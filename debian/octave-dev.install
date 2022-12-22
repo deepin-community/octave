@@ -1,0 +1,5 @@
+usr/bin/mkoctfile
+usr/bin/octave-config
+usr/include
+debian/defs.make /usr/share/octave/debian/
+usr/lib/*/pkgconfig

@@ -1,0 +1,65 @@
+General information
+===================
+
+The octave-doc package contains extra documentation in PDF and HTML formats
+which can be found in the doc-base system or directly under
+/usr/share/doc/octave once this supplementary package is installed. It also
+installs documentation in the Info format.
+
+Further information on Octave, the Octave mailing-lists and the Octave 
+source archive can be found at https://www.octave.org/
+
+The Debian Octave-related packages are collectively maintained by the Debian
+Octave Group (https://wiki.debian.org/Teams/DebianOctaveGroup).
+
+
+Using ATLAS or OpenBLAS libs with GNU Octave
+============================================
+
+In order to speed up Octave's linear algebra operations, you can install the
+ATLAS package (libatlas3-base), or the OpenBLAS package (libopenblas-base).
+Octave should automatically pick up the faster libraries. For more information
+about BLAS and LAPACK in Debian, see:
+
+ https://wiki.debian.org/DebianScience/LinearAlgebraLibraries
+
+
+About Octave-Forge packages
+===========================
+
+If you want to install packages from the Octave-Forge project
+(https://octave.sourceforge.io/), the recommended way is to use the packages
+distributed by Debian. Most Octave-Forge packages are available in Debian under
+the name octave-<pkgname> (for example, the statistics package from
+Octave-Forge is available as the octave-statistics package in Debian). The use
+of the `pkg install' command at the Octave prompt and may interfere
+with the package management system in Debian.
+
+Note that Octave is not configured to autoload the installed packages.
+This means that the functions provided by the installed packages will
+not be available at the Octave prompt at startup.  Therefore, each
+package must be individually loaded by using the `pkg load' command.
+One way to automatically load all the installed packages at startup
+time is to add the following code to the initialization file
+`~/.octaverc':
+
+  pkgs = pkg ("list");
+  for i = 1 : numel (pkgs)
+    pkg ("load", pkgs{i}.name);
+  endfor
+
+If you do this, remember that other users may not have Octave
+configured to load packages at startup. Therefore, if you write code
+for others, your scripts still need to load the packages they require.
+
+
+Why is mkoctfile not in octave, but in liboctave-dev?
+=====================================================
+
+In order to use mkoctfile, one needs the development packages (headers, .a
+libraries) of the libraries used by Octave (fftw, blas, ...). These sum up to a
+lot of space; an installation of liboctave-dev will trigger the installation of
+these packages, so one can use mkoctfile then.
+
+ -- Sébastien Villemot <sebastien@debian.org>, Thu, 11 Jun 2020 11:00:24 +0200
+

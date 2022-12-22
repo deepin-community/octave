@@ -1,0 +1,162 @@
+Source: octave
+Maintainer: Debian Octave Group <team+pkg-octave-team@tracker.debian.org>
+Uploaders: Sébastien Villemot <sebastien@debian.org>,
+           Rafael Laboissière <rafael@debian.org>
+Section: math
+Priority: optional
+Build-Depends: automake,
+               bison,
+               debhelper-compat (= 13),
+               debhelper (>= 12.8~),
+               default-jdk [!hppa !hurd-any !kfreebsd-any],
+               desktop-file-utils,
+               epstool,
+               fig2dev,
+               flex,
+               gawk,
+               gfortran,
+               ghostscript,
+               gnuplot-nox,
+               gperf,
+               icoutils,
+               less,
+               libarpack2-dev,
+               libblas-dev,
+               libcurl4-gnutls-dev,
+               libfftw3-dev,
+               libfltk1.3-dev,
+               libfontconfig1-dev,
+               libgl2ps-dev,
+               libglpk-dev,
+               libglu1-mesa-dev,
+               libgraphicsmagick++1-dev,
+               libhdf5-dev,
+               liblapack-dev,
+               libncurses5-dev,
+               libpcre3-dev,
+               libqhull-dev,
+               libqrupdate-dev,
+               libqscintilla2-qt5-dev,
+               libqt5opengl5-dev,
+               libreadline-dev,
+               librsvg2-bin,
+               libsndfile1-dev,
+               libsuitesparse-dev,
+               libsundials-dev,
+               libxft-dev,
+               portaudio19-dev,
+               pstoedit,
+               qtbase5-dev,
+               qttools5-dev,
+               qttools5-dev-tools,
+               rapidjson-dev,
+               texinfo,
+               texlive-fonts-recommended,
+               texlive-latex-base,
+               texlive-plain-generic,
+               unzip,
+               xauth,
+               zip
+Standards-Version: 4.6.0
+Vcs-Browser: https://salsa.debian.org/pkg-octave-team/octave
+Vcs-Git: https://salsa.debian.org/pkg-octave-team/octave.git
+Homepage: https://www.octave.org/
+Rules-Requires-Root: no
+
+Package: octave
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         texinfo,
+         octave-common (= ${source:Version}),
+Recommends: gnuplot-qt | gnuplot-x11 | gnuplot-nox,
+            libopenblas0 | libatlas3-base,
+            pstoedit,
+            epstool,
+            default-jre-headless [!armel !hppa !hurd-any !kfreebsd-any !mipsel !powerpc],
+            octave-doc
+Suggests: octave-dev
+Provides: ${octave-abi:Provides}
+Breaks: liboctave3v5, liboctave4, liboctave5, liboctave6, liboctave7, liboctave8,
+        octave-nlopt (<< 2.6.1-8~)
+Description: GNU Octave language for numerical computations
+ Octave is a (mostly MATLAB® compatible) high-level language, primarily
+ intended for numerical computations. It provides a convenient command-line
+ interface for solving linear and nonlinear problems numerically.
+ .
+ Octave can be dynamically extended with user-supplied C++ files.
+
+Package: octave-common
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: fonts-freefont-otf
+Multi-Arch: foreign
+Description: architecture-independent files for octave
+ Octave is a (mostly MATLAB® compatible) high-level language, primarily
+ intended for numerical computations. It provides a convenient command-line
+ interface for solving linear and nonlinear problems numerically.
+ .
+ Octave can be dynamically extended with user-supplied C++ files.
+ .
+ This package provides the architecture-independent files (Octave scripts
+ and other helper files).
+
+Package: octave-doc
+Architecture: all
+Section: doc
+Depends: ${misc:Depends},
+         info
+Suggests: www-browser | pdf-viewer
+Breaks: octave-info (<< 4.2.1-6), octave-htmldoc (<< 4.2.1-6)
+Replaces: octave-info (<< 4.2.1-6), octave-htmldoc (<< 4.2.1-6)
+Enhances: octave
+Multi-Arch: foreign
+Description: documentation of the GNU Octave language
+ Octave is a (mostly MATLAB® compatible) high-level language, primarily
+ intended for numerical computations. It provides a convenient command-line
+ interface for solving linear and nonlinear problems numerically.
+ .
+ This package provides the following documentation in HTML, PDF and Info
+ formats:
+  - the main user manual
+  - a document on the C++ classes used internally by Octave.
+ .
+ It also includes a reference card in PDF format and in a4, letter and legal
+ paper sizes.
+ .
+ This package is required by the 'help -i' command at the Octave command-line
+ and by the help documentation browser in the graphical interface.
+
+Package: octave-dev
+Architecture: any
+Section: libdevel
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         octave (= ${binary:Version}),
+         libreadline-dev | libreadline-gplv2-dev,
+         libncurses5-dev,
+         libhdf5-dev | libhdf5-openmpi-dev | libhdf5-mpich-dev,
+         libgl1-mesa-dev | libgl-dev,
+         libblas-dev | libblas.so,
+         liblapack-dev | liblapack.so,
+         libfftw3-dev,
+         gfortran,
+         gcc,
+         g++
+Enhances: octave
+Description: development files for the GNU Octave language
+ Octave is a (mostly MATLAB® compatible) high-level language, primarily
+ intended for numerical computations. It provides a convenient command-line
+ interface for solving linear and nonlinear problems numerically.
+ .
+ This package provides the header files and the mkoctfile script used for
+ extending Octave via compiled code.
+
+Package: liboctave-dev
+Architecture: all
+Section: oldlibs
+Depends: ${misc:Depends},
+         octave-dev
+Description: transitional dummy package for GNU Octave development
+ The only purpose of this package is to ensure a smooth upgrade to the new
+ 'octave-dev' package which replaces 'liboctave-dev'. It can be safely removed.

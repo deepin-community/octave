@@ -1,0 +1,11 @@
+Document: octave-refcard
+Title: The GNU Octave Reference Card
+Author: John W. Eaton
+Abstract: Octave is a (mostly MATLAB® compatible) high-level
+ language, primarily intended for numerical computations.  It provides
+ a convenient command-line interface for solving linear and nonlinear
+ problems numerically.
+Section: Science/Mathematics
+
+Format: PDF
+Files: /usr/share/doc/octave/refcard-*.pdf

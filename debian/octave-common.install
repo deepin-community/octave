@@ -1,0 +1,7 @@
+usr/share/octave
+usr/share/icons
+
+debian/octaverc /etc
+
+# Install the Debian-specific error handler
+debian/debian_missing_handler.m /usr/share/octave/site/m/
