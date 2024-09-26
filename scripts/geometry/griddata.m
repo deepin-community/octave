@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1999-2022 The Octave Project Developers
+## Copyright (C) 1999-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -83,8 +83,9 @@ function [rx, ry, rz] = griddata (x, y, z, varargin)
   endif
 
   if (nargin > 6)
-    ## Current 2D implementation has nargin max = 6, since no triangulation
-    ## options are passed to the 2D algorithm. 3D algorithm requires nargin >=7
+    ## Current 2-D implementation has nargin max = 6, since no triangulation
+    ## options are passed to the 2-D algorithm.
+    ## 3-D algorithm requires nargin >=7.
 
     if (nargout > 1)
       error ("griddata: only one output argument valid for 3-D interpolation");
@@ -92,7 +93,7 @@ function [rx, ry, rz] = griddata (x, y, z, varargin)
     rx = griddata3 (x, y, z, varargin{:});
 
   else
-    ## for nargin 5 or 6, assign varargin terms to variables for 2D algorithm
+    ## for nargin 5 or 6, assign varargin terms to variables for 2-D algorithm
     xi = varargin{1};
     yi = varargin{2};
 
@@ -130,7 +131,7 @@ function [rx, ry, rz] = griddata (x, y, z, varargin)
       elseif (! ischar (method))
         error ("griddata: METHOD must be a string");
       else
-        method = tolower (method);
+        method = lower (method);
       endif
 
       if (any (strcmp (method, {"linear", "nearest", "v4"})))
@@ -180,7 +181,8 @@ function [rx, ry, rz] = griddata (x, y, z, varargin)
       z3 = z(tri(:,3));
 
       ## Calculate norm vector.
-      N = cross ([x2-x1, y2-y1, z2-z1], [x3-x1, y3-y1, z3-z1]);
+      N = cross ([x2-x1, y2-y1, z2-z1], [x3-x1, y3-y1, z3-z1], 2);
+
       ## Normalize.
       N = diag (norm (N, "rows")) \ N;
 
@@ -328,6 +330,15 @@ endfunction
 %! zz2 = 2*(xx.^2 + yy.^2);
 %! zz2(isnan (zz)) = NaN;
 %! assert (zz, zz2, 100*eps);
+
+%!testif HAVE_QHULL <*65146> # Ensure correct output for 3-point queries.
+%! xi = [1 2 3];
+%! a = griddata (xi, xi, xi .* xi', xi, xi, "linear");
+%! assert (a, [1, 4, 9]', 10*eps);
+%! a = griddata (xi, xi, xi .* xi', xi', xi', "linear");
+%! assert (a, [1, 4, 9]', 10*eps);
+%! a = griddata (xi, xi, xi .* xi', [xi; xi], [xi; xi], "linear");
+%! assert (a, [1, 4, 9; 1, 4, 9], 10*eps);
 
 ## Test input validation
 %!error <Invalid call> griddata ()

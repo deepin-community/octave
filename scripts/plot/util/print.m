@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -28,7 +28,7 @@
 ## @deftypefnx {} {} print (@var{options})
 ## @deftypefnx {} {} print (@var{filename}, @var{options})
 ## @deftypefnx {} {} print (@var{hfig}, @dots{})
-## @deftypefnx {} {@var{rgb} =} print (@qcode{"-RGBImage"}, @dots{})
+## @deftypefnx {} {@var{RGB} =} print (@qcode{"-RGBImage"}, @dots{})
 ## Format a figure for printing and either save it to a file, send it to a
 ## printer, or return an RGB image.
 ##
@@ -116,19 +116,21 @@
 ## @end group
 ## @end example
 ##
-## @item  -opengl
-## @itemx -painters
-##   Specifies whether the opengl (pixel-based) or painters (vector-based)
-## renderer is used.  This is equivalent to changing the figure's
+## @item  -image | -opengl
+## @itemx -vector | -painters
+##   Specifies whether the pixel-based renderer (@option{-image} or
+## @option{-opengl}) or vector-based renderer (@option{-vector} or
+## @option{-painters}) is used.  This is equivalent to changing the figure's
 ## @qcode{"Renderer"} property.  When the figure
 ## @nospell{@qcode{"RendererMode"}} property is @qcode{"auto"} (the default)
 ## Octave will use the @qcode{"opengl"} renderer for raster formats (e.g.,
-## JPEG) and @qcode{"painters"} for vector formats (e.g., PDF).  Those options
+## JPEG) and @qcode{"painters"} for vector formats (e.g., PDF)@.  These options
 ## are only supported for the "qt" graphics toolkit.
 ##
-## @item -svgconvert
-##   When using the @option{-painters} renderer, this enables a different
-## backend toolchain with enhanced characteristics:
+## @item  -svgconvert (default)
+## @itemx -nosvgconvert
+##   When using the @option{-painters} renderer, this enables or disables the
+## SVG based backend toolchain with enhanced characteristics:
 ##
 ## @table @asis
 ## @item Font handling:
@@ -152,8 +154,22 @@
 ## output to be rasterized.
 ## @end table
 ##
-## Caution: @option{-svgconvert} may lead to inaccurate rendering of image
-## objects.
+## Caution: If Octave was built against Qt version earlier than 5.13,
+## @option{-svgconvert} may lead to inaccurate rendering of image objects.
+##
+## @item  -polymerge
+## @itemx -nopolymerge
+## @itemx -polymerge-all
+##   When using the SVG based backend @option{-svgconvert}, faces are rendered
+## as triangles.  In some cases, some viewers might display fine lines where
+## those triangles share an edge.  These options control whether all triangles
+## that share edges are merged into polygons (@option{-polymerge-all} which
+## might take some time for graphics consisting of many triangles -- including
+## line markers), only consecutive polygons are merged (@option{-polymerge}),
+## or no triangles are merged at all (@option{-no-polymerge}).  By default,
+## only consecutive triangles sharing an edge are merged, unless the printed
+## figure contains patch or surface graphics objects in which case all
+## triangles that are sharing an edge are merged.
 ##
 ## @item  -portrait
 ## @itemx -landscape
@@ -262,9 +278,8 @@
 ##
 ## Use @code{pdfcrop} if you don't want the surrounding page.
 ##
-## By default, PDF inherits the same limitations as PostScript.
-## For an enhanced output with complete text support and basic transparency,
-## use the @option{-svgconvert} option.
+## Caution: with @option{-nosvgconvert} option, PDF inherits the same
+## limitations as PostScript (limited set of fonts and lack of transparency).
 ##
 ##   @item  eps(2)
 ##   @itemx epsc(2)
@@ -272,7 +287,7 @@
 ##
 ## The OpenGL-based graphics toolkits always generate PostScript level 3.0.
 ## They have limited support for text unless using the @option{-svgconvert}
-## option.
+## option (the default).
 ## Limitations include using only ASCII characters (e.g., no Greek letters)
 ## and support for just three base PostScript fonts: Helvetica (the default),
 ## Times, or Courier.  Any other font will be replaced by Helvetica.
@@ -410,12 +425,16 @@
 ## anti-aliasing is applied using Ghostscript's TextAlphaBits and
 ## GraphicsAlphaBits options.  The default number of bits are 4 and 1
 ## respectively.  Allowed values for @var{N} are 1, 2, or 4.
+##
+## @item -no-append-file-extension
+##   With this option, @var{filename} is used verbatim.  That means no file
+## extension matching the file format is appended automatically.
 ## @end table
 ##
 ## @seealso{saveas, getframe, savefig, hgsave, orient, figure}
 ## @end deftypefn
 
-function rgbout = print (varargin)
+function RGB = print (varargin)
 
   opts = __print_parse_opts__ (varargin{:});
 
@@ -754,7 +773,7 @@ function rgbout = print (varargin)
       otherwise
         if (strcmp (opts.renderer, "opengl"))
           if (opts.rgb_output)
-            rgbout = __get_frame__ (opts.figure);
+            RGB = __get_frame__ (opts.figure);
           else
             compression = "none";
 
@@ -790,7 +809,7 @@ function rgbout = print (varargin)
 
     ## Avoid a redraw since the figure should not have changed
     ## FIXME: Bug #57552, marker sizes, requires that redraw be done.
-    ##set (gcf, "__modified__", "off");
+    ## set (gcf, "__modified__", "off");
 
     ## Unlink temporary files
     for n = 1:numel (opts.unlink)
@@ -808,6 +827,26 @@ function rgbout = print (varargin)
 
 endfunction
 
+## Print to file with and without file extension
+%!testif ; (have_window_system () && any (strcmp ("qt", available_graphics_toolkits ())))
+%! toolkit = graphics_toolkit ();
+%! graphics_toolkit ("qt");
+%! hf = figure ("visible", "off");
+%! unwind_protect
+%!   x = 0:0.1:1;
+%!   hax = axes (hf);
+%!   plot (hax, x, x);
+%!   tmp_name = tempname ();
+%!   print (hf, tmp_name, "-dpng");
+%!   assert (isfile ([tmp_name ".png"]));
+%!   unlink ([tmp_name ".png"]);
+%!   print (hf, tmp_name, "-dpng", "-no-append-file-extension");
+%!   assert (isfile (tmp_name));
+%!   unlink (tmp_name);
+%! unwind_protect_cleanup
+%!   close (hf);
+%!   graphics_toolkit (toolkit);
+%! end_unwind_protect
 
 %!error <a graphics handle>
 %! hf = figure ("visible", "off");
@@ -1159,7 +1198,8 @@ function cmd = svgconvert (opts, devopt)
     cmd = sprintf ('%s - %%s %3.2f "%s" %d "%%s"', ...
                    undo_string_escapes (opts.svgconvert_binary), ...
                    get (0, "screenpixelsperinch"), ...
-                   undo_string_escapes (fullfile (fontdir, "FreeSans.otf")), 1);
+                   undo_string_escapes (fullfile (fontdir, "FreeSans.otf")),
+                   opts.polymerge);
 
     if (opts.debug)
       fprintf ("svgconvert command: '%s'\n", cmd);

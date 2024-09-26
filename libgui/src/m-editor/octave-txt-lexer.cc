@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2014-2022 The Octave Project Developers
+// Copyright (C) 2014-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,25 +33,26 @@
 
 #include "octave-txt-lexer.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+QString octave_txt_lexer::description (int style) const
 {
-  QString octave_txt_lexer::description (int style) const
-  {
-    if (style == 0)
-      return tr ("Default");
-    else
-      return QString ();
-  };
+  if (style == 0)
+    return tr ("Default");
+  else
+    return QString ();
+};
 
-  const char * octave_txt_lexer::language (void) const
-  {
-    return "Text";
-  }
-
-  const char * octave_txt_lexer::lexer (void) const
-  {
-    return "text";
-  }
+const char * octave_txt_lexer::language () const
+{
+  return "Text";
 }
+
+const char * octave_txt_lexer::lexer () const
+{
+  return "text";
+}
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

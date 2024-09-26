@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2007-2022 The Octave Project Developers
+## Copyright (C) 2007-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} ellipsoid (@var{xc}, @var{yc}, @var{zc}, @var{xr}, @var{yr}, @var{zr}, @var{n})
+## @deftypefn  {} {} ellipsoid (@var{xc}, @var{yc}, @var{zc}, @var{xr}, @var{yr}, @var{zr})
 ## @deftypefnx {} {} ellipsoid (@dots{}, @var{n})
 ## @deftypefnx {} {} ellipsoid (@var{hax}, @dots{})
 ## @deftypefnx {} {[@var{x}, @var{y}, @var{z}] =} ellipsoid (@dots{})
@@ -45,7 +45,7 @@
 ## @seealso{cylinder, rectangle, sphere}
 ## @end deftypefn
 
-function [xx, yy, zz] = ellipsoid (varargin)
+function [x, y, z] = ellipsoid (varargin)
 
   [hax, varargin, nargin] = __plt_get_axis_arg__ ("ellipsoid", varargin{:});
 
@@ -64,20 +64,24 @@ function [xx, yy, zz] = ellipsoid (varargin)
     n = 20;
   else
     n = varargin{7};
+    if (! (isreal (n) && isscalar (n) && n > 0))
+      error ("ellipsoid: N must be a real scalar > 0");
+    endif
+    n = floor (n);
   endif
 
   theta = linspace (0, 2 * pi, n + 1);
   phi = linspace (-pi / 2, pi / 2, n + 1);
   [theta, phi] = meshgrid (theta, phi);
 
-  x = xr .* cos (phi) .* cos (theta) + xc;
-  y = yr .* cos (phi) .* sin (theta) + yc;
-  z = zr .* sin (phi) + zc;
+  xx = xr .* cos (phi) .* cos (theta) + xc;
+  yy = yr .* cos (phi) .* sin (theta) + yc;
+  zz = zr .* sin (phi) + zc;
 
   if (nargout > 0)
-    xx = x;
-    yy = y;
-    zz = z;
+    x = xx;
+    y = yy;
+    z = zz;
   else
     oldfig = [];
     if (! isempty (hax))
@@ -86,7 +90,7 @@ function [xx, yy, zz] = ellipsoid (varargin)
     unwind_protect
       hax = newplot (hax);
 
-      surf (x, y, z);
+      surf (xx, yy, zz);
     unwind_protect_cleanup
       if (! isempty (oldfig))
         set (0, "currentfigure", oldfig);
@@ -101,3 +105,23 @@ endfunction
 %! clf;
 %! ellipsoid (0, 0, 1, 2, 3, 4, 20);
 %! title ("ellipsoid()");
+
+%!test <*64468> # No return if nargout = 0
+%! hf = figure ("visible", "off");
+%! hax = gca ();
+%! unwind_protect
+%!   1 + 1;
+%!   assert (ans, 2);
+%!   ellipsoid (hax, 0, 0, 0, 1, 1, 1);
+%!   assert (ans, 2);
+%!
+%!  unwind_protect_cleanup
+%!   close (hf);
+%! end_unwind_protect
+
+## Test input validation
+%!error <Invalid call> ellipsoid (1,2,3,4,5)
+%!error <Invalid call> ellipsoid (1,2,3,4,5,6,7,8)
+%!error <N must be a real scalar> ellipsoid (1,2,3,4,5,6, 2i)
+%!error <N must be a real scalar> ellipsoid (1,2,3,4,5,6, ones (2,2))
+%!error <N must be a real scalar . 0> ellipsoid (1,2,3,4,5,6, -1)

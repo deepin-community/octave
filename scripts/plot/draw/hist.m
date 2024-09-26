@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -82,7 +82,10 @@
 ##
 ## If an output is requested then no plot is made.  Instead, return the values
 ## @var{nn} (numbers of elements) and @var{xx} (bin centers) such that
-## @code{bar (@var{xx}, @var{nn})} will plot the histogram.
+## @code{bar (@var{xx}, @var{nn})} will plot the histogram.  If @var{y} is a
+## vector, @var{nn} and @var{xx} will be row vectors.  If @var{y} is an array,
+## @var{nn} will be an array with one column of element counts for each column
+## in @var{y}, and @var{xx} will be a column vector of bin centers.
 ##
 ## @seealso{histc, bar, pie, rose}
 ## @end deftypefn
@@ -101,6 +104,10 @@ function [nn, xx] = hist (varargin)
 
   if (! isreal (y))
     error ("hist: Y must be real-valued");
+  endif
+
+  if (ndims (y) > 2)
+    error ("hist: Y must be a 2-D array");
   endif
 
   arg_is_vector = isvector (y);
@@ -124,8 +131,9 @@ function [nn, xx] = hist (varargin)
   if (nargin == 1 || ischar (varargin{iarg}))
     n = 10;
     ## Use integer range values and perform division last to preserve
-    ## accuracy.
-    if (min_val != max_val)
+    ## accuracy.  If max - min is less than 20*eps, treat as if min = max to
+    ## avoid bug #65714 error.
+    if (min_val != max_val && diff ([min_val, max_val]) > 20 * eps)
       x = 1:2:2*n;
       x = ((max_val - min_val) * x + 2*n*min_val) / (2*n);
     else
@@ -150,8 +158,9 @@ function [nn, xx] = hist (varargin)
         error ("hist: number of bins NBINS must be positive");
       endif
       ## Use integer range values and perform division last to preserve
-      ## accuracy.
-      if (min_val != max_val)
+      ## accuracy.  If max - min is less than 20*eps, treat as if min = max
+      ## to avoid bug #65714 error.
+      if (min_val != max_val && diff ([min_val, max_val]) > 20 * eps)
         x = 1:2:2*n;
         x = ((max_val - min_val) * x + 2*n*min_val) / (2*n);
       else
@@ -405,6 +414,31 @@ endfunction
 %! assert (isa (xx, "double"));
 %! [nn, xx] = hist (double (1:10), single ([1, 5, 10]));
 %! assert (isa (xx, "single"));
+
+%!test <*65714> # Avoid error if diff(y) is very small.
+%! a = [1, 1+eps, 1+ 15*eps];
+%! hf = figure ("visible", "off");
+%! unwind_protect
+%!   hax = axes ("parent", hf);
+%!   hist (hax, a);
+%!   hp = get (hax, "children");
+%!   assert (max (get (hp, "ydata")(:)), 3);
+%! unwind_protect_cleanup
+%!   close (hf);
+%! end_unwind_protect
+
+%!test <*65714> # Avoid error if diff(y) is very small, with specified X.
+%! a = [1, 1+eps, 1+ 15*eps];
+%! hf = figure ("visible", "off");
+%! unwind_protect
+%!   hax = axes ("parent", hf);
+%!   hist (hax, a, 5);
+%!   hp = get (hax, "children");
+%!   assert (max (get (hp, "ydata")(:)), 3);
+%! unwind_protect_cleanup
+%!   close (hf);
+%! end_unwind_protect
+
 
 ## Test input validation
 %!error <Invalid call> hist ()

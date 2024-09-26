@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} fftconv (@var{x}, @var{y})
-## @deftypefnx {} {} fftconv (@var{x}, @var{y}, @var{n})
+## @deftypefn  {} {@var{c} =} fftconv (@var{x}, @var{y})
+## @deftypefnx {} {@var{c} =} fftconv (@var{x}, @var{y}, @var{n})
 ## Convolve two vectors using the FFT for computation.
 ##
 ## @code{c = fftconv (@var{x}, @var{y})} returns a vector of length equal to

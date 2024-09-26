@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,7 +37,7 @@
 #include "ovl.h"
 #include "utils.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 template <typename Matrix>
 static octave_value
@@ -46,7 +46,7 @@ mark_upper_triangular (const Matrix& a)
   octave_value retval = a;
 
   octave_idx_type n = a.rows ();
-  assert (a.columns () == n);
+  error_unless (a.columns () == n);
 
   const typename Matrix::element_type zero = typename Matrix::element_type ();
 
@@ -69,7 +69,7 @@ DEFUN (schur, args, nargout,
 @cindex Schur decomposition
 Compute the Schur@tie{}decomposition of @var{A}.
 
-The Schur@tie{}decomposition is defined as
+The Schur@tie{}decomposition of a square matrix @var{A} is defined as
 @tex
 $$
  S = U^T A U
@@ -100,34 +100,32 @@ $2 \times 2$
 @ifnottex
 @code{2 x 2}
 @end ifnottex
-along the diagonal.  The diagonal elements of @var{S}
-(or the eigenvalues of the
-@tex
-$2 \times 2$
-@end tex
-@ifnottex
-@code{2 x 2}
-@end ifnottex
-blocks, when appropriate) are the eigenvalues of @var{A} and @var{S}.
+along the diagonal.
 
-The default for real matrices is a real Schur@tie{}decomposition.
-A complex decomposition may be forced by passing the flag
-@qcode{"complex"}.
+The default for real matrices is a real Schur@tie{}decomposition.  A complex
+decomposition may be forced by passing the flag @qcode{"complex"}.
 
 The eigenvalues are optionally ordered along the diagonal according to the
-value of @var{opt}.  @code{@var{opt} = "a"} indicates that all eigenvalues
-with negative real parts should be moved to the leading block of @var{S}
-(used in @code{are}), @code{@var{opt} = "d"} indicates that all
-eigenvalues with magnitude less than one should be moved to the leading
-block of @var{S} (used in @code{dare}), and @code{@var{opt} = "u"}, the
-default, indicates that no ordering of eigenvalues should occur.  The
-leading @var{k} columns of @var{U} always span the @var{A}-invariant
-subspace corresponding to the @var{k} leading eigenvalues of @var{S}.
+value of @var{opt}:
 
-The Schur@tie{}decomposition is used to compute eigenvalues of a square
-matrix, and has applications in the solution of algebraic @nospell{Riccati}
-equations in control (see @code{are} and @code{dare}).
-@seealso{rsf2csf, ordschur, ordeig, lu, chol, hess, qr, qz, svd}
+@table @asis
+@item @qcode{@var{opt} = "a"}
+Move eigenvalues with negative real parts to the leading block of @var{S}.
+Mnemonic: @qcode{"a"} for Algebraic @nospell{Riccati} Equations, where this
+ordering is useful.
+
+@item @qcode{@var{opt} = "d"}
+Move eigenvalues with magnitude less than one to the leading block of @var{S}.
+Mnemonic: @qcode{"d"} for Discrete Algebraic @nospell{Riccati} Equations,
+where this ordering is useful.
+
+@item @qcode{@var{opt} = "u"}
+Unordered.  No particular ordering of eigenvalues (default).
+@end table
+
+The leading @var{k} columns of @var{U} always span the @var{A}-invariant
+subspace corresponding to the @var{k} leading eigenvalues of @var{S}.
+@seealso{rsf2csf, ordschur, ordeig, lu, chol, hess, qr, qz, svd, eig}
 @end deftypefn */)
 {
   int nargin = args.length ();
@@ -345,4 +343,4 @@ Note also that @var{U} and @var{T} are not unique.
 %! assert (U * T * U', A, 1e-14);
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

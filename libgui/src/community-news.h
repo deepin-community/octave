@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,40 +31,36 @@
 
 class QTextBrowser;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class community_news : public QWidget
 {
-  class base_qobject;
+  Q_OBJECT
 
-  class community_news : public QWidget
-  {
-    Q_OBJECT
+public:
 
-  public:
+  community_news (int serial);
 
-    community_news (base_qobject& oct_qobj, int serial);
+  community_news (QWidget *parent = nullptr,
+                  const QString& base_url = "https://octave.org",
+                  const QString& page = "community-news.html",
+                  int serial = -1);
 
-    community_news (base_qobject& oct_qobj, QWidget *parent = nullptr,
-                    const QString& base_url = "https://octave.org",
-                    const QString& page = "community-news.html",
-                    int serial = -1);
+  ~community_news () = default;
 
-    ~community_news (void) = default;
+public slots:
 
-  public slots:
+  void set_news (const QString& news);
 
-    void set_news (const QString& news);
+  void display ();
 
-    void display (void);
+private:
 
-  private:
+  void construct (const QString& base_url, const QString& page, int serial);
 
-    void construct (base_qobject& oct_qobj, const QString& base_url,
-                    const QString& page, int serial);
+  QTextBrowser *m_browser;
+};
 
-    void get_screen_geometry (int& width, int& height);
-
-    QTextBrowser *m_browser;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

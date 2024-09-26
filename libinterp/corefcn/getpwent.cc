@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -41,7 +41,7 @@
 #include "ovl.h"
 #include "utils.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Password file functions.  (Why not?)
 
@@ -142,7 +142,7 @@ If the user name does not exist in the database, @code{getpwname} returns 0.
 
 DEFUN (setpwent, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} setpwent ()
+@deftypefn {} {[@var{status}, @var{msg}] =} setpwent ()
 Return the internal pointer to the beginning of the password database.
 @seealso{getpwent, endpwent}
 @end deftypefn */)
@@ -160,7 +160,7 @@ Return the internal pointer to the beginning of the password database.
 
 DEFUN (endpwent, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} endpwent ()
+@deftypefn {} {[@var{status}, @var{msg}] =} endpwent ()
 Close the password database.
 @seealso{getpwent, setpwent}
 @end deftypefn */)
@@ -176,4 +176,4 @@ Close the password database.
   return ovl (static_cast<double> (status), msg);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

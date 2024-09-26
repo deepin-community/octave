@@ -1,7 +1,7 @@
 %top {
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -140,7 +140,7 @@ NUM (({D}+\.?{D}*)|(\.{D}+))
     return FONTSIZE;
   }
 
-"\\color[m_rgb]" {
+"\\color[rgb]" {
     BEGIN (MAYBE_NUM_MODE);
     return COLOR_RGB;
   }
@@ -214,8 +214,8 @@ octave_tex_free (void *ptr, yyscan_t)
   free (ptr);
 }
 
-namespace octave
-{
+OCTAVE_BEGIN_NAMESPACE(octave)
+
   bool text_parser_tex::init_lexer (const std::string& s)
   {
     if (! m_scanner)
@@ -237,7 +237,7 @@ namespace octave
     return (m_scanner && m_buffer_state);
   }
 
-  void text_parser_tex::destroy_lexer (void)
+  void text_parser_tex::destroy_lexer ()
   {
     if (m_buffer_state)
       {
@@ -252,4 +252,5 @@ namespace octave
         m_scanner = nullptr;
       }
   }
-}
+
+OCTAVE_END_NAMESPACE(octave)

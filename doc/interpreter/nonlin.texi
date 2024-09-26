@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -53,12 +53,20 @@ convergence is not guaranteed even if a solution exists.
 
 @c fsolve scripts/optimization/fsolve.m
 @anchor{XREFfsolve}
-@deftypefn  {} {} fsolve (@var{fcn}, @var{x0})
-@deftypefnx {} {} fsolve (@var{fcn}, @var{x0}, @var{options})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} fsolve (@var{fcn}, @var{x0})
+@deftypefnx {} {@var{x} =} fsolve (@var{fcn}, @var{x0}, @var{options})
+@deftypefnx {} {[@var{x}, @var{fval}] =} fsolve (@dots{})
+@deftypefnx {} {[@var{x}, @var{fval}, @var{info}] =} fsolve (@dots{})
+@deftypefnx {} {[@var{x}, @var{fval}, @var{info}, @var{output}] =} fsolve (@dots{})
 @deftypefnx {} {[@var{x}, @var{fval}, @var{info}, @var{output}, @var{fjac}] =} fsolve (@dots{})
 Solve a system of nonlinear equations defined by the function @var{fcn}.
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function to evaluate.  @var{fcn} should accept a vector (array)
 defining the unknown variables, and return a vector of left-hand sides of
 the equations.  Right-hand sides are defined to be zeros.  In other words,
@@ -178,7 +186,7 @@ different vector, in which case they should be dropped in favor of this most
 recent vector.  A short example how this can be achieved follows:
 
 @example
-function [fval, fjac] = user_func (x, optimvalues, state)
+function [fval, fjac] = user_fcn (x, optimvalues, state)
 persistent sav = [], sav0 = [];
 if (nargin == 1)
   ## evaluation call
@@ -199,7 +207,7 @@ endfunction
 
 ## @dots{}
 
-fsolve (@@user_func, x0, optimset ("OutputFcn", @@user_func, @dots{}))
+fsolve (@@user_fcn, x0, optimset ("OutputFcn", @@user_fcn, @dots{}))
 @end example
 @xseealso{@ref{XREFfzero,,fzero}, @ref{XREFoptimset,,optimset}}
 @end deftypefn
@@ -317,12 +325,19 @@ which gives the same solution as before.
 
 @c fzero scripts/optimization/fzero.m
 @anchor{XREFfzero}
-@deftypefn  {} {} fzero (@var{fun}, @var{x0})
-@deftypefnx {} {} fzero (@var{fun}, @var{x0}, @var{options})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} fzero (@var{fcn}, @var{x0})
+@deftypefnx {} {@var{x} =} fzero (@var{fcn}, @var{x0}, @var{options})
+@deftypefnx {} {[@var{x}, @var{fval}] =} fzero (@dots{})
+@deftypefnx {} {[@var{x}, @var{fval}, @var{info}] =} fzero (@dots{})
 @deftypefnx {} {[@var{x}, @var{fval}, @var{info}, @var{output}] =} fzero (@dots{})
 Find a zero of a univariate function.
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function to evaluate.
 
 @var{x0} should be a two-element vector specifying two points which
@@ -331,7 +346,7 @@ function between @var{x0}(1) and @var{x0}(2).  More mathematically, the
 following must hold
 
 @example
-sign (@var{fun}(@var{x0}(1))) * sign (@var{fun}(@var{x0}(2))) <= 0
+sign (@var{fcn}(@var{x0}(1))) * sign (@var{fcn}(@var{x0}(2))) <= 0
 @end example
 
 If @var{x0} is a single scalar then several nearby and distant values are
@@ -418,7 +433,7 @@ functions use different internal algorithms and some knowledge of the objective
 function is required.  For functions which can be differentiated,
 @code{fminunc} is appropriate.  For functions with discontinuities, or for
 which a gradient search would fail, use @code{fminsearch}.
-@xref{Optimization}, for minimization with the presence of constraint
+@xref{Optimization} for minimization with the presence of constraint
 functions.  Note that searches can be made for maxima by simply inverting the
 objective function
 @tex
@@ -430,12 +445,17 @@ objective function
 
 @c fminbnd scripts/optimization/fminbnd.m
 @anchor{XREFfminbnd}
-@deftypefn  {} {@var{x} =} fminbnd (@var{fun}, @var{a}, @var{b})
-@deftypefnx {} {@var{x} =} fminbnd (@var{fun}, @var{a}, @var{b}, @var{options})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} fminbnd (@var{fcn}, @var{a}, @var{b})
+@deftypefnx {} {@var{x} =} fminbnd (@var{fcn}, @var{a}, @var{b}, @var{options})
 @deftypefnx {} {[@var{x}, @var{fval}, @var{info}, @var{output}] =} fminbnd (@dots{})
 Find a minimum point of a univariate function.
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function to evaluate.
 
 The starting interval is specified by @var{a} (left boundary) and @var{b}
@@ -479,19 +499,37 @@ Iteration limit (either @code{MaxIter} or @code{MaxFunEvals}) exceeded.
 The algorithm was terminated by a user @code{OutputFcn}.
 @end itemize
 
-Programming Notes: The search for a minimum is restricted to be in the
+Application Notes:
+@enumerate
+@item
+The search for a minimum is restricted to be in the
 finite interval bound by @var{a} and @var{b}.  If you have only one initial
 point to begin searching from then you will need to use an unconstrained
 minimization algorithm such as @code{fminunc} or @code{fminsearch}.
 @code{fminbnd} internally uses a Golden Section search strategy.
+@item
+Use @ref{Anonymous Functions} to pass additional parameters to @var{fcn}.
+For specific examples of doing so for @code{fminbnd} and other
+minimization functions see the @ref{Minimizers} section of the GNU Octave
+manual.
+@end enumerate
 @xseealso{@ref{XREFfzero,,fzero}, @ref{XREFfminunc,,fminunc}, @ref{XREFfminsearch,,fminsearch}, @ref{XREFoptimset,,optimset}}
 @end deftypefn
 
 
 @c fminunc scripts/optimization/fminunc.m
 @anchor{XREFfminunc}
-@deftypefn  {} {} fminunc (@var{fcn}, @var{x0})
-@deftypefnx {} {} fminunc (@var{fcn}, @var{x0}, @var{options})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} fminunc (@var{fcn}, @var{x0})
+@deftypefnx {} {@var{x} =} fminunc (@var{fcn}, @var{x0}, @var{options})
+@deftypefnx {} {[@var{x}, @var{fval}] =} fminunc (@var{fcn}, @dots{})
+@deftypefnx {} {[@var{x}, @var{fval}, @var{info}] =} fminunc (@var{fcn}, @dots{})
+@deftypefnx {} {[@var{x}, @var{fval}, @var{info}, @var{output}] =} fminunc (@var{fcn}, @dots{})
+@deftypefnx {} {[@var{x}, @var{fval}, @var{info}, @var{output}, @var{grad}] =} fminunc (@var{fcn}, @dots{})
 @deftypefnx {} {[@var{x}, @var{fval}, @var{info}, @var{output}, @var{grad}, @var{hess}] =} fminunc (@var{fcn}, @dots{})
 Solve an unconstrained optimization problem defined by the function
 @var{fcn}.
@@ -499,7 +537,7 @@ Solve an unconstrained optimization problem defined by the function
 @code{fminunc} attempts to determine a vector @var{x} such that
 @code{@var{fcn} (@var{x})} is a local minimum.
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function to evaluate.  @var{fcn} should accept a vector (array)
 defining the unknown variables, and return the objective function value,
 optionally with gradient.
@@ -571,28 +609,42 @@ statistics (@var{output}), the output gradient (@var{grad}) at the
 solution @var{x}, and approximate Hessian (@var{hess}) at the solution
 @var{x}.
 
-Application Notes: If the objective function is a single nonlinear equation
+Application Notes:
+@enumerate
+@item
+If the objective function is a single nonlinear equation
 of one variable then using @code{fminbnd} is usually a better choice.
-
+@item
 The algorithm used by @code{fminunc} is a gradient search which depends
 on the objective function being differentiable.  If the function has
 discontinuities it may be better to use a derivative-free algorithm such as
 @code{fminsearch}.
+@item
+Use @ref{Anonymous Functions} to pass additional parameters to @var{fcn}.
+For specific examples of doing so for @code{fminunc} and other
+minimization functions see the @ref{Minimizers} section of the GNU Octave
+manual.
+@end enumerate
 @xseealso{@ref{XREFfminbnd,,fminbnd}, @ref{XREFfminsearch,,fminsearch}, @ref{XREFoptimset,,optimset}}
 @end deftypefn
 
 
 @c fminsearch scripts/optimization/fminsearch.m
 @anchor{XREFfminsearch}
-@deftypefn  {} {@var{x} =} fminsearch (@var{fun}, @var{x0})
-@deftypefnx {} {@var{x} =} fminsearch (@var{fun}, @var{x0}, @var{options})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} fminsearch (@var{fcn}, @var{x0})
+@deftypefnx {} {@var{x} =} fminsearch (@var{fcn}, @var{x0}, @var{options})
 @deftypefnx {} {@var{x} =} fminsearch (@var{problem})
 @deftypefnx {} {[@var{x}, @var{fval}, @var{exitflag}, @var{output}] =} fminsearch (@dots{})
 
 Find a value of @var{x} which minimizes the multi-variable function
-@var{fun}.
+@var{fcn}.
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function to evaluate.
 
 The search begins at the point @var{x0} and iterates using the
@@ -663,7 +715,7 @@ if the iteration is stopped by the @qcode{"OutputFcn"}.
 
 The fourth output is a structure @var{output} containing runtime
 about the algorithm.  Fields in the structure are @code{funcCount}
-containing the number of function calls to @var{fun}, @code{iterations}
+containing the number of function calls to @var{fcn}, @code{iterations}
 containing the number of iteration steps, @code{algorithm} with the name of
 the search algorithm (always:
 @nospell{@qcode{"Nelder-Mead simplex direct search"}}), and @code{message}
@@ -675,17 +727,65 @@ Example:
 fminsearch (@@(x) (x(1)-5).^2+(x(2)-8).^4, [0;0])
 @end example
 
-Note: If you need to find the minimum of a single variable function it is
+Application Notes:
+@enumerate
+@item
+If you need to find the minimum of a single variable function it is
 probably better to use @code{fminbnd}.
+@item
+The legacy, undocumented syntax for passing parameters to @var{fcn} by
+appending them to the input argument list after @var{options} is
+discouraged and will be completely removed in Octave 10.  The
+preferred, cross-platform compatible method of passing parameters to
+@var{fcn} is through use of @ref{Anonymous Functions}.  For specific
+examples of doing so for @code{fminsearch} and other minimization
+functions see the @ref{Minimizers} section of the GNU Octave manual.
+@end enumerate
 @xseealso{@ref{XREFfminbnd,,fminbnd}, @ref{XREFfminunc,,fminunc}, @ref{XREFoptimset,,optimset}}
 @end deftypefn
 
+
+Certain minimization operations require additional parameters be passed to
+the function, @code{F}, being minimized. E.g., @w{@code{F = F(x, C)}}.
+Octave's minimizer functions are designed to only pass one optimization
+variable to @code{F}, but parameter passing can be accomplished by defining
+an @ref{Anonymous Functions,,Anonymous Function} that contains the necessary
+parameter(s).  See the example below:
+
+@example
+@group
+A = 2; B = 3;
+f = @@(x) sin (A*x + B);
+fminbnd (f, 0, 2)
+   @result{}   0.8562
+@end group
+@end example
+
+Note that anonymous functions retain the value of parameters at the time they
+are defined.  Changing a parameter value after function definition will not
+affect output of the function until it is redefined:
+
+@example
+@group
+B = 4;
+fminbnd (f, 0, 2)
+   @result{}   0.8562
+f = @@(x) sin (A*x + B);
+fminbnd (f, 0, 2)
+   @result{}   0.3562
+@end group
+@end example
 
 The function @code{humps} is a useful function for testing zero and
 extrema finding functions.
 
 @c humps scripts/optimization/humps.m
 @anchor{XREFhumps}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{y} =} humps (@var{x})
 @deftypefnx {} {[@var{x}, @var{y}] =} humps (@var{x})
 Evaluate a function with multiple minima, maxima, and zero crossings.
@@ -693,7 +793,7 @@ Evaluate a function with multiple minima, maxima, and zero crossings.
 The output @var{y} is the evaluation of the rational function:
 
 @tex
-$$y = -{ {1200x^4 - 2880x^3 + 2036x^2 - 340x - 88} \over {200x^4 - 480x^3 + 406x^2 - 138x - 17} }$$
+$$y = -{ {1200x^4 - 2880x^3 + 2036x^2 - 348x - 88} \over {200x^4 - 480x^3 + 406x^2 - 138x + 17} }$$
 @end tex
 @ifnottex
 

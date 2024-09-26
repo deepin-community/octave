@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,19 +23,15 @@
 
 Properties of @code{text} objects (@pxref{XREFtext,,text}):
 
+@subsubheading Categories:
+
+@ref{XREFtextcategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFtextcategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFtextcategoryDisplay, , @w{Display}}@: | @ref{XREFtextcategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFtextcategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFtextcategoryObjectPosition, , @w{Object Position}}@: | @ref{XREFtextcategoryParent/Children, , @w{Parent/Children}}@: | @ref{XREFtextcategoryTextAppearance, , @w{Text Appearance}}@: | @ref{XREFtextcategoryTextBoxAppearance, , @w{Text Box Appearance}}@: 
+
+@anchor{XREFtextcategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex text CallbackExecution
+
 @table @asis
-
-@anchor{XREFtextbackgroundcolor}
-@prindex text backgroundcolor
-@item @code{backgroundcolor}: colorspec, def. @qcode{"none"}
-Color of the background area.  @xref{Colors, , colorspec}.
-
-
-@anchor{XREFtextbeingdeleted}
-@prindex text beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
 
 @anchor{XREFtextbusyaction}
 @prindex text busyaction
@@ -41,34 +40,24 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFtextbuttondownfcn}
-@prindex text buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
-For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+@anchor{XREFtextinterruptible}
+@prindex text interruptible
+@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
+@xref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFtextchildren}
-@prindex text children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-@code{children} is unused.
+@anchor{XREFtextcategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex text Creation/Deletion
 
+@table @asis
 
-@anchor{XREFtextclipping}
-@prindex text clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the text is clipped in its parent axes limits.
-
-
-@anchor{XREFtextcolor}
-@prindex text color
-@item @code{color}: colorspec, def. @code{[0   0   0]}
-Color of the text.  @xref{Colors, ,colorspec}.
-
-
-@anchor{XREFtextcontextmenu}
-@prindex text contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this text object.
+@anchor{XREFtextbeingdeleted}
+@prindex text beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
 
 
 @anchor{XREFtextcreatefcn}
@@ -86,23 +75,179 @@ Callback function executed immediately before text is deleted.
 
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFtextedgecolor}
-@prindex text edgecolor
-@item @code{edgecolor}: colorspec, def. @qcode{"none"}
-Color of the outline of the background area.  @xref{Colors, , colorspec}.
+@anchor{XREFtextcategoryDisplay}
+@subsubheading Display
+@prindex text Display
+
+@table @asis
+
+@anchor{XREFtextclipping}
+@prindex text clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the text is clipped in its parent axes limits.
 
 
-@anchor{XREFtextediting}
-@prindex text editing
-@item @code{editing}: @{@qcode{"off"}@} | @qcode{"on"}
-@code{editing} is unused.
+@anchor{XREFtextvisible}
+@prindex text visible
+@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{visible} is @qcode{"off"}, the text is not rendered on screen.
 
+@end table
+
+@anchor{XREFtextcategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex text MouseInteraction
+
+@table @asis
+
+@anchor{XREFtextbuttondownfcn}
+@prindex text buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+
+
+@anchor{XREFtextcontextmenu}
+@prindex text contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this text object.
+
+
+@anchor{XREFtexthittest}
+@prindex text hittest
+@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether text processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFtextpickableparts, , @w{pickableparts property}}.
+
+
+@anchor{XREFtextpickableparts}
+@prindex text pickableparts
+@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
+Specify whether text will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the text or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFtexthittest, , @w{hittest property}}.
+
+
+@anchor{XREFtextselected}
+@prindex text selected
+@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicates whether this text is selected.
+
+
+@anchor{XREFtextselectionhighlight}
+@prindex text selectionhighlight
+@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the text's selection state is visually highlighted.
+
+@end table
+
+@anchor{XREFtextcategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex text ObjectIdentification
+
+@table @asis
+
+@anchor{XREFtexttag}
+@prindex text tag
+@item @code{tag}: string, def. @qcode{""}
+A user-defined string to label the graphics object.
+
+
+@anchor{XREFtexttype}
+@prindex text type
+@item @code{type} (read-only): string
+Class name of the graphics object.  @code{type} is always @qcode{"text"}.
+
+
+@anchor{XREFtextuserdata}
+@prindex text userdata
+@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
+User-defined data to associate with the graphics object.
+
+@end table
+
+@anchor{XREFtextcategoryObjectPosition}
+@subsubheading Object Position
+@prindex text ObjectPosition
+
+@table @asis
 
 @anchor{XREFtextextent}
 @prindex text extent
 @item @code{extent} (read-only): four-element vector
 Vector @code{[x0 y0 width height]} indicating the size and location of the text string.
+
+
+@anchor{XREFtexthorizontalalignment}
+@prindex text horizontalalignment
+@item @code{horizontalalignment}: @qcode{"center"} | @{@qcode{"left"}@} | @qcode{"right"}
+Specifies the horizontal location of the point set by the @ref{XREFtextposition, , @w{@qcode{"position"} property}} relative to the text.
+
+
+@anchor{XREFtextposition}
+@prindex text position
+@item @code{position}: three-element vector, def. @code{[0   0   0]}
+Vector @code{[X0 Y0 Z0]} where X0, Y0, and Z0 indicate the position of the text anchor as defined by @code{verticalalignment} and @code{horizontalalignment}.
+
+
+@anchor{XREFtextrotation}
+@prindex text rotation
+@item @code{rotation}: scalar, def. @code{0}
+The angle of rotation for the displayed text, measured in degrees.
+
+
+@anchor{XREFtextunits}
+@prindex text units
+@item @code{units}: @qcode{"centimeters"} | @{@qcode{"data"}@} | @qcode{"inches"} | @qcode{"normalized"} | @qcode{"pixels"} | @qcode{"points"}
+Sets the measurement unit or method applied to the @ref{XREFtextposition, , @qcode{"position"}} and @ref{XREFtextextent, , @qcode{"extent"}} properties.  The default option @qcode{"data"} uses the same units and limits as the data plotted in the figure.  The @qcode{"normalized"} option applies a unitless 0 to 1 scale to the limits along each axis of the displayed data.
+
+
+@anchor{XREFtextverticalalignment}
+@prindex text verticalalignment
+@item @code{verticalalignment}: @qcode{"baseline"} | @qcode{"bottom"} | @qcode{"cap"} | @{@qcode{"middle"}@} | @qcode{"top"}
+Specifies the vertical location of the point set by the @ref{XREFtextposition, , @w{@qcode{"position"} property}} relative to the text.  Note that @qcode{"top"} and @qcode{"bottom"} align to the edge of the text box while @qcode{"cap"} and @qcode{"baseline"} refer to the edges of the text itself.
+
+@end table
+
+@anchor{XREFtextcategoryParent/Children}
+@subsubheading Parent/Children
+@prindex text Parent/Children
+
+@table @asis
+
+@anchor{XREFtextchildren}
+@prindex text children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+text objects have no child objects.  @code{children} is unused.
+
+
+@anchor{XREFtexthandlevisibility}
+@prindex text handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the text's handle is not visible in its parent's @qcode{"children"} property.
+
+
+@anchor{XREFtextparent}
+@prindex text parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
+
+@end table
+
+@anchor{XREFtextcategoryTextAppearance}
+@subsubheading Text Appearance
+@prindex text TextAppearance
+
+@table @asis
+
+@anchor{XREFtextcolor}
+@prindex text color
+@item @code{color}: colorspec, def. @code{[0   0   0]}
+Color of the text.  @xref{Colors, ,colorspec}.
+
+
+@anchor{XREFtextediting}
+@prindex text editing
+@item @code{editing}: @{@qcode{"off"}@} | @qcode{"on"}
+Interactive text editing is not yet implemented for text objects.  @code{editing} is unused.
 
 
 @anchor{XREFtextfontangle}
@@ -143,90 +288,11 @@ Units used to interpret the @qcode{"fontsize"} property.
 Control the variant of the base font used for text rendering.
 
 
-@anchor{XREFtexthandlevisibility}
-@prindex text handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the text's handle is not visible in its parent's "children" property.
-
-
-@anchor{XREFtexthittest}
-@prindex text hittest
-@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether text processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFtextpickableparts, , @w{pickableparts property}}.
-
-
-@anchor{XREFtexthorizontalalignment}
-@prindex text horizontalalignment
-@item @code{horizontalalignment}: @qcode{"center"} | @{@qcode{"left"}@} | @qcode{"right"}
-
-
-
 @anchor{XREFtextinterpreter}
 @prindex text interpreter
 @item @code{interpreter}: @qcode{"latex"} | @qcode{"none"} | @{@qcode{"tex"}@}
 Control the way the @qcode{"string"} property is interpreted.
-@xref{XREFinterpreterusage, , @w{Use of the interpreter property}}.
-
-
-@anchor{XREFtextinterruptible}
-@prindex text interruptible
-@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
-@xref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFtextlinestyle}
-@prindex text linestyle
-@item @code{linestyle}: @{@qcode{"-"}@} | @qcode{"--"} | @qcode{"-."} | @qcode{":"} | @qcode{"none"}
-Style of the outline.  @xref{Line Styles}.
-
-
-@anchor{XREFtextlinewidth}
-@prindex text linewidth
-@item @code{linewidth}: scalar, def. @code{0.5000}
-Width of the outline.
-
-
-@anchor{XREFtextmargin}
-@prindex text margin
-@item @code{margin}: scalar, def. @code{3}
-Margins between the borders of the background area and the texts.  The value is currently interpreted as pixels, regardless of the @qcode{"fontunits"} property.
-
-
-@anchor{XREFtextparent}
-@prindex text parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
-
-
-@anchor{XREFtextpickableparts}
-@prindex text pickableparts
-@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
-Specify whether text will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the text or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFtexthittest, , @w{hittest property}}.
-
-
-@anchor{XREFtextposition}
-@prindex text position
-@item @code{position}: three-element vector, def. @code{[0   0   0]}
-Vector @code{[X0 Y0 Z0]} where X0, Y0, and Z0 indicate the position of the text anchor as defined by @code{verticalalignment} and @code{horizontalalignment}.
-
-
-@anchor{XREFtextrotation}
-@prindex text rotation
-@item @code{rotation}: scalar, def. @code{0}
-The angle of rotation for the displayed text, measured in degrees.
-
-
-@anchor{XREFtextselected}
-@prindex text selected
-@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
-
-@anchor{XREFtextselectionhighlight}
-@prindex text selectionhighlight
-@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
-
+@xref{Use of the "interpreter" Property, , @w{Use of the @qcode{"interpreter"} Property}}.
 
 
 @anchor{XREFtextstring}
@@ -234,40 +300,41 @@ The angle of rotation for the displayed text, measured in degrees.
 @item @code{string}: string, def. @qcode{""}
 The text object string content.
 
+@end table
 
-@anchor{XREFtexttag}
-@prindex text tag
-@item @code{tag}: string, def. @qcode{""}
-A user-defined string to label the graphics object.
+@anchor{XREFtextcategoryTextBoxAppearance}
+@subsubheading Text Box Appearance
+@prindex text TextBoxAppearance
 
+@table @asis
 
-@anchor{XREFtexttype}
-@prindex text type
-@item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"text"}
-
-
-@anchor{XREFtextunits}
-@prindex text units
-@item @code{units}: @qcode{"centimeters"} | @{@qcode{"data"}@} | @qcode{"inches"} | @qcode{"normalized"} | @qcode{"pixels"} | @qcode{"points"}
+@anchor{XREFtextbackgroundcolor}
+@prindex text backgroundcolor
+@item @code{backgroundcolor}: colorspec, def. @qcode{"none"}
+Color of the background area.  @xref{Colors, , colorspec}.
 
 
-
-@anchor{XREFtextuserdata}
-@prindex text userdata
-@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
-User-defined data to associate with the graphics object.
-
-
-@anchor{XREFtextverticalalignment}
-@prindex text verticalalignment
-@item @code{verticalalignment}: @qcode{"baseline"} | @qcode{"bottom"} | @qcode{"cap"} | @{@qcode{"middle"}@} | @qcode{"top"}
+@anchor{XREFtextedgecolor}
+@prindex text edgecolor
+@item @code{edgecolor}: colorspec, def. @qcode{"none"}
+Color of the outline of the background area.  @xref{Colors, , colorspec}.
 
 
+@anchor{XREFtextlinestyle}
+@prindex text linestyle
+@item @code{linestyle}: @{@qcode{"-"}@} | @qcode{"--"} | @qcode{"-."} | @qcode{":"} | @qcode{"none"}
+Style of the text box outline.  @xref{Line Styles}.
 
-@anchor{XREFtextvisible}
-@prindex text visible
-@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{visible} is @qcode{"off"}, the text is not rendered on screen.
+
+@anchor{XREFtextlinewidth}
+@prindex text linewidth
+@item @code{linewidth}: scalar, def. @code{0.5000}
+Width of the text box outline.
+
+
+@anchor{XREFtextmargin}
+@prindex text margin
+@item @code{margin}: scalar, def. @code{3}
+Margins between the borders of the background area and the texts.  The value is currently interpreted as pixels, regardless of the @qcode{"fontunits"} property.
 
 @end table

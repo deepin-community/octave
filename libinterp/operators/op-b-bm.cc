@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2003-2022 The Octave Project Developers
+// Copyright (C) 2003-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -41,7 +41,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // bool matrix by bool ops.
 
@@ -61,7 +61,7 @@ DEFNDCATOP_FN (f_bm, float_scalar, bool_matrix, float_array, float_array,
 
 DEFCONV (bool_matrix_conv, bool, bool_matrix)
 {
-  const octave_bool& v = dynamic_cast<const octave_bool&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_bool&, v, a);
 
   return new octave_bool_matrix (v.bool_matrix_value ());
 }
@@ -85,4 +85,4 @@ install_b_bm_ops (octave::type_info& ti)
   INSTALL_WIDENOP_TI (ti, octave_bool, octave_bool_matrix, bool_matrix_conv);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

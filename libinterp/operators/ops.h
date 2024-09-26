@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -29,11 +29,28 @@
 #include "octave-config.h"
 
 #include "Array-util.h"
+#include "error.h"
 
-namespace octave
-{
-  class type_info;
-}
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class type_info;
+
+OCTAVE_END_NAMESPACE(octave)
+
+// NOTE: If OCTAVE_ENABLE_INTERNAL_CHECKS is defined, then
+// OCTAVE_DYNAMIC_CAST is only safe if you can ensure that the cast will
+// succeed.  Using static_cast disables the RTTI checks used by
+// dynamic_cast that ensure an unsuccesful cast will either throw an
+// error for reference types or or return nullptr for pointer types.
+
+#if defined (OCTAVE_ENABLE_INTERNAL_CHECKS)
+#  define OCTAVE_DYNAMIC_CAST dynamic_cast
+#else
+#  define OCTAVE_DYNAMIC_CAST static_cast
+#endif
+
+#define OCTAVE_CAST_BASE_VALUE(T, T_VAL, BASE_VAL)      \
+  T T_VAL = OCTAVE_DYNAMIC_CAST<T> (BASE_VAL)
 
 // Concatenation macros that enforce argument prescan
 #define CONCAT2X(x, y) x ## y
@@ -88,23 +105,23 @@ namespace octave
                                  const octave_value_list& idx,          \
                                  const octave_base_value& a2)           \
   {                                                                     \
-    CONCAT2 (octave_, t1)& v1 = dynamic_cast<CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (CONCAT2 (octave_, t1)&, v1, a1);            \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     v1.f (idx, v2.CONCAT2 (t1, _value) ());                             \
     return octave_value ();                                             \
   }
 
-#define DEFNULLASSIGNOP_FN(name, t, f)                                  \
-  static octave_value                                                   \
-  CONCAT2 (oct_assignop_, name) (octave_base_value& a,                  \
-                                 const octave_value_list& idx,          \
-                                 const octave_base_value&)              \
-  {                                                                     \
-    CONCAT2 (octave_, t)& v = dynamic_cast<CONCAT2 (octave_, t)&> (a);  \
-                                                                        \
-    v.f (idx);                                                          \
-    return octave_value ();                                             \
+#define DEFNULLASSIGNOP_FN(name, t, f)                          \
+  static octave_value                                           \
+  CONCAT2 (oct_assignop_, name) (octave_base_value& a,          \
+                                 const octave_value_list& idx,  \
+                                 const octave_base_value&)      \
+  {                                                             \
+    OCTAVE_CAST_BASE_VALUE (CONCAT2 (octave_, t)&, v, a);       \
+                                                                \
+    v.f (idx);                                                  \
+    return octave_value ();                                     \
   }
 
 #define DEFNDASSIGNOP_FN(name, t1, t2, e, f)                            \
@@ -113,8 +130,8 @@ namespace octave
                                  const octave_value_list& idx,          \
                                  const octave_base_value& a2)           \
   {                                                                     \
-    CONCAT2 (octave_, t1)& v1 = dynamic_cast<CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (CONCAT2 (octave_, t1)&, v1, a1);            \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     v1.f (idx, v2.CONCAT2 (e, _value) ());                              \
     return octave_value ();                                             \
@@ -127,10 +144,10 @@ namespace octave
                                  const octave_value_list& idx,          \
                                  const octave_base_value& a2)           \
   {                                                                     \
-    CONCAT2 (octave_, t1)& v1 = dynamic_cast<CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (CONCAT2 (octave_, t1)&, v1, a1);            \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
-    assert (idx.empty ());                                              \
+    error_unless (idx.empty ());                                        \
     v1.matrix_ref () op v2.CONCAT2 (f, _value) ();                      \
                                                                         \
     return octave_value ();                                             \
@@ -142,25 +159,25 @@ namespace octave
                                  const octave_value_list& idx,          \
                                  const octave_base_value& a2)           \
   {                                                                     \
-    CONCAT2 (octave_, t1)& v1 = dynamic_cast<CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (CONCAT2 (octave_, t1)&, v1, a1);            \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
-    assert (idx.empty ());                                              \
+    error_unless (idx.empty ());                                        \
     fnop (v1.matrix_ref (), v2.CONCAT2 (f, _value) ());                 \
                                                                         \
     return octave_value ();                                             \
   }
 
-#define DEFASSIGNANYOP_FN(name, t1, f)                                  \
-  static octave_value                                                   \
-  CONCAT2 (oct_assignop_, name) (octave_base_value& a1,                 \
-                                 const octave_value_list& idx,          \
-                                 const octave_value& a2)                \
-  {                                                                     \
-    CONCAT2 (octave_, t1)& v1 = dynamic_cast<CONCAT2 (octave_, t1)&> (a1); \
-                                                                        \
-    v1.f (idx, a2);                                                     \
-    return octave_value ();                                             \
+#define DEFASSIGNANYOP_FN(name, t1, f)                          \
+  static octave_value                                           \
+  CONCAT2 (oct_assignop_, name) (octave_base_value& a1,         \
+                                 const octave_value_list& idx,  \
+                                 const octave_value& a2)        \
+  {                                                             \
+    OCTAVE_CAST_BASE_VALUE (CONCAT2 (octave_, t1)&, v1, a1);    \
+                                                                \
+    v1.f (idx, a2);                                             \
+    return octave_value ();                                     \
   }
 
 #define CONVDECL(name)                                          \
@@ -178,46 +195,46 @@ namespace octave
   static octave_value                                           \
   CONCAT2 (oct_unop_, name) (const octave_base_value& a)
 
-#define DEFUNOP_OP(name, t, op)                                         \
-  static octave_value                                                   \
-  CONCAT2 (oct_unop_, name) (const octave_base_value& a)                \
-  {                                                                     \
-    const CONCAT2 (octave_, t)& v = dynamic_cast<const CONCAT2 (octave_, t)&> (a); \
-    return octave_value (op v.CONCAT2 (t, _value) ());                  \
+#define DEFUNOP_OP(name, t, op)                                 \
+  static octave_value                                           \
+  CONCAT2 (oct_unop_, name) (const octave_base_value& a)        \
+  {                                                             \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t)&, v, a); \
+    return octave_value (op v.CONCAT2 (t, _value) ());          \
   }
 
-#define DEFNDUNOP_OP(name, t, e, op)                                    \
-  static octave_value                                                   \
-  CONCAT2 (oct_unop_, name) (const octave_base_value& a)                \
-  {                                                                     \
-    const CONCAT2 (octave_, t)& v = dynamic_cast<const CONCAT2 (octave_, t)&> (a); \
-    return octave_value (op v.CONCAT2 (e, _value) ());                  \
+#define DEFNDUNOP_OP(name, t, e, op)                            \
+  static octave_value                                           \
+  CONCAT2 (oct_unop_, name) (const octave_base_value& a)        \
+  {                                                             \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t)&, v, a); \
+    return octave_value (op v.CONCAT2 (e, _value) ());          \
   }
 
 // FIXME: in some cases, the constructor isn't necessary.
 
-#define DEFUNOP_FN(name, t, f)                                          \
-  static octave_value                                                   \
-  CONCAT2 (oct_unop_, name) (const octave_base_value& a)                \
-  {                                                                     \
-    const CONCAT2 (octave_, t)& v = dynamic_cast<const CONCAT2 (octave_, t)&> (a); \
-    return octave_value (f (v.CONCAT2 (t, _value) ()));                 \
+#define DEFUNOP_FN(name, t, f)                                  \
+  static octave_value                                           \
+  CONCAT2 (oct_unop_, name) (const octave_base_value& a)        \
+  {                                                             \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t)&, v, a); \
+    return octave_value (f (v.CONCAT2 (t, _value) ()));         \
   }
 
-#define DEFNDUNOP_FN(name, t, e, f)                                     \
-  static octave_value                                                   \
-  CONCAT2 (oct_unop_, name) (const octave_base_value& a)                \
-  {                                                                     \
-    const CONCAT2 (octave_, t)& v = dynamic_cast<const CONCAT2 (octave_, t)&> (a); \
-    return octave_value (f (v.CONCAT2 (e, _value) ()));                 \
+#define DEFNDUNOP_FN(name, t, e, f)                             \
+  static octave_value                                           \
+  CONCAT2 (oct_unop_, name) (const octave_base_value& a)        \
+  {                                                             \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t)&, v, a); \
+    return octave_value (f (v.CONCAT2 (e, _value) ()));         \
   }
 
-#define DEFNCUNOP_METHOD(name, t, method)                               \
-  static void                                                           \
-  CONCAT2 (oct_unop_, name) (octave_base_value& a)                      \
-  {                                                                     \
-    CONCAT2 (octave_, t)& v = dynamic_cast<CONCAT2 (octave_, t)&> (a);  \
-    v.method ();                                                        \
+#define DEFNCUNOP_METHOD(name, t, method)                       \
+  static void                                                   \
+  CONCAT2 (oct_unop_, name) (octave_base_value& a)              \
+  {                                                             \
+    OCTAVE_CAST_BASE_VALUE (CONCAT2 (octave_, t)&, v, a);       \
+    v.method ();                                                \
   }
 
 #define DEFBINOPX(name, t1, t2)                         \
@@ -235,8 +252,8 @@ namespace octave
   CONCAT2 (oct_binop_, name) (const octave_base_value& a1,              \
                               const octave_base_value& a2)              \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     return octave_value                                                 \
       (v1.CONCAT2 (t1, _value) () op v2.CONCAT2 (t2, _value) ());       \
@@ -247,8 +264,8 @@ namespace octave
   CONCAT2 (oct_binop_, name) (const octave_base_value& a1,              \
                               const octave_base_value& a2)              \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     warn_complex_cmp ();                                                \
                                                                         \
@@ -261,11 +278,11 @@ namespace octave
   CONCAT2 (oct_binop_, name) (const octave_base_value& a1,              \
                               const octave_base_value& a2)              \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     if (octave::math::isnan (v1.CONCAT2 (t1, _value) ()) || octave::math::isnan (v2.CONCAT2 (t2, _value) ())) \
-      octave::err_nan_to_logical_conversion ();                                 \
+      octave::err_nan_to_logical_conversion ();                         \
                                                                         \
     return octave_value                                                 \
       (v1.CONCAT2 (t1, _value) () op v2.CONCAT2 (t2, _value) ());       \
@@ -276,8 +293,8 @@ namespace octave
   CONCAT2 (oct_binop_, name) (const octave_base_value& a1,              \
                               const octave_base_value& a2)              \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     return octave_value                                                 \
       (v1.CONCAT2 (e1, _value) () op v2.CONCAT2 (e2, _value) ());       \
@@ -290,8 +307,8 @@ namespace octave
   CONCAT2 (oct_binop_, name) (const octave_base_value& a1,              \
                               const octave_base_value& a2)              \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     return octave_value (f (v1.CONCAT2 (t1, _value) (), v2.CONCAT2 (t2, _value) ())); \
   }
@@ -301,8 +318,8 @@ namespace octave
   CONCAT2 (oct_binop_, name) (const octave_base_value& a1,              \
                               const octave_base_value& a2)              \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     return octave_value (f (v1.CONCAT2 (e1, _value) (), v2.CONCAT2 (e2, _value) ())); \
   }
@@ -312,8 +329,8 @@ namespace octave
   CONCAT2 (oct_binop_, name) (const octave_base_value& a1,              \
                               const octave_base_value& a2)              \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     return octave_value (f (v1.CONCAT2 (e1, _value) (), v2.CONCAT2 (e2, _value) ())); \
   }
@@ -338,8 +355,8 @@ namespace octave
                               const octave_base_value& a2,              \
                               const Array<octave_idx_type>& ra_idx)     \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     return octave_value (v1.CONCAT2 (t1, _value) () . f (v2.CONCAT2 (t2, _value) (), ra_idx)); \
   }
@@ -350,8 +367,8 @@ namespace octave
                               const octave_base_value& a2,              \
                               const Array<octave_idx_type>& ra_idx)     \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     return octave_value (v1.CONCAT2 (e1, _value) () . f (v2.CONCAT2 (e2, _value) (), ra_idx)); \
   }
@@ -362,8 +379,8 @@ namespace octave
                               const octave_base_value& a2,              \
                               const Array<octave_idx_type>& ra_idx)     \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     return octave_value (v1.char_array_value () . f (v2.char_array_value (), ra_idx), \
                          ((a1.is_sq_string () || a2.is_sq_string ())    \
@@ -379,8 +396,8 @@ namespace octave
                               const octave_base_value& a2,              \
                               const Array<octave_idx_type>& ra_idx)     \
   {                                                                     \
-    const CONCAT2 (octave_, t1)& v1 = dynamic_cast<const CONCAT2 (octave_, t1)&> (a1); \
-    const CONCAT2 (octave_, t2)& v2 = dynamic_cast<const CONCAT2 (octave_, t2)&> (a2); \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t1)&, v1, a1);      \
+    OCTAVE_CAST_BASE_VALUE (const CONCAT2 (octave_, t2)&, v2, a2);      \
                                                                         \
     return octave_value (tc1 (v1.CONCAT2 (e1, _value) ()) . f (tc2 (v2.CONCAT2 (e2, _value) ()), ra_idx)); \
   }

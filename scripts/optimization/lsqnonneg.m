@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -69,8 +69,12 @@
 ## @end itemize
 ##
 ## @item lambda
-## @c FIXME: Something is output from the function, but what is it?
-## Undocumented output
+## Lagrange multipliers.  If these are nonzero, the corresponding @var{x}
+## values should be zero, indicating the solution is pressed up against a
+## coordinate plane.  The magnitude indicates how much the residual would
+## improve if the @code{@var{x} >= 0} constraints were relaxed in that
+## direction.
+##
 ## @end table
 ## @seealso{pqpnonneg, lscov, optimset}
 ## @end deftypefn
@@ -200,25 +204,25 @@ function [x, resnorm, residual, exitflag, output, lambda] = lsqnonneg (c, d, x0 
   ## LH12: complete.
 
   ## Generate the additional output arguments.
-  if (isargout (2))
+  if (nargout > 1)
     resnorm = norm (c*x - d) ^ 2;
   endif
-  if (isargout (3))
+  if (nargout > 2)
     residual = d - c*x;
   endif
-  if (isargout (4))
+  if (nargout > 3)
     if (iter >= max_iter)
       exitflag = 0;
     else
       exitflag = iter;
     endif
   endif
-  if (isargout (5))
+  if (nargout > 4)
     output = struct ("algorithm", "nnls", "iterations", iter);
   endif
-  if (isargout (6))
+  if (nargout > 5)
     lambda = zeros (size (x));
-    lambda(p) = w;
+    lambda (setdiff (1:numel(x), p)) = w;
   endif
 
 endfunction
@@ -234,6 +238,40 @@ endfunction
 %! d = [0.8587;0.1781;0.0747;0.8405];
 %! xnew = [0;0.6929];
 %! assert (lsqnonneg (C, d), xnew, 0.0001);
+
+## Test Lagrange multiplier duality: x .* lambda == 0
+
+%!test
+%! [x, resn, resid, ~, ~, lambda] = lsqnonneg ([1 0; 0 1; 2 1], [1 1 3]');
+%! assert (x, [1 1]', 10*eps);
+%! assert (resn, 0, 10*eps);
+%! assert (resid, [0 0 0]', 10*eps);
+%! assert (lambda, [0 0]', 10*eps);
+%! assert (x .* lambda, [0 0]');
+
+%!test
+%! [x, resn, resid, ~, ~, lambda] = lsqnonneg ([1 0; 0 1; 2 1], [1 -1 1]');
+%! assert (x, [0.6 0]', 10*eps);
+%! assert (resn, 1.2, 10*eps);
+%! assert (resid, [0.4 -1 -0.2]', 10*eps);
+%! assert (lambda, [0 -1.2]', 10*eps);
+%! assert (x .* lambda, [0 0]');
+
+%!test
+%! [x, resn, resid, ~, ~, lambda] = lsqnonneg ([1 0; 0 1; 2 1], [-1 1 -1]');
+%! assert (x, [0 0]', 10*eps);
+%! assert (resn, 3, 10*eps);
+%! assert (resid, [-1 1 -1]', 10*eps);
+%! assert (lambda, [-3 0]', 10*eps);
+%! assert (x .* lambda, [0 0]');
+
+%!test
+%! [x, resn, resid, ~, ~, lambda] = lsqnonneg ([1 0; 0 1; 2 1], [-1 -1 -3]');
+%! assert (x, [0 0]', 10*eps);
+%! assert (resn, 11, 20*eps);
+%! assert (resid, [-1 -1 -3]', 10*eps);
+%! assert (lambda, [-7 -4]', 10*eps);
+%! assert (x .* lambda, [0 0]');
 
 ## Test input validation
 %!error <Invalid call> lsqnonneg ()

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,10 +24,10 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} empirical_rnd (@var{data})
-## @deftypefnx {} {} empirical_rnd (@var{data}, @var{r})
-## @deftypefnx {} {} empirical_rnd (@var{data}, @var{r}, @var{c}, @dots{})
-## @deftypefnx {} {} empirical_rnd (@var{data}, [@var{sz}])
+## @deftypefn  {} {@var{rnd} =} empirical_rnd (@var{data})
+## @deftypefnx {} {@var{rnd} =} empirical_rnd (@var{data}, @var{r})
+## @deftypefnx {} {@var{rnd} =} empirical_rnd (@var{data}, @var{r}, @var{c}, @dots{})
+## @deftypefnx {} {@var{rnd} =} empirical_rnd (@var{data}, [@var{sz}])
 ## Return a matrix of random samples from the empirical distribution obtained
 ## from the univariate sample @var{data}.
 ##

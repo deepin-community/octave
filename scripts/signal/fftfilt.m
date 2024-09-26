@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} fftfilt (@var{b}, @var{x})
-## @deftypefnx {} {} fftfilt (@var{b}, @var{x}, @var{n})
+## @deftypefn  {} {@var{y} =} fftfilt (@var{b}, @var{x})
+## @deftypefnx {} {@var{y} =} fftfilt (@var{b}, @var{x}, @var{n})
 ## Filter @var{x} with the FIR filter @var{b} using the FFT.
 ##
 ## If @var{x} is a matrix, filter each column of the matrix.

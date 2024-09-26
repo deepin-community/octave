@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Callbacks (GNU Octave (version 7.1.0))</title>
+<title>Callbacks (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Callbacks (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Callbacks (GNU Octave (version 7.1.0))">
+<meta name="description" content="Callbacks (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Callbacks (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,11 @@
 <link href="Marker-Styles.html" rel="prev" title="Marker Styles">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
+ul.mark-bullet {list-style-type: disc}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,157 +33,163 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Callbacks">
-<div class="header">
+<div class="subsection-level-extent" id="Callbacks">
+<div class="nav-panel">
 <p>
 Next: <a href="Application_002ddefined-Data.html" accesskey="n" rel="next">Application-defined Data</a>, Previous: <a href="Marker-Styles.html" accesskey="p" rel="prev">Marker Styles</a>, Up: <a href="Advanced-Plotting.html" accesskey="u" rel="up">Advanced Plotting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Callbacks-1"></span><h4 class="subsection">15.4.4 Callbacks</h4>
-<span id="index-callbacks"></span>
+<h4 class="subsection" id="Callbacks-1"><span>15.4.4 Callbacks<a class="copiable-link" href="#Callbacks-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-callbacks"></a>
 
 <p>Callback functions can be associated with graphics objects and triggered
 after certain events occur.  The basic structure of all callback function
 is
 </p>
 <div class="example">
-<pre class="example">function mycallback (hsrc, evt)
-  &hellip;
+<div class="group"><pre class="example-preformatted">function mycallback (hsrc, evt)
+  ...
 endfunction
-</pre></div>
+</pre></div></div>
 
-<p>where <code>hsrc</code> is a handle to the source of the callback, and <code>evt</code>
+<p>where <code class="code">hsrc</code> is a handle to the source of the callback, and <code class="code">evt</code>
 gives some event specific data.
 </p>
 <p>The function can be provided as a function handle to a plain Octave function,
 as an anonymous function, or as a string representing an Octave command.  The
 latter syntax is not recommended since syntax errors will only occur when the
 string is evaluated.
-See <a href="Function-Handles-and-Anonymous-Functions.html">Function Handles section</a>.
+See <a class="xref" href="Function-Handles-and-Anonymous-Functions.html">Function Handles section</a>.
 </p>
 <p>This can then be associated with an object either at the object&rsquo;s creation, or
-later with the <code>set</code> function.  For example,
+later with the <code class="code">set</code> function.  For example,
 </p>
 <div class="example">
-<pre class="example">plot (x, &quot;DeleteFcn&quot;, @(h, e) disp (&quot;Window Deleted&quot;))
+<pre class="example-preformatted">plot (x, &quot;DeleteFcn&quot;, @(h, e) disp (&quot;Window Deleted&quot;))
 </pre></div>
 
 <p>where at the moment that the plot is deleted, the message
-<code>&quot;Window Deleted&quot;</code> will be displayed.
+<code class="code">&quot;Window Deleted&quot;</code> will be displayed.
 </p>
 <p>Additional user arguments can be passed to callback functions, and will be
 passed after the two default arguments.  For example:
 </p>
 <div class="example">
-<pre class="example">plot (x, &quot;DeleteFcn&quot;, {@mycallback, &quot;1&quot;})
-&hellip;
+<div class="group"><pre class="example-preformatted">plot (x, &quot;DeleteFcn&quot;, {@mycallback, &quot;1&quot;})
+...
 function mycallback (h, evt, arg1)
   fprintf (&quot;Closing plot %d\n&quot;, arg1);
 endfunction
-</pre></div>
+</pre></div></div>
 
-<p><strong>Caution:</strong> The second argument in callback functions&mdash;<code>evt</code>&mdash;is
+<p><strong class="strong">Caution:</strong> The second argument in callback functions&mdash;<code class="code">evt</code>&mdash;is
 only partially implemented in the Qt graphics toolkit:
 </p>
-<ul>
-<li> Mouse click events:
-<code>evt</code> is a class <code>double</code> value: 1 for left, 2 for middle, and 3 for
+<ul class="itemize mark-bullet">
+<li>Mouse click events:
+<code class="code">evt</code> is a class <code class="code">double</code> value: 1 for left, 2 for middle, and 3 for
 right click.
 
-</li><li> Key press events:
-<code>evt</code> is a structure with fields <code>Key</code> (string), <code>Character</code>
-(string), and <code>Modifier</code> (cell array of strings).
+</li><li>Key press events:
+<code class="code">evt</code> is a structure with fields <code class="code">Key</code> (string), <code class="code">Character</code>
+(string), and <code class="code">Modifier</code> (cell array of strings).
 
-</li><li> Other events:
-<code>evt</code> is a class <code>double</code> empty matrix.
+</li><li>Other events:
+<code class="code">evt</code> is a class <code class="code">double</code> empty matrix.
 </li></ul>
 
 <p>The basic callback functions that are available for all graphics objects are
 </p>
-<ul>
-<li> CreateFcn:
+<ul class="itemize mark-bullet">
+<li>CreateFcn:
 called at the moment of the objects creation.  It is not called if the
 object is altered in any way, and so it only makes sense to define this
 callback in the function call that defines the object.  Callbacks that
-are added to <code>CreateFcn</code> later with the <code>set</code> function will
+are added to <code class="code">CreateFcn</code> later with the <code class="code">set</code> function will
 never be executed.
 
-</li><li> DeleteFcn:
+</li><li>DeleteFcn:
 called at the moment an object is deleted.
 
-</li><li> ButtonDownFcn:
+</li><li>ButtonDownFcn:
 called if a mouse button is pressed while the pointer is over this
 object.  Note, that the gnuplot interface does not implement this
 callback.
 </li></ul>
 
 <p>By default callback functions are queued (they are executed one after the other
-in the event queue) unless the <code>drawnow</code>, <code>figure</code>, <code>waitfor</code>,
-<code>getframe</code>, or <code>pause</code> functions are used.  If an executing callback
+in the event queue) unless the <code class="code">drawnow</code>, <code class="code">figure</code>, <code class="code">waitfor</code>,
+<code class="code">getframe</code>, or <code class="code">pause</code> functions are used.  If an executing callback
 invokes one of those functions, it causes Octave to flush the event queue,
 which results in the executing callback being interrupted.
 </p>
 <p>It is possible to specify that an object&rsquo;s callbacks should not be interrupted
-by setting the object&rsquo;s <code>interruptible</code> property to <code>&quot;off&quot;</code>.  In
-this case, Octave decides what to do based on the <code>busyaction</code> property of
-the <strong>interrupting</strong> callback object:
+by setting the object&rsquo;s <code class="code">interruptible</code> property to <code class="code">&quot;off&quot;</code>.  In
+this case, Octave decides what to do based on the <code class="code">busyaction</code> property of
+the <strong class="strong">interrupting</strong> callback object:
 </p>
-<dl compact="compact">
-<dt><span><code>queue</code> (the default)</span></dt>
+<dl class="table">
+<dt><code class="code">queue</code> (the default)</dt>
 <dd><p>The interrupting callback is executed after the executing callback has
 returned.
 </p>
 </dd>
-<dt><span><code>cancel</code></span></dt>
+<dt><code class="code">cancel</code></dt>
 <dd><p>The interrupting callback is discarded.
 </p></dd>
 </dl>
 
-<p>The <code>interruptible</code> property has no effect when the interrupting callback
-is a <code>deletefcn</code>, or a figure <code>resizefcn</code> or <code>closerequestfcn</code>.
+<p>The <code class="code">interruptible</code> property has no effect when the interrupting callback
+is a <code class="code">deletefcn</code>, or a figure <code class="code">resizefcn</code> or <code class="code">closerequestfcn</code>.
 Those callbacks always interrupt the executing callback.
 </p>
 <p>The handle to the object that holds the callback being executed can be
-obtained with the <code>gcbo</code> function.  The handle to the ancestor figure
-of this object may be obtained using the <code>gcbf</code> function.
+obtained with the <code class="code">gcbo</code> function.  The handle to the ancestor figure
+of this object may be obtained using the <code class="code">gcbf</code> function.
 </p>
-<span id="XREFgcbo"></span><dl class="def">
-<dt id="index-gcbo"><span class="category">: </span><span><em><var>h</var> =</em> <strong>gcbo</strong> <em>()</em><a href='#index-gcbo' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-gcbo-1"><span class="category">: </span><span><em>[<var>h</var>, <var>fig</var>] =</em> <strong>gcbo</strong> <em>()</em><a href='#index-gcbo-1' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFgcbo"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-gcbo"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">gcbo</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-gcbo"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-gcbo-1"><span class="category-def">: </span><span><code class="def-type">[<var class="var">h</var>, <var class="var">fig</var>] =</code> <strong class="def-name">gcbo</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-gcbo-1"> &para;</a></span></dt>
 <dd><p>Return a handle to the object whose callback is currently executing.
 </p>
 <p>If no callback is executing, this function returns the empty matrix.  This
-handle is obtained from the root object property <code>&quot;CallbackObject&quot;</code>.
+handle is obtained from the root object property <code class="code">&quot;CallbackObject&quot;</code>.
 </p>
 <p>When called with a second output argument, return the handle of the figure
 containing the object whose callback is currently executing.  If no callback
 is executing the second output is also set to the empty matrix.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFgcbf">gcbf</a>, <a href="Graphics-Objects.html#XREFgco">gco</a>, <a href="Graphics-Objects.html#XREFgca">gca</a>, <a href="Graphics-Objects.html#XREFgcf">gcf</a>, <a href="Graphics-Objects.html#XREFget">get</a>, <a href="Graphics-Objects.html#XREFset">set</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgcbf">gcbf</a>, <a class="ref" href="Graphics-Objects.html#XREFgco">gco</a>, <a class="ref" href="Graphics-Objects.html#XREFgca">gca</a>, <a class="ref" href="Graphics-Objects.html#XREFgcf">gcf</a>, <a class="ref" href="Graphics-Objects.html#XREFget">get</a>, <a class="ref" href="Graphics-Objects.html#XREFset">set</a>.
 </p></dd></dl>
 
 
-<span id="XREFgcbf"></span><dl class="def">
-<dt id="index-gcbf"><span class="category">: </span><span><em><var>fig</var> =</em> <strong>gcbf</strong> <em>()</em><a href='#index-gcbf' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFgcbf"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-gcbf"><span class="category-def">: </span><span><code class="def-type"><var class="var">fig</var> =</code> <strong class="def-name">gcbf</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-gcbf"> &para;</a></span></dt>
 <dd><p>Return a handle to the figure containing the object whose callback is
 currently executing.
 </p>
 <p>If no callback is executing, this function returns the empty matrix.  The
 handle returned by this function is the same as the second output argument
-of <code>gcbo</code>.
+of <code class="code">gcbo</code>.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFgcbo">gcbo</a>, <a href="Graphics-Objects.html#XREFgcf">gcf</a>, <a href="Graphics-Objects.html#XREFgco">gco</a>, <a href="Graphics-Objects.html#XREFgca">gca</a>, <a href="Graphics-Objects.html#XREFget">get</a>, <a href="Graphics-Objects.html#XREFset">set</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgcbo">gcbo</a>, <a class="ref" href="Graphics-Objects.html#XREFgcf">gcf</a>, <a class="ref" href="Graphics-Objects.html#XREFgco">gco</a>, <a class="ref" href="Graphics-Objects.html#XREFgca">gca</a>, <a class="ref" href="Graphics-Objects.html#XREFget">get</a>, <a class="ref" href="Graphics-Objects.html#XREFset">set</a>.
 </p></dd></dl>
 
 
-<p>Callbacks can equally be added to properties with the <code>addlistener</code>
+<p>Callbacks can equally be added to properties with the <code class="code">addlistener</code>
 function described below.
 </p>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Application_002ddefined-Data.html">Application-defined Data</a>, Previous: <a href="Marker-Styles.html">Marker Styles</a>, Up: <a href="Advanced-Plotting.html">Advanced Plotting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

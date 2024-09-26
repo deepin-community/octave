@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,10 +34,13 @@
 #include <cstring>
 #include <iomanip>
 #include <string>
+#include <unordered_set>
 
 #include "Array.h"
+#include "iconv-wrappers.h"
 #include "lo-ieee.h"
 #include "lo-mappers.h"
+#include "oct-locbuf.h"
 #include "uniconv-wrappers.h"
 #include "unistr-wrappers.h"
 #include "unwind-prot.h"
@@ -607,6 +610,304 @@ octave::string::u8_validate (const std::string& who,
   return num_replacements;
 }
 
+std::string
+octave::string::u16_to_encoding (const std::string& who,
+                                 const std::u16string& u16_string,
+                                 const std::string& encoding)
+{
+  const uint16_t *src = reinterpret_cast<const uint16_t *>
+                        (u16_string.c_str ());
+  std::size_t srclen = u16_string.length ();
+
+  std::size_t length;
+  char *native_str = octave_u16_conv_to_encoding (encoding.c_str (), src,
+                                                  srclen, &length);
+
+  if (! native_str)
+    {
+      if (errno == ENOSYS)
+        (*current_liboctave_error_handler)
+          ("%s: iconv() is not supported. Installing GNU libiconv and then "
+           "re-compiling Octave could fix this.", who.c_str ());
+      else
+        (*current_liboctave_error_handler)
+          ("%s: converting from UTF-16 to codepage '%s' failed: %s",
+           who.c_str (), encoding.c_str (), std::strerror (errno));
+    }
+
+  octave::unwind_action free_native_str ([=] () { ::free (native_str); });
+
+  std::string retval = std::string (native_str, length);
+
+  return retval;
+}
+
+std::vector<std::string>
+octave::string::get_encoding_list ()
+{
+  static std::vector<std::string> encoding_list;
+
+  if (encoding_list.empty ())
+    {
+#if defined (HAVE_ICONVLIST)
+      // get number of supported encodings
+      std::size_t count = 0;
+      octave_iconvlist_wrapper (
+        [] (unsigned int num, const char * const *, void *data) -> int
+          {
+            std::size_t *count_ptr = static_cast<std::size_t *> (data);
+            *count_ptr = num;
+            return 0;
+          },
+        &count);
+
+      if (count == static_cast<size_t> (-1))
+        {
+          encoding_list.push_back ("UTF-8");
+          return encoding_list;
+        }
+
+#  if defined (HAVE_ICONV_CANONICALIZE)
+      // use unordered_set to skip canonicalized aliases
+      std::unordered_set<std::string> encoding_set;
+      encoding_set.reserve (count);
+
+      // populate vector with name of encodings
+      octave_iconvlist_wrapper (
+        [] (unsigned int num, const char * const *names, void *data) -> int
+          {
+            std::unordered_set<std::string> *encoding_set_ptr
+              = static_cast<std::unordered_set<std::string> *> (data);
+            for (std::size_t i = 0; i < num; i++)
+              {
+                const char *canonicalized_enc
+                  = octave_iconv_canonicalize_wrapper (names[i]);
+                encoding_set_ptr->insert (canonicalized_enc);
+              }
+            return 0;
+          },
+        &encoding_set);
+
+      encoding_list.assign (encoding_set.begin (), encoding_set.end ());
+#  endif
+
+#else
+      // Use hardcoded list of encodings as a fallback for platforms without
+      // iconvlist (or another way of programmatically querrying a list of
+      // supported encodings).
+      // This list is inspired by the encodings supported by Geany.
+      encoding_list
+        = {"ISO-8859-1",
+           "ISO-8859-2",
+           "ISO-8859-3",
+           "ISO-8859-4",
+           "ISO-8859-5",
+           "ISO-8859-6",
+           "ISO-8859-7",
+           "ISO-8859-8",
+           "ISO-8859-9",
+           "ISO-8859-10",
+           "ISO-8859-13",
+           "ISO-8859-14",
+           "ISO-8859-15",
+           "ISO-8859-16",
+
+           "UTF-7",
+           "UTF-8",
+           "UTF-16LE",
+           "UTF-16BE",
+           "UTF-32LE",
+           "UTF-32BE",
+           "UCS-2LE",
+           "UCS-2BE",
+
+           "ARMSCII-8",
+           "BIG5",
+           "BIG5-HKSCS",
+           "CP866",
+
+           "EUC-JP",
+           "EUC-KR",
+           "EUC-TW",
+
+           "GB18030",
+           "GB_2312-80",
+           "GBK",
+           "HZ",
+
+           "IBM850",
+           "IBM852",
+           "IBM855",
+           "IBM857",
+           "IBM862",
+           "IBM864",
+
+           "ISO-2022-JP",
+           "ISO-2022-KR",
+           "JOHAB",
+           "KOI8-R",
+           "KOI8-U",
+
+           "SHIFT_JIS",
+           "TCVN",
+           "TIS-620",
+           "UHC",
+           "VISCII",
+
+           "CP1250",
+           "CP1251",
+           "CP1252",
+           "CP1253",
+           "CP1254",
+           "CP1255",
+           "CP1256",
+           "CP1257",
+           "CP1258",
+
+           "CP932"
+           };
+
+      // FIXME: Should we check whether those are actually valid encoding
+      // identifiers?
+#endif
+
+      // sort list of encodings
+      std::sort (encoding_list.begin (), encoding_list.end ());
+    }
+
+  return encoding_list;
+}
+
+typedef octave::string::codecvt_u8::InternT InternT;
+typedef octave::string::codecvt_u8::ExternT ExternT;
+typedef octave::string::codecvt_u8::StateT StateT;
+
+typename std::codecvt<InternT, ExternT, StateT>::result
+octave::string::codecvt_u8::do_out
+  (StateT& /* state */,
+   const InternT* from, const InternT* from_end, const InternT*& from_next,
+   ExternT* to, ExternT* to_end, ExternT*& to_next) const
+{
+  to_next = to;
+  if (from_end <= from)
+    {
+      from_next = from_end;
+      return std::codecvt<InternT, ExternT, StateT>::noconv;
+    }
+
+  // Check if buffer ends in a complete UTF-8 surrogate.
+  // FIXME: If this is the last call before a stream is closed, we should
+  //        convert trailing bytes even if they look incomplete.
+  //        How can we detect that?
+  std::size_t pop_end = 0;
+  if ((*(from_end-1) & 0b10000000) == 0b10000000)
+    {
+      // The last byte is part of a surrogate. Check if it is complete.
+
+      // number of bytes of the surrogate in the buffer
+      std::size_t num_bytes_in_buf = 1;
+      // Find initial byte of surrogate
+      while (((*(from_end-num_bytes_in_buf) & 0b11000000) != 0b11000000)
+             && (num_bytes_in_buf < 4)
+             && (from_end-num_bytes_in_buf > from))
+        num_bytes_in_buf++;
+
+      // If the start of the surrogate is not in the buffer, we need to
+      // continue with the invalid UTF-8 sequence to avoid an infinite loop.
+      // Check if we found an initial byte and if there are enough bytes in the
+      // buffer to complete the surrogate.
+      if ((((*(from_end-num_bytes_in_buf) & 0b11100000) == 0b11000000)
+           && (num_bytes_in_buf < 2))  // incomplete 2-byte surrogate
+          || (((*(from_end-num_bytes_in_buf) & 0b11110000) == 0b11100000)
+              && (num_bytes_in_buf < 3))  // incomplete 3-byte surrogate
+          || (((*(from_end-num_bytes_in_buf) & 0b11111000) == 0b11110000)
+              && (num_bytes_in_buf < 4)))  // incomplete 4-byte surrogate
+        pop_end = num_bytes_in_buf;
+    }
+  from_next = from_end - pop_end;
+
+  std::size_t srclen = (from_end-from-pop_end) * sizeof (InternT);
+  std::size_t length = (to_end-to) * sizeof (ExternT);
+  if (srclen < 1 || length < 1)
+    return std::codecvt<InternT, ExternT, StateT>::partial;
+
+  // Convert from UTF-8 to output encoding
+  const uint8_t *u8_str = reinterpret_cast<const uint8_t *> (from);
+  char *enc_str = octave_u8_conv_to_encoding (m_enc.c_str (), u8_str, srclen,
+                                              &length);
+
+  if (length < 1)
+    return std::codecvt<InternT, ExternT, StateT>::partial;
+
+  size_t max = (to_end - to) * sizeof (ExternT);
+  // FIXME: If the output encoding is a multibyte or variable byte encoding,
+  //        we should ensure that we don't cut off a "partial" surrogate from
+  //        the output.
+  //        Can this ever happen?
+  if (length < max)
+    max = length;
+
+  // copy conversion result to output
+  std::copy_n (enc_str, max, to);
+  ::free (enc_str);
+
+  from_next = from + srclen;
+  to_next = to + max;
+
+  return ((pop_end > 0 || max < length)
+          ? std::codecvt<InternT, ExternT, StateT>::partial
+          : std::codecvt<InternT, ExternT, StateT>::ok);
+}
+
+typename std::codecvt<InternT, ExternT, StateT>::result
+octave::string::codecvt_u8::do_in
+  (StateT& /* state */,
+   const ExternT* from, const ExternT* from_end, const ExternT*& from_next,
+   InternT* to, InternT* to_end, InternT*& to_next) const
+{
+  // Convert from input encoding to UTF-8
+  std::size_t srclen = (from_end-from) * sizeof (ExternT);
+  std::size_t lengthp = (to_end-to) * sizeof (InternT);
+  const char *enc_str = reinterpret_cast<const char *> (from);
+  uint8_t *u8_str = octave_u8_conv_from_encoding (m_enc.c_str (),
+                                                  enc_str, srclen, &lengthp);
+
+  std::size_t max = to_end - to;
+  if (lengthp < max)
+    max = lengthp;
+
+  // copy conversion result to output
+  std::copy_n (u8_str, max, to);
+  ::free (u8_str);
+
+  from_next = from + srclen;
+  to_next = to + max;
+
+  return std::codecvt<InternT, ExternT, StateT>::ok;
+}
+
+int octave::string::codecvt_u8::do_length
+  (StateT& /* state */, const ExternT *src, const ExternT *end,
+   std::size_t max) const
+{
+  // return number of external characters that produce MAX internal ones
+  std::size_t srclen = end-src;
+  OCTAVE_LOCAL_BUFFER (std::size_t, offsets, srclen);
+  std::size_t lengthp = max;
+  octave_u8_conv_from_encoding_offsets (m_enc.c_str (), src, srclen, offsets,
+                                        &lengthp);
+  std::size_t ext_char;
+  for (ext_char = 0; ext_char < srclen; ext_char++)
+    {
+      if (offsets[ext_char] != static_cast<size_t> (-1)
+          && offsets[ext_char] >= max)
+        break;
+    }
+
+  return ext_char;
+}
+
+
 template <typename T>
 std::string
 rational_approx (T val, int len)
@@ -617,9 +918,9 @@ rational_approx (T val, int len)
     len = 10;
 
   static const T out_of_range_top
-    = static_cast<T>(std::numeric_limits<int>::max ()) + 1.;
+    = static_cast<T> (std::numeric_limits<int>::max ()) + 1.;
   static const T out_of_range_bottom
-    = static_cast<T>(std::numeric_limits<int>::min ()) - 1.;
+    = static_cast<T> (std::numeric_limits<int>::min ()) - 1.;
   if (octave::math::isinf (val))
     {
       if (val > 0)
@@ -644,7 +945,6 @@ rational_approx (T val, int len)
       T n = octave::math::round (val);
       T d = 1;
       T frac = val - n;
-      int m = 0;
 
       std::ostringstream init_buf;
       init_buf.flags (std::ios::fixed);
@@ -676,7 +976,6 @@ rational_approx (T val, int len)
           buf.flags (std::ios::fixed);
           buf << std::setprecision (0) << static_cast<int> (n)
               << '/' << static_cast<int> (d);
-          m++;
 
           if (n < 0 && d < 0)
             {

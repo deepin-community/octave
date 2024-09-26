@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} namelengthmax ()
+## @deftypefn {} {@var{n} =} namelengthmax ()
 ## Return the @sc{matlab} compatible maximum variable name length.
 ##
 ## Octave is capable of storing strings up to @math{2^{31} - 1} in length.

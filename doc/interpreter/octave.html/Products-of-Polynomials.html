@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Products of Polynomials (GNU Octave (version 7.1.0))</title>
+<title>Products of Polynomials (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Products of Polynomials (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Products of Polynomials (GNU Octave (version 7.1.0))">
+<meta name="description" content="Products of Polynomials (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Products of Polynomials (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Finding-Roots.html" rel="prev" title="Finding Roots">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,131 +32,146 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Products-of-Polynomials">
-<div class="header">
+<div class="section-level-extent" id="Products-of-Polynomials">
+<div class="nav-panel">
 <p>
 Next: <a href="Derivatives-_002f-Integrals-_002f-Transforms.html" accesskey="n" rel="next">Derivatives / Integrals / Transforms</a>, Previous: <a href="Finding-Roots.html" accesskey="p" rel="prev">Finding Roots</a>, Up: <a href="Polynomial-Manipulations.html" accesskey="u" rel="up">Polynomial Manipulations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Products-of-Polynomials-1"></span><h3 class="section">28.3 Products of Polynomials</h3>
+<h3 class="section" id="Products-of-Polynomials-1"><span>28.3 Products of Polynomials<a class="copiable-link" href="#Products-of-Polynomials-1"> &para;</a></span></h3>
 
-<span id="XREFconv"></span><dl class="def">
-<dt id="index-conv"><span class="category">: </span><span><em></em> <strong>conv</strong> <em>(<var>a</var>, <var>b</var>)</em><a href='#index-conv' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-conv-1"><span class="category">: </span><span><em></em> <strong>conv</strong> <em>(<var>a</var>, <var>b</var>, <var>shape</var>)</em><a href='#index-conv-1' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Convolve two vectors <var>a</var> and <var>b</var>.
+<a class="anchor" id="XREFconv"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-conv"><span class="category-def">: </span><span><code class="def-type"><var class="var">y</var> =</code> <strong class="def-name">conv</strong> <code class="def-code-arguments">(<var class="var">a</var>, <var class="var">b</var>)</code><a class="copiable-link" href="#index-conv"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-conv-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">y</var> =</code> <strong class="def-name">conv</strong> <code class="def-code-arguments">(<var class="var">a</var>, <var class="var">b</var>, <var class="var">shape</var>)</code><a class="copiable-link" href="#index-conv-1"> &para;</a></span></dt>
+<dd><p>Convolve two vectors <var class="var">a</var> and <var class="var">b</var>.
 </p>
-<p>When <var>a</var> and <var>b</var> are the coefficient vectors of two polynomials, the
+<p>When <var class="var">a</var> and <var class="var">b</var> are the coefficient vectors of two polynomials, the
 convolution represents the coefficient vector of the product polynomial.
 </p>
-<p>The size of the result is determined by the optional <var>shape</var> argument
+<p>The size of the result is determined by the optional <var class="var">shape</var> argument
 which takes the following values
 </p>
-<dl compact="compact">
-<dt><span><var>shape</var> = <code>&quot;full&quot;</code></span></dt>
+<dl class="table">
+<dt><var class="var">shape</var> = <code class="code">&quot;full&quot;</code></dt>
 <dd><p>Return the full convolution.  (default)
 The result is a vector with length equal to
-<code>length (<var>a</var>) + length (<var>b</var>) - 1</code>.
+<code class="code">length (<var class="var">a</var>) + length (<var class="var">b</var>) - 1</code>.
 </p>
 </dd>
-<dt><span><var>shape</var> = <code>&quot;same&quot;</code></span></dt>
-<dd><p>Return the central part of the convolution with the same size as <var>a</var>.
+<dt><var class="var">shape</var> = <code class="code">&quot;same&quot;</code></dt>
+<dd><p>Return the central part of the convolution with the same size as <var class="var">a</var>.
 </p>
 </dd>
-<dt><span><var>shape</var> = <code>&quot;valid&quot;</code></span></dt>
+<dt><var class="var">shape</var> = <code class="code">&quot;valid&quot;</code></dt>
 <dd><p>Return only the parts which do not include zero-padded edges.
 The size of the result is
-<code>max (size (<var>a</var>) - size (<var>b</var>) + 1, 0)</code>.
+<code class="code">max (size (<var class="var">a</var>) - size (<var class="var">b</var>) + 1, 0)</code>.
 </p></dd>
 </dl>
 
 
-<p><strong>See also:</strong> <a href="#XREFdeconv">deconv</a>, <a href="#XREFconv2">conv2</a>, <a href="#XREFconvn">convn</a>, <a href="Signal-Processing.html#XREFfftconv">fftconv</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFdeconv">deconv</a>, <a class="ref" href="#XREFconv2">conv2</a>, <a class="ref" href="#XREFconvn">convn</a>, <a class="ref" href="Signal-Processing.html#XREFfftconv">fftconv</a>.
 </p></dd></dl>
 
 
-<span id="XREFconvn"></span><dl class="def">
-<dt id="index-convn"><span class="category">: </span><span><em><var>C</var> =</em> <strong>convn</strong> <em>(<var>A</var>, <var>B</var>)</em><a href='#index-convn' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-convn-1"><span class="category">: </span><span><em><var>C</var> =</em> <strong>convn</strong> <em>(<var>A</var>, <var>B</var>, <var>shape</var>)</em><a href='#index-convn-1' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the n-D convolution of <var>A</var> and <var>B</var>.
+<a class="anchor" id="XREFconvn"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-convn"><span class="category-def">: </span><span><code class="def-type"><var class="var">C</var> =</code> <strong class="def-name">convn</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">B</var>)</code><a class="copiable-link" href="#index-convn"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-convn-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">C</var> =</code> <strong class="def-name">convn</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">B</var>, <var class="var">shape</var>)</code><a class="copiable-link" href="#index-convn-1"> &para;</a></span></dt>
+<dd><p>Return the n-D convolution of <var class="var">A</var> and <var class="var">B</var>.
 </p>
-<p>The size of the result is determined by the optional <var>shape</var> argument
+<p>The size of the result is determined by the optional <var class="var">shape</var> argument
 which takes the following values
 </p>
-<dl compact="compact">
-<dt><span><var>shape</var> = <code>&quot;full&quot;</code></span></dt>
+<dl class="table">
+<dt><var class="var">shape</var> = <code class="code">&quot;full&quot;</code></dt>
 <dd><p>Return the full convolution.  (default)
 </p>
 </dd>
-<dt><span><var>shape</var> = <code>&quot;same&quot;</code></span></dt>
-<dd><p>Return central part of the convolution with the same size as <var>A</var>.
+<dt><var class="var">shape</var> = <code class="code">&quot;same&quot;</code></dt>
+<dd><p>Return central part of the convolution with the same size as <var class="var">A</var>.
 The central part of the convolution begins at the indices
-<code>floor ([size(<var>B</var>)/2] + 1)</code>.
+<code class="code">floor ([size(<var class="var">B</var>)/2] + 1)</code>.
 </p>
 </dd>
-<dt><span><var>shape</var> = <code>&quot;valid&quot;</code></span></dt>
+<dt><var class="var">shape</var> = <code class="code">&quot;valid&quot;</code></dt>
 <dd><p>Return only the parts which do not include zero-padded edges.
-The size of the result is <code>max (size (A) - size (B) + 1, 0)</code>.
+The size of the result is <code class="code">max (size (A) - size (B) + 1, 0)</code>.
 </p></dd>
 </dl>
 
 
-<p><strong>See also:</strong> <a href="#XREFconv2">conv2</a>, <a href="#XREFconv">conv</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFconv2">conv2</a>, <a class="ref" href="#XREFconv">conv</a>.
 </p></dd></dl>
 
 
-<span id="XREFdeconv"></span><dl class="def">
-<dt id="index-deconv"><span class="category">: </span><span><em><var>b</var> =</em> <strong>deconv</strong> <em>(<var>y</var>, <var>a</var>)</em><a href='#index-deconv' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-deconv-1"><span class="category">: </span><span><em>[<var>b</var>, <var>r</var>] =</em> <strong>deconv</strong> <em>(<var>y</var>, <var>a</var>)</em><a href='#index-deconv-1' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFdeconv"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-deconv"><span class="category-def">: </span><span><code class="def-type"><var class="var">b</var> =</code> <strong class="def-name">deconv</strong> <code class="def-code-arguments">(<var class="var">y</var>, <var class="var">a</var>)</code><a class="copiable-link" href="#index-deconv"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-deconv-1"><span class="category-def">: </span><span><code class="def-type">[<var class="var">b</var>, <var class="var">r</var>] =</code> <strong class="def-name">deconv</strong> <code class="def-code-arguments">(<var class="var">y</var>, <var class="var">a</var>)</code><a class="copiable-link" href="#index-deconv-1"> &para;</a></span></dt>
 <dd><p>Deconvolve two vectors (polynomial division).
 </p>
-<p><code>[<var>b</var>, <var>r</var>] = deconv (<var>y</var>, <var>a</var>)</code> solves for <var>b</var> and
-<var>r</var> such that <code><var>y</var> = conv (<var>a</var>, <var>b</var>) + <var>r</var></code>.
+<p><code class="code">[<var class="var">b</var>, <var class="var">r</var>] = deconv (<var class="var">y</var>, <var class="var">a</var>)</code> solves for <var class="var">b</var> and
+<var class="var">r</var> such that <code class="code"><var class="var">y</var> = conv (<var class="var">a</var>, <var class="var">b</var>) + <var class="var">r</var></code>.
 </p>
-<p>If <var>y</var> and <var>a</var> are polynomial coefficient vectors, <var>b</var> will
-contain the coefficients of the polynomial quotient and <var>r</var> will be
+<p>If <var class="var">y</var> and <var class="var">a</var> are polynomial coefficient vectors, <var class="var">b</var> will
+contain the coefficients of the polynomial quotient and <var class="var">r</var> will be
 a remainder polynomial of lowest order.
 </p>
-<p><strong>See also:</strong> <a href="#XREFconv">conv</a>, <a href="#XREFresidue">residue</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFconv">conv</a>, <a class="ref" href="#XREFresidue">residue</a>.
 </p></dd></dl>
 
 
-<span id="XREFconv2"></span><dl class="def">
-<dt id="index-conv2"><span class="category">: </span><span><em></em> <strong>conv2</strong> <em>(<var>A</var>, <var>B</var>)</em><a href='#index-conv2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-conv2-1"><span class="category">: </span><span><em></em> <strong>conv2</strong> <em>(<var>v1</var>, <var>v2</var>, <var>m</var>)</em><a href='#index-conv2-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-conv2-2"><span class="category">: </span><span><em></em> <strong>conv2</strong> <em>(&hellip;, <var>shape</var>)</em><a href='#index-conv2-2' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the 2-D convolution of <var>A</var> and <var>B</var>.
+<a class="anchor" id="XREFconv2"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-conv2"><span class="category-def">: </span><span><code class="def-type"><var class="var">C</var> =</code> <strong class="def-name">conv2</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">B</var>)</code><a class="copiable-link" href="#index-conv2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-conv2-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">C</var> =</code> <strong class="def-name">conv2</strong> <code class="def-code-arguments">(<var class="var">v1</var>, <var class="var">v2</var>, <var class="var">m</var>)</code><a class="copiable-link" href="#index-conv2-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-conv2-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">C</var> =</code> <strong class="def-name">conv2</strong> <code class="def-code-arguments">(&hellip;, <var class="var">shape</var>)</code><a class="copiable-link" href="#index-conv2-2"> &para;</a></span></dt>
+<dd><p>Return the 2-D convolution of <var class="var">A</var> and <var class="var">B</var>.
 </p>
-<p>The size of the result is determined by the optional <var>shape</var> argument
+<p>The size of the result is determined by the optional <var class="var">shape</var> argument
 which takes the following values
 </p>
-<dl compact="compact">
-<dt><span><var>shape</var> = <code>&quot;full&quot;</code></span></dt>
+<dl class="table">
+<dt><var class="var">shape</var> = <code class="code">&quot;full&quot;</code></dt>
 <dd><p>Return the full convolution.  (default)
 </p>
 </dd>
-<dt><span><var>shape</var> = <code>&quot;same&quot;</code></span></dt>
-<dd><p>Return the central part of the convolution with the same size as <var>A</var>.
+<dt><var class="var">shape</var> = <code class="code">&quot;same&quot;</code></dt>
+<dd><p>Return the central part of the convolution with the same size as <var class="var">A</var>.
 The central part of the convolution begins at the indices
-<code>floor ([size(<var>B</var>)/2] + 1)</code>.
+<code class="code">floor ([size(<var class="var">B</var>)/2] + 1)</code>.
 </p>
 </dd>
-<dt><span><var>shape</var> = <code>&quot;valid&quot;</code></span></dt>
+<dt><var class="var">shape</var> = <code class="code">&quot;valid&quot;</code></dt>
 <dd><p>Return only the parts which do not include zero-padded edges.
-The size of the result is <code>max (size (A) - size (B) + 1, 0)</code>.
+The size of the result is <code class="code">max (size (A) - size (B) + 1, 0)</code>.
 </p></dd>
 </dl>
 
 <p>When the third argument is a matrix, return the convolution of the matrix
-<var>m</var> by the vector <var>v1</var> in the column direction and by the vector
-<var>v2</var> in the row direction.
+<var class="var">m</var> by the vector <var class="var">v1</var> in the column direction and by the vector
+<var class="var">v2</var> in the row direction.
 </p>
-<p><strong>See also:</strong> <a href="#XREFconv">conv</a>, <a href="#XREFconvn">convn</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFconv">conv</a>, <a class="ref" href="#XREFconvn">convn</a>.
 </p></dd></dl>
 
 
-<span id="XREFpolygcd"></span><dl class="def">
-<dt id="index-polygcd"><span class="category">: </span><span><em><var>q</var> =</em> <strong>polygcd</strong> <em>(<var>b</var>, <var>a</var>)</em><a href='#index-polygcd' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-polygcd-1"><span class="category">: </span><span><em><var>q</var> =</em> <strong>polygcd</strong> <em>(<var>b</var>, <var>a</var>, <var>tol</var>)</em><a href='#index-polygcd-1' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFpolygcd"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-polygcd"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">polygcd</strong> <code class="def-code-arguments">(<var class="var">b</var>, <var class="var">a</var>)</code><a class="copiable-link" href="#index-polygcd"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-polygcd-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">polygcd</strong> <code class="def-code-arguments">(<var class="var">b</var>, <var class="var">a</var>, <var class="var">tol</var>)</code><a class="copiable-link" href="#index-polygcd-1"> &para;</a></span></dt>
 <dd>
 <p>Find the greatest common divisor of two polynomials.
 </p>
@@ -175,78 +179,81 @@ The size of the result is <code>max (size (A) - size (B) + 1, 0)</code>.
 common roots.  Together with deconv, you can reduce a ratio of two
 polynomials.
 </p>
-<p>The tolerance <var>tol</var> defaults to <code>sqrt (eps)</code>.
+<p>The tolerance <var class="var">tol</var> defaults to <code class="code">sqrt (eps)</code>.
 </p>
-<p><strong>Caution:</strong> This is a numerically unstable algorithm and should not
+<p><strong class="strong">Caution:</strong> This is a numerically unstable algorithm and should not
 be used on large polynomials.
 </p>
 <p>Example code:
 </p>
 <div class="example">
-<pre class="example">polygcd (poly (1:8), poly (3:12)) - poly (3:8)
+<div class="group"><pre class="example-preformatted">polygcd (poly (1:8), poly (3:12)) - poly (3:8)
 &rArr; [ 0, 0, 0, 0, 0, 0, 0 ]
 deconv (poly (1:8), polygcd (poly (1:8), poly (3:12))) - poly (1:2)
 &rArr; [ 0, 0, 0 ]
-</pre></div>
+</pre></div></div>
 
-<p><strong>See also:</strong> <a href="Miscellaneous-Functions.html#XREFpoly">poly</a>, <a href="Finding-Roots.html#XREFroots">roots</a>, <a href="#XREFconv">conv</a>, <a href="#XREFdeconv">deconv</a>, <a href="#XREFresidue">residue</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Miscellaneous-Functions.html#XREFpoly">poly</a>, <a class="ref" href="Finding-Roots.html#XREFroots">roots</a>, <a class="ref" href="#XREFconv">conv</a>, <a class="ref" href="#XREFdeconv">deconv</a>, <a class="ref" href="#XREFresidue">residue</a>.
 </p></dd></dl>
 
 
-<span id="XREFresidue"></span><dl class="def">
-<dt id="index-residue"><span class="category">: </span><span><em>[<var>r</var>, <var>p</var>, <var>k</var>, <var>e</var>] =</em> <strong>residue</strong> <em>(<var>b</var>, <var>a</var>)</em><a href='#index-residue' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-residue-1"><span class="category">: </span><span><em>[<var>b</var>, <var>a</var>] =</em> <strong>residue</strong> <em>(<var>r</var>, <var>p</var>, <var>k</var>)</em><a href='#index-residue-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-residue-2"><span class="category">: </span><span><em>[<var>b</var>, <var>a</var>] =</em> <strong>residue</strong> <em>(<var>r</var>, <var>p</var>, <var>k</var>, <var>e</var>)</em><a href='#index-residue-2' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFresidue"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-residue"><span class="category-def">: </span><span><code class="def-type">[<var class="var">r</var>, <var class="var">p</var>, <var class="var">k</var>, <var class="var">e</var>] =</code> <strong class="def-name">residue</strong> <code class="def-code-arguments">(<var class="var">b</var>, <var class="var">a</var>)</code><a class="copiable-link" href="#index-residue"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-residue-1"><span class="category-def">: </span><span><code class="def-type">[<var class="var">b</var>, <var class="var">a</var>] =</code> <strong class="def-name">residue</strong> <code class="def-code-arguments">(<var class="var">r</var>, <var class="var">p</var>, <var class="var">k</var>)</code><a class="copiable-link" href="#index-residue-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-residue-2"><span class="category-def">: </span><span><code class="def-type">[<var class="var">b</var>, <var class="var">a</var>] =</code> <strong class="def-name">residue</strong> <code class="def-code-arguments">(<var class="var">r</var>, <var class="var">p</var>, <var class="var">k</var>, <var class="var">e</var>)</code><a class="copiable-link" href="#index-residue-2"> &para;</a></span></dt>
 <dd><p>The first calling form computes the partial fraction expansion for the
-quotient of the polynomials, <var>b</var> and <var>a</var>.
+quotient of the polynomials, <var class="var">b</var> and <var class="var">a</var>.
 </p>
 <p>The quotient is defined as
 </p>
 <div class="example">
-<pre class="example">B(s)    M       r(m)        N
+<div class="group"><pre class="example-preformatted">B(s)    M       r(m)        N
 ---- = SUM ------------- + SUM k(i)*s^(N-i)
 A(s)   m=1 (s-p(m))^e(m)   i=1
-</pre></div>
+</pre></div></div>
 
-<p>where <em class='math'>M</em> is the number of poles (the length of the <var>r</var>, <var>p</var>,
-and <var>e</var>), the <var>k</var> vector is a polynomial of order <em class='math'>N-1</em>
-representing the direct contribution, and the <var>e</var> vector specifies the
+<p>where <em class="math">M</em> is the number of poles (the length of the <var class="var">r</var>, <var class="var">p</var>,
+and <var class="var">e</var>), the <var class="var">k</var> vector is a polynomial of order <em class="math">N-1</em>
+representing the direct contribution, and the <var class="var">e</var> vector specifies the
 multiplicity of the m-th residue&rsquo;s pole.
 </p>
 <p>For example,
 </p>
 <div class="example">
-<pre class="example">b = [1, 1, 1];
+<div class="group"><pre class="example-preformatted">b = [1, 1, 1];
 a = [1, -5, 8, -4];
 [r, p, k, e] = residue (b, a)
    &rArr; r = [-2; 7; 3]
    &rArr; p = [2; 2; 1]
    &rArr; k = [](0x0)
    &rArr; e = [1; 2; 1]
-</pre></div>
+</pre></div></div>
 
 <p>which represents the following partial fraction expansion
 </p>
 <div class="example">
-<pre class="example">        s^2 + s + 1       -2        7        3
+<div class="group"><pre class="example-preformatted">        s^2 + s + 1       -2        7        3
    ------------------- = ----- + ------- + -----
    s^3 - 5s^2 + 8s - 4   (s-2)   (s-2)^2   (s-1)
-</pre></div>
+</pre></div></div>
 
 
 <p>The second calling form performs the inverse operation and computes the
-reconstituted quotient of polynomials, <var>b</var>(s)/<var>a</var>(s), from the
+reconstituted quotient of polynomials, <var class="var">b</var>(s)/<var class="var">a</var>(s), from the
 partial fraction expansion; represented by the residues, poles, and a direct
-polynomial specified by <var>r</var>, <var>p</var> and <var>k</var>, and the pole
-multiplicity <var>e</var>.
+polynomial specified by <var class="var">r</var>, <var class="var">p</var> and <var class="var">k</var>, and the pole
+multiplicity <var class="var">e</var>.
 </p>
-<p>If the multiplicity, <var>e</var>, is not explicitly specified the multiplicity
-is determined by the function <code>mpoles</code>.
+<p>If the multiplicity, <var class="var">e</var>, is not explicitly specified the multiplicity
+is determined by the function <code class="code">mpoles</code>.
 </p>
 <p>For example:
 </p>
 <div class="example">
-<pre class="example">r = [-2; 7; 3];
+<div class="group"><pre class="example-preformatted">r = [-2; 7; 3];
 p = [2; 2; 1];
 k = [1, 0];
 [b, a] = residue (r, p, k)
@@ -254,36 +261,36 @@ k = [1, 0];
    &rArr; a = [1, -5, 8, -4]
 
 where mpoles is used to determine e = [1; 2; 1]
-</pre></div>
+</pre></div></div>
 
 <p>Alternatively the multiplicity may be defined explicitly, for example,
 </p>
 <div class="example">
-<pre class="example">r = [7; 3; -2];
+<div class="group"><pre class="example-preformatted">r = [7; 3; -2];
 p = [2; 1; 2];
 k = [1, 0];
 e = [2; 1; 1];
 [b, a] = residue (r, p, k, e)
    &rArr; b = [1, -5, 9, -3, 1]
    &rArr; a = [1, -5, 8, -4]
-</pre></div>
+</pre></div></div>
 
 <p>which represents the following partial fraction expansion
 </p>
 <div class="example">
-<pre class="example"> -2        7        3         s^4 - 5s^3 + 9s^2 - 3s + 1
+<div class="group"><pre class="example-preformatted"> -2        7        3         s^4 - 5s^3 + 9s^2 - 3s + 1
 ----- + ------- + ----- + s = --------------------------
 (s-2)   (s-2)^2   (s-1)          s^3 - 5s^2 + 8s - 4
-</pre></div>
+</pre></div></div>
 
 
-<p><strong>See also:</strong> <a href="Finding-Roots.html#XREFmpoles">mpoles</a>, <a href="Miscellaneous-Functions.html#XREFpoly">poly</a>, <a href="Finding-Roots.html#XREFroots">roots</a>, <a href="#XREFconv">conv</a>, <a href="#XREFdeconv">deconv</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Finding-Roots.html#XREFmpoles">mpoles</a>, <a class="ref" href="Miscellaneous-Functions.html#XREFpoly">poly</a>, <a class="ref" href="Finding-Roots.html#XREFroots">roots</a>, <a class="ref" href="#XREFconv">conv</a>, <a class="ref" href="#XREFdeconv">deconv</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Derivatives-_002f-Integrals-_002f-Transforms.html">Derivatives / Integrals / Transforms</a>, Previous: <a href="Finding-Roots.html">Finding Roots</a>, Up: <a href="Polynomial-Manipulations.html">Polynomial Manipulations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

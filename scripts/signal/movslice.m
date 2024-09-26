@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2018-2022 The Octave Project Developers
+## Copyright (C) 2018-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -36,14 +36,15 @@
 ## is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on either
 ## side of the central element.  If @var{wlen} is even the window is asymmetric
 ## and has @w{@code{@var{wlen}/2}} elements to the left of the central element
-## and @w{@code{@var{wlen}/2 - 1}} elements to the right of the central element.
-## When @var{wlen}is a 2-element array , @w{@code{[@var{nb}, @var{na}]}}, the
-## window includes @var{nb} elements to the left of the current element and
-## @var{na} elements to the right of the current element.
+## and @w{@code{@var{wlen}/2 - 1}} elements to the right of the central
+## element.  When @var{wlen} is a 2-element array,
+## @w{@code{[@var{nb}, @var{na}]}}, the window includes @var{nb} elements to
+## the left of the current element and @var{na} elements to the right of the
+## current element.
 ##
 ## The output @var{slcidx} is an array of indices of the slices that fit fully
 ## within the vector, where each column is an individual slice as the window
-## moves from left to right. The slices have @var{wlen} elements for scalar
+## moves from left to right.  The slices have @var{wlen} elements for scalar
 ## @var{wlen}, or @w{@code{@var{nb} + @var{na} + 1}} elements for array valued
 ## @var{wlen}.
 ##
@@ -111,6 +112,18 @@ function [slcidx, C, Cpre, Cpost, win] = movslice (N, wlen)
   Cnf   = N - wlen(2) + 1;        # first center that can't fit the post-window
   Cpost = Cnf:N;                  # centers that can't fit centered post-window
   C     = (wlen(1) + 1):(Cnf - 1);
+  ## Convert C to minimum unsigned integer array large enough to hold indices.
+  ## This can save significant memory in resulting slcidx array over using a
+  ## double (8 bytes).
+  if (N <= 255)
+    C = uint8 (C);
+  elseif (N <= 65535)
+    C = uint16 (C);
+  elseif (N <= 4294967295)
+    C = uint32 (C);
+  else
+    C = uint64 (C);
+  endif
   win   = (-wlen(1):wlen(2)).';
   slcidx = C + win;
 

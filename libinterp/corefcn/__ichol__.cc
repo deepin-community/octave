@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -27,6 +27,8 @@
 #  include "config.h"
 #endif
 
+#include <limits>
+
 #include "oct-locbuf.h"
 #include "oct-norm.h"
 
@@ -35,7 +37,7 @@
 
 #include "builtin-defun-decls.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Secondary functions for complex and real case used in ichol algorithms.
 Complex ichol_mult_complex (Complex a, Complex b)
@@ -50,14 +52,16 @@ Complex ichol_mult_complex (Complex a, Complex b)
   return a * b;
 }
 
-double ichol_mult_real (double a, double b)
+double
+ichol_mult_real (double a, double b)
 {
   return a * b;
 }
 
-bool ichol_checkpivot_complex (Complex pivot)
+bool
+ichol_checkpivot_complex (Complex pivot)
 {
-  if (pivot.imag () != 0)
+  if (fabs (pivot.imag ()) > std::numeric_limits<double>::epsilon())
     error ("ichol: non-real pivot encountered.  The matrix must be Hermitian.");
   else if (pivot.real () < 0)
     error ("ichol: negative pivot encountered");
@@ -65,7 +69,8 @@ bool ichol_checkpivot_complex (Complex pivot)
   return true;
 }
 
-bool ichol_checkpivot_real (double pivot)
+bool
+ichol_checkpivot_real (double pivot)
 {
   if (pivot < 0)
     error ("ichol: negative pivot encountered");
@@ -75,7 +80,8 @@ bool ichol_checkpivot_real (double pivot)
 
 template <typename octave_matrix_t, typename T, T (*ichol_mult) (T, T),
           bool (*ichol_checkpivot) (T)>
-void ichol_0 (octave_matrix_t& sm, const std::string michol = "off")
+void
+ichol_0 (octave_matrix_t& sm, const std::string michol = "off")
 {
   const octave_idx_type n = sm.cols ();
   octave_idx_type j1, jend, j2, jrow, jjrow, j, jw, i, k, jj, r;
@@ -117,7 +123,7 @@ void ichol_0 (octave_matrix_t& sm, const std::string michol = "off")
         iw[ridx[j]] = j;
 
       jrow = Llist[k];
-      // Iterate over each non-zero element in the actual row.
+      // Iterate over each nonzero element in the actual row.
       while (jrow != -1)
         {
           jjrow = Lfirst[jrow];
@@ -201,25 +207,26 @@ Undocumented internal function.
   // matrix is used to build the output matrix due to that fact.
   if (! args(0).iscomplex ())
     {
-      SparseMatrix sm = Ftril (args(0))(0).sparse_matrix_value ();
+      SparseMatrix sm = Ftril (ovl (args(0)))(0).sparse_matrix_value ();
       ichol_0 <SparseMatrix, double, ichol_mult_real,
-               ichol_checkpivot_real> (sm, michol);
+              ichol_checkpivot_real> (sm, michol);
       return ovl (sm);
     }
   else
     {
       SparseComplexMatrix sm
-        = Ftril (args(0))(0).sparse_complex_matrix_value ();
+        = Ftril (ovl (args(0)))(0).sparse_complex_matrix_value ();
       ichol_0 <SparseComplexMatrix, Complex, ichol_mult_complex,
-               ichol_checkpivot_complex> (sm, michol);
+              ichol_checkpivot_complex> (sm, michol);
       return ovl (sm);
     }
 }
 
 template <typename octave_matrix_t, typename T,  T (*ichol_mult) (T, T),
           bool (*ichol_checkpivot) (T)>
-void ichol_t (const octave_matrix_t& sm, octave_matrix_t& L, const T* cols_norm,
-              const T droptol, const std::string michol = "off")
+void
+ichol_t (const octave_matrix_t& sm, octave_matrix_t& L, const T *cols_norm,
+         const T droptol, const std::string michol = "off")
 {
 
   const octave_idx_type n = sm.cols ();
@@ -296,8 +303,8 @@ void ichol_t (const octave_matrix_t& sm, octave_matrix_t& L, const T* cols_norm,
             {
               j = ridx_l[jj];
               // If the element in the j position of the row is zero,
-              // then it will become non-zero, so we add it to the
-              // vector that tracks non-zero elements in the working row.
+              // then it will become nonzero, so we add it to the
+              // vector that tracks nonzero elements in the working row.
               if (! mark[j])
                 {
                   mark[j] = true;
@@ -330,7 +337,7 @@ void ichol_t (const octave_matrix_t& sm, octave_matrix_t& L, const T* cols_norm,
           ridx_l = ridx_out_l.fortran_vec ();
         }
 
-      // The sorting of the non-zero elements of the working column can be
+      // The sorting of the nonzero elements of the working column can be
       // handled in a couple of ways.  The most efficient two I found, are
       // keeping the elements in an ordered binary search tree dynamically or
       // keep them unsorted in a vector and at the end of the outer iteration
@@ -341,7 +348,7 @@ void ichol_t (const octave_matrix_t& sm, octave_matrix_t& L, const T* cols_norm,
       ridx_l[total_len] = k;
       w_len = 1;
 
-      // Extract the non-zero elements of working column and
+      // Extract the nonzero elements of working column and
       // drop the elements that are lower than droptol * cols_norm[k].
       for (i = 0; i < ind ; i++)
         {
@@ -434,10 +441,11 @@ Undocumented internal function.
   if (! args(0).iscomplex ())
     {
       SparseMatrix L;
-      SparseMatrix sm_l = Ftril (args(0))(0).sparse_matrix_value ();
+      SparseMatrix sm_l = Ftril (ovl (args(0)))(0).sparse_matrix_value ();
+      RowVector sm_col_norms = xcolnorms (sm_l, 1);
       ichol_t <SparseMatrix,
-               double, ichol_mult_real, ichol_checkpivot_real>
-        (sm_l, L, xcolnorms (sm_l, 1).fortran_vec (), droptol, michol);
+              double, ichol_mult_real, ichol_checkpivot_real>
+              (sm_l, L, sm_col_norms.fortran_vec (), droptol, michol);
 
       return ovl (L);
     }
@@ -445,12 +453,12 @@ Undocumented internal function.
     {
       SparseComplexMatrix L;
       SparseComplexMatrix sm_l
-        = Ftril (args(0))(0).sparse_complex_matrix_value ();
+        = Ftril (ovl (args(0)))(0).sparse_complex_matrix_value ();
       Array <Complex> cols_norm = xcolnorms (sm_l, 1);
       ichol_t <SparseComplexMatrix,
-               Complex, ichol_mult_complex, ichol_checkpivot_complex>
-               (sm_l, L, cols_norm.fortran_vec (),
-                Complex (droptol), michol);
+              Complex, ichol_mult_complex, ichol_checkpivot_complex>
+              (sm_l, L, cols_norm.fortran_vec (),
+               Complex (droptol), michol);
 
       return ovl (L);
     }
@@ -469,4 +477,4 @@ Undocumented internal function.
 %! assert (norm (A - L*L.'), 0, 2*eps);
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

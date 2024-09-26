@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,13 +32,16 @@
 #include "defun.h"
 #include "error.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (nproc, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} nproc ()
-@deftypefnx {} {} nproc (@var{query})
-Return the current number of available processors.
+@deftypefn  {} {@var{n} =} nproc ()
+@deftypefnx {} {@var{n} =} nproc (@var{query})
+Return the current number of available (logical) processors.
+
+This returns the number of logical processors.  For processors with
+hyperthreading, this is larger than the number of physical cores.
 
 If called with the optional argument @var{query}, modify how processors
 are counted as follows:
@@ -52,7 +55,7 @@ processors available to the current process.
 
 @item overridable
 same as @code{current}, but overridable through the
-@w{@env{OMP_NUM_THREADS}} environment variable.
+@w{@env{OMP_NUM_THREADS}}@ environment variable.
 @end table
 @end deftypefn */)
 {
@@ -109,4 +112,4 @@ same as @code{current}, but overridable through the
 %!error nproc ("no_valid_option")
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,88 +34,72 @@
 
 #include "str-vec.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+OCTAVE_BEGIN_NAMESPACE(sys)
+
+class
+OCTAVE_API
+group
 {
-  namespace sys
-  {
-    class
-    OCTAVE_API
-    group
-    {
-    public:
+public:
 
-      group (void)
-        : m_name (), m_passwd (), m_gid (0), m_mem (), m_valid (false)
-      { }
+  group ()
+    : m_name (), m_passwd (), m_gid (0), m_mem (), m_valid (false)
+  { }
 
-      group (const group& gr)
-        : m_name (gr.m_name), m_passwd (gr.m_passwd),
-          m_gid (gr.m_gid), m_mem (gr.m_mem), m_valid (gr.m_valid)
-      { }
+  OCTAVE_DEFAULT_COPY_MOVE_DELETE (group)
 
-      group& operator = (const group& gr)
-      {
-        if (this != &gr)
-          {
-            m_name = gr.m_name;
-            m_passwd = gr.m_passwd;
-            m_gid = gr.m_gid;
-            m_mem = gr.m_mem;
-            m_valid = gr.m_valid;
-          }
+  std::string name () const;
 
-        return *this;
-      }
+  std::string passwd () const;
 
-      std::string name (void) const;
+  gid_t gid () const;
 
-      std::string passwd (void) const;
+  string_vector mem () const;
 
-      gid_t gid (void) const;
+  bool ok () const { return m_valid; }
 
-      string_vector mem (void) const;
+  operator bool () const { return ok (); }
 
-      bool ok (void) const { return m_valid; }
+  static group getgrent ();
+  static group getgrent (std::string& msg);
 
-      operator bool () const { return ok (); }
+  static group getgrgid (gid_t gid);
+  static group getgrgid (gid_t gid, std::string& msg);
 
-      static group getgrent (void);
-      static group getgrent (std::string& msg);
+  static group getgrnam (const std::string& nm);
+  static group getgrnam (const std::string& nm, std::string& msg);
 
-      static group getgrgid (gid_t gid);
-      static group getgrgid (gid_t gid, std::string& msg);
+  static int setgrent ();
+  static int setgrent (std::string& msg);
 
-      static group getgrnam (const std::string& nm);
-      static group getgrnam (const std::string& nm, std::string& msg);
+  static int endgrent ();
+  static int endgrent (std::string& msg);
 
-      static int setgrent (void);
-      static int setgrent (std::string& msg);
+private:
 
-      static int endgrent (void);
-      static int endgrent (std::string& msg);
+  // The group name.
+  std::string m_name;
 
-    private:
+  // The group password.
+  std::string m_passwd;
 
-      // The group name.
-      std::string m_name;
+  // The numeric group id.
+  gid_t m_gid;
 
-      // The group password.
-      std::string m_passwd;
+  // The members of the group;
+  string_vector m_mem;
 
-      // The numeric group id.
-      gid_t m_gid;
+  // Flag that says whether we have been properly initialized.
+  bool m_valid;
 
-      // The members of the group;
-      string_vector m_mem;
+  // This is how we will create an group object from a pointer
+  // to a struct group.
+  group (void *p, std::string& msg);
+};
 
-      // Flag that says whether we have been properly initialized.
-      bool m_valid;
-
-      // This is how we will create an group object from a pointer
-      // to a struct group.
-      group (void *p, std::string& msg);
-    };
-  }
-}
+OCTAVE_END_NAMESPACE(sys)
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

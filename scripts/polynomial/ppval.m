@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -61,7 +61,7 @@ function yi = ppval (pp, xi)
   P = reshape (P, [d, n * k]);
   P = shiftdim (P, nd);
   P = reshape (P, [n, k, d]);
-  Pidx = P(idx(:), :);  # 2D matrix size: x = coefs*prod (d), y = prod (sxi)
+  Pidx = P(idx(:), :);  # 2-D matrix size: x = coefs*prod (d), y = prod (sxi)
 
   if (isvector (xi))
     Pidx = reshape (Pidx, [xn, k, d]);

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,43 +28,51 @@
 #endif
 
 #include "hook-fcn.h"
-#include "parse.h"
+#include "interpreter-private.h"
+#include "interpreter.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+hook_function::hook_function (const octave_value& f, const octave_value& d)
 {
-  hook_function::hook_function (const octave_value& f, const octave_value& d)
-  {
-    if (f.is_string ())
-      {
-        std::string name = f.string_value ();
+  if (f.is_string ())
+    {
+      std::string name = f.string_value ();
 
-        m_rep = std::shared_ptr<base_hook_function> (new named_hook_function (name, d));
-      }
-    else if (f.is_function_handle ())
-      {
-        m_rep = std::shared_ptr<base_hook_function> (new fcn_handle_hook_function (f, d));
-      }
-    else
-      error ("invalid hook function");
-  }
-
-  void named_hook_function::eval (const octave_value_list& initial_args)
-  {
-    octave_value_list args = initial_args;
-
-    if (m_data.is_defined ())
-      args.append (m_data);
-
-    feval (m_name, args, 0);
-  }
-
-  void fcn_handle_hook_function::eval (const octave_value_list& initial_args)
-  {
-    octave_value_list args = initial_args;
-
-    if (m_data.is_defined ())
-      args.append (m_data);
-
-    feval (m_fcn_handle, args, 0);
-  }
+      m_rep = std::shared_ptr<base_hook_function> (new named_hook_function (name, d));
+    }
+  else if (f.is_function_handle ())
+    {
+      m_rep = std::shared_ptr<base_hook_function> (new fcn_handle_hook_function (f, d));
+    }
+  else
+    error ("invalid hook function");
 }
+
+void
+named_hook_function::eval (const octave_value_list& initial_args)
+{
+  octave_value_list args = initial_args;
+
+  if (m_data.is_defined ())
+    args.append (m_data);
+
+  interpreter& interp = __get_interpreter__ ();
+
+  interp.feval (m_name, args, 0);
+}
+
+void
+fcn_handle_hook_function::eval (const octave_value_list& initial_args)
+{
+  octave_value_list args = initial_args;
+
+  if (m_data.is_defined ())
+    args.append (m_data);
+
+  interpreter& interp = __get_interpreter__ ();
+
+  interp.feval (m_fcn_handle, args, 0);
+}
+
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -29,7 +29,7 @@
 
 #include "oct-strstrm.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Position a stream at OFFSET relative to ORIGIN.
 
@@ -45,7 +45,7 @@ base_strstream::seek (off_t, int)
 // Return current stream position.
 
 off_t
-base_strstream::tell (void)
+base_strstream::tell ()
 {
   // Note: error is inherited from base_stream, not ::error.
   // This error function does not halt execution so "return ..." must exist.
@@ -77,4 +77,4 @@ ostrstream::create (std::ios::openmode arg_md,
   return stream (new ostrstream (arg_md, flt_fmt, encoding));
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

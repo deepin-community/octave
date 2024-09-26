@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -63,7 +63,7 @@ boolMatrix::insert (const boolMatrix& a, octave_idx_type r, octave_idx_type c)
 // unary operations
 
 boolMatrix
-boolMatrix::operator ! (void) const
+boolMatrix::operator ! () const
 {
   octave_idx_type nr = rows ();
   octave_idx_type nc = cols ();

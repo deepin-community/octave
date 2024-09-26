@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} diffuse (@var{sx}, @var{sy}, @var{sz}, @var{lv})
+## @deftypefn {} {@var{d} =} diffuse (@var{sx}, @var{sy}, @var{sz}, @var{lv})
 ## Calculate the diffuse reflection strength of a surface defined by the normal
 ## vector elements @var{sx}, @var{sy}, @var{sz}.
 ##
@@ -33,7 +33,7 @@
 ## @seealso{specular, surfl}
 ## @end deftypefn
 
-function retval = diffuse (sx, sy, sz, lv)
+function d = diffuse (sx, sy, sz, lv)
 
   if (nargin != 4)
     print_usage ();
@@ -57,7 +57,7 @@ function retval = diffuse (sx, sy, sz, lv)
   endif
 
   ns = sqrt (sx.^2 + sy.^2 + sz.^2);
-  retval = (sx * lv(1) + sy * lv(2) + sz * lv(3)) ./ ns;
-  retval(retval < 0) = 0;
+  d = (sx * lv(1) + sy * lv(2) + sz * lv(3)) ./ ns;
+  d(d < 0) = 0;
 
 endfunction

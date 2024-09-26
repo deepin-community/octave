@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -30,8 +30,15 @@
 %#!assert (0 \ i, Inf)
 %#!assert (0 \ single (i), single (Inf))
 
-%!assert ([Inf, 0; 0, 0] \ [1; 1], zeros (2,1))
-%!assert ([Inf, 0; 0, 0] \ single ([1; 1]), zeros (2,1, "single"))
-%!assert ([Inf, 0; 0, 0] \ [i; 1], zeros (2,1))
-%!assert ([Inf, 0; 0, 0] \ single ([i; 1]), zeros (2,1, "single"))
-
+%!warning <matrix singular to machine precision>
+%! warning ('on', 'Octave:singular-matrix', 'local');
+%! assert ([Inf, 0; 0, 0] \ [1; 1], zeros (2,1));
+%!warning <matrix singular to machine precision>
+%! warning ('on', 'Octave:singular-matrix', 'local');
+%! assert ([Inf, 0; 0, 0] \ single ([1; 1]), zeros (2,1, "single"));
+%!warning <matrix singular to machine precision>
+%! warning ('on', 'Octave:singular-matrix', 'local');
+%! assert ([Inf, 0; 0, 0] \ [i; 1], zeros (2,1));
+%!warning <matrix singular to machine precision>
+%! warning ('on', 'Octave:singular-matrix', 'local');
+%! assert ([Inf, 0; 0, 0] \ single ([i; 1]), zeros (2,1, "single"));

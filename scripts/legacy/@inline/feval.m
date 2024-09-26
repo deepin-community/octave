@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2020-2022 The Octave Project Developers
+## Copyright (C) 2020-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -23,14 +23,16 @@
 ##
 ########################################################################
 
-function retval = feval (fcn, varargin)
+## -*- texinfo -*-
+## @deftypefn {} {} feval (@var{fobj}, @dots{})
+## Evaluate the inline function in @var{fobj}.
+##
+## Any arguments after the first are passed as inputs to the function.
+## @seealso{inline}
+## @end deftypefn
 
-  if (nargin < 1)
-    print_usage ();
-  endif
+function retval = feval (fobj, varargin)
 
-  fh = eval (sprintf ("@(%s) %s", strjoin (fcn.args, ","), fcn.expr));
-
-  retval = fh (varargin{:});
+  retval = fobj.fh (varargin{:});
 
 endfunction

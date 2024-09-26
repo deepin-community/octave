@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017-2022 The Octave Project Developers
+// Copyright (C) 2017-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,64 +33,66 @@
 class octave_value;
 class octave_value_list;
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  class environment
+class environment
+{
+public:
+
+  environment ()
+    : m_editor (init_editor ()),
+      m_exec_path (init_exec_path ()),
+      m_image_path (init_image_path ())
+  { }
+
+  OCTAVE_DEFAULT_COPY_DELETE (environment)
+
+  octave_value editor (const octave_value_list& args, int nargout);
+
+  std::string editor () const { return m_editor; }
+
+  std::string editor (const std::string& ed)
   {
-  public:
+    return set (m_editor, ed);
+  }
 
-    environment (void)
-      : m_editor (init_editor ()),
-        m_exec_path (init_exec_path ()),
-        m_image_path (init_image_path ())
-    { }
+  octave_value exec_path (const octave_value_list& args, int nargout);
 
-    octave_value editor (const octave_value_list& args, int nargout);
+  std::string exec_path () const { return m_exec_path; }
 
-    std::string editor (void) const { return m_editor; }
+  std::string exec_path (const std::string& path);
 
-    std::string editor (const std::string& ed)
-    {
-      return set (m_editor, ed);
-    }
+  octave_value image_path (const octave_value_list& args, int nargout);
 
-    octave_value exec_path (const octave_value_list& args, int nargout);
+  std::string image_path () const { return m_image_path; }
 
-    std::string exec_path (void) const { return m_exec_path; }
+  std::string image_path (const std::string& path)
+  {
+    return set (m_image_path, path);
+  }
 
-    std::string exec_path (const std::string& path);
+private:
 
-    octave_value image_path (const octave_value_list& args, int nargout);
+  std::string m_editor;
 
-    std::string image_path (void) const { return m_image_path; }
+  std::string m_exec_path;
 
-    std::string image_path (const std::string& path)
-    {
-      return set (m_image_path, path);
-    }
+  std::string m_image_path;
 
-  private:
+  static std::string init_editor ();
 
-    std::string m_editor;
+  static std::string init_exec_path ();
 
-    std::string m_exec_path;
+  static std::string init_image_path ();
 
-    std::string m_image_path;
+  std::string set (std::string& var, const std::string& new_val)
+  {
+    std::string old_val = var;
+    var = new_val;
+    return old_val;
+  }
+};
 
-    static std::string init_editor (void);
-
-    static std::string init_exec_path (void);
-
-    static std::string init_image_path (void);
-
-    std::string set (std::string& var, const std::string& new_val)
-    {
-      std::string old_val = var;
-      var = new_val;
-      return old_val;
-    }
-  };
-
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

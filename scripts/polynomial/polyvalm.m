@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} polyvalm (@var{c}, @var{x})
+## @deftypefn {} {@var{y} =} polyvalm (@var{c}, @var{x})
 ## Evaluate a polynomial in the matrix sense.
 ##
 ## @code{polyvalm (@var{c}, @var{x})} will evaluate the polynomial in the

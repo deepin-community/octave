@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -134,7 +134,7 @@ function h = imshow (im, varargin)
         error ("imshow: argument number %d is invalid", narg);
       endif
     elseif (ischar (arg))
-      switch (tolower (arg))
+      switch (lower (arg))
         case "border"
           warning ("imshow: border argument is not implemented");
           narg += 1;

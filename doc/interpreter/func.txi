@@ -1,4 +1,4 @@
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -237,7 +237,7 @@ endfunction
 @end group
 @end example
 
-There is still one additional problem with this function.  What if it is
+There is still one remaining problem with this function.  What if it is
 called without an argument?  Without additional error checking, Octave
 will probably print an error message that won't really help you track
 down the source of the error.  To allow you to catch errors like this,
@@ -263,13 +263,13 @@ endfunction
 @end group
 @end example
 
-Although Octave does not automatically report an error if you call a
-function with more arguments than expected, doing so probably indicates
-that something is wrong.  Octave also does not automatically report an
-error if a function is called with too few arguments, but any attempt to
-use a variable that has not been given a value will result in an error.
-To avoid such problems and to provide useful messages, we check for both
-possibilities and issue our own error message.
+Octave automatically reports an error for functions written in .m file code
+if they are called with more arguments than expected.  Octave does not
+automatically report an error if a function is called with too few arguments,
+since functions in general may have default arguments, but any attempt to use
+a variable that has not been given a value will result in an error.
+Functions can check the arguments they are called with to avoid such problems
+and to provide more context-specific error messages.
 
 @DOCSTRING(nargin)
 
@@ -386,9 +386,11 @@ the user of the function has requested.  The implicit assignment to the
 built-in variable @code{ans} does not figure in the count of output
 arguments, so the value of @code{nargout} may be zero.
 
-The @code{svd} and @code{lu} functions are examples of built-in
+The @code{svd} and @code{hist} functions are examples of built-in
 functions that behave differently depending on the value of
-@code{nargout}.
+@code{nargout}.  For example, @code{hist} will draw a histogram when called
+with no output variables, but if called with outputs it will return the
+frequency counts and/or bin centers without creating a plot.
 
 It is possible to write functions that only set some return values.  For
 example, calling the function
@@ -431,7 +433,6 @@ along with a warning.
 @section Variable-length Return Lists
 @cindex variable-length return lists
 @cindex @code{varargout}
-
 @anchor{XREFvarargout}
 
 It is possible to return a variable number of output arguments from a
@@ -476,7 +477,6 @@ and is handled the same as any other parameter name.
 @section Variable-length Argument Lists
 @cindex variable-length argument lists
 @cindex @code{varargin}
-
 @anchor{XREFvarargin}
 
 Sometimes the number of input arguments is not known when the function
@@ -923,6 +923,8 @@ After this the directory @samp{~/Octave} will be searched for functions.
 @DOCSTRING(command_line_path)
 
 @DOCSTRING(dir_in_loadpath)
+
+@DOCSTRING(mfile_encoding)
 
 @DOCSTRING(dir_encoding)
 
@@ -1904,7 +1906,7 @@ functional form.
 @section Command Syntax and Function Syntax
 @cindex commands functions
 
-Additionally to the function syntax described above (i.e., calling a function
+In addition to the function syntax described above (i.e., calling a function
 like @code{fun (arg1, arg2, @dots{})}), a function can be called using command
 syntax (for example, calling a function like @code{fun arg1 arg2 @dots{}}).  In
 that case, all arguments are passed to the function as strings.  For example,
@@ -1953,7 +1955,7 @@ For example:
 
 @example
 @group
-toupper lower_case_arg
+upper lower_case_arg
    @result{} ans = LOWER_CASE_ARG
 @end group
 @end example
@@ -1965,9 +1967,9 @@ case, a command must be called using the function syntax.  For example:
 @example
 @group
 strvar = "hello world";
-toupper strvar
+upper strvar
    @result{} ans = STRVAR
-toupper (strvar)
+upper (strvar)
    @result{} ans = HELLO WORLD
 @end group
 @end example
@@ -1977,6 +1979,87 @@ using the command syntax.  Only the first return argument is assigned to the
 built-in variable @code{ans}.  If the output argument of a command should be
 assigned to a variable, or multiple output arguments of a function should be
 returned, the function syntax must be used.
+
+It should be noted that mixing command syntax and binary operators can
+create apparent ambiguities with mathematical and logical expressions that
+use function syntax.  For example, all three of the statements
+
+@example
+@group
+arg1 - arg2
+arg1 -arg2
+arg1-arg2
+@end group
+@end example
+
+@noindent
+could be intended by a user to be subtraction operations between
+@code{arg1} and @code{arg2}.  The first two, however, could also have been
+meant as a command syntax call to function @code{arg1}, in the first case
+with options @code{-} and @code{arg2}, and in the second case with option
+@option{-arg2}.
+
+Octave uses whitespace to interpret such expressions according to the
+following rules:
+
+@itemize @bullet
+@item
+Statements consisting of plain symbols without any operators that are
+separated only by whitespace are always treated as command syntax:
+
+@example
+arg1 arg2 arg3 ... argn
+@end example
+
+@item
+Statements without any whitespace are always treated as function syntax:
+
+@example
+@group
+arg1+arg2
+arg1&&arg2||arg3
+arg1+=arg2*arg3
+@end group
+@end example
+
+@item
+If the first symbol is a constant (or special-valued named constant pi, i,
+I, j, J, e, NaN, or Inf) followed by a binary operator, the statement is
+treated as function syntax regardless of any whitespace or what follows the
+second symbol:
+
+@example
+@group
+7 -arg2
+pi+ arg2
+j * arg2 -arg3
+@end group
+@end example
+
+@item
+If the first symbol is a function or variable and there is no whitespace
+separating the operator and the second symbol, the statement is treated
+as command syntax:
+
+@example
+@group
+arg1 -arg2
+arg1 &&arg2 ||arg3
+arg1 +=arg2*arg3
+@end group
+@end example
+
+@item
+Any other whitespace combination will result in the statement being treated
+as function syntax.
+@end itemize
+
+Note 1: If a special-valued named constant has been redefined as a
+variable, the interpreter will still process the statement with function
+syntax.
+
+Note 2: Attempting to use a variable as @code{arg1} in a command being
+processed as command syntax will result in an error.
 
 
 @node Organization of Functions

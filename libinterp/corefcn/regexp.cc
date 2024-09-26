@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2002-2022 The Octave Project Developers
+// Copyright (C) 2002-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,8 +30,6 @@
 #include <list>
 #include <sstream>
 
-#include <pcre.h>
-
 #include "base-list.h"
 #include "oct-locbuf.h"
 #include "quit.h"
@@ -46,7 +44,7 @@
 #include "ovl.h"
 #include "utils.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Replace backslash escapes in a string with the real values.  We need
 // two special functions instead of the one in utils.cc because the set
@@ -93,35 +91,35 @@ do_regexp_ptn_string_escapes (const std::string& s, bool is_sq_str)
               break;
 
             case 'o': // octal input
-            {
-              bool bad_esc_seq = (j+1 >= len);
+              {
+                bool bad_esc_seq = (j+1 >= len);
 
-              bool brace = false;
-              if (! bad_esc_seq && s[++j] == '{')
-                {
-                  brace = true;
-                  j++;
-                }
+                bool brace = false;
+                if (! bad_esc_seq && s[++j] == '{')
+                  {
+                    brace = true;
+                    j++;
+                  }
 
-              int tmpi = 0;
-              std::size_t k;
-              for (k = j; k < std::min (j+3+brace, len); k++)
-                {
-                  int digit = s[k] - '0';
-                  if (digit < 0 || digit > 7)
-                    break;
-                  tmpi <<= 3;
-                  tmpi += digit;
-                }
-              if (bad_esc_seq || (brace && s[k++] != '}'))
-                {
-                  tmpi = 0;
-                  warning (R"(malformed octal escape sequence '\o' -- converting to '\0')");
-                }
-              retval[i] = tmpi;
-              j = k - 1;
-              break;
-            }
+                int tmpi = 0;
+                std::size_t k;
+                for (k = j; k < std::min (j+3+brace, len); k++)
+                  {
+                    int digit = s[k] - '0';
+                    if (digit < 0 || digit > 7)
+                      break;
+                    tmpi <<= 3;
+                    tmpi += digit;
+                  }
+                if (bad_esc_seq || (brace && s[k++] != '}'))
+                  {
+                    tmpi = 0;
+                    warning (R"(malformed octal escape sequence '\o' -- converting to '\0')");
+                  }
+                retval[i] = tmpi;
+                j = k - 1;
+                break;
+              }
 
             default:  // pass escape sequence through
               retval[i] = '\\';
@@ -196,89 +194,89 @@ do_regexp_rep_string_escapes (const std::string& s)
             case '5':
             case '6':
             case '7': // octal input
-            {
-              std::size_t k;
-              int tmpi = s[j] - '0';
-              for (k = j+1; k < std::min (j+3, len); k++)
-                {
-                  int digit = s[k] - '0';
-                  if (digit < 0 || digit > 7)
-                    break;
-                  tmpi <<= 3;
-                  tmpi += digit;
-                }
-              retval[i] = tmpi;
-              j = k - 1;
-              break;
-            }
+              {
+                std::size_t k;
+                int tmpi = s[j] - '0';
+                for (k = j+1; k < std::min (j+3, len); k++)
+                  {
+                    int digit = s[k] - '0';
+                    if (digit < 0 || digit > 7)
+                      break;
+                    tmpi <<= 3;
+                    tmpi += digit;
+                  }
+                retval[i] = tmpi;
+                j = k - 1;
+                break;
+              }
 
             case 'o': // octal input
-            {
-              bool bad_esc_seq = (j+1 >= len);
+              {
+                bool bad_esc_seq = (j+1 >= len);
 
-              bool brace = false;
-              if (! bad_esc_seq && s[++j] == '{')
-                {
-                  brace = true;
-                  j++;
-                }
+                bool brace = false;
+                if (! bad_esc_seq && s[++j] == '{')
+                  {
+                    brace = true;
+                    j++;
+                  }
 
-              int tmpi = 0;
-              std::size_t k;
-              for (k = j; k < std::min (j+3+brace, len); k++)
-                {
-                  int digit = s[k] - '0';
-                  if (digit < 0 || digit > 7)
-                    break;
-                  tmpi <<= 3;
-                  tmpi += digit;
-                }
-              if (bad_esc_seq || (brace && s[k++] != '}'))
-                {
-                  warning (R"(malformed octal escape sequence '\o' -- converting to '\0')");
-                  tmpi = 0;
-                }
-              retval[i] = tmpi;
-              j = k - 1;
-              break;
-            }
+                int tmpi = 0;
+                std::size_t k;
+                for (k = j; k < std::min (j+3+brace, len); k++)
+                  {
+                    int digit = s[k] - '0';
+                    if (digit < 0 || digit > 7)
+                      break;
+                    tmpi <<= 3;
+                    tmpi += digit;
+                  }
+                if (bad_esc_seq || (brace && s[k++] != '}'))
+                  {
+                    warning (R"(malformed octal escape sequence '\o' -- converting to '\0')");
+                    tmpi = 0;
+                  }
+                retval[i] = tmpi;
+                j = k - 1;
+                break;
+              }
 
             case 'x': // hex input
-            {
-              bool bad_esc_seq = (j+1 >= len);
+              {
+                bool bad_esc_seq = (j+1 >= len);
 
-              bool brace = false;
-              if (! bad_esc_seq && s[++j] == '{')
-                {
-                  brace = true;
-                  j++;
-                }
+                bool brace = false;
+                if (! bad_esc_seq && s[++j] == '{')
+                  {
+                    brace = true;
+                    j++;
+                  }
 
-              int tmpi = 0;
-              std::size_t k;
-              for (k = j; k < std::min (j+2+brace, len); k++)
-                {
-                  if (! isxdigit (s[k]))
-                    break;
+                int tmpi = 0;
+                std::size_t k;
+                for (k = j; k < std::min (j+2+brace, len); k++)
+                  {
+                    if (! isxdigit (s[k]))
+                      break;
 
-                  tmpi <<= 4;
-                  int digit = s[k];
-                  if (digit >= 'a')
-                    tmpi += digit - 'a' + 10;
-                  else if (digit >= 'A')
-                    tmpi += digit - 'A' + 10;
-                  else
-                    tmpi += digit - '0';
-                }
-              if (bad_esc_seq || (brace && s[k++] != '}'))
-                {
-                  warning (R"(malformed hex escape sequence '\x' -- converting to '\0')");
-                  tmpi = 0;
-                }
-              retval[i] = tmpi;
-              j = k - 1;
-              break;
-            }
+                    tmpi <<= 4;
+                    int digit = s[k];
+                    if (digit >= 'a')
+                      tmpi += digit - 'a' + 10;
+                    else if (digit >= 'A')
+                      tmpi += digit - 'A' + 10;
+                    else
+                      tmpi += digit - '0';
+                  }
+                if (bad_esc_seq || (brace && s[k++] != '}'))
+                  {
+                    warning (R"(malformed hex escape sequence '\x' -- converting to '\0')");
+                    tmpi = 0;
+                  }
+                retval[i] = tmpi;
+                j = k - 1;
+                break;
+              }
 
             // Both dollar sign (for capture buffer) and backslash are
             // passed through with their escape backslash.  The processing
@@ -882,6 +880,13 @@ may lead to a segfault.  As an alternative, consider constructing pattern
 searches that reduce the number of matches (e.g., by creatively using set
 complement), and then further processing the return variables (now reduced in
 size) with successive @code{regexp} searches.
+
+Octave's @code{regexp} implementation is based on the Perl Compatible
+Regular Expressions library (@url{https://www.pcre.org/}).  For a more
+comprehensive list of @code{regexp} operator syntax see the
+@url{https://www.pcre.org/current/doc/html/pcre2syntax.html,,
+"PCRE Syntax quick-reference summary"}.
+
 @seealso{regexpi, strfind, regexprep}
 @end deftypefn */)
 {
@@ -912,6 +917,7 @@ size) with successive @code{regexp} searches.
 
 ## segfault test
 %!assert (regexp ("abcde", "."), [1,2,3,4,5])
+%!assert <*62704> (regexpi('(', '\(?'), 1)
 ## Infinite loop test
 %!assert (isempty (regexp ("abcde", "")))
 
@@ -919,6 +925,10 @@ size) with successive @code{regexp} searches.
 %!assert (regexp ('abcabc', '^abc'), 1)
 %!assert (regexp ('abcabc', 'abc$'), 4)
 %!assert (regexp ('abcabc', '^abc$'), zeros (1,0))
+
+## UTF-8 test with character vector "âé🙂ïõù"
+%!assert (regexp (char ([195, 162, 195, 169, 240, 159, 153, 130, 195, 175, ...
+%!                       195, 181, 195, 185]), "."), [1, 3, 5, 9, 11, 13])
 
 %!test
 %! [s, e, te, m, t] = regexp (' No Match ', 'f(.*)uck');
@@ -1127,8 +1137,10 @@ size) with successive @code{regexp} searches.
 %! assert (isempty (fieldnames (nm)));
 %! assert (sp, { "", "", "A", "", "E", "" });
 
-%!assert (regexp ({'asdfg-dfd';'-dfd-dfd-';'qasfdfdaq'}, '-'), {6;[1,5,9];zeros(1,0)})
-%!assert (regexp ({'asdfg-dfd';'-dfd-dfd-';'qasfdfdaq'}, {'-';'f';'q'}), {6;[3,7];[1,9]})
+%!assert (regexp ({'asdfg-dfd';'-dfd-dfd-';'qasfdfdaq'}, '-'),
+%!        {6;[1,5,9];zeros(1,0)})
+%!assert (regexp ({'asdfg-dfd';'-dfd-dfd-';'qasfdfdaq'}, {'-';'f';'q'}),
+%!        {6;[3,7];[1,9]})
 %!assert (regexp ('Strings', {'t','s'}), {2, 7})
 
 ## Test case for lookaround operators
@@ -1158,7 +1170,7 @@ size) with successive @code{regexp} searches.
 %! assert (b, {"foo bar foo"});
 %!test
 %! [a, b] = regexp (str, "fx.", "match", "split", "once");
-%! assert (a, "");;
+%! assert (a, "");
 %! assert (b, "foo bar foo");
 
 %!shared str
@@ -1196,6 +1208,12 @@ size) with successive @code{regexp} searches.
 %! assert (regexp ('foo!+bar', '.\>'), [3, 4, 8]);
 %! assert (regexp ('foo!+bar\nbar!+foo', '.\>'), [3, 4, 8, 13, 14, 18]);
 %! assert (regexp ('foo!+bar\nbar!+foo', '\<\w'), [1, 6, 10, 16]);
+
+## Test "incomplete" named patterns
+%!assert <*62705> (regexpi ('<', '\(?<'), 1)
+%!assert <*62705> (regexpi ('<n>', '\(?<n\>'), 1)
+%!assert <*62705> (regexpi ('<n>', '\(?<n\>\)?'), 1)
+%!assert <62705> (regexpi ('<n>a', '\(?<n\>a\)?'), 1)
 
 ## Test input validation
 %!error regexp ('string', 'tri', 'BadArg')
@@ -1351,9 +1369,12 @@ pattern.
 %!error regexpi ('string', 'tri', 'BadArg')
 %!error regexpi ('string')
 
-%!assert (regexpi ({'asdfg-dfd';'-dfd-dfd-';'qasfdfdaq'}, '-'), {6;[1,5,9];zeros(1, 0)})
-%!assert (regexpi ({'asdfg-dfd', '-dfd-dfd-', 'qasfdfdaq'}, '-'), {6, [1,5,9], zeros(1,0)})
-%!assert (regexpi ({'asdfg-dfd';'-dfd-dfd-';'qasfdfdaq'}, {'-';'f';'q'}), {6;[3,7];[1,9]})
+%!assert (regexpi ({'asdfg-dfd';'-dfd-dfd-';'qasfdfdaq'}, '-'),
+%!        {6;[1,5,9];zeros(1, 0)})
+%!assert (regexpi ({'asdfg-dfd', '-dfd-dfd-', 'qasfdfdaq'}, '-'),
+%!        {6, [1,5,9], zeros(1,0)})
+%!assert (regexpi ({'asdfg-dfd';'-dfd-dfd-';'qasfdfdaq'}, {'-';'f';'q'}),
+%!        {6;[3,7];[1,9]})
 %!assert (regexpi ('Strings', {'t', 's'}), {2, [1, 7]})
 
 %!assert (regexpi ("\n", '\n'), 1)
@@ -1588,7 +1609,8 @@ function.
 
 ## Empty matches were broken on ARM architecture
 %!test <*52810>
-%! assert (strcmp (regexprep ("\nabc", "^(\t*)(abc)$", "$1$2", "lineanchors"), "\nabc"))
+%! assert (strcmp (regexprep ("\nabc", "^(\t*)(abc)$", "$1$2", "lineanchors"),
+%!                 "\nabc"));
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

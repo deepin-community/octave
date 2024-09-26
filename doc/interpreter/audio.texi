@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -40,6 +40,11 @@ wav, flac and ogg vorbis.
 
 @c audioinfo libinterp/dldfcn/audioread.cc
 @anchor{XREFaudioinfo}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{info} =} audioinfo (@var{filename})
 Return information about an audio file specified by @var{filename}.
 
@@ -86,6 +91,11 @@ Audio bit rate.  Unused, only present for compatibility with @sc{matlab}.
 
 @c audioread libinterp/dldfcn/audioread.cc
 @anchor{XREFaudioread}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{y}, @var{fs}] =} audioread (@var{filename})
 @deftypefnx {} {[@var{y}, @var{fs}] =} audioread (@var{filename}, @var{samples})
 
@@ -109,6 +119,11 @@ is stored in the audio file.
 
 @c audiowrite libinterp/dldfcn/audioread.cc
 @anchor{XREFaudiowrite}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} audiowrite (@var{filename}, @var{y}, @var{fs})
 @deftypefnx {} {} audiowrite (@var{filename}, @var{y}, @var{fs}, @var{name}, @var{value}, @dots{})
 
@@ -145,6 +160,11 @@ Comment.
 
 @c audioformats libinterp/dldfcn/audioread.cc
 @anchor{XREFaudioformats}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} audioformats ()
 @deftypefnx {} {} audioformats (@var{format})
 Display information about all supported audio formats.
@@ -160,6 +180,11 @@ with names that start with @var{format}.
 
 @c audiodevinfo libinterp/dldfcn/audiodevinfo.cc
 @anchor{XREFaudiodevinfo}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{devinfo} =} audiodevinfo ()
 
 @deftypefnx {} {@var{devs} =} audiodevinfo (@var{io})
@@ -210,6 +235,11 @@ playback, convenient pausing and resuming and much more.
 
 @c @audioplayer/audioplayer scripts/audio/@audioplayer/audioplayer.m
 @anchor{XREF@@audioplayer/audioplayer}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{player} =} audioplayer (@var{y}, @var{fs})
 @deftypefnx {} {@var{player} =} audioplayer (@var{y}, @var{fs}, @var{nbits})
 @deftypefnx {} {@var{player} =} audioplayer (@var{y}, @var{fs}, @var{nbits}, @var{id})
@@ -218,16 +248,35 @@ playback, convenient pausing and resuming and much more.
 Create an audioplayer object that will play back data @var{y} at sample
 rate @var{fs}.
 
-The optional arguments @var{nbits}, and @var{id} specify the bit depth and
-player device id, respectively.  Device IDs may be found using the
-audiodevinfo function.  Given an audioplayer object, use the data from the
-object to initialize the player.
+The signal @var{y} can be a vector (mono audio) or a two-dimensional array
+(multi-channel audio).
 
-The signal @var{y} can be a vector or a two-dimensional array.
+The optional arguments @var{nbits} and @var{id} specify the number of bits
+per sample and player device ID, respectively.  Device IDs may be found
+using the @code{audiodevinfo} function.
 
-The following example will create an audioplayer object that will play
-back one second of white noise at 44100 sample rate using 8 bits per
-sample.
+Given an audiorecorder object @var{recorder}, use the data from the object
+to initialize the player.
+
+The list of actions for an audioplayer object are shown below.  All
+methods require an audioplayer object as the first argument.
+
+@multitable @columnfractions 0.2 0.75
+@headitem Method @tab Description
+@item get @tab Read audioplayer property values
+@item isplaying @tab Return true if audioplayer is playing
+@item pause @tab Pause audioplayer playback
+@item play @tab Play audio stored in audioplayer object w/o blocking
+@item playblocking @tab Play audio stored in audioplayer object
+@item resume @tab Resume playback after pause
+@item set @tab Write audioplayer property values
+@item stop @tab Stop playback
+@end multitable
+
+Example
+
+Create an audioplayer object that will play back one second of white noise
+at 44100 sample rate using 8 bits per sample.
 
 @example
 @group
@@ -236,6 +285,7 @@ player = audioplayer (y, 44100, 8);
 play (player);
 @end group
 @end example
+@xseealso{@ref{XREF@@audioplayer/get,,@@audioplayer/get}, @ref{XREF@@audioplayer/isplaying,,@@audioplayer/isplaying}, @ref{XREF@@audioplayer/pause,,@@audioplayer/pause}, @ref{XREF@@audioplayer/play,,@@audioplayer/play}, @ref{XREF@@audioplayer/playblocking,,@@audioplayer/playblocking}, @ref{XREF@@audioplayer/resume,,@@audioplayer/resume}, @ref{XREF@@audioplayer/set,,@@audioplayer/set}, @ref{XREF@@audioplayer/stop,,@@audioplayer/stop}, @ref{XREFaudiodevinfo,,audiodevinfo}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}, @ref{XREFsound,,sound}, @ref{XREFsoundsc,,soundsc}}
 @end deftypefn
 
 
@@ -251,57 +301,98 @@ The following methods are used to control player playback.
 
 @c @audioplayer/play scripts/audio/@audioplayer/play.m
 @anchor{XREF@@audioplayer/play}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} play (@var{player})
 @deftypefnx {} {} play (@var{player}, @var{start})
-@deftypefnx {} {} play (@var{player}, @var{limits})
+@deftypefnx {} {} play (@var{player}, [@var{start}, @var{end}])
 Play audio stored in the audioplayer object @var{player} without blocking.
 
-Given optional argument start, begin playing at @var{start} samples in the
-recording.  Given a two-element vector @var{limits}, begin and end playing
-at the number of samples specified by the elements of the vector.
+If the optional argument @var{start} is provided, begin playing
+@var{start} samples in to the recording.
+
+If the optional argument @var{end} is provided, stop playing at
+@var{end} samples into the recording.
+@xseealso{@ref{XREF@@audioplayer/playblocking,,@@audioplayer/playblocking}, @ref{XREF@@audioplayer/pause,,@@audioplayer/pause}, @ref{XREF@@audioplayer/stop,,@@audioplayer/stop}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}}
 @end deftypefn
 
 
 @c @audioplayer/playblocking scripts/audio/@audioplayer/playblocking.m
 @anchor{XREF@@audioplayer/playblocking}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} playblocking (@var{player})
 @deftypefnx {} {} playblocking (@var{player}, @var{start})
-@deftypefnx {} {} playblocking (@var{player}, @var{limits})
-Play audio stored in the audioplayer object @var{player} with blocking.
+@deftypefnx {} {} playblocking (@var{player}, [@var{start}, @var{end}])
+Play audio stored in the audioplayer object @var{player} with blocking
+(synchronous I/O).
 
-Given optional argument start, begin playing at @var{start} samples in the
-recording.  Given a two-element vector @var{limits}, begin and end playing
-at the number of samples specified by the elements of the vector.
+If the optional argument @var{start} is provided, begin playing
+@var{start} samples into the recording.
+
+If the optional argument @var{end} is provided, stop playing at
+@var{end} samples into the recording.
+@xseealso{@ref{XREF@@audioplayer/play,,@@audioplayer/play}, @ref{XREF@@audioplayer/pause,,@@audioplayer/pause}, @ref{XREF@@audioplayer/stop,,@@audioplayer/stop}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}}
 @end deftypefn
 
 
 @c @audioplayer/pause scripts/audio/@audioplayer/pause.m
 @anchor{XREF@@audioplayer/pause}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} pause (@var{player})
-Pause the audioplayer @var{player}.
+Pause playback of audioplayer @var{player}.
+@xseealso{@ref{XREF@@audioplayer/resume,,@@audioplayer/resume}, @ref{XREF@@audioplayer/stop,,@@audioplayer/stop}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}}
 @end deftypefn
 
 
 @c @audioplayer/resume scripts/audio/@audioplayer/resume.m
 @anchor{XREF@@audioplayer/resume}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} resume (@var{player})
 Resume playback for the paused audioplayer object @var{player}.
+@xseealso{@ref{XREF@@audioplayer/pause,,@@audioplayer/pause}, @ref{XREF@@audioplayer/stop,,@@audioplayer/stop}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}}
 @end deftypefn
 
 
 @c @audioplayer/stop scripts/audio/@audioplayer/stop.m
 @anchor{XREF@@audioplayer/stop}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} stop (@var{player})
-Stop the playback for the audioplayer @var{player} and reset the
-relevant variables to their starting values.
+Stop playback of the audioplayer @var{player} and reset relevant variables
+to their initial values.
+@xseealso{@ref{XREF@@audioplayer/pause,,@@audioplayer/pause}, @ref{XREF@@audioplayer/resume,,@@audioplayer/resume}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}}
 @end deftypefn
 
 
 @c @audioplayer/isplaying scripts/audio/@audioplayer/isplaying.m
 @anchor{XREF@@audioplayer/isplaying}
-@deftypefn {} {} isplaying (@var{player})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isplaying (@var{player})
 Return true if the audioplayer object @var{player} is currently playing back
 audio and false otherwise.
+@xseealso{@ref{XREF@@audioplayer/pause,,@@audioplayer/pause}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}}
 @end deftypefn
 
 
@@ -313,30 +404,44 @@ properties of the audioplayer object.
 
 @c @audioplayer/get scripts/audio/@audioplayer/get.m
 @anchor{XREF@@audioplayer/get}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{value} =} get (@var{player}, @var{name})
+@deftypefnx {} {@var{values} =} get (@var{player}, @lbracechar{}@var{name1}, @var{name2}, @dots{}@rbracechar{})
 @deftypefnx {} {@var{values} =} get (@var{player})
 Return the @var{value} of the property identified by @var{name}.
 
 If @var{name} is a cell array return the values of the properties
 identified by the elements of the cell array.  Given only the player
-object, return a scalar structure with values of all properties of
-@var{player}.  The field names of the structure correspond to property
+object, return a scalar structure with values for all properties of
+@var{player}.  The field names of the structure correspond to the property
 names.
+@xseealso{@ref{XREF@@audioplayer/set,,@@audioplayer/set}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}}
 @end deftypefn
 
 
 @c @audioplayer/set scripts/audio/@audioplayer/set.m
 @anchor{XREF@@audioplayer/set}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} set (@var{player}, @var{name}, @var{value})
-@deftypefnx {} {} set (@var{player}, @var{properties})
+@deftypefnx {} {} set (@var{player}, @var{name_cell}, @var{value_cell})
+@deftypefnx {} {} set (@var{player}, @var{properties_struct})
 @deftypefnx {} {@var{properties} =} set (@var{player})
 Set the value of property specified by @var{name} to a given @var{value}.
 
 If @var{name} and @var{value} are cell arrays, set each property to the
-corresponding value.  Given a structure of @var{properties} with fields
+corresponding value.  Given a structure of properties with fields
 corresponding to property names, set the value of those properties to the
-field values.  Given only the audioplayer object, return a structure of
-settable properties.
+corresponding field values.  Given only an audioplayer object, return a
+structure of configurable properties (i.e., writeable properties).
+@xseealso{@ref{XREF@@audioplayer/get,,@@audioplayer/get}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}}
 @end deftypefn
 
 
@@ -352,17 +457,41 @@ resuming recording and much more is available.
 
 @c @audiorecorder/audiorecorder scripts/audio/@audiorecorder/audiorecorder.m
 @anchor{XREF@@audiorecorder/audiorecorder}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{recorder} =} audiorecorder ()
-@deftypefnx {} {@var{recorder} =} audiorecorder (@var{fs}, @var{nbits}, @var{channels})
-@deftypefnx {} {@var{recorder} =} audiorecorder (@var{fs}, @var{nbits}, @var{channels}, @var{id})
-Create an audiorecorder object recording 8 bit mono audio at 8000 Hz
+@deftypefnx {} {@var{recorder} =} audiorecorder (@var{fs}, @var{nbits}, @var{nchannels})
+@deftypefnx {} {@var{recorder} =} audiorecorder (@var{fs}, @var{nbits}, @var{nchannels}, @var{id})
+Create an audiorecorder object recording 8-bit mono audio at 8000 Hz
 sample rate.
 
-The optional arguments @var{fs}, @var{nbits}, @var{channels}, and @var{id}
-specify the sample rate, bit depth, number of channels and recording
-device id, respectively.  Device IDs may be found using the audiodevinfo
-function.
+The optional arguments @var{fs}, @var{nbits}, @var{nchannels}, and @var{id}
+specify the sample rate, number of bits per sample, number of channels, and
+recording device ID, respectively.  Device IDs may be found using the
+@code{audiodevinfo} function.
+
+The list of actions for an audiorecorder object are shown below.  All
+methods require an audiorecorder object as the first argument.
+
+@multitable @columnfractions 0.22 0.73
+@headitem Method @tab Description
+@item get @tab Read audiorecorder property values
+@item getaudiodata @tab Return audio data as a numeric matrix
+@item getplayer @tab Return audioplayer loaded with data from audiorecorder
+@item isrecording @tab Return true if audiorecorder is recording
+@item pause @tab Pause recording
+@item play @tab Play audio stored in audiorecorder object
+@item record @tab Record audio in audiorecorder object w/o blocking
+@item recordblocking @tab Record audio in audiorecorder object
+@item resume @tab Resume recording after pause
+@item set @tab Write audiorecorder property values
+@item stop @tab Stop recording
+@end multitable
 @end deftypefn
+@xseealso{@ref{XREF@@audiorecorder/get,,@@audiorecorder/get}, @ref{XREF@@audiorecorder/getaudiodata,,@@audiorecorder/getaudiodata}, @ref{XREF@@audiorecorder/getplayer,,@@audiorecorder/getplayer}, @ref{XREF@@audiorecorder/isrecording,,@@audiorecorder/isrecording}, @ref{XREF@@audiorecorder/pause,,@@audiorecorder/pause}, @ref{XREF@@audiorecorder/play,,@@audiorecorder/play}, @ref{XREF@@audiorecorder/record,,@@audiorecorder/record}, @ref{XREF@@audiorecorder/recordblocking,,@@audiorecorder/recordblocking}, @ref{XREF@@audioplayer/resume,,@@audioplayer/resume}, @ref{XREF@@audiorecorder/set,,@@audiorecorder/set}, @ref{XREF@@audiorecorder/stop,,@@audiorecorder/stop}, @ref{XREFaudiodevinfo,,audiodevinfo}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}, @ref{XREFrecord,,record}}
 
 
 @menu
@@ -378,51 +507,88 @@ The following methods control the recording process.
 
 @c @audiorecorder/record scripts/audio/@audiorecorder/record.m
 @anchor{XREF@@audiorecorder/record}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} record (@var{recorder})
 @deftypefnx {} {} record (@var{recorder}, @var{length})
 Record audio without blocking using the audiorecorder object
-@var{recorder} until stopped or paused by the @var{stop} or @var{pause}
-method.
+@var{recorder} until paused or stopped by the @var{pause} or @var{stop}
+methods.
 
 Given the optional argument @var{length}, record for @var{length} seconds.
+@xseealso{@ref{XREF@@audiorecorder/recordblocking,,@@audiorecorder/recordblocking}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
 @c @audiorecorder/recordblocking scripts/audio/@audiorecorder/recordblocking.m
 @anchor{XREF@@audiorecorder/recordblocking}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} recordblocking (@var{recorder}, @var{length})
 Record audio with blocking (synchronous I/O).
 
 The length of the recording in seconds (@var{length}) must be specified.
+@xseealso{@ref{XREF@@audiorecorder/record,,@@audiorecorder/record}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
 @c @audiorecorder/pause scripts/audio/@audiorecorder/pause.m
 @anchor{XREF@@audiorecorder/pause}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} pause (@var{recorder})
-Pause recording with audiorecorder object @var{recorder}.
+Pause recording for audiorecorder @var{recorder}.
+@xseealso{@ref{XREF@@audiorecorder/resume,,@@audiorecorder/resume}, @ref{XREF@@audiorecorder/stop,,@@audiorecorder/stop}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
 @c @audiorecorder/resume scripts/audio/@audiorecorder/resume.m
 @anchor{XREF@@audiorecorder/resume}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} resume (@var{recorder})
 Resume recording with the paused audiorecorder object @var{recorder}.
+@xseealso{@ref{XREF@@audiorecorder/pause,,@@audiorecorder/pause}, @ref{XREF@@audiorecorder/stop,,@@audiorecorder/stop}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
 @c @audiorecorder/stop scripts/audio/@audiorecorder/stop.m
 @anchor{XREF@@audiorecorder/stop}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} stop (@var{recorder})
-Stop the audiorecorder object @var{recorder} and clean up any audio streams.
+Stop recording with audiorecorder object @var{recorder} and clean up any
+audio streams.
+@xseealso{@ref{XREF@@audiorecorder/pause,,@@audiorecorder/pause}, @ref{XREF@@audiorecorder/resume,,@@audiorecorder/resume}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
 @c @audiorecorder/isrecording scripts/audio/@audiorecorder/isrecording.m
 @anchor{XREF@@audiorecorder/isrecording}
-@deftypefn {} {} isrecording (@var{recorder})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isrecording (@var{recorder})
 Return true if the audiorecorder object @var{recorder} is currently
 recording audio and false otherwise.
+@xseealso{@ref{XREF@@audiorecorder/pause,,@@audiorecorder/pause}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
@@ -434,38 +600,57 @@ various ways.
 
 @c @audiorecorder/getaudiodata scripts/audio/@audiorecorder/getaudiodata.m
 @anchor{XREF@@audiorecorder/getaudiodata}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{data} =} getaudiodata (@var{recorder})
 @deftypefnx {} {@var{data} =} getaudiodata (@var{recorder}, @var{datatype})
-Return recorder audio data as a matrix with values between -1.0 and 1.0
-and with as many columns as there are channels in the recorder.
+Return audio data from audiorecorder object @var{recorder} as a double
+matrix with values between -1.0 and 1.0 and with as many columns as there
+are channels in @var{recorder}.
 
 Given the optional argument @var{datatype}, convert the recorded data
 to the specified type, which may be one of @qcode{"double"},
 @qcode{"single"}, @qcode{"int16"}, @qcode{"int8"} or @qcode{"uint8"}.
+@xseealso{@ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
 @c @audiorecorder/getplayer scripts/audio/@audiorecorder/getplayer.m
 @anchor{XREF@@audiorecorder/getplayer}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{player} =} getplayer (@var{recorder})
 Return an audioplayer object with data recorded by the audiorecorder object
 @var{recorder}.
+@xseealso{@ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
 @c @audiorecorder/play scripts/audio/@audiorecorder/play.m
 @anchor{XREF@@audiorecorder/play}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{player} =} play (@var{recorder})
 @deftypefnx {} {@var{player} =} play (@var{recorder}, @var{start})
 @deftypefnx {} {@var{player} =} play (@var{recorder}, [@var{start}, @var{end}])
-Play the audio recorded in @var{recorder} and return a corresponding
-audioplayer object.
+Play the audio recorded in @var{recorder} without blocking and return a
+corresponding audioplayer object.
 
 If the optional argument @var{start} is provided, begin playing
-@var{start} seconds in to the recording.
+@var{start} seconds into the recording.
 
 If the optional argument @var{end} is provided, stop playing at
-@var{end} seconds in the recording.
+@var{end} seconds into the recording.
+@xseealso{@ref{XREF@@audiorecorder/getplayer,,@@audiorecorder/getplayer}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
@@ -477,30 +662,44 @@ audiorecorder objects.
 
 @c @audiorecorder/get scripts/audio/@audiorecorder/get.m
 @anchor{XREF@@audiorecorder/get}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{value} =} get (@var{recorder}, @var{name})
+@deftypefnx {} {@var{values} =} get (@var{recorder}, @lbracechar{}@var{name1}, @var{name2}, @dots{}@rbracechar{})
 @deftypefnx {} {@var{values} =} get (@var{recorder})
 Return the @var{value} of the property identified by @var{name}.
 
-If @var{name} is a cell array, return the values of the properties
-corresponding to the elements of the cell array.  Given only the recorder
-object, return a scalar structure with values of all properties of
-@var{recorder}.  The field names of the structure correspond to property
+If @var{name} is a cell array return the values of the properties
+identified by the elements of the cell array.  Given only the recorder
+object, return a scalar structure with values for all properties of
+@var{recorder}.  The field names of the structure correspond to the property
 names.
+@xseealso{@ref{XREF@@audiorecorder/set,,@@audiorecorder/set}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
 @c @audiorecorder/set scripts/audio/@audiorecorder/set.m
 @anchor{XREF@@audiorecorder/set}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} set (@var{recorder}, @var{name}, @var{value})
-@deftypefnx {} {} set (@var{recorder}, @var{properties})
+@deftypefnx {} {} set (@var{recorder}, @var{name_cell}, @var{value_cell})
+@deftypefnx {} {} set (@var{recorder}, @var{properties_struct})
 @deftypefnx {} {@var{properties} =} set (@var{recorder})
 Set the value of property specified by @var{name} to a given @var{value}.
 
-If @var{name} and @var{value} are cell arrays of the same size, set each
-property to a corresponding value.  Given a structure with fields
+If @var{name} and @var{value} are cell arrays, set each property to a
+corresponding value.  Given a structure of properties with fields
 corresponding to property names, set the value of those properties to the
-corresponding field values.  Given only the recorder object, return a
-structure of settable properties.
+corresponding field values.  Given only a recorder object, return a
+structure of configurable properties (i.e., writeable properties).
+@xseealso{@ref{XREF@@audiorecorder/get,,@@audiorecorder/get}, @ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}}
 @end deftypefn
 
 
@@ -531,37 +730,57 @@ files holding data in mu-law encoding end in @file{au}, @file{mu}, or
 
 @c lin2mu scripts/audio/lin2mu.m
 @anchor{XREFlin2mu}
-@deftypefn {} {@var{y} =} lin2mu (@var{x}, @var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} lin2mu (@var{x})
+@deftypefnx {} {@var{y} =} lin2mu (@var{x}, @var{n})
 Convert audio data from linear to mu-law.
 
-Mu-law values use 8-bit unsigned integers.  Linear values use @var{n}-bit
-signed integers or floating point values in the range -1 @leq{} @var{x}
-@leq{} 1 if @var{n} is 0.
-
-If @var{n} is not specified it defaults to 0, 8, or 16 depending on
-the range of values in @var{x}.
+Linear values use floating point values in the range -1 @leq{} @var{x}
+@leq{} 1 if @var{n} is 0 (default), or @var{n}-bit signed integers if @var{n}
+is 8 or 16.  Mu-law values are 8-bit unsigned integers in the range
+0 @leq{} @var{y} @leq{} 255.
 @xseealso{@ref{XREFmu2lin,,mu2lin}}
 @end deftypefn
 
 
 @c mu2lin scripts/audio/mu2lin.m
 @anchor{XREFmu2lin}
-@deftypefn {} {@var{y} =} mu2lin (@var{x}, @var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} mu2lin (@var{x})
+@deftypefnx {} {@var{y} =} mu2lin (@var{x}, @var{n})
 Convert audio data from mu-law to linear.
 
-Mu-law values are 8-bit unsigned integers.  Linear values use @var{n}-bit
-signed integers or floating point values in the range -1 @leq{} @var{y}
-@leq{} 1 if @var{n} is 0.
+Mu-law values are 8-bit unsigned integers in the range 0 @leq{} @var{y}
+@leq{} 255.  Linear values use floating point values in the range
+-@var{linmax} @leq{} @var{x} @var{linmax} (where
+@code{@var{linmax} = 32124/32768 =~ 0.98}) when @var{n} is zero (default).
+If @var{n} is 8 or 16 then @var{n}-bit signed integers are used instead.
 
-If @var{n} is not specified it defaults to 0.
+Programming Note: @code{mu2lin} maps maximum mu-law inputs to values
+slightly below the maximum ([-0.98, +0.98]) representable with a linear
+scale.  Because of this, @code{mu2lin (lin2mu (@var{x}))} might not
+reproduce the original input.
 @xseealso{@ref{XREFlin2mu,,lin2mu}}
 @end deftypefn
 
 
 @c record scripts/audio/record.m
 @anchor{XREFrecord}
-@deftypefn  {} {} record (@var{sec})
-@deftypefnx {} {} record (@var{sec}, @var{fs})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{data} =} record (@var{sec})
+@deftypefnx {} {@var{data} =} record (@var{sec}, @var{fs})
 Record @var{sec} seconds of audio from the system's default audio input at
 a sampling rate of 8000 samples per second.
 
@@ -569,19 +788,24 @@ If the optional argument @var{fs} is given, it specifies the sampling rate
 for recording.
 
 For more control over audio recording, use the @code{audiorecorder} class.
-@xseealso{@ref{XREFsound,,sound}, @ref{XREFsoundsc,,soundsc}}
+@xseealso{@ref{XREF@@audiorecorder/audiorecorder,,@@audiorecorder/audiorecorder}, @ref{XREFsound,,sound}, @ref{XREFsoundsc,,soundsc}}
 @end deftypefn
 
 
 @c sound scripts/audio/sound.m
 @anchor{XREFsound}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} sound (@var{y})
 @deftypefnx {} {} sound (@var{y}, @var{fs})
 @deftypefnx {} {} sound (@var{y}, @var{fs}, @var{nbits})
 Play audio data @var{y} at sample rate @var{fs} to the default audio
 device.
 
-The audio signal @var{y} can be a vector or a two-column array, representing
+The audio signal @var{y} can be a vector or a two-column array representing
 mono or stereo audio, respectively.
 
 If @var{fs} is not given, a default sample rate of 8000 samples per second
@@ -591,12 +815,17 @@ The optional argument @var{nbits} specifies the bit depth to play to the
 audio device and defaults to 8 bits.
 
 For more control over audio playback, use the @code{audioplayer} class.
-@xseealso{@ref{XREFsoundsc,,soundsc}, @ref{XREFrecord,,record}}
+@xseealso{@ref{XREFsoundsc,,soundsc}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}, @ref{XREFrecord,,record}}
 @end deftypefn
 
 
 @c soundsc scripts/audio/soundsc.m
 @anchor{XREFsoundsc}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} soundsc (@var{y})
 @deftypefnx {} {} soundsc (@var{y}, @var{fs})
 @deftypefnx {} {} soundsc (@var{y}, @var{fs}, @var{nbits})
@@ -604,7 +833,7 @@ For more control over audio playback, use the @code{audioplayer} class.
 Scale the audio data @var{y} and play it at sample rate @var{fs} to the
 default audio device.
 
-The audio signal @var{y} can be a vector or a two-column array, representing
+The audio signal @var{y} can be a vector or a two-column array representing
 mono or stereo audio, respectively.
 
 If @var{fs} is not given, a default sample rate of 8000 samples per second
@@ -619,6 +848,6 @@ that fall within the range @var{ymin} @leq{} @var{y} @leq{} @var{ymax}
 are scaled to the range [-1, 1] instead.
 
 For more control over audio playback, use the @code{audioplayer} class.
-@xseealso{@ref{XREFsound,,sound}, @ref{XREFrecord,,record}}
+@xseealso{@ref{XREFsound,,sound}, @ref{XREF@@audioplayer/audioplayer,,@@audioplayer/audioplayer}, @ref{XREFrecord,,record}}
 @end deftypefn
 

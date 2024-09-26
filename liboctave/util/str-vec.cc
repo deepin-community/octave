@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -86,7 +86,7 @@ string_vector::sort (bool make_uniq)
   return *this;
 }
 string_vector&
-string_vector::uniq (void)
+string_vector::uniq ()
 {
   octave_idx_type len = numel ();
 
@@ -154,7 +154,7 @@ string_vector::join (const std::string& sep) const
 }
 
 char **
-string_vector::c_str_vec (void) const
+string_vector::c_str_vec () const
 {
   octave_idx_type len = numel ();
 
@@ -169,7 +169,7 @@ string_vector::c_str_vec (void) const
 }
 
 std::list<std::string>
-string_vector::std_list (void) const
+string_vector::std_list () const
 {
   octave_idx_type len = numel ();
 
@@ -244,7 +244,6 @@ string_vector::list_in_columns (std::ostream& os, int width,
   for (octave_idx_type row = 0; row < nr; row++)
     {
       count = row;
-      octave_idx_type pos = 0;
 
       // Print the next row.
 
@@ -264,7 +263,6 @@ string_vector::list_in_columns (std::ostream& os, int width,
           octave_idx_type spaces_to_pad = max_name_length - name_length;
           for (octave_idx_type i = 0; i < spaces_to_pad; i++)
             os << ' ';
-          pos += max_name_length;
         }
       os << "\n";
     }

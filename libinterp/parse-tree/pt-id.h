@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -41,98 +41,99 @@ class octave_function;
 #include "pt-walk.h"
 #include "symscope.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class tree_evaluator;
+
+// Symbols from the symbol table.
+
+class tree_identifier : public tree_expression
 {
-  class tree_evaluator;
+  friend class tree_index_expression;
 
-  // Symbols from the symbol table.
+public:
 
-  class tree_identifier : public tree_expression
+  tree_identifier (int l = -1, int c = -1)
+    : tree_expression (l, c), m_sym () { }
+
+  tree_identifier (const symbol_record& s,
+                   int l = -1, int c = -1)
+    : tree_expression (l, c), m_sym (s) { }
+
+  OCTAVE_DISABLE_COPY_MOVE (tree_identifier)
+
+  ~tree_identifier () = default;
+
+  bool is_identifier () const { return true; }
+
+  std::string name () const { return m_sym.name (); }
+
+  virtual bool is_black_hole () const { return false; }
+
+  void mark_as_formal_parameter () { m_sym.mark_formal (); }
+
+  // We really need to know whether this symbol refers to a variable
+  // or a function, but we may not know that yet.
+
+  bool lvalue_ok () const { return true; }
+
+  octave_lvalue lvalue (tree_evaluator& tw);
+
+  void eval_undefined_error ();
+
+  void static_workspace_error ()
   {
-    friend class tree_index_expression;
+    error (R"(can not add variable "%s" to a static workspace)",
+           name ().c_str ());
+  }
 
-  public:
+  tree_identifier * dup (symbol_scope& scope) const;
 
-    tree_identifier (int l = -1, int c = -1)
-      : tree_expression (l, c), m_sym () { }
-
-    tree_identifier (const symbol_record& s,
-                     int l = -1, int c = -1)
-      : tree_expression (l, c), m_sym (s) { }
-
-    // No copying!
-
-    tree_identifier (const tree_identifier&) = delete;
-
-    tree_identifier& operator = (const tree_identifier&) = delete;
-
-    ~tree_identifier (void) = default;
-
-    bool is_identifier (void) const { return true; }
-
-    std::string name (void) const { return m_sym.name (); }
-
-    virtual bool is_black_hole (void) const { return false; }
-
-    void mark_as_formal_parameter (void) { m_sym.mark_formal (); }
-
-    // We really need to know whether this symbol refers to a variable
-    // or a function, but we may not know that yet.
-
-    bool lvalue_ok (void) const { return true; }
-
-    octave_lvalue lvalue (tree_evaluator& tw);
-
-    void eval_undefined_error (void);
-
-    void static_workspace_error (void)
-    {
-      error (R"(can not add variable "%s" to a static workspace)",
-             name ().c_str ());
-    }
-
-    tree_identifier * dup (symbol_scope& scope) const;
-
-    octave_value evaluate (tree_evaluator& tw, int nargout = 1)
-    {
-      octave_value_list retval = evaluate_n (tw, nargout);
-
-      return retval.length () > 0 ? retval(0) : octave_value ();
-    }
-
-    octave_value_list evaluate_n (tree_evaluator& tw, int nargout = 1);
-
-    void accept (tree_walker& tw)
-    {
-      tw.visit_identifier (*this);
-    }
-
-    symbol_record symbol (void) const { return m_sym; }
-
-  protected:
-
-    // The symbol record that this identifier references.
-    symbol_record m_sym;
-  };
-
-  class tree_black_hole : public tree_identifier
+  octave_value evaluate (tree_evaluator& tw, int nargout = 1)
   {
-  public:
+    octave_value_list retval = evaluate_n (tw, nargout);
 
-    tree_black_hole (int l = -1, int c = -1)
-      : tree_identifier (l, c) { }
+    return retval.length () > 0 ? retval(0) : octave_value ();
+  }
 
-    std::string name (void) const { return "~"; }
+  octave_value_list evaluate_n (tree_evaluator& tw, int nargout = 1);
 
-    bool is_black_hole (void) const { return true; }
+  void accept (tree_walker& tw)
+  {
+    tw.visit_identifier (*this);
+  }
 
-    tree_black_hole * dup (symbol_scope&) const
-    {
-      return new tree_black_hole;
-    }
+  symbol_record symbol () const { return m_sym; }
 
-    octave_lvalue lvalue (tree_evaluator& tw);
-  };
-}
+protected:
+
+  // The symbol record that this identifier references.
+  symbol_record m_sym;
+};
+
+class tree_black_hole : public tree_identifier
+{
+public:
+
+  tree_black_hole (int l = -1, int c = -1)
+    : tree_identifier (l, c) { }
+
+  OCTAVE_DISABLE_COPY_MOVE (tree_black_hole)
+
+  ~tree_black_hole () = default;
+
+  std::string name () const { return "~"; }
+
+  bool is_black_hole () const { return true; }
+
+  tree_black_hole * dup (symbol_scope&) const
+  {
+    return new tree_black_hole;
+  }
+
+  octave_lvalue lvalue (tree_evaluator& tw);
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

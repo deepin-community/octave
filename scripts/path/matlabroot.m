@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,17 +24,17 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} matlabroot ()
+## @deftypefn {} {@var{dir} =} matlabroot ()
 ## Return the name of the top-level Octave installation directory.
 ##
-## This is an alias for the function @w{@code{OCTAVE_HOME}} provided for
+## This is an alias for the function @w{@code{OCTAVE_HOME}}@ provided for
 ## compatibility.
 ## @seealso{OCTAVE_HOME}
 ## @end deftypefn
 
-function retval = matlabroot ()
+function dir = matlabroot ()
 
-  retval = OCTAVE_HOME ();
+  dir = OCTAVE_HOME ();
 
 endfunction
 

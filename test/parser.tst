@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -61,6 +61,7 @@
 %! assert (!a .b, logical ([1 0]));
 %! assert (3*a .b, [0 3]);
 %! assert (a. b-1, [-1 0]);
+%! warning ('off', 'Octave:colon-nonscalar-argument', 'local');
 %! assert (a. b:3, 0:3);
 %! assert (a. b>0.5, logical ([0 1]));
 %! assert (a. b&0, logical ([0 0]));
@@ -105,7 +106,7 @@
 %! assert (a, 3);
 %! assert (a' ^2, 9);
 %! assert (2 ^sin (0), 1);
-%! assert (-2 ^2, -4);;
+%! assert (-2 ^2, -4);
 %! assert (2 ^+1 ^3, 8);
 %! assert (2 ^-1 ^3, 0.125);
 %! assert (2 ^~0 ^2, 4);
@@ -364,4 +365,3 @@
 %! fail ("i:5", "warning", "imaginary part of complex colon arguments is ignored");
 %! fail ("1:5*i", "warning", "imaginary part of complex colon arguments is ignored");
 %! fail ("1:i:5", "warning", "imaginary part of complex colon arguments is ignored");
-

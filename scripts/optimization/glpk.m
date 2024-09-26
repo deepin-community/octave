@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -489,7 +489,8 @@ function [xopt, fmin, errnum, extra] = glpk (c, A, b, lb, ub, ctype, vartype, se
     print_usage ();
   endif
 
-   if (! isvector (c) || iscomplex (c) || ischar (c) || any (! isfinite (c)))
+   if (! isvector (c) || iscomplex (c) || ischar (c) || any (isinf (c))
+       || any (isnan (c)))
      error ("glpk: C must be a real vector with finite values");
   endif
   nx = length (c);
@@ -504,7 +505,7 @@ function [xopt, fmin, errnum, extra] = glpk (c, A, b, lb, ub, ctype, vartype, se
   if (! isreal (A))
     error ("glpk: A must be real valued, not %s", typeinfo (A));
   endif
-  if (any (! isfinite (A(:))))
+  if (any (isinf (A(:))) || any (isnan (A(:))))
     error ("glpk: The values in A must be finite");
   endif
 
@@ -651,6 +652,22 @@ endfunction
 %!   assert (A(i,:) * xmin <= b(i));
 %! endfor
 
+%!testif HAVE_GLPK
+%! sense = 1;
+%! c = [-1, -1]';
+%! A = [1, 0; 0, 1];
+%! b = [1, 1]';
+%! ctype = ['D', 'D']';
+%! lb = [-1, -1]';
+%! ub = [];
+%! vartype = ['I', 'I']';
+%! param.msglev = 0;
+%! [xmin, fmin, errnum, extra] = glpk (c, A, b, lb, ub, ctype, vartype, ...
+%!   sense, param);
+%! assert (fmin, c' * xmin);
+%! for i = 1:2
+%!   assert (A(i,:) * xmin <= b(i));
+%! endfor
 
 %!testif HAVE_GLPK
 %! sense = 1;

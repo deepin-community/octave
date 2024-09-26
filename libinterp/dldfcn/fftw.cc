@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2006-2022 The Octave Project Developers
+// Copyright (C) 2006-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -41,7 +41,7 @@
 #include "errwarn.h"
 #include "ov.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN_DLD (fftw, args, ,
            doc: /* -*- texinfo -*-
@@ -49,8 +49,8 @@ DEFUN_DLD (fftw, args, ,
 @deftypefnx {} {} fftw ("planner", @var{method})
 @deftypefnx {} {@var{wisdom} =} fftw ("dwisdom")
 @deftypefnx {} {} fftw ("dwisdom", @var{wisdom})
-@deftypefnx {} {} fftw ("threads", @var{nthreads})
 @deftypefnx {} {@var{nthreads} =} fftw ("threads")
+@deftypefnx {} {} fftw ("threads", @var{nthreads})
 
 Manage @sc{fftw} wisdom data.
 
@@ -134,9 +134,9 @@ transforms can be set with
 fftw ("threads", @var{NTHREADS})
 @end example
 
-Note that octave must be compiled with multi-threaded @sc{fftw} support for
-this feature.  The number of processors available to the current process is
-used per default.
+Note that Octave must be compiled with multi-threaded @sc{fftw} support for
+this feature.  By default, the number of (logical) processors available to the
+current process or @var{3} is used (whichever is smaller).
 
 @seealso{fft, ifft, fft2, ifft2, fftn, ifftn}
 @end deftypefn */)
@@ -401,4 +401,4 @@ used per default.
 %!error fftw ("threads", -3)
  */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

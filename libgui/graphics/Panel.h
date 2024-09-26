@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,49 +31,44 @@
 class QFrame;
 class QLabel;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class Container;
+
+class Panel : public Object
 {
-  class base_qobject;
-  class interpreter;
-}
+public:
+  Panel (octave::interpreter& interp,
+         const graphics_object& go, QFrame *frame);
+  ~Panel ();
 
-namespace octave
-{
+  Container * innerContainer () { return m_container; }
 
-  class Container;
+  bool eventFilter (QObject *watched, QEvent *event);
 
-  class Panel : public Object
-  {
-  public:
-    Panel (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-           const graphics_object& go, QFrame *frame);
-    ~Panel (void);
+  static Panel *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-    Container * innerContainer (void) { return m_container; }
+  void do_connections (const QObject *receiver,
+                       const QObject *emitter = nullptr);
 
-    bool eventFilter (QObject *watched, QEvent *event);
+protected:
+  void update (int pId);
+  void redraw ();
 
-    static Panel *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+private:
+  void updateLayout ();
 
-    void do_connections (const QObject *receiver,
-                         const QObject *emitter = nullptr);
+private:
+  Container *m_container;
+  QLabel *m_title;
+  bool m_blockUpdates;
+  Matrix m_previous_bbox;
+};
 
-  protected:
-    void update (int pId);
-    void redraw (void);
-
-  private:
-    void updateLayout (void);
-
-  private:
-    Container *m_container;
-    QLabel *m_title;
-    bool m_blockUpdates;
-    Matrix m_previous_bbox;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -60,6 +60,11 @@ using @nospell{Hindmarsh's} ODE solver @sc{lsode}.
 
 @c lsode libinterp/corefcn/lsode.cc
 @anchor{XREFlsode}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{x}, @var{istate}, @var{msg}] =} lsode (@var{fcn}, @var{x_0}, @var{t})
 @deftypefnx {} {[@var{x}, @var{istate}, @var{msg}] =} lsode (@var{fcn}, @var{x_0}, @var{t}, @var{t_crit})
 Ordinary Differential Equation (ODE) solver.
@@ -128,10 +133,10 @@ $$ J = {\partial f_i \over \partial x_j} = \left[\matrix{
   & \cdots
   & {\partial f_2 \over \partial x_N} \cr
  \vdots & \vdots & \ddots & \vdots \cr
-{\partial f_3 \over \partial x_1}
-  & {\partial f_3 \over \partial x_2}
+{\partial f_M \over \partial x_1}
+  & {\partial f_M \over \partial x_2}
   & \cdots
-  & {\partial f_3 \over \partial x_N} \cr}\right]$$
+  & {\partial f_M \over \partial x_N} \cr}\right]$$
 @end tex
 @ifnottex
 
@@ -149,7 +154,7 @@ jac = ---- = |                       |
              |  .    .      .   .    |
              |  .    .       .  .    |
              |                       |
-             | df_N  df_N       df_N |
+             | df_M  df_M       df_M |
              | ----  ----  ...  ---- |
              | dx_1  dx_2       dx_N |
 @end group
@@ -196,6 +201,11 @@ fvdp = @@(@var{y},@var{t}) [@var{y}(2); (1 - @var{y}(1)^2) * @var{y}(2) - @var{y
 
 @c lsode_options libinterp/corefcn/LSODE-opts.cc
 @anchor{XREFlsode_options}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} lsode_options ()
 @deftypefnx {} {val =} lsode_options (@var{opt})
 @deftypefnx {} {} lsode_options (@var{opt}, @var{val})
@@ -263,6 +273,40 @@ The minimum absolute step size allowed (default is 0).
 
 @item @qcode{"step limit"}
 Maximum number of steps allowed (default is 100000).
+
+@item @qcode{"jacobian type"}
+A string specifying the type of Jacobian used with the stiff backward
+differentiation formula (BDF) integration method.  Valid values are
+
+@table @asis
+@item @qcode{"full"}
+The default.  All partial derivatives are approximated or used from the
+user-supplied Jacobian function.
+
+@item @qcode{"banded"}
+Only the diagonal and the number of lower and upper subdiagonals specified by
+the options @qcode{"lower jacobian subdiagonals"} and @qcode{"upper jacobian
+subdiagonals"}, respectively, are approximated or used from the user-supplied
+Jacobian function.  A user-supplied Jacobian function may set all other
+partial derivatives to arbitrary values.
+
+@item @qcode{"diagonal"}
+If a Jacobian function is supplied by the user, this setting has no effect.
+A Jacobian approximated by @code{lsode} is restricted to the diagonal, where
+each partial derivative is computed by applying a finite change to all
+elements of the state together; if the real Jacobian is indeed always diagonal,
+this has the same effect as applying the finite change only to the respective
+element of the state, but is more efficient.
+@end table
+
+@item @qcode{"lower jacobian subdiagonals"}
+Number of lower subdiagonals used if option @qcode{"jacobian type"} is set to
+@qcode{"banded"}.  The default is zero.
+
+@item @qcode{"upper jacobian subdiagonals"}
+Number of upper subdiagonals used if option @qcode{"jacobian type"} is set to
+@qcode{"banded"}.  The default is zero.
+
 @end table
 @end deftypefn
 
@@ -346,6 +390,11 @@ is the derivative of @math{x}.  The equation is solved using
 
 @c daspk libinterp/corefcn/daspk.cc
 @anchor{XREFdaspk}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{x}, @var{xdot}, @var{istate}, @var{msg}] =} daspk (@var{fcn}, @var{x_0}, @var{xdot_0}, @var{t}, @var{t_crit})
 Solve a set of differential-algebraic equations.
 
@@ -450,6 +499,11 @@ parameters for @code{daspk}.
 
 @c daspk_options libinterp/corefcn/DASPK-opts.cc
 @anchor{XREFdaspk_options}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} daspk_options ()
 @deftypefnx {} {val =} daspk_options (@var{opt})
 @deftypefnx {} {} daspk_options (@var{opt}, @var{val})
@@ -629,6 +683,11 @@ and @sc{dasrt}, which can be used to solve DAEs with constraints
 
 @c dassl libinterp/corefcn/dassl.cc
 @anchor{XREFdassl}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{x}, @var{xdot}, @var{istate}, @var{msg}] =} dassl (@var{fcn}, @var{x_0}, @var{xdot_0}, @var{t}, @var{t_crit})
 Solve a set of differential-algebraic equations.
 
@@ -734,6 +793,11 @@ parameters for @code{dassl}.
 
 @c dassl_options libinterp/corefcn/DASSL-opts.cc
 @anchor{XREFdassl_options}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} dassl_options ()
 @deftypefnx {} {val =} dassl_options (@var{opt})
 @deftypefnx {} {} dassl_options (@var{opt}, @var{val})
@@ -804,6 +868,11 @@ underlying Fortran code.
 
 @c dasrt libinterp/corefcn/dasrt.cc
 @anchor{XREFdasrt}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{x}, @var{xdot}, @var{t_out}, @var{istat}, @var{msg}] =} dasrt (@var{fcn}, @var{g}, @var{x_0}, @var{xdot_0}, @var{t})
 @deftypefnx {} {@dots{} =} dasrt (@var{fcn}, @var{g}, @var{x_0}, @var{xdot_0}, @var{t}, @var{t_crit})
 @deftypefnx {} {@dots{} =} dasrt (@var{fcn}, @var{x_0}, @var{xdot_0}, @var{t})
@@ -948,6 +1017,11 @@ parameters for @code{dasrt}.
 
 @c dasrt_options libinterp/corefcn/DASRT-opts.cc
 @anchor{XREFdasrt_options}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} dasrt_options ()
 @deftypefnx {} {val =} dasrt_options (@var{opt})
 @deftypefnx {} {} dasrt_options (@var{opt}, @var{val})
@@ -1067,8 +1141,13 @@ Scientific Computing, Vol. 18, 1997, pp. 1–22,
 
 @c ode45 scripts/ode/ode45.m
 @anchor{XREFode45}
-@deftypefn  {} {[@var{t}, @var{y}] =} ode45 (@var{fun}, @var{trange}, @var{init})
-@deftypefnx {} {[@var{t}, @var{y}] =} ode45 (@var{fun}, @var{trange}, @var{init}, @var{ode_opt})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {[@var{t}, @var{y}] =} ode45 (@var{fcn}, @var{trange}, @var{init})
+@deftypefnx {} {[@var{t}, @var{y}] =} ode45 (@var{fcn}, @var{trange}, @var{init}, @var{ode_opt})
 @deftypefnx {} {[@var{t}, @var{y}, @var{te}, @var{ye}, @var{ie}] =} ode45 (@dots{})
 @deftypefnx {} {@var{solution} =} ode45 (@dots{})
 @deftypefnx {} {} ode45 (@dots{})
@@ -1076,7 +1155,7 @@ Scientific Computing, Vol. 18, 1997, pp. 1–22,
 Solve a set of non-stiff Ordinary Differential Equations (non-stiff ODEs)
 with the well known explicit @nospell{Dormand-Prince} method of order 4.
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function that defines the ODE: @code{y' = f(t,y)}.  The function
 must accept two inputs where the first is time @var{t} and the second is a
 column vector of unknowns @var{y}.
@@ -1135,8 +1214,13 @@ fvdp = @@(@var{t},@var{y}) [@var{y}(2); (1 - @var{y}(1)^2) * @var{y}(2) - @var{y
 
 @c ode23 scripts/ode/ode23.m
 @anchor{XREFode23}
-@deftypefn  {} {[@var{t}, @var{y}] =} ode23 (@var{fun}, @var{trange}, @var{init})
-@deftypefnx {} {[@var{t}, @var{y}] =} ode23 (@var{fun}, @var{trange}, @var{init}, @var{ode_opt})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {[@var{t}, @var{y}] =} ode23 (@var{fcn}, @var{trange}, @var{init})
+@deftypefnx {} {[@var{t}, @var{y}] =} ode23 (@var{fcn}, @var{trange}, @var{init}, @var{ode_opt})
 @deftypefnx {} {[@var{t}, @var{y}, @var{te}, @var{ye}, @var{ie}] =} ode23 (@dots{})
 @deftypefnx {} {@var{solution} =} ode23 (@dots{})
 @deftypefnx {} {} ode23 (@dots{})
@@ -1144,7 +1228,7 @@ fvdp = @@(@var{t},@var{y}) [@var{y}(2); (1 - @var{y}(1)^2) * @var{y}(2) - @var{y
 Solve a set of non-stiff Ordinary Differential Equations (non-stiff ODEs)
 with the well known explicit @nospell{Bogacki-Shampine} method of order 3.
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function that defines the ODE: @code{y' = f(t,y)}.  The function
 must accept two inputs where the first is time @var{t} and the second is a
 column vector of unknowns @var{y}.
@@ -1206,8 +1290,13 @@ Reference: For the definition of this method see
 
 @c ode23s scripts/ode/ode23s.m
 @anchor{XREFode23s}
-@deftypefn  {} {[@var{t}, @var{y}] =} ode23s (@var{fun}, @var{trange}, @var{init})
-@deftypefnx {} {[@var{t}, @var{y}] =} ode23s (@var{fun}, @var{trange}, @var{init}, @var{ode_opt})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {[@var{t}, @var{y}] =} ode23s (@var{fcn}, @var{trange}, @var{init})
+@deftypefnx {} {[@var{t}, @var{y}] =} ode23s (@var{fcn}, @var{trange}, @var{init}, @var{ode_opt})
 @deftypefnx {} {[@var{t}, @var{y}] =} ode23s (@dots{}, @var{par1}, @var{par2}, @dots{})
 @deftypefnx {} {[@var{t}, @var{y}, @var{te}, @var{ye}, @var{ie}] =} ode23s (@dots{})
 @deftypefnx {} {@var{solution} =} ode23s (@dots{})
@@ -1215,7 +1304,7 @@ Reference: For the definition of this method see
 Solve a set of stiff Ordinary Differential Equations (stiff ODEs) with a
 @nospell{Rosenbrock} method of order (2,3).
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function that defines the ODE: @code{M y' = f(t,y)}.  The
 function must accept two inputs where the first is time @var{t} and the
 second is a column vector of unknowns @var{y}.  @var{M} is a constant mass
@@ -1278,8 +1367,13 @@ opt = odeset ('Mass', [1 0; 0 1], 'MaxStep', 1e-1);
 
 @c ode15s scripts/ode/ode15s.m
 @anchor{XREFode15s}
-@deftypefn  {} {[@var{t}, @var{y}] =} ode15s (@var{fun}, @var{trange}, @var{y0})
-@deftypefnx {} {[@var{t}, @var{y}] =} ode15s (@var{fun}, @var{trange}, @var{y0}, @var{ode_opt})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {[@var{t}, @var{y}] =} ode15s (@var{fcn}, @var{trange}, @var{y0})
+@deftypefnx {} {[@var{t}, @var{y}] =} ode15s (@var{fcn}, @var{trange}, @var{y0}, @var{ode_opt})
 @deftypefnx {} {[@var{t}, @var{y}, @var{te}, @var{ye}, @var{ie}] =} ode15s (@dots{})
 @deftypefnx {} {@var{solution} =} ode15s (@dots{})
 @deftypefnx {} {} ode15s (@dots{})
@@ -1289,7 +1383,7 @@ semi-explicit index 1 Differential Algebraic Equations (DAEs).
 @code{ode15s} uses a variable step, variable order BDF (Backward
 Differentiation Formula) method that ranges from order 1 to 5.
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function that defines the ODE: @code{y' = f(t,y)}.  The function
 must accept two inputs where the first is time @var{t} and the second is a
 column vector of unknowns @var{y}.
@@ -1348,8 +1442,13 @@ opt = odeset ("Mass", [1 0 0; 0 1 0; 0 0 0], "MStateDependence", "none");
 
 @c ode15i scripts/ode/ode15i.m
 @anchor{XREFode15i}
-@deftypefn  {} {[@var{t}, @var{y}] =} ode15i (@var{fun}, @var{trange}, @var{y0}, @var{yp0})
-@deftypefnx {} {[@var{t}, @var{y}] =} ode15i (@var{fun}, @var{trange}, @var{y0}, @var{yp0}, @var{ode_opt})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {[@var{t}, @var{y}] =} ode15i (@var{fcn}, @var{trange}, @var{y0}, @var{yp0})
+@deftypefnx {} {[@var{t}, @var{y}] =} ode15i (@var{fcn}, @var{trange}, @var{y0}, @var{yp0}, @var{ode_opt})
 @deftypefnx {} {[@var{t}, @var{y}, @var{te}, @var{ye}, @var{ie}] =} ode15i (@dots{})
 @deftypefnx {} {@var{solution} =} ode15i (@dots{})
 @deftypefnx {} {} ode15i (@dots{})
@@ -1359,7 +1458,7 @@ index 1 Differential Algebraic Equations (DAEs).
 @code{ode15i} uses a variable step, variable order BDF (Backward
 Differentiation Formula) method that ranges from order 1 to 5.
 
-@var{fun} is a function handle, inline function, or string containing the
+@var{fcn} is a function handle, inline function, or string containing the
 name of the function that defines the ODE: @code{0 = f(t,y,yp)}.  The
 function must accept three inputs where the first is time @var{t}, the
 second is the function value @var{y} (a column vector), and the third
@@ -1423,8 +1522,13 @@ endfunction
 
 @c decic scripts/ode/decic.m
 @anchor{XREFdecic}
-@deftypefn  {} {[@var{y0_new}, @var{yp0_new}] =} decic (@var{fun}, @var{t0}, @var{y0}, @var{fixed_y0}, @var{yp0}, @var{fixed_yp0})
-@deftypefnx {} {[@var{y0_new}, @var{yp0_new}] =} decic (@var{fun}, @var{t0}, @var{y0}, @var{fixed_y0}, @var{yp0}, @var{fixed_yp0}, @var{options})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {[@var{y0_new}, @var{yp0_new}] =} decic (@var{fcn}, @var{t0}, @var{y0}, @var{fixed_y0}, @var{yp0}, @var{fixed_yp0})
+@deftypefnx {} {[@var{y0_new}, @var{yp0_new}] =} decic (@var{fcn}, @var{t0}, @var{y0}, @var{fixed_y0}, @var{yp0}, @var{fixed_yp0}, @var{options})
 @deftypefnx {} {[@var{y0_new}, @var{yp0_new}, @var{resnorm}] =} decic (@dots{})
 
 Compute consistent implicit ODE initial conditions @var{y0_new} and
@@ -1433,12 +1537,12 @@ Compute consistent implicit ODE initial conditions @var{y0_new} and
 A maximum of @code{length (@var{y0})} components between @var{fixed_y0} and
 @var{fixed_yp0} may be chosen as fixed values.
 
-@var{fun} is a function handle.  The function must accept three inputs where
+@var{fcn} is a function handle.  The function must accept three inputs where
 the first is time @var{t}, the second is a column vector of unknowns
 @var{y}, and the third is a column vector of unknowns @var{yp}.
 
 @var{t0} is the initial time such that
-@code{@var{fun}(@var{t0}, @var{y0_new}, @var{yp0_new}) = 0}, specified as a
+@code{@var{fcn}(@var{t0}, @var{y0_new}, @var{yp0_new}) = 0}, specified as a
 scalar.
 
 @var{y0} is a vector used as the initial guess for @var{y}.
@@ -1495,6 +1599,11 @@ endfunction
 
 @c odeset scripts/ode/odeset.m
 @anchor{XREFodeset}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{odestruct} =} odeset ()
 @deftypefnx {} {@var{odestruct} =} odeset (@var{"field1"}, @var{value1}, @var{"field2"}, @var{value2}, @dots{})
 @deftypefnx {} {@var{odestruct} =} odeset (@var{oldstruct}, @var{"field1"}, @var{value1}, @var{"field2"}, @var{value2}, @dots{})
@@ -1601,7 +1710,6 @@ Specify whether output should be returned only at the end of each
 time step or also at intermediate time instances.  The value should be
 a scalar indicating the number of equally spaced time points to use
 within each timestep at which to return output.
-@emph{Note}: This option is not yet implemented.
 
 @item @code{RelTol}: positive scalar
 Relative error tolerance.
@@ -1610,7 +1718,7 @@ Relative error tolerance.
 Print solver statistics after simulation.
 
 @item @code{Vectorized}: @{@qcode{"off"}@} | @qcode{"on"}
-Specify whether @code{odefun} can be passed multiple values of the
+Specify whether @code{odefcn} can be passed multiple values of the
 state at once.
 
 @end table
@@ -1624,6 +1732,11 @@ added to the result structure.
 
 @c odeget scripts/ode/odeget.m
 @anchor{XREFodeget}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} odeget (@var{ode_opt}, @var{field})
 @deftypefnx {} {@var{val} =} odeget (@var{ode_opt}, @var{field}, @var{default})
 
@@ -1644,6 +1757,11 @@ not set in the structure @var{ode_opt}, then return the default value
 
 @c odeplot scripts/ode/odeplot.m
 @anchor{XREFodeplot}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{stop_solve} =} odeplot (@var{t}, @var{y}, @var{flag})
 
 Open a new figure window and plot the solution of an ode problem at each
@@ -1660,8 +1778,8 @@ last time step (@code{[@var{tfirst} @var{tlast}]}.  The input @var{y}
 contains the initial conditions for the ode problem (@var{y0}).
 
 @item @qcode{""}
-The input @var{t} must be a scalar double specifying the time for which
-the solution in input @var{y} was calculated.
+The input @var{t} must be a scalar double or vector specifying the time(s)
+for which the solution in input @var{y} was calculated.
 
 @item @qcode{"done"}
 The inputs should be empty, but are ignored if they are present.

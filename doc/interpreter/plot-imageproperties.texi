@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,25 +23,15 @@
 
 Properties of @code{image} objects (@pxref{XREFimage,,image}):
 
+@subsubheading Categories:
+
+@ref{XREFimagecategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFimagecategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFimagecategoryDisplay, , @w{Display}}@: | @ref{XREFimagecategoryImageData, , @w{Image Data}}@: | @ref{XREFimagecategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFimagecategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFimagecategoryParent/Children, , @w{Parent/Children}}@: 
+
+@anchor{XREFimagecategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex image CallbackExecution
+
 @table @asis
-
-@anchor{XREFimagealphadata}
-@prindex image alphadata
-@item @code{alphadata}: scalar | matrix, def. @code{1}
-Transparency is not yet implemented for image objects.  @code{alphadata} is unused.
-
-
-@anchor{XREFimagealphadatamapping}
-@prindex image alphadatamapping
-@item @code{alphadatamapping}: @qcode{"direct"} | @{@qcode{"none"}@} | @qcode{"scaled"}
-Transparency is not yet implemented for image objects.  @code{alphadatamapping} is unused.
-
-
-@anchor{XREFimagebeingdeleted}
-@prindex image beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
 
 @anchor{XREFimagebusyaction}
 @prindex image busyaction
@@ -47,40 +40,24 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFimagebuttondownfcn}
-@prindex image buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
-For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+@anchor{XREFimageinterruptible}
+@prindex image interruptible
+@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
+@xref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFimagecdata}
-@prindex image cdata
-@item @code{cdata}: matrix, def. 64-by-64 double
+@anchor{XREFimagecategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex image Creation/Deletion
 
+@table @asis
 
-
-@anchor{XREFimagecdatamapping}
-@prindex image cdatamapping
-@item @code{cdatamapping}: @{@qcode{"direct"}@} | @qcode{"scaled"}
-
-
-
-@anchor{XREFimagechildren}
-@prindex image children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-@code{children} is unused.
-
-
-@anchor{XREFimageclipping}
-@prindex image clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the image is clipped in its parent axes limits.
-
-
-@anchor{XREFimagecontextmenu}
-@prindex image contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this image object.
+@anchor{XREFimagebeingdeleted}
+@prindex image beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
 
 
 @anchor{XREFimagecreatefcn}
@@ -98,72 +75,55 @@ Callback function executed immediately before image is deleted.
 
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFimagehandlevisibility}
-@prindex image handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the image's handle is not visible in its parent's "children" property.
+@anchor{XREFimagecategoryDisplay}
+@subsubheading Display
+@prindex image Display
 
+@table @asis
 
-@anchor{XREFimagehittest}
-@prindex image hittest
-@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether image processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFimagepickableparts, , @w{pickableparts property}}.
-
-
-@anchor{XREFimageinterruptible}
-@prindex image interruptible
-@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
-@xref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFimageparent}
-@prindex image parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
-
-
-@anchor{XREFimagepickableparts}
-@prindex image pickableparts
-@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
-Specify whether image will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the image or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFimagehittest, , @w{hittest property}}.
-
-
-@anchor{XREFimageselected}
-@prindex image selected
-@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
-
-@anchor{XREFimageselectionhighlight}
-@prindex image selectionhighlight
-@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
-
-
-
-@anchor{XREFimagetag}
-@prindex image tag
-@item @code{tag}: string, def. @qcode{""}
-A user-defined string to label the graphics object.
-
-
-@anchor{XREFimagetype}
-@prindex image type
-@item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"image"}
-
-
-@anchor{XREFimageuserdata}
-@prindex image userdata
-@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
-User-defined data to associate with the graphics object.
+@anchor{XREFimageclipping}
+@prindex image clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the image is clipped in its parent axes limits.
 
 
 @anchor{XREFimagevisible}
 @prindex image visible
 @item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
 If @code{visible} is @qcode{"off"}, the image is not rendered on screen.
+
+@end table
+
+@anchor{XREFimagecategoryImageData}
+@subsubheading Image Data
+@prindex image ImageData
+
+@table @asis
+
+@anchor{XREFimagealphadata}
+@prindex image alphadata
+@item @code{alphadata}: scalar | matrix, def. @code{1}
+Transparency is not yet implemented for image objects.  @code{alphadata} is unused.
+
+
+@anchor{XREFimagealphadatamapping}
+@prindex image alphadatamapping
+@item @code{alphadatamapping}: @qcode{"direct"} | @{@qcode{"none"}@} | @qcode{"scaled"}
+Transparency is not yet implemented for image objects.  @code{alphadatamapping} is unused.
+
+
+@anchor{XREFimagecdata}
+@prindex image cdata
+@item @code{cdata}: array, def. 64-by-64 double
+Color data for the image object.  Data is either stored as a 2-D matrix where each element's value determines that pixel's color according to the current colormap, or as a 3-D array where the third dimension contains separate red, blue, and green components for each pixel.  For RGB arrays, the values that map to minimum and maximum color value depend on the class of @qcode{"cdata"}.  Floating point and logical values range from 0 to 1 while integer value range from @code{intmin} to @code{intmax} for that integer class.
+
+
+@anchor{XREFimagecdatamapping}
+@prindex image cdatamapping
+@item @code{cdatamapping}: @{@qcode{"direct"}@} | @qcode{"scaled"}
+Sets the method for mapping data from the @ref{XREFimagecdata, , @w{@qcode{"cdata"} property}} to the current colormap.  @qcode{"Direct"} mapping selects the color using the @qcode{"cdata"} value as an index to the current colormap.  @qcode{"Scaled"} mapping scales the @qcode{"cdata"} values to the range specified in the @ref{XREFaxesclim, , @w{@qcode{"clim"} axes property}}.
 
 
 @anchor{XREFimagexdata}
@@ -180,5 +140,98 @@ Setting @code{xdata} to the empty matrix ([]) will restore the default value of 
 Two-element vector @code{[yfirst ylast]} specifying the y coordinates of the centers of the first and last rows of the image.
 
 Setting @code{ydata} to the empty matrix ([]) will restore the default value of @code{[1 rows(image)]}.
+
+@end table
+
+@anchor{XREFimagecategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex image MouseInteraction
+
+@table @asis
+
+@anchor{XREFimagebuttondownfcn}
+@prindex image buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+
+
+@anchor{XREFimagecontextmenu}
+@prindex image contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this image object.
+
+
+@anchor{XREFimagehittest}
+@prindex image hittest
+@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether image processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFimagepickableparts, , @w{pickableparts property}}.
+
+
+@anchor{XREFimagepickableparts}
+@prindex image pickableparts
+@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
+Specify whether image will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the image or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFimagehittest, , @w{hittest property}}.
+
+
+@anchor{XREFimageselected}
+@prindex image selected
+@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicates whether this image is selected.
+
+
+@anchor{XREFimageselectionhighlight}
+@prindex image selectionhighlight
+@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the image's selection state is visually highlighted.
+
+@end table
+
+@anchor{XREFimagecategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex image ObjectIdentification
+
+@table @asis
+
+@anchor{XREFimagetag}
+@prindex image tag
+@item @code{tag}: string, def. @qcode{""}
+A user-defined string to label the graphics object.
+
+
+@anchor{XREFimagetype}
+@prindex image type
+@item @code{type} (read-only): string
+Class name of the graphics object.  @code{type} is always @qcode{"image"}.
+
+
+@anchor{XREFimageuserdata}
+@prindex image userdata
+@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
+User-defined data to associate with the graphics object.
+
+@end table
+
+@anchor{XREFimagecategoryParent/Children}
+@subsubheading Parent/Children
+@prindex image Parent/Children
+
+@table @asis
+
+@anchor{XREFimagechildren}
+@prindex image children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Child objects of Images is not yet implemented for image objects.  @code{children} is unused.
+
+
+@anchor{XREFimagehandlevisibility}
+@prindex image handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the image's handle is not visible in its parent's @qcode{"children"} property.
+
+
+@anchor{XREFimageparent}
+@prindex image parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
 
 @end table

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -71,7 +71,7 @@
 ## @end group
 ## @end example
 ##
-## @seealso{lookup, unique, union, intersect, setdiff, setxor}
+## @seealso{lookup, unique, union, intersect, setdiff, setxor, ismembertol}
 ## @end deftypefn
 
 function [tf, s_idx] = ismember (a, s, varargin)
@@ -88,7 +88,7 @@ function [tf, s_idx] = ismember (a, s, varargin)
     [real_argout{:}] = ismember (real (a), real (s), varargin{:});
     [imag_argout{:}] = ismember (imag (a), imag (s), varargin{:});
     tf = real_argout{1} & imag_argout{1};
-    if (isargout (2))
+    if (nargout > 1)
       s_idx = zeros (size (real_argout{2}));
       s_idx(tf) = min (real_argout{2}(tf), imag_argout{2}(tf));
     endif
@@ -122,7 +122,7 @@ function [tf, s_idx] = ismember (a, s, varargin)
 
   by_rows = any (strcmp ("rows", varargin));
   ## FIXME: uncomment if bug #56692 is addressed.
-  ##optlegacy = any (strcmp ("legacy", varargin));
+  ## optlegacy = any (strcmp ("legacy", varargin));
 
   if (! by_rows)
     s = s(:);

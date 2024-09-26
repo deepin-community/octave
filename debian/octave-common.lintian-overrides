@@ -1,14 +1,18 @@
 # The file license.m is actually a script of Octave
-octave-common: extra-license-file usr/share/octave/*/m/miscellaneous/license.m
+octave-common: extra-license-file [usr/share/octave/*/m/miscellaneous/license.m]
 
 # The empty directories are created on purpose by the upstream build
 # process
-octave-common: package-contains-empty-directory usr/share/octave/*/site/m/
-octave-common: package-contains-empty-directory usr/share/octave/site/*/m/
+octave-common: package-contains-empty-directory [usr/share/octave/*/site/m/]
+octave-common: package-contains-empty-directory [usr/share/octave/site/*/m/]
 
 # The COPYING file is included on purpose, in order to test the pkg system
-octave-common: extra-license-file usr/share/octave/*/etc/tests/fixed/pkg/*/COPYING
+octave-common: extra-license-file [usr/share/octave/*/etc/tests/fixed/pkg/*/COPYING]
 
-# The default.img file is only used in a demo of function imshow.
-# The fact that its file extension is not .png does not cause problems.
-octave-common: image-file-has-unexpected-name usr/share/octave/*/imagelib/default.img (is PNG)
+# The files in /etc/profiler/ are templates for the Octave's profiler
+octave-common: package-contains-documentation-outside-usr-share-doc [usr/share/octave/*/etc/profiler/*.html]
+octave-common: package-contains-documentation-outside-usr-share-doc [usr/share/octave/*/m/testfun/private/html_plot_demos_template.html]
+
+# These files are deliberately using a different encoding for testing purposes
+octave-common: national-encoding [usr/share/octave/*/etc/tests/fixed/file-encoding/CP1251/test_CP1251.m]
+octave-common: national-encoding [usr/share/octave/*/etc/tests/fixed/file-encoding/test_CP1252.m]

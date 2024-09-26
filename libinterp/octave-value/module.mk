@@ -51,6 +51,7 @@ OCTAVE_VALUE_INC = \
   %reldir%/ov-flt-cx-mat.h \
   %reldir%/ov-flt-re-diag.h \
   %reldir%/ov-flt-re-mat.h \
+  %reldir%/ov-inline.h \
   %reldir%/ov-java.h \
   %reldir%/ov-lazy-idx.h \
   %reldir%/ov-legacy-range.h \
@@ -143,7 +144,7 @@ OCTAVE_VALUE_SRC = \
 ## in other files.  They are not supposed to be compiled separately,
 ## so they should not appear in the OCTAVE_VALUE_SRC list.
 
-libinterp_EXTRA_DIST += \
+LIBINTERP_TEMPLATE_SRC += \
   %reldir%/ov-base-diag.cc \
   %reldir%/ov-base-int.cc \
   %reldir%/ov-base-mat.cc \

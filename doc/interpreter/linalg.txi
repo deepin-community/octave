@@ -1,4 +1,4 @@
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -210,6 +210,8 @@ detect a non-Hermitian matrix.
 @DOCSTRING(sqrtm)
 
 @DOCSTRING(kron)
+
+@DOCSTRING(tensorprod)
 
 @DOCSTRING(blkmm)
 

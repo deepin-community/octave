@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -52,6 +52,7 @@
 #include "ls-hdf5.h"
 #include "ls-utils.h"
 #include "pr-output.h"
+#include "ov-inline.h"
 
 
 DEFINE_OV_TYPEID_FUNCTIONS_AND_DATA(octave_struct, "struct", "struct");
@@ -76,7 +77,7 @@ octave_struct::break_closure_cycles (const std::shared_ptr<octave::stack_frame>&
 }
 
 octave_base_value *
-octave_struct::try_narrowing_conversion (void)
+octave_struct::try_narrowing_conversion ()
 {
   octave_base_value *retval = nullptr;
 
@@ -91,7 +92,7 @@ octave_struct::dotref (const octave_value_list& idx, bool auto_add)
 {
   Cell retval;
 
-  assert (idx.length () == 1);
+  panic_if (idx.length () != 1);
 
   std::string nm = idx(0).string_value ();
 
@@ -109,7 +110,7 @@ octave_struct::dotref (const octave_value_list& idx, bool auto_add)
 }
 
 static void
-err_invalid_index_for_assignment (void)
+err_invalid_index_for_assignment ()
 {
   error ("invalid index for structure array assignment");
 }
@@ -306,7 +307,7 @@ octave_struct::subsasgn (const std::string& type,
   octave_value t_rhs = rhs;
 
   if (idx.front ().empty ())
-    error ("missing index in indexed assignment");
+    error ("subsasgn: missing index in indexed assignment");
 
   if (n > 1 && ! (type.length () == 2 && type[0] == '(' && type[1] == '.'))
     {
@@ -321,9 +322,11 @@ octave_struct::subsasgn (const std::string& type,
 
                 octave_value_list key_idx = *++p;
 
-                assert (key_idx.length () == 1);
+                if (key_idx.length () != 1)
+                  error ("subsasgn: dynamic structure field names must be strings");
 
-                std::string key = key_idx(0).string_value ();
+                std::string key
+                  = key_idx(0).xstring_value ("subsasgn: dynamic structure field names must be strings");
 
                 maybe_warn_invalid_field_name (key, "subsasgn");
 
@@ -377,9 +380,11 @@ octave_struct::subsasgn (const std::string& type,
           {
             octave_value_list key_idx = idx.front ();
 
-            assert (key_idx.length () == 1);
+            if (key_idx.length () != 1)
+              error ("subsasgn: dynamic structure field names must be strings");
 
-            std::string key = key_idx(0).string_value ();
+            std::string key
+              = key_idx(0).xstring_value ("subsasgn: dynamic structure field names must be strings");
 
             maybe_warn_invalid_field_name (key, "subsasgn");
 
@@ -443,9 +448,11 @@ octave_struct::subsasgn (const std::string& type,
             octave_value_list key_idx = *++p;
             octave_value_list idxf = idx.front ();
 
-            assert (key_idx.length () == 1);
+            if (key_idx.length () != 1)
+              error ("subsasgn: dynamic structure field names must be strings");
 
-            std::string key = key_idx(0).string_value ();
+            std::string key
+              = key_idx(0).xstring_value ("subsasgn: dynamic structure field names must be strings");
 
             maybe_warn_invalid_field_name (key, "subsasgn");
 
@@ -465,7 +472,7 @@ octave_struct::subsasgn (const std::string& type,
 
                 m_map.assign (idxf, key, tmp_cell);
 
-                count++;
+                m_count++;
                 retval = octave_value (this);
               }
             else
@@ -478,7 +485,7 @@ octave_struct::subsasgn (const std::string& type,
                     m_map.assign (idxf,
                                   key, Cell (t_rhs.storable_value ()));
 
-                    count++;
+                    m_count++;
                     retval = octave_value (this);
                   }
                 else
@@ -493,7 +500,7 @@ octave_struct::subsasgn (const std::string& type,
 
                 m_map.assign (idx.front (), rhs_map);
 
-                count++;
+                m_count++;
                 retval = octave_value (this);
               }
             else
@@ -503,7 +510,7 @@ octave_struct::subsasgn (const std::string& type,
 
                 m_map.delete_elements (idx.front ());
 
-                count++;
+                m_count++;
                 retval = octave_value (this);
               }
           }
@@ -514,9 +521,11 @@ octave_struct::subsasgn (const std::string& type,
       {
         octave_value_list key_idx = idx.front ();
 
-        assert (key_idx.length () == 1);
+        if (key_idx.length () != 1)
+          error ("subsasgn: dynamic structure field names must be strings");
 
-        std::string key = key_idx(0).string_value ();
+        std::string key
+          = key_idx(0).xstring_value ("subsasgn: dynamic structure field names must be strings");
 
         maybe_warn_invalid_field_name (key, "subsasgn");
 
@@ -540,7 +549,7 @@ octave_struct::subsasgn (const std::string& type,
             m_map.setfield (key, tmp_cell);
           }
 
-        count++;
+        m_count++;
         retval = octave_value (this);
       }
       break;
@@ -558,6 +567,21 @@ octave_struct::subsasgn (const std::string& type,
   return retval;
 }
 
+/*
+%!test
+%! x(1:2) = struct ();
+%! idx = struct ("type", {"()", ".", "."}, "subs", {{1}, "a", "b"});
+%! x = subsasgn (x, idx, 42);
+%! assert (x(1).a.b, 42);
+%! assert (isempty (x(2).a));
+
+%!test <*64213>
+%! x(1:2) = struct ();
+%! idx = struct ("type", {"()", "."}, "subs", {{1}, {"a", "b"}});
+%! fail ("x = subsasgn (x, idx, 42);", ...
+%!       "structure field names must be strings");
+*/
+
 octave_value
 octave_struct::do_index_op (const octave_value_list& idx, bool resize_ok)
 {
@@ -571,7 +595,7 @@ octave_struct::do_index_op (const octave_value_list& idx, bool resize_ok)
 }
 
 std::size_t
-octave_struct::byte_size (void) const
+octave_struct::byte_size () const
 {
   // Neglect the size of the fieldnames.
 
@@ -795,7 +819,8 @@ octave_struct::load_ascii (std::istream& is)
           if (! is)
             break;
 
-          Cell tcell = (t2.iscell () ? t2.xcell_value ("load: internal error loading struct elements") : Cell (t2));
+          Cell tcell = (t2.iscell () ? t2.xcell_value ("load: internal error loading struct elements") :
+                        Cell (t2));
 
           m.setfield (nm, tcell);
         }
@@ -908,7 +933,8 @@ octave_struct::load_binary (std::istream& is, bool swap,
           if (! is)
             break;
 
-          Cell tcell = (t2.iscell () ? t2.xcell_value ("load: internal error loading struct elements") : Cell (t2));
+          Cell tcell = (t2.iscell () ? t2.xcell_value ("load: internal error loading struct elements") :
+                        Cell (t2));
 
           m.setfield (nm, tcell);
         }
@@ -1009,7 +1035,8 @@ octave_struct::load_hdf5 (octave_hdf5_id loc_id, const char *name)
     {
       octave_value t2 = dsub.tc;
 
-      Cell tcell = (t2.iscell () ? t2.xcell_value ("load: internal error loading struct elements") : Cell (t2));
+      Cell tcell = (t2.iscell () ? t2.xcell_value ("load: internal error loading struct elements") :
+                    Cell (t2));
 
       m.setfield (dsub.name, tcell);
 
@@ -1084,7 +1111,7 @@ octave_struct::fast_elem_insert (octave_idx_type n,
       // To avoid copying the scalar struct, it just stores a pointer to
       // itself.
       const octave_scalar_map *sm_ptr;
-      void *here = reinterpret_cast<void *>(&sm_ptr);
+      void *here = reinterpret_cast<void *> (&sm_ptr);
       return (x.get_rep ().fast_elem_insert_self (here, btyp_struct)
               && m_map.fast_elem_insert (n, *sm_ptr));
     }
@@ -1107,7 +1134,7 @@ octave_scalar_struct::dotref (const octave_value_list& idx, bool auto_add)
 {
   octave_value retval;
 
-  assert (idx.length () == 1);
+  panic_if (idx.length () != 1);
 
   std::string nm = idx(0).string_value ();
 
@@ -1218,7 +1245,7 @@ octave_scalar_struct::subsasgn (const std::string& type,
   octave_value retval;
 
   if (idx.front ().empty ())
-    error ("missing index in indexed assignment");
+    error ("subsasgn: missing index in indexed assignment");
 
   if (type[0] == '.')
     {
@@ -1228,9 +1255,11 @@ octave_scalar_struct::subsasgn (const std::string& type,
 
       octave_value_list key_idx = idx.front ();
 
-      assert (key_idx.length () == 1);
+      if (key_idx.length () != 1)
+        error ("subsasgn: structure field names must be strings");
 
-      std::string key = key_idx(0).string_value ();
+      std::string key
+        = key_idx(0).xstring_value ("subsasgn: structure field names must be strings");
 
       maybe_warn_invalid_field_name (key, "subsasgn");
 
@@ -1268,7 +1297,7 @@ octave_scalar_struct::subsasgn (const std::string& type,
 
       m_map.setfield (key, t_rhs.storable_value ());
 
-      count++;
+      m_count++;
       retval = this;
     }
   else
@@ -1281,6 +1310,20 @@ octave_scalar_struct::subsasgn (const std::string& type,
   return retval;
 }
 
+/*
+%!test
+%! x = struct ();
+%! idx = struct ("type", ".", "subs", {"a", "b"});
+%! x = subsasgn (x, idx, 42);
+%! assert (x.a.b, 42);
+
+%!test <*64213>
+%! x = struct ();
+%! idx = struct ("type", ".", "subs", {{"a", "b"}});
+%! fail ("x = subsasgn (x, idx, 42)", ...
+%!       "structure field names must be strings");
+*/
+
 octave_value
 octave_scalar_struct::do_index_op (const octave_value_list& idx, bool resize_ok)
 {
@@ -1289,7 +1332,7 @@ octave_scalar_struct::do_index_op (const octave_value_list& idx, bool resize_ok)
 }
 
 std::size_t
-octave_scalar_struct::byte_size (void) const
+octave_scalar_struct::byte_size () const
 {
   // Neglect the size of the fieldnames.
 
@@ -1691,26 +1734,26 @@ octave_scalar_struct::as_mxArray (bool interleaved) const
 }
 
 octave_value
-octave_scalar_struct::to_array (void)
+octave_scalar_struct::to_array ()
 {
   return new octave_struct (octave_map (m_map));
 }
 
 bool
 octave_scalar_struct::fast_elem_insert_self (void *where,
-                                             builtin_type_t btyp) const
+    builtin_type_t btyp) const
 {
 
   if (btyp == btyp_struct)
     {
-      *(reinterpret_cast<const octave_scalar_map **>(where)) = &m_map;
+      *(reinterpret_cast<const octave_scalar_map **> (where)) = &m_map;
       return true;
     }
   else
     return false;
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (struct, args, ,
        doc: /* -*- texinfo -*-
@@ -1764,7 +1807,7 @@ a cell array containing a single entry, this becomes a scalar struct with
 that single entry as the value of the field.  That single entry happens
 to be an empty cell array.
 
-Finally, if the value is a non-scalar cell array, then @code{struct}
+Finally, if the value is a nonscalar cell array, then @code{struct}
 produces a struct @strong{array}.
 @seealso{cell2struct, fieldnames, getfield, setfield, rmfield, isfield,
 orderfields, isstruct, structfun}
@@ -1885,14 +1928,16 @@ orderfields, isstruct, structfun}
 %!assert (size (x), [0,0])
 %!assert (isstruct (x))
 %!assert (isempty (fieldnames (x)))
-%!fail ('struct ("a",{1,2},"b",{1,2,3})', 'dimensions of parameter 2 do not match those of parameter 4')
+%!fail ('struct ("a",{1,2},"b",{1,2,3})',
+%!      'dimensions of parameter 2 do not match those of parameter 4')
 %!error <arguments must occur as "field", VALUE pairs> struct (1,2,3,4)
-%!fail ('struct ("1",2,"3")', 'struct: additional arguments must occur as "field", VALUE pairs')
+%!fail ('struct ("1",2,"3")',
+%!      'struct: additional arguments must occur as "field", VALUE pairs')
 */
 
 DEFUN (isstruct, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} isstruct (@var{x})
+@deftypefn {} {@var{tf} =} isstruct (@var{x})
 Return true if @var{x} is a structure or a structure array.
 @seealso{ismatrix, iscell, isa}
 @end deftypefn */)
@@ -1905,8 +1950,8 @@ Return true if @var{x} is a structure or a structure array.
 
 DEFUN (__fieldnames__, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} __fieldnames__ (@var{struct})
-@deftypefnx {} {} __fieldnames__ (@var{obj})
+@deftypefn  {} {@var{names} =} __fieldnames__ (@var{struct})
+@deftypefnx {} {@var{names} =} __fieldnames__ (@var{obj})
 Internal function.
 
 Implements @code{fieldnames()} for structures and Octave objects.
@@ -1932,8 +1977,8 @@ Implements @code{fieldnames()} for structures and Octave objects.
 
 DEFUN (isfield, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} isfield (@var{x}, "@var{name}")
-@deftypefnx {} {} isfield (@var{x}, @var{name})
+@deftypefn  {} {@var{tf} =} isfield (@var{x}, "@var{name}")
+@deftypefnx {} {@var{tf} =} isfield (@var{x}, @var{name})
 Return true if the @var{x} is a structure and it includes an element named
 @var{name}.
 
@@ -1949,7 +1994,7 @@ dimension is returned.
 
   if (args(0).isstruct ())
     {
-      octave_map m = args(0).map_value ();
+      octave_value m = args(0);
 
       // FIXME: should this work for all types that can do
       // structure reference operations?
@@ -1986,7 +2031,7 @@ dimension is returned.
 
 DEFUN (numfields, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} numfields (@var{s})
+@deftypefn {} {@var{n} =} numfields (@var{s})
 Return the number of fields of the structure @var{s}.
 @seealso{fieldnames}
 @end deftypefn */)
@@ -2014,7 +2059,7 @@ Return the number of fields of the structure @var{s}.
 
 OCTAVE_NORETURN
 static void
-invalid_cell2struct_fields_error (void)
+invalid_cell2struct_fields_error ()
 {
   error ("cell2struct: FIELDS must be a cell array of strings or a scalar string");
 }
@@ -2054,8 +2099,8 @@ get_cell2struct_fields (const octave_value& arg)
 
 DEFUN (cell2struct, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} cell2struct (@var{cell}, @var{fields})
-@deftypefnx {} {} cell2struct (@var{cell}, @var{fields}, @var{dim})
+@deftypefn  {} {@var{S} =} cell2struct (@var{cell}, @var{fields})
+@deftypefnx {} {@var{S} =} cell2struct (@var{cell}, @var{fields}, @var{dim})
 Convert @var{cell} to a structure.
 
 The number of fields in @var{fields} must match the number of elements in
@@ -2065,10 +2110,10 @@ is omitted, a value of 1 is assumed.
 
 @example
 @group
-A = cell2struct (@{"Peter", "Hannah", "Robert";
+S = cell2struct (@{"Peter", "Hannah", "Robert";
                    185, 170, 168@},
                  @{"Name","Height"@}, 1);
-A(1)
+S(1)
    @result{}
       @{
         Name   = Peter
@@ -2085,8 +2130,7 @@ A(1)
   if (nargin < 2 || nargin > 3)
     print_usage ();
 
-  const Cell vals
-    = args(0).xcell_value ("cell2struct: argument CELL must be of type cell");
+  const Cell vals = args(0).xcell_value ("cell2struct: argument CELL must be of type cell");
 
   const Array<std::string> fields = get_cell2struct_fields (args(1));
 
@@ -2112,7 +2156,7 @@ A(1)
   // result dimensions.
   dim_vector rdv = vals.dims ().redim (nd);
 
-  assert (ext == rdv(dim));
+  panic_unless (ext == rdv(dim));
   if (nd == 2)
     {
       rdv(0) = rdv(1-dim);
@@ -2177,7 +2221,7 @@ the named fields.
 
   octave_map m = args(0).xmap_value ("rmfield: first argument must be a struct");
 
-  octave_value_list fval = Fcellstr (args(1), 1);
+  octave_value_list fval = Fcellstr (ovl (args(1)), 1);
 
   Cell fcell = fval(0).cell_value ();
 
@@ -2213,7 +2257,7 @@ DEFUN (struct_levels_to_print, args, nargout,
        doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{val} =} struct_levels_to_print ()
 @deftypefnx {} {@var{old_val} =} struct_levels_to_print (@var{new_val})
-@deftypefnx {} {} struct_levels_to_print (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} struct_levels_to_print (@var{new_val}, "local")
 Query or set the internal variable that specifies the number of
 structure levels to display.
 
@@ -2232,7 +2276,7 @@ DEFUN (print_struct_array_contents, args, nargout,
        doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{val} =} print_struct_array_contents ()
 @deftypefnx {} {@var{old_val} =} print_struct_array_contents (@var{new_val})
-@deftypefnx {} {} print_struct_array_contents (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} print_struct_array_contents (@var{new_val}, "local")
 Query or set the internal variable that specifies whether to print struct
 array contents.
 
@@ -2251,4 +2295,4 @@ The original variable value is restored when exiting the function.
                                 "print_struct_array_contents");
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

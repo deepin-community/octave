@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} arch_rnd (@var{a}, @var{b}, @var{t})
+## @deftypefn {} {@var{y} =} arch_rnd (@var{a}, @var{b}, @var{t})
 ## Simulate an ARCH sequence of length @var{t} with AR coefficients @var{b} and
 ## CH coefficients @var{a}.
 ##

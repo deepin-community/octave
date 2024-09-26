@@ -1,24 +1,19 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-# Configure default Java paths using javahelper except on some archs.
-# We require at least OpenJDK 9 (otherwise JAVA_LIBDIR below will not work)
-# The following arches do not have OpenJDK 9: hppa, hurd-*, kfreebsd-*
-# The following arches have crashes with Java
-# - as of OpenJDK 9: armel
-# - as of OpenJDK 10: mipsel, powerpc
+export DEB_BUILD_MAINT_OPTIONS=optimize=+lto
+
+# Configure default Java paths using javahelper except on some archs which do not have OpenJDK.
 # This arch list must be kept in sync with the arch list qualifying
-# default-jre in debian/control.
-# The arch list qualifying default-jdk in the Build-Depends should be a subset
-# of $(NO_JDK_ARCHS) (it’s the archs that really do not have a JDK, see also
-# #947959).
+# default-jre and default-jdk in debian/control (see also #947959).
 include /usr/share/dpkg/architecture.mk
-NO_JDK_ARCHS := armel hppa hurd-i386 kfreebsd-amd64 kfreebsd-i386 mipsel powerpc
+NO_JDK_ARCHS := hppa hurd-amd64 hurd-i386
 ifneq (,$(filter $(DEB_HOST_ARCH),$(NO_JDK_ARCHS)))
 WITH_JAVA_FLAGS := --disable-java
 else
 JAVA_HOME := /usr/lib/jvm/default-java
-JAVA_LIBDIR := $(shell if test -d $(JAVA_HOME)/lib/client; then echo $(JAVA_HOME)/lib/client; else echo $(JAVA_HOME)/lib/server; fi)
+# The “client” JVM no longer exists on OpenJDK 21, but is kept here for facilitating backports (see also #1077977)
+JAVA_LIBDIR := $(shell if test -d $(JAVA_HOME)/lib/server; then echo $(JAVA_HOME)/lib/server; elif test -d $(JAVA_HOME)/lib/zero; then echo $(JAVA_HOME)/lib/zero; elif test -d $(JAVA_HOME)/lib/client; then echo $(JAVA_HOME)/lib/client; fi)
 WITH_JAVA_FLAGS := --with-java-homedir=$(JAVA_HOME) --with-java-libdir=$(JAVA_LIBDIR)
 endif
 
@@ -35,15 +30,6 @@ override_dh_auto_configure:
 DOC_FLAG := --disable-docs
 endif
 
-# On mipsel, disable debugging symbols. Otherwise, it FTBFS because the
-# assembler hits the virtual space memory limit of 2Gb. See e.g.
-# https://buildd.debian.org/status/fetch.php?pkg=octave&arch=mipsel&ver=5.1.0-2&stamp=1569871716
-# See also this thread:
-# https://lists.debian.org/debian-devel/2019/08/msg00171.html
-ifeq ($(DEB_HOST_ARCH),mipsel)
-export DEB_CXXFLAGS_MAINT_STRIP := -g
-endif
-
 # Get the current API version
 API_VERSION = $(shell grep ^OCTAVE_API_VERSION= configure.ac | sed -e 's/OCTAVE_API_VERSION="api-v\(.*\)"/\1/')
 
@@ -57,6 +43,7 @@ override_dh_auto_configure:
 	dh_auto_configure -- \
 		--with-blas=blas --enable-openmp \
 		--with-system-freefont=/usr/share/fonts/opentype/freefont \
+		--disable-rpath \
 		$(WITH_JAVA_FLAGS) $(HDF5_FLAGS) $(DOC_FLAG)
 
 ifneq (,$(filter $(DEB_HOST_ARCH),$(NO_JDK_ARCHS)))

@@ -1,4 +1,4 @@
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -66,5 +66,7 @@ function which is of order O(n).
 @DOCSTRING(setxor)
 
 @DOCSTRING(ismember)
+
+@DOCSTRING(ismembertol)
 
 @DOCSTRING(powerset)

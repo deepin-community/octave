@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Subfunctions (GNU Octave (version 7.1.0))</title>
+<title>Subfunctions (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Subfunctions (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Subfunctions (GNU Octave (version 7.1.0))">
+<meta name="description" content="Subfunctions (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Subfunctions (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Manipulating-the-Load-Path.html" rel="prev" title="Manipulating the Load Path">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,21 +32,21 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Subfunctions">
-<div class="header">
+<div class="subsection-level-extent" id="Subfunctions">
+<div class="nav-panel">
 <p>
 Next: <a href="Private-Functions.html" accesskey="n" rel="next">Private Functions</a>, Previous: <a href="Manipulating-the-Load-Path.html" accesskey="p" rel="prev">Manipulating the Load Path</a>, Up: <a href="Function-Files.html" accesskey="u" rel="up">Function Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Subfunctions-1"></span><h4 class="subsection">11.10.2 Subfunctions</h4>
+<h4 class="subsection" id="Subfunctions-1"><span>11.10.2 Subfunctions<a class="copiable-link" href="#Subfunctions-1"> &para;</a></span></h4>
 
 <p>A function file may contain secondary functions called
-<em>subfunctions</em>.  These secondary functions are only visible to the
+<em class="dfn">subfunctions</em>.  These secondary functions are only visible to the
 other functions in the same function file.  For example, a file
-<samp>f.m</samp> containing
+<samp class="file">f.m</samp> containing
 </p>
 <div class="example">
-<pre class="example">function f ()
+<div class="group"><pre class="example-preformatted">function f ()
   printf (&quot;in f, calling g\n&quot;);
   g ()
 endfunction
@@ -68,27 +57,30 @@ endfunction
 function h ()
   printf (&quot;in h\n&quot;)
 endfunction
-</pre></div>
+</pre></div></div>
 
-<p>defines a main function <code>f</code> and two subfunctions.  The
-subfunctions <code>g</code> and <code>h</code> may only be called from the main
-function <code>f</code> or from the other subfunctions, but not from outside
-the file <samp>f.m</samp>.
+<p>defines a main function <code class="code">f</code> and two subfunctions.  The
+subfunctions <code class="code">g</code> and <code class="code">h</code> may only be called from the main
+function <code class="code">f</code> or from the other subfunctions, but not from outside
+the file <samp class="file">f.m</samp>.
 </p>
-<span id="XREFlocalfunctions"></span><dl class="def">
-<dt id="index-localfunctions"><span class="category">: </span><span><em></em> <strong>localfunctions</strong> <em>()</em><a href='#index-localfunctions' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFlocalfunctions"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-localfunctions"><span class="category-def">: </span><span><code class="def-type"><var class="var">subfcn_list</var> =</code> <strong class="def-name">localfunctions</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-localfunctions"> &para;</a></span></dt>
 <dd><p>Return a list of all local functions, i.e., subfunctions, within the current
 file.
 </p>
 <p>The return value is a column cell array of function handles to all local
-functions accessible from the function from which <code>localfunctions</code> is
-called.  Nested functions are <em>not</em> included in the list.
+functions accessible from the function from which <code class="code">localfunctions</code> is
+called.  Nested functions are <em class="emph">not</em> included in the list.
 </p>
 <p>If the call is from the command line, an anonymous function, or a script,
 the return value is an empty cell array.
 </p>
 
-<p><strong>See also:</strong> <a href="Function-Handles.html#XREFfunctions">functions</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Function-Handles.html#XREFfunctions">functions</a>.
 </p></dd></dl>
 
 

@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 2007-2022 The Octave Project Developers
+@c Copyright (C) 2007-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -53,6 +53,11 @@ circum-circle.  In this case the Delaunay triangulation is not unique.
 
 @c delaunay scripts/geometry/delaunay.m
 @anchor{XREFdelaunay}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{tri} =} delaunay (@var{x}, @var{y})
 @deftypefnx {} {@var{tetr} =} delaunay (@var{x}, @var{y}, @var{z})
 @deftypefnx {} {@var{tri} =} delaunay (@var{x})
@@ -116,6 +121,11 @@ The N-dimensional extension of a triangulation is called a tessellation.
 
 @c delaunayn scripts/geometry/delaunayn.m
 @anchor{XREFdelaunayn}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{T} =} delaunayn (@var{pts})
 @deftypefnx {} {@var{T} =} delaunayn (@var{pts}, @var{options})
 Compute the Delaunay triangulation for an N-dimensional set of points.
@@ -194,6 +204,11 @@ to plot the Delaunay triangulation of a 2-dimensional set of points.
 
 @c triplot scripts/plot/draw/triplot.m
 @anchor{XREFtriplot}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} triplot (@var{tri}, @var{x}, @var{y})
 @deftypefnx {} {} triplot (@var{tri}, @var{x}, @var{y}, @var{linespec})
 @deftypefnx {} {@var{h} =} triplot (@dots{})
@@ -215,6 +230,11 @@ patch object.
 
 @c trimesh scripts/plot/draw/trimesh.m
 @anchor{XREFtrimesh}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} trimesh (@var{tri}, @var{x}, @var{y}, @var{z}, @var{c})
 @deftypefnx {} {} trimesh (@var{tri}, @var{x}, @var{y}, @var{z})
 @deftypefnx {} {} trimesh (@var{tri}, @var{x}, @var{y})
@@ -253,6 +273,11 @@ object.
 
 @c trisurf scripts/plot/draw/trisurf.m
 @anchor{XREFtrisurf}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} trisurf (@var{tri}, @var{x}, @var{y}, @var{z}, @var{c})
 @deftypefnx {} {} trisurf (@var{tri}, @var{x}, @var{y}, @var{z})
 @deftypefnx {} {} trisurf (@dots{}, @var{prop}, @var{val}, @dots{})
@@ -292,6 +317,11 @@ object.
 
 @c tetramesh scripts/plot/draw/tetramesh.m
 @anchor{XREFtetramesh}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} tetramesh (@var{T}, @var{X})
 @deftypefnx {} {} tetramesh (@var{T}, @var{X}, @var{C})
 @deftypefnx {} {} tetramesh (@dots{}, @var{property}, @var{val}, @dots{})
@@ -424,29 +454,48 @@ Barycentric coordinates are not explicitly formed.
 
 @c tsearch libinterp/corefcn/tsearch.cc
 @anchor{XREFtsearch}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{idx} =} tsearch (@var{x}, @var{y}, @var{t}, @var{xi}, @var{yi})
 Search for the enclosing Delaunay convex hull.
 
 For @code{@var{t} = delaunay (@var{x}, @var{y})}, finds the index in @var{t}
 containing the points @code{(@var{xi}, @var{yi})}.  For points outside the
 convex hull, @var{idx} is NaN.
+
+Programming Note: The algorithm is @qcode{O}(@var{M}*@var{N}) for locating
+@var{M} points in @var{N} triangles.  Performance is typically much faster if
+the points to be located are in a single continuous path; a point is first
+checked against the region its predecessor was found in, speeding up lookups
+for points along a continuous path.
+
 @xseealso{@ref{XREFdelaunay,,delaunay}, @ref{XREFdelaunayn,,delaunayn}}
 @end deftypefn
 
 
 @c tsearchn scripts/geometry/tsearchn.m
 @anchor{XREFtsearchn}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{idx} =} tsearchn (@var{x}, @var{t}, @var{xi})
 @deftypefnx {} {[@var{idx}, @var{p}] =} tsearchn (@var{x}, @var{t}, @var{xi})
-Search for the enclosing Delaunay convex hull.
+Find the simplexes enclosing the given points.
 
-For @code{@var{t} = delaunayn (@var{x})}, finds the index in @var{t}
-containing the points @var{xi}.  For points outside the convex hull,
-@var{idx} is NaN.
+@code{tsearchn} is typically used with @code{delaunayn}:
+@code{@var{t} = delaunayn (@var{x})} returns a set of simplexes @code{t},
+then @code{tsearchn} returns the row index of @var{t} containing each point
+of @var{xi}.  For points outside the convex hull, @var{idx} is NaN.
 
-If requested @code{tsearchn} also returns the Barycentric coordinates
-@var{p} of the enclosing triangles.
-@xseealso{@ref{XREFdelaunay,,delaunay}, @ref{XREFdelaunayn,,delaunayn}}
+If requested, @code{tsearchn} also returns the barycentric coordinates
+@var{p} of the enclosing simplexes.
+
+@xseealso{@ref{XREFdelaunay,,delaunay}, @ref{XREFdelaunayn,,delaunayn}, @ref{XREFtsearch,,tsearch}}
 @end deftypefn
 
 
@@ -492,6 +541,11 @@ N-simplex within which the desired point is found.
 
 @c dsearch scripts/geometry/dsearch.m
 @anchor{XREFdsearch}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{idx} =} dsearch (@var{x}, @var{y}, @var{tri}, @var{xi}, @var{yi})
 @deftypefnx {} {@var{idx} =} dsearch (@var{x}, @var{y}, @var{tri}, @var{xi}, @var{yi}, @var{s})
 Return the index @var{idx} of the closest point in @code{@var{x}, @var{y}}
@@ -504,6 +558,11 @@ The variable @var{s} is accepted for compatibility but is ignored.
 
 @c dsearchn scripts/geometry/dsearchn.m
 @anchor{XREFdsearchn}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{idx} =} dsearchn (@var{x}, @var{tri}, @var{xi})
 @deftypefnx {} {@var{idx} =} dsearchn (@var{x}, @var{tri}, @var{xi}, @var{outval})
 @deftypefnx {} {@var{idx} =} dsearchn (@var{x}, @var{xi})
@@ -561,6 +620,11 @@ simplices of the Delaunay tessellation.
 
 @c voronoi scripts/geometry/voronoi.m
 @anchor{XREFvoronoi}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} voronoi (@var{x}, @var{y})
 @deftypefnx {} {} voronoi (@var{x}, @var{y}, @var{options})
 @deftypefnx {} {} voronoi (@dots{}, "linespec")
@@ -605,6 +669,11 @@ legend ("", "points", "hull");
 
 @c voronoin scripts/geometry/voronoin.m
 @anchor{XREFvoronoin}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{C}, @var{F}] =} voronoin (@var{pts})
 @deftypefnx {} {[@var{C}, @var{F}] =} voronoin (@var{pts}, @var{options})
 Compute N-dimensional Voronoi facets.
@@ -672,8 +741,13 @@ with the @code{polyarea} and @code{inpolygon} functions respectively.
 
 @c polyarea scripts/general/polyarea.m
 @anchor{XREFpolyarea}
-@deftypefn  {} {} polyarea (@var{x}, @var{y})
-@deftypefnx {} {} polyarea (@var{x}, @var{y}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{a} =} polyarea (@var{x}, @var{y})
+@deftypefnx {} {@var{a} =} polyarea (@var{x}, @var{y}, @var{dim})
 
 Determine area of a polygon by triangle method.
 
@@ -709,6 +783,11 @@ available with @code{rectint}
 
 @c rectint scripts/geometry/rectint.m
 @anchor{XREFrectint}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{area} =} rectint (@var{a}, @var{b})
 Compute area or volume of intersection of rectangles or N-D boxes.
 
@@ -733,6 +812,11 @@ j-th row of b.
 
 @c inpolygon scripts/geometry/inpolygon.m
 @anchor{XREFinpolygon}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{in} =} inpolygon (@var{x}, @var{y}, @var{xv}, @var{yv})
 @deftypefnx {} {[@var{in}, @var{on}] =} inpolygon (@var{x}, @var{y}, @var{xv}, @var{yv})
 
@@ -784,6 +868,11 @@ N-dimensional sets of points.
 
 @c convhull scripts/geometry/convhull.m
 @anchor{XREFconvhull}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{H} =} convhull (@var{x}, @var{y})
 @deftypefnx {} {@var{H} =} convhull (@var{x}, @var{y}, @var{z})
 @deftypefnx {} {@var{H} =} convhull (@var{x})
@@ -819,6 +908,11 @@ convex hull is calculated.
 
 @c convhulln libinterp/dldfcn/convhulln.cc
 @anchor{XREFconvhulln}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{h} =} convhulln (@var{pts})
 @deftypefnx {} {@var{h} =} convhulln (@var{pts}, @var{options})
 @deftypefnx {} {[@var{h}, @var{v}] =} convhulln (@dots{})
@@ -888,6 +982,11 @@ interpolation are @code{griddata}, @code{griddata3} and @code{griddatan}.
 
 @c griddata scripts/geometry/griddata.m
 @anchor{XREFgriddata}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{zi} =} griddata (@var{x}, @var{y}, @var{z}, @var{xi}, @var{yi})
 @deftypefnx {} {@var{zi} =} griddata (@var{x}, @var{y}, @var{z}, @var{xi}, @var{yi}, @var{method})
 @deftypefnx {} {[@var{xi}, @var{yi}, @var{zi}] =} griddata (@dots{})
@@ -943,6 +1042,11 @@ not use the triangulation and will return values outside the original data
 
 @c griddata3 scripts/geometry/griddata3.m
 @anchor{XREFgriddata3}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{vi} =} griddata3 (@var{x}, @var{y}, @var{z}, @var{v}, @var{xi}, @var{yi}, @var{zi})
 @deftypefnx {} {@var{vi} =} griddata3 (@var{x}, @var{y}, @var{z}, @var{v}, @var{xi}, @var{yi}, @var{zi}, @var{method})
 @deftypefnx {} {@var{vi} =} griddata3 (@var{x}, @var{y}, @var{z}, @var{v}, @var{xi}, @var{yi}, @var{zi}, @var{method}, @var{options})
@@ -981,6 +1085,11 @@ points will return @code{NaN}.
 
 @c griddatan scripts/geometry/griddatan.m
 @anchor{XREFgriddatan}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{yi} =} griddatan (@var{x}, @var{y}, @var{xi})
 @deftypefnx {} {@var{yi} =} griddatan (@var{x}, @var{y}, @var{xi}, @var{method})
 @deftypefnx {} {@var{yi} =} griddatan (@var{x}, @var{y}, @var{xi}, @var{method}, @var{options})
@@ -1086,6 +1195,11 @@ p' = Rp = Rz*Ry*Rx*p
 
 @c rotx scripts/geometry/rotx.m
 @anchor{XREFrotx}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{T} =} rotx (@var{angle})
 
 @code{rotx} returns the 3x3 transformation matrix corresponding to an active
@@ -1147,6 +1261,11 @@ v =
 
 @c roty scripts/geometry/roty.m
 @anchor{XREFroty}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{T} =} roty (@var{angle})
 
 @code{roty} returns the 3x3 transformation matrix corresponding to an active
@@ -1208,6 +1327,11 @@ positive x-axis:
 
 @c rotz scripts/geometry/rotz.m
 @anchor{XREFrotz}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{T} =} rotz (@var{angle})
 
 @code{rotz} returns the 3x3 transformation matrix corresponding to an active

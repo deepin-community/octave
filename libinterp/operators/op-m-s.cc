@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // matrix by scalar ops.
 
@@ -48,8 +48,8 @@ DEFNDBINOP_OP (mul, matrix, scalar, array, scalar, *)
 
 DEFBINOP (div, matrix, scalar)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v1.array_value () / v2.double_value ());
 }
@@ -58,8 +58,8 @@ DEFBINOP_FN (pow, matrix, scalar, xpow)
 
 DEFBINOP (ldiv, matrix, scalar)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   Matrix m1 = v1.matrix_value ();
   Matrix m2 = v2.matrix_value ();
@@ -82,8 +82,8 @@ DEFNDBINOP_OP (el_mul, matrix, scalar, array, scalar, *)
 
 DEFBINOP (el_div, matrix, scalar)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v1.array_value () / v2.double_value ());
 }
@@ -92,8 +92,8 @@ DEFNDBINOP_FN (el_pow, matrix, scalar, array, scalar, elem_xpow)
 
 DEFBINOP (el_ldiv, matrix, scalar)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return elem_xdiv (v2.double_value (), v1.array_value ());
 }
@@ -150,4 +150,4 @@ install_m_s_ops (octave::type_info& ti)
   INSTALL_ASSIGNOP_TI (ti, op_div_eq, octave_matrix, octave_scalar, assign_div);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

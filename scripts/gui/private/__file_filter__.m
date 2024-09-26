@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __file_filter__ (@var{caller}, @var{file_filter})
+## @deftypefn {} {[retval, defname, defdir] =} __file_filter__ (@var{caller}, @var{file_filter})
 ## Undocumented internal function.
 ## @end deftypefn
 
@@ -94,7 +94,7 @@ function name = __default_filtername__ (filterext)
   if (isempty (name))
     extlist = ostrsplit (filterext, ";");
     extlist = strrep (extlist, "*.", "");
-    extlist = toupper (extlist);
+    extlist = upper (extlist);
     extlist(end+1, :) = repmat ({","}, 1, length (extlist));
     extlist = strcat (extlist{:});
     extlist = extlist(1:end-1);

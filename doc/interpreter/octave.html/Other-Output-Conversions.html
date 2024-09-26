@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Other Output Conversions (GNU Octave (version 7.1.0))</title>
+<title>Other Output Conversions (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Other Output Conversions (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Other Output Conversions (GNU Octave (version 7.1.0))">
+<meta name="description" content="Other Output Conversions (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Other Output Conversions (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Floating_002dPoint-Conversions.html" rel="prev" title="Floating-Point Conversions">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,40 +31,40 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Other-Output-Conversions">
-<div class="header">
+<div class="subsection-level-extent" id="Other-Output-Conversions">
+<div class="nav-panel">
 <p>
 Next: <a href="Formatted-Input.html" accesskey="n" rel="next">Formatted Input</a>, Previous: <a href="Floating_002dPoint-Conversions.html" accesskey="p" rel="prev">Floating-Point Conversions</a>, Up: <a href="C_002dStyle-I_002fO-Functions.html" accesskey="u" rel="up">C-Style I/O Functions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Other-Output-Conversions-1"></span><h4 class="subsection">14.2.10 Other Output Conversions</h4>
+<h4 class="subsection" id="Other-Output-Conversions-1"><span>14.2.10 Other Output Conversions<a class="copiable-link" href="#Other-Output-Conversions-1"> &para;</a></span></h4>
 
-<p>This section describes miscellaneous conversions for <code>printf</code>.
+<p>This section describes miscellaneous conversions for <code class="code">printf</code>.
 </p>
-<p>The &lsquo;<samp>%c</samp>&rsquo; conversion prints a single character.  The &lsquo;<samp>-</samp>&rsquo;
+<p>The &lsquo;<samp class="samp">%c</samp>&rsquo; conversion prints a single character.  The &lsquo;<samp class="samp">-</samp>&rsquo;
 flag can be used to specify left-justification in the field, but no
 other flags are defined, and no precision or type modifier can be given.
 For example:
 </p>
 <div class="example">
-<pre class="example">printf (&quot;%c%c%c%c%c&quot;, &quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;);
+<pre class="example-preformatted">printf (&quot;%c%c%c%c%c&quot;, &quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;);
 </pre></div>
 
-<p>prints &lsquo;<samp>hello</samp>&rsquo;.
+<p>prints &lsquo;<samp class="samp">hello</samp>&rsquo;.
 </p>
-<p>The &lsquo;<samp>%s</samp>&rsquo; conversion prints a string.  The corresponding argument
+<p>The &lsquo;<samp class="samp">%s</samp>&rsquo; conversion prints a string.  The corresponding argument
 must be a string.  A precision can be specified to indicate the maximum
 number of characters to write; otherwise characters in the string up to
 but not including the terminating null character are written to the
-output stream.  The &lsquo;<samp>-</samp>&rsquo; flag can be used to specify
+output stream.  The &lsquo;<samp class="samp">-</samp>&rsquo; flag can be used to specify
 left-justification in the field, but no other flags or type modifiers
 are defined for this conversion.  For example:
 </p>
 <div class="example">
-<pre class="example">printf (&quot;%3s%-6s&quot;, &quot;no&quot;, &quot;where&quot;);
+<pre class="example-preformatted">printf (&quot;%3s%-6s&quot;, &quot;no&quot;, &quot;where&quot;);
 </pre></div>
 
-<p>prints &lsquo;<samp> nowhere </samp>&rsquo; (note the leading and trailing spaces).
+<p>prints &lsquo;<samp class="samp"> nowhere </samp>&rsquo; (note the leading and trailing spaces).
 </p>
 </div>
 

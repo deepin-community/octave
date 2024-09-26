@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,12 +35,12 @@
 
 #include "lo-specfun.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (psi, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} psi (@var{z})
-@deftypefnx {} {} psi (@var{k}, @var{z})
+@deftypefn  {} {@var{y} =} psi (@var{z})
+@deftypefnx {} {@var{y} =} psi (@var{k}, @var{z})
 Compute the psi (polygamma) function.
 
 The polygamma functions are the @var{k}th derivative of the logarithm
@@ -105,15 +105,15 @@ can have any value real or complex value.  However, for polygamma functions
         {
           FLOAT_BRANCH(double, Complex, complex_, Complex)
           else FLOAT_BRANCH(single, FloatComplex, float_complex_, FloatComplex)
-          else
-            error ("psi: Z must be a floating point");
+            else
+              error ("psi: Z must be a floating point");
         }
       else
         {
-          FLOAT_BRANCH(double, , , double)
+          FLOAT_BRANCH(double,,, double)
           else FLOAT_BRANCH(single, Float, float_, float)
-          else
-            error ("psi: Z must be a floating point");
+            else
+              error ("psi: Z must be a floating point");
         }
 
 #undef FLOAT_BRANCH
@@ -142,10 +142,10 @@ can have any value real or complex value.  However, for polygamma functions
           retval = psi_z;                                               \
         }
 
-      FLOAT_BRANCH(double, , , double)
+      FLOAT_BRANCH(double,,, double)
       else FLOAT_BRANCH(single, Float, float_, float)
-      else
-        error ("psi: Z must be a floating point for polygamma (K > 0)");
+        else
+          error ("psi: Z must be a floating point for polygamma (K > 0)");
 
 #undef FLOAT_BRANCH
     }
@@ -179,7 +179,8 @@ can have any value real or complex value.  However, for polygamma functions
 ## Interesting identities of the digamma function, in section of 5.1.3
 %!assert (psi (1/3), - em - (3/2) * log (3) - ((sqrt (3) / 6) * pi), eps*10)
 %!assert (psi (1/4), - em -3 * log (2) - pi/2, eps*10)
-%!assert (psi (1/6), - em -2 * log (2) - (3/2) * log (3) - ((sqrt (3) / 2) * pi), eps*10)
+%!assert (psi (1/6),
+%!        - em -2 * log (2) - (3/2) * log (3) - ((sqrt (3) / 2) * pi), eps*10)
 
 ## First 6 zeros of the digamma function, in section of 5.1.5 (and also on
 ## Abramowitz and Stegun, page 258, eq 6.3.19)
@@ -235,4 +236,4 @@ can have any value real or complex value.  However, for polygamma functions
 
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

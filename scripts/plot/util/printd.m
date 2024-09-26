@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -30,7 +30,7 @@
 ## Convert any object acceptable to @code{disp} into the format selected by
 ## the suffix of @var{filename}.
 ##
-## If the return argument @var{out_file} is given, the name of the created
+## If the optional output @var{out_file} is requested, the name of the created
 ## file is returned.
 ##
 ## This function is intended to facilitate manipulation of the output of

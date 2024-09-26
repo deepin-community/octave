@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2007-2022 The Octave Project Developers
+## Copyright (C) 2007-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -141,12 +141,9 @@ function h = fill (varargin)
         ## For Matlab compatibility, return 1 patch object for each column
         for j = 1 : columns (x)
           if (one_color)
-            [htmp, err] = __patch__ (hax, x(:,j), y(:,j), cdata, opts{:});
+            htmp = __patch__ (hax, x(:,j), y(:,j), cdata, opts{:});
           else
-            [htmp, err] = __patch__ (hax, x(:,j), y(:,j), cdata(:,j), opts{:});
-          endif
-          if (err)
-            print_usage ();
+            htmp = __patch__ (hax, x(:,j), y(:,j), cdata(:,j), opts{:});
           endif
           hlist(end+1, 1) = htmp;
         endfor

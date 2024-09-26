@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -155,7 +155,7 @@ function [faces, vertices, max_faces, patch_handle, fast, verbose] = ...
     if (! ischar (arg{1}))
       break;  # no string arguments at end, exit checking
     endif
-    switch (tolower (arg{1}))
+    switch (lower (arg{1}))
       case {"f", "fast"}
         fast = true;
         num_string_inputs += 1;

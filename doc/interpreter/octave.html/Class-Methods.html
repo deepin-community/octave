@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Class Methods (GNU Octave (version 7.1.0))</title>
+<title>Class Methods (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Class Methods (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Class Methods (GNU Octave (version 7.1.0))">
+<meta name="description" content="Class Methods (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Class Methods (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Creating-a-Class.html" rel="prev" title="Creating a Class">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,23 +32,23 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Class-Methods">
-<div class="header">
+<div class="section-level-extent" id="Class-Methods">
+<div class="nav-panel">
 <p>
 Next: <a href="Indexing-Objects.html" accesskey="n" rel="next">Indexing Objects</a>, Previous: <a href="Creating-a-Class.html" accesskey="p" rel="prev">Creating a Class</a>, Up: <a href="Object-Oriented-Programming.html" accesskey="u" rel="up">Object Oriented Programming</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Class-Methods-1"></span><h3 class="section">34.2 Class Methods</h3>
+<h3 class="section" id="Class-Methods-1"><span>34.2 Class Methods<a class="copiable-link" href="#Class-Methods-1"> &para;</a></span></h3>
 
 <p>There are a number of basic class methods that can (and should) be defined to
 allow the contents of the classes to be queried and set.  The most basic of
-these is the <code>disp</code> method.  The <code>disp</code> method is used by Octave
+these is the <code class="code">disp</code> method.  The <code class="code">disp</code> method is used by Octave
 whenever a class should be displayed on the screen.  Usually this is the result
 of an Octave expression that doesn&rsquo;t end with a semicolon.  If this method is
 not defined, then Octave won&rsquo;t print anything when displaying the contents of a
 class which can be confusing.
 </p>
-<p>An example of a <code>disp</code> method for the polynomial class might be
+<p>An example of a <code class="code">disp</code> method for the polynomial class might be
 </p>
 <div class="example">
 <pre class="verbatim">function disp (p)
@@ -99,7 +88,7 @@ endfunction
 </pre></div>
 
 <p>To be consistent with the Octave graphic handle classes, a class should also
-define the <code>get</code> and <code>set</code> methods.  The <code>get</code> method accepts
+define the <code class="code">get</code> and <code class="code">set</code> methods.  The <code class="code">get</code> method accepts
 one or two arguments.  The first argument is an object of the appropriate
 class.  If no second argument is given then the method should return a
 structure with all the properties of the class.  If the optional second
@@ -131,7 +120,7 @@ should be retrieved.
 endfunction
 </pre></div>
 
-<p>Similarly, the first argument to the <code>set</code> method should be an object and
+<p>Similarly, the first argument to the <code class="code">set</code> method should be an object and
 any additional arguments should be property/value pairs.
 </p>
 <div class="example">
@@ -160,85 +149,91 @@ endfunction
 
 <p>Note that Octave does not implement pass by reference; Therefore, to modify an
 object requires an assignment statement using the return value from the
-<code>set</code> method.
+<code class="code">set</code> method.
 </p>
 <div class="example">
-<pre class="example">p = set (p, &quot;poly&quot;, [1, 0, 0, 0, 1]);
+<pre class="example-preformatted">p = set (p, &quot;poly&quot;, [1, 0, 0, 0, 1]);
 </pre></div>
 
-<p>The <code>set</code> method makes use of the <code>subsasgn</code> method of the class, and
-therefore this method must also be defined.  The <code>subsasgn</code> method is
-discussed more thoroughly in the next section (see <a href="Indexing-Objects.html">Indexing Objects</a>).
+<p>The <code class="code">set</code> method makes use of the <code class="code">subsasgn</code> method of the class, and
+therefore this method must also be defined.  The <code class="code">subsasgn</code> method is
+discussed more thoroughly in the next section (see <a class="pxref" href="Indexing-Objects.html">Indexing Objects</a>).
 </p>
 <p>Finally, user classes can be considered to be a special type of a structure,
 and they can be saved to a file in the same manner as a structure.  For
 example:
 </p>
 <div class="example">
-<pre class="example">p = polynomial ([1, 0, 1]);
+<div class="group"><pre class="example-preformatted">p = polynomial ([1, 0, 1]);
 save userclass.mat p
 clear p
 load userclass.mat
-</pre></div>
+</pre></div></div>
 
-<p>All of the file formats supported by <code>save</code> and <code>load</code> are supported.
+<p>All of the file formats supported by <code class="code">save</code> and <code class="code">load</code> are supported.
 In certain circumstances a user class might contain a field that it doesn&rsquo;t
 make sense to save, or a field that needs to be initialized before it is saved.
-This can be done with the <code>saveobj</code> method of the class.
+This can be done with the <code class="code">saveobj</code> method of the class.
 </p>
-<span id="XREFsaveobj"></span><dl class="def">
-<dt id="index-saveobj"><span class="category">: </span><span><em><var>b</var> =</em> <strong>saveobj</strong> <em>(<var>a</var>)</em><a href='#index-saveobj' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFsaveobj"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-saveobj"><span class="category-def">: </span><span><code class="def-type"><var class="var">b</var> =</code> <strong class="def-name">saveobj</strong> <code class="def-code-arguments">(<var class="var">a</var>)</code><a class="copiable-link" href="#index-saveobj"> &para;</a></span></dt>
 <dd><p>Method of a class to manipulate an object prior to saving it to a file.
 </p>
-<p>The function <code>saveobj</code> is called when the object <var>a</var> is saved
-using the <code>save</code> function.  An example of the use of <code>saveobj</code>
+<p>The function <code class="code">saveobj</code> is called when the object <var class="var">a</var> is saved
+using the <code class="code">save</code> function.  An example of the use of <code class="code">saveobj</code>
 might be to remove fields of the object that don&rsquo;t make sense to be saved
 or it might be used to ensure that certain fields of the object are
 initialized before the object is saved.  For example:
 </p>
 <div class="example">
-<pre class="example">function b = saveobj (a)
+<div class="group"><pre class="example-preformatted">function b = saveobj (a)
   b = a;
   if (isempty (b.field))
      b.field = initfield (b);
   endif
 endfunction
-</pre></div>
+</pre></div></div>
 
 
-<p><strong>See also:</strong> <a href="#XREFloadobj">loadobj</a>, <a href="Built_002din-Data-Types.html#XREFclass">class</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFloadobj">loadobj</a>, <a class="ref" href="Built_002din-Data-Types.html#XREFclass">class</a>.
 </p></dd></dl>
 
 
-<p><code>saveobj</code> is called just prior to saving the class to a file.  Similarly,
-the <code>loadobj</code> method is called just after a class is loaded from a file,
+<p><code class="code">saveobj</code> is called just prior to saving the class to a file.  Similarly,
+the <code class="code">loadobj</code> method is called just after a class is loaded from a file,
 and can be used to ensure that any removed fields are reinserted into the user
 object.
 </p>
-<span id="XREFloadobj"></span><dl class="def">
-<dt id="index-loadobj"><span class="category">: </span><span><em><var>b</var> =</em> <strong>loadobj</strong> <em>(<var>a</var>)</em><a href='#index-loadobj' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFloadobj"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-loadobj"><span class="category-def">: </span><span><code class="def-type"><var class="var">b</var> =</code> <strong class="def-name">loadobj</strong> <code class="def-code-arguments">(<var class="var">a</var>)</code><a class="copiable-link" href="#index-loadobj"> &para;</a></span></dt>
 <dd><p>Method of a class to manipulate an object after loading it from a file.
 </p>
-<p>The function <code>loadobj</code> is called when the object <var>a</var> is loaded
-using the <code>load</code> function.  An example of the use of <code>saveobj</code>
+<p>The function <code class="code">loadobj</code> is called when the object <var class="var">a</var> is loaded
+using the <code class="code">load</code> function.  An example of the use of <code class="code">saveobj</code>
 might be to add fields to an object that don&rsquo;t make sense to be saved.
 For example:
 </p>
 <div class="example">
-<pre class="example">function b = loadobj (a)
+<div class="group"><pre class="example-preformatted">function b = loadobj (a)
   b = a;
   b.addmissingfield = addfield (b);
 endfunction
-</pre></div>
+</pre></div></div>
 
 
-<p><strong>See also:</strong> <a href="#XREFsaveobj">saveobj</a>, <a href="Built_002din-Data-Types.html#XREFclass">class</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFsaveobj">saveobj</a>, <a class="ref" href="Built_002din-Data-Types.html#XREFclass">class</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Indexing-Objects.html">Indexing Objects</a>, Previous: <a href="Creating-a-Class.html">Creating a Class</a>, Up: <a href="Object-Oriented-Programming.html">Object Oriented Programming</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2014-2022 The Octave Project Developers
+## Copyright (C) 2014-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -79,7 +79,7 @@ function [h, old_prop] = hgload (filename, prop_struct = struct ())
 
   ## Override properties of top-level objects
   calc_old_prop = false;
-  if (isargout (2))
+  if (nargout > 1)
     calc_old_prop = true;
     old_prop = repmat ({[]}, 1, numel (hg));
   endif
@@ -88,7 +88,7 @@ function [h, old_prop] = hgload (filename, prop_struct = struct ())
     for i = 1:numel (hg)
       fn_old = fieldnames (hg(i).properties);
       for j = 1:numel (fn_new)
-        idx = ismember (tolower (fn_old), tolower (fn_new{j}));
+        idx = ismember (lower (fn_old), lower (fn_new{j}));
         if (any (idx))
           if (calc_old_prop)
             old_prop{i}.(fn_new{j}) = hg(i).properties.(fn_old{idx});

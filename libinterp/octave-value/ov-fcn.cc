@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,14 +34,20 @@
 #include "ov-fcn.h"
 #include "pt-eval.h"
 
+#include "error.h"
+#include "interpreter-private.h"
+#include "symtab.h"
+#include "interpreter.h"
+#include "lo-array-errwarn.h"
+
 octave_base_value *
-octave_function::clone (void) const
+octave_function::clone () const
 {
   panic_impossible ();
 }
 
 octave_base_value *
-octave_function::empty_clone (void) const
+octave_function::empty_clone () const
 {
   panic_impossible ();
 }

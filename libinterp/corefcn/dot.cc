@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,14 +35,16 @@
 #include "error.h"
 #include "parse.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
+// FIXME: input 'y' is no longer necessary (2/5/2022).
+//        At some point it would be better to change all occurrences of
+//        get_red_dims to eliminate this input parameter.
 static void
-get_red_dims (const dim_vector& x, const dim_vector& y, int dim,
+get_red_dims (const dim_vector& x, const dim_vector& /* y */, int dim,
               dim_vector& z, F77_INT& m, F77_INT& n, F77_INT& k)
 {
   int nd = x.ndims ();
-  assert (nd == y.ndims ());
   z = dim_vector::alloc (nd);
   octave_idx_type tmp_m = 1;
   octave_idx_type tmp_n = 1;
@@ -73,7 +75,8 @@ get_red_dims (const dim_vector& x, const dim_vector& y, int dim,
 
 DEFUN (dot, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} dot (@var{x}, @var{y}, @var{dim})
+@deftypefn  {} {@var{z} =} dot (@var{x}, @var{y})
+@deftypefnx {} {@var{z} =} dot (@var{x}, @var{y}, @var{dim})
 Compute the dot product of two vectors.
 
 If @var{x} and @var{y} are matrices, calculate the dot products along the
@@ -88,7 +91,7 @@ temporary array and is faster.  When @var{X} and @var{Y} are column vectors,
 the result is equivalent to @code{@var{X}' * @var{Y}}.  Although, @code{dot}
 is defined for integer arrays, the output may differ from the expected result
 due to the limited range of integer objects.
-@seealso{cross, divergence}
+@seealso{cross, divergence, tensorprod}
 @end deftypefn */)
 {
   int nargin = args.length ();
@@ -190,9 +193,9 @@ due to the limited range of integer objects.
       // of calculating possibly garbage results.
       // Think of the dot product of two int8 vectors where the multiplications
       // exceed intmax.
-      octave_value_list tmp;
-      tmp(1) = dim + 1;
+      octave_value_list tmp (2);
       tmp(0) = binary_op (octave_value::op_el_mul, argx, argy);
+      tmp(1) = dim + 1;
 
       tmp = Fsum (tmp, 1);
       if (! tmp.empty ())
@@ -349,7 +352,7 @@ do_blkmm (const octave_value& xov, const octave_value& yov)
 
 DEFUN (blkmm, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} blkmm (@var{A}, @var{B})
+@deftypefn {} {@var{C} =} blkmm (@var{A}, @var{B})
 Compute products of matrix blocks.
 
 The blocks are given as 2-dimensional subarrays of the arrays @var{A},
@@ -433,4 +436,4 @@ endfor
 %!error <A and B dimensions don't match> blkmm (ones (2,2), ones (3,3))
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

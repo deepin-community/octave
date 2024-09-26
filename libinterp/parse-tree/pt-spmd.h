@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2020-2022 The Octave Project Developers
+// Copyright (C) 2020-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,52 +32,49 @@
 #include "pt-cmd.h"
 #include "pt-walk.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class tree_comment_list;
+class tree_statement_list;
+
+// Spmd.
+
+class tree_spmd_command : public tree_command
 {
-  class tree_comment_list;
-  class tree_statement_list;
+public:
 
-  // Spmd.
+  tree_spmd_command (tree_statement_list *body, comment_list *lc,
+                     comment_list *tc, int l = -1, int c = -1)
+    : tree_command (l, c), m_body (body), m_lead_comm (lc), m_trail_comm (tc)
+  { }
 
-  class tree_spmd_command : public tree_command
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (tree_spmd_command)
+
+  ~tree_spmd_command ();
+
+  tree_statement_list * body () { return m_body; }
+
+  comment_list * leading_comment () { return m_lead_comm; }
+
+  comment_list * trailing_comment () { return m_trail_comm; }
+
+  void accept (tree_walker& tw)
   {
-  public:
+    tw.visit_spmd_command (*this);
+  }
 
-    tree_spmd_command (tree_statement_list *body, comment_list *lc,
-                       comment_list *tc, int l = -1, int c = -1)
-      : tree_command (l, c), m_body (body), m_lead_comm (lc), m_trail_comm (tc)
-    { }
+private:
 
-    // No copying!
+  // List of commands.
+  tree_statement_list *m_body;
 
-    tree_spmd_command (const tree_spmd_command&) = delete;
+  // Comment preceding SPMD token.
+  comment_list *m_lead_comm;
 
-    tree_spmd_command& operator = (const tree_spmd_command&) = delete;
+  // Comment preceding ENDSPMD token.
+  comment_list *m_trail_comm;
+};
 
-    ~tree_spmd_command (void);
-
-    tree_statement_list * body (void) { return m_body; }
-
-    comment_list * leading_comment (void) { return m_lead_comm; }
-
-    comment_list * trailing_comment (void) { return m_trail_comm; }
-
-    void accept (tree_walker& tw)
-    {
-      tw.visit_spmd_command (*this);
-    }
-
-  private:
-
-    // List of commands.
-    tree_statement_list *m_body;
-
-    // Comment preceding SPMD token.
-    comment_list *m_lead_comm;
-
-    // Comment preceding ENDSPMD token.
-    comment_list *m_trail_comm;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

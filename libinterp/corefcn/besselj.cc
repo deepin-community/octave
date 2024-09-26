@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1997-2022 The Octave Project Developers
+// Copyright (C) 1997-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,7 +35,7 @@
 #include "ovl.h"
 #include "utils.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 enum bessel_type
 {
@@ -83,7 +83,7 @@ enum bessel_type
   while (0)
 
 octave_value_list
-do_bessel (enum bessel_type type, const char *fn,
+do_bessel (enum bessel_type type, const char *fcn,
            const octave_value_list& args, int nargout)
 {
   int nargin = args.length ();
@@ -112,7 +112,7 @@ do_bessel (enum bessel_type type, const char *fn,
         scaled = opt_arg.bool_value ();
 
       if (rpt_error)
-        error ("%s: OPT must be 0 (or false) or 1 (or true)", fn);
+        error ("%s: OPT must be 0 (or false) or 1 (or true)", fcn);
     }
 
   octave_value alpha_arg = args(0);
@@ -122,11 +122,11 @@ do_bessel (enum bessel_type type, const char *fn,
     {
       if (alpha_arg.is_scalar_type ())
         {
-          float alpha = args(0).xfloat_value ("%s: ALPHA must be a scalar or matrix", fn);
+          float alpha = args(0).xfloat_value ("%s: ALPHA must be a scalar or matrix", fcn);
 
           if (x_arg.is_scalar_type ())
             {
-              FloatComplex x = x_arg.xfloat_complex_value ("%s: X must be a scalar or matrix", fn);
+              FloatComplex x = x_arg.xfloat_complex_value ("%s: X must be a scalar or matrix", fcn);
 
               octave_idx_type ierr;
               octave_value result;
@@ -139,7 +139,7 @@ do_bessel (enum bessel_type type, const char *fn,
             }
           else
             {
-              FloatComplexNDArray x = x_arg.xfloat_complex_array_value ("%s: X must be a scalar or matrix", fn);
+              FloatComplexNDArray x = x_arg.xfloat_complex_array_value ("%s: X must be a scalar or matrix", fcn);
 
               Array<octave_idx_type> ierr;
               octave_value result;
@@ -161,10 +161,11 @@ do_bessel (enum bessel_type type, const char *fn,
 
           if (args0_is_row_vector && args1_is_col_vector)
             {
-              FloatRowVector ralpha = args(0).xfloat_row_vector_value ("%s: ALPHA must be a scalar or matrix", fn);
+              FloatRowVector ralpha = args(0).xfloat_row_vector_value ("%s: ALPHA must be a scalar or matrix",
+                                      fcn);
 
               FloatComplexColumnVector cx
-                = x_arg.xfloat_complex_column_vector_value ("%s: X must be a scalar or matrix", fn);
+                = x_arg.xfloat_complex_column_vector_value ("%s: X must be a scalar or matrix", fcn);
 
               Array<octave_idx_type> ierr;
               octave_value result;
@@ -177,11 +178,11 @@ do_bessel (enum bessel_type type, const char *fn,
             }
           else
             {
-              FloatNDArray alpha = args(0).xfloat_array_value ("%s: ALPHA must be a scalar or matrix", fn);
+              FloatNDArray alpha = args(0).xfloat_array_value ("%s: ALPHA must be a scalar or matrix", fcn);
 
               if (x_arg.is_scalar_type ())
                 {
-                  FloatComplex x = x_arg.xfloat_complex_value ("%s: X must be a scalar or matrix", fn);
+                  FloatComplex x = x_arg.xfloat_complex_value ("%s: X must be a scalar or matrix", fcn);
 
                   Array<octave_idx_type> ierr;
                   octave_value result;
@@ -194,7 +195,7 @@ do_bessel (enum bessel_type type, const char *fn,
                 }
               else
                 {
-                  FloatComplexNDArray x = x_arg.xfloat_complex_array_value ("%s: X must be a scalar or matrix", fn);
+                  FloatComplexNDArray x = x_arg.xfloat_complex_array_value ("%s: X must be a scalar or matrix", fcn);
 
                   Array<octave_idx_type> ierr;
                   octave_value result;
@@ -212,11 +213,11 @@ do_bessel (enum bessel_type type, const char *fn,
     {
       if (alpha_arg.is_scalar_type ())
         {
-          double alpha = args(0).xdouble_value ("%s: ALPHA must be a scalar or matrix", fn);
+          double alpha = args(0).xdouble_value ("%s: ALPHA must be a scalar or matrix", fcn);
 
           if (x_arg.is_scalar_type ())
             {
-              Complex x = x_arg.xcomplex_value ("%s: X must be a scalar or matrix", fn);
+              Complex x = x_arg.xcomplex_value ("%s: X must be a scalar or matrix", fcn);
 
               octave_idx_type ierr;
               octave_value result;
@@ -229,7 +230,7 @@ do_bessel (enum bessel_type type, const char *fn,
             }
           else
             {
-              ComplexNDArray x = x_arg.xcomplex_array_value ("%s: X must be a scalar or matrix", fn);
+              ComplexNDArray x = x_arg.xcomplex_array_value ("%s: X must be a scalar or matrix", fcn);
 
               Array<octave_idx_type> ierr;
               octave_value result;
@@ -251,10 +252,10 @@ do_bessel (enum bessel_type type, const char *fn,
 
           if (args0_is_row_vector && args1_is_col_vector)
             {
-              RowVector ralpha = args(0).xrow_vector_value ("%s: ALPHA must be a scalar or matrix", fn);
+              RowVector ralpha = args(0).xrow_vector_value ("%s: ALPHA must be a scalar or matrix", fcn);
 
               ComplexColumnVector cx
-                = x_arg.xcomplex_column_vector_value ("%s: X must be a scalar or matrix", fn);
+                = x_arg.xcomplex_column_vector_value ("%s: X must be a scalar or matrix", fcn);
 
               Array<octave_idx_type> ierr;
               octave_value result;
@@ -267,11 +268,11 @@ do_bessel (enum bessel_type type, const char *fn,
             }
           else
             {
-              NDArray alpha = args(0).xarray_value ("%s: ALPHA must be a scalar or matrix", fn);
+              NDArray alpha = args(0).xarray_value ("%s: ALPHA must be a scalar or matrix", fcn);
 
               if (x_arg.is_scalar_type ())
                 {
-                  Complex x = x_arg.xcomplex_value ("%s: X must be a scalar or matrix", fn);
+                  Complex x = x_arg.xcomplex_value ("%s: X must be a scalar or matrix", fcn);
 
                   Array<octave_idx_type> ierr;
                   octave_value result;
@@ -284,7 +285,7 @@ do_bessel (enum bessel_type type, const char *fn,
                 }
               else
                 {
-                  ComplexNDArray x = x_arg.xcomplex_array_value ("%s: X must be a scalar or matrix", fn);
+                  ComplexNDArray x = x_arg.xcomplex_array_value ("%s: X must be a scalar or matrix", fcn);
 
                   Array<octave_idx_type> ierr;
                   octave_value result;
@@ -355,6 +356,10 @@ Error---no computation, algorithm termination condition not met, return
 
 /*
 %!# Function besselj is tested along with other bessels at the end of this file
+
+## besselj specific BIST
+%!assert <*48316> (! any (isnan (besselj (1, 10.^[5:12]))))
+
 */
 
 DEFUN (bessely, args, nargout,
@@ -466,6 +471,10 @@ Error---no computation, algorithm termination condition not met, return
 
 /*
 %!# Function besseli is tested along with other bessels at the end of this file
+
+## besseli specific BIST
+%!assert (! isinf (besseli (0, 700)))
+
 */
 
 DEFUN (besselk, args, nargout,
@@ -616,12 +625,16 @@ Error---no computation, algorithm termination condition not met, return
 
 DEFUN (airy, args, nargout,
        doc: /* -*- texinfo -*-
-@deftypefn {} {[@var{a}, @var{ierr}] =} airy (@var{k}, @var{z}, @var{opt})
+@deftypefn  {} {@var{a} =} airy (@var{z})
+@deftypefnx {} {@var{a} =} airy (@var{k}, @var{z})
+@deftypefnx {} {@var{a} =} airy (@var{k}, @var{z}, @var{scale})
+@deftypefnx {} {[@var{a}, @var{ierr}] =} airy (@dots{})
+
 Compute Airy functions of the first and second kind, and their derivatives.
 
 @example
 @group
- K   Function   Scale factor (if "opt" is supplied)
+ K   Function   Scale factor (if @var{scale} is true)
 ---  --------   ---------------------------------------
  0   Ai (Z)     exp ((2/3) * Z * sqrt (Z))
  1   dAi(Z)/dZ  exp ((2/3) * Z * sqrt (Z))
@@ -633,9 +646,12 @@ Compute Airy functions of the first and second kind, and their derivatives.
 The function call @code{airy (@var{z})} is equivalent to
 @code{airy (0, @var{z})}.
 
-The result is the same size as @var{z}.
+The optional third input @var{scale} determines whether to
+apply scaling as described above.  It is false by default.
 
-If requested, @var{ierr} contains the following status information and
+The result @var{a} is the same size as @var{z}.
+
+The optional output @var{ierr} contains the following status information and
 is the same size as the result.
 
 @enumerate 0
@@ -677,49 +693,90 @@ return @code{NaN}.
         error ("airy: K must be 0, 1, 2, or 3");
     }
 
-  bool scale = (nargin == 3);
+  bool scale = (nargin == 3) && args(2).xbool_value ("airy: scale option must be a logical value");
 
   int idx = (nargin == 1 ? 0 : 1);
+
+  Array<octave_idx_type> ierr;
+  octave_value result;
 
   if (args(idx).is_single_type ())
     {
       FloatComplexNDArray z = args(idx).xfloat_complex_array_value ("airy: Z must be a complex matrix");
 
-      Array<octave_idx_type> ierr;
-      octave_value result;
-
       if (kind > 1)
         result = math::biry (z, kind == 3, scale, ierr);
       else
         result = math::airy (z, kind == 1, scale, ierr);
-
-      retval(0) = result;
-      if (nargout > 1)
-        retval(1) = NDArray (ierr);
     }
   else
     {
       ComplexNDArray z = args(idx).xcomplex_array_value ("airy: Z must be a complex matrix");
 
-      Array<octave_idx_type> ierr;
-      octave_value result;
-
       if (kind > 1)
         result = math::biry (z, kind == 3, scale, ierr);
       else
         result = math::airy (z, kind == 1, scale, ierr);
-
-      retval(0) = result;
-      if (nargout > 1)
-        retval(1) = NDArray (ierr);
     }
+
+  retval(0) = result;
+  if (nargout > 1)
+    retval(1) = NDArray (ierr);
 
   return retval;
 }
 
 /*
-FIXME: Function airy does not yet have BIST tests
+%!test <*62321>
+%! assert (airy (0, +1, false),   0.1352924163128814,                       1e-15);
+%! assert (airy (0, -1, false),   0.5355608832923521,                       1e-15);
+%! assert (airy (0, +i, false),   0.3314933054321411 - 0.3174498589684437i, 1e-15);
+%! assert (airy (0, -i, false),   0.3314933054321411 + 0.3174498589684437i, 1e-15);
+%! assert (airy (0, +1,  true),   0.2635136447491401,                       1e-15);
+%! assert (airy (0, -1,  true),   0.4208904755499093 - 0.3311746779333462i, 1e-15);
+%! assert (airy (0, +i,  true),   0.2743053542644657 - 0.0825606941400591i, 1e-15);
+%! assert (airy (0, -i,  true),   0.2743053542644657 + 0.0825606941400591i, 1e-15);
+%! assert (airy (1, +1, false),  -0.1591474412967932,                       1e-15);
+%! assert (airy (1, -1, false),  -0.0101605671166451,                       1e-15);
+%! assert (airy (1, +i, false),  -0.4324926598418070 + 0.0980478562292432i, 1e-15);
+%! assert (airy (1, -i, false),  -0.4324926598418070 - 0.0980478562292432i, 1e-15);
+%! assert (airy (1, +1,  true),  -0.3099768889605148,                       1e-15);
+%! assert (airy (1, -1,  true),  -0.0079850602592406 + 0.0062829878869967i, 1e-15);
+%! assert (airy (1, +i,  true),  -0.2682792317254506 - 0.0680655016581369i, 1e-15);
+%! assert (airy (1, -i,  true),  -0.2682792317254506 + 0.0680655016581369i, 1e-15);
+%! assert (airy (2, +1, false),   1.2074235949528715,                       1e-15);
+%! assert (airy (2, -1, false),   0.1039973894969446,                       1e-15);
+%! assert (airy (2, +i, false),   0.6488582083303949 + 0.3449586347680484i, 1e-15);
+%! assert (airy (2, -i, false),   0.6488582083303949 - 0.3449586347680484i, 1e-15);
+%! assert (airy (2, +1,  true),   0.6199119435726786,                       1e-15);
+%! assert (airy (2, -1,  true),   0.1039973894969446,                       1e-15);
+%! assert (airy (2, +i,  true),   0.4049686654663902 + 0.2152973271658010i, 1e-15);
+%! assert (airy (2, -i,  true),   0.4049686654663902 - 0.2152973271658010i, 1e-15);
+%! assert (airy (3, +1, false),   0.9324359333927754,                       1e-15);
+%! assert (airy (3, -1, false),   0.5923756264227923,                       1e-15);
+%! assert (airy (3, +i, false),   0.1350266467108190 - 0.1288373867812549i, 1e-15);
+%! assert (airy (3, -i, false),   0.1350266467108190 + 0.1288373867812549i, 1e-15);
+%! assert (airy (3, +1,  true),   0.4787285706049846,                       1e-15);
+%! assert (airy (3, -1,  true),   0.5923756264227923,                       1e-15);
+%! assert (airy (3, +i,  true),   0.0842735134099415 - 0.0804106412111761i, 1e-15);
+%! assert (airy (3, -i,  true),   0.0842735134099415 + 0.0804106412111761i, 1e-15);
+%! z = -1 - 1e-6i;
+%! s1 = exp (2/3 * z * sqrt(z));
+%! s2 = exp (-abs (real (2/3 * z * sqrt(z))));
+%! assert (airy (0, z, true), s1 * airy (0, z, false), 1e-15);
+%! assert (airy (1, z, true), s1 * airy (1, z, false), 1e-15);
+%! assert (airy (2, z, true), s2 * airy (2, z, false), 1e-15);
+%! assert (airy (3, z, true), s2 * airy (3, z, false), 1e-15);
+
+Input validation tests
+%!error airy ()
+%!error airy (0, 1, 2, 3)
+%!error <K must be an integer value> airy ("foo", 2, false)
+%!error <K must be 0, 1, 2, or 3> airy (3743, 2, false)
+%!error <scale option must be a logical value> airy (0, 2, "foo")
+%!error <Z must be a complex matrix> airy (0, "foo", false)
 */
+
 
 /*
 ## Test values computed with GP/PARI version 2.3.3
@@ -739,12 +796,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %!assert (besselj (-alpha,x), jx, 100*eps)
 %!assert (bessely (-alpha,x), yx, 100*eps)
@@ -753,12 +810,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (-alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (-alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (-alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (-alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (-alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (-alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (-alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (-alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (-alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (-alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (-alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (-alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (-alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (-alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! x *= -1;
 %! yx = -1.193199310178553861283790424 + 0.3421822624810469647226182835*I;
@@ -771,12 +828,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! ## Bessel functions, odd order, positive and negative x
 %! alpha = 3;  x = 2.5;
@@ -792,12 +849,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %!assert (besselj (-alpha,x), -jx, 100*eps)
 %!assert (bessely (-alpha,x), -yx, 100*eps)
@@ -806,12 +863,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (-alpha,1,x), -(jx + I*yx), 100*eps)
 %!assert (besselh (-alpha,2,x), -(jx - I*yx), 100*eps)
 %!
-%!assert (besselj (-alpha,x,1), -jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (-alpha,x,1), -yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (-alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (-alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (-alpha,1,x,1), -(jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (-alpha,2,x,1), -(jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (-alpha,x,1), -jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (-alpha,x,1), -yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (-alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (-alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (-alpha,1,x,1), -(jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (-alpha,2,x,1), -(jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! x *= -1;
 %! jx = -jx;
@@ -826,12 +883,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! ## Bessel functions, fractional order, positive and negative x
 %!
@@ -848,12 +905,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! nix = 0.2119931212254662995364461998;
 %!
@@ -864,12 +921,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (-alpha,1,x), -I*(jx + I*yx), 100*eps)
 %!assert (besselh (-alpha,2,x), I*(jx - I*yx), 100*eps)
 %!
-%!assert (besselj (-alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (-alpha,x,1), -jx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (-alpha,x,1), nix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (-alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (-alpha,1,x,1), -I*(jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (-alpha,2,x,1), I*(jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (-alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (-alpha,x,1), -jx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (-alpha,x,1), nix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (-alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (-alpha,1,x,1), -I*(jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (-alpha,2,x,1), I*(jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! x *= -1;
 %! jx *= -I;
@@ -884,12 +941,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! ## Bessel functions, even order, complex x
 %!
@@ -906,12 +963,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %!assert (besselj (-alpha,x), jx, 100*eps)
 %!assert (bessely (-alpha,x), yx, 100*eps)
@@ -920,12 +977,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (-alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (-alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (-alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (-alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (-alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (-alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (-alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (-alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (-alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (-alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (-alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (-alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (-alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (-alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! ## Bessel functions, odd order, complex x
 %!
@@ -942,12 +999,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %!assert (besselj (-alpha,x), -jx, 100*eps)
 %!assert (bessely (-alpha,x), -yx, 100*eps)
@@ -956,12 +1013,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (-alpha,1,x), -(jx + I*yx), 100*eps)
 %!assert (besselh (-alpha,2,x), -(jx - I*yx), 100*eps)
 %!
-%!assert (besselj (-alpha,x,1), -jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (-alpha,x,1), -yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (-alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (-alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (-alpha,1,x,1), -(jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (-alpha,2,x,1), -(jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (-alpha,x,1), -jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (-alpha,x,1), -yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (-alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (-alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (-alpha,1,x,1), -(jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (-alpha,2,x,1), -(jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! ## Bessel functions, fractional order, complex x
 %!
@@ -978,12 +1035,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (alpha,1,x), jx + I*yx, 100*eps)
 %!assert (besselh (alpha,2,x), jx - I*yx, 100*eps)
 %!
-%!assert (besselj (alpha,x,1), jx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (alpha,x,1), ix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (alpha,1,x,1), (jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (alpha,2,x,1), (jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (alpha,x,1), jx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (alpha,x,1), ix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (alpha,1,x,1), (jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (alpha,2,x,1), (jx - I*yx)* exp (I*x), 100*eps)
 %!
 %! nix = 0.09822388691172060573913739253 - 0.7110230642207380127317227407*I;
 %!
@@ -994,12 +1051,12 @@ FIXME: Function airy does not yet have BIST tests
 %!assert (besselh (-alpha,1,x), -I*(jx + I*yx), 100*eps)
 %!assert (besselh (-alpha,2,x), I*(jx - I*yx), 100*eps)
 %!
-%!assert (besselj (-alpha,x,1), yx*exp (-abs (imag (x))), 100*eps)
-%!assert (bessely (-alpha,x,1), -jx*exp (-abs (imag (x))), 100*eps)
-%!assert (besseli (-alpha,x,1), nix*exp (-abs (real (x))), 100*eps)
-%!assert (besselk (-alpha,x,1), kx*exp (x), 100*eps)
-%!assert (besselh (-alpha,1,x,1), -I*(jx + I*yx)*exp (-I*x), 100*eps)
-%!assert (besselh (-alpha,2,x,1), I*(jx - I*yx)*exp (I*x), 100*eps)
+%!assert (besselj (-alpha,x,1), yx* exp (-abs (imag (x))), 100*eps)
+%!assert (bessely (-alpha,x,1), -jx* exp (-abs (imag (x))), 100*eps)
+%!assert (besseli (-alpha,x,1), nix* exp (-abs (real (x))), 100*eps)
+%!assert (besselk (-alpha,x,1), kx* exp (x), 100*eps)
+%!assert (besselh (-alpha,1,x,1), -I*(jx + I*yx)* exp (-I*x), 100*eps)
+%!assert (besselh (-alpha,2,x,1), I*(jx - I*yx)* exp (I*x), 100*eps)
 
 Tests contributed by Robert T. Short.
 Tests are based on the properties and tables in A&S:
@@ -1316,4 +1373,4 @@ Table 10.4 - j and y for various integer orders and arguments.
 %! assert (y, yt, -1e-9);
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

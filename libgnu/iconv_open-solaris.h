@@ -1,5 +1,5 @@
 /* ANSI-C code produced by gperf version 3.1 */
-/* Command-line: gperf -m 10 /home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf  */
+/* Command-line: gperf -m 10 ../../libgnu/iconv_open-solaris.gperf  */
 /* Computed positions: -k'10' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -29,7 +29,7 @@
 #error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gperf@gnu.org>."
 #endif
 
-#line 17 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 17 "../../libgnu/iconv_open-solaris.gperf"
 struct mapping { int standard_name; const char vendor_name[10 + 1]; };
 
 #define TOTAL_KEYWORDS 13
@@ -132,32 +132,32 @@ static const struct stringpool_t stringpool_contents =
 static const struct mapping mappings[] =
   {
     {-1}, {-1}, {-1}, {-1}, {-1},
-#line 35 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 35 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str5, "646"},
-#line 46 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 46 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str6, "ansi-1251"},
-#line 34 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 34 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str7},
     {-1}, {-1},
-#line 36 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 36 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str10, "ISO8859-1"},
-#line 45 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 45 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str11, "ISO8859-15"},
-#line 44 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 44 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str12, "ISO8859-9"},
-#line 43 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 43 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str13, "ISO8859-8"},
-#line 42 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 42 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str14, "ISO8859-7"},
-#line 41 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 41 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str15, "ISO8859-6"},
-#line 40 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 40 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str16, "ISO8859-5"},
-#line 39 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 39 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str17, "ISO8859-4"},
-#line 38 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 38 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str18, "ISO8859-3"},
-#line 37 "/home/jwe/src/octave-stable/libgnu/iconv_open-solaris.gperf"
+#line 37 "../../libgnu/iconv_open-solaris.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str19, "ISO8859-2"}
   };
 

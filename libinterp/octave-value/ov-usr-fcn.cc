@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -64,7 +64,7 @@
 // Whether to optimize subsasgn method calls.
 static bool Voptimize_subsasgn_calls = true;
 
-octave_user_code::~octave_user_code (void)
+octave_user_code::~octave_user_code ()
 {
   // This function is no longer valid, so remove the pointer to it from
   // the corresponding scope.
@@ -75,8 +75,7 @@ octave_user_code::~octave_user_code (void)
   // FIXME: shouldn't this happen automatically when deleting cmd_list?
   if (m_cmd_list)
     {
-      octave::event_manager& evmgr
-        = octave::__get_event_manager__ ("octave_user_code::~octave_user_code");
+      octave::event_manager& evmgr = octave::__get_event_manager__ ();
 
       m_cmd_list->remove_all_breakpoints (evmgr, m_file_name);
     }
@@ -86,7 +85,7 @@ octave_user_code::~octave_user_code (void)
 }
 
 void
-octave_user_code::get_file_info (void)
+octave_user_code::get_file_info ()
 {
   m_file_info = new octave::file_info (m_file_name);
 
@@ -119,8 +118,7 @@ void
 octave_user_code::cache_function_text (const std::string& text,
                                        const octave::sys::time& timestamp)
 {
-  if (m_file_info)
-    delete m_file_info;
+  delete m_file_info;
 
   if (timestamp > time_parsed ())
     warning ("help text for function is newer than function");
@@ -129,19 +127,20 @@ octave_user_code::cache_function_text (const std::string& text,
 }
 
 std::map<std::string, octave_value>
-octave_user_code::subfunctions (void) const
+octave_user_code::subfunctions () const
 {
   return std::map<std::string, octave_value> ();
 }
 
 octave_value
-octave_user_code::dump (void) const
+octave_user_code::dump () const
 {
   std::map<std::string, octave_value> m
-    = {{ "scope_info", m_scope ? m_scope.dump () : "0x0" },
-       { "m_file_name", m_file_name },
-       { "time_parsed", m_t_parsed },
-       { "time_checked", m_t_checked }};
+  = {{ "scope_info", m_scope ? m_scope.dump () : "0x0" },
+    { "m_file_name", m_file_name },
+    { "time_parsed", m_t_parsed },
+    { "time_checked", m_t_checked }
+  };
 
   return octave_value (m);
 }
@@ -153,14 +152,14 @@ DEFINE_OV_TYPEID_FUNCTIONS_AND_DATA (octave_user_script,
                                      "user-defined script",
                                      "user-defined script");
 
-octave_user_script::octave_user_script (void)
+octave_user_script::octave_user_script ()
   : octave_user_code ()
 { }
 
 octave_user_script::octave_user_script
-  (const std::string& fnm, const std::string& nm,
-   const octave::symbol_scope& scope, octave::tree_statement_list *cmds,
-   const std::string& ds)
+(const std::string& fnm, const std::string& nm,
+ const octave::symbol_scope& scope, octave::tree_statement_list *cmds,
+ const std::string& ds)
   : octave_user_code (fnm, nm, scope, cmds, ds)
 {
   if (m_cmd_list)
@@ -168,9 +167,9 @@ octave_user_script::octave_user_script
 }
 
 octave_user_script::octave_user_script
-  (const std::string& fnm, const std::string& nm,
-   const octave::symbol_scope& scope, const std::string& ds)
-    : octave_user_code (fnm, nm, scope, nullptr, ds)
+(const std::string& fnm, const std::string& nm,
+ const octave::symbol_scope& scope, const std::string& ds)
+  : octave_user_code (fnm, nm, scope, nullptr, ds)
 { }
 
 // We must overload the call method so that we call the proper
@@ -212,8 +211,8 @@ DEFINE_OV_TYPEID_FUNCTIONS_AND_DATA (octave_user_function,
 // extrinsic/intrinsic state?).
 
 octave_user_function::octave_user_function
-  (const octave::symbol_scope& scope, octave::tree_parameter_list *pl,
-   octave::tree_parameter_list *rl, octave::tree_statement_list *cl)
+(const octave::symbol_scope& scope, octave::tree_parameter_list *pl,
+ octave::tree_parameter_list *rl, octave::tree_statement_list *cl)
   : octave_user_code ("", "", scope, cl, ""),
     m_param_list (pl), m_ret_list (rl),
     m_lead_comm (), m_trail_comm (),
@@ -228,7 +227,7 @@ octave_user_function::octave_user_function
     m_cmd_list->mark_as_function_body ();
 }
 
-octave_user_function::~octave_user_function (void)
+octave_user_function::~octave_user_function ()
 {
   delete m_param_list;
   delete m_ret_list;
@@ -253,7 +252,7 @@ octave_user_function::define_ret_list (octave::tree_parameter_list *t)
 // information (yet).
 
 void
-octave_user_function::maybe_relocate_end_internal (void)
+octave_user_function::maybe_relocate_end_internal ()
 {
   if (m_cmd_list && ! m_cmd_list->empty ())
     {
@@ -263,7 +262,7 @@ octave_user_function::maybe_relocate_end_internal (void)
           && last_stmt->is_end_of_file ())
         {
           octave::tree_statement_list::reverse_iterator
-            next_to_last_elt = m_cmd_list->rbegin ();
+          next_to_last_elt = m_cmd_list->rbegin ();
 
           next_to_last_elt++;
 
@@ -289,7 +288,7 @@ octave_user_function::maybe_relocate_end_internal (void)
 }
 
 void
-octave_user_function::maybe_relocate_end (void)
+octave_user_function::maybe_relocate_end ()
 {
   std::map<std::string, octave_value> fcns = subfunctions ();
 
@@ -314,7 +313,7 @@ octave_user_function::stash_parent_fcn_scope (const octave::symbol_scope& ps)
 }
 
 std::string
-octave_user_function::profiler_name (void) const
+octave_user_function::profiler_name () const
 {
   std::ostringstream result;
 
@@ -337,7 +336,7 @@ octave_user_function::profiler_name (void) const
 }
 
 void
-octave_user_function::mark_as_system_fcn_file (void)
+octave_user_function::mark_as_system_fcn_file ()
 {
   if (! m_file_name.empty ())
     {
@@ -354,10 +353,10 @@ octave_user_function::mark_as_system_fcn_file (void)
 
       static const std::string canonical_fcn_file_dir
         = octave::sys::canonicalize_file_name
-            (octave::config::fcn_file_dir ());
+          (octave::config::fcn_file_dir ());
       static const std::string fcn_file_dir
         = canonical_fcn_file_dir.empty () ? octave::config::fcn_file_dir ()
-                                          : canonical_fcn_file_dir;
+          : canonical_fcn_file_dir;
 
       if (fcn_file_dir == ff_name.substr (0, fcn_file_dir.length ()))
         m_system_fcn_file = true;
@@ -367,19 +366,19 @@ octave_user_function::mark_as_system_fcn_file (void)
 }
 
 void
-octave_user_function::erase_subfunctions (void)
+octave_user_function::erase_subfunctions ()
 {
   m_scope.erase_subfunctions ();
 }
 
 bool
-octave_user_function::takes_varargs (void) const
+octave_user_function::takes_varargs () const
 {
   return (m_param_list && m_param_list->takes_varargs ());
 }
 
 bool
-octave_user_function::takes_var_return (void) const
+octave_user_function::takes_var_return () const
 {
   return (m_ret_list && m_ret_list->takes_varargs ());
 }
@@ -393,56 +392,56 @@ octave_user_function::mark_as_private_function (const std::string& cname)
 }
 
 void
-octave_user_function::lock_subfunctions (void)
+octave_user_function::lock_subfunctions ()
 {
   m_scope.lock_subfunctions ();
 }
 
 void
-octave_user_function::unlock_subfunctions (void)
+octave_user_function::unlock_subfunctions ()
 {
   m_scope.unlock_subfunctions ();
 }
 
 std::map<std::string, octave_value>
-octave_user_function::subfunctions (void) const
+octave_user_function::subfunctions () const
 {
   return m_scope.subfunctions ();
 }
 
-// Find definition of final subfunction in list of subfuns:
+// Find definition of final subfunction in list of subfcns:
 //
 //  sub1>sub2>...>subN
 
 octave_value
-octave_user_function::find_subfunction (const std::string& subfuns_arg) const
+octave_user_function::find_subfunction (const std::string& subfcns_arg) const
 {
-  std::string subfuns = subfuns_arg;
+  std::string subfcns = subfcns_arg;
 
-  std::string first_fun = subfuns;
+  std::string first_fcn = subfcns;
 
-  std::size_t pos = subfuns.find ('>');
+  std::size_t pos = subfcns.find ('>');
 
   if (pos == std::string::npos)
-    subfuns = "";
+    subfcns = "";
   else
     {
-      first_fun = subfuns.substr (0, pos-1);
-      subfuns = subfuns.substr (pos+1);
+      first_fcn = subfcns.substr (0, pos-1);
+      subfcns = subfcns.substr (pos+1);
     }
 
-  octave_value ov_fcn = m_scope.find_subfunction (first_fun);
+  octave_value ov_fcn = m_scope.find_subfunction (first_fcn);
 
-  if (subfuns.empty ())
+  if (subfcns.empty ())
     return ov_fcn;
 
   octave_user_function *fcn = ov_fcn.user_function_value ();
 
-  return fcn->find_subfunction (subfuns);
+  return fcn->find_subfunction (subfcns);
 }
 
 bool
-octave_user_function::has_subfunctions (void) const
+octave_user_function::has_subfunctions () const
 {
   return m_scope.has_subfunctions ();
 }
@@ -454,7 +453,7 @@ octave_user_function::stash_subfunction_names (const std::list<std::string>& nam
 }
 
 std::list<std::string>
-octave_user_function::subfunction_names (void) const
+octave_user_function::subfunction_names () const
 {
   return m_scope.subfunction_names ();
 }
@@ -502,17 +501,17 @@ octave_user_function::accept (octave::tree_walker& tw)
 }
 
 octave::tree_expression *
-octave_user_function::special_expr (void)
+octave_user_function::special_expr ()
 {
-  assert (is_special_expr ());
-  assert (m_cmd_list->length () == 1);
+  panic_unless (is_special_expr ());
+  panic_if (m_cmd_list->length () != 1);
 
   octave::tree_statement *stmt = m_cmd_list->front ();
   return stmt->expression ();
 }
 
 bool
-octave_user_function::subsasgn_optimization_ok (void)
+octave_user_function::subsasgn_optimization_ok ()
 {
   bool retval = false;
   if (Voptimize_subsasgn_calls
@@ -529,7 +528,7 @@ octave_user_function::subsasgn_optimization_ok (void)
 }
 
 std::string
-octave_user_function::ctor_type_str (void) const
+octave_user_function::ctor_type_str () const
 {
   std::string retval;
 
@@ -556,7 +555,7 @@ octave_user_function::ctor_type_str (void) const
 }
 
 std::string
-octave_user_function::method_type_str (void) const
+octave_user_function::method_type_str () const
 {
   std::string retval;
 
@@ -583,22 +582,23 @@ octave_user_function::method_type_str (void) const
 }
 
 octave_value
-octave_user_function::dump (void) const
+octave_user_function::dump () const
 {
   std::map<std::string, octave_value> m
-    = {{ "user_code", octave_user_code::dump () },
-       { "line", m_location_line },
-       { "col", m_location_column },
-       { "end_line", m_end_location_line },
-       { "end_col", m_end_location_column },
-       { "system_fcn_file", m_system_fcn_file },
-       { "num_named_args", m_num_named_args },
-       { "subfunction", m_subfunction },
-       { "inline_function", m_inline_function },
-       { "anonymous_function", m_anonymous_function },
-       { "nested_function", m_nested_function },
-       { "ctor_type", ctor_type_str () },
-       { "class_method", m_class_method }};
+  = {{ "user_code", octave_user_code::dump () },
+    { "line", m_location_line },
+    { "col", m_location_column },
+    { "end_line", m_end_location_line },
+    { "end_col", m_end_location_column },
+    { "system_fcn_file", m_system_fcn_file },
+    { "num_named_args", m_num_named_args },
+    { "subfunction", m_subfunction },
+    { "inline_function", m_inline_function },
+    { "anonymous_function", m_anonymous_function },
+    { "nested_function", m_nested_function },
+    { "ctor_type", ctor_type_str () },
+    { "class_method", m_class_method }
+  };
 
   return octave_value (m);
 }
@@ -620,10 +620,9 @@ octave_user_function::print_code_function_trailer (const std::string& prefix)
 }
 
 void
-octave_user_function::restore_warning_states (void)
+octave_user_function::restore_warning_states ()
 {
-  octave::interpreter& interp
-    = octave::__get_interpreter__ ("octave_user_function::restore_warning_states");
+  octave::interpreter& interp = octave::__get_interpreter__ ();
 
   octave::tree_evaluator& tw = interp.get_evaluator ();
 
@@ -648,12 +647,12 @@ octave_user_function::restore_warning_states (void)
     }
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFMETHOD (nargin, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} nargin ()
-@deftypefnx {} {} nargin (@var{fcn})
+@deftypefn  {} {@var{n} =} nargin ()
+@deftypefnx {} {@var{n} =} nargin (@var{fcn})
 Report the number of input arguments to a function.
 
 Called from within a function, return the number of arguments passed to the
@@ -692,25 +691,25 @@ Programming Note: @code{nargin} does not work on compiled functions
 
   if (nargin == 1)
     {
-      octave_value func = args(0);
+      octave_value fcn = args(0);
 
-      if (func.is_string ())
+      if (fcn.is_string ())
         {
           symbol_table& symtab = interp.get_symbol_table ();
 
-          std::string name = func.string_value ();
-          func = symtab.find_function (name);
-          if (func.is_undefined ())
+          std::string name = fcn.string_value ();
+          fcn = symtab.find_function (name);
+          if (fcn.is_undefined ())
             error ("nargin: invalid function name: %s", name.c_str ());
         }
 
-      octave_function *fcn_val = func.function_value (true);
+      octave_function *fcn_val = fcn.function_value (true);
       if (! fcn_val)
         error ("nargin: FCN must be a string or function handle");
 
-      octave_user_function *fcn = fcn_val->user_function_value (true);
+      octave_user_function *ufcn = fcn_val->user_function_value (true);
 
-      if (! fcn)
+      if (! ufcn)
         {
           // Matlab gives up for histc, so maybe it's ok that we
           // give up sometimes too?
@@ -720,10 +719,10 @@ Programming Note: @code{nargin} does not work on compiled functions
                  type.c_str ());
         }
 
-      tree_parameter_list *m_param_list = fcn->parameter_list ();
+      tree_parameter_list *m_param_list = ufcn->parameter_list ();
 
       retval = (m_param_list ? m_param_list->length () : 0);
-      if (fcn->takes_varargs ())
+      if (ufcn->takes_varargs ())
         retval = -1 - retval;
     }
   else
@@ -741,8 +740,8 @@ Programming Note: @code{nargin} does not work on compiled functions
 
 DEFMETHOD (nargout, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} nargout ()
-@deftypefnx {} {} nargout (@var{fcn})
+@deftypefn  {} {@var{n} =} nargout ()
+@deftypefnx {} {@var{n} =} nargout (@var{fcn})
 Report the number of output arguments from a function.
 
 Called from within a function, return the number of values the caller
@@ -803,36 +802,36 @@ returns -1 for all anonymous functions.
 
   if (nargin == 1)
     {
-      octave_value func = args(0);
+      octave_value fcn = args(0);
 
-      if (func.is_string ())
+      if (fcn.is_string ())
         {
           symbol_table& symtab = interp.get_symbol_table ();
 
-          std::string name = func.string_value ();
-          func = symtab.find_function (name);
-          if (func.is_undefined ())
+          std::string name = fcn.string_value ();
+          fcn = symtab.find_function (name);
+          if (fcn.is_undefined ())
             error ("nargout: invalid function name: %s", name.c_str ());
         }
 
-      if (func.is_inline_function ())
+      if (fcn.is_inline_function ())
         return ovl (1);
 
-      if (func.is_function_handle ())
+      if (fcn.is_function_handle ())
         {
-          octave_fcn_handle *fh = func.fcn_handle_value ();
+          octave_fcn_handle *fh = fcn.fcn_handle_value ();
 
           if (fh->is_anonymous ())
             return ovl (-1);
         }
 
-      octave_function *fcn_val = func.function_value (true);
+      octave_function *fcn_val = fcn.function_value (true);
       if (! fcn_val)
         error ("nargout: FCN must be a string or function handle");
 
-      octave_user_function *fcn = fcn_val->user_function_value (true);
+      octave_user_function *ufcn = fcn_val->user_function_value (true);
 
-      if (! fcn)
+      if (! ufcn)
         {
           // Matlab gives up for histc, so maybe it's ok that we
           // give up sometimes too?
@@ -842,11 +841,11 @@ returns -1 for all anonymous functions.
                  type.c_str ());
         }
 
-      tree_parameter_list *m_ret_list = fcn->return_list ();
+      tree_parameter_list *m_ret_list = ufcn->return_list ();
 
       retval = (m_ret_list ? m_ret_list->length () : 0);
 
-      if (fcn->takes_var_return ())
+      if (ufcn->takes_var_return ())
         retval = -1 - retval;
     }
   else
@@ -869,7 +868,7 @@ DEFUN (optimize_subsasgn_calls, args, nargout,
        doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{val} =} optimize_subsasgn_calls ()
 @deftypefnx {} {@var{old_val} =} optimize_subsasgn_calls (@var{new_val})
-@deftypefnx {} {} optimize_subsasgn_calls (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} optimize_subsasgn_calls (@var{new_val}, "local")
 Query or set the internal flag for @code{subsasgn} method call
 optimizations.
 
@@ -886,7 +885,8 @@ The original variable value is restored when exiting the function.
                                 "optimize_subsasgn_calls");
 }
 
-static bool val_in_table (const Matrix& table, double val)
+static bool
+val_in_table (const Matrix& table, double val)
 {
   if (table.isempty ())
     return false;
@@ -895,7 +895,8 @@ static bool val_in_table (const Matrix& table, double val)
   return (i > 0 && table(i-1) == val);
 }
 
-static bool isargout1 (int nargout, const Matrix& ignored, double k)
+static bool
+isargout1 (int nargout, const Matrix& ignored, double k)
 {
   if (k != math::fix (k) || k <= 0)
     error ("isargout: K must be a positive integer");
@@ -905,7 +906,7 @@ static bool isargout1 (int nargout, const Matrix& ignored, double k)
 
 DEFMETHOD (isargout, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} isargout (@var{k})
+@deftypefn {} {@var{tf} =} isargout (@var{k})
 Within a function, return a logical value indicating whether the argument
 @var{k} will be assigned to a variable on output.
 
@@ -1009,18 +1010,29 @@ element-by-element and a logical array is returned.  At the top level,
 %! [~, y] = try_isargout;
 %! assert (y, -2);
 %!
-## It should work in function handles, anonymous functions, and cell
-## arrays of handles or anonymous functions.
+## It should work in function handles,
+%!test
+%! fh = @try_isargout;
+%! [~, y] = fh ();
+%! assert (y, -2);
+%!
+## anonymous functions,
+%!test
+%! af = @() try_isargout;
+%! [~, y] = af ();
+%! assert (y, -2);
+%!
+## and cell arrays of handles or anonymous functions.
 %!test
 %! fh = @try_isargout;
 %! af = @() try_isargout;
 %! c = {fh, af};
-%! [~, y] = fh ();
-%! assert (y, -2);
-%! [~, y] = af ();
-%! assert (y, -2);
 %! [~, y] = c{1}();
 %! assert (y, -2);
+%!test
+%! fh = @try_isargout;
+%! af = @() try_isargout;
+%! c = {fh, af};
 %! [~, y] = c{2}();
 %! assert (y, -2);
 %!
@@ -1033,4 +1045,4 @@ element-by-element and a logical array is returned.  At the top level,
 %! assert (b, {0, 1, {-1, -1}});
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

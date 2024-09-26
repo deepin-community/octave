@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -46,15 +46,14 @@
 #include "interpreter.h"
 #include "symtab.h"
 #include "variables.h"
-#include "parse.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Print the usage part of the doc string of FCN (user-defined or DEFUN).
 void
-print_usage (void)
+print_usage ()
 {
-  tree_evaluator& tw = __get_evaluator__ ("print_usage");
+  tree_evaluator& tw = __get_evaluator__ ();
 
   const octave_function *cur = tw.current_function ();
 
@@ -67,7 +66,9 @@ print_usage (void)
 void
 print_usage (const std::string& name)
 {
-  feval ("print_usage", octave_value (name), 0);
+  interpreter& interp = __get_interpreter__ ();
+
+  interp.feval ("print_usage", octave_value (name), 0);
 }
 
 void
@@ -97,7 +98,7 @@ install_dld_function (octave_dld_function::fcn f, const std::string& name,
 
   octave_value fval (fcn);
 
-  symbol_table& symtab = __get_symbol_table__ ("install_dld_function");
+  symbol_table& symtab = __get_symbol_table__ ();
 
   symtab.install_built_in_function (name, fval);
 }
@@ -114,7 +115,7 @@ install_dld_function (octave_dld_function::meth m, const std::string& name,
 
   octave_value fval (fcn);
 
-  symbol_table& symtab = __get_symbol_table__ ("install_dld_function");
+  symbol_table& symtab = __get_symbol_table__ ();
 
   symtab.install_built_in_function (name, fval);
 }
@@ -130,17 +131,17 @@ install_mex_function (void *fptr, bool fmex, const std::string& name,
 
   octave_value fval (fcn);
 
-  symbol_table& symtab = __get_symbol_table__ ("install_mex_function");
+  symbol_table& symtab = __get_symbol_table__ ();
 
   symtab.install_built_in_function (name, fval);
 }
 
 dynamic_library
-get_current_shlib (void)
+get_current_shlib ()
 {
   dynamic_library retval;
 
-  tree_evaluator& tw = __get_evaluator__ ("get_current_shlib");
+  tree_evaluator& tw = __get_evaluator__ ();
 
   octave_function *curr_fcn = tw.current_function ();
 
@@ -163,4 +164,4 @@ get_current_shlib (void)
   return retval;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

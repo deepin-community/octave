@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Area Series (GNU Octave (version 7.1.0))</title>
+<title>Area Series (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Area Series (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Area Series (GNU Octave (version 7.1.0))">
+<meta name="description" content="Area Series (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Area Series (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,8 @@
 <link href="Data-Sources-in-Object-Groups.html" rel="prev" title="Data Sources in Object Groups">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,46 +30,46 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsubsection" id="Area-Series">
-<div class="header">
+<div class="subsubsection-level-extent" id="Area-Series">
+<div class="nav-panel">
 <p>
 Next: <a href="Bar-Series.html" accesskey="n" rel="next">Bar Series</a>, Previous: <a href="Data-Sources-in-Object-Groups.html" accesskey="p" rel="prev">Data Sources in Object Groups</a>, Up: <a href="Object-Groups.html" accesskey="u" rel="up">Object Groups</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Area-Series-1"></span><h4 class="subsubsection">15.4.6.2 Area Series</h4>
-<span id="index-series-objects"></span>
-<span id="index-area-series"></span>
+<h4 class="subsubsection" id="Area-Series-1"><span>15.4.6.2 Area Series<a class="copiable-link" href="#Area-Series-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-series-objects"></a>
+<a class="index-entry-id" id="index-area-series"></a>
 
-<p>Area series objects are created by the <code>area</code> function.  Each of the
-<code>hggroup</code> elements contains a single patch object.  The properties
+<p>Area series objects are created by the <code class="code">area</code> function.  Each of the
+<code class="code">hggroup</code> elements contains a single patch object.  The properties
 of the area series are
 </p>
-<dl compact="compact">
-<dt><span><code>basevalue</code></span></dt>
+<dl class="table">
+<dt><code class="code">basevalue</code></dt>
 <dd><p>The value where the base of the area plot is drawn.
 </p>
 </dd>
-<dt><span><code>linewidth</code></span></dt>
-<dt><span><code>linestyle</code></span></dt>
+<dt><code class="code">linewidth</code></dt>
+<dt><code class="code">linestyle</code></dt>
 <dd><p>The line width and style of the edge of the patch objects making up the
-areas.  See <a href="Line-Styles.html">Line Styles</a>.
+areas.  See <a class="xref" href="Line-Styles.html">Line Styles</a>.
 </p>
 </dd>
-<dt><span><code>edgecolor</code></span></dt>
-<dt><span><code>facecolor</code></span></dt>
+<dt><code class="code">edgecolor</code></dt>
+<dt><code class="code">facecolor</code></dt>
 <dd><p>The line and fill color of the patch objects making up the areas.
-See <a href="Colors.html">Colors</a>.
+See <a class="xref" href="Colors.html">Colors</a>.
 </p>
 </dd>
-<dt><span><code>xdata</code></span></dt>
-<dt><span><code>ydata</code></span></dt>
+<dt><code class="code">xdata</code></dt>
+<dt><code class="code">ydata</code></dt>
 <dd><p>The x and y coordinates of the original columns of the data passed to
-<code>area</code> prior to the cumulative summation used in the <code>area</code>
+<code class="code">area</code> prior to the cumulative summation used in the <code class="code">area</code>
 function.
 </p>
 </dd>
-<dt><span><code>xdatasource</code></span></dt>
-<dt><span><code>ydatasource</code></span></dt>
+<dt><code class="code">xdatasource</code></dt>
+<dt><code class="code">ydatasource</code></dt>
 <dd><p>Data source variables.
 </p></dd>
 </dl>

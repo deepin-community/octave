@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __pltopt__ (@var{caller}, @var{opt}, @var{err_on_invalid})
+## @deftypefn {} {[@var{options}, @var{valid}] =} __pltopt__ (@var{caller}, @var{opt}, @var{err_on_invalid})
 ##
 ## Decode plot option strings.
 ##
@@ -181,8 +181,14 @@ function [options, valid] = decode_linespec (caller, opt, err_on_invalid)
           n = 9;
         endif
       endif
+      ## Backward compatibility.  Leave undocumented.
+      if (topt == "@")
+        warning ("Octave:deprecated-option", ...
+                 "%s: marker type '@' is deprecated.  Use '+' instead.", ...
+                 caller);
+        topt = "+";
+      endif
       options.marker = topt;
-    ## Color specs
     elseif (topt == "k")
       options.color = [0, 0, 0];
     elseif (topt == "r")

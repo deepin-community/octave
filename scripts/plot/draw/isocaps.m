@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -124,7 +124,7 @@ function varargout = isocaps (varargin)
   ## select type of cap (above or below iso value)
   data_min = min ([v(:); isoval]);
   data_max = max ([v(:); isoval]);
-  switch (tolower (which_caps))
+  switch (lower (which_caps))
     case {"a", "above"}
       pad_val = data_min - 1;
 

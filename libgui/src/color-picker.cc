@@ -3,7 +3,7 @@
 // This class provides a simple color picker based on tQColorButton
 // by Harald Jedele, 23.03.01, GPL version 2 or any later version.
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,52 +32,53 @@
 
 #include "color-picker.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// Constructor with initial color as parameter
+color_picker::color_picker (QColor old_color, QWidget *p)
+: QPushButton (p)
 {
-  // Constructor with initial color as parameter
-  color_picker::color_picker (QColor old_color, QWidget *p)
-    : QPushButton (p)
-  {
-    m_color = old_color;
-    setFlat (true);
-    setFocusPolicy (Qt::NoFocus);  // no focus, would change the color
-    update_button ();
-    connect (this, &color_picker::clicked, this, &color_picker::select_color);
-  }
-
-  // Slot for button clicked: select a new color using QColorDialog
-  void color_picker::select_color (void)
-  {
-    QColor new_color = QColorDialog::getColor (m_color);
-
-    if (new_color.isValid () && new_color != m_color)
-      {
-        m_color = new_color;
-        update_button ();
-      }
-  }
-
-  // Set the color of the button
-  void color_picker::set_color (QColor new_color)
-  {
-    m_color = new_color;
-    update_button ();
-  }
-
-  // Draw the button with the actual color (using a stylesheet)
-  void color_picker::update_button (void)
-  {
-    // Is this the right place to look for a "foreground" color that would
-    // provide a reasonable border for the color swatches?
-    QWidget *p = parentWidget ();
-
-    QString bordercolor
-      = (p ? p->palette ().text ().color ().name () : QString ("#000000"));
-
-    setStyleSheet (QString ("background-color: %1; border: 1px solid %2;")
-                   .arg (m_color.name ())
-                   .arg (bordercolor));
-
-    repaint ();
-  }
+  m_color = old_color;
+  setFlat (true);
+  setFocusPolicy (Qt::NoFocus);  // no focus, would change the color
+  update_button ();
+  connect (this, &color_picker::clicked, this, &color_picker::select_color);
 }
+
+// Slot for button clicked: select a new color using QColorDialog
+void color_picker::select_color ()
+{
+  QColor new_color = QColorDialog::getColor (m_color);
+
+  if (new_color.isValid () && new_color != m_color)
+    {
+      m_color = new_color;
+      update_button ();
+    }
+}
+
+// Set the color of the button
+void color_picker::set_color (QColor new_color)
+{
+  m_color = new_color;
+  update_button ();
+}
+
+// Draw the button with the actual color (using a stylesheet)
+void color_picker::update_button ()
+{
+  // Is this the right place to look for a "foreground" color that would
+  // provide a reasonable border for the color swatches?
+  QWidget *p = parentWidget ();
+
+  QString bordercolor
+    = (p ? p->palette ().text ().color ().name () : QString ("#000000"));
+
+  setStyleSheet (QString ("background-color: %1; border: 1px solid %2;")
+                 .arg (m_color.name ())
+                 .arg (bordercolor));
+
+  repaint ();
+}
+
+OCTAVE_END_NAMESPACE(octave)

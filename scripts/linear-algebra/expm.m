@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} expm (@var{A})
+## @deftypefn {} {@var{r} =} expm (@var{A})
 ## Return the exponential of a matrix.
 ##
 ## The matrix exponential is defined as the infinite Taylor series

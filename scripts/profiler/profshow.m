@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -43,7 +43,6 @@
 ## @seealso{profexplore, profile}
 ## @end deftypefn
 
-## Built-in profiler.
 function profshow (data, n = 20)
 
   if (nargin == 0)

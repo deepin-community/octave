@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2007-2022 The Octave Project Developers
+## Copyright (C) 2007-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -185,11 +185,6 @@ function vi = interpn (varargin)
 
   if (strcmp (method, "linear"))
     vi = __lin_interpn__ (x{:}, v, y{:});
-    if (iscomplex (v))
-      ## __lin_interpn__ ignores imaginary part. Do it again for imag part.
-      ## FIXME: Adapt __lin_interpn__ to correctly handle complex input.
-      vi += 1i * __lin_interpn__ (x{:}, imag (v), y{:});
-    endif
     vi(isna (vi)) = extrapval;
   elseif (strcmp (method, "nearest"))
     ## FIXME: This seems overly complicated.  Is there a way to simplify
@@ -366,13 +361,14 @@ endfunction
 %! yi = [0.5, 1.5]';
 %! xi = [2.5, 3.5];
 %! zi = [2.25, 4.75];
+%! rand ("state", 1340640850);
 %! v = rand (4, 3, 5) + 1i * rand (4, 3, 5);
 %! for method = {"nearest", "linear", "spline"}
 %!   vi_complex = interpn (v, yi, xi, zi, method{1});
 %!   vi_real = interpn (real (v), yi, xi, zi, method{1});
 %!   vi_imag = interpn (imag (v), yi, xi, zi, method{1});
-%!   assert (real (vi_complex), vi_real)
-%!   assert (imag (vi_complex), vi_imag)
+%!   assert (real (vi_complex), vi_real, 2*eps);
+%!   assert (imag (vi_complex), vi_imag, 2*eps);
 %! endfor
 
 ## Test input validation
@@ -392,4 +388,3 @@ endfunction
 %! interpn ([1,2], [1,2], magic (3), [1,2], ones (2,2), "spline")
 %!error <pchip interpolation not yet implemented> interpn ([1,2], "pchip")
 %!error <cubic interpolation not yet implemented> interpn ([1,2], "cubic")
-

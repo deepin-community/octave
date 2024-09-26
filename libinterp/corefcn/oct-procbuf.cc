@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -55,7 +55,7 @@
 #include "errwarn.h"
 #include "utils.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 #if ! defined (SHELL_PATH)
 #  define SHELL_PATH "/bin/sh"
@@ -182,7 +182,7 @@ procbuf::open (const char *command, int mode)
 }
 
 procbuf *
-procbuf::close (void)
+procbuf::close ()
 {
 #if defined (__CYGWIN__) || defined (__MINGW32__) || defined (_MSC_VER)
 
@@ -241,4 +241,4 @@ procbuf::close (void)
 #endif
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

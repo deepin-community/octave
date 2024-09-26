@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2014-2022 The Octave Project Developers
+## Copyright (C) 2014-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,24 +24,24 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} istril (@var{A})
-## Return true if @var{A} is a lower triangular matrix.
+## @deftypefn {} {@var{tf} =} istril (@var{A})
+## Return true if @var{A} is a lower triangular numeric matrix.
 ##
 ## A lower triangular matrix has nonzero entries only on the main diagonal and
 ## below.
 ## @seealso{istriu, isbanded, isdiag, tril, bandwidth}
 ## @end deftypefn
 
-function retval = istril (A)
+function tf = istril (A)
 
   if (nargin < 1)
     print_usage ();
   endif
 
-  retval = (isnumeric (A) || islogical (A)) && ndims (A) == 2;
-  if (retval)
+  tf = (isnumeric (A) || islogical (A)) && ndims (A) == 2;
+  if (tf)
     [i, j] = find (A);
-    retval = all (i >= j);
+    tf = all (i >= j);
   endif
 
 endfunction

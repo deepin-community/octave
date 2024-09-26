@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} range (@var{x})
-## @deftypefnx {} {} range (@var{x}, @var{dim})
+## @deftypefn  {} {@var{y} =} range (@var{x})
+## @deftypefnx {} {@var{y} =} range (@var{x}, @var{dim})
 ## Return the range, i.e., the difference between the maximum and the minimum
 ## of the input data.
 ##

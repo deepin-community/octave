@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,76 +30,75 @@
 #include <QMenuBar>
 #include <QToolBar>
 
-#include "gui-settings.h"
 #include "octave-dock-widget.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class file_editor_interface : public octave_dock_widget
 {
-  class base_qobject;
+  Q_OBJECT
 
-  class file_editor_interface : public octave_dock_widget
-  {
-    Q_OBJECT
+public:
 
-  public:
+  file_editor_interface (QWidget *p)
+    : octave_dock_widget ("FileEditor", p)
+  { }
 
-    file_editor_interface (QWidget *p, base_qobject& oct_qobj)
-      : octave_dock_widget ("FileEditor", p, oct_qobj)
-    { }
+  virtual ~file_editor_interface () = default;
 
-    virtual ~file_editor_interface (void) = default;
+  virtual QMenu * get_mru_menu () = 0;
+  virtual QMenu * debug_menu () = 0;
+  virtual QToolBar * toolbar () = 0;
+  virtual QMenuBar * menubar () = 0;
 
-    virtual QMenu * get_mru_menu (void) = 0;
-    virtual QMenu * debug_menu (void) = 0;
-    virtual QToolBar * toolbar (void) = 0;
-    virtual QMenuBar * menubar (void) = 0;
+  virtual void insert_global_actions (QList<QAction *>) = 0;
+  virtual void handle_enter_debug_mode () = 0;
+  virtual void handle_exit_debug_mode () = 0;
 
-    virtual void insert_global_actions (QList<QAction *>) = 0;
-    virtual void handle_enter_debug_mode (void) = 0;
-    virtual void handle_exit_debug_mode (void) = 0;
+  virtual void
+  handle_insert_debugger_pointer_request (const QString& file, int line) = 0;
 
-    virtual void
-    handle_insert_debugger_pointer_request (const QString& file, int line) = 0;
+  virtual void
+  handle_delete_debugger_pointer_request (const QString& file, int line) = 0;
 
-    virtual void
-    handle_delete_debugger_pointer_request (const QString& file, int line) = 0;
+  virtual void
+  handle_update_breakpoint_marker_request (bool insert, const QString& file,
+                                           int line, const QString& cond) = 0;
 
-    virtual void
-    handle_update_breakpoint_marker_request (bool insert, const QString& file,
-                                             int line, const QString& cond) = 0;
+  virtual void handle_edit_file_request (const QString& file) = 0;
 
-    virtual void handle_edit_file_request (const QString& file) = 0;
+  virtual bool check_closing () = 0;
 
-    virtual bool check_closing (void) = 0;
+  virtual void empty_script (bool, bool) = 0;
 
-    virtual void empty_script (bool, bool) = 0;
+  virtual void restore_session () = 0;
 
-    virtual void restore_session (gui_settings *) = 0;
+  virtual void enable_menu_shortcuts (bool enable) = 0;
 
-    virtual void enable_menu_shortcuts (bool enable) = 0;
+signals:
 
-  signals:
+  void interpreter_event (const fcn_callback& fcn);
+  void interpreter_event (const meth_callback& meth);
 
-    void interpreter_event (const fcn_callback& fcn);
-    void interpreter_event (const meth_callback& meth);
+public slots:
 
-  public slots:
+  virtual void toplevel_change (bool) = 0;
 
-    virtual void toplevel_change (bool) = 0;
+  virtual void handle_file_remove (const QString& o, const QString& n) = 0;
 
-    virtual void handle_file_remove (const QString& o, const QString& n) = 0;
+  virtual void request_new_file (const QString& command = QString ()) = 0;
 
-    virtual void request_new_file (const QString& command = QString ()) = 0;
+  virtual void request_open_file (const QString& openFileName,
+                                  const QString& encoding = QString (),
+                                  int line = -1,
+                                  bool debug_pointer = false,
+                                  bool breakpoint_marker = false,
+                                  bool insert = true,
+                                  const QString& cond = "",
+                                  int index = -1,
+                                  const QString& bookmarks = QString ()) = 0;
+};
 
-    virtual void request_open_file (const QString& openFileName,
-                                    const QString& encoding = QString (),
-                                    int line = -1,
-                                    bool debug_pointer = false,
-                                    bool breakpoint_marker = false,
-                                    bool insert = true,
-                                    const QString& cond = "",
-                                    int index = -1) = 0;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

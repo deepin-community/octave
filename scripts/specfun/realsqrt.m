@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} realsqrt (@var{x})
+## @deftypefn {} {@var{y} =} realsqrt (@var{x})
 ## Return the real-valued square root of each element of @var{x}.
 ##
 ## If any element results in a complex return value @code{realsqrt} aborts and

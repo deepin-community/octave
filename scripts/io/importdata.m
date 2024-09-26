@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -316,7 +316,7 @@ function [output, delimiter, header_rows] = importdata_ascii (fname, delimiter, 
         ## FIXME: This code should be redundant because dlmread was called
         ##        with "emptyval", NA.  Delete if there are no problems
         ##        detected after some time.  Commented out: 5/23/2020.
-        ##output.data(ridx, (col+1):end) = NA;
+        ## output.data(ridx, (col+1):end) = NA;
         missing_idx = missing_idx(1:col);
       endif
       text = fields(missing_idx);
@@ -358,7 +358,7 @@ endfunction
 
 
 %!test
-%! ## Comma separated values
+%! ## Comma-separated values
 %! A = [3.1 -7.2 0; 0.012 6.5 128];
 %! fn  = tempname ();
 %! fid = fopen (fn, "w");
@@ -522,7 +522,7 @@ endfunction
 %! assert (d, "\t");
 %! assert (h, 0);
 
-%!testif ; ! ismac ()
+%!testif ; ! __have_feature__ ("LLVM_LIBCXX")
 %! ## Complex numbers
 %! A = [3.1 -7.2 0-3.4i; 0.012 -6.5+7.2i 128];
 %! fn  = tempname ();
@@ -535,9 +535,8 @@ endfunction
 %! assert (d, "\t");
 %! assert (h, 0);
 
-%!test <47413>
-%! ## Same test code as above, but intended only for test statistics on Mac.
-%! if (! ismac ()), return; endif
+%!testif HAVE_LLVM_LIBCXX  <47413>
+%! ## Same test code as above, intended only for test statistics with libc++.
 %! ## Complex numbers
 %! A = [3.1 -7.2 0-3.4i; 0.012 -6.5+7.2i 128];
 %! fn  = tempname ();

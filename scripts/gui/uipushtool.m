@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,9 +24,10 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} uipushtool (@var{property}, @var{value}, @dots{})
-## @deftypefnx {} {} uipushtool (@var{parent}, @var{property}, @var{value}, @dots{})
-## @deftypefnx {} {@var{hui} =} uipushtool (@dots{})
+## @deftypefn  {} {@var{hui} =} uipushtool ()
+## @deftypefnx {} {@var{hui} =} uipushtool (@var{property}, @var{value}, @dots{})
+## @deftypefnx {} {@var{hui} =} uipushtool (@var{parent})
+## @deftypefnx {} {@var{hui} =} uipushtool (@var{parent}, @var{property}, @var{value}, @dots{})
 ##
 ## Create a uipushtool object.
 ##

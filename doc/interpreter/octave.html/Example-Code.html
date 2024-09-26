@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Example Code (GNU Octave (version 7.1.0))</title>
+<title>Example Code (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Example Code (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Example Code (GNU Octave (version 7.1.0))">
+<meta name="description" content="Example Code (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Example Code (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Function-Support.html" rel="prev" title="Function Support">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,53 +31,53 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Example-Code">
-<div class="header">
+<div class="section-level-extent" id="Example-Code">
+<div class="nav-panel">
 <p>
 Next: <a href="Zeros-Treatment.html" accesskey="n" rel="next">Differences in Treatment of Zero Elements</a>, Previous: <a href="Function-Support.html" accesskey="p" rel="prev">Functions That Are Aware of These Matrices</a>, Up: <a href="Diagonal-and-Permutation-Matrices.html" accesskey="u" rel="up">Diagonal and Permutation Matrices</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Examples-of-Usage"></span><h3 class="section">21.4 Examples of Usage</h3>
+<h3 class="section" id="Examples-of-Usage"><span>21.4 Examples of Usage<a class="copiable-link" href="#Examples-of-Usage"> &para;</a></span></h3>
 
-<p>The following can be used to solve a linear system <code>A*x = b</code>
+<p>The following can be used to solve a linear system <code class="code">A*x = b</code>
 using the pivoted LU&nbsp;factorization:
 </p>
 <div class="example">
-<pre class="example">  [L, U, P] = lu (A); ## now L*U = P*A
+<div class="group"><pre class="example-preformatted">  [L, U, P] = lu (A); ## now L*U = P*A
   x = U \ (L \ P) * b;
-</pre></div>
+</pre></div></div>
 
-<p>This is one way to normalize columns of a matrix <var>X</var> to unit norm:
+<p>This is one way to normalize columns of a matrix <var class="var">X</var> to unit norm:
 </p>
 <div class="example">
-<pre class="example">  s = norm (X, &quot;columns&quot;);
+<div class="group"><pre class="example-preformatted">  s = norm (X, &quot;columns&quot;);
   X /= diag (s);
-</pre></div>
+</pre></div></div>
 
-<p>The same can also be accomplished with broadcasting (see <a href="Broadcasting.html">Broadcasting</a>):
+<p>The same can also be accomplished with broadcasting (see <a class="pxref" href="Broadcasting.html">Broadcasting</a>):
 </p>
 <div class="example">
-<pre class="example">  s = norm (X, &quot;columns&quot;);
+<div class="group"><pre class="example-preformatted">  s = norm (X, &quot;columns&quot;);
   X ./= s;
-</pre></div>
+</pre></div></div>
 
 <p>The following expression is a way to efficiently calculate the sign of a
-permutation, given by a permutation vector <var>p</var>.  It will also work
+permutation, given by a permutation vector <var class="var">p</var>.  It will also work
 in earlier versions of Octave, but slowly.
 </p>
 <div class="example">
-<pre class="example">  det (eye (length (p))(p, :))
+<pre class="example-preformatted">  det (eye (length (p))(p, :))
 </pre></div>
 
-<p>Finally, here&rsquo;s how to solve a linear system <code>A*x = b</code>
+<p>Finally, here&rsquo;s how to solve a linear system <code class="code">A*x = b</code>
 with Tikhonov regularization (ridge regression) using SVD (a skeleton
 only):
 </p>
 <div class="example">
-<pre class="example">  m = rows (A); n = columns (A);
+<div class="group"><pre class="example-preformatted">  m = rows (A); n = columns (A);
   [U, S, V] = svd (A);
   ## determine the regularization factor alpha
-  ## alpha = &hellip;
+  ## alpha = ...
   ## transform to orthogonal basis
   b = U'*b;
   ## Use the standard formula, replacing A with S.
@@ -97,7 +85,7 @@ only):
   x = (S'*S + alpha^2 * eye (n)) \ (S' * b);
   ## transform to solution basis
   x = V*x;
-</pre></div>
+</pre></div></div>
 
 
 </div>

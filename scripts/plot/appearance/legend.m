@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -34,7 +34,7 @@
 ## @deftypefnx {} {} legend ("@var{command}")
 ## @deftypefnx {} {} legend (@var{hax}, @dots{})
 ## @deftypefnx {} {} legend (@var{hleg}, @dots{})
-## @deftypefnx {} {@var{hleg, hplt} =} legend (@dots{})
+## @deftypefnx {} {@var{hleg} =} legend (@dots{})
 ##
 ## Display a legend for the current axes using the specified strings as labels.
 ##
@@ -207,6 +207,12 @@ function [hleg, hleg_obj, hplot, labels] = legend (varargin)
   ##        lock once that bug is properly fixed.
   mlock ();
 
+  ## legend() requires root property to be invisible.
+  if (strcmp (get (groot, 'showhiddenhandles'), 'on'))
+    cleanup = onCleanup (@() set (groot, 'showhiddenhandles', 'on'));
+    set (groot, 'showhiddenhandles', 'off');
+  endif
+
   opts = parse_opts (varargin{:});
 
   hl = opts.legend_handle;
@@ -308,7 +314,7 @@ function [hleg, hleg_obj, hplot, labels] = legend (varargin)
                       "deletefcn", {@reset_cb, hl});
 
     ## Listeners to foreign objects properties are stored for later
-    ## deletion in "delfunction"
+    ## deletion in "reset_cb"
     hax = opts.axes_handles(1);
     hf = ancestor (hax, "figure");
 
@@ -350,7 +356,7 @@ function [hleg, hleg_obj, hplot, labels] = legend (varargin)
 
     addlistener (hl, "textcolor", ...
                  @(h, ~) set (findobj (h, "type", "text"), ...
-                               "color", get (hl, "textcolor")));
+                              "color", get (hl, "textcolor")));
 
     addlistener (hl, "visible", @update_visible_cb);
 
@@ -1042,6 +1048,8 @@ function [htxt, hicon] = create_item (hl, str, txtpval, hplt)
       typ = creator;
       switch (creator)
         case "__contour__"
+          ## Eliminate eventual text objects created by clabel
+          kids(strcmp (get (kids, "type"), "text")) = [];
           hplt = [kids(end), kids(1)];
         case {"__errplot__", "__quiver__", "__stem__"}
           hplt = kids(2:-1:1);
@@ -1064,7 +1072,7 @@ function [htxt, hicon] = create_item (hl, str, txtpval, hplt)
   persistent lprops = {"color", "linestyle", "linewidth"};
   persistent mprops = {"color", "marker", "markeredgecolor", ...
                        "markerfacecolor", "markersize"};
-  persistent pprops = {"edgecolor", "facecolor", "cdata", ...
+  persistent pprops = {"edgecolor", "facecolor", ...
                        "linestyle", "linewidth", ...
                        "marker", "markeredgecolor", ...
                        "markerfacecolor", "markersize"};
@@ -1076,14 +1084,22 @@ function [htxt, hicon] = create_item (hl, str, txtpval, hplt)
 
       ## Main line
       vals = get (hplt(1), lprops);
-      hicon = __go_line__ (hl, [lprops; vals]{:});
+      hicon = __go_line__ (hl, [lprops; vals]{:}, ...
+                           "pickableparts", "all", ...
+                           "buttondownfcn", ...
+                           {@execute_itemhit, hl, hplt, "icon"});
+
       addproperty ("markerxdata", hicon, "double", 0);
       addproperty ("markerydata", hicon, "double", 0);
 
       ## Additional line for the marker
       vals = get (hplt(end), mprops);
       hmarker = __go_line__ (hl, "handlevisibility", "off", ...
-                             "xdata", 0, "ydata", 0, [mprops; vals]{:});
+                             "xdata", 0, "ydata", 0, [mprops; vals]{:}, ...
+                             "pickableparts", "all", ...
+                             "buttondownfcn", ...
+                             {@execute_itemhit, hl, hplt, "icon"});
+      addproperty ("markertruesize", hmarker, "double", NaN);
       update_marker_cb (hmarker);
 
       ## Listeners
@@ -1095,7 +1111,8 @@ function [htxt, hicon] = create_item (hl, str, txtpval, hplt)
                    @(h, ~) set (hmarker, "xdata", get (h, "markerxdata")));
       addlistener (hicon, "visible", ...
                    @(h, ~) set (hmarker, "visible", get (h, "visible")));
-      addlistener (hmarker, "markersize", @update_marker_cb);
+      addlistener (hmarker, "markersize", {@update_marker_cb, true});
+      addlistener (hmarker, "marker", {@update_marker_cb, false});
       add_safe_listener (hl, hplt(1), "beingdeleted",
                          @(~, ~) delete ([hicon hmarker]))
       if (! strcmp (typ, "__errplot__"))
@@ -1108,11 +1125,16 @@ function [htxt, hicon] = create_item (hl, str, txtpval, hplt)
     case {"patch", "surface"}
 
       vals = get (hplt, pprops);
+      cdata = get (hplt, "cdata");
 
-      hicon = __go_patch__ (hl, [pprops; vals]{:});
+      hicon = __go_patch__ (hl, [pprops; vals]{:}, ...
+                            "cdata", median (median (cdata, 1), 2));
 
       ## Listeners
       safe_property_link (hplt(1), hicon, pprops);
+      addlistener (hplt, "cdata", ...
+                   @(h, ~) set (hicon, "cdata", ...
+                                median (median (get (h, "cdata"), 1), 2)));
 
       setappdata (hicon, "__creator__", typ);
 
@@ -1127,7 +1149,10 @@ function [htxt, hicon] = create_item (hl, str, txtpval, hplt)
       vals {end-1} = mean (vals {end-1}, 1);
       vals {end} = mean (vals {end}, 1);
 
-      hicon = __go_scatter__ (hl, [all_sprops; vals]{:});
+      hicon = __go_scatter__ (hl, [all_sprops; vals]{:}, ...
+                              "pickableparts", "all", ...
+                              "buttondownfcn", ...
+                              {@execute_itemhit, hl, hplt, "icon"});
 
       ## Simple Listeners
       safe_property_link (hplt(1), hicon, sprops);
@@ -1151,19 +1176,29 @@ function [htxt, hicon] = create_item (hl, str, txtpval, hplt)
       ## Main patch
 
       vals = get (hplt(1), pprops);
-      hicon = __go_patch__ (hl, [pprops; vals]{:});
+      cdata = get (hplt(1), "cdata");
+      hicon = __go_patch__ (hl, "cdata", cdata, ...
+                            [pprops; vals]{:}, ...
+                            "pickableparts", "all", ...
+                            "buttondownfcn", ...
+                            {@execute_itemhit, hl, hplt, "icon"});
 
       addproperty ("innerxdata", hicon, "any", 0);
       addproperty ("innerydata", hicon, "any", 0);
 
       ## Additional patch for the inner contour
       vals = get (hplt(end), pprops);
+      cdata = get (hplt(end), "cdata");
       htmp =  __go_patch__ (hl, "handlevisibility", "off", ...
-                            "xdata", 0, "ydata", 0, [pprops; vals]{:});
+                            "xdata", 0, "ydata", 0, "cdata", cdata, ...
+                            [pprops; vals]{:}, ...
+                            "pickableparts", "all", ...
+                            "buttondownfcn", ...
+                            {@execute_itemhit, hl, hplt, "icon"});
 
       ## Listeners
-      safe_property_link (hplt(1), hicon, pprops);
-      safe_property_link (hplt(end), htmp, pprops);
+      safe_property_link (hplt(1), hicon, [{"cdata"}, pprops]);
+      safe_property_link (hplt(end), htmp, [{"cdata"}, pprops]);
       addlistener (hicon, "ydata", ...
                    @(h, ~) set (htmp, "ydata", get (h, "innerydata")));
       addlistener (hicon, "xdata", ...
@@ -1177,10 +1212,27 @@ function [htxt, hicon] = create_item (hl, str, txtpval, hplt)
 
   endswitch
 
-  htxt = __go_text__ (hl, txtpval{:}, "string", str);
+  htxt = __go_text__ (hl, txtpval{:}, "string", str, ...
+                      "pickableparts", "all", ...
+                      "buttondownfcn", {@execute_itemhit, hl, hplt, "label"});
+
+  set (htxt, "buttondownfcn", {@execute_itemhit, hl, hplt, "label"});
 
   addproperty ("peer_object", htxt, "double", base_hplt);
   addproperty ("peer_object", hicon, "double", base_hplt);
+
+endfunction
+
+function execute_itemhit (h, ~, hl, hplt, region)
+
+  fcn = get (hl, "itemhitfcn");
+
+  if (! isempty (fcn))
+    evt = struct ("Peer", hplt, "Region", region, ...
+                  "SelectionType", get (gcbf (), "selectiontype"), ...
+                  "Source", hl, "EventName", "ItemHit");
+    fcn (hl, evt)
+  endif
 
 endfunction
 
@@ -1207,16 +1259,55 @@ function update_displayname_cb (h, ~, hl)
     str = {str};
   endif
 
-  str{h == getappdata (hl, "__peer_objects__")} = get (h, "displayname");
-
-  set (hl ,"string", str);
+  idx = h == getappdata (hl, "__peer_objects__");
+  if (any (idx))
+    str{idx} = get (h, "displayname");
+    set (hl ,"string", str);
+  endif
 
 endfunction
 
-function update_marker_cb (h, ~)
+## Enforce maximum size of marker so it doesn't overflow legend key
+function update_marker_cb (h, ~, sz_updated = true)
+  persistent is_updating = false;
 
-  if (get (h, "markersize") > 8)
-    set (h, "markersize", 8);
+  if (is_updating)
+    return;
+  endif
+
+  if (sz_updated)
+    ## Size was changed
+    sz = get (h, "markersize");
+    set (h, "markertruesize", sz);  # store true marker size
+
+    if (sz > 8)
+      is_updating = true;
+
+      mark = get (h, "marker");
+      if (strcmp (mark, '.'))
+        set (h, "markersize", min ([sz, 24]));
+      else
+        set (h, "markersize", 8);
+      endif
+
+      is_updating = false;
+    endif
+
+  else
+    ## Marker style was changed
+    sz = get (h, "markertruesize");
+    if (sz > 8)
+      is_updating = true;
+
+      mark = get (h, "marker");
+      if (strcmp (mark, '.'))
+        set (h, "markersize", min ([sz, 24]));
+      else
+        set (h, "markersize", 8);
+      endif
+
+      is_updating = false;
+    endif
   endif
 
 endfunction
@@ -1829,6 +1920,20 @@ endfunction
 %! title ("legend() works for surface objects too");
 
 %!demo
+%! clf;
+%! [x,y,z] = meshgrid (-.2:0.02:.2, -.2:0.02:.2, -.2:0.02:.2);
+%! val = (x.^2 + y.^2 + z.^2);
+%!
+%! h_axes = axes ();
+%! view (3);
+%! fv = isosurface (x, y, z, val, .039, z);
+%! h_patch = patch (fv, "FaceColor", "flat", "EdgeColor", "none");
+%! view (3);
+%! axis tight
+%! axis equal
+%! legend ({"colored patch"});
+
+%!demo
 %! clf reset;  # needed to undo colormap assignment in previous demo
 %! rand_2x3_data2 = [0.44804, 0.84368, 0.23012; 0.72311, 0.58335, 0.90531];
 %! bar (rand_2x3_data2);
@@ -2039,6 +2144,18 @@ endfunction
 %! plot (1:10);
 %! legend ("Legend Text");
 %! title ({"Multi-line", "titles", "are *not* a", "problem"});
+
+%!demo  # bug 61814
+%! clf;
+%! data = [ [1:5]' , [5:-1:1]', 2.5*ones(5,1) ];
+%! hp = plot (data);
+%! set (hp(1), "marker", 'x', "markersize", 15);
+%! set (hp(2), "marker", 'o', "markersize", 30);
+%! set (hp(3), "marker", '.', "markersize", 30);
+%! legend ({"data1", "data2", "data3"}, "location", "north");
+%! set (hp(2), "marker", '.');
+%! set (hp(3), "marker", 'o');
+%! title ("Marker sizes do not overflow legend box");
 
 ## Test input validation
 %!test

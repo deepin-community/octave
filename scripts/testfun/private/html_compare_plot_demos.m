@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -27,7 +27,7 @@
 ## @deftypefn  {} {} html_compare (@var{toolkits})
 ## @deftypefnx {} {} html_compare (@var{toolkits}, @var{name}, @var{value}, @dots{})
 ##
-## Produces an html document to compare the plot demos produced by
+## Produce an html document to compare the plot demos produced by
 ## @var{toolkits}.
 ##
 ## Valid property names, and their defaults, are:

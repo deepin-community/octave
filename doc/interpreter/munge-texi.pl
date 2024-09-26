@@ -2,7 +2,7 @@
 
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -94,7 +94,11 @@ TXI_LINE: while (<STDIN>)
 
     $func =~ s/^@/@@/;   # Texinfo uses @@ to produce '@'
     $func =~ s/\./_/g;   # Texinfo doesn't like '.' in node names
-    $docstring =~ s/^$tex_delim$/\@anchor{XREF$func}/m;
+    # Replace texinfo start tag by an anchor. QtHelp requires a string
+    # directly following the anchor. Adding a &nbsp; in html mode adds an
+    # additional vertical space which is compensated by span-tag with
+    # negativ top margin
+    $docstring =~ s/^$tex_delim$/\@anchor{XREF$func}\n\@html\n<span style=\"display:block; margin-top:-4.5ex;\">&nbsp;<\/span>\n\@end html\n\n/m;
     print $docstring,"\n";
 
     next TXI_LINE;

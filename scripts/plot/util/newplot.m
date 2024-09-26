@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -155,7 +155,6 @@ function hax = newplot (hsave = [])
   set (cf, "nextplot", "add");  # Matlab compatibility
 
   do_reset = true;
-  deleteall = false;
   if (isempty (ca))
     ca = get (cf, "currentaxes");
     if (isempty (ca))
@@ -163,6 +162,9 @@ function hax = newplot (hsave = [])
       do_reset = false;
     endif
     deleteall = true;
+  else
+    set (cf, "currentaxes", ca);
+    deleteall = false;
   endif
 
   anp = get (ca, "nextplot");

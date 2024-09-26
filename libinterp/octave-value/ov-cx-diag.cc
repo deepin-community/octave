@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -53,11 +53,11 @@ default_numeric_conversion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_complex_diag_matrix::numeric_conversion_function (void) const
+octave_complex_diag_matrix::numeric_conversion_function () const
 {
   return octave_base_value::type_conv_info
-           (default_numeric_conversion_function,
-            octave_complex_matrix::static_type_id ());
+         (default_numeric_conversion_function,
+          octave_complex_matrix::static_type_id ());
 }
 
 static octave_base_value *
@@ -67,11 +67,11 @@ default_numeric_demotion_function (const octave_base_value& a)
     = dynamic_cast<const octave_complex_diag_matrix&> (a);
 
   return new octave_float_complex_diag_matrix
-               (v.float_complex_diag_matrix_value ());
+         (v.float_complex_diag_matrix_value ());
 }
 
 octave_base_value::type_conv_info
-octave_complex_diag_matrix::numeric_demotion_function (void) const
+octave_complex_diag_matrix::numeric_demotion_function () const
 {
   return
     octave_base_value::type_conv_info (default_numeric_demotion_function,
@@ -79,7 +79,7 @@ octave_complex_diag_matrix::numeric_demotion_function (void) const
 }
 
 octave_base_value *
-octave_complex_diag_matrix::try_narrowing_conversion (void)
+octave_complex_diag_matrix::try_narrowing_conversion ()
 {
   octave_base_value *retval = nullptr;
 
@@ -142,13 +142,13 @@ octave_complex_diag_matrix::float_complex_diag_matrix_value (bool) const
 }
 
 octave_value
-octave_complex_diag_matrix::as_double (void) const
+octave_complex_diag_matrix::as_double () const
 {
   return m_matrix;
 }
 
 octave_value
-octave_complex_diag_matrix::as_single (void) const
+octave_complex_diag_matrix::as_single () const
 {
   return FloatComplexDiagMatrix (m_matrix);
 }
@@ -216,7 +216,7 @@ octave_complex_diag_matrix::save_binary (std::ostream& os, bool save_as_floats)
 
 bool
 octave_complex_diag_matrix::load_binary (std::istream& is, bool swap,
-                                         octave::mach_info::float_format fmt)
+    octave::mach_info::float_format fmt)
 {
   int32_t r, c;
   char tmp;
@@ -246,7 +246,7 @@ octave_complex_diag_matrix::load_binary (std::istream& is, bool swap,
 
 bool
 octave_complex_diag_matrix::chk_valid_scalar (const octave_value& val,
-                                              Complex& x) const
+    Complex& x) const
 {
   bool retval = val.is_complex_scalar () || val.is_real_scalar ();
   if (retval)

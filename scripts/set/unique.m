@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,10 +24,10 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} unique (@var{x})
-## @deftypefnx {} {} unique (@var{x}, "rows")
-## @deftypefnx {} {} unique (@dots{}, "sorted")
-## @deftypefnx {} {} unique (@dots{}, "stable")
+## @deftypefn  {} {@var{y} =} unique (@var{x})
+## @deftypefnx {} {@var{y} =} unique (@var{x}, "rows")
+## @deftypefnx {} {@var{y} =} unique (@dots{}, "sorted")
+## @deftypefnx {} {@var{y} =} unique (@dots{}, "stable")
 ## @deftypefnx {} {[@var{y}, @var{i}, @var{j}] =} unique (@dots{})
 ## @deftypefnx {} {[@var{y}, @var{i}, @var{j}] =} unique (@dots{}, "first")
 ## @deftypefnx {} {[@var{y}, @var{i}, @var{j}] =} unique (@dots{}, "last")
@@ -87,7 +87,7 @@
 ## The third output, @var{j}, has not been implemented yet when the sort
 ## order is @qcode{"stable"}.
 ##
-## @seealso{union, intersect, setdiff, setxor, ismember}
+## @seealso{uniquetol, union, intersect, setdiff, setxor, ismember}
 ## @end deftypefn
 
 function [y, i, j] = unique (x, varargin)
@@ -231,7 +231,7 @@ function [y, i, j] = unique (x, varargin)
   endif
 
   ## Calculate j output (3rd output)
-  if (isargout (3))
+  if (nargout > 2)
     j = i;  # cheap way to copy dimensions
     j(i) = cumsum ([1; ! match(:)]);
     if (! optsorted)
@@ -245,7 +245,7 @@ function [y, i, j] = unique (x, varargin)
   endif
 
   ## Calculate i output (2nd output)
-  if (isargout (2))
+  if (nargout > 1)
     if (optsorted)
       idx = find (match);
       if (! optlegacy && optfirst)
@@ -305,6 +305,7 @@ endfunction
 %! [y,i,~] = unique ([4,4,2,2,2,3,1], "stable");
 %! assert (y, [4,2,3,1]);
 %! assert (i, [1;3;6;7]);
+%! ## FIXME: 'j' input not calculated with stable
 %! ##assert (j, []);
 
 %!test
@@ -337,6 +338,7 @@ endfunction
 %! [y,i,~] = unique (A, "rows", "stable");
 %! assert (y, [4,5,6; 1,2,3]);
 %! assert (A(i,:), y);
+%! ## FIXME: 'j' output not calculated correctly with "stable"
 %! ##assert (y(j,:), A);
 
 ## Test "legacy" option

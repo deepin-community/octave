@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,56 +35,55 @@
 
 #include "Logger.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+Logger *Logger::s_instance = nullptr;
+QMutex *Logger::s_mutex = nullptr;
+
+Logger::Logger ()
+  : m_debugEnabled (false)
 {
+  QProcessEnvironment pe (QProcessEnvironment::systemEnvironment ());
 
-  Logger *Logger::s_instance = nullptr;
-  QMutex *Logger::s_mutex = nullptr;
-
-  Logger::Logger (void)
-    : m_debugEnabled (false)
-  {
-    QProcessEnvironment pe (QProcessEnvironment::systemEnvironment ());
-
-    if (pe.value ("QTHANDLES_DEBUG", "0") != "0")
-      m_debugEnabled = true;
-  }
-
-  Logger::~Logger (void)
-  { }
-
-  Logger *
-  Logger::instance (void)
-  {
-    if (! s_instance)
-      {
-        s_instance = new Logger ();
-        s_mutex = new QMutex ();
-      }
-
-    return s_instance;
-  }
-
-#define STATIC_LOGGER(fun) \
-  void Logger::fun (const char *fmt, ...) \
-  { \
-    QMutexLocker lock (s_mutex); \
-    va_list vl; \
-    va_start (vl, fmt); \
-    instance ()->fun ## V (fmt, vl); \
-    va_end (vl); \
-  }
-
-  STATIC_LOGGER (debug)
-
-  void
-  Logger::debugV (const char *fmt, va_list arg)
-  {
-    if (m_debugEnabled)
-      {
-        vfprintf (stderr, fmt, arg);
-        fprintf (stderr, "\n");
-      }
-  }
-
+  if (pe.value ("QTHANDLES_DEBUG", "0") != "0")
+    m_debugEnabled = true;
 }
+
+Logger::~Logger ()
+{ }
+
+Logger *
+Logger::instance ()
+{
+  if (! s_instance)
+    {
+      s_instance = new Logger ();
+      s_mutex = new QMutex ();
+    }
+
+  return s_instance;
+}
+
+#define STATIC_LOGGER(fcn)                      \
+  void Logger::fcn (const char *fmt, ...)       \
+  {                                             \
+    QMutexLocker lock (s_mutex);                \
+    va_list vl;                                 \
+    va_start (vl, fmt);                         \
+    instance ()->fcn ## V (fmt, vl);            \
+    va_end (vl);                                \
+  }
+
+STATIC_LOGGER (debug)
+
+void
+Logger::debugV (const char *fmt, va_list arg)
+{
+  if (m_debugEnabled)
+    {
+      vfprintf (stderr, fmt, arg);
+      fprintf (stderr, "\n");
+    }
+}
+
+OCTAVE_END_NAMESPACE(octave)

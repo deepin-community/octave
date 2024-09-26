@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,7 +34,7 @@
 #include "errwarn.h"
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Find at most N_TO_FIND nonzero elements in NDA.  Search forward if
 // DIRECTION is 1, backward if it is -1.  NARGOUT is the number of
@@ -54,7 +54,8 @@ find_nonzero_elem_idx (const Array<T>& nda, int nargout,
     idx = nda.find ();
 
   // The maximum element is always at the end.
-  octave_idx_type iext = (idx.isempty () ? 0 : idx.xelem (idx.numel () - 1) + 1);
+  octave_idx_type iext = (idx.isempty () ? 0
+                          : idx.xelem (idx.numel () - 1) + 1);
 
   switch (nargout)
     {
@@ -615,4 +616,4 @@ b = sparse (i, j, v, sz(1), sz(2));
 %!error find ()
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

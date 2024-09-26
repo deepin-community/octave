@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -54,7 +54,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // bool unary ops.
 
@@ -65,14 +65,14 @@ DEFUNOP_OP (not, bool, !)
 static octave_value
 oct_unop_uplus (const octave_base_value& a)
 {
-  const octave_bool& v = dynamic_cast<const octave_bool&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_bool&, v, a);
   return octave_value (v.double_value ());
 }
 
 static octave_value
 oct_unop_uminus (const octave_base_value& a)
 {
-  const octave_bool& v = dynamic_cast<const octave_bool&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_bool&, v, a);
   return octave_value (- v.double_value ());
 }
 
@@ -145,4 +145,4 @@ install_b_b_ops (octave::type_info& ti)
   INSTALL_ASSIGNCONV_TI (ti, octave_bool, octave_null_sq_str, octave_bool_matrix);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

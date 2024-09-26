@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,94 +34,88 @@
 
 class octave_function;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class tree_evaluator;
+class tree_walker;
+
+// Base class for the parse tree.
+
+class tree
 {
-  class tree_evaluator;
-  class tree_walker;
+public:
 
-  // Base class for the parse tree.
+  tree (int l = -1, int c = -1)
+    : m_line_num (l), m_column_num (c), m_bp_cond (nullptr)
+  { }
 
-  class tree
+  OCTAVE_DISABLE_COPY_MOVE (tree)
+
+  virtual ~tree () = default;
+
+  virtual int line () const { return m_line_num; }
+
+  virtual int column () const { return m_column_num; }
+
+  void line (int l) { m_line_num = l; }
+
+  void column (int c) { m_column_num = c; }
+
+  void set_location (int l, int c)
   {
-  public:
+    m_line_num = l;
+    m_column_num = c;
+  }
 
-    tree (int l = -1, int c = -1)
-      : m_line_num (l), m_column_num (c), m_bp_cond (nullptr)
-    { }
+  virtual void set_breakpoint (const std::string& condition)
+  {
+    if (m_bp_cond)
+      *m_bp_cond = condition;
+    else
+      m_bp_cond = new std::string (condition);
+  }
 
-    // No copying!
+  virtual void delete_breakpoint ()
+  {
+    delete m_bp_cond;
 
-    tree (const tree&) = delete;
+    m_bp_cond = nullptr;
+  }
 
-    tree& operator = (const tree&) = delete;
+  bool meets_bp_condition (tree_evaluator& tw) const;
 
-    virtual ~tree (void) = default;
+  bool is_breakpoint () const
+  {
+    return m_bp_cond;
+  }
 
-    virtual int line (void) const { return m_line_num; }
+  bool is_active_breakpoint (tree_evaluator& tw) const
+  {
+    return m_bp_cond && meets_bp_condition (tw);
+  }
 
-    virtual int column (void) const { return m_column_num; }
+  // breakpoint condition, or "0" (i.e., "false") if no breakpoint.
+  // To distinguish "0" from a disabled breakpoint, test "is_breakpoint" too.
+  const std::string bp_cond () const
+  {
+    return m_bp_cond ? *m_bp_cond : "0";
+  }
 
-    void line (int l) { m_line_num = l; }
+  std::string str_print_code ();
 
-    void column (int c) { m_column_num = c; }
+  virtual void accept (tree_walker& tw) = 0;
 
-    void set_location (int l, int c)
-    {
-      m_line_num = l;
-      m_column_num = c;
-    }
+private:
 
-    virtual void set_breakpoint (const std::string& condition)
-    {
-      if (m_bp_cond)
-        *m_bp_cond = condition;
-      else
-        m_bp_cond = new std::string (condition);
-    }
+  // The input line and column where we found the text that was
+  // eventually converted to this tree node.
+  int m_line_num;
+  int m_column_num;
 
-    virtual void delete_breakpoint (void)
-    {
-      if (m_bp_cond)
-        {
-          delete m_bp_cond;
+  // NULL if no breakpoint, or a breakpoint condition if there is one.
+  std::string *m_bp_cond;
+};
 
-          m_bp_cond = nullptr;
-        }
-    }
-
-    bool meets_bp_condition (tree_evaluator& tw) const;
-
-    bool is_breakpoint (void) const
-    {
-      return m_bp_cond;
-    }
-
-    bool is_active_breakpoint (tree_evaluator& tw) const
-    {
-      return m_bp_cond && meets_bp_condition (tw);
-    }
-
-    // breakpoint condition, or "0" (i.e., "false") if no breakpoint.
-    // To distinguish "0" from a disabled breakpoint, test "is_breakpoint" too.
-    const std::string bp_cond (void) const
-    {
-      return m_bp_cond ? *m_bp_cond : "0";
-    }
-
-    std::string str_print_code (void);
-
-    virtual void accept (tree_walker& tw) = 0;
-
-  private:
-
-    // The input line and column where we found the text that was
-    // eventually converted to this tree node.
-    int m_line_num;
-    int m_column_num;
-
-    // NULL if no breakpoint, or a breakpoint condition if there is one.
-    std::string *m_bp_cond;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

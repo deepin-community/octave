@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} etime (@var{t2}, @var{t1})
+## @deftypefn {} {@var{secs} =} etime (@var{t2}, @var{t1})
 ## Return the difference in seconds between two time values returned from
 ## @code{clock} (@math{@var{t2} - @var{t1}}).
 ##

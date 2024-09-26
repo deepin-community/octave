@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2005-2022 The Octave Project Developers
+// Copyright (C) 2005-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -44,7 +44,7 @@
 #include "ov.h"
 #include "pager.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (ccolamd, args, nargout,
        doc: /* -*- texinfo -*-
@@ -187,7 +187,7 @@ csymamd, amd, colamd, symamd, and other related orderings.
             octave_stdout << "knobs(2): " << User_knobs(1)
                           << ", rows with > max (16,"
                           << knobs[CCOLAMD_DENSE_ROW]
-                          << "*sqrt (columns(A)))"
+                          << "* sqrt (columns(A)))"
                           << " entries removed\n";
           else
             octave_stdout << "knobs(2): " << User_knobs(1)
@@ -196,7 +196,7 @@ csymamd, amd, colamd, symamd, and other related orderings.
           if (knobs[CCOLAMD_DENSE_COL] >= 0)
             octave_stdout << "knobs(3): " << User_knobs(2)
                           << ", cols with > max (16,"
-                          << knobs[CCOLAMD_DENSE_COL] << "*sqrt (size(A)))"
+                          << knobs[CCOLAMD_DENSE_COL] << "* sqrt (size(A)))"
                           << " entries removed\n";
           else
             octave_stdout << "knobs(3): " << User_knobs(2)
@@ -277,7 +277,7 @@ csymamd, amd, colamd, symamd, and other related orderings.
       OCTAVE_LOCAL_BUFFER (suitesparse_integer, cmember, cslen);
       for (octave_idx_type i = 0; i < cslen; i++)
         // convert cmember from 1-based to 0-based
-        cmember[i] = static_cast<suitesparse_integer>(in_cmember(i) - 1);
+        cmember[i] = static_cast<suitesparse_integer> (in_cmember(i) - 1);
 
       if (cslen != n_col)
         error ("ccolamd: CMEMBER must be of length equal to #cols of A");
@@ -446,7 +446,7 @@ colamd, csymamd, amd, colamd, symamd, and other related orderings.
             octave_stdout << "knobs(1): " << User_knobs(0)
                           << ", rows/cols with > max (16,"
                           << knobs[CCOLAMD_DENSE_ROW]
-                          << "*sqrt (columns(A)))"
+                          << "* sqrt (columns(A)))"
                           << " entries removed\n";
           else
             octave_stdout << "knobs(1): " << User_knobs(0)
@@ -584,4 +584,4 @@ colamd, csymamd, amd, colamd, symamd, and other related orderings.
 #endif
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

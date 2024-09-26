@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} record (@var{sec})
-## @deftypefnx {} {} record (@var{sec}, @var{fs})
+## @deftypefn  {} {@var{data} =} record (@var{sec})
+## @deftypefnx {} {@var{data} =} record (@var{sec}, @var{fs})
 ## Record @var{sec} seconds of audio from the system's default audio input at
 ## a sampling rate of 8000 samples per second.
 ##
@@ -33,10 +33,10 @@
 ## for recording.
 ##
 ## For more control over audio recording, use the @code{audiorecorder} class.
-## @seealso{sound, soundsc}
+## @seealso{@audiorecorder/audiorecorder, sound, soundsc}
 ## @end deftypefn
 
-function x = record (sec, fs = 8000)
+function data = record (sec, fs = 8000)
 
   if (nargin < 1)
     print_usage ();
@@ -50,16 +50,14 @@ function x = record (sec, fs = 8000)
     error ("record: sample rate FS must be a positive number");
   endif
 
-  x = [];
+  data = [];
 
   if (sec > 0)
-
     rec = audiorecorder (fs, 16, 1);
 
     recordblocking (rec, sec);
 
-    x = getaudiodata (rec);
-
+    data = getaudiodata (rec);
   endif
 
 endfunction

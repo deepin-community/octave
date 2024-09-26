@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,26 +30,27 @@
 #include "action-container.h"
 #include "cmd-edit.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+void action_container::run (std::size_t num)
 {
-  void action_container::run (std::size_t num)
-  {
-    if (num > size ())
-      num = size ();
+  if (num > size ())
+    num = size ();
 
-    for (std::size_t i = 0; i < num; i++)
-      {
-        run_first ();
+  for (std::size_t i = 0; i < num; i++)
+    {
+      run_first ();
 
-        // If event_loop_interrupted is TRUE, a user callback event has
-        // requested that we break out of the readline event handler to
-        // process a command or other action.
+      // If event_loop_interrupted is TRUE, a user callback event has
+      // requested that we break out of the readline event handler to
+      // process a command or other action.
 
-        if (command_editor::event_loop_interrupted ())
-          {
-            command_editor::interrupt_event_loop (false);
-            break;
-          }
-      }
-  }
+      if (command_editor::event_loop_interrupted ())
+        {
+          command_editor::interrupt_event_loop (false);
+          break;
+        }
+    }
 }
+
+OCTAVE_END_NAMESPACE(octave)

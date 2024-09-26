@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1997-2022 The Octave Project Developers
+// Copyright (C) 1997-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#  include "config.h"
 #endif
 
 #include "dMatrix.h"
@@ -40,7 +40,7 @@
 #include "ovl.h"
 #include "ov.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 template <typename T>
 static typename math::gsvd<T>::Type
@@ -196,8 +196,10 @@ should avoid this combination.
         }
       else if (argA.iscomplex () || argB.iscomplex ())
         {
-          FloatComplexMatrix ctmpA = argA.xfloat_complex_matrix_value ("gsvd: A must be a real or complex matrix");
-          FloatComplexMatrix ctmpB = argB.xfloat_complex_matrix_value ("gsvd: B must be a real or complex matrix");
+          FloatComplexMatrix ctmpA =
+            argA.xfloat_complex_matrix_value ("gsvd: A must be a real or complex matrix");
+          FloatComplexMatrix ctmpB =
+            argB.xfloat_complex_matrix_value ("gsvd: B must be a real or complex matrix");
 
           if (ctmpA.any_element_is_inf_or_nan ())
             error ("gsvd: A cannot have Inf or NaN values");
@@ -281,17 +283,17 @@ should avoid this combination.
 %! assert (S0, S1, 20*eps);
 
 ## a few tests for gsvd.m
-%!shared A, A0, B, B0, U, V, C, S, X, old_state, restore_state
+%!shared A0, B0
 %! old_state = randn ("state");
 %! restore_state = onCleanup (@() randn ("state", old_state));
-%! randn ("state", 40); # initialize generator to make behavior reproducible
+%! randn ("state", 40);  # initialize generator to make behavior reproducible
 %! A0 = randn (5, 3);
 %! B0 = diag ([1 2 4]);
-%! A = A0;
-%! B = B0;
 
 ## A (5x3) and B (3x3) are full rank
 %!test <48807>
+%! A = A0;
+%! B = B0;
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (3), 5*eps);
 %! assert (U*C*X', A, 10*eps);
@@ -299,6 +301,8 @@ should avoid this combination.
 
 ## A: 5x3 full rank, B: 3x3 rank deficient
 %!test <48807>
+%! A = A0;
+%! B = B0;
 %! B(2, 2) = 0;
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (3), 5*eps);
@@ -307,6 +311,7 @@ should avoid this combination.
 
 ## A: 5x3 rank deficient, B: 3x3 full rank
 %!test <48807>
+%! A = A0;
 %! B = B0;
 %! A(:, 3) = 2*A(:, 1) - A(:, 2);
 %! [U, V, X, C, S] = gsvd (A, B);
@@ -317,6 +322,8 @@ should avoid this combination.
 ## A and B are both rank deficient
 ## FIXME: LAPACK seems to be completely broken for this case
 %!#test <48807>
+%! A = A0;
+%! B = B0;
 %! B(:, 3) = 2*B(:, 1) - B(:, 2);
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (3), 5*eps);
@@ -326,8 +333,7 @@ should avoid this combination.
 ## A (now 3x5) and B (now 5x5) are full rank
 %!test <48807>
 %! A = A0.';
-%! B0 = diag ([1 2 4 8 16]);
-%! B = B0;
+%! B = diag ([1 2 4 8 16]);
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (5), 5*eps);
 %! assert (U*C*X', A, 15*eps);
@@ -335,6 +341,8 @@ should avoid this combination.
 
 ## A: 3x5 full rank, B: 5x5 rank deficient
 %!test <48807>
+%! A = A0.';
+%! B = diag ([1 2 4 8 16]);
 %! B(2, 2) = 0;
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (5), 5*eps);
@@ -343,7 +351,8 @@ should avoid this combination.
 
 ## A: 3x5 rank deficient, B: 5x5 full rank
 %!test <48807>
-%! B = B0;
+%! A = A0.';
+%! B = diag ([1 2 4 8 16]);
 %! A(3, :) = 2*A(1, :) - A(2, :);
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (5), 5*eps);
@@ -363,10 +372,11 @@ should avoid this combination.
 
 ## A: 5x3 complex full rank, B: 3x3 complex full rank
 %!test <48807>
-%! A0 = A0 + j*randn (5, 3);
-%! B0 = diag ([1 2 4]) + j*diag ([4 -2 -1]);
-%! A = A0;
-%! B = B0;
+%! old_state = randn ("state");
+%! restore_state = onCleanup (@() randn ("state", old_state));
+%! randn ("state", 12345);  # initialize generator to make behavior reproducible
+%! A = A0 + j* randn (5, 3);
+%! B = diag ([1 2 4]) + j* diag ([4 -2 -1]);
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (3), 5*eps);
 %! assert (U*C*X', A, 10*eps);
@@ -374,6 +384,8 @@ should avoid this combination.
 
 ## A: 5x3 complex full rank, B: 3x3 complex rank deficient
 %!test <48807>
+%! A = A0 + j* randn (5, 3);
+%! B = diag ([1 2 4]) + j* diag ([4 -2 -1]);
 %! B(2, 2) = 0;
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (3), 5*eps);
@@ -382,7 +394,8 @@ should avoid this combination.
 
 ## A: 5x3 complex rank deficient, B: 3x3 complex full rank
 %!test <48807>
-%! B = B0;
+%! A = A0 + j* randn (5, 3);
+%! B = diag ([1 2 4]) + j* diag ([4 -2 -1]);
 %! A(:, 3) = 2*A(:, 1) - A(:, 2);
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (3), 5*eps);
@@ -392,6 +405,8 @@ should avoid this combination.
 ## A (5x3) and B (3x3) are both complex rank deficient
 ## FIXME: LAPACK seems to be completely broken for this case
 %!#test <48807>
+%! A = A0 + j* randn (5, 3);
+%! B = diag ([1 2 4]) + j* diag ([4 -2 -1]);
 %! B(:, 3) = 2*B(:, 1) - B(:, 2);
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (3), 5*eps);
@@ -402,8 +417,7 @@ should avoid this combination.
 ## now, A is 3x5
 %!test <48807>
 %! A = A0.';
-%! B0 = diag ([1 2 4 8 16]) + j*diag ([-5 4 -3 2 -1]);
-%! B = B0;
+%! B = diag ([1 2 4 8 16]) + j* diag ([-5 4 -3 2 -1]);
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (5), 5*eps);
 %! assert (U*C*X', A, 25*eps);
@@ -411,7 +425,8 @@ should avoid this combination.
 
 ## A: 3x5 complex full rank, B: 5x5 complex rank deficient
 %!test <48807>
-%! B(2, 2) = 0;
+%! A = A0.';
+%! B = diag ([1 0 4 8 16]) + j* diag ([-5 0 -3 2 -1]);
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (5), 5*eps);
 %! assert (U*C*X', A, 10*eps);
@@ -419,7 +434,8 @@ should avoid this combination.
 
 ## A: 3x5 complex rank deficient, B: 5x5 complex full rank
 %!test <48807>
-%! B = B0;
+%! A = A0.';
+%! B = diag ([1 2 4 8 16]) + j* diag ([-5 4 -3 2 -1]);
 %! A(3, :) = 2*A(1, :) - A(2, :);
 %! [U, V, X, C, S] = gsvd (A, B);
 %! assert (C'*C + S'*S, eye (5), 5*eps);
@@ -440,9 +456,11 @@ should avoid this combination.
 
 ## Test that single inputs produce single outputs
 %!test
+%! A = A0.';
+%! B = diag ([1 2 4 8 16]) + j* diag ([-5 4 -3 2 -1]);
 %! s = gsvd (single (eye (5)), B);
 %! assert (class (s), "single");
-%! [U,V,X,C,S] = gsvd (single (eye(5)), B);
+%! [U, V, X, C, S] = gsvd (single (eye(5)), B);
 %! assert (class (U), "single");
 %! assert (class (V), "single");
 %! assert (class (X), "single");
@@ -451,7 +469,7 @@ should avoid this combination.
 %!
 %! s = gsvd (A, single (eye (5)));
 %! assert (class (s), "single");
-%! [U,V,X,C,S] = gsvd (A, single (eye (5)));
+%! [U, V, X, C, S] = gsvd (A, single (eye (5)));
 %! assert (class (U), "single");
 %! assert (class (V), "single");
 %! assert (class (X), "single");
@@ -498,4 +516,4 @@ should avoid this combination.
 
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} discrete_cdf (@var{x}, @var{v}, @var{p})
+## @deftypefn {} {@var{cdf} =} discrete_cdf (@var{x}, @var{v}, @var{p})
 ## For each element of @var{x}, compute the cumulative distribution function
 ## (CDF) at @var{x} of a univariate discrete distribution which assumes the
 ## values in @var{v} with probabilities @var{p}.

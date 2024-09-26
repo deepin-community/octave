@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017-2022 The Octave Project Developers
+// Copyright (C) 2017-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -27,6 +27,7 @@
 #  include "config.h"
 #endif
 
+#include <iostream>
 #include <list>
 #include <string>
 
@@ -48,204 +49,224 @@
 #include "pager.h"
 #include "symtab.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+interpreter& __get_interpreter__ ()
 {
-  interpreter& __get_interpreter__ (const std::string& who)
-  {
-    interpreter *interp = interpreter::the_interpreter ();
+  interpreter *interp = interpreter::the_interpreter ();
 
-    if (! interp)
-      {
-        abort ();
-        error ("%s: interpreter context missing", who.c_str ());
-      }
+  if (! interp)
+    {
+      std::cerr << "fatal error: octave interpreter context missing" << std::endl;
+      abort ();
+    }
 
-    return *interp;
-  }
-
-  dynamic_loader& __get_dynamic_loader__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_dynamic_loader ();
-  }
-
-  error_system& __get_error_system__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_error_system ();
-  }
-
-  gh_manager& __get_gh_manager__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_gh_manager ();
-  }
-
-  help_system& __get_help_system__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_help_system ();
-  }
-
-  input_system& __get_input_system__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_input_system ();
-  }
-
-  output_system& __get_output_system__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_output_system ();
-  }
-
-  load_path& __get_load_path__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_load_path ();
-  }
-
-  load_save_system& __get_load_save_system__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_load_save_system ();
-  }
-
-  event_manager& __get_event_manager__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_event_manager ();
-  }
-
-  type_info& __get_type_info__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_type_info ();
-  }
-
-  symbol_table& __get_symbol_table__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_symbol_table ();
-  }
-
-  symbol_scope __get_current_scope__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_current_scope ();
-  }
-
-  symbol_scope __require_current_scope__ (const std::string& who)
-  {
-    symbol_scope scope = __get_current_scope__ (who);
-
-    if (! scope)
-      error ("%s: symbol table scope missing", who.c_str ());
-
-    return scope;
-  }
-
-  tree_evaluator& __get_evaluator__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_evaluator ();
-  }
-
-  bp_table& __get_bp_table__ (const std::string& who)
-  {
-    tree_evaluator& tw = __get_evaluator__ (who);
-
-    return tw.get_bp_table ();
-  }
-
-  child_list& __get_child_list__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_child_list ();
-  }
-
-  cdef_manager& __get_cdef_manager__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_cdef_manager ();
-  }
-
-  display_info& __get_display_info__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_display_info ();
-  }
-
-  gtk_manager& __get_gtk_manager__ (const std::string& who)
-  {
-    interpreter& interp = __get_interpreter__ (who);
-
-    return interp.get_gtk_manager ();
-  }
-
-  octave_value
-  get_function_handle (interpreter& interp, const octave_value& arg,
-                       const std::string& parameter_name)
-  {
-    std::list<std::string> parameter_names;
-    parameter_names.push_back (parameter_name);
-    return get_function_handle (interp, arg, parameter_names);
-  }
-
-  // May return a function handle object, inline function object, or
-  // function object.
-
-  octave_value
-  get_function_handle (interpreter& interp, const octave_value& arg,
-                       const std::list<std::string>& parameter_names)
-  {
-    if (arg.is_function_handle () || arg.is_inline_function ())
-      return arg;
-    else if (arg.is_string ())
-      {
-        std::string fstr = arg.string_value ();
-
-        if (fstr.empty ())
-          return octave_value ();
-
-        symbol_table& symtab = interp.get_symbol_table ();
-
-        octave_value fcn = symtab.find_function (fstr);
-
-        if (fcn.is_defined ())
-          return fcn;
-
-        // Possibly warn here that passing the function body in a
-        // character string is discouraged.
-
-        octave_value_list args (parameter_names.size () + 1);
-        octave_idx_type i = 0;
-        args(i++) = fstr;
-        for (const auto& pname : parameter_names)
-          args(i++) = pname;
-
-        octave_value_list tmp = interp.feval ("inline", args, 1);
-
-        if (tmp.length () > 0)
-          return tmp(0);
-      }
-
-    return octave_value ();
-  }
+  return *interp;
 }
+
+dynamic_loader&
+__get_dynamic_loader__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_dynamic_loader ();
+}
+
+error_system&
+__get_error_system__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_error_system ();
+}
+
+gh_manager&
+__get_gh_manager__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_gh_manager ();
+}
+
+help_system&
+__get_help_system__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_help_system ();
+}
+
+input_system&
+__get_input_system__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_input_system ();
+}
+
+output_system&
+__get_output_system__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_output_system ();
+}
+
+load_path&
+__get_load_path__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_load_path ();
+}
+
+load_save_system&
+__get_load_save_system__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_load_save_system ();
+}
+
+event_manager&
+__get_event_manager__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_event_manager ();
+}
+
+type_info&
+__get_type_info__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_type_info ();
+}
+
+symbol_table&
+__get_symbol_table__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_symbol_table ();
+}
+
+symbol_scope
+__get_current_scope__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_current_scope ();
+}
+
+symbol_scope
+__require_current_scope__ ()
+{
+  symbol_scope scope = __get_current_scope__ ();
+
+  if (! scope)
+    error ("__require_current_scope__: symbol table scope missing");
+
+  return scope;
+}
+
+tree_evaluator&
+__get_evaluator__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_evaluator ();
+}
+
+bp_table&
+__get_bp_table__ ()
+{
+  tree_evaluator& tw = __get_evaluator__ ();
+
+  return tw.get_bp_table ();
+}
+
+child_list&
+__get_child_list__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_child_list ();
+}
+
+cdef_manager&
+__get_cdef_manager__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_cdef_manager ();
+}
+
+display_info&
+__get_display_info__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_display_info ();
+}
+
+gtk_manager&
+__get_gtk_manager__ ()
+{
+  interpreter& interp = __get_interpreter__ ();
+
+  return interp.get_gtk_manager ();
+}
+
+octave_value
+get_function_handle (interpreter& interp, const octave_value& arg,
+                     const std::string& parameter_name)
+{
+  std::list<std::string> parameter_names;
+  parameter_names.push_back (parameter_name);
+  return get_function_handle (interp, arg, parameter_names);
+}
+
+// May return a function handle object, inline function object, or
+// function object.
+
+octave_value
+get_function_handle (interpreter& interp, const octave_value& arg,
+                     const std::list<std::string>& parameter_names)
+{
+  if (arg.is_function_handle () || arg.is_inline_function ())
+    return arg;
+  else if (arg.is_string ())
+    {
+      std::string fstr = arg.string_value ();
+
+      if (fstr.empty ())
+        return octave_value ();
+
+      symbol_table& symtab = interp.get_symbol_table ();
+
+      octave_value fcn = symtab.find_function (fstr);
+
+      if (fcn.is_defined ())
+        return fcn;
+
+      // Possibly warn here that passing the function body in a
+      // character string is discouraged.
+
+      octave_value_list args (parameter_names.size () + 1);
+      octave_idx_type i = 0;
+      args(i++) = fstr;
+      for (const auto& pname : parameter_names)
+        args(i++) = pname;
+
+      octave_value_list tmp = interp.feval ("inline", args, 1);
+
+      if (tmp.length () > 0)
+        return tmp(0);
+    }
+
+  return octave_value ();
+}
+
+OCTAVE_END_NAMESPACE(octave)

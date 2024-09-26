@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2019-2022 The Octave Project Developers
+## Copyright (C) 2019-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -110,7 +110,7 @@ function varargout = uisetfont (varargin)
   ## Populate fontstruct
   persistent defstruct = [];
   if (isempty (defstruct))
-    factory_fields = strcat ("factorytext", tolower (fontfields));
+    factory_fields = strcat ("factorytext", lower (fontfields));
     values = get (0, factory_fields);
     defstruct = struct ([fontfields; values]{:});
   endif

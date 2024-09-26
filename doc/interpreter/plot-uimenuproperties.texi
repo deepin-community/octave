@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,19 +23,34 @@
 
 Properties of @code{uimenu} objects (@pxref{XREFuimenu,,uimenu}):
 
+@subsubheading Categories:
+
+@ref{XREFuimenucategoryAppearance, , @w{Appearance}}@: | @ref{XREFuimenucategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFuimenucategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFuimenucategoryDisplay, , @w{Display}}@: | @ref{XREFuimenucategoryKeyboardInteraction, , @w{Keyboard Interaction}}@: | @ref{XREFuimenucategoryMenuOptions, , @w{Menu Options}}@: | @ref{XREFuimenucategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFuimenucategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFuimenucategoryObjectPosition, , @w{Object Position}}@: | @ref{XREFuimenucategoryParent/Children, , @w{Parent/Children}}@: 
+
+@anchor{XREFuimenucategoryAppearance}
+@subsubheading Appearance
+@prindex uimenu Appearance
+
 @table @asis
 
-@anchor{XREFuimenuaccelerator}
-@prindex uimenu accelerator
-@item @code{accelerator}: def. @qcode{""}
+@anchor{XREFuimenuforegroundcolor}
+@prindex uimenu foregroundcolor
+@item @code{foregroundcolor}: colorspec, def. @code{[0   0   0]}
+The color value of the text for this menu entry.
 
 
+@anchor{XREFuimenuseparator}
+@prindex uimenu separator
+@item @code{separator}: @{@qcode{"off"}@} | @qcode{"on"}
+State indicating whether a separator line will be drawn above the current menu position.
 
-@anchor{XREFuimenubeingdeleted}
-@prindex uimenu beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+@end table
 
+@anchor{XREFuimenucategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex uimenu CallbackExecution
 
+@table @asis
 
 @anchor{XREFuimenubusyaction}
 @prindex uimenu busyaction
@@ -41,40 +59,30 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFuimenubuttondownfcn}
-@prindex uimenu buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
-@code{buttondownfcn} is unused.
+@anchor{XREFuimenuinterruptible}
+@prindex uimenu interruptible
+@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
+@xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFuimenucallback}
-@prindex uimenu callback
-@item @code{callback}: def. @code{[](0x0)}
+@anchor{XREFuimenumenuselectedfcn}
+@prindex uimenu menuselectedfcn
+@item @code{menuselectedfcn}: string | function handle, def. @code{[](0x0)}
+Function that is called when this menu item is executed.  For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
+@anchor{XREFuimenucategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex uimenu Creation/Deletion
 
-@anchor{XREFuimenuchecked}
-@prindex uimenu checked
-@item @code{checked}: @{@qcode{"off"}@} | @qcode{"on"}
+@table @asis
 
-
-
-@anchor{XREFuimenuchildren}
-@prindex uimenu children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-Graphics handles of the uimenu's children.
-
-
-@anchor{XREFuimenuclipping}
-@prindex uimenu clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the uimenu is clipped in its parent axes limits.
-
-
-@anchor{XREFuimenucontextmenu}
-@prindex uimenu contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this uimenu object.
+@anchor{XREFuimenubeingdeleted}
+@prindex uimenu beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
 
 
 @anchor{XREFuimenucreatefcn}
@@ -92,23 +100,81 @@ Callback function executed immediately before uimenu is deleted.
 
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
+
+@anchor{XREFuimenucategoryDisplay}
+@subsubheading Display
+@prindex uimenu Display
+
+@table @asis
+
+@anchor{XREFuimenuclipping}
+@prindex uimenu clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the uimenu is clipped in its parent axes limits.
+
+
+@anchor{XREFuimenuvisible}
+@prindex uimenu visible
+@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{visible} is @qcode{"off"}, the uimenu is not rendered on screen.
+
+@end table
+
+@anchor{XREFuimenucategoryKeyboardInteraction}
+@subsubheading Keyboard Interaction
+@prindex uimenu KeyboardInteraction
+
+@table @asis
+
+@anchor{XREFuimenuaccelerator}
+@prindex uimenu accelerator
+@item @code{accelerator}: character, def. @qcode{""}
+A character that when pressed together with CTRL will execute this menu entry (e.g., @qcode{"x"} for @code{CTRL+x}).
+
+@end table
+
+@anchor{XREFuimenucategoryMenuOptions}
+@subsubheading Menu Options
+@prindex uimenu MenuOptions
+
+@table @asis
+
+@anchor{XREFuimenuchecked}
+@prindex uimenu checked
+@item @code{checked}: @{@qcode{"off"}@} | @qcode{"on"}
+Sets whether or not a mark appears at this menu entry.
+
 
 @anchor{XREFuimenuenable}
 @prindex uimenu enable
 @item @code{enable}: @qcode{"off"} | @{@qcode{"on"}@}
+Sets whether this menu entry is active or is grayed out.
 
 
+@anchor{XREFuimenutext}
+@prindex uimenu text
+@item @code{text}: string, def. @qcode{""}
+The text for this menu entry.  A @qcode{"&"} character can be used to mark the @ref{XREFuimenuaccelerator, , @w{@qcode{"accelerator"} key}}
 
-@anchor{XREFuimenuforegroundcolor}
-@prindex uimenu foregroundcolor
-@item @code{foregroundcolor}: def. @code{[0   0   0]}
+@end table
+
+@anchor{XREFuimenucategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex uimenu MouseInteraction
+
+@table @asis
+
+@anchor{XREFuimenubuttondownfcn}
+@prindex uimenu buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+@code{buttondownfcn} is unused.
 
 
-
-@anchor{XREFuimenuhandlevisibility}
-@prindex uimenu handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the uimenu's handle is not visible in its parent's "children" property.
+@anchor{XREFuimenucontextmenu}
+@prindex uimenu contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this uimenu object.
 
 
 @anchor{XREFuimenuhittest}
@@ -117,54 +183,30 @@ If @code{handlevisibility} is @qcode{"off"}, the uimenu's handle is not visible 
 Specify whether uimenu processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFuimenupickableparts, , @w{pickableparts property}}.
 
 
-@anchor{XREFuimenuinterruptible}
-@prindex uimenu interruptible
-@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
-@xref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFuimenulabel}
-@prindex uimenu label
-@item @code{label}: def. @qcode{""}
-
-
-
-@anchor{XREFuimenuparent}
-@prindex uimenu parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
-
-
 @anchor{XREFuimenupickableparts}
 @prindex uimenu pickableparts
 @item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
 Specify whether uimenu will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the uimenu or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFuimenuhittest, , @w{hittest property}}.
 
 
-@anchor{XREFuimenuposition}
-@prindex uimenu position
-@item @code{position}: def. @code{4}
-
-
-
 @anchor{XREFuimenuselected}
 @prindex uimenu selected
 @item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
+Property indicates whether this uimenu is selected.
 
 
 @anchor{XREFuimenuselectionhighlight}
 @prindex uimenu selectionhighlight
 @item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the uimenu's selection state is visually highlighted.
 
+@end table
 
+@anchor{XREFuimenucategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex uimenu ObjectIdentification
 
-@anchor{XREFuimenuseparator}
-@prindex uimenu separator
-@item @code{separator}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
+@table @asis
 
 @anchor{XREFuimenutag}
 @prindex uimenu tag
@@ -172,16 +214,10 @@ Specify whether uimenu will accept mouse clicks.  By default, @code{pickablepart
 A user-defined string to label the graphics object.
 
 
-@anchor{XREFuimenutext}
-@prindex uimenu text
-@item @code{text}: def. @qcode{""}
-
-
-
 @anchor{XREFuimenutype}
 @prindex uimenu type
 @item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"uimenu"}
+Class name of the graphics object.  @code{type} is always @qcode{"uimenu"}.
 
 
 @anchor{XREFuimenuuserdata}
@@ -189,10 +225,42 @@ Class name of the graphics object.  @code{type} is always @qcode{"uimenu"}
 @item @code{userdata}: Any Octave data, def. @code{[](0x0)}
 User-defined data to associate with the graphics object.
 
+@end table
 
-@anchor{XREFuimenuvisible}
-@prindex uimenu visible
-@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{visible} is @qcode{"off"}, the uimenu is not rendered on screen.
+@anchor{XREFuimenucategoryObjectPosition}
+@subsubheading Object Position
+@prindex uimenu ObjectPosition
+
+@table @asis
+
+@anchor{XREFuimenuposition}
+@prindex uimenu position
+@item @code{position}: scalar, def. @code{4}
+A scalar value containing the relative menu position from the left or top depending on the orientation of the menu.
+
+@end table
+
+@anchor{XREFuimenucategoryParent/Children}
+@subsubheading Parent/Children
+@prindex uimenu Parent/Children
+
+@table @asis
+
+@anchor{XREFuimenuchildren}
+@prindex uimenu children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Graphics handles of the uimenu's children.
+
+
+@anchor{XREFuimenuhandlevisibility}
+@prindex uimenu handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the uimenu's handle is not visible in its parent's @qcode{"children"} property.
+
+
+@anchor{XREFuimenuparent}
+@prindex uimenu parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
 
 @end table

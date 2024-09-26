@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -128,7 +128,7 @@ function assert (cond, varargin)
       if (ischar (expected))
         if (! ischar (cond))
           err.index{end+1} = ".";
-          err.expected{end+1} = expected;
+          err.expected{end+1} = ["'" expected "'"];
           if (isnumeric (cond))
             err.observed{end+1} = num2str (cond);
             err.reason{end+1} = "Expected string, but observed number";
@@ -138,8 +138,8 @@ function assert (cond, varargin)
           endif
         elseif (! strcmp (cond, expected))
           err.index{end+1} = "[]";
-          err.observed{end+1} = cond;
-          err.expected{end+1} = expected;
+          err.observed{end+1} = ["'" cond(:).' "'"];
+          err.expected{end+1} = ["'" expected(:).' "'"];
           err.reason{end+1} = "Strings don't match";
         endif
 
@@ -347,8 +347,14 @@ function assert (cond, varargin)
               A_null_real = real (A);
               B_null_real = real (B);
             endif
-            exclude = errseen ...
-                      | ! isfinite (A_null_real) & ! isfinite (B_null_real);
+            if (issparse (errseen))
+              exclude = errseen ...
+                        | isnan (A_null_real) | isinf (A_null_real) ...
+                        | isnan (B_null_real) | isinf (B_null_real);
+            else
+              exclude = errseen ...
+                        | ! isfinite (A_null_real) & ! isfinite (B_null_real);
+            endif
             A_null_real(exclude) = 0;
             B_null_real(exclude) = 0;
 
@@ -358,8 +364,15 @@ function assert (cond, varargin)
             else
               A_null_imag = imag (A);
               B_null_imag = imag (B);
-              exclude = errseen ...
-                        | ! isfinite (A_null_imag) & ! isfinite (B_null_imag);
+              if (issparse (errseen))
+                exclude = errseen ...
+                          | isnan (A_null_imag) | isinf (A_null_imag) ...
+                          | isnan (B_null_imag) | isinf (B_null_imag);
+              else
+                exclude = errseen ...
+                          | ! isfinite (A_null_imag) & ! isfinite (B_null_imag);
+              endif
+
               A_null_imag(exclude) = 0;
               B_null_imag(exclude) = 0;
               A_null = complex (A_null_real, A_null_imag);
@@ -730,6 +743,18 @@ endfunction
 %! catch
 %!   errmsg = lasterr ();
 %!   assert (isempty (strfind (errmsg, "sprintf: invalid field width")));
+%! end_try_catch
+
+%!test <*63988>
+%! A = ["ab"; "cd"];
+%! B = ["ad"; "cb"];
+%! try
+%!   assert (A, B);
+%! catch
+%!   errmsg = lasterr ();
+%!   if (regexp (errmsg, 'horizontal dimensions mismatch'))
+%!     error ("assert failed for char arrays with multiple rows");
+%!   endif
 %! end_try_catch
 
 ## test input validation

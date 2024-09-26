@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2014-2022 The Octave Project Developers
+## Copyright (C) 2014-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -90,7 +90,7 @@ function hgsave (h, filename, fmt = "-binary")
 endfunction
 
 
-%!testif HAVE_MAGICK; (have_window_system () && __have_feature__ ("QT_OFFSCREEN") && any (strcmp ("qt", available_graphics_toolkits ())));
+%!testif HAVE_MAGICK; (have_window_system () && any (strcmp ("qt", available_graphics_toolkits ())));
 %! toolkit = graphics_toolkit ();
 %! graphics_toolkit ("qt");
 %! h1 = figure ("visible", "off", "paperposition", [0.25, 2.5, 8.0, 6.0]);

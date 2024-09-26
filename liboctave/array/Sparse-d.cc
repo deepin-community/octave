@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -51,7 +51,3 @@ sparse_descending_compare<double> (double a, double b)
 }
 
 INSTANTIATE_SPARSE (double);
-
-#if 0
-template std::ostream& operator << (std::ostream&, const Sparse<double>&);
-#endif

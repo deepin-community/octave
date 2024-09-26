@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -45,7 +45,7 @@
 #include "ov-flt-cx-diag.h"
 #include "ov-perm.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 #define MAYBE_CAST(VAR, CLASS)                                          \
   const CLASS *VAR = (arg.type_id () == CLASS::static_type_id ()        \
@@ -54,7 +54,7 @@ OCTAVE_NAMESPACE_BEGIN
 
 DEFUN (det, args, nargout,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} det (@var{A})
+@deftypefn  {} {@var{d} =} det (@var{A})
 @deftypefnx {} {[@var{d}, @var{rcond}] =} det (@var{A})
 Compute the determinant of @var{A}.
 
@@ -186,7 +186,7 @@ For that, use any of the condition number functions: @code{cond},
 
               MAYBE_CAST (rep, octave_matrix);
               MatrixType mtype = (rep ? rep -> matrix_type ()
-                                      : MatrixType ());
+                                  : MatrixType ());
               DET det = m.determinant (mtype, info, rcond);
               retval(0) = (info == -1 ? 0.0 : det.value ());
               retval(1) = rcond;
@@ -213,7 +213,7 @@ For that, use any of the condition number functions: @code{cond},
 
               MAYBE_CAST (rep, octave_complex_matrix);
               MatrixType mtype = (rep ? rep -> matrix_type ()
-                                      : MatrixType ());
+                                  : MatrixType ());
               ComplexDET det = m.determinant (mtype, info, rcond);
               retval(0) = (info == -1 ? Complex (0.0) : det.value ());
               retval(1) = rcond;
@@ -230,11 +230,11 @@ For that, use any of the condition number functions: @code{cond},
 
 /*
 %!assert (det ([1, 2; 3, 4]), -2, 10*eps)
-%!assert (det (single ([1, 2; 3, 4])), single (-2), 10*eps ("single"))
+%!assert (det (single ([1, 2; 3, 4])), single (-2), 10* eps ("single"))
 %!assert (det (eye (2000)), 1)
 %!error det ()
 %!error det (1, 2)
 %!error <must be a square matrix> det ([1, 2; 3, 4; 5, 6])
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

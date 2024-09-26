@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Ignoring Arguments (GNU Octave (version 7.1.0))</title>
+<title>Ignoring Arguments (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Ignoring Arguments (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Ignoring Arguments (GNU Octave (version 7.1.0))">
+<meta name="description" content="Ignoring Arguments (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Ignoring Arguments (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Variable_002dlength-Argument-Lists.html" rel="prev" title="Variable-length Argument Lists">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,35 +32,35 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Ignoring-Arguments">
-<div class="header">
+<div class="section-level-extent" id="Ignoring-Arguments">
+<div class="nav-panel">
 <p>
 Next: <a href="Default-Arguments.html" accesskey="n" rel="next">Default Arguments</a>, Previous: <a href="Variable_002dlength-Argument-Lists.html" accesskey="p" rel="prev">Variable-length Argument Lists</a>, Up: <a href="Functions-and-Scripts.html" accesskey="u" rel="up">Functions and Scripts</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Ignoring-Arguments-1"></span><h3 class="section">11.7 Ignoring Arguments</h3>
+<h3 class="section" id="Ignoring-Arguments-1"><span>11.7 Ignoring Arguments<a class="copiable-link" href="#Ignoring-Arguments-1"> &para;</a></span></h3>
 
 <p>In the formal argument list, it is possible to use the dummy placeholder
-<code>~</code> instead of a name.  This indicates that the corresponding argument
+<code class="code">~</code> instead of a name.  This indicates that the corresponding argument
 value should be ignored and not stored to any variable.
 </p>
 <div class="example">
-<pre class="example">function val = pick2nd (~, arg2)
+<div class="group"><pre class="example-preformatted">function val = pick2nd (~, arg2)
   val = arg2;
 endfunction
-</pre></div>
+</pre></div></div>
 
-<p>The value of <code>nargin</code> is not affected by using this declaration.
+<p>The value of <code class="code">nargin</code> is not affected by using this declaration.
 </p>
 <p>Return arguments can also be ignored using the same syntax.  For example, the
 sort function returns both the sorted values, and an index vector for the
 original input which will result in a sorted output.  Ignoring the second
 output is simple&mdash;don&rsquo;t request more than one output.  But ignoring the first,
-and calculating just the second output, requires the use of the <code>~</code>
+and calculating just the second output, requires the use of the <code class="code">~</code>
 placeholder.
 </p>
 <div class="example">
-<pre class="example">x = [2, 3, 1];
+<div class="group"><pre class="example-preformatted">x = [2, 3, 1];
 [s, i] = sort (x)
 &rArr;
 s =
@@ -87,56 +76,59 @@ i =
 i =
 
    3   1   2
-</pre></div>
+</pre></div></div>
 
-<p>When using the <code>~</code> placeholder, commas&mdash;not whitespace&mdash;must be used
-to separate output arguments.  Otherwise, the interpreter will view <code>~</code> as
+<p>When using the <code class="code">~</code> placeholder, commas&mdash;not whitespace&mdash;must be used
+to separate output arguments.  Otherwise, the interpreter will view <code class="code">~</code> as
 the logical not operator.
 </p>
 <div class="example">
-<pre class="example">[~ i] = sort (x)
+<div class="group"><pre class="example-preformatted">[~ i] = sort (x)
 parse error:
 
   invalid left hand side of assignment
-</pre></div>
+</pre></div></div>
 
 <p>Functions may take advantage of ignored outputs to reduce the number of
-calculations performed.  To do so, use the <code>isargout</code> function to query
+calculations performed.  To do so, use the <code class="code">isargout</code> function to query
 whether the output argument is wanted.  For example:
 </p>
 <div class="example">
-<pre class="example">function [out1, out2] = long_function (x, y, z)
+<div class="group"><pre class="example-preformatted">function [out1, out2] = long_function (x, y, z)
   if (isargout (1))
     ## Long calculation
-    &hellip;
+    ...
     out1 = result;
   endif
-  &hellip;
+  ...
 endfunction
-</pre></div>
+</pre></div></div>
 
-<span id="XREFisargout"></span><dl class="def">
-<dt id="index-isargout"><span class="category">: </span><span><em></em> <strong>isargout</strong> <em>(<var>k</var>)</em><a href='#index-isargout' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFisargout"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-isargout"><span class="category-def">: </span><span><code class="def-type"><var class="var">tf</var> =</code> <strong class="def-name">isargout</strong> <code class="def-code-arguments">(<var class="var">k</var>)</code><a class="copiable-link" href="#index-isargout"> &para;</a></span></dt>
 <dd><p>Within a function, return a logical value indicating whether the argument
-<var>k</var> will be assigned to a variable on output.
+<var class="var">k</var> will be assigned to a variable on output.
 </p>
 <p>If the result is false, the argument has been ignored during the function
 call through the use of the tilde (~) special output argument.  Functions
-can use <code>isargout</code> to avoid performing unnecessary calculations for
+can use <code class="code">isargout</code> to avoid performing unnecessary calculations for
 outputs which are unwanted.
 </p>
-<p>If <var>k</var> is outside the range <code>1:max (nargout)</code>, the function returns
-false.  <var>k</var> can also be an array, in which case the function works
+<p>If <var class="var">k</var> is outside the range <code class="code">1:max (nargout)</code>, the function returns
+false.  <var class="var">k</var> can also be an array, in which case the function works
 element-by-element and a logical array is returned.  At the top level,
-<code>isargout</code> returns an error.
+<code class="code">isargout</code> returns an error.
 </p>
-<p><strong>See also:</strong> <a href="Multiple-Return-Values.html#XREFnargout">nargout</a>, <a href="Variable_002dlength-Return-Lists.html#XREFvarargout">varargout</a>, <a href="Multiple-Return-Values.html#XREFnthargout">nthargout</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Multiple-Return-Values.html#XREFnargout">nargout</a>, <a class="ref" href="Variable_002dlength-Return-Lists.html#XREFvarargout">varargout</a>, <a class="ref" href="Multiple-Return-Values.html#XREFnthargout">nthargout</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Default-Arguments.html">Default Arguments</a>, Previous: <a href="Variable_002dlength-Argument-Lists.html">Variable-length Argument Lists</a>, Up: <a href="Functions-and-Scripts.html">Functions and Scripts</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -46,7 +46,7 @@ static const char *usage_string =
 // Usage message with extra help.
 
 static void
-octave_print_verbose_usage_and_exit (void)
+octave_print_verbose_usage_and_exit ()
 {
   std::cout << octave_name_version_copyright_copying_and_warranty ()
             << "\n\
@@ -103,7 +103,7 @@ Options:\n\
 // Terse usage message.
 
 static void
-octave_print_terse_usage_and_exit (void)
+octave_print_terse_usage_and_exit ()
 {
   std::cerr << "\nusage: " << usage_string << "\n\n";
 
@@ -111,7 +111,7 @@ octave_print_terse_usage_and_exit (void)
 }
 
 static void
-octave_print_version_and_exit (void)
+octave_print_version_and_exit ()
 {
   std::cout << octave_name_version_copyright_copying_warranty_and_bugs ()
             << "\n";

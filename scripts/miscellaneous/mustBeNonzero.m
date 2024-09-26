@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2019-2022 The Octave Project Developers
+## Copyright (C) 2019-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -47,7 +47,7 @@ function mustBeNonzero (x)
       label = "input";
     endif
     bad_idx = find (tf);
-    errmsg = sprintf ("%s must be non-zero; found %d elements that were zero: indexes %s", ...
+    errmsg = sprintf ("%s must be nonzero; found %d elements that were zero: indexes %s", ...
                       label, numel (bad_idx), mat2str (bad_idx));
     error (errmsg);
   endif

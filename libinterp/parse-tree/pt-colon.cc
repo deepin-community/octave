@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,47 +32,50 @@
 #include "pt-colon.h"
 #include "pt-eval.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// Colon expressions.
+
+tree_expression *
+tree_colon_expression::dup (symbol_scope& scope) const
 {
-  // Colon expressions.
+  tree_colon_expression *new_ce
+    = new tree_colon_expression (m_base ? m_base->dup (scope) : nullptr,
+                                 m_limit ? m_limit->dup (scope) : nullptr,
+                                 m_increment ? m_increment->dup (scope)
+                                 : nullptr,
+                                 line (), column ());
 
-  tree_expression *
-  tree_colon_expression::dup (symbol_scope& scope) const
-  {
-    tree_colon_expression *new_ce
-      = new tree_colon_expression (m_base ? m_base->dup (scope) : nullptr,
-                                   m_limit ? m_limit->dup (scope) : nullptr,
-                                   m_increment ? m_increment->dup (scope) : nullptr,
-                                   line (), column ());
+  new_ce->copy_base (*this);
 
-    new_ce->copy_base (*this);
-
-    return new_ce;
-  }
-
-  octave_value tree_colon_expression::evaluate (tree_evaluator& tw, int)
-  {
-    octave_value val;
-
-    if (! m_base || ! m_limit)
-      return val;
-
-    octave_value ov_base;
-    octave_value ov_increment;
-    octave_value ov_limit;
-
-    if (m_increment)
-      {
-        ov_base = m_base->evaluate (tw);
-        ov_increment = m_increment->evaluate (tw);
-        ov_limit = m_limit->evaluate (tw);
-      }
-    else
-      {
-        ov_base = m_base->evaluate (tw);
-        ov_limit = m_limit->evaluate (tw);
-      }
-
-    return colon_op (ov_base, ov_increment, ov_limit, is_for_cmd_expr ());
-  }
+  return new_ce;
 }
+
+octave_value
+tree_colon_expression::evaluate (tree_evaluator& tw, int)
+{
+  octave_value val;
+
+  if (! m_base || ! m_limit)
+    return val;
+
+  octave_value ov_base;
+  octave_value ov_increment;
+  octave_value ov_limit;
+
+  if (m_increment)
+    {
+      ov_base = m_base->evaluate (tw);
+      ov_increment = m_increment->evaluate (tw);
+      ov_limit = m_limit->evaluate (tw);
+    }
+  else
+    {
+      ov_base = m_base->evaluate (tw);
+      ov_limit = m_limit->evaluate (tw);
+    }
+
+  return colon_op (ov_base, ov_increment, ov_limit, is_for_cmd_expr ());
+}
+
+OCTAVE_END_NAMESPACE(octave)

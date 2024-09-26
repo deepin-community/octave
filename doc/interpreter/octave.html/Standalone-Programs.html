@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Standalone Programs (GNU Octave (version 7.1.0))</title>
+<title>Standalone Programs (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Standalone Programs (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Standalone Programs (GNU Octave (version 7.1.0))">
+<meta name="description" content="Standalone Programs (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Standalone Programs (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Mex_002dFiles.html" rel="prev" title="Mex-Files">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,25 +31,25 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Standalone-Programs">
-<div class="header">
+<div class="section-level-extent" id="Standalone-Programs">
+<div class="nav-panel">
 <p>
 Next: <a href="Java-Interface.html" accesskey="n" rel="next">Java Interface</a>, Previous: <a href="Mex_002dFiles.html" accesskey="p" rel="prev">Mex-Files</a>, Up: <a href="External-Code-Interface.html" accesskey="u" rel="up">External Code Interface</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Standalone-Programs-1"></span><h3 class="section">A.3 Standalone Programs</h3>
+<h3 class="section" id="Standalone-Programs-1"><span>A.3 Standalone Programs<a class="copiable-link" href="#Standalone-Programs-1"> &para;</a></span></h3>
 
 <p>The libraries Octave uses itself can be utilized in standalone applications.
 These applications then have access, for example, to the array and matrix
 classes, as well as to all of the Octave algorithms.  The following C++
-program, uses class Matrix from <samp>liboctave.a</samp> or <samp>liboctave.so</samp>.
+program, uses class Matrix from <samp class="file">liboctave.a</samp> or <samp class="file">liboctave.so</samp>.
 </p>
 <div class="example">
 <pre class="verbatim">#include &lt;iostream&gt;
 #include &lt;octave/oct.h&gt;
 
 int
-main (void)
+main ()
 {
   std::cout &lt;&lt; &quot;Hello Octave world!\n&quot;;
 
@@ -81,15 +69,15 @@ main (void)
 <p>mkoctfile can be used to build a standalone application with a command like
 </p>
 <div class="example">
-<pre class="example">$ mkoctfile --link-stand-alone standalone.cc -o standalone
+<div class="group"><pre class="example-preformatted">$ mkoctfile --link-stand-alone standalone.cc -o standalone
 $ ./standalone
 Hello Octave world!
   11 12
   21 22
 $
-</pre></div>
+</pre></div></div>
 
-<p>Note that the application <code>standalone</code> will be dynamically linked against
+<p>Note that the application <code class="code">standalone</code> will be dynamically linked against
 the Octave libraries and any Octave support libraries.  The above allows the
 Octave math libraries to be used by an application.  It does not, however,
 allow the script files, oct-files, or built-in functions of Octave to be used
@@ -104,7 +92,7 @@ first.  An example of how to do this can then be seen in the code
 #include &lt;octave/interpreter.h&gt;
 
 int
-main (void)
+main ()
 {
   // Create interpreter.
 
@@ -125,11 +113,11 @@ main (void)
       //
       //   interpreter.initialize ();
       //
-      //   if (! interpreter.initialized ())
+      //   if (! interpreter.is_initialized ())
       //     {
       //       std::cerr &lt;&lt; &quot;Octave interpreter initialization failed!&quot;
       //                 &lt;&lt; std::endl;
-      //       exit (status);
+      //       exit (1);
       //     }
       //
       // You may skip this step if you don't need to do anything
@@ -182,21 +170,21 @@ main (void)
 <p>which, as before, is compiled and run as a standalone application with
 </p>
 <div class="example">
-<pre class="example">$ mkoctfile --link-stand-alone embedded.cc -o embedded
+<div class="group"><pre class="example-preformatted">$ mkoctfile --link-stand-alone embedded.cc -o embedded
 $ ./embedded
 GCD of [10, 15] is 5
 $
-</pre></div>
+</pre></div></div>
 
 <p>It is worth re-iterating that, if only built-in functions are to be called from
 a C++ standalone program then it does not need to initialize the interpreter.
-The general rule is that for a built-in function named <code>function_name</code> in
-the interpreter, there will be a C++ function named <code>Ffunction_name</code> (note
-the prepended capital <code>F</code>) accessible in the C++ API.  The declarations
+The general rule is that for a built-in function named <code class="code">function_name</code> in
+the interpreter, there will be a C++ function named <code class="code">Ffunction_name</code> (note
+the prepended capital <code class="code">F</code>) accessible in the C++ API.  The declarations
 for all built-in functions are collected in the header file
-<code>builtin-defun-decls.h</code>.  This feature should be used with care as the
+<code class="code">builtin-defun-decls.h</code>.  This feature should be used with care as the
 list of built-in functions can change.  No guarantees can be made that a
-function that is currently a built-in won&rsquo;t be implemented as a <samp>.m</samp> file
+function that is currently a built-in won&rsquo;t be implemented as a <samp class="file">.m</samp> file
 or as a dynamically linked function in the future.  An example of how to call
 built-in functions from C++ can be seen in the code
 </p>
@@ -206,7 +194,7 @@ built-in functions from C++ can be seen in the code
 #include &lt;octave/builtin-defun-decls.h&gt;
 
 int
-main (void)
+main ()
 {
   int n = 2;
   Matrix a_matrix = Matrix (n, n);
@@ -234,7 +222,7 @@ main (void)
 <p>which is compiled and run as a standalone application with
 </p>
 <div class="example">
-<pre class="example">$ mkoctfile --link-stand-alone standalonebuiltin.cc -o standalonebuiltin
+<div class="group"><pre class="example-preformatted">$ mkoctfile --link-stand-alone standalonebuiltin.cc -o standalonebuiltin
 $ ./standalonebuiltin
 This is a matrix:
  11 12
@@ -243,11 +231,11 @@ This is a matrix:
 This is the norm of the matrix:
 34.4952
 $
-</pre></div>
+</pre></div></div>
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Java-Interface.html">Java Interface</a>, Previous: <a href="Mex_002dFiles.html">Mex-Files</a>, Up: <a href="External-Code-Interface.html">External Code Interface</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

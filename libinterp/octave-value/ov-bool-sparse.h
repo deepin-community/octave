@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -53,7 +53,7 @@ octave_sparse_bool_matrix : public octave_base_sparse<SparseBoolMatrix>
 {
 public:
 
-  octave_sparse_bool_matrix (void)
+  octave_sparse_bool_matrix ()
     : octave_base_sparse<SparseBoolMatrix> () { }
 
   octave_sparse_bool_matrix (const SparseBoolMatrix& bnda)
@@ -75,16 +75,14 @@ public:
   octave_sparse_bool_matrix (const octave_sparse_bool_matrix& bm)
     : octave_base_sparse<SparseBoolMatrix> (bm) { }
 
-  ~octave_sparse_bool_matrix (void) = default;
+  ~octave_sparse_bool_matrix () = default;
 
-  octave_base_value * clone (void) const
+  octave_base_value * clone () const
   { return new octave_sparse_bool_matrix (*this); }
-  octave_base_value * empty_clone (void) const
+  octave_base_value * empty_clone () const
   { return new octave_sparse_bool_matrix (); }
 
-  type_conv_info numeric_conversion_function (void) const;
-
-  octave_base_value * try_narrowing_conversion (void);
+  type_conv_info numeric_conversion_function () const;
 
   // FIXME: Adapt idx_vector to allow sparse logical indexing without overflow!
   octave::idx_vector index_vector (bool /* require_integers */ = false) const
@@ -92,15 +90,15 @@ public:
     return octave::idx_vector (matrix);
   }
 
-  builtin_type_t builtin_type (void) const { return btyp_bool; }
+  builtin_type_t builtin_type () const { return btyp_bool; }
 
-  bool is_bool_matrix (void) const { return true; }
+  bool is_bool_matrix () const { return true; }
 
-  bool islogical (void) const { return true; }
+  bool islogical () const { return true; }
 
-  bool isreal (void) const { return true; }
+  bool isreal () const { return true; }
 
-  bool isnumeric (void) const { return false; }
+  bool isnumeric () const { return false; }
 
   double double_value (bool = false) const;
 
@@ -132,7 +130,7 @@ public:
 
   octave_value convert_to_str_internal (bool pad, bool force, char type) const;
 
-  octave_value as_double (void) const;
+  octave_value as_double () const;
 
   bool save_binary (std::ostream& os, bool save_as_floats);
 

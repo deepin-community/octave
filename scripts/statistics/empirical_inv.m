@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,13 +24,13 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} empirical_inv (@var{x}, @var{data})
+## @deftypefn {} {@var{q} =} empirical_inv (@var{x}, @var{data})
 ## For each element of @var{x}, compute the quantile (the inverse of the CDF)
 ## at @var{x} of the empirical distribution obtained from the
 ## univariate sample @var{data}.
 ## @end deftypefn
 
-function inv = empirical_inv (x, data)
+function q = empirical_inv (x, data)
 
   if (nargin != 2)
     print_usage ();
@@ -40,7 +40,7 @@ function inv = empirical_inv (x, data)
     error ("empirical_inv: DATA must be a vector");
   endif
 
-  inv = discrete_inv (x, data, ones (size (data)));
+  q = discrete_inv (x, data, ones (size (data)));
 
 endfunction
 

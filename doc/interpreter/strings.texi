@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -64,7 +64,12 @@ of blank characters (ASCII code 32).
 
 @c blanks scripts/strings/blanks.m
 @anchor{XREFblanks}
-@deftypefn {} {} blanks (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{str} =} blanks (@var{n})
 Return a string of @var{n} blanks.
 
 For example:
@@ -176,7 +181,12 @@ by using @code{is_dq_string} and @code{is_sq_string}.
 
 @c is_dq_string libinterp/octave-value/ov.cc
 @anchor{XREFis_dq_string}
-@deftypefn {} {} is_dq_string (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} is_dq_string (@var{x})
 Return true if @var{x} is a double-quoted character string.
 @xseealso{@ref{XREFis_sq_string,,is_sq_string}, @ref{XREFischar,,ischar}}
 @end deftypefn
@@ -184,7 +194,12 @@ Return true if @var{x} is a double-quoted character string.
 
 @c is_sq_string libinterp/octave-value/ov.cc
 @anchor{XREFis_sq_string}
-@deftypefn {} {} is_sq_string (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} is_sq_string (@var{x})
 Return true if @var{x} is a single-quoted character string.
 @xseealso{@ref{XREFis_dq_string,,is_dq_string}, @ref{XREFischar,,ischar}}
 @end deftypefn
@@ -217,7 +232,12 @@ matrix.
 
 @c ischar libinterp/corefcn/strfns.cc
 @anchor{XREFischar}
-@deftypefn {} {} ischar (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} ischar (@var{x})
 Return true if @var{x} is a character array.
 @xseealso{@ref{XREFisfloat,,isfloat}, @ref{XREFisinteger,,isinteger}, @ref{XREFislogical,,islogical}, @ref{XREFisnumeric,,isnumeric}, @ref{XREFisstring,,isstring}, @ref{XREFiscellstr,,iscellstr}, @ref{XREFisa,,isa}}
 @end deftypefn
@@ -225,7 +245,12 @@ Return true if @var{x} is a character array.
 
 @c isstring scripts/strings/isstring.m
 @anchor{XREFisstring}
-@deftypefn {} {} isstring (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isstring (@var{s})
 Return true if @var{s} is a string array.
 
 A string array is a data type that stores strings (row vectors of
@@ -267,9 +292,14 @@ blank character using the @code{string_fill_char} function.
 
 @c string_fill_char libinterp/parse-tree/pt-eval.cc
 @anchor{XREFstring_fill_char}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} string_fill_char ()
 @deftypefnx {} {@var{old_val} =} string_fill_char (@var{new_val})
-@deftypefnx {} {} string_fill_char (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} string_fill_char (@var{new_val}, "local")
 Query or set the internal variable used to pad all rows of a character
 matrix to the same length.
 
@@ -280,9 +310,9 @@ single space).  For example:
 @group
 string_fill_char ("X");
 [ "these"; "are"; "strings" ]
-      @result{}  "theseXX"
-          "areXXXX"
-          "strings"
+    @result{}  "theseXX"
+        "areXXXX"
+        "strings"
 @end group
 @end example
 
@@ -297,8 +327,13 @@ the @code{strjust} function.
 
 @c strjust scripts/strings/strjust.m
 @anchor{XREFstrjust}
-@deftypefn  {} {} strjust (@var{s})
-@deftypefnx {} {} strjust (@var{s}, @var{pos})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{str} =} strjust (@var{s})
+@deftypefnx {} {@var{str} =} strjust (@var{s}, @var{pos})
 Return the text, @var{s}, justified according to @var{pos}, which may
 be @qcode{"left"}, @qcode{"center"}, or @qcode{"right"}.
 
@@ -361,10 +396,15 @@ general regular expressions, the following functions come with Octave.
 
 The following functions are useful to perform common String operations.
 
-@c tolower libinterp/corefcn/mappers.cc
-@anchor{XREFtolower}
-@deftypefn  {} {} tolower (@var{s})
-@deftypefnx {} {} lower (@var{s})
+@c lower libinterp/corefcn/mappers.cc
+@anchor{XREFlower}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} lower (@var{s})
+@deftypefnx {} {@var{y} =} tolower (@var{s})
 Return a copy of the string or cell string @var{s}, with each uppercase
 character replaced by the corresponding lowercase one; non-alphabetic
 characters are left unchanged.
@@ -373,18 +413,27 @@ For example:
 
 @example
 @group
-tolower ("MiXeD cAsE 123")
-      @result{} "mixed case 123"
+lower ("MiXeD cAsE 123")
+    @result{} "mixed case 123"
 @end group
 @end example
-@xseealso{@ref{XREFtoupper,,toupper}}
+
+Programming Note: @code{tolower} is an alias for @code{lower} and either name
+can be used in Octave.
+
+@xseealso{@ref{XREFupper,,upper}}
 @end deftypefn
 
 
-@c toupper libinterp/corefcn/mappers.cc
-@anchor{XREFtoupper}
-@deftypefn  {} {} toupper (@var{s})
-@deftypefnx {} {} upper (@var{s})
+@c upper libinterp/corefcn/mappers.cc
+@anchor{XREFupper}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} upper (@var{s})
+@deftypefnx {} {@var{y} =} toupper (@var{s})
 Return a copy of the string or cell string @var{s}, with each lowercase
 character replaced by the corresponding uppercase one; non-alphabetic
 characters are left unchanged.
@@ -393,21 +442,30 @@ For example:
 
 @example
 @group
-toupper ("MiXeD cAsE 123")
-      @result{} "MIXED CASE 123"
+upper ("MiXeD cAsE 123")
+    @result{} "MIXED CASE 123"
 @end group
 @end example
-@xseealso{@ref{XREFtolower,,tolower}}
+
+Programming Note: @code{toupper} is an alias for @code{upper} and either name
+can be used in Octave.
+
+@xseealso{@ref{XREFlower,,lower}}
 @end deftypefn
 
 
 @c deblank scripts/strings/deblank.m
 @anchor{XREFdeblank}
-@deftypefn {} {} deblank (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{s} =} deblank (@var{s})
 Remove trailing whitespace and nulls from @var{s}.
 
 If @var{s} is a matrix, @var{deblank} trims each row to the length of
-longest string.  If @var{s} is a cell array of strings, operate
+the longest string.  If @var{s} is a cell array of strings, operate
 recursively on each string element.
 
 Examples:
@@ -427,7 +485,12 @@ deblank ([" abc   "; "   def   "])
 
 @c strtrim scripts/strings/strtrim.m
 @anchor{XREFstrtrim}
-@deftypefn {} {} strtrim (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{s} =} strtrim (@var{s})
 Remove leading and trailing whitespace from @var{s}.
 
 If @var{s} is a matrix, @var{strtrim} trims each row to the length of
@@ -451,7 +514,12 @@ strtrim ([" abc   "; "   def   "])
 
 @c strtrunc scripts/strings/strtrunc.m
 @anchor{XREFstrtrunc}
-@deftypefn {} {} strtrunc (@var{s}, @var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{s} =} strtrunc (@var{s}, @var{n})
 Truncate the character string @var{s} to length @var{n}.
 
 If @var{s} is a character matrix, then the number of columns is adjusted.
@@ -463,9 +531,14 @@ on each cell element and the new cell array is returned.
 
 @c untabify scripts/strings/untabify.m
 @anchor{XREFuntabify}
-@deftypefn  {} {} untabify (@var{t})
-@deftypefnx {} {} untabify (@var{t}, @var{tw})
-@deftypefnx {} {} untabify (@var{t}, @var{tw}, @var{deblank})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{str} =} untabify (@var{t})
+@deftypefnx {} {@var{str} =} untabify (@var{t}, @var{tw})
+@deftypefnx {} {@var{str} =} untabify (@var{t}, @var{tw}, @var{deblank})
 Replace TAB characters in @var{t} with spaces.
 
 The input, @var{t}, may be either a 2-D character array, or a cell array of
@@ -497,7 +570,12 @@ fclose (fid);
 
 @c do_string_escapes libinterp/corefcn/utils.cc
 @anchor{XREFdo_string_escapes}
-@deftypefn {} {} do_string_escapes (@var{string})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{newstr} =} do_string_escapes (@var{string})
 Convert escape sequences in @var{string} to the characters they represent.
 
 Escape sequences begin with a leading backslash
@@ -509,13 +587,18 @@ Escape sequences begin with a leading backslash
 
 @c undo_string_escapes libinterp/corefcn/utils.cc
 @anchor{XREFundo_string_escapes}
-@deftypefn {} {} undo_string_escapes (@var{s})
-Convert special characters in strings back to their escaped forms.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{newstr} =} undo_string_escapes (@var{string})
+Convert special characters in @var{string} back to their escaped forms.
 
 For example, the expression
 
 @example
-bell = "\a";
+@var{bell} = "\a";
 @end example
 
 @noindent
@@ -565,7 +648,12 @@ as multiple lines of text when displayed.
 
 @c newline libinterp/corefcn/strfns.cc
 @anchor{XREFnewline}
-@deftypefn {} {} newline
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{c} =} newline
 Return the character corresponding to a newline.
 
 This is equivalent to @qcode{"@backslashchar{}n"}.
@@ -696,10 +784,15 @@ from the internal representation of the strings in a string array
 
 @c char libinterp/corefcn/strfns.cc
 @anchor{XREFchar}
-@deftypefn  {} {} char (@var{x})
-@deftypefnx {} {} char (@var{x}, @dots{})
-@deftypefnx {} {} char (@var{s1}, @var{s2}, @dots{})
-@deftypefnx {} {} char (@var{cell_array})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{C} =} char (@var{A})
+@deftypefnx {} {@var{C} =} char (@var{A}, @dots{})
+@deftypefnx {} {@var{C} =} char (@var{str1}, @var{str2}, @dots{})
+@deftypefnx {} {@var{C} =} char (@var{cell_array})
 Create a string array from one or more numeric matrices, character
 matrices, or cell arrays.
 
@@ -733,10 +826,15 @@ char ([97, 98, 99], "", @{"98", "99", 100@}, "str1", ["ha", "lf"])
 
 @c strvcat libinterp/corefcn/strfns.cc
 @anchor{XREFstrvcat}
-@deftypefn  {} {} strvcat (@var{x})
-@deftypefnx {} {} strvcat (@var{x}, @dots{})
-@deftypefnx {} {} strvcat (@var{s1}, @var{s2}, @dots{})
-@deftypefnx {} {} strvcat (@var{cell_array})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{C} =} strvcat (@var{A})
+@deftypefnx {} {@var{C} =} strvcat (@var{A}, @dots{})
+@deftypefnx {} {@var{C} =} strvcat (@var{str1}, @var{str2}, @dots{})
+@deftypefnx {} {@var{C} =} strvcat (@var{cell_array})
 Create a character array from one or more numeric matrices, character
 matrices, or cell arrays.
 
@@ -770,9 +868,13 @@ strvcat ([97, 98, 99], "", @{"98", "99", 100@}, "str1", ["ha", "lf"])
 
 @c strcat scripts/strings/strcat.m
 @anchor{XREFstrcat}
-@deftypefn {} {} strcat (@var{s1}, @var{s2}, @dots{})
-Return a string containing all the arguments concatenated
-horizontally.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{str} =} strcat (@var{s1}, @var{s2}, @dots{})
+Return a string containing all the arguments concatenated horizontally.
 
 If the arguments are cell strings, @code{strcat} returns a cell string
 with the individual cells concatenated.  For numerical input, each element
@@ -832,7 +934,12 @@ strcat (s, s, s)
 
 @c cstrcat scripts/strings/cstrcat.m
 @anchor{XREFcstrcat}
-@deftypefn {} {} cstrcat (@var{s1}, @var{s2}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{str} =} cstrcat (@var{s1}, @var{s2}, @dots{})
 Return a string containing all the arguments concatenated horizontally
 with trailing white space preserved.
 
@@ -862,7 +969,12 @@ cstrcat (s, s, s)
 
 @c substr scripts/strings/substr.m
 @anchor{XREFsubstr}
-@deftypefn  {} {} substr (@var{s}, @var{offset})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{str} =} substr (@var{s}, @var{offset})
 @deftypefnx {} {} substr (@var{s}, @var{offset}, @var{len})
 Return the substring of @var{s} which starts at character number
 @var{offset} and is @var{len} characters long.
@@ -893,6 +1005,11 @@ This function is patterned after the equivalent function in Perl.
 
 @c strtok scripts/strings/strtok.m
 @anchor{XREFstrtok}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{tok}, @var{rem}] =} strtok (@var{str})
 @deftypefnx {} {[@var{tok}, @var{rem}] =} strtok (@var{str}, @var{delim})
 
@@ -928,6 +1045,11 @@ strtok ("this is the life")
 
 @c strsplit scripts/strings/strsplit.m
 @anchor{XREFstrsplit}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{cstr}] =} strsplit (@var{str})
 @deftypefnx {} {[@var{cstr}] =} strsplit (@var{str}, @var{del})
 @deftypefnx {} {[@var{cstr}] =} strsplit (@dots{}, @var{name}, @var{value})
@@ -1044,6 +1166,11 @@ strsplit ("a,\t,b, c", @{',', ' ', '\t'@}, "collapsedelimiters", false)
 
 @c ostrsplit scripts/strings/ostrsplit.m
 @anchor{XREFostrsplit}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{cstr}] =} ostrsplit (@var{s}, @var{sep})
 @deftypefnx {} {[@var{cstr}] =} ostrsplit (@var{s}, @var{sep}, @var{strip_empty})
 Split the string @var{s} using one or more separators @var{sep} and return
@@ -1083,6 +1210,11 @@ ostrsplit (["a,b" ; "cde"], ",")
 
 @c strjoin scripts/strings/strjoin.m
 @anchor{XREFstrjoin}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{str} =} strjoin (@var{cstr})
 @deftypefnx {} {@var{str} =} strjoin (@var{cstr}, @var{delimiter})
 Join the elements of the cell string array, @var{cstr}, into a single
@@ -1132,11 +1264,16 @@ corresponding functions for case-insensitive comparison.
 
 @c strcmp libinterp/corefcn/strfns.cc
 @anchor{XREFstrcmp}
-@deftypefn {} {} strcmp (@var{s1}, @var{s2})
-Return 1 if the character strings @var{s1} and @var{s2} are the same,
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} strcmp (@var{str1}, @var{str2})
+Return 1 if the character strings @var{str1} and @var{str2} are the same,
 and 0 otherwise.
 
-If either @var{s1} or @var{s2} is a cell array of strings, then an array
+If either @var{str1} or @var{str2} is a cell array of strings, then an array
 of the same size is returned, containing the values described above for
 every member of the cell array.  The other argument may also be a cell
 array of strings (of the same size or with only one element), char matrix
@@ -1151,8 +1288,13 @@ This is just the opposite of the corresponding C library function.
 
 @c strncmp libinterp/corefcn/strfns.cc
 @anchor{XREFstrncmp}
-@deftypefn {} {} strncmp (@var{s1}, @var{s2}, @var{n})
-Return 1 if the first @var{n} characters of strings @var{s1} and @var{s2}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} strncmp (@var{str1}, @var{str2}, @var{n})
+Return 1 if the first @var{n} characters of strings @var{str1} and @var{str2}
 are the same, and 0 otherwise.
 
 @example
@@ -1162,7 +1304,7 @@ strncmp ("abce", "abcd", 3)
 @end group
 @end example
 
-If either @var{s1} or @var{s2} is a cell array of strings, then an array
+If either @var{str1} or @var{str2} is a cell array of strings, then an array
 of the same size is returned, containing the values described above for
 every member of the cell array.  The other argument may also be a cell
 array of strings (of the same size or with only one element), char matrix
@@ -1184,11 +1326,16 @@ This is just the opposite of the corresponding C library function.
 
 @c strcmpi libinterp/corefcn/strfns.cc
 @anchor{XREFstrcmpi}
-@deftypefn {} {} strcmpi (@var{s1}, @var{s2})
-Return 1 if the character strings @var{s1} and @var{s2} are the same,
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} strcmpi (@var{str1}, @var{str2})
+Return 1 if the character strings @var{str1} and @var{str2} are the same,
 disregarding case of alphabetic characters, and 0 otherwise.
 
-If either @var{s1} or @var{s2} is a cell array of strings, then an array
+If either @var{str1} or @var{str2} is a cell array of strings, then an array
 of the same size is returned, containing the values described above for
 every member of the cell array.  The other argument may also be a cell
 array of strings (of the same size or with only one element), char matrix
@@ -1205,11 +1352,16 @@ This is just the opposite of the corresponding C library function.
 
 @c strncmpi libinterp/corefcn/strfns.cc
 @anchor{XREFstrncmpi}
-@deftypefn {} {} strncmpi (@var{s1}, @var{s2}, @var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} strncmpi (@var{str1}, @var{str2}, @var{n})
 Return 1 if the first @var{n} character of @var{s1} and @var{s2} are the
 same, disregarding case of alphabetic characters, and 0 otherwise.
 
-If either @var{s1} or @var{s2} is a cell array of strings, then an array
+If either @var{str1} or @var{str2} is a cell array of strings, then an array
 of the same size is returned, containing the values described above for
 every member of the cell array.  The other argument may also be a cell
 array of strings (of the same size or with only one element), char matrix
@@ -1229,6 +1381,11 @@ find the index position of a search pattern within a string.
 
 @c startsWith scripts/strings/startsWith.m
 @anchor{XREFstartsWith}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{retval} =} startsWith (@var{str}, @var{pattern})
 @deftypefnx {} {@var{retval} =} startsWith (@var{str}, @var{pattern}, "IgnoreCase", @var{ignore_case})
 Check whether string(s) start with pattern(s).
@@ -1284,6 +1441,11 @@ startsWith (@{"DATASHEET.ods", "data.txt", "foundations.ppt"@},
 
 @c endsWith scripts/strings/endsWith.m
 @anchor{XREFendsWith}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{retval} =} endsWith (@var{str}, @var{pattern})
 @deftypefnx {} {@var{retval} =} endsWith (@var{str}, @var{pattern}, "IgnoreCase", @var{ignore_case})
 Check whether string(s) end with pattern(s).
@@ -1339,8 +1501,13 @@ endsWith (@{"TESTS.TXT", "mydoc.odt", "result.txt", "myFunc.m"@},
 
 @c findstr scripts/legacy/findstr.m
 @anchor{XREFfindstr}
-@deftypefn  {} {} findstr (@var{s}, @var{t})
-@deftypefnx {} {} findstr (@var{s}, @var{t}, @var{overlap})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{v} =} findstr (@var{s}, @var{t})
+@deftypefnx {} {@var{v} =} findstr (@var{s}, @var{t}, @var{overlap})
 
 This function is obsolete.  Use @code{strfind} instead.
 
@@ -1367,6 +1534,11 @@ code.
 
 @c strchr scripts/strings/strchr.m
 @anchor{XREFstrchr}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{idx} =} strchr (@var{str}, @var{chars})
 @deftypefnx {} {@var{idx} =} strchr (@var{str}, @var{chars}, @var{n})
 @deftypefnx {} {@var{idx} =} strchr (@var{str}, @var{chars}, @var{n}, @var{direction})
@@ -1385,8 +1557,13 @@ This will be faster than using @code{regexp} in most cases.
 
 @c index scripts/strings/index.m
 @anchor{XREFindex}
-@deftypefn  {} {} index (@var{s}, @var{t})
-@deftypefnx {} {} index (@var{s}, @var{t}, @var{direction})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{n} =} index (@var{s}, @var{t})
+@deftypefnx {} {@var{n} =} index (@var{s}, @var{t}, @var{direction})
 Return the position of the first occurrence of the string @var{t} in the
 string @var{s}, or 0 if no occurrence is found.
 
@@ -1410,7 +1587,12 @@ If @var{direction} is @qcode{"last"}, return the last element found.
 
 @c rindex scripts/strings/rindex.m
 @anchor{XREFrindex}
-@deftypefn {} {} rindex (@var{s}, @var{t})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{n} =} rindex (@var{s}, @var{t})
 Return the position of the last occurrence of the character string
 @var{t} in the character string @var{s}, or 0 if no occurrence is
 found.
@@ -1435,6 +1617,11 @@ The @code{rindex} function is equivalent to @code{index} with
 
 @c unicode_idx libinterp/corefcn/strfns.cc
 @anchor{XREFunicode_idx}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{idx} =} unicode_idx (@var{str})
 Return an array with the indices for each UTF-8 encoded character in @var{str}.
 
@@ -1450,6 +1637,11 @@ unicode_idx ("aäbc")
 
 @c strfind libinterp/corefcn/strfind.cc
 @anchor{XREFstrfind}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{idx} =} strfind (@var{str}, @var{pattern})
 @deftypefnx {} {@var{idx} =} strfind (@var{cellstr}, @var{pattern})
 @deftypefnx {} {@var{idx} =} strfind (@dots{}, "overlaps", @var{val})
@@ -1513,8 +1705,13 @@ strfind ("abababa", "aba", "forcecelloutput", true)
 
 @c strmatch scripts/legacy/strmatch.m
 @anchor{XREFstrmatch}
-@deftypefn  {} {} strmatch (@var{s}, @var{A})
-@deftypefnx {} {} strmatch (@var{s}, @var{A}, "exact")
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{idx} =} strmatch (@var{s}, @var{A})
+@deftypefnx {} {@var{idx} =} strmatch (@var{s}, @var{A}, "exact")
 
 This function is obsolete.  @strong{Use an alternative} such as
 @code{strncmp} or @code{strcmp} instead.
@@ -1557,6 +1754,11 @@ include @code{regexp} or @code{validatestring}.
 
 @c strrep libinterp/corefcn/strfind.cc
 @anchor{XREFstrrep}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{newstr} =} strrep (@var{str}, @var{ptn}, @var{rep})
 @deftypefnx {} {@var{newstr} =} strrep (@var{cellstr}, @var{ptn}, @var{rep})
 @deftypefnx {} {@var{newstr} =} strrep (@dots{}, "overlaps", @var{val})
@@ -1585,6 +1787,11 @@ strrep ("This is a test string", "is", "&%$")
 
 @c erase scripts/strings/erase.m
 @anchor{XREFerase}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{newstr} =} erase (@var{str}, @var{ptn})
 Delete all occurrences of @var{ptn} within @var{str}.
 
@@ -1633,6 +1840,11 @@ For processing overlaps, @pxref{XREFstrrep,,@code{strrep}}.
 
 @c regexp libinterp/corefcn/regexp.cc
 @anchor{XREFregexp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{s}, @var{e}, @var{te}, @var{m}, @var{t}, @var{nm}, @var{sp}] =} regexp (@var{str}, @var{pat})
 @deftypefnx {} {[@dots{}] =} regexp (@var{str}, @var{pat}, "@var{opt1}", @dots{})
 Regular expression string matching.
@@ -1849,12 +2061,24 @@ may lead to a segfault.  As an alternative, consider constructing pattern
 searches that reduce the number of matches (e.g., by creatively using set
 complement), and then further processing the return variables (now reduced in
 size) with successive @code{regexp} searches.
+
+Octave's @code{regexp} implementation is based on the Perl Compatible
+Regular Expressions library (@url{https://www.pcre.org/}).  For a more
+comprehensive list of @code{regexp} operator syntax see the
+@url{https://www.pcre.org/current/doc/html/pcre2syntax.html,,
+"PCRE Syntax quick-reference summary"}.
+
 @xseealso{@ref{XREFregexpi,,regexpi}, @ref{XREFstrfind,,strfind}, @ref{XREFregexprep,,regexprep}}
 @end deftypefn
 
 
 @c regexpi libinterp/corefcn/regexp.cc
 @anchor{XREFregexpi}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{s}, @var{e}, @var{te}, @var{m}, @var{t}, @var{nm}, @var{sp}] =} regexpi (@var{str}, @var{pat})
 @deftypefnx {} {[@dots{}] =} regexpi (@var{str}, @var{pat}, "@var{opt1}", @dots{})
 
@@ -1870,6 +2094,11 @@ pattern.
 
 @c regexprep libinterp/corefcn/regexp.cc
 @anchor{XREFregexprep}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{outstr} =} regexprep (@var{string}, @var{pat}, @var{repstr})
 @deftypefnx {} {@var{outstr} =} regexprep (@var{string}, @var{pat}, @var{repstr}, "@var{opt1}", @dots{})
 Replace occurrences of pattern @var{pat} in @var{string} with @var{repstr}.
@@ -1913,7 +2142,12 @@ function.
 
 @c regexptranslate scripts/strings/regexptranslate.m
 @anchor{XREFregexptranslate}
-@deftypefn {} {} regexptranslate (@var{op}, @var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{str} =} regexptranslate (@var{op}, @var{s})
 Translate a string for use in a regular expression.
 
 This may include either wildcard replacement or special character escaping.
@@ -1965,6 +2199,11 @@ Octave offers several kinds of conversion functions for Strings.
 
 @c unicode2native scripts/strings/unicode2native.m
 @anchor{XREFunicode2native}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{native_bytes} =} unicode2native (@var{utf8_str}, @var{codepage})
 @deftypefnx {} {@var{native_bytes} =} unicode2native (@var{utf8_str})
 Convert UTF-8 string @var{utf8_str} to byte stream using @var{codepage}.
@@ -1987,6 +2226,11 @@ codepage.
 
 @c native2unicode scripts/strings/native2unicode.m
 @anchor{XREFnative2unicode}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{utf8_str} =} native2unicode (@var{native_bytes}, @var{codepage})
 @deftypefnx {} {@var{utf8_str} =} native2unicode (@var{native_bytes})
 Convert byte stream @var{native_bytes} to UTF-8 using @var{codepage}.
@@ -2021,6 +2265,11 @@ numerical data as strings is the @code{sprintf} function
 
 @c mat2str scripts/strings/mat2str.m
 @anchor{XREFmat2str}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} mat2str (@var{x}, @var{n})
 @deftypefnx {} {@var{s} =} mat2str (@var{x}, @var{n}, "class")
 Format real, complex, and logical matrices as strings.
@@ -2063,9 +2312,14 @@ isequal (x, eval (mat2str (x)))
 
 @c num2str scripts/general/num2str.m
 @anchor{XREFnum2str}
-@deftypefn  {} {} num2str (@var{x})
-@deftypefnx {} {} num2str (@var{x}, @var{precision})
-@deftypefnx {} {} num2str (@var{x}, @var{format})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{str} =} num2str (@var{x})
+@deftypefnx {} {@var{str} =} num2str (@var{x}, @var{precision})
+@deftypefnx {} {@var{str} =} num2str (@var{x}, @var{format})
 Convert a number (or array) to a string (or a character array).
 
 The optional second argument may either give the number of significant
@@ -2120,7 +2374,12 @@ modification.  This is in contrast to @sc{matlab} which tampers with the
 
 @c int2str scripts/general/int2str.m
 @anchor{XREFint2str}
-@deftypefn {} {} int2str (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{str} =} int2str (@var{n})
 Convert an integer (or array of integers) to a string (or a character
 array).
 
@@ -2157,7 +2416,12 @@ of complex numbers is displayed.
 
 @c str2double libinterp/corefcn/strfns.cc
 @anchor{XREFstr2double}
-@deftypefn {} {} str2double (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{d} =} str2double (@var{str})
 Convert a string to a real or complex number.
 
 The string must be in one of the following formats where a and b are real
@@ -2182,12 +2446,12 @@ the brackets indicate optional arguments and @qcode{'d'} indicates zero or
 more digits.  The special input values @code{Inf}, @code{NaN}, and @code{NA}
 are also accepted.
 
-@var{s} may be a character string, character matrix, or cell array.  For
+@var{str} may be a character string, character matrix, or cell array.  For
 character arrays the conversion is repeated for every row, and a double or
 complex array is returned.  Empty rows in @var{s} are deleted and not
 returned in the numeric array.  For cell arrays each character string
 element is processed and a double or complex array of the same dimensions as
-@var{s} is returned.
+@var{str} is returned.
 
 For unconvertible scalar or character string input @code{str2double} returns
 a NaN@.  Similarly, for character array input @code{str2double} returns a
@@ -2197,14 +2461,19 @@ conversion fails.  Note that numeric elements in a mixed string/numeric
 cell array are not strings and the conversion will fail for these elements
 and return NaN.
 
-@code{str2double} can replace @code{str2num}, and it avoids the security
-risk of using @code{eval} on unknown data.
+Programming Note: @code{str2double} can replace @code{str2num}, is more
+efficient, and avoids the security risk of using @code{eval} on unknown data.
 @xseealso{@ref{XREFstr2num,,str2num}}
 @end deftypefn
 
 
 @c str2num scripts/strings/str2num.m
 @anchor{XREFstr2num}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} str2num (@var{s})
 @deftypefnx {} {[@var{x}, @var{state}] =} str2num (@var{s})
 Convert the string (or character array) @var{s} to a number (or an array).
@@ -2237,9 +2506,14 @@ For cell array of strings use @code{str2double}.
 
 @c bin2dec scripts/strings/bin2dec.m
 @anchor{XREFbin2dec}
-@deftypefn {} {} bin2dec (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{d} =} bin2dec (@var{str})
 Return the decimal number corresponding to the binary number represented
-by the string @var{s}.
+by the string @var{str}.
 
 For example:
 
@@ -2260,29 +2534,38 @@ bin2dec ("1000 0001")
 @end group
 @end example
 
-If @var{s} is a string matrix, return a column vector with one converted
-number per row of @var{s}; Invalid rows evaluate to NaN@.
+If @var{str} is a string matrix, return a column vector with one converted
+number per row of @var{str}; Invalid rows evaluate to NaN@.
 
-If @var{s} is a cell array of strings, return a column vector with one
-converted number per cell element in @var{s}.
+If @var{str} is a cell array of strings, return a column vector with one
+converted number per cell element in @var{str}.
 @xseealso{@ref{XREFdec2bin,,dec2bin}, @ref{XREFbase2dec,,base2dec}, @ref{XREFhex2dec,,hex2dec}}
 @end deftypefn
 
 
 @c dec2bin scripts/strings/dec2bin.m
 @anchor{XREFdec2bin}
-@deftypefn  {} {} dec2bin (@var{d})
-@deftypefnx {} {} dec2bin (@var{d}, @var{len})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{bstr} =} dec2bin (@var{d})
+@deftypefnx {} {@var{bstr} =} dec2bin (@var{d}, @var{len})
 Return a string of ones and zeros representing the conversion of the integer
 @var{d} to a binary number.
 
-If @var{d} is negative, return the two's complement binary value of @var{d}.
 If @var{d} is a matrix or cell array, return a string matrix with one row
 for each element in @var{d}, padded with leading zeros to the width of the
 largest value.
 
 The optional second argument, @var{len}, specifies the minimum number of
 digits in the result.
+
+For negative elements of @var{d}, return the binary value of the two's
+complement.  The result is padded with leading ones to 8, 16, 32, or 64
+bits as appropriate for the magnitude of the input.  Positive input
+elements are padded with leading zeros to the same width.
 
 Examples:
 
@@ -2296,30 +2579,29 @@ dec2bin (-14)
 @end group
 @end example
 
-Programming Notes: The largest negative value that can be converted into
-two's complement is @code{- (flintmax () / 2)}.
+Programming tip: @code{dec2bin} discards any fractional part of the input.
+If you need the fractional part to be converted too, call @code{dec2base}
+with a nonzero number of decimal places.  You can also use @code{fix} or
+@code{round} on fractional inputs to ensure predictable rounding behavior.
 
-Known @sc{matlab} Incompatibility: @sc{matlab}'s @code{dec2bin} allows
-non-integer values for @var{d}, truncating the value using the equivalent
-of @code{fix (@var{d})} for positive values, but, as of R2020b and in
-conflict with published documentation, appears to use
-@code{round (@var{d})} for negative values.  To be consistent with
-@code{dec2hex} and @code{dec2base}, Octave produces an error for non-integer
-valued inputs for @var{d}.  Users wanting compatible code for non-integer
-valued inputs should make use of @code{fix} or @code{round} as appropriate.
 @xseealso{@ref{XREFbin2dec,,bin2dec}, @ref{XREFdec2base,,dec2base}, @ref{XREFdec2hex,,dec2hex}}
 @end deftypefn
 
 
 @c dec2hex scripts/strings/dec2hex.m
 @anchor{XREFdec2hex}
-@deftypefn  {} {} dec2hex (@var{d})
-@deftypefnx {} {} dec2hex (@var{d}, @var{len})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{hstr} =} dec2hex (@var{d})
+@deftypefnx {} {@var{hstr} =} dec2hex (@var{d}, @var{len})
 Return a string representing the conversion of the integer @var{d} to a
 hexadecimal (base16) number.
 
-If @var{d} is negative, return the hexadecimal equivalent of the two's
-complement binary value of @var{d}.
+If @var{d} is negative, return the hexadecimal complement of @var{d}.
+
 If @var{d} is a matrix or cell array, return a string matrix with one row
 for each element in @var{d}, padded with leading zeros to the width of the
 largest value.
@@ -2339,15 +2621,25 @@ dec2hex (-2)
 @end group
 @end example
 
+Programming tip: @code{dec2hex} discards any fractional part of the input.
+If you need the fractional part to be converted too, call @code{dec2base}
+with a nonzero number of decimal places.  You can also use @code{fix} or
+@code{round} on fractional inputs to ensure predictable rounding behavior.
+
 @xseealso{@ref{XREFhex2dec,,hex2dec}, @ref{XREFdec2base,,dec2base}, @ref{XREFdec2bin,,dec2bin}}
 @end deftypefn
 
 
 @c hex2dec scripts/strings/hex2dec.m
 @anchor{XREFhex2dec}
-@deftypefn {} {} hex2dec (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{d} =} hex2dec (@var{str})
 Return the integer corresponding to the hexadecimal number represented by
-the string @var{s}.
+the string @var{str}.
 
 For example:
 
@@ -2360,11 +2652,11 @@ hex2dec ("12b")
 @end group
 @end example
 
-If @var{s} is a string matrix, return a column vector with one converted
-number per row of @var{s}; Invalid rows evaluate to NaN@.
+If @var{str} is a string matrix, return a column vector with one converted
+number per row of @var{str}; Invalid rows evaluate to NaN@.
 
-If @var{s} is a cell array of strings, return a column vector with one
-converted number per cell element in @var{s}.
+If @var{str} is a cell array of strings, return a column vector with one
+converted number per cell element in @var{str}.
 
 @xseealso{@ref{XREFdec2hex,,dec2hex}, @ref{XREFbase2dec,,base2dec}, @ref{XREFbin2dec,,bin2dec}}
 @end deftypefn
@@ -2372,10 +2664,16 @@ converted number per cell element in @var{s}.
 
 @c dec2base scripts/strings/dec2base.m
 @anchor{XREFdec2base}
-@deftypefn  {} {} dec2base (@var{d}, @var{base})
-@deftypefnx {} {} dec2base (@var{d}, @var{base}, @var{len})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{str} =} dec2base (@var{d}, @var{base})
+@deftypefnx {} {@var{str} =} dec2base (@var{d}, @var{base}, @var{len})
+@deftypefnx {} {@var{str} =} dec2base (@var{d}, @var{base}, @var{len}, @var{decimals})
 Return a string of symbols in base @var{base} corresponding to the
-non-negative integer @var{d}.
+value @var{d}.
 
 @example
 @group
@@ -2383,6 +2681,10 @@ dec2base (123, 3)
    @result{} "11120"
 @end group
 @end example
+
+If @var{d} is negative, then the result will represent @var{d} in complement
+notation.  For example, negative binary numbers are in twos-complement, and
+analogously for other bases.
 
 If @var{d} is a matrix or cell array, return a string matrix with one row
 per element in @var{d}, padded with leading zeros to the width of the
@@ -2400,15 +2702,47 @@ dec2base (123, "aei")
 @end example
 
 The optional third argument, @var{len}, specifies the minimum number of
-digits in the result.
+digits in the integer part of the result.  If this is omitted, then
+@code{dec2base} uses enough digits to accommodate the input.
+
+The optional fourth argument, @var{decimals}, specifies the number of
+digits to represent the fractional part of the input.  If this is omitted,
+then it is set to zero, and @code{dec2base} returns an integer output for
+backward compatibility.
+
+@example
+@group
+dec2base (100*pi, 16)
+@result{} "13A"
+dec2base (100*pi, 16, 4)
+@result{} "013A"
+dec2base (100*pi, 16, 4, 6)
+@result{} "013A.28C59D"
+dec2base (-100*pi, 16)
+@result{} "EC6"
+dec2base (-100*pi, 16, 4)
+@result{} "FEC6"
+dec2base (-100*pi, 16, 4, 6)
+@result{} "FEC5.D73A63"
+@end group
+@end example
+
+Programming tip: When passing negative inputs to @code{dec2base}, it is
+best to explicitly specify the length of the output required.
+
 @xseealso{@ref{XREFbase2dec,,base2dec}, @ref{XREFdec2bin,,dec2bin}, @ref{XREFdec2hex,,dec2hex}}
 @end deftypefn
 
 
 @c base2dec scripts/strings/base2dec.m
 @anchor{XREFbase2dec}
-@deftypefn {} {} base2dec (@var{s}, @var{base})
-Convert @var{s} from a string of digits in base @var{base} to a decimal
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{d} =} base2dec (@var{str}, @var{base})
+Convert @var{str} from a string of digits in base @var{base} to a decimal
 integer (base 10).
 
 @example
@@ -2418,15 +2752,16 @@ base2dec ("11120", 3)
 @end group
 @end example
 
-If @var{s} is a string matrix, return a column vector with one value per
-row of @var{s}.  If a row contains invalid symbols then the corresponding
+If @var{str} is a string matrix, return a column vector with one value per
+row of @var{str}.  If a row contains invalid symbols then the corresponding
 value will be NaN@.
 
-If @var{s} is a cell array of strings, return a column vector with one
-value per cell element in @var{s}.
+If @var{str} is a cell array of strings, return a column vector with one
+value per cell element in @var{str}.
 
 If @var{base} is a string, the characters of @var{base} are used as the
-symbols for the digits of @var{s}.  Space (' ') may not be used as a symbol.
+symbols for the digits of @var{str}.  Space (' ') may not be used as a
+symbol.
 
 @example
 @group
@@ -2440,6 +2775,11 @@ base2dec ("yyyzx", "xyz")
 
 @c num2hex libinterp/corefcn/hex2num.cc
 @anchor{XREFnum2hex}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} num2hex (@var{n})
 @deftypefnx {} {@var{s} =} num2hex (@var{n}, "cell")
 Convert a numeric array to an array of hexadecimal strings.
@@ -2477,6 +2817,11 @@ strings instead of a character array.
 
 @c hex2num libinterp/corefcn/hex2num.cc
 @anchor{XREFhex2num}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{n} =} hex2num (@var{s})
 @deftypefnx {} {@var{n} =} hex2num (@var{s}, @var{class})
 Typecast a hexadecimal character array or cell array of strings to an
@@ -2527,6 +2872,11 @@ hex2num (["402df854"; "41200000"], "single")
 
 @c strread scripts/legacy/strread.m
 @anchor{XREFstrread}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{a}, @dots{}] =} strread (@var{str})
 @deftypefnx {} {[@var{a}, @dots{}] =} strread (@var{str}, @var{format})
 @deftypefnx {} {[@var{a}, @dots{}] =} strread (@var{str}, @var{format}, @var{format_repeat})
@@ -2709,6 +3059,11 @@ format with the following two functions.
 
 @c jsonencode libinterp/corefcn/jsonencode.cc
 @anchor{XREFjsonencode}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{JSON_txt} =} jsonencode (@var{object})
 @deftypefnx {} {@var{JSON_txt} =} jsonencode (@dots{}, "ConvertInfAndNaN", @var{TF})
 @deftypefnx {} {@var{JSON_txt} =} jsonencode (@dots{}, "PrettyPrint", @var{TF})
@@ -2849,6 +3204,11 @@ jsonencode (containers.Map(@{'foo'; 'bar'; 'baz'@}, [1, 2, 3]))
 
 @c jsondecode libinterp/corefcn/jsondecode.cc
 @anchor{XREFjsondecode}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{object} =} jsondecode (@var{JSON_txt})
 @deftypefnx {} {@var{object} =} jsondecode (@dots{}, "ReplacementStyle", @var{rs})
 @deftypefnx {} {@var{object} =} jsondecode (@dots{}, "Prefix", @var{pfx})
@@ -2967,7 +3327,12 @@ isalpha ("!Q@@WERT^Y&")
 
 @c isalnum libinterp/corefcn/mappers.cc
 @anchor{XREFisalnum}
-@deftypefn {} {} isalnum (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isalnum (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 letters or digits and false where they are not.
 
@@ -2978,7 +3343,12 @@ This is equivalent to (@code{isalpha (@var{s}) | isdigit (@var{s})}).
 
 @c isalpha libinterp/corefcn/mappers.cc
 @anchor{XREFisalpha}
-@deftypefn {} {} isalpha (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isalpha (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 letters and false where they are not.
 
@@ -2989,7 +3359,12 @@ This is equivalent to (@code{islower (@var{s}) | isupper (@var{s})}).
 
 @c isletter scripts/strings/isletter.m
 @anchor{XREFisletter}
-@deftypefn {} {} isletter (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isletter (@var{s})
 Return a logical array which is true where the elements of @var{s}
 are letters and false where they are not.
 
@@ -3000,7 +3375,12 @@ This is an alias for the @code{isalpha} function.
 
 @c islower libinterp/corefcn/mappers.cc
 @anchor{XREFislower}
-@deftypefn {} {} islower (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} islower (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 lowercase letters and false where they are not.
 @xseealso{@ref{XREFisupper,,isupper}, @ref{XREFisalpha,,isalpha}, @ref{XREFisletter,,isletter}, @ref{XREFisalnum,,isalnum}}
@@ -3009,7 +3389,12 @@ lowercase letters and false where they are not.
 
 @c isupper libinterp/corefcn/mappers.cc
 @anchor{XREFisupper}
-@deftypefn {} {} isupper (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isupper (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 uppercase letters and false where they are not.
 @xseealso{@ref{XREFislower,,islower}, @ref{XREFisalpha,,isalpha}, @ref{XREFisletter,,isletter}, @ref{XREFisalnum,,isalnum}}
@@ -3018,7 +3403,12 @@ uppercase letters and false where they are not.
 
 @c isdigit libinterp/corefcn/mappers.cc
 @anchor{XREFisdigit}
-@deftypefn {} {} isdigit (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isdigit (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 decimal digits (0-9) and false where they are not.
 @xseealso{@ref{XREFisxdigit,,isxdigit}, @ref{XREFisalpha,,isalpha}, @ref{XREFisletter,,isletter}, @ref{XREFispunct,,ispunct}, @ref{XREFisspace,,isspace}, @ref{XREFiscntrl,,iscntrl}}
@@ -3027,7 +3417,12 @@ decimal digits (0-9) and false where they are not.
 
 @c isxdigit libinterp/corefcn/mappers.cc
 @anchor{XREFisxdigit}
-@deftypefn {} {} isxdigit (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isxdigit (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 hexadecimal digits (0-9 and @nospell{a-fA-F}).
 @xseealso{@ref{XREFisdigit,,isdigit}}
@@ -3036,7 +3431,12 @@ hexadecimal digits (0-9 and @nospell{a-fA-F}).
 
 @c ispunct libinterp/corefcn/mappers.cc
 @anchor{XREFispunct}
-@deftypefn {} {} ispunct (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} ispunct (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 punctuation characters and false where they are not.
 @xseealso{@ref{XREFisalpha,,isalpha}, @ref{XREFisdigit,,isdigit}, @ref{XREFisspace,,isspace}, @ref{XREFiscntrl,,iscntrl}}
@@ -3045,7 +3445,12 @@ punctuation characters and false where they are not.
 
 @c isspace libinterp/corefcn/mappers.cc
 @anchor{XREFisspace}
-@deftypefn {} {} isspace (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isspace (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 whitespace characters (space, formfeed, newline, carriage return, tab, and
 vertical tab) and false where they are not.
@@ -3055,7 +3460,12 @@ vertical tab) and false where they are not.
 
 @c iscntrl libinterp/corefcn/mappers.cc
 @anchor{XREFiscntrl}
-@deftypefn {} {} iscntrl (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} iscntrl (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 control characters and false where they are not.
 @xseealso{@ref{XREFispunct,,ispunct}, @ref{XREFisspace,,isspace}, @ref{XREFisalpha,,isalpha}, @ref{XREFisdigit,,isdigit}}
@@ -3064,7 +3474,12 @@ control characters and false where they are not.
 
 @c isgraph libinterp/corefcn/mappers.cc
 @anchor{XREFisgraph}
-@deftypefn {} {} isgraph (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isgraph (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 printable characters (but not the space character) and false where they are
 not.
@@ -3074,7 +3489,12 @@ not.
 
 @c isprint libinterp/corefcn/mappers.cc
 @anchor{XREFisprint}
-@deftypefn {} {} isprint (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isprint (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 printable characters (including the space character) and false where they
 are not.
@@ -3084,7 +3504,12 @@ are not.
 
 @c isascii libinterp/corefcn/mappers.cc
 @anchor{XREFisascii}
-@deftypefn {} {} isascii (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isascii (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 ASCII characters (in the range 0 to 127 decimal) and false where they are
 not.
@@ -3093,7 +3518,13 @@ not.
 
 @c isstrprop scripts/strings/isstrprop.m
 @anchor{XREFisstrprop}
-@deftypefn {} {} isstrprop (@var{str}, @var{prop})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{tf} =} isstrprop (@var{str}, @var{prop})
+@deftypefnx {} {@var{tf} =} isstrprop (@var{str}, @var{prop}, 'ForceCellOutput', @var{flag})
 Test character string properties.
 
 For example:
@@ -3155,6 +3586,9 @@ True for printing characters including space.
 True for characters that are in the range of ASCII encoding.
 
 @end table
+
+If the option @nospell{@qcode{'ForceCellOutput'}} is given and @var{flag} is
+true then a cell value is returned rather than a logical array.
 
 @xseealso{@ref{XREFisalpha,,isalpha}, @ref{XREFisalnum,,isalnum}, @ref{XREFislower,,islower}, @ref{XREFisupper,,isupper}, @ref{XREFisdigit,,isdigit}, @ref{XREFisxdigit,,isxdigit}, @ref{XREFisspace,,isspace}, @ref{XREFispunct,,ispunct}, @ref{XREFiscntrl,,iscntrl}, @ref{XREFisgraph,,isgraph}, @ref{XREFisprint,,isprint}, @ref{XREFisascii,,isascii}}
 @end deftypefn

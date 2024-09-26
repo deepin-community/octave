@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2007-2022 The Octave Project Developers
+## Copyright (C) 2007-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -101,27 +101,29 @@ function h = findobj (varargin)
     handles = 0;
     n1 = 0;
   else
-    if (! isempty (varargin{1}))
-      if (ishghandle (varargin{1}(1)))
-        handles = varargin{1};
-        n1 = 2;
-      else
-        handles = 0;
-        n1 = 1;
-      endif
-    else
+    if (isempty (varargin{1}))
       ## Return [](0x1) for compatibility.
       h = zeros (0, 1);
       return;
     endif
+    arg1 = varargin{1};
+    if (isnumeric (arg1))
+      if (! all (ishghandle (arg1)))
+        error ("findobj: invalid graphics handles in input HLIST");
+      endif
+      handles = arg1;
+      n1 = 2;
+    else
+      handles = 0;
+      n1 = 1;
+    endif
     if (n1 <= nargin)
-      if (ischar (varargin{n1}))
-        if (strcmpi (varargin{n1}, "flat"))
-          depth = 0;
-          n1 += 1;
-        endif
-      else
+      if (! ischar (varargin{n1}))
         error ("findobj: properties and options must be strings");
+      endif
+      if (strcmpi (varargin{n1}, "flat"))
+        depth = 0;
+        n1 += 1;
       endif
     endif
   endif
@@ -217,7 +219,7 @@ function h = findobj (varargin)
 
   numpairs = np - 1;
   if (! isempty (logicaloperator))
-    logicaloperator = shift (logicaloperator, 1);
+    logicaloperator = circshift (logicaloperator, 1);
   endif
 
   ## Load all objects which qualify for being searched.
@@ -236,7 +238,7 @@ function h = findobj (varargin)
   if (numpairs > 0)
     match = true (numel (h), numpairs);
     for nh = 1 : numel (h)
-      p = get (h(nh));
+      p = __get__ (h(nh));
       for np = 1 : numpairs
         fields = fieldnames (p);
         fieldindex = find (strcmpi (fields, pname{np}), 1);
@@ -443,3 +445,7 @@ endfunction
 %! unwind_protect_cleanup
 %!   close (hf);
 %! end_unwind_protect
+
+## Test input validation
+%!error <invalid graphics handles in input HLIST> findobj ([0 1 10], "flat")
+%!error <properties and options must be strings> findobj ({0}, "flat")

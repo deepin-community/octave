@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,29 +30,28 @@
 
 #include "GenericEventNotify.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+DECLARE_GENERICEVENTNOTIFY_SENDER(FigureWindowBase, QMainWindow);
+
+class FigureWindow : public FigureWindowBase
 {
+  Q_OBJECT
 
-  DECLARE_GENERICEVENTNOTIFY_SENDER(FigureWindowBase, QMainWindow);
+public:
+  explicit FigureWindow (QWidget *parent = nullptr);
+  ~FigureWindow ();
 
-  class FigureWindow : public FigureWindowBase
-  {
-    Q_OBJECT
+  QMenu * createPopupMenu ();
 
-  public:
-    explicit FigureWindow (QWidget *parent = nullptr);
-    ~FigureWindow (void);
+protected:
+  void showEvent(QShowEvent *ev);
 
-    QMenu * createPopupMenu (void);
+signals:
+  void figureWindowShown();
 
-  protected:
-    void showEvent(QShowEvent *ev);
+};
 
-  signals:
-    void figureWindowShown();
-
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

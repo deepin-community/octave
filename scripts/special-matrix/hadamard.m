@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1993-2022 The Octave Project Developers
+## Copyright (C) 1993-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -27,7 +27,7 @@
 ## public domain.
 
 ## -*- texinfo -*-
-## @deftypefn {} {} hadamard (@var{n})
+## @deftypefn {} {@var{h} =} hadamard (@var{n})
 ## Construct a Hadamard matrix (@nospell{Hn}) of size @var{n}-by-@var{n}.
 ##
 ## The size @var{n} must be of the form @math{2^k * p} in which p is one of
@@ -166,6 +166,7 @@ function h = h28 ()
        1 -1 1 1 -1 1 1 -1 -1 -1 1 -1 1 1 1 -1 1 1 1 -1 -1 1 -1 -1 1 -1 -1 -1
        1 1 1 -1 -1 1 -1 -1 1 -1 1 -1 1 1 -1 1 -1 1 -1 1 -1 -1 1 1 -1 -1 -1 1
        1 -1 1 1 -1 -1 1 1 -1 -1 -1 1 -1 -1 1 1 -1 1 1 1 -1 -1 1 1 -1 -1 1 -1];
+
 endfunction
 
 

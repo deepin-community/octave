@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2000-2022 The Octave Project Developers
+// Copyright (C) 2000-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -68,7 +68,7 @@ char qh_version[] = "__delaunayn__.oct 2007-08-21";
 #  endif
 #endif
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 #if defined (HAVE_QHULL)
 
@@ -196,30 +196,30 @@ Undocumented internal function.
       octave_idx_type i = 0;
 
       FORALLfacets
-        {
-          if (! facet->upperdelaunay)
-            nf++;
+      {
+        if (! facet->upperdelaunay)
+          nf++;
 
-          // Double check.  Non-simplicial facets will cause segfault below
-          if (! facet->simplicial)
-            error ("__delaunayn__: Qhull returned non-simplicial facets -- try delaunayn with different options");
-        }
+        // Double check.  Non-simplicial facets will cause segfault below
+        if (! facet->simplicial)
+          error ("__delaunayn__: Qhull returned non-simplicial facets -- try delaunayn with different options");
+      }
 
       Matrix simpl (nf, dim+1);
 
       FORALLfacets
-        {
-          if (! facet->upperdelaunay)
-            {
-              octave_idx_type j = 0;
+      {
+        if (! facet->upperdelaunay)
+          {
+            octave_idx_type j = 0;
 
-              FOREACHvertex_ (facet->vertices)
-                {
-                  simpl(i, j++) = 1 + qh_pointid(qh, vertex->point);
-                }
-              i++;
+            FOREACHvertex_ (facet->vertices)
+            {
+              simpl(i, j++) = 1 + qh_pointid(qh, vertex->point);
             }
-        }
+            i++;
+          }
+      }
 
       retval(0) = simpl;
     }
@@ -250,4 +250,4 @@ Undocumented internal function.
 %!assert (1)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

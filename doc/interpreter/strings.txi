@@ -1,4 +1,4 @@
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -254,9 +254,9 @@ general regular expressions, the following functions come with Octave.
 
 The following functions are useful to perform common String operations.
 
-@DOCSTRING(tolower)
+@DOCSTRING(lower)
 
-@DOCSTRING(toupper)
+@DOCSTRING(upper)
 
 @DOCSTRING(deblank)
 

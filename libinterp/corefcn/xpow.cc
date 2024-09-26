@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -56,16 +56,16 @@
 
 #include "bsxfun.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 static void
-err_failed_diagonalization (void)
+err_failed_diagonalization ()
 {
   error ("Failed to diagonalize matrix while calculating matrix exponential");
 }
 
 static void
-err_nonsquare_matrix (void)
+err_nonsquare_matrix ()
 {
   error ("for x^y, only square matrix arguments are permitted and one " \
          "argument must be scalar.  Use .^ for elementwise power.");
@@ -84,7 +84,7 @@ static inline bool
 xisint (float x)
 {
   static const float out_of_range_top
-    = static_cast<float>(std::numeric_limits<int>::max ()) + 1.;
+    = static_cast<float> (std::numeric_limits<int>::max ()) + 1.;
   return (octave::math::x_nint (x) == x
           && x < out_of_range_top
           && x >= std::numeric_limits<int>::min ());
@@ -2824,4 +2824,4 @@ elem_xpow (const FloatComplexNDArray& a, const FloatComplexNDArray& b)
   return result;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

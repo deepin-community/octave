@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -181,8 +181,8 @@ function [text, status] = first_sentence_html (help_text, max_len)
 endfunction
 
 
-%!assert (get_first_help_sentence ('get_first_help_sentence'), ...
-%!        "Return the first sentence of a function's help text.")
+%!assert (regexp (get_first_help_sentence ('get_first_help_sentence'), ...
+%!                "Return the first sentence of a function.s help text\."))
 
 %!assert (get_first_help_sentence ('get_first_help_sentence', 28), ...
 %!        "Return the first sentence...")

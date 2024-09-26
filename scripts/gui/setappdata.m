@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -25,7 +25,7 @@
 
 ## -*- texinfo -*-
 ## @deftypefn  {} {} setappdata (@var{h}, @var{name}, @var{value})
-## @deftypefnx {} {} setappdata (@var{h}, @var{name1}, @var{value1}, @var{name2}, @var{value3}, @dots{})
+## @deftypefnx {} {} setappdata (@var{h}, @var{name1}, @var{value1}, @var{name2}, @var{value2}, @dots{})
 ## @deftypefnx {} {} setappdata (@var{h}, @{@var{name1}, @var{name2}, @dots{}@}, @{@var{value1}, @var{value2}, @dots{}@})
 ## Set the application data @var{name} to @var{value} for the graphics object
 ## with handle @var{h}.

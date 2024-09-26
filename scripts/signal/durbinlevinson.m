@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} durbinlevinson (@var{c}, @var{oldphi}, @var{oldv})
+## @deftypefn {} {[@var{newphi}, @var{newv}] =} durbinlevinson (@var{c}, @var{oldphi}, @var{oldv})
 ## Perform one step of the @nospell{Durbin-Levinson} algorithm.
 ##
 ## The vector @var{c} specifies the autocovariances

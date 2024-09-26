@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -36,18 +36,18 @@
 #include "error.h"
 #include "errwarn.h"
 #include "interpreter-private.h"
+#include "interpreter.h"
 #include "ovl.h"
 #include "ov-fcn.h"
 #include "ov-cell.h"
 #include "pager.h"
-#include "parse.h"
 #include "unwind-prot.h"
 #include "utils.h"
 #include "variables.h"
 
 #include "DASPK-opts.cc"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Global pointer for user defined function required by daspk.
 static octave_value daspk_fcn;
@@ -68,7 +68,7 @@ daspk_user_function (const ColumnVector& x, const ColumnVector& xdot,
 {
   ColumnVector retval;
 
-  assert (x.numel () == xdot.numel ());
+  error_unless (x.numel () == xdot.numel ());
 
   octave_value_list args;
 
@@ -82,7 +82,9 @@ daspk_user_function (const ColumnVector& x, const ColumnVector& xdot,
 
       try
         {
-          tmp = feval (daspk_fcn, args, 1);
+          interpreter& interp = __get_interpreter__ ();
+
+          tmp = interp.feval (daspk_fcn, args, 1);
         }
       catch (execution_exception& ee)
         {
@@ -117,7 +119,7 @@ daspk_user_jacobian (const ColumnVector& x, const ColumnVector& xdot,
 {
   Matrix retval;
 
-  assert (x.numel () == xdot.numel ());
+  error_unless (x.numel () == xdot.numel ());
 
   octave_value_list args;
 
@@ -132,7 +134,9 @@ daspk_user_jacobian (const ColumnVector& x, const ColumnVector& xdot,
 
       try
         {
-          tmp = feval (daspk_jac, args, 1);
+          interpreter& interp = __get_interpreter__ ();
+
+          tmp = interp.feval (daspk_jac, args, 1);
         }
       catch (execution_exception& ee)
         {
@@ -367,11 +371,11 @@ parameters for @code{daspk}.
 
   double tzero = out_times (0);
 
-  DAEFunc func (daspk_user_function);
+  DAEFunc fcn (daspk_user_function);
   if (daspk_jac.is_defined ())
-    func.set_jacobian_function (daspk_user_jacobian);
+    fcn.set_jacobian_function (daspk_user_jacobian);
 
-  DASPK dae (state, deriv, tzero, func);
+  DASPK dae (state, deriv, tzero, fcn);
   dae.set_options (daspk_opts);
 
   Matrix output;
@@ -404,4 +408,4 @@ parameters for @code{daspk}.
   return retval;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

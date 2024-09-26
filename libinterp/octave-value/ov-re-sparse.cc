@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -67,32 +67,6 @@ octave_sparse_matrix::index_vector (bool /* require_integers */) const
       std::string nm = '<' + type_name () + '>';
       octave::err_invalid_index (nm.c_str ());
     }
-}
-
-octave_base_value *
-octave_sparse_matrix::try_narrowing_conversion (void)
-{
-  octave_base_value *retval = nullptr;
-
-  if (Vsparse_auto_mutate)
-    {
-      // Don't use numel, since it can overflow for very large matrices
-      // Note that for the second test, this means it becomes approximative
-      // since it involves a cast to double to avoid issues of overflow
-      if (matrix.rows () == 1 && matrix.cols () == 1)
-        {
-          // Const copy of the matrix, so the right version of () operator used
-          const SparseMatrix tmp (matrix);
-
-          retval = new octave_scalar (tmp (0));
-        }
-      else if (matrix.cols () > 0 && matrix.rows () > 0
-               && (double (matrix.byte_size ()) > double (matrix.rows ())
-                   * double (matrix.cols ()) * sizeof (double)))
-        retval = new octave_matrix (matrix.matrix_value ());
-    }
-
-  return retval;
 }
 
 double
@@ -240,7 +214,7 @@ octave_sparse_matrix::convert_to_str_internal (bool, bool, char type) const
 }
 
 octave_value
-octave_sparse_matrix::as_double (void) const
+octave_sparse_matrix::as_double () const
 {
   return this->matrix;
 }
@@ -421,7 +395,8 @@ octave_sparse_matrix::save_hdf5 (octave_hdf5_id loc_id, const char *name,
     }
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (group_hid, "nr", H5T_NATIVE_IDX, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (group_hid, "nr", H5T_NATIVE_IDX, space_hid,
                         octave_H5P_DEFAULT);
@@ -445,7 +420,8 @@ octave_sparse_matrix::save_hdf5 (octave_hdf5_id loc_id, const char *name,
     }
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (group_hid, "nc", H5T_NATIVE_IDX, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (group_hid, "nc", H5T_NATIVE_IDX, space_hid,
                         octave_H5P_DEFAULT);
@@ -470,7 +446,8 @@ octave_sparse_matrix::save_hdf5 (octave_hdf5_id loc_id, const char *name,
 
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (group_hid, "nz", H5T_NATIVE_IDX, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (group_hid, "nz", H5T_NATIVE_IDX, space_hid,
                         octave_H5P_DEFAULT);
@@ -508,7 +485,8 @@ octave_sparse_matrix::save_hdf5 (octave_hdf5_id loc_id, const char *name,
 
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (group_hid, "cidx", H5T_NATIVE_IDX, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (group_hid, "cidx", H5T_NATIVE_IDX, space_hid,
                         octave_H5P_DEFAULT);
@@ -545,7 +523,8 @@ octave_sparse_matrix::save_hdf5 (octave_hdf5_id loc_id, const char *name,
     }
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (group_hid, "ridx", H5T_NATIVE_IDX, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (group_hid, "ridx", H5T_NATIVE_IDX, space_hid,
                         octave_H5P_DEFAULT);
@@ -594,7 +573,8 @@ octave_sparse_matrix::save_hdf5 (octave_hdf5_id loc_id, const char *name,
 
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (group_hid, "data", save_type_hid, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (group_hid, "data", save_type_hid, space_hid,
                         octave_H5P_DEFAULT);
@@ -607,8 +587,8 @@ octave_sparse_matrix::save_hdf5 (octave_hdf5_id loc_id, const char *name,
     }
 
   double *dtmp = m.xdata ();
-  retval = H5Dwrite (data_hid, H5T_NATIVE_DOUBLE, octave_H5S_ALL, octave_H5S_ALL,
-                     octave_H5P_DEFAULT, dtmp) >= 0;
+  retval = H5Dwrite (data_hid, H5T_NATIVE_DOUBLE, octave_H5S_ALL,
+                     octave_H5S_ALL, octave_H5P_DEFAULT, dtmp) >= 0;
   H5Dclose (data_hid);
   H5Sclose (space_hid);
   H5Gclose (group_hid);
@@ -905,58 +885,58 @@ octave_sparse_matrix::map (unary_mapper_t umap) const
     case umap_conj:
       return matrix;
 
-    // Mappers handled specially.
+      // Mappers handled specially.
 #define ARRAY_METHOD_MAPPER(UMAP, FCN)        \
     case umap_ ## UMAP:                       \
       return octave_value (matrix.FCN ())
 
-    ARRAY_METHOD_MAPPER (abs, abs);
+      ARRAY_METHOD_MAPPER (abs, abs);
 
 #define ARRAY_MAPPER(UMAP, TYPE, FCN)                 \
     case umap_ ## UMAP:                               \
       return octave_value (matrix.map<TYPE> (FCN))
 
-    ARRAY_MAPPER (acos, Complex, octave::math::rc_acos);
-    ARRAY_MAPPER (acosh, Complex, octave::math::rc_acosh);
-    ARRAY_MAPPER (angle, double, std::arg);
-    ARRAY_MAPPER (arg, double,std::arg);
-    ARRAY_MAPPER (asin, Complex, octave::math::rc_asin);
-    ARRAY_MAPPER (asinh, double, octave::math::asinh);
-    ARRAY_MAPPER (atan, double, ::atan);
-    ARRAY_MAPPER (atanh, Complex, octave::math::rc_atanh);
-    ARRAY_MAPPER (erf, double, octave::math::erf);
-    ARRAY_MAPPER (erfinv, double, octave::math::erfinv);
-    ARRAY_MAPPER (erfcinv, double, octave::math::erfcinv);
-    ARRAY_MAPPER (erfc, double, octave::math::erfc);
-    ARRAY_MAPPER (erfcx, double, octave::math::erfcx);
-    ARRAY_MAPPER (erfi, double, octave::math::erfi);
-    ARRAY_MAPPER (dawson, double, octave::math::dawson);
-    ARRAY_MAPPER (gamma, double, octave::math::gamma);
-    ARRAY_MAPPER (lgamma, Complex, octave::math::rc_lgamma);
-    ARRAY_MAPPER (cbrt, double, octave::math::cbrt);
-    ARRAY_MAPPER (ceil, double, ::ceil);
-    ARRAY_MAPPER (cos, double, ::cos);
-    ARRAY_MAPPER (cosh, double, ::cosh);
-    ARRAY_MAPPER (exp, double, ::exp);
-    ARRAY_MAPPER (expm1, double, octave::math::expm1);
-    ARRAY_MAPPER (fix, double, octave::math::fix);
-    ARRAY_MAPPER (floor, double, ::floor);
-    ARRAY_MAPPER (log, Complex, octave::math::rc_log);
-    ARRAY_MAPPER (log2, Complex, octave::math::rc_log2);
-    ARRAY_MAPPER (log10, Complex, octave::math::rc_log10);
-    ARRAY_MAPPER (log1p, Complex, octave::math::rc_log1p);
-    ARRAY_MAPPER (round, double, octave::math::round);
-    ARRAY_MAPPER (roundb, double, octave::math::roundb);
-    ARRAY_MAPPER (signum, double, octave::math::signum);
-    ARRAY_MAPPER (sin, double, ::sin);
-    ARRAY_MAPPER (sinh, double, ::sinh);
-    ARRAY_MAPPER (sqrt, Complex, octave::math::rc_sqrt);
-    ARRAY_MAPPER (tan, double, ::tan);
-    ARRAY_MAPPER (tanh, double, ::tanh);
-    ARRAY_MAPPER (isnan, bool, octave::math::isnan);
-    ARRAY_MAPPER (isna, bool, octave::math::isna);
-    ARRAY_MAPPER (isinf, bool, octave::math::isinf);
-    ARRAY_MAPPER (isfinite, bool, octave::math::isfinite);
+      ARRAY_MAPPER (acos, Complex, octave::math::rc_acos);
+      ARRAY_MAPPER (acosh, Complex, octave::math::rc_acosh);
+      ARRAY_MAPPER (angle, double, std::arg);
+      ARRAY_MAPPER (arg, double, std::arg);
+      ARRAY_MAPPER (asin, Complex, octave::math::rc_asin);
+      ARRAY_MAPPER (asinh, double, octave::math::asinh);
+      ARRAY_MAPPER (atan, double, ::atan);
+      ARRAY_MAPPER (atanh, Complex, octave::math::rc_atanh);
+      ARRAY_MAPPER (erf, double, octave::math::erf);
+      ARRAY_MAPPER (erfinv, double, octave::math::erfinv);
+      ARRAY_MAPPER (erfcinv, double, octave::math::erfcinv);
+      ARRAY_MAPPER (erfc, double, octave::math::erfc);
+      ARRAY_MAPPER (erfcx, double, octave::math::erfcx);
+      ARRAY_MAPPER (erfi, double, octave::math::erfi);
+      ARRAY_MAPPER (dawson, double, octave::math::dawson);
+      ARRAY_MAPPER (gamma, double, octave::math::gamma);
+      ARRAY_MAPPER (lgamma, Complex, octave::math::rc_lgamma);
+      ARRAY_MAPPER (cbrt, double, octave::math::cbrt);
+      ARRAY_MAPPER (ceil, double, ::ceil);
+      ARRAY_MAPPER (cos, double, ::cos);
+      ARRAY_MAPPER (cosh, double, ::cosh);
+      ARRAY_MAPPER (exp, double, ::exp);
+      ARRAY_MAPPER (expm1, double, octave::math::expm1);
+      ARRAY_MAPPER (fix, double, octave::math::fix);
+      ARRAY_MAPPER (floor, double, ::floor);
+      ARRAY_MAPPER (log, Complex, octave::math::rc_log);
+      ARRAY_MAPPER (log2, Complex, octave::math::rc_log2);
+      ARRAY_MAPPER (log10, Complex, octave::math::rc_log10);
+      ARRAY_MAPPER (log1p, Complex, octave::math::rc_log1p);
+      ARRAY_MAPPER (round, double, octave::math::round);
+      ARRAY_MAPPER (roundb, double, octave::math::roundb);
+      ARRAY_MAPPER (signum, double, octave::math::signum);
+      ARRAY_MAPPER (sin, double, ::sin);
+      ARRAY_MAPPER (sinh, double, ::sinh);
+      ARRAY_MAPPER (sqrt, Complex, octave::math::rc_sqrt);
+      ARRAY_MAPPER (tan, double, ::tan);
+      ARRAY_MAPPER (tanh, double, ::tanh);
+      ARRAY_MAPPER (isnan, bool, octave::math::isnan);
+      ARRAY_MAPPER (isna, bool, octave::math::isna);
+      ARRAY_MAPPER (isinf, bool, octave::math::isinf);
+      ARRAY_MAPPER (isfinite, bool, octave::math::isfinite);
 
     default: // Attempt to go via dense matrix.
       return octave_base_sparse<SparseMatrix>::map (umap);

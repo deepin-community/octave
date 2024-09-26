@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2018-2022 The Octave Project Developers
+// Copyright (C) 2018-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,14 +30,15 @@
 
 #include <string>
 
-namespace octave
-{
-  namespace sys
-  {
-    extern OCTAVE_API std::string blas_version (void);
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-    extern OCTAVE_API std::string lapack_version (void);
-  }
-}
+OCTAVE_BEGIN_NAMESPACE(sys)
+
+extern OCTAVE_API std::string blas_version ();
+
+extern OCTAVE_API std::string lapack_version ();
+
+OCTAVE_END_NAMESPACE(sys)
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

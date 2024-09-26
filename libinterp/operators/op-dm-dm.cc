@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // matrix unary ops.
 
@@ -47,7 +47,7 @@ DEFUNOP_OP (uminus, diag_matrix, -)
 
 DEFUNOP (transpose, diag_matrix)
 {
-  const octave_diag_matrix& v = dynamic_cast<const octave_diag_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_diag_matrix&, v, a);
   return octave_value (v.diag_matrix_value ().transpose ());
 }
 
@@ -59,8 +59,8 @@ DEFBINOP_OP (mul, diag_matrix, diag_matrix, *)
 
 DEFBINOP (div, diag_matrix, diag_matrix)
 {
-  const octave_diag_matrix& v1 = dynamic_cast<const octave_diag_matrix&> (a1);
-  const octave_diag_matrix& v2 = dynamic_cast<const octave_diag_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_diag_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_diag_matrix&, v2, a2);
 
   return xdiv (v1.diag_matrix_value (),
                v2.diag_matrix_value ());
@@ -68,8 +68,8 @@ DEFBINOP (div, diag_matrix, diag_matrix)
 
 DEFBINOP (ldiv, diag_matrix, diag_matrix)
 {
-  const octave_diag_matrix& v1 = dynamic_cast<const octave_diag_matrix&> (a1);
-  const octave_diag_matrix& v2 = dynamic_cast<const octave_diag_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_diag_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_diag_matrix&, v2, a2);
 
   return xleftdiv (v1.diag_matrix_value (),
                    v2.diag_matrix_value ());
@@ -77,7 +77,7 @@ DEFBINOP (ldiv, diag_matrix, diag_matrix)
 
 CONVDECL (diag_matrix_to_matrix)
 {
-  const octave_diag_matrix& v = dynamic_cast<const octave_diag_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_diag_matrix&, v, a);
 
   return new octave_matrix (v.matrix_value ());
 }
@@ -101,4 +101,4 @@ install_dm_dm_ops (octave::type_info& ti)
                       diag_matrix_to_matrix);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

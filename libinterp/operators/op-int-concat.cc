@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2004-2022 The Octave Project Developers
+// Copyright (C) 2004-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -50,7 +50,7 @@
 #include "op-int.h"
 #include "ops.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Concatenation of mixed integer types:
 
@@ -322,4 +322,4 @@ install_int_concat_ops (octave::type_info& ti)
   OCTAVE_INSTALL_CHAR_INT_CONCAT_FN (uint64);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

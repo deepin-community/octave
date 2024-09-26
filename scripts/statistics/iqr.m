@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -95,7 +95,7 @@ function z = iqr (x, dim)
         && all (dim > 0) && all (rem (dim, 1) == 0))
 
       if (((num_vecdims = numel (dim)) > 1) && all (diff (sort (dim))))
-        ## DIM must be 1D and non repeating.
+        ## DIM must be 1-D and non repeating.
 
         ## Detect trivial case of DIM being all dimensions (same as "all").
         highest_dim = (max (nd, max (dim)));
@@ -146,7 +146,7 @@ function z = iqr (x, dim)
         error ("iqr: vector DIM must contain non-repeating positive integers");
       endif
 
-    elseif (strcmp (tolower (dim), "all"))
+    elseif (strcmp (lower (dim), "all"))
       ## "ALL" simplifies to collapsing all elements to single vector
       x = x(:);
       dim = 1;

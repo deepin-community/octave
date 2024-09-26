@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,12 +24,35 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} lcm (@var{x}, @var{y})
-## @deftypefnx {} {} lcm (@var{x}, @var{y}, @dots{})
+## @deftypefn  {} {@var{l} =} lcm (@var{x}, @var{y})
+## @deftypefnx {} {@var{l} =} lcm (@var{x}, @var{y}, @dots{})
 ## Compute the least common multiple of @var{x} and @var{y}, or of the list of
 ## all arguments.
 ##
-## All elements must be numeric and of the same size or scalar.
+## All inputs must be of the same size, or scalar.  All elements must be
+## real integer or Gaussian (complex) integer.  For complex inputs, the result
+## is unique only up to a phase factor (multiplication by +1, +i, -1, or -i),
+## and one of the four is returned arbitrarily.
+##
+## Example code:
+##
+## @example
+## @group
+## lcm (5:8, 9:12)
+##    @result{}  45  30  77  24
+## @end group
+## @end example
+##
+## Programming tip: To find the LCM of all the elements of a single array, use
+## @code{num2cell} instead of nested calls or a loop:
+##
+## @example
+## @group
+## x = 1:10;    # vector or array of inputs
+## lcm (num2cell (x) @{:@})
+##    @result{}     2520
+## @end group
+## @end example
 ## @seealso{factor, gcd, isprime}
 ## @end deftypefn
 
@@ -53,6 +76,14 @@ function l = lcm (varargin)
     l(msk) = 0;
   endfor
 
+  if (isfloat (l) && l > flintmax (l))
+    warning ("Octave:lcm:large-output-float", ...
+             "lcm: possible loss of precision");
+  elseif (isinteger (l) && l == intmax (l))
+    warning ("Octave:lcm:large-output-integer", ...
+             "lcm: result may have saturated at intmax");
+  endif
+
 endfunction
 
 
@@ -63,3 +94,13 @@ endfunction
 %!error <Invalid call> lcm (1)
 %!error <same size or scalar> lcm ([1 2], [1 2 3])
 %!error <arguments must be numeric> lcm ([1 2], {1 2})
+%!warning <loss of precision>   lcm (num2cell (double (1:47)){:});
+%!warning <loss of precision>   lcm (num2cell (single (1:47)){:});
+%!warning <result .* saturated> lcm (num2cell (uint64 (1:47)){:});
+%!warning <result .* saturated> lcm (num2cell (uint32 (1:47)){:});
+%!warning <result .* saturated> lcm (num2cell (uint16 (1:47)){:});
+%!warning <result .* saturated> lcm (num2cell ( uint8 (1:47)){:});
+%!warning <result .* saturated> lcm (num2cell ( int64 (1:47)){:});
+%!warning <result .* saturated> lcm (num2cell ( int32 (1:47)){:});
+%!warning <result .* saturated> lcm (num2cell ( int16 (1:47)){:});
+%!warning <result .* saturated> lcm (num2cell (  int8 (1:47)){:});

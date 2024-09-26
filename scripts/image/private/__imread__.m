@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2002-2022 The Octave Project Developers
+## Copyright (C) 2002-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -23,10 +23,22 @@
 ##
 ########################################################################
 
-## This function does all the work of imread.  It exists here as private
-## function so that imread can use other functions if imformats is
-## configured to.  It is also needed so that imformats can create a
-## function handle for it.
+## -*- texinfo -*-
+## @deftypefn  {} {[@var{img}, @var{map}, @var{alpha}] =} __imread__ (@var{filename})
+## @deftypefnx {} {[@dots{}] =} __imread__ (@var{url})
+## @deftypefnx {} {[@dots{}] =} __imread__ (@dots{}, @var{ext})
+## @deftypefnx {} {[@dots{}] =} __imread__ (@dots{}, @var{idx})
+## @deftypefnx {} {[@dots{}] =} __imread__ (@dots{}, @var{param1}, @var{value1}, @dots{})
+## @deftypefnx {} {@var{info} =} __imread__ (@var{filename})
+##
+## This function does all the work of @code{imread}.
+##
+## It exists here as private function so that @code{imread} can use other
+## functions if @code{imformats} is configured to.  It is also needed so that
+## @code{imformats} can create a function handle for it.
+##
+## @seealso{imread}
+## @end deftypefn
 
 function varargout = __imread__ (filename, varargin)
 
@@ -61,7 +73,7 @@ function varargout = __imread__ (filename, varargin)
     if (sum (idx) > 1)
       error ("imread: Index or Frames may only be specified once");
     endif
-    val = varargin{shift (idx, 1)};
+    val = varargin{circshift (idx, 1)};
     if (! is_valid_index_option (val) && ! strcmpi (val, "all"))
       error ("imread: %s must be a vector or the string 'all'", varargin{idx});
     endif
@@ -79,7 +91,7 @@ function varargout = __imread__ (filename, varargin)
   options.region = {1:1:info.rows, 1:1:info.columns};
 
   for idx = offset:2:(numel (varargin) - offset + 1)
-    switch (tolower (varargin{idx}))
+    switch (lower (varargin{idx}))
 
       case {"frames", "index"}
         ## Do nothing.  This option was already processed before the loop.

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,66 +32,62 @@
 #include "CheckBoxControl.h"
 #include "Container.h"
 
-#include "octave-qobject.h"
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-namespace octave
+CheckBoxControl *
+CheckBoxControl::create (octave::interpreter& interp,
+                         const graphics_object& go)
 {
+  Object *parent = parentObject (interp, go);
 
-  CheckBoxControl *
-  CheckBoxControl::create (octave::base_qobject& oct_qobj,
-                           octave::interpreter& interp,
-                           const graphics_object& go)
-  {
-    Object *parent = parentObject (interp, go);
+  if (parent)
+    {
+      Container *container = parent->innerContainer ();
 
-    if (parent)
+      if (container)
+        return new CheckBoxControl (interp, go,
+                                    new QCheckBox (container));
+    }
+
+  return nullptr;
+}
+
+CheckBoxControl::CheckBoxControl (octave::interpreter& interp,
+                                  const graphics_object& go, QCheckBox *box)
+  : ButtonControl (interp, go, box)
+{
+  uicontrol::properties& up = properties<uicontrol> ();
+
+  box->setAutoFillBackground (true);
+  if (up.enable_is ("inactive"))
+    box->setCheckable (false);
+}
+
+CheckBoxControl::~CheckBoxControl ()
+{ }
+
+void
+CheckBoxControl::update (int pId)
+{
+  uicontrol::properties& up = properties<uicontrol> ();
+  QCheckBox *box = qWidget<QCheckBox> ();
+
+  switch (pId)
+    {
+    case uicontrol::properties::ID_ENABLE:
       {
-        Container *container = parent->innerContainer ();
-
-        if (container)
-          return new CheckBoxControl (oct_qobj, interp, go,
-                                      new QCheckBox (container));
-      }
-
-    return nullptr;
-  }
-
-  CheckBoxControl::CheckBoxControl (octave::base_qobject& oct_obj,
-                                    octave::interpreter& interp,
-                                    const graphics_object& go, QCheckBox *box)
-    : ButtonControl (oct_obj, interp, go, box)
-  {
-    uicontrol::properties& up = properties<uicontrol> ();
-
-    box->setAutoFillBackground (true);
-    if (up.enable_is ("inactive"))
-      box->setCheckable (false);
-  }
-
-  CheckBoxControl::~CheckBoxControl (void)
-  { }
-
-  void
-  CheckBoxControl::update (int pId)
-  {
-    uicontrol::properties& up = properties<uicontrol> ();
-    QCheckBox *box = qWidget<QCheckBox> ();
-
-    switch (pId)
-      {
-      case uicontrol::properties::ID_ENABLE:
-        {
-          if (up.enable_is ("inactive"))
-            box->setCheckable (false);
-          else
-            box->setCheckable (true);
-          ButtonControl::update (pId);
-        }
-        break;
-
-      default:
+        if (up.enable_is ("inactive"))
+          box->setCheckable (false);
+        else
+          box->setCheckable (true);
         ButtonControl::update (pId);
-        break;
       }
-  }
-};
+      break;
+
+    default:
+      ButtonControl::update (pId);
+      break;
+    }
+}
+
+OCTAVE_END_NAMESPACE(octave);

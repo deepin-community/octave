@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2005-2022 The Octave Project Developers
+// Copyright (C) 2005-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -39,7 +39,7 @@
 
 octave_errno *octave_errno::s_instance = nullptr;
 
-octave_errno::octave_errno (void)
+octave_errno::octave_errno ()
 {
   struct errno_struct
   {
@@ -276,7 +276,7 @@ octave_errno::octave_errno (void)
 
     // Others (duplicates are OK).
 
-@SYSDEP_ERRNO_LIST@
+    @SYSDEP_ERRNO_LIST@
 
     { nullptr, 0 },
   };
@@ -293,7 +293,7 @@ octave_errno::octave_errno (void)
 }
 
 bool
-octave_errno::instance_ok (void)
+octave_errno::instance_ok ()
 {
   bool retval = true;
 
@@ -313,7 +313,7 @@ octave_errno::lookup (const std::string& name)
 }
 
 octave_scalar_map
-octave_errno::list (void)
+octave_errno::list ()
 {
   return (instance_ok ()) ? s_instance->do_list () : octave_scalar_map ();
 }
@@ -321,11 +321,12 @@ octave_errno::list (void)
 int
 octave_errno::do_lookup (const std::string& name)
 {
-  return (m_errno_tbl.find (name) != m_errno_tbl.end ()) ? m_errno_tbl[name] : -1;
+  return (m_errno_tbl.find (name) != m_errno_tbl.end ()) ? m_errno_tbl[name]
+         : -1;
 }
 
 octave_scalar_map
-octave_errno::do_list (void)
+octave_errno::do_list ()
 {
   octave_scalar_map retval;
 

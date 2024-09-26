@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,13 +38,13 @@
 #include "ov-flt-cx-diag.h"
 #include "ov-perm.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (pinv, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} pinv (@var{x})
-@deftypefnx {} {} pinv (@var{x}, @var{tol})
-Return the @nospell{Moore-Penrose} pseudoinverse of @var{x}.
+@deftypefn  {} {@var{B} =} pinv (@var{A})
+@deftypefnx {} {@var{B} =} pinv (@var{A}, @var{tol})
+Return the @nospell{Moore-Penrose} pseudoinverse of @var{A}.
 
 Singular values less than @var{tol} are ignored.
 
@@ -63,6 +63,9 @@ tol = max ([rows(@var{x}), columns(@var{x})]) * norm (@var{x}) * eps
     print_usage ();
 
   octave_value arg = args(0);
+
+  if (! arg.isnumeric ())
+    err_wrong_type_arg ("pinv", arg);
 
   if (arg.isempty ())
     return ovl (Matrix ());
@@ -166,7 +169,7 @@ tol = max ([rows(@var{x}), columns(@var{x})]) * norm (@var{x}) * eps
 %! a = reshape (rand*[1:16], 4, 4);  # Rank 2 matrix
 %! b = pinv (a);
 %! tol = 4e-14;
-%! hitol = 40*sqrt (eps);
+%! hitol = 40* sqrt (eps);
 %! d = diag ([rand, rand, hitol, hitol]);
 %! u = rand (4);                     # Could be singular by freak accident
 %! x = inv (u)*d*u;
@@ -197,6 +200,12 @@ tol = max ([rows(@var{x}), columns(@var{x})]) * norm (@var{x}) * eps
 %! y = pinv (x, 2);
 %! assert (diag (y), [1/3 1/2 0 0 0]');
 
+## Basic test for integer inputs
+%!assert (pinv (int32 (2)), 0.5)
+%!assert (pinv (uint32 (2)), 0.5)
+%!assert (pinv (int64 (2)), 0.5)
+%!assert (pinv (uint64 (2)), 0.5)
+
 ## Test special case of 0 scalars and vectors
 %!assert (pinv (0), 0)
 %!assert (pinv ([0, 0, 0]), [0; 0; 0])
@@ -206,6 +215,12 @@ tol = max ([rows(@var{x}), columns(@var{x})]) * norm (@var{x}) * eps
 %!assert (pinv (complex ([0,0,0], [0,0,0])), [0; 0; 0])
 %!assert (pinv (complex (single (0),0)), single (0))
 %!assert (pinv (complex (single ([0,0,0]), [0,0,0])), single ([0; 0; 0]))
+
+## Test input validation
+%!error <wrong type argument> pinv ("Hello World")
+%!error <wrong type argument> pinv ({1})
+%!error <wrong type argument> pinv (true)
+
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1993-2022 The Octave Project Developers
+## Copyright (C) 1993-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} hankel (@var{c})
-## @deftypefnx {} {} hankel (@var{c}, @var{r})
+## @deftypefn  {} {@var{h} =} hankel (@var{c})
+## @deftypefnx {} {@var{h} =} hankel (@var{c}, @var{r})
 ## Return the Hankel matrix constructed from the first column @var{c}, and
 ## (optionally) the last row @var{r}.
 ##
@@ -54,7 +54,7 @@
 ## @seealso{hadamard, toeplitz}
 ## @end deftypefn
 
-function retval = hankel (c, r)
+function h = hankel (c, r)
 
   if (nargin < 1)
     print_usage ();
@@ -85,7 +85,7 @@ function retval = hankel (c, r)
   endif
 
   slices = cellslices (data, 1:nc, nr:1:nc+nr-1);
-  retval = horzcat (slices{:});
+  h = horzcat (slices{:});
 
 endfunction
 

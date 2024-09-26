@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,7 +37,7 @@
 #include "ov-re-sparse.h"
 #include "ov-cx-sparse.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 template <typename MT>
 static octave_value
@@ -276,7 +276,7 @@ permutation information.
               for (octave_idx_type i = 0; i < nc; i++)
                 Qinit(i) = i;
               math::sparse_lu<SparseComplexMatrix> fact (m, Qinit, thresh,
-                                                         false, true);
+                  false, true);
 
               if (nargout < 2)
                 retval(0) = fact.Y ();
@@ -539,6 +539,16 @@ permutation information.
 %! assert (u, single ([5, 6; 0, 4/5]), sqrt (eps ("single")));
 %! assert (p(:,:), single ([0, 0, 1; 1, 0, 0; 0 1 0]), sqrt (eps ("single")));
 
+# complex matrix input
+%!test
+%! C = [1, 0, 1, 0;
+%!      1i, 1/3, -1i, 1/3;
+%!      1, 2i/3, 1, -2i/3;
+%!      1i, -1/3, -1i, -1/3];
+%! [L, U, P] = lu (C);
+%! assert (rcond (C), 1/8, eps);
+%! assert (norm (P'*L*U - C, Inf) < eps);
+
 %!testif HAVE_UMFPACK
 %! Bi = [1 2 3 4 5 2 3 6 7 8 4 5 7 8 9];
 %! Bj = [1 3 4 5 6 7 8 9 11 12 13 14 15 16 17];
@@ -559,9 +569,9 @@ permutation information.
 
 */
 
-static
-bool check_lu_dims (const octave_value& l, const octave_value& u,
-                    const octave_value& p)
+static bool
+check_lu_dims (const octave_value& l, const octave_value& u,
+               const octave_value& p)
 {
   octave_idx_type m = l.rows ();
   octave_idx_type k = u.rows ();
@@ -778,17 +788,19 @@ factorization from scratch.
 
 %!testif HAVE_QRUPDATE_LUU
 %! [L,U,P] = lu (single (A));
-%! [L,U] = luupdate (L,U,P*single (u), single (v));
+%! [L,U] = luupdate (L,U,P* single (u), single (v));
 %! assert (norm (vec (tril (L)-L), Inf) == 0);
 %! assert (norm (vec (triu (U)-U), Inf) == 0);
-%! assert (norm (vec (P'*L*U - single (A) - single (u)*single (v).'), Inf) < norm (single (A))*1e1*eps ("single"));
+%! assert (norm (vec (P'*L*U - single (A) - single (u)* single (v).'), Inf)
+%!         < norm (single (A))*1e1* eps ("single"));
 %!
 %!testif HAVE_QRUPDATE_LUU
 %! [L,U,P] = lu (single (Ac));
-%! [L,U] = luupdate (L,U,P*single (uc),single (vc));
+%! [L,U] = luupdate (L,U,P* single (uc),single (vc));
 %! assert (norm (vec (tril (L)-L), Inf) == 0);
 %! assert (norm (vec (triu (U)-U), Inf) == 0);
-%! assert (norm (vec (P'*L*U - single (Ac) - single (uc)*single (vc).'), Inf) < norm (single (Ac))*1e1*eps ("single"));
+%! assert (norm (vec (P'*L*U - single (Ac) - single (uc)* single (vc).'), Inf)
+%!         < norm (single (Ac))*1e1* eps ("single"));
 
 %!testif HAVE_QRUPDATE_LUU
 %! [L,U,P] = lu (A);
@@ -823,14 +835,16 @@ factorization from scratch.
 %! [L,U,P] = luupdate (L,U,P,single (u),single (v));
 %! assert (norm (vec (tril (L)-L), Inf) == 0);
 %! assert (norm (vec (triu (U)-U), Inf) == 0);
-%! assert (norm (vec (P'*L*U - single (A) - single (u)*single (v).'), Inf) < norm (single (A))*1e1*eps ("single"));
+%! assert (norm (vec (P'*L*U - single (A) - single (u)* single (v).'), Inf)
+%!         < norm (single (A))*1e1* eps ("single"));
 %!
 %!testif HAVE_QRUPDATE_LUU
 %! [L,U,P] = lu (single (Ac));
 %! [L,U,P] = luupdate (L,U,P,single (uc),single (vc));
 %! assert (norm (vec (tril (L)-L), Inf) == 0);
 %! assert (norm (vec (triu (U)-U), Inf) == 0);
-%! assert (norm (vec (P'*L*U - single (Ac) - single (uc)*single (vc).'), Inf) < norm (single (Ac))*1e1*eps ("single"));
+%! assert (norm (vec (P'*L*U - single (Ac) - single (uc)* single (vc).'), Inf)
+%!         < norm (single (Ac))*1e1* eps ("single"));
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

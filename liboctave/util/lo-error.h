@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -46,13 +46,11 @@ liboctave_warning_with_id (const char *id, const char *fmt, ...);
 
 typedef void (*liboctave_error_handler) (const char *, ...);
 
-typedef void (*liboctave_error_with_id_handler) (const char *, const char *,
-                                                 ...);
+typedef void (*liboctave_error_with_id_handler) (const char *, const char *, ...);
 
 typedef void (*liboctave_warning_handler) (const char *, ...);
 
-typedef void (*liboctave_warning_with_id_handler) (const char *, const char *,
-                                                   ...);
+typedef void (*liboctave_warning_with_id_handler) (const char *, const char *, ...);
 
 /* Would be nice to make these pointers private, but we want to share
    them among all the liboctave classes. */

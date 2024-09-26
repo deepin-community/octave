@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -47,41 +47,41 @@ public:
                                 const ColumnVector& xdot,
                                 double t, double cj);
 
-  DAEFunc (void)
-    : m_fun (nullptr), m_jac (nullptr), m_reset (true) { }
+  DAEFunc ()
+    : m_fcn (nullptr), m_jac (nullptr), m_reset (true) { }
 
   DAEFunc (DAERHSFunc f)
-    : m_fun (f), m_jac (nullptr), m_reset (true) { }
+    : m_fcn (f), m_jac (nullptr), m_reset (true) { }
 
   DAEFunc (DAERHSFunc f, DAEJacFunc j)
-    : m_fun (f), m_jac (j), m_reset (true) { }
+    : m_fcn (f), m_jac (j), m_reset (true) { }
 
   DAEFunc (const DAEFunc& a)
-    : m_fun (a.m_fun), m_jac (a.m_jac), m_reset (a.m_reset) { }
+    : m_fcn (a.m_fcn), m_jac (a.m_jac), m_reset (a.m_reset) { }
 
   DAEFunc& operator = (const DAEFunc& a)
   {
     if (this != &a)
       {
-        m_fun = a.m_fun;
+        m_fcn = a.m_fcn;
         m_jac = a.m_jac;
         m_reset = a.m_reset;
       }
     return *this;
   }
 
-  virtual ~DAEFunc (void) = default;
+  virtual ~DAEFunc () = default;
 
-  DAERHSFunc function (void) const { return m_fun; }
+  DAERHSFunc function () const { return m_fcn; }
 
   DAEFunc& set_function (DAERHSFunc f)
   {
-    m_fun = f;
+    m_fcn = f;
     m_reset = true;
     return *this;
   }
 
-  DAEJacFunc jacobian_function (void) const { return m_jac; }
+  DAEJacFunc jacobian_function () const { return m_jac; }
 
   DAEFunc& set_jacobian_function (DAEJacFunc j)
   {
@@ -92,7 +92,7 @@ public:
 
 protected:
 
-  DAERHSFunc m_fun;
+  DAERHSFunc m_fcn;
   DAEJacFunc m_jac;
 
   // This variable is TRUE when this object is constructed, and also

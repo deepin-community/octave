@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -31,7 +31,7 @@
 ## The output @var{y} is the evaluation of the rational function:
 ##
 ## @tex
-## $$y = -{ {1200x^4 - 2880x^3 + 2036x^2 - 340x - 88} \over {200x^4 - 480x^3 + 406x^2 - 138x - 17} }$$
+## $$y = -{ {1200x^4 - 2880x^3 + 2036x^2 - 348x - 88} \over {200x^4 - 480x^3 + 406x^2 - 138x + 17} }$$
 ## @end tex
 ## @ifnottex
 ##

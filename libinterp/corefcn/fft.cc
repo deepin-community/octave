@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,7 +35,7 @@
 #include "ovl.h"
 #include "utils.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 static octave_value
 do_fft (const octave_value_list& args, const char *fcn, int type)
@@ -195,9 +195,9 @@ do_fft (const octave_value_list& args, const char *fcn, int type)
 
 DEFUN (fft, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} fft (@var{x})
-@deftypefnx {} {} fft (@var{x}, @var{n})
-@deftypefnx {} {} fft (@var{x}, @var{n}, @var{dim})
+@deftypefn  {} {@var{y} =} fft (@var{x})
+@deftypefnx {} {@var{y} =} fft (@var{x}, @var{n})
+@deftypefnx {} {@var{y} =} fft (@var{x}, @var{n}, @var{dim})
 Compute the discrete Fourier transform of @var{x} using
 a Fast Fourier Transform (FFT) algorithm.
 
@@ -224,23 +224,23 @@ dimension of the matrix along which the FFT is performed.
 
 DEFUN (ifft, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} ifft (@var{x})
-@deftypefnx {} {} ifft (@var{x}, @var{n})
-@deftypefnx {} {} ifft (@var{x}, @var{n}, @var{dim})
-Compute the inverse discrete Fourier transform of @var{x}
+@deftypefn  {} {@var{x} =} ifft (@var{y})
+@deftypefnx {} {@var{x} =} ifft (@var{y}, @var{n})
+@deftypefnx {} {@var{x} =} ifft (@var{y}, @var{n}, @var{dim})
+Compute the inverse discrete Fourier transform of @var{y}
 using a Fast Fourier Transform (FFT) algorithm.
 
 The inverse FFT is calculated along the first non-singleton dimension
-of the array.  Thus if @var{x} is a matrix, @code{fft (@var{x})} computes
-the inverse FFT for each column of @var{x}.
+of the array.  Thus if @var{y} is a matrix, @code{ifft (@var{y})} computes
+the inverse FFT for each column of @var{y}.
 
 If called with two arguments, @var{n} is expected to be an integer
-specifying the number of elements of @var{x} to use, or an empty
+specifying the number of elements of @var{y} to use, or an empty
 matrix to specify that its value should be ignored.  If @var{n} is
 larger than the dimension along which the inverse FFT is calculated, then
-@var{x} is resized and padded with zeros.  Otherwise, if @var{n} is
+@var{y} is resized and padded with zeros.  Otherwise, if @var{n} is
 smaller than the dimension along which the inverse FFT is calculated,
-then @var{x} is truncated.
+then @var{y} is truncated.
 
 If called with three arguments, @var{dim} is an integer specifying the
 dimension of the matrix along which the inverse FFT is performed.
@@ -296,7 +296,7 @@ dimension of the matrix along which the inverse FFT is performed.
 %! answer(n+1) = N/2;
 %! answer(N-n+1) = N/2;
 %!
-%! assert (S, answer, 4*N*eps ("single"));
+%! assert (S, answer, 4*N* eps ("single"));
 
 ## Author: David Billinghurst (David.Billinghurst@riotinto.com.au)
 ##         Comalco Research and Technology
@@ -311,7 +311,45 @@ dimension of the matrix along which the inverse FFT is performed.
 %! S(n+1) = N/2;
 %! S(N-n+1) = N/2;
 %!
-%! assert (ifft (S), s, 4*N*eps ("single"));
+%! assert (ifft (S), s, 4*N* eps ("single"));
+
+%!testif HAVE_FFTW <*64729>
+%! x = rand (5, 5, 5, 5);
+%! old_planner = fftw ('planner', 'measure');
+%! unwind_protect
+%!   y = fft (x);
+%!   y = fft (x);  # second invocation might crash Octave
+%!   assert (size (y), [5, 5, 5, 5]);
+%! unwind_protect_cleanup
+%!   fftw ('planner', old_planner);
+%! end_unwind_protect
+
+%!testif HAVE_FFTW <*64729>
+%! x = rand (5, 5, 5, 5, 'single');
+%! old_planner = fftw ('planner', 'measure');
+%! unwind_protect
+%!   y = fft (x);
+%!   y = fft (x);  # second invocation might crash Octave
+%!   assert (size (y), [5, 5, 5, 5]);
+%! unwind_protect_cleanup
+%!   fftw ('planner', old_planner);
+%! end_unwind_protect
+
+%!testif HAVE_FFTW <*64733>
+%! old_planner = fftw ('planner', 'measure');
+%! unwind_protect
+%!   assert (ifft ([2, 4, 6, 8]), [5, -1-1i, -1, -1+1i]);
+%! unwind_protect_cleanup
+%!   fftw ('planner', old_planner);
+%! end_unwind_protect
+
+%!testif HAVE_FFTW <*64733>
+%! old_planner = fftw ('planner', 'measure');
+%! unwind_protect
+%!   assert (ifft (single ([2, 4, 6, 8])), single ([5, -1-1i, -1, -1+1i]));
+%! unwind_protect_cleanup
+%!   fftw ('planner', old_planner);
+%! end_unwind_protect
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

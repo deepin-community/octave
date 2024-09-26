@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -118,7 +118,7 @@ octave_perm_matrix::do_index_op (const octave_value_list& idx,
           else
             {
               retval = this;
-              this->count++;
+              this->m_count++;
             }
         }
     }
@@ -134,10 +134,10 @@ octave_perm_matrix::do_index_op (const octave_value_list& idx,
   return retval;
 }
 
-// Return true if this matrix has all true elements (non-zero, not NaN/NA).
+// Return true if this matrix has all true elements (nonzero, not NaN/NA).
 // A permutation cannot have NaN/NA.
 bool
-octave_perm_matrix::is_true (void) const
+octave_perm_matrix::is_true () const
 {
   if (dims ().numel () > 1)
     {
@@ -248,73 +248,73 @@ octave_perm_matrix::index_vector (bool require_integers) const
 
 octave_value
 octave_perm_matrix::convert_to_str_internal (bool pad, bool force,
-                                             char type) const
+    char type) const
 {
   return to_dense ().convert_to_str_internal (pad, force, type);
 }
 
 octave_value
-octave_perm_matrix::as_double (void) const
+octave_perm_matrix::as_double () const
 {
   return m_matrix;
 }
 
 octave_value
-octave_perm_matrix::as_single (void) const
+octave_perm_matrix::as_single () const
 {
   return float_array_value ();
 }
 
 octave_value
-octave_perm_matrix::as_int8 (void) const
+octave_perm_matrix::as_int8 () const
 {
   return int8_array_value  ();
 }
 
 octave_value
-octave_perm_matrix::as_int16 (void) const
+octave_perm_matrix::as_int16 () const
 {
   return int16_array_value ();
 }
 
 octave_value
-octave_perm_matrix::as_int32 (void) const
+octave_perm_matrix::as_int32 () const
 {
   return int32_array_value ();
 }
 
 octave_value
-octave_perm_matrix::as_int64 (void) const
+octave_perm_matrix::as_int64 () const
 {
   return int64_array_value ();
 }
 
 octave_value
-octave_perm_matrix::as_uint8 (void) const
+octave_perm_matrix::as_uint8 () const
 {
   return uint8_array_value ();
 }
 
 octave_value
-octave_perm_matrix::as_uint16 (void) const
+octave_perm_matrix::as_uint16 () const
 {
   return uint16_array_value ();
 }
 
 octave_value
-octave_perm_matrix::as_uint32 (void) const
+octave_perm_matrix::as_uint32 () const
 {
   return uint32_array_value ();
 }
 
 octave_value
-octave_perm_matrix::as_uint64 (void) const
+octave_perm_matrix::as_uint64 () const
 {
   return uint64_array_value ();
 }
 
 float_display_format
-octave_perm_matrix::get_edit_display_format (void) const
+octave_perm_matrix::get_edit_display_format () const
 {
   return float_display_format (float_format (1, 0, 0));
 }
@@ -380,7 +380,7 @@ octave_perm_matrix::save_binary (std::ostream& os, bool)
   os.write (reinterpret_cast<char *> (&colp), 1);
   const Array<octave_idx_type>& col_perm = m_matrix.col_perm_vec ();
   os.write (reinterpret_cast<const char *> (col_perm.data ()),
-                                            col_perm.byte_size ());
+            col_perm.byte_size ());
 
   return true;
 }
@@ -440,7 +440,7 @@ octave_perm_matrix::as_mxArray (bool interleaved) const
 }
 
 bool
-octave_perm_matrix::print_as_scalar (void) const
+octave_perm_matrix::print_as_scalar () const
 {
   dim_vector dv = dims ();
 
@@ -470,7 +470,7 @@ octave_perm_matrix::print_info (std::ostream& os,
 }
 
 octave_value
-octave_perm_matrix::to_dense (void) const
+octave_perm_matrix::to_dense () const
 {
   if (! m_dense_cache.is_defined ())
     m_dense_cache = Matrix (m_matrix);
@@ -490,10 +490,10 @@ default_numeric_conversion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_perm_matrix::numeric_conversion_function (void) const
+octave_perm_matrix::numeric_conversion_function () const
 {
   return octave_base_value::type_conv_info (default_numeric_conversion_function,
-                                            octave_matrix::static_type_id ());
+         octave_matrix::static_type_id ());
 }
 
 // FIXME: This is duplicated from octave_base_matrix<T>.  Could
@@ -552,7 +552,7 @@ octave_perm_matrix::short_disp (std::ostream& os) const
 }
 
 octave_base_value *
-octave_perm_matrix::try_narrowing_conversion (void)
+octave_perm_matrix::try_narrowing_conversion ()
 {
   octave_base_value *retval = nullptr;
 

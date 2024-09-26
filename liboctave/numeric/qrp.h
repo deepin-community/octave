@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1994-2022 The Octave Project Developers
+// Copyright (C) 1994-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,50 +31,51 @@
 #include "PermMatrix.h"
 #include "qr.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+OCTAVE_BEGIN_NAMESPACE(math)
+
+template <typename T>
+class
+qrp : public qr<T>
 {
-  namespace math
+public:
+
+  typedef typename T::real_row_vector_type RV_T;
+
+  typedef typename qr<T>::type type;
+
+  qrp () : qr<T> (), m_p () { }
+
+  OCTAVE_API qrp (const T&, type = qr<T>::std);
+
+  qrp (const qrp& a) : qr<T> (a), m_p (a.m_p) { }
+
+  qrp& operator = (const qrp& a)
   {
-    template <typename T>
-    class
-    qrp : public qr<T>
-    {
-    public:
-
-      typedef typename T::real_row_vector_type RV_T;
-
-      typedef typename qr<T>::type type;
-
-      qrp (void) : qr<T> (), m_p () { }
-
-      OCTAVE_API qrp (const T&, type = qr<T>::std);
-
-      qrp (const qrp& a) : qr<T> (a), m_p (a.m_p) { }
-
-      qrp& operator = (const qrp& a)
+    if (this != &a)
       {
-        if (this != &a)
-          {
-            qr<T>::operator = (a);
-            m_p = a.m_p;
-          }
-
-        return *this;
+        qr<T>::operator = (a);
+        m_p = a.m_p;
       }
 
-      ~qrp (void) = default;
-
-      OCTAVE_API void init (const T&, type = qr<T>::std);
-
-      PermMatrix P (void) const { return m_p; }
-
-      OCTAVE_API RV_T Pvec (void) const;
-
-    private:
-
-      PermMatrix m_p;
-    };
+    return *this;
   }
-}
+
+  ~qrp () = default;
+
+  OCTAVE_API void init (const T&, type = qr<T>::std);
+
+  PermMatrix P () const { return m_p; }
+
+  OCTAVE_API RV_T Pvec () const;
+
+private:
+
+  PermMatrix m_p;
+};
+
+OCTAVE_END_NAMESPACE(math)
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

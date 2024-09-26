@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,12 +37,12 @@
 #include "error.h"
 #include "variables.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (abs, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} abs (@var{z})
-Compute the magnitude of @var{z}.
+@deftypefn {} {@var{z} =} abs (@var{x})
+Compute the magnitude of @var{x}.
 
 The magnitude is defined as
 @tex
@@ -88,7 +88,7 @@ abs (3 + 4i)
 
 DEFUN (acos, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} acos (@var{x})
+@deftypefn {} {@var{y} =} acos (@var{x})
 Compute the inverse cosine in radians for each element of @var{x}.
 @seealso{cos, acosd}
 @end deftypefn */)
@@ -130,14 +130,14 @@ Compute the inverse cosine in radians for each element of @var{x}.
 
 ## Test large magnitude arguments (bug #45507)
 ## Test fails with older versions of libm, solution is to upgrade.
-%!testif ; ! ismac () && ! ispc ()   <*45507>
+%!testif ; ! __have_feature__ ("LLVM_LIBCXX")  <*45507>
 %! x = [1, -1, i, -i] .* 1e150;
 %! v = [0, pi, pi/2, pi/2];
 %! assert (real (acos (x)), v);
 
-%!testif ; ismac () || ispc ()   <52627>
-%! ## Same test code as above, but intended only for test statistics on Mac and
-%! ## Windows.  Their trig/hyperbolic functions have huge tolerances.
+%!testif ; __have_feature__ ("LLVM_LIBCXX")  <52627>
+%! ## Same test code as above, but intended for test statistics with libc++.
+%! ## Their trig/hyperbolic functions have huge tolerances.
 %! x = [1, -1, i, -i] .* 1e150;
 %! v = [0, pi, pi/2, pi/2];
 %! assert (real (acos (x)), v);
@@ -148,7 +148,7 @@ Compute the inverse cosine in radians for each element of @var{x}.
 
 DEFUN (acosh, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} acosh (@var{x})
+@deftypefn {} {@var{y} =} acosh (@var{x})
 Compute the inverse hyperbolic cosine for each element of @var{x}.
 @seealso{cosh}
 @end deftypefn */)
@@ -197,19 +197,19 @@ Compute the inverse hyperbolic cosine for each element of @var{x}.
 %!test <49091>
 %! re = single (2.99822295029797);
 %! im = single (pi/2);
-%! assert (acosh (single (10i)), re + i*im, 5*eps ("single"));
-%! assert (acosh (single (-10i)), re - i*im, 5*eps ("single"));
+%! assert (acosh (single (10i)), re + i*im, 5* eps ("single"));
+%! assert (acosh (single (-10i)), re - i*im, 5* eps ("single"));
 
 ## Test large magnitude arguments (bug #45507)
 ## Test fails with older versions of libm, solution is to upgrade.
-%!testif ; ! ismac () && ! ispc ()   <*45507>
+%!testif ; ! __have_feature__ ("LLVM_LIBCXX")  <*45507>
 %! x = [1, -1, i, -i] .* 1e150;
 %! v = [0, pi, pi/2, -pi/2];
 %! assert (imag (acosh (x)), v);
 
-%!testif ; ismac () || ispc ()   <52627>
-%! ## Same test code as above, but intended only for test statistics on Mac and
-%! ## Windows.  Their trig/hyperbolic functions have huge tolerances.
+%!testif ; __have_feature__ ("LLVM_LIBCXX")  <52627>
+%! ## Same test code as above, but intended for test statistics with libc++.
+%! ## Their trig/hyperbolic functions have huge tolerances.
 %! x = [1, -1, i, -i] .* 1e150;
 %! v = [0, pi, pi/2, -pi/2];
 %! assert (imag (acosh (x)), v);
@@ -220,7 +220,7 @@ Compute the inverse hyperbolic cosine for each element of @var{x}.
 
 DEFUN (angle, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} angle (@var{z})
+@deftypefn {} {@var{theta} =} angle (@var{z})
 @xref{XREFarg,,@code{arg}}.
 @seealso{arg}
 @end deftypefn */)
@@ -233,8 +233,8 @@ DEFUN (angle, args, ,
 
 DEFUN (arg, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} arg (@var{z})
-@deftypefnx {} {} angle (@var{z})
+@deftypefn  {} {@var{theta} =} arg (@var{z})
+@deftypefnx {} {@var{theta} =} angle (@var{z})
 Compute the argument, i.e., angle of @var{z}.
 
 This is defined as,
@@ -275,12 +275,13 @@ arg (3 + 4i)
 %!test
 %! if (ismac ())
 %!   ## Avoid failing for a MacOS feature
-%!   assert (arg (single (-1)), single (pi), 2*eps (single (1)));
+%!   assert (arg (single (-1)), single (pi), 2* eps (single (1)));
 %! else
 %!   assert (arg (single (-1)), single (pi));
 %! endif
 %!assert (arg (single (-i)), single (-pi/2))
-%!assert (arg (single ([1, i; -1, -i])), single ([0, pi/2; pi, -pi/2]), 2e1*eps ("single"))
+%!assert (arg (single ([1, i; -1, -i])),
+%!        single ([0, pi/2; pi, -pi/2]), 2e1* eps ("single"))
 
 %!error arg ()
 %!error arg (1, 2)
@@ -288,7 +289,7 @@ arg (3 + 4i)
 
 DEFUN (asin, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} asin (@var{x})
+@deftypefn {} {@var{y} =} asin (@var{x})
 Compute the inverse sine in radians for each element of @var{x}.
 @seealso{sin, asind}
 @end deftypefn */)
@@ -335,14 +336,14 @@ Compute the inverse sine in radians for each element of @var{x}.
 
 ## Test large magnitude arguments (bug #45507)
 ## Test fails with older versions of libm, solution is to upgrade.
-%!testif ; ! ismac () && ! ispc ()   <*45507>
+%!testif ; ! __have_feature__ ("LLVM_LIBCXX")  <*45507>
 %! x = [1, -1, i, -i] .* 1e150;
 %! v = [pi/2, -pi/2, 0, -0];
 %! assert (real (asin (x)), v);
 
-%!testif ; ismac () || ispc ()   <52627>
-%! ## Same test code as above, but intended only for test statistics on Mac and
-%! ## Windows. Their trig/hyperbolic functions have huge tolerances.
+%!testif ; __have_feature__ ("LLVM_LIBCXX")  <52627>
+%! ## Same test code as above, but intended for test statistics with libc++.
+%! ## Their trig/hyperbolic functions have huge tolerances.
 %! x = [1, -1, i, -i] .* 1e150;
 %! v = [pi/2, -pi/2, 0, -0];
 %! assert (real (asin (x)), v);
@@ -353,7 +354,7 @@ Compute the inverse sine in radians for each element of @var{x}.
 
 DEFUN (asinh, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} asinh (@var{x})
+@deftypefn {} {@var{y} =} asinh (@var{x})
 Compute the inverse hyperbolic sine for each element of @var{x}.
 @seealso{sinh}
 @end deftypefn */)
@@ -377,14 +378,14 @@ Compute the inverse hyperbolic sine for each element of @var{x}.
 
 ## Test large magnitude arguments (bug #45507)
 ## Test fails with older versions of libm, solution is to upgrade.
-%!testif ; ! ismac () && ! ispc ()   <*45507>
+%!testif ; ! __have_feature__ ("LLVM_LIBCXX")  <*45507>
 %! x = [1, -1, i, -i] .* 1e150;
 %! v = [0, 0, pi/2, -pi/2];
 %! assert (imag (asinh (x)), v);
 
-%!testif ; ismac () || ispc ()   <52627>
-%! ## Same test code as above, but intended only for test statistics on Mac and
-%! ## Windows.  Their trig/hyperbolic functions have huge tolerances.
+%!testif ; __have_feature__ ("LLVM_LIBCXX")  <52627>
+%! ## Same test code as above, but intended for test statistics with libc++.
+%! ## Their trig/hyperbolic functions have huge tolerances.
 %! x = [1, -1, i, -i] .* 1e150;
 %! v = [0, 0, pi/2, -pi/2];
 %! assert (imag (asinh (x)), v);
@@ -395,7 +396,7 @@ Compute the inverse hyperbolic sine for each element of @var{x}.
 
 DEFUN (atan, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} atan (@var{x})
+@deftypefn {} {@var{y} =} atan (@var{x})
 Compute the inverse tangent in radians for each element of @var{x}.
 @seealso{tan, atand}
 @end deftypefn */)
@@ -434,7 +435,7 @@ Compute the inverse tangent in radians for each element of @var{x}.
 
 DEFUN (atanh, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} atanh (@var{x})
+@deftypefn {} {@var{y} =} atanh (@var{x})
 Compute the inverse hyperbolic tangent for each element of @var{x}.
 @seealso{tanh}
 @end deftypefn */)
@@ -469,7 +470,7 @@ Compute the inverse hyperbolic tangent for each element of @var{x}.
 
 DEFUN (cbrt, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} cbrt (@var{x})
+@deftypefn {} {@var{y} =} cbrt (@var{x})
 Compute the real-valued cube root of each element of @var{x}.
 
 Unlike @code{@var{x}^(1/3)}, the result will be negative if @var{x} is
@@ -501,7 +502,7 @@ If any element of @var{x} is complex, @code{cbrt} aborts with an error.
 
 DEFUN (ceil, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} ceil (@var{x})
+@deftypefn {} {@var{y} =} ceil (@var{x})
 Return the smallest integer not less than @var{x}.
 
 This is equivalent to rounding towards positive infinity.
@@ -535,7 +536,8 @@ ceil ([-2.7, 2.7])
 %!assert (ceil (single ([2, 1.1, -1.1, -1])), single ([2, 2, -1, -1]))
 
 ## complex single precision
-%!assert (ceil (single ([2+2i, 1.1+1.1i, -1.1-1.1i, -1-i])), single ([2+2i, 2+2i, -1-i, -1-i]))
+%!assert (ceil (single ([2+2i, 1.1+1.1i, -1.1-1.1i, -1-i])),
+%!        single ([2+2i, 2+2i, -1-i, -1-i]))
 
 %!error ceil ()
 %!error ceil (1, 2)
@@ -543,7 +545,7 @@ ceil ([-2.7, 2.7])
 
 DEFUN (conj, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} conj (@var{z})
+@deftypefn {} {@var{zc} =} conj (@var{z})
 Return the complex conjugate of @var{z}.
 
 The complex conjugate is defined as
@@ -581,7 +583,7 @@ $\bar{z} = x - iy$.
 
 DEFUN (cos, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} cos (@var{x})
+@deftypefn {} {@var{y} =} cos (@var{x})
 Compute the cosine for each element of @var{x} in radians.
 @seealso{acos, cosd, cosh}
 @end deftypefn */)
@@ -615,7 +617,7 @@ Compute the cosine for each element of @var{x} in radians.
 
 DEFUN (cosh, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} cosh (@var{x})
+@deftypefn {} {@var{y} =} cosh (@var{x})
 Compute the hyperbolic cosine for each element of @var{x}.
 @seealso{acosh, sinh, tanh}
 @end deftypefn */)
@@ -643,7 +645,7 @@ Compute the hyperbolic cosine for each element of @var{x}.
 
 DEFUN (erf, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} erf (@var{z})
+@deftypefn {} {@var{v} =} erf (@var{z})
 Compute the error function.
 
 The error function is defined as
@@ -676,7 +678,7 @@ erf (z) = --------- *  | e^(-t^2) dt
 
 /*
 %!test
-%! a = -1i*sqrt (-1/(6.4187*6.4187));
+%! a = -1i* sqrt (-1/(6.4187*6.4187));
 %! assert (erf (a), erf (real (a)));
 
 %!test
@@ -688,7 +690,7 @@ erf (z) = --------- *  | e^(-t^2) dt
 %! assert (erfinv (v), x, 1.e-10);
 
 %!test
-%! a = -1i*sqrt (single (-1/(6.4187*6.4187)));
+%! a = -1i* sqrt (single (-1/(6.4187*6.4187)));
 %! assert (erf (a), erf (real (a)));
 
 %!test
@@ -712,7 +714,7 @@ erf (z) = --------- *  | e^(-t^2) dt
 
 DEFUN (erfinv, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} erfinv (@var{x})
+@deftypefn {} {@var{y} =} erfinv (@var{x})
 Compute the inverse error function.
 
 The inverse error function is defined such that
@@ -732,13 +734,18 @@ erf (@var{y}) == @var{x}
 /*
 ## middle region
 %!assert (erf (erfinv ([-0.9 -0.3 0 0.4 0.8])), [-0.9 -0.3 0 0.4 0.8], eps)
-%!assert (erf (erfinv (single ([-0.9 -0.3 0 0.4 0.8]))), single ([-0.9 -0.3 0 0.4 0.8]), eps ("single"))
+%!assert (erf (erfinv (single ([-0.9 -0.3 0 0.4 0.8]))),
+%!        single ([-0.9 -0.3 0 0.4 0.8]), eps ("single"))
 ## tail region
-%!assert (erf (erfinv ([-0.999 -0.99 0.9999 0.99999])), [-0.999 -0.99 0.9999 0.99999], eps)
-%!assert (erf (erfinv (single ([-0.999 -0.99 0.9999 0.99999]))), single ([-0.999 -0.99 0.9999 0.99999]), eps ("single"))
+%!assert (erf (erfinv ([-0.999 -0.99 0.9999 0.99999])),
+%!        [-0.999 -0.99 0.9999 0.99999], eps)
+%!assert (erf (erfinv (single ([-0.999 -0.99 0.9999 0.99999]))),
+%!        single ([-0.999 -0.99 0.9999 0.99999]), eps ("single"))
 ## backward - loss of accuracy
-%!assert (erfinv (erf ([-3 -1 -0.4 0.7 1.3 2.8])), [-3 -1 -0.4 0.7 1.3 2.8], -1e-12)
-%!assert (erfinv (erf (single ([-3 -1 -0.4 0.7 1.3 2.8]))), single ([-3 -1 -0.4 0.7 1.3 2.8]), -1e-4)
+%!assert (erfinv (erf ([-3 -1 -0.4 0.7 1.3 2.8])),
+%!        [-3 -1 -0.4 0.7 1.3 2.8], -1e-12)
+%!assert (erfinv (erf (single ([-3 -1 -0.4 0.7 1.3 2.8]))),
+%!        single ([-3 -1 -0.4 0.7 1.3 2.8]), -1e-4)
 ## exceptional
 %!assert (erfinv ([-1, 1, 1.1, -2.1]), [-Inf, Inf, NaN, NaN])
 %!error erfinv (1+2i)
@@ -749,7 +756,7 @@ erf (@var{y}) == @var{x}
 
 DEFUN (erfcinv, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} erfcinv (@var{x})
+@deftypefn {} {@var{y} =} erfcinv (@var{x})
 Compute the inverse complementary error function.
 
 The inverse complementary error function is defined such that
@@ -769,13 +776,24 @@ erfc (@var{y}) == @var{x}
 /*
 ## middle region
 %!assert (erfc (erfcinv ([1.9 1.3 1 0.6 0.2])), [1.9 1.3 1 0.6 0.2], eps)
-%!assert (erfc (erfcinv (single ([1.9 1.3 1 0.6 0.2]))), single ([1.9 1.3 1 0.6 0.2]), eps ("single"))
+%!assert (erfc (erfcinv (single ([1.9 1.3 1 0.6 0.2]))),
+%!        single ([1.9 1.3 1 0.6 0.2]), eps ("single"))
 ## tail region
-%!assert (erfc (erfcinv ([0.001 0.01 1.9999 1.99999])), [0.001 0.01 1.9999 1.99999], eps)
-%!assert (erfc (erfcinv (single ([0.001 0.01 1.9999 1.99999]))), single ([0.001 0.01 1.9999 1.99999]), eps ("single"))
+%!assert (erfc (erfcinv ([0.001 0.01 1.9999 1.99999])),
+%!        [0.001 0.01 1.9999 1.99999], eps)
+%!assert (erfc (erfcinv (single ([0.001 0.01 1.9999 1.99999]))),
+%!        single ([0.001 0.01 1.9999 1.99999]), eps ("single"))
 ## backward - loss of accuracy
-%!assert (erfcinv (erfc ([-3 -1 -0.4 0.7 1.3 2.8])), [-3 -1 -0.4 0.7 1.3 2.8], -1e-12)
-%!assert (erfcinv (erfc (single ([-3 -1 -0.4 0.7 1.3 2.8]))), single ([-3 -1 -0.4 0.7 1.3 2.8]), -1e-4)
+%!assert (erfcinv (erfc ([-3 -1 -0.4 0.7 1.3 2.8])),
+%!        [-3 -1 -0.4 0.7 1.3 2.8], -1e-12)
+%!testif ; ! ispc ()
+%! assert (erfcinv (erfc (single ([-3 -1 -0.4 0.7 1.3 2.8]))),
+%!         single ([-3 -1 -0.4 0.7 1.3 2.8]), -1e-4)
+%!testif ; ispc ()  <65075>
+%! ## Same test code as above, but intended for test statistics with the UCRT.
+%! ## The deviations are twice as high with it.
+%! assert (erfcinv (erfc (single ([-3 -1 -0.4 0.7 1.3 2.8]))),
+%!         single ([-3 -1 -0.4 0.7 1.3 2.8]), -1e-4)
 ## exceptional
 %!assert (erfcinv ([2, 0, -0.1, 2.1]), [-Inf, Inf, NaN, NaN])
 %!error erfcinv (1+2i)
@@ -786,7 +804,7 @@ erfc (@var{y}) == @var{x}
 
 DEFUN (erfc, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} erfc (@var{z})
+@deftypefn {} {@var{v} =} erfc (@var{z})
 Compute the complementary error function.
 
 The complementary error function is defined as
@@ -807,7 +825,7 @@ $1 - {\rm erf} (z)$.
 
 /*
 %!test
-%! a = -1i*sqrt (-1/(6.4187*6.4187));
+%! a = -1i* sqrt (-1/(6.4187*6.4187));
 %! assert (erfc (a), erfc (real (a)));
 
 %!error erfc ()
@@ -816,7 +834,7 @@ $1 - {\rm erf} (z)$.
 
 DEFUN (erfcx, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} erfcx (@var{z})
+@deftypefn {} {@var{v} =} erfcx (@var{z})
 Compute the scaled complementary error function.
 
 The scaled complementary error function is defined as
@@ -858,7 +876,7 @@ exp (z^2) * erfc (z)
 
 DEFUN (erfi, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} erfi (@var{z})
+@deftypefn {} {@var{v} =} erfi (@var{z})
 Compute the imaginary error function.
 
 The imaginary error function is defined as
@@ -895,7 +913,7 @@ $$
 
 DEFUN (dawson, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} dawson (@var{z})
+@deftypefn {} {@var{v} =} dawson (@var{z})
 Compute the Dawson (scaled imaginary error) function.
 
 The Dawson function is defined as
@@ -934,7 +952,7 @@ $$
 
 DEFUN (exp, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} exp (@var{x})
+@deftypefn {} {@var{y} =} exp (@var{x})
 Compute
 @tex
 $e^{x}$
@@ -957,8 +975,10 @@ To compute the matrix exponential, @pxref{Linear Algebra}.
 /*
 %!assert (exp ([0, 1, -1, -1000]), [1, e, 1/e, 0], sqrt (eps))
 %!assert (exp (1+i), e * (cos (1) + sin (1) * i), sqrt (eps))
-%!assert (exp (single ([0, 1, -1, -1000])), single ([1, e, 1/e, 0]), sqrt (eps ("single")))
-%!assert (exp (single (1+i)), single (e * (cos (1) + sin (1) * i)), sqrt (eps ("single")))
+%!assert (exp (single ([0, 1, -1, -1000])),
+%!        single ([1, e, 1/e, 0]), sqrt (eps ("single")))
+%!assert (exp (single (1+i)),
+%!        single (e * (cos (1) + sin (1) * i)), sqrt (eps ("single")))
 
 %!assert (exp ([Inf, -Inf, NaN]), [Inf 0 NaN])
 %!assert (exp (single ([Inf, -Inf, NaN])), single ([Inf 0 NaN]))
@@ -969,7 +989,7 @@ To compute the matrix exponential, @pxref{Linear Algebra}.
 
 DEFUN (expm1, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} expm1 (@var{x})
+@deftypefn {} {@var{y} =} expm1 (@var{x})
 Compute
 @tex
 $ e^{x} - 1 $
@@ -999,7 +1019,7 @@ accurately in the neighborhood of zero.
 
 DEFUN (isfinite, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} isfinite (@var{x})
+@deftypefn {} {@var{tf} =} isfinite (@var{x})
 Return a logical array which is true where the elements of @var{x} are
 finite values and false where they are not.
 
@@ -1036,7 +1056,7 @@ isfinite ([13, Inf, NA, NaN])
 
 DEFUN (fix, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} fix (@var{x})
+@deftypefn {} {@var{y} =} fix (@var{x})
 Truncate fractional portion of @var{x} and return the integer portion.
 
 This is equivalent to rounding towards zero.  If @var{x} is complex, return
@@ -1061,7 +1081,8 @@ fix ([-2.7, 2.7])
 %!assert (fix ([1.1, 1, -1.1, -1]), [1, 1, -1, -1])
 %!assert (fix ([1.1+1.1i, 1+i, -1.1-1.1i, -1-i]), [1+i, 1+i, -1-i, -1-i])
 %!assert (fix (single ([1.1, 1, -1.1, -1])), single ([1, 1, -1, -1]))
-%!assert (fix (single ([1.1+1.1i, 1+i, -1.1-1.1i, -1-i])), single ([1+i, 1+i, -1-i, -1-i]))
+%!assert (fix (single ([1.1+1.1i, 1+i, -1.1-1.1i, -1-i])),
+%!        single ([1+i, 1+i, -1-i, -1-i]))
 
 %!error fix ()
 %!error fix (1, 2)
@@ -1069,7 +1090,7 @@ fix ([-2.7, 2.7])
 
 DEFUN (floor, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} floor (@var{x})
+@deftypefn {} {@var{y} =} floor (@var{x})
 Return the largest integer not greater than @var{x}.
 
 This is equivalent to rounding towards negative infinity.  If @var{x} is
@@ -1094,7 +1115,8 @@ floor ([-2.7, 2.7])
 %!assert (floor ([2, 1.1, -1.1, -1]), [2, 1, -2, -1])
 %!assert (floor ([2+2i, 1.1+1.1i, -1.1-1.1i, -1-i]), [2+2i, 1+i, -2-2i, -1-i])
 %!assert (floor (single ([2, 1.1, -1.1, -1])), single ([2, 1, -2, -1]))
-%!assert (floor (single ([2+2i, 1.1+1.1i, -1.1-1.1i, -1-i])), single ([2+2i, 1+i, -2-2i, -1-i]))
+%!assert (floor (single ([2+2i, 1.1+1.1i, -1.1-1.1i, -1-i])),
+%!        single ([2+2i, 1+i, -2-2i, -1-i]))
 
 %!error floor ()
 %!error floor (1, 2)
@@ -1102,7 +1124,7 @@ floor ([-2.7, 2.7])
 
 DEFUN (gamma, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} gamma (@var{z})
+@deftypefn {} {@var{v} =} gamma (@var{z})
 Compute the Gamma function.
 
 The Gamma function is defined as
@@ -1141,7 +1163,7 @@ loss of precision.  The final result is then
 
 /*
 %!test
-%! a = -1i*sqrt (-1/(6.4187*6.4187));
+%! a = -1i* sqrt (-1/(6.4187*6.4187));
 %! assert (gamma (a), gamma (real (a)));
 
 %!test
@@ -1150,7 +1172,7 @@ loss of precision.  The final result is then
 %! assert (gamma (x), v, sqrt (eps));
 
 %!test
-%! a = single (-1i*sqrt (-1/(6.4187*6.4187)));
+%! a = single (-1i* sqrt (-1/(6.4187*6.4187)));
 %! assert (gamma (a), gamma (real (a)));
 
 %!test
@@ -1171,7 +1193,7 @@ loss of precision.  The final result is then
 
 DEFUN (imag, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} imag (@var{z})
+@deftypefn {} {@var{y} =} imag (@var{z})
 Return the imaginary part of @var{z} as a real number.
 @seealso{real, conj}
 @end deftypefn */)
@@ -1199,7 +1221,7 @@ Return the imaginary part of @var{z} as a real number.
 
 DEFUNX ("isalnum", Fisalnum, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} isalnum (@var{s})
+@deftypefn {} {@var{tf} =} isalnum (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 letters or digits and false where they are not.
 
@@ -1229,7 +1251,7 @@ This is equivalent to (@code{isalpha (@var{s}) | isdigit (@var{s})}).
 
 DEFUNX ("isalpha", Fisalpha, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} isalpha (@var{s})
+@deftypefn {} {@var{tf} =} isalpha (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 letters and false where they are not.
 
@@ -1258,7 +1280,7 @@ This is equivalent to (@code{islower (@var{s}) | isupper (@var{s})}).
 
 DEFUNX ("isascii", Fisascii, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} isascii (@var{s})
+@deftypefn {} {@var{tf} =} isascii (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 ASCII characters (in the range 0 to 127 decimal) and false where they are
 not.
@@ -1282,7 +1304,7 @@ not.
 
 DEFUNX ("iscntrl", Fiscntrl, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} iscntrl (@var{s})
+@deftypefn {} {@var{tf} =} iscntrl (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 control characters and false where they are not.
 @seealso{ispunct, isspace, isalpha, isdigit}
@@ -1308,7 +1330,7 @@ control characters and false where they are not.
 
 DEFUNX ("isdigit", Fisdigit, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} isdigit (@var{s})
+@deftypefn {} {@var{tf} =} isdigit (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 decimal digits (0-9) and false where they are not.
 @seealso{isxdigit, isalpha, isletter, ispunct, isspace, iscntrl}
@@ -1334,7 +1356,7 @@ decimal digits (0-9) and false where they are not.
 
 DEFUN (isinf, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} isinf (@var{x})
+@deftypefn {} {@var{tf} =} isinf (@var{x})
 Return a logical array which is true where the elements of @var{x} are
 infinite and false where they are not.
 
@@ -1360,13 +1382,15 @@ isinf ([13, Inf, NA, NaN])
 %!assert (! isinf (NaN))
 %!assert (! isinf (NA))
 %!assert (isinf (rand (1,10)), false (1,10))
-%!assert (isinf ([NaN -Inf -1 0 1 Inf NA]), [false, true, false, false, false, true, false])
+%!assert (isinf ([NaN -Inf -1 0 1 Inf NA]),
+%!        [false, true, false, false, false, true, false])
 
 %!assert (isinf (single (Inf)))
 %!assert (! isinf (single (NaN)))
 %!assert (! isinf (single (NA)))
 %!assert (isinf (single (rand (1,10))), false (1,10))
-%!assert (isinf (single ([NaN -Inf -1 0 1 Inf NA])), [false, true, false, false, false, true, false])
+%!assert (isinf (single ([NaN -Inf -1 0 1 Inf NA])),
+%!        [false, true, false, false, false, true, false])
 %!assert (! isinf ('a'))
 
 %!error isinf ()
@@ -1375,7 +1399,7 @@ isinf ([13, Inf, NA, NaN])
 
 DEFUNX ("isgraph", Fisgraph, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} isgraph (@var{s})
+@deftypefn {} {@var{tf} =} isgraph (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 printable characters (but not the space character) and false where they are
 not.
@@ -1402,7 +1426,7 @@ not.
 
 DEFUNX ("islower", Fislower, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} islower (@var{s})
+@deftypefn {} {@var{tf} =} islower (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 lowercase letters and false where they are not.
 @seealso{isupper, isalpha, isletter, isalnum}
@@ -1428,7 +1452,7 @@ lowercase letters and false where they are not.
 
 DEFUN (isna, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} isna (@var{x})
+@deftypefn {} {@var{tf} =} isna (@var{x})
 Return a logical array which is true where the elements of @var{x} are
 NA (missing) values and false where they are not.
 
@@ -1454,13 +1478,15 @@ isna ([13, Inf, NA, NaN])
 %!assert (! isna (NaN))
 %!assert (isna (NA))
 %!assert (isna (rand (1,10)), false (1,10))
-%!assert (isna ([NaN -Inf -1 0 1 Inf NA]), [false, false, false, false, false, false, true])
+%!assert (isna ([NaN -Inf -1 0 1 Inf NA]),
+%!        [false, false, false, false, false, false, true])
 
 %!assert (! isna (single (Inf)))
 %!assert (! isna (single (NaN)))
 %!assert (isna (single (NA)))
 %!assert (isna (single (rand (1,10))), false (1,10))
-%!assert (isna (single ([NaN -Inf -1 0 1 Inf NA])), [false, false, false, false, false, false, true])
+%!assert (isna (single ([NaN -Inf -1 0 1 Inf NA])),
+%!        [false, false, false, false, false, false, true])
 
 %!error isna ()
 %!error isna (1, 2)
@@ -1468,7 +1494,7 @@ isna ([13, Inf, NA, NaN])
 
 DEFUN (isnan, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} isnan (@var{x})
+@deftypefn {} {@var{tf} =} isnan (@var{x})
 Return a logical array which is true where the elements of @var{x} are
 NaN values and false where they are not.
 
@@ -1494,13 +1520,15 @@ isnan ([13, Inf, NA, NaN])
 %!assert (isnan (NaN))
 %!assert (isnan (NA))
 %!assert (isnan (rand (1,10)), false (1,10))
-%!assert (isnan ([NaN -Inf -1 0 1 Inf NA]), [true, false, false, false, false, false, true])
+%!assert (isnan ([NaN -Inf -1 0 1 Inf NA]),
+%!        [true, false, false, false, false, false, true])
 
 %!assert (! isnan (single (Inf)))
 %!assert (isnan (single (NaN)))
 %!assert (isnan (single (NA)))
 %!assert (isnan (single (rand (1,10))), false (1,10))
-%!assert (isnan (single ([NaN -Inf -1 0 1 Inf NA])), [true, false, false, false, false, false, true])
+%!assert (isnan (single ([NaN -Inf -1 0 1 Inf NA])),
+%!        [true, false, false, false, false, false, true])
 %!assert (! isnan ('a'))
 
 %!error isnan ()
@@ -1509,7 +1537,7 @@ isnan ([13, Inf, NA, NaN])
 
 DEFUNX ("isprint", Fisprint, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} isprint (@var{s})
+@deftypefn {} {@var{tf} =} isprint (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 printable characters (including the space character) and false where they
 are not.
@@ -1536,7 +1564,7 @@ are not.
 
 DEFUNX ("ispunct", Fispunct, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} ispunct (@var{s})
+@deftypefn {} {@var{tf} =} ispunct (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 punctuation characters and false where they are not.
 @seealso{isalpha, isdigit, isspace, iscntrl}
@@ -1565,7 +1593,7 @@ punctuation characters and false where they are not.
 
 DEFUNX ("isspace", Fisspace, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} isspace (@var{s})
+@deftypefn {} {@var{tf} =} isspace (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 whitespace characters (space, formfeed, newline, carriage return, tab, and
 vertical tab) and false where they are not.
@@ -1592,7 +1620,7 @@ vertical tab) and false where they are not.
 
 DEFUNX ("isupper", Fisupper, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} isupper (@var{s})
+@deftypefn {} {@var{tf} =} isupper (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 uppercase letters and false where they are not.
 @seealso{islower, isalpha, isletter, isalnum}
@@ -1618,7 +1646,7 @@ uppercase letters and false where they are not.
 
 DEFUNX ("isxdigit", Fisxdigit, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} isxdigit (@var{s})
+@deftypefn {} {@var{tf} =} isxdigit (@var{s})
 Return a logical array which is true where the elements of @var{s} are
 hexadecimal digits (0-9 and @nospell{a-fA-F}).
 @seealso{isdigit}
@@ -1646,9 +1674,12 @@ hexadecimal digits (0-9 and @nospell{a-fA-F}).
 
 DEFUN (lgamma, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} gammaln (@var{x})
-@deftypefnx {} {} lgamma (@var{x})
+@deftypefn  {} {@var{y} =} gammaln (@var{x})
+@deftypefnx {} {@var{y} =} lgamma (@var{x})
 Return the natural logarithm of the gamma function of @var{x}.
+
+Programming Note: @code{lgamma} is an alias for @code{gammaln} and either name
+can be used in Octave.
 @seealso{gamma, gammainc}
 @end deftypefn */)
 {
@@ -1660,7 +1691,7 @@ Return the natural logarithm of the gamma function of @var{x}.
 
 /*
 %!test
-%! a = -1i*sqrt (-1/(6.4187*6.4187));
+%! a = -1i* sqrt (-1/(6.4187*6.4187));
 %! assert (gammaln (a), gammaln (real (a)));
 
 %!test
@@ -1669,7 +1700,7 @@ Return the natural logarithm of the gamma function of @var{x}.
 %! assert (gammaln (x), log (v), sqrt (eps));
 
 %!test
-%! a = single (-1i*sqrt (-1/(6.4187*6.4187)));
+%! a = single (-1i* sqrt (-1/(6.4187*6.4187)));
 %! assert (gammaln (a), gammaln (real (a)));
 
 %!test
@@ -1689,7 +1720,7 @@ Return the natural logarithm of the gamma function of @var{x}.
 
 DEFUN (log, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} log (@var{x})
+@deftypefn {} {@var{y} =} log (@var{x})
 Compute the natural logarithm,
 @tex
 $\ln{(x)},$
@@ -1714,7 +1745,8 @@ To compute the matrix logarithm, @pxref{Linear Algebra}.
 %!assert (log ([-0.5, -1.5, -2.5]), log ([0.5, 1.5, 2.5]) + pi*1i, sqrt (eps))
 
 %!assert (log (single ([1, e, e^2])), single ([0, 1, 2]), sqrt (eps ("single")))
-%!assert (log (single ([-0.5, -1.5, -2.5])), single (log ([0.5, 1.5, 2.5]) + pi*1i), 4*eps ("single"))
+%!assert (log (single ([-0.5, -1.5, -2.5])),
+%!        single (log ([0.5, 1.5, 2.5]) + pi*1i), 4* eps ("single"))
 
 %!error log ()
 %!error log (1, 2)
@@ -1722,7 +1754,7 @@ To compute the matrix logarithm, @pxref{Linear Algebra}.
 
 DEFUN (log10, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} log10 (@var{x})
+@deftypefn {} {@var{y} =} log10 (@var{x})
 Compute the base-10 logarithm of each element of @var{x}.
 @seealso{log, log2, logspace, exp}
 @end deftypefn */)
@@ -1735,7 +1767,8 @@ Compute the base-10 logarithm of each element of @var{x}.
 
 /*
 %!assert (log10 ([0.01, 0.1, 1, 10, 100]), [-2, -1, 0, 1, 2], sqrt (eps))
-%!assert (log10 (single ([0.01, 0.1, 1, 10, 100])), single ([-2, -1, 0, 1, 2]), sqrt (eps ("single")))
+%!assert (log10 (single ([0.01, 0.1, 1, 10, 100])),
+%!        single ([-2, -1, 0, 1, 2]), sqrt (eps ("single")))
 
 %!error log10 ()
 %!error log10 (1, 2)
@@ -1743,7 +1776,7 @@ Compute the base-10 logarithm of each element of @var{x}.
 
 DEFUN (log1p, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} log1p (@var{x})
+@deftypefn {} {@var{y} =} log1p (@var{x})
 Compute
 @tex
 $\ln{(1 + x)}$
@@ -1778,7 +1811,7 @@ accurately in the neighborhood of zero.
 
 DEFUN (real, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} real (@var{z})
+@deftypefn {} {@var{x} =} real (@var{z})
 Return the real part of @var{z}.
 @seealso{imag, conj}
 @end deftypefn */)
@@ -1806,7 +1839,7 @@ Return the real part of @var{z}.
 
 DEFUN (round, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} round (@var{x})
+@deftypefn {} {@var{y} =} round (@var{x})
 Return the integer nearest to @var{x}.
 
 If @var{x} is complex, return
@@ -1851,7 +1884,7 @@ round ([-2.7, 2.7])
 
 DEFUN (roundb, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} roundb (@var{x})
+@deftypefn {} {@var{y} =} roundb (@var{x})
 Return the integer nearest to @var{x}.  If there are two nearest
 integers, return the even one (banker's rounding).
 
@@ -1891,7 +1924,7 @@ return @code{roundb (real (@var{x})) + roundb (imag (@var{x})) * I}.
 
 DEFUN (sign, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} sign (@var{x})
+@deftypefn {} {@var{y} =} sign (@var{x})
 Compute the @dfn{signum} function.
 
 This is defined as
@@ -1943,7 +1976,7 @@ whether zero is signed, use the @code{signbit} function.
 
 DEFUNX ("signbit", Fsignbit, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} signbit (@var{x})
+@deftypefn {} {@var{y} =} signbit (@var{x})
 Return logical true if the value of @var{x} has its sign bit set and false
 otherwise.
 
@@ -1982,7 +2015,7 @@ but @code{signbit (-0.0)} will return a nonzero value.
 
 DEFUN (sin, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} sin (@var{x})
+@deftypefn {} {@var{y} =} sin (@var{x})
 Compute the sine for each element of @var{x} in radians.
 @seealso{asin, sind, sinh}
 @end deftypefn */)
@@ -2014,7 +2047,7 @@ Compute the sine for each element of @var{x} in radians.
 
 DEFUN (sinh, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} sinh (@var{x})
+@deftypefn {} {@var{y} =} sinh (@var{x})
 Compute the hyperbolic sine for each element of @var{x}.
 @seealso{asinh, cosh, tanh}
 @end deftypefn */)
@@ -2042,7 +2075,7 @@ Compute the hyperbolic sine for each element of @var{x}.
 
 DEFUN (sqrt, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} sqrt (@var{x})
+@deftypefn {} {@var{y} =} sqrt (@var{x})
 Compute the square root of each element of @var{x}.
 
 If @var{x} is negative, a complex result is returned.
@@ -2061,12 +2094,16 @@ To compute the matrix square root, @pxref{Linear Algebra}.
 %!assert (sqrt (4), 2)
 %!assert (sqrt (-1), i)
 %!assert (sqrt (1+i), exp (0.5 * log (1+i)), sqrt (eps))
-%!assert (sqrt ([4, -4; i, 1-i]), [2, 2i; exp(0.5 * log (i)), exp(0.5 * log (1-i))], sqrt (eps))
+%!assert (sqrt ([4, -4; i, 1-i]),
+%!        [2, 2i; exp(0.5 * log (i)), exp(0.5 * log (1-i))], sqrt (eps))
 
 %!assert (sqrt (single (4)), single (2))
 %!assert (sqrt (single (-1)), single (i))
-%!assert (sqrt (single (1+i)), single (exp (0.5 * log (1+i))), sqrt (eps ("single")))
-%!assert (sqrt (single ([4, -4; i, 1-i])), single ([2, 2i; exp(0.5 * log (i)), exp(0.5 * log (1-i))]), sqrt (eps ("single")))
+%!assert (sqrt (single (1+i)),
+%!        single (exp (0.5 * log (1+i))), sqrt (eps ("single")))
+%!assert (sqrt (single ([4, -4; i, 1-i])),
+%!        single ([2, 2i; exp(0.5 * log (i)), exp(0.5 * log (1-i))]),
+%!        sqrt (eps ("single")))
 
 %!error sqrt ()
 %!error sqrt (1, 2)
@@ -2074,7 +2111,7 @@ To compute the matrix square root, @pxref{Linear Algebra}.
 
 DEFUN (tan, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} tan (@var{z})
+@deftypefn {} {@var{y} =} tan (@var{z})
 Compute the tangent for each element of @var{x} in radians.
 @seealso{atan, tand, tanh}
 @end deftypefn */)
@@ -2106,7 +2143,7 @@ Compute the tangent for each element of @var{x} in radians.
 
 DEFUN (tanh, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} tanh (@var{x})
+@deftypefn {} {@var{y} =} tanh (@var{x})
 Compute hyperbolic tangent for each element of @var{x}.
 @seealso{atanh, sinh, cosh}
 @end deftypefn */)
@@ -2132,10 +2169,10 @@ Compute hyperbolic tangent for each element of @var{x}.
 %!error tanh (1, 2)
 */
 
-DEFUNX ("tolower", Ftolower, args, ,
-        doc: /* -*- texinfo -*-
-@deftypefn  {} {} tolower (@var{s})
-@deftypefnx {} {} lower (@var{s})
+DEFUN (lower, args, ,
+       doc: /* -*- texinfo -*-
+@deftypefn  {} {@var{y} =} lower (@var{s})
+@deftypefnx {} {@var{y} =} tolower (@var{s})
 Return a copy of the string or cell string @var{s}, with each uppercase
 character replaced by the corresponding lowercase one; non-alphabetic
 characters are left unchanged.
@@ -2144,11 +2181,15 @@ For example:
 
 @example
 @group
-tolower ("MiXeD cAsE 123")
-      @result{} "mixed case 123"
+lower ("MiXeD cAsE 123")
+    @result{} "mixed case 123"
 @end group
 @end example
-@seealso{toupper}
+
+Programming Note: @code{tolower} is an alias for @code{lower} and either name
+can be used in Octave.
+
+@seealso{upper}
 @end deftypefn */)
 {
   if (args.length () != 1)
@@ -2157,22 +2198,24 @@ tolower ("MiXeD cAsE 123")
   return ovl (args(0).xtolower ());
 }
 
-DEFALIAS (lower, tolower);
+DEFALIAS (tolower, lower);
 
 /*
-%!assert (tolower ("OCTAVE"), "octave")
-%!assert (tolower ("123OCTave! _&"), "123octave! _&")
-%!assert (tolower ({"ABC", "DEF", {"GHI", {"JKL"}}}), {"abc", "def", {"ghi", {"jkl"}}})
-%!assert (tolower (["ABC"; "DEF"]), ["abc"; "def"])
-%!assert (tolower ({["ABC"; "DEF"]}), {["abc";"def"]})
-%!assert (tolower (["ABCÄÖÜSS"; "abcäöüß"]), ["abcäöüss"; "abcäöüß"])
-%!assert (tolower (repmat ("ÄÖÜ", 2, 1, 3)), repmat ("äöü", 2, 1, 3))
-%!assert (tolower (68), 68)
-%!assert (tolower ({[68, 68; 68, 68]}), {[68, 68; 68, 68]})
-%!assert (tolower (68i), 68i)
-%!assert (tolower ({[68i, 68; 68, 68i]}), {[68i, 68; 68, 68i]})
-%!assert (tolower (single (68i)), single (68i))
-%!assert (tolower ({single([68i, 68; 68, 68i])}), {single([68i, 68; 68, 68i])})
+%!assert (lower ("OCTAVE"), "octave")
+%!assert (lower ("123OCTave! _&"), "123octave! _&")
+%!assert (lower ({"ABC", "DEF", {"GHI", {"JKL"}}}),
+%!        {"abc", "def", {"ghi", {"jkl"}}})
+%!assert (lower (["ABC"; "DEF"]), ["abc"; "def"])
+%!assert (lower ({["ABC"; "DEF"]}), {["abc";"def"]})
+%!assert (lower (["ABCÄÖÜSS"; "abcäöüß"]),
+%!        ["abcäöüss"; "abcäöüß"])
+%!assert (lower (repmat ("ÄÖÜ", 2, 1, 3)), repmat ("äöü", 2, 1, 3))
+%!assert (lower (68), 68)
+%!assert (lower ({[68, 68; 68, 68]}), {[68, 68; 68, 68]})
+%!assert (lower (68i), 68i)
+%!assert (lower ({[68i, 68; 68, 68i]}), {[68i, 68; 68, 68i]})
+%!assert (lower (single (68i)), single (68i))
+%!assert (lower ({single([68i, 68; 68, 68i])}), {single([68i, 68; 68, 68i])})
 
 %!test
 %! classes = {@char, @double, @single, ...
@@ -2180,28 +2223,28 @@ DEFALIAS (lower, tolower);
 %!            @uint8, @uint16, @uint32, @uint64};
 %! for i = 1:numel (classes)
 %!   cls = classes{i};
-%!   assert (class (tolower (cls (97))), class (cls (97)));
-%!   assert (class (tolower (cls ([98, 99]))), class (cls ([98, 99])));
+%!   assert (class (lower (cls (97))), class (cls (97)));
+%!   assert (class (lower (cls ([98, 99]))), class (cls ([98, 99])));
 %! endfor
 %!test
 %! a(3,3,3,3) = "D";
-%! assert (tolower (a)(3,3,3,3), "d");
+%! assert (lower (a)(3,3,3,3), "d");
 
 %!test
 %! charset = char (0:127);
 %! result = charset;
 %! result (double ("A":"Z") + 1) = result (double ("a":"z") + 1);
-%! assert (tolower (charset), result);
+%! assert (lower (charset), result);
 
-%!error <Invalid call to tolower> lower ()
-%!error <Invalid call to tolower> tolower ()
-%!error tolower (1, 2)
+%!error <Invalid call to lower> lower ()
+%!error <Invalid call to lower> tolower ()
+%!error lower (1, 2)
 */
 
-DEFUNX ("toupper", Ftoupper, args, ,
-        doc: /* -*- texinfo -*-
-@deftypefn  {} {} toupper (@var{s})
-@deftypefnx {} {} upper (@var{s})
+DEFUN (upper, args, ,
+       doc: /* -*- texinfo -*-
+@deftypefn  {} {@var{y} =} upper (@var{s})
+@deftypefnx {} {@var{y} =} toupper (@var{s})
 Return a copy of the string or cell string @var{s}, with each lowercase
 character replaced by the corresponding uppercase one; non-alphabetic
 characters are left unchanged.
@@ -2210,11 +2253,15 @@ For example:
 
 @example
 @group
-toupper ("MiXeD cAsE 123")
-      @result{} "MIXED CASE 123"
+upper ("MiXeD cAsE 123")
+    @result{} "MIXED CASE 123"
 @end group
 @end example
-@seealso{tolower}
+
+Programming Note: @code{toupper} is an alias for @code{upper} and either name
+can be used in Octave.
+
+@seealso{lower}
 @end deftypefn */)
 {
   if (args.length () != 1)
@@ -2223,23 +2270,25 @@ toupper ("MiXeD cAsE 123")
   return ovl (args(0).xtoupper ());
 }
 
-DEFALIAS (upper, toupper);
+DEFALIAS (toupper, upper);
 
 /*
-%!assert (toupper ("octave"), "OCTAVE")
-%!assert (toupper ("123OCTave! _&"), "123OCTAVE! _&")
-%!assert (toupper ({"abc", "def", {"ghi", {"jkl"}}}), {"ABC", "DEF", {"GHI", {"JKL"}}})
-%!assert (toupper (["abc"; "def"]), ["ABC"; "DEF"])
-%!assert (toupper ({["abc"; "def"]}), {["ABC";"DEF"]})
-%!assert (toupper (["ABCÄÖÜSS"; "abcäöüß"]), ["ABCÄÖÜSS"; "ABCÄÖÜSS"])
-%!assert (toupper (repmat ("äöü", 2, 1, 3)), repmat ("ÄÖÜ", 2, 1, 3))
-%!assert (toupper (100), 100)
-%!assert (toupper ({[100, 100; 100, 100]}), {[100, 100; 100, 100]})
-%!assert (toupper (100i), 100i)
-%!assert (toupper ({[100i, 100; 100, 100i]}), {[100i, 100; 100, 100i]})
-%!assert (toupper (single (100i)), single (100i))
-%!assert (toupper ({single([100i, 100; 100, 100i])}),
-%!                 {single([100i, 100; 100, 100i])})
+%!assert (upper ("octave"), "OCTAVE")
+%!assert (upper ("123OCTave! _&"), "123OCTAVE! _&")
+%!assert (upper ({"abc", "def", {"ghi", {"jkl"}}}),
+%!        {"ABC", "DEF", {"GHI", {"JKL"}}})
+%!assert (upper (["abc"; "def"]), ["ABC"; "DEF"])
+%!assert (upper ({["abc"; "def"]}), {["ABC";"DEF"]})
+%!assert (upper (["ABCÄÖÜSS"; "abcäöüß"]),
+%!        ["ABCÄÖÜSS"; "ABCÄÖÜSS"])
+%!assert (upper (repmat ("äöü", 2, 1, 3)), repmat ("ÄÖÜ", 2, 1, 3))
+%!assert (upper (100), 100)
+%!assert (upper ({[100, 100; 100, 100]}), {[100, 100; 100, 100]})
+%!assert (upper (100i), 100i)
+%!assert (upper ({[100i, 100; 100, 100i]}), {[100i, 100; 100, 100i]})
+%!assert (upper (single (100i)), single (100i))
+%!assert (upper ({single([100i, 100; 100, 100i])}),
+%!        {single([100i, 100; 100, 100i])})
 
 %!test
 %! classes = {@char, @double, @single, ...
@@ -2247,23 +2296,23 @@ DEFALIAS (upper, toupper);
 %!            @uint8, @uint16, @uint32, @uint64};
 %! for i = 1:numel (classes)
 %!   cls = classes{i};
-%!   assert (class (toupper (cls (97))), class (cls (97)));
-%!   assert (class (toupper (cls ([98, 99]))), class (cls ([98, 99])));
+%!   assert (class (upper (cls (97))), class (cls (97)));
+%!   assert (class (upper (cls ([98, 99]))), class (cls ([98, 99])));
 %! endfor
 %!test
 %! a(3,3,3,3) = "d";
-%! assert (toupper (a)(3,3,3,3), "D");
+%! assert (upper (a)(3,3,3,3), "D");
 %!test
 %! charset = char (0:127);
 %! result = charset;
 %! result (double  ("a":"z") + 1) = result (double  ("A":"Z") + 1);
-%! assert (toupper (charset), result);
+%! assert (upper (charset), result);
 
-%!error <Invalid call to toupper> toupper ()
-%!error <Invalid call to toupper> upper ()
-%!error toupper (1, 2)
+%!error <Invalid call to upper> upper ()
+%!error <Invalid call to upper> toupper ()
+%!error upper (1, 2)
 */
 
 DEFALIAS (gammaln, lgamma);
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

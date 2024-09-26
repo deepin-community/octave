@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -40,13 +40,13 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // scalar unary ops.
 
 DEFUNOP (not, float_scalar)
 {
-  const octave_float_scalar& v = dynamic_cast<const octave_float_scalar&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_scalar&, v, a);
   float x = v.float_value ();
   if (octave::math::isnan (x))
     octave::err_nan_to_logical_conversion ();
@@ -70,8 +70,8 @@ DEFBINOP_OP (mul, float_scalar, float_scalar, *)
 
 DEFBINOP (div, float_scalar, float_scalar)
 {
-  const octave_float_scalar& v1 = dynamic_cast<const octave_float_scalar&> (a1);
-  const octave_float_scalar& v2 = dynamic_cast<const octave_float_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_scalar&, v2, a2);
 
   return octave_value (v1.float_value () / v2.float_value ());
 }
@@ -80,8 +80,8 @@ DEFBINOP_FN (pow, float_scalar, float_scalar, xpow)
 
 DEFBINOP (ldiv, float_scalar, float_scalar)
 {
-  const octave_float_scalar& v1 = dynamic_cast<const octave_float_scalar&> (a1);
-  const octave_float_scalar& v2 = dynamic_cast<const octave_float_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_scalar&, v2, a2);
 
   return octave_value (v2.float_value () / v1.float_value ());
 }
@@ -97,8 +97,8 @@ DEFBINOP_OP (el_mul, float_scalar, float_scalar, *)
 
 DEFBINOP (el_div, float_scalar, float_scalar)
 {
-  const octave_float_scalar& v1 = dynamic_cast<const octave_float_scalar&> (a1);
-  const octave_float_scalar& v2 = dynamic_cast<const octave_float_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_scalar&, v2, a2);
 
   return octave_value (v1.float_value () / v2.float_value ());
 }
@@ -107,8 +107,8 @@ DEFBINOP_FN (el_pow, float_scalar, float_scalar, xpow)
 
 DEFBINOP (el_ldiv, float_scalar, float_scalar)
 {
-  const octave_float_scalar& v1 = dynamic_cast<const octave_float_scalar&> (a1);
-  const octave_float_scalar& v2 = dynamic_cast<const octave_float_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_scalar&, v2, a2);
 
   return octave_value (v2.float_value () / v1.float_value ());
 }
@@ -174,4 +174,4 @@ install_fs_fs_ops (octave::type_info& ti)
                          octave_float_matrix);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

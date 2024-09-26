@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,15 +28,14 @@
 
 class QWidget;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class MenuContainer
 {
+public:
+  virtual QWidget * menu () = 0;
+};
 
-  class MenuContainer
-  {
-  public:
-    virtual QWidget * menu (void) = 0;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

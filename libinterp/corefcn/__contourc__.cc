@@ -2,7 +2,7 @@
 //
 // Contour lines for function evaluated on a grid.
 //
-// Copyright (C) 2001-2022 The Octave Project Developers
+// Copyright (C) 2001-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -46,7 +46,7 @@
 #include "defun.h"
 #include "ov.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // FIXME: this looks like trouble...
 static Matrix this_contour;
@@ -71,7 +71,7 @@ add_point (double x, double y)
 // Add contents of current contour to contourc.
 // this_contour.cols () - 1;
 static void
-end_contour (void)
+end_contour ()
 {
   if (elem > 2)
     {
@@ -327,4 +327,4 @@ Calculate Z-level contours (isolines).
 %!assert (1)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

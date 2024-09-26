@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Basic Usage of Cell Arrays (GNU Octave (version 7.1.0))</title>
+<title>Basic Usage of Cell Arrays (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Basic Usage of Cell Arrays (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Basic Usage of Cell Arrays (GNU Octave (version 7.1.0))">
+<meta name="description" content="Basic Usage of Cell Arrays (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Basic Usage of Cell Arrays (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,10 @@
 <link href="Creating-Cell-Arrays.html" rel="next" title="Creating Cell Arrays">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,20 +31,20 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Basic-Usage-of-Cell-Arrays">
-<div class="header">
+<div class="subsection-level-extent" id="Basic-Usage-of-Cell-Arrays">
+<div class="nav-panel">
 <p>
 Next: <a href="Creating-Cell-Arrays.html" accesskey="n" rel="next">Creating Cell Arrays</a>, Up: <a href="Cell-Arrays.html" accesskey="u" rel="up">Cell Arrays</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Basic-Usage-of-Cell-Arrays-1"></span><h4 class="subsection">6.3.1 Basic Usage of Cell Arrays</h4>
-<span id="index-_007b"></span>
-<span id="index-_007d"></span>
+<h4 class="subsection" id="Basic-Usage-of-Cell-Arrays-1"><span>6.3.1 Basic Usage of Cell Arrays<a class="copiable-link" href="#Basic-Usage-of-Cell-Arrays-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-_007b"></a>
+<a class="index-entry-id" id="index-_007d"></a>
 <p>As an example, the following code creates a cell array containing a
 string and a 2-by-2 random matrix
 </p>
 <div class="example">
-<pre class="example">c = {&quot;a string&quot;, rand(2, 2)};
+<pre class="example-preformatted">c = {&quot;a string&quot;, rand(2, 2)};
 </pre></div>
 
 <p>To access the elements of a cell array, it can be indexed with the {
@@ -63,28 +52,28 @@ and } operators.  Thus, the variable created in the previous example
 can be indexed like this:
 </p>
 <div class="example">
-<pre class="example">c{1}
+<div class="group"><pre class="example-preformatted">c{1}
      &rArr; ans = a string
-</pre></div>
+</pre></div></div>
 
 <p>As with numerical arrays several elements of a cell array can be
 extracted by indexing with a vector of indexes
 </p>
 <div class="example">
-<pre class="example">c{1:2}
+<div class="group"><pre class="example-preformatted">c{1:2}
      &rArr; ans = a string
      &rArr; ans =
 
                0.593993   0.627732
                0.377037   0.033643
-</pre></div>
+</pre></div></div>
 
 <p>The indexing operators can also be used to insert or overwrite elements
 of a cell array.  The following code inserts the scalar 3 on the
 third place of the previously created cell array
 </p>
 <div class="example">
-<pre class="example">c{3} = 3
+<div class="group"><pre class="example-preformatted">c{3} = 3
      &rArr; c =
 
          {
@@ -96,26 +85,29 @@ third place of the previously created cell array
 
            [1,3] =  3
          }
-</pre></div>
+</pre></div></div>
 
-<p>Details on indexing cell arrays are explained in <a href="Indexing-Cell-Arrays.html">Indexing Cell Arrays</a>.
+<p>Details on indexing cell arrays are explained in <a class="ref" href="Indexing-Cell-Arrays.html">Indexing Cell Arrays</a>.
 </p>
 <p>In general nested cell arrays are displayed hierarchically as in the
 previous example.  In some circumstances it makes sense to reference
-them by their index, and this can be performed by the <code>celldisp</code>
+them by their index, and this can be performed by the <code class="code">celldisp</code>
 function.
 </p>
-<span id="XREFcelldisp"></span><dl class="def">
-<dt id="index-celldisp"><span class="category">: </span><span><em></em> <strong>celldisp</strong> <em>(<var>c</var>)</em><a href='#index-celldisp' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-celldisp-1"><span class="category">: </span><span><em></em> <strong>celldisp</strong> <em>(<var>c</var>, <var>name</var>)</em><a href='#index-celldisp-1' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFcelldisp"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-celldisp"><span class="category-def">: </span><span><strong class="def-name">celldisp</strong> <code class="def-code-arguments">(<var class="var">c</var>)</code><a class="copiable-link" href="#index-celldisp"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-celldisp-1"><span class="category-def">: </span><span><strong class="def-name">celldisp</strong> <code class="def-code-arguments">(<var class="var">c</var>, <var class="var">name</var>)</code><a class="copiable-link" href="#index-celldisp-1"> &para;</a></span></dt>
 <dd><p>Recursively display the contents of a cell array.
 </p>
-<p>By default the values are displayed with the name of the variable <var>c</var>.
-However, this name can be replaced with the variable <var>name</var>.  For
+<p>By default the values are displayed with the name of the variable <var class="var">c</var>.
+However, this name can be replaced with the variable <var class="var">name</var>.  For
 example:
 </p>
 <div class="example">
-<pre class="example">c = {1, 2, {31, 32}};
+<div class="group"><pre class="example-preformatted">c = {1, 2, {31, 32}};
 celldisp (c, &quot;b&quot;)
    &rArr;
       b{1} =
@@ -126,36 +118,39 @@ celldisp (c, &quot;b&quot;)
        31
       b{3}{2} =
        32
-</pre></div>
+</pre></div></div>
 
 
-<p><strong>See also:</strong> <a href="Terminal-Output.html#XREFdisp">disp</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Terminal-Output.html#XREFdisp">disp</a>.
 </p></dd></dl>
 
 
-<p>To test if an object is a cell array, use the <code>iscell</code>
+<p>To test if an object is a cell array, use the <code class="code">iscell</code>
 function.  For example:
 </p>
 <div class="example">
-<pre class="example">iscell (c)
+<div class="group"><pre class="example-preformatted">iscell (c)
      &rArr; ans = 1
 
 iscell (3)
      &rArr; ans = 0
 
-</pre></div>
+</pre></div></div>
 
-<span id="XREFiscell"></span><dl class="def">
-<dt id="index-iscell"><span class="category">: </span><span><em></em> <strong>iscell</strong> <em>(<var>x</var>)</em><a href='#index-iscell' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return true if <var>x</var> is a cell array object.
+<a class="anchor" id="XREFiscell"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-iscell"><span class="category-def">: </span><span><code class="def-type"><var class="var">tf</var> =</code> <strong class="def-name">iscell</strong> <code class="def-code-arguments">(<var class="var">x</var>)</code><a class="copiable-link" href="#index-iscell"> &para;</a></span></dt>
+<dd><p>Return true if <var class="var">x</var> is a cell array object.
 </p>
-<p><strong>See also:</strong> <a href="Predicates-for-Numeric-Objects.html#XREFismatrix">ismatrix</a>, <a href="Creating-Structures.html#XREFisstruct">isstruct</a>, <a href="Cell-Arrays-of-Strings.html#XREFiscellstr">iscellstr</a>, <a href="Built_002din-Data-Types.html#XREFisa">isa</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Predicates-for-Numeric-Objects.html#XREFismatrix">ismatrix</a>, <a class="ref" href="Creating-Structures.html#XREFisstruct">isstruct</a>, <a class="ref" href="Cell-Arrays-of-Strings.html#XREFiscellstr">iscellstr</a>, <a class="ref" href="Built_002din-Data-Types.html#XREFisa">isa</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Creating-Cell-Arrays.html">Creating Cell Arrays</a>, Up: <a href="Cell-Arrays.html">Cell Arrays</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

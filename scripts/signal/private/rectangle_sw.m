@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,19 +24,21 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} rectangle_sw (@var{n}, @var{b})
-## Rectangular spectral window.  Subfunction used for spectral density
-## estimation.
+## @deftypefn {} {@var{c} =} rectangle_sw (@var{n}, @var{b})
+## Rectangular spectral window.
+##
+## Subfunction used for spectral density estimation.
+## @seealso{spectral_xdf}
 ## @end deftypefn
 
-function retval = rectangle_sw (n, b)
+function c = rectangle_sw (n, b)
 
-  retval = zeros (n, 1);
-  retval(1) = 2 / b + 1;
+  c = zeros (n, 1);
+  c(1) = 2 / b + 1;
 
   l = (2:n)' - 1;
   l = 2 * pi * l / n;
 
-  retval(2:n) = sin ((2/b + 1) * l / 2) ./ sin (l / 2);
+  c(2:n) = sin ((2/b + 1) * l / 2) ./ sin (l / 2);
 
 endfunction

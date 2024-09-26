@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} date ()
+## @deftypefn {} {@var{str} =} date ()
 ## Return the current date as a character string in the form DD-MMM-YYYY@.
 ##
 ## For example:
@@ -38,9 +38,9 @@
 ## @seealso{now, clock, datestr, localtime}
 ## @end deftypefn
 
-function retval = date ()
+function str = date ()
 
-  retval = strftime ("%d-%b-%Y", localtime (time ()));
+  str = strftime ("%d-%b-%Y", localtime (time ()));
 
 endfunction
 

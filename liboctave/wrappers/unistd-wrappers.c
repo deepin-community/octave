@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -148,20 +148,6 @@ octave_execv_wrapper (const char *file, char *const *argv)
 
   int status = _wspawnv (P_WAIT, wfile, wargv+1);
 
-#    if 0
-  // Code snippet from gnulib execute.c
-
-  // Executing arbitrary files as shell scripts is unsecure.
-  if (status == -1 && errno == ENOEXEC)
-    {
-      // prog is not a native executable.  Try to execute it as a
-      // shell script.  Note that prepare_spawn() has already prepended
-      // a hidden element "sh.exe" to argv.
-      argv[1] = prog_path;
-      status = _wspawnv (P_WAIT, wargv[0], wargv);
-    }
-#    endif
-
   // This happens when the spawned child process terminates.
 
   free (wfile);
@@ -194,7 +180,11 @@ octave_execv_wrapper (const char *file, char *const *argv)
 int
 octave_execvp_wrapper (const char *file, char *const *argv)
 {
+#if defined (OCTAVE_USE_WINDOWS_API)
+  return execvp (file, (const char *const *) argv);
+#else
   return execvp (file, argv);
+#endif
 }
 
 pid_t
@@ -380,8 +370,16 @@ octave_unlink_wrapper (const char *nm)
 {
 #if defined (OCTAVE_USE_WINDOWS_API)
   wchar_t *wnm = u8_to_wchar (nm);
+
+  // _wunlink fails on files with the read-only flag set. Try to un-set it.
+  DWORD file_attributes = GetFileAttributesW (wnm);
+  if (file_attributes != INVALID_FILE_ATTRIBUTES
+      && file_attributes & FILE_ATTRIBUTE_READONLY)
+    SetFileAttributesW (wnm, file_attributes & ~FILE_ATTRIBUTE_READONLY);
+
   int status = _wunlink (wnm);
   free ((void *) wnm);
+
   return status;
 #else
   return unlink (nm);

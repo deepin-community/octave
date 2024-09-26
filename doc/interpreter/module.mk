@@ -271,7 +271,13 @@ if AMCOND_BUILD_QT_DOCS
 
 endif
 
-$(srcdir)/%reldir%/octave.info: %reldir%/octave.texi $(srcdir)/%reldir%/version-octave.texi
+# Create a version file where EDITION variable only holds MAJOR number
+$(srcdir)/%reldir%/octave-doc-version.texi: $(srcdir)/%reldir%/version-octave.texi
+	$(AM_V_GEN)rm -f $@-t $@ ; \
+	$(SED) 's#\(@set EDITION [0-9]\+\)\..*$$#\1#' $(srcdir)/%reldir%/version-octave.texi > $@-t ; \
+	mv $@-t $@
+
+$(srcdir)/%reldir%/octave.info: %reldir%/octave.texi $(srcdir)/%reldir%/octave-doc-version.texi
 	$(AM_V_MAKEINFO)restore=: && backupdir="$(am__leading_dot)am$$$$" && \
 	am__cwd=`pwd` && $(am__cd) $(srcdir) && \
 	rm -rf $$backupdir && mkdir $$backupdir && \
@@ -293,13 +299,13 @@ $(srcdir)/%reldir%/octave.info: %reldir%/octave.texi $(srcdir)/%reldir%/version-
 	fi; \
 	rm -rf $$backupdir; exit $$rc
 
-%reldir%/octave.dvi: %reldir%/octave.texi $(srcdir)/%reldir%/version-octave.texi | %reldir%/$(am__dirstamp)
+%reldir%/octave.dvi: %reldir%/octave.texi $(srcdir)/%reldir%/octave-doc-version.texi | %reldir%/$(am__dirstamp)
 	$(AM_V_TEXI2DVI)TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
 	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS) -I doc/interpreter -I $(srcdir)/doc/interpreter' \
 	$(TEXI2DVI) $(AM_V_texinfo) --build-dir=$(@:.dvi=.t2d) -o $@ $(AM_V_texidevnull) \
 	`test -f '%reldir%/octave.texi' || echo '$(abs_top_srcdir)/'`%reldir%/octave.texi
 
-%reldir%/octave.pdf: %reldir%/octave.texi $(srcdir)/%reldir%/version-octave.texi | %reldir%/$(am__dirstamp)
+%reldir%/octave.pdf: %reldir%/octave.texi $(srcdir)/%reldir%/octave-doc-version.texi | %reldir%/$(am__dirstamp)
 	$(AM_V_TEXI2PDF)TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
 	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS) -I doc/interpreter -I $(abs_top_srcdir)/doc/interpreter' \
 	$(TEXI2PDF) $(AM_V_texinfo) --build-dir=$(@:.pdf=.t2p) -o $@ $(AM_V_texidevnull) \
@@ -307,7 +313,7 @@ $(srcdir)/%reldir%/octave.info: %reldir%/octave.texi $(srcdir)/%reldir%/version-
 
 %reldir%/octave.html: $(OCTAVE_HTML_STAMP)
 
-$(OCTAVE_HTML_STAMP): %reldir%/octave.texi $(srcdir)/%reldir%/version-octave.texi | %reldir%/$(am__dirstamp)
+$(OCTAVE_HTML_STAMP): %reldir%/octave.texi $(srcdir)/%reldir%/octave-doc-version.texi | %reldir%/$(am__dirstamp)
 	$(AM_V_MAKEINFO)rm -rf $(OCTAVE_HTML_DIR)
 	$(AM_V_at)if $(MAKEINFOHTML) $(AM_MAKEINFOHTMLFLAGS) $(MAKEINFOFLAGS) \
 	 -I doc/interpreter -I $(abs_top_srcdir)/doc/interpreter \
@@ -346,7 +352,6 @@ endif
 doc_EXTRA_DIST += \
   $(BUILT_OCTAVE_TEXI_SRC) \
   $(srcdir)/%reldir%/octave.info \
-  %reldir%/TODO \
   %reldir%/doc-cache \
   %reldir%/octave.dvi \
   %reldir%/octave.ps \
@@ -364,7 +369,6 @@ doc-interpreter-dist-hook:
 	@$(GREP) '#define HAVE_CHOLMOD 1' $(top_builddir)/config.h > /dev/null || { echo "Documentation creation requires missing CHOLMOD library.  Cannot package distribution!" ; exit 1; }
 	@$(GREP) '#define HAVE_UMFPACK 1' $(top_builddir)/config.h > /dev/null || { echo "Documentation creation requires missing UMFPACK library.  Cannot package distribution!" ; exit 1; }
 	@$(GREP) '#define HAVE_QHULL 1' $(top_builddir)/config.h > /dev/null || { echo "Documentation creation requires missing QHULL library.  Cannot package distribution!" ; exit 1; }
-	@$(GREP) '#define HAVE_QT_OFFSCREEN 1' $(top_builddir)/config.h > /dev/null || { echo "Documentation creation requires Qt offscreen OpenGL rendering.  Cannot package distribution!" ; exit 1; }
 
 $(MUNGED_TEXI_SRC): $(DOCSTRING_FILES)
 
@@ -421,6 +425,7 @@ doc_EXTRA_DIST += \
   %reldir%/mk-qthelp.pl \
   %reldir%/mkcontrib.awk \
   %reldir%/munge-texi.pl \
+  %reldir%/octave-doc-version.texi \
   $(DOC_IMAGES) \
   $(DOC_IMAGES_SRC) \
   $(LOGOS) \
@@ -428,6 +433,7 @@ doc_EXTRA_DIST += \
 
 doc_MAINTAINERCLEANFILES += \
   AUTHORS \
+  %reldir%/octave-doc-version.texi \
   $(BUILT_DOC_IMAGES) \
   $(BUILT_OCTAVE_TEXI_SRC) \
   $(OCTAVE_QTHELP_FILES)
@@ -469,6 +475,16 @@ octetc_DATA += \
 	rm -f $@-t $@
 	-cd $(srcdir)/%reldir%; $(PERL) ./doccheck/mk_undocumented_list > $(@F)-t
 	mv $@-t $@
+	[ -s $@ ] || rm -f $@
+	@cd $(srcdir)/%reldir% ; \
+	if ls undocumented_list >/dev/null 2>&1 ; then \
+		echo "Undocumented function check failed"; \
+		echo "Review doc/interpreter/undocumented_list"; \
+		exit 1 ; \
+	else \
+		echo "Undocumented function check passed"; \
+	fi
+
 .PHONY: %reldir%/undocumented_list
 
 SPELLCHECK_FILES = $(MUNGED_TEXI_SRC:.texi=.scheck)

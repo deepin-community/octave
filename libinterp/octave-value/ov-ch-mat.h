@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -53,7 +53,7 @@ octave_char_matrix : public octave_base_matrix<charNDArray>
 {
 protected:
 
-  octave_char_matrix (void)
+  octave_char_matrix ()
     : octave_base_matrix<charNDArray> () { }
 
   octave_char_matrix (const charMatrix& chm)
@@ -82,21 +82,21 @@ protected:
 
 public:
 
-  ~octave_char_matrix (void) = default;
+  ~octave_char_matrix () = default;
 
-  octave_base_value * clone (void) const
+  octave_base_value * clone () const
   { return new octave_char_matrix (*this); }
-  octave_base_value * empty_clone (void) const
+  octave_base_value * empty_clone () const
   { return new octave_char_matrix (); }
 
   octave::idx_vector index_vector (bool require_integers = false) const;
 
-  builtin_type_t builtin_type (void) const { return btyp_char; }
+  builtin_type_t builtin_type () const { return btyp_char; }
 
-  bool is_char_matrix (void) const { return true; }
-  bool is_real_matrix (void) const { return true; }
+  bool is_char_matrix () const { return true; }
+  bool is_real_matrix () const { return true; }
 
-  bool isreal (void) const { return true; }
+  bool isreal () const { return true; }
 
   double double_value (bool = false) const;
 
@@ -112,54 +112,54 @@ public:
   octave_uint64 uint64_scalar_value () const;
 
   Matrix matrix_value (bool = false) const
-  { return Matrix (charMatrix (matrix)); }
+  { return Matrix (charMatrix (m_matrix)); }
 
   FloatMatrix float_matrix_value (bool = false) const
-  { return FloatMatrix (charMatrix (matrix)); }
+  { return FloatMatrix (charMatrix (m_matrix)); }
 
   NDArray array_value (bool = false) const
-  { return NDArray (matrix); }
+  { return NDArray (m_matrix); }
 
   FloatNDArray float_array_value (bool = false) const
-  { return FloatNDArray (matrix); }
+  { return FloatNDArray (m_matrix); }
 
   Complex complex_value (bool = false) const;
 
   FloatComplex float_complex_value (bool = false) const;
 
   ComplexMatrix complex_matrix_value (bool = false) const
-  { return ComplexMatrix (charMatrix (matrix)); }
+  { return ComplexMatrix (charMatrix (m_matrix)); }
 
   FloatComplexMatrix float_complex_matrix_value (bool = false) const
-  { return FloatComplexMatrix (charMatrix (matrix)); }
+  { return FloatComplexMatrix (charMatrix (m_matrix)); }
 
   ComplexNDArray complex_array_value (bool = false) const
-  { return ComplexNDArray (matrix); }
+  { return ComplexNDArray (m_matrix); }
 
   FloatComplexNDArray float_complex_array_value (bool = false) const
-  { return FloatComplexNDArray (matrix); }
+  { return FloatComplexNDArray (m_matrix); }
 
   charMatrix char_matrix_value (bool = false) const
-  { return charMatrix (matrix); }
+  { return charMatrix (m_matrix); }
 
   charNDArray char_array_value (bool = false) const
-  { return matrix; }
+  { return m_matrix; }
 
   octave_value convert_to_str_internal (bool, bool, char type) const
-  { return octave_value (matrix, type); }
+  { return octave_value (m_matrix, type); }
 
-  octave_value as_double (void) const;
-  octave_value as_single (void) const;
+  octave_value as_double () const;
+  octave_value as_single () const;
 
-  octave_value as_int8 (void) const;
-  octave_value as_int16 (void) const;
-  octave_value as_int32 (void) const;
-  octave_value as_int64 (void) const;
+  octave_value as_int8 () const;
+  octave_value as_int16 () const;
+  octave_value as_int32 () const;
+  octave_value as_int64 () const;
 
-  octave_value as_uint8 (void) const;
-  octave_value as_uint16 (void) const;
-  octave_value as_uint32 (void) const;
-  octave_value as_uint64 (void) const;
+  octave_value as_uint8 () const;
+  octave_value as_uint16 () const;
+  octave_value as_uint32 () const;
+  octave_value as_uint64 () const;
 
   void print_raw (std::ostream& os, bool pr_as_read_syntax = false) const;
 

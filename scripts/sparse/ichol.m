@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -182,7 +182,7 @@ function L = ichol (A, opts = struct ())
   if (! isfield (opts, "type"))
     opts.type = "nofill";  # set default
   else
-    type = tolower (getfield (opts, "type"));
+    type = lower (getfield (opts, "type"));
     if (! strcmp (type, "nofill") && ! strcmp (type, "ict"))
       error ('ichol: TYPE must be "nofill" or "ict"');
     endif
@@ -202,7 +202,7 @@ function L = ichol (A, opts = struct ())
   if (! isfield (opts, "michol"))
     opts.michol = "off";   # set default
   else
-    michol = tolower (getfield (opts, "michol"));
+    michol = lower (getfield (opts, "michol"));
     if (! strcmp (michol, "off") && ! strcmp (michol, "on"))
       error ('ichol: MICHOL must be "on" or "off"');
     endif
@@ -221,7 +221,7 @@ function L = ichol (A, opts = struct ())
   if (! isfield (opts, "shape"))
     opts.shape = "lower";  # set default
   else
-    shape = tolower (getfield (opts, "shape"));
+    shape = lower (getfield (opts, "shape"));
     if (! strcmp (shape, "lower") && ! strcmp (shape, "upper"))
       error ('ichol: SHAPE must be "lower" or "upper"');
     endif
@@ -364,7 +364,7 @@ endfunction
 
 ## ICHOLT tests
 
-#%!test
+%!#test
 %! opts.type = "ict";
 %! opts.droptol = 1e-1;
 %! opts.michol = "off";
@@ -376,8 +376,8 @@ endfunction
 %! opts.shape = "lower";
 %! L = ichol (A1, opts);
 %! assert (norm (A1 - L * L', "fro") / norm (A1, "fro"), 0.2065, 1e-4);
-%!
-#%!test
+
+%!#test
 %! opts.type = "ict";
 %! opts.droptol = 1e-1;
 %! opts.michol = "on";
@@ -390,7 +390,7 @@ endfunction
 %! opts.diagcomp = 3e-3;
 %! L = ichol (A1, opts);
 %! assert (norm (A1 - L * L', "fro") / norm (A1, "fro"), 0.3266, 1e-4);
-%!
+
 %!test
 %! opts.type = "ict";
 %! opts.droptol = 1e-1;
@@ -400,7 +400,7 @@ endfunction
 %! opts.michol = "on";
 %! L = ichol (A2, opts);
 %! assert (norm (A2 - L*L', "fro") / norm (A2, "fro"), 0.2377, 1e-4);
-%!
+
 %!test
 %! opts.type = "ict";
 %! opts.droptol = 1e-1;
@@ -410,7 +410,7 @@ endfunction
 %! opts.michol = "on";
 %! L = ichol (A3, opts);
 %! assert (norm (A3 - L*L', "fro") / norm (A3, "fro"), eps, eps);
-%!
+
 %!test
 %! opts.type = "ict";
 %! opts.droptol = 1e-1;
@@ -420,7 +420,7 @@ endfunction
 %! opts.michol = "on";
 %! L = ichol (A4, opts);
 %! assert (norm (A4 - L*L', "fro") / norm (A4, "fro"), 0.2118, 1e-4);
-%!
+
 %!test
 %! opts.type = "ict";
 %! opts.droptol = 1e-1;

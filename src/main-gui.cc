@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -36,6 +36,8 @@
 #  include <vector>
 #  include <locale>
 #  include <codecvt>
+#  include <windows.h>
+#  include <versionhelpers.h>
 #endif
 
 #include "liboctave-build-info.h"
@@ -50,9 +52,10 @@
 #include "octave-build-info.h"
 #include "qt-application.h"
 #include "sysdep.h"
+#include "version.h"
 
 static void
-check_hg_versions (void)
+check_hg_versions ()
 {
   bool ok = true;
 
@@ -118,6 +121,20 @@ wmain (int argc, wchar_t **wargv)
     argv[i_arg] = &argv_str[i_arg][0];
   argv[argc] = nullptr;
 
+  unsigned int old_console_codepage = 0;
+  unsigned int old_console_output_codepage = 0;
+
+  if (IsWindows7OrGreater ())
+    {
+      // save old console input and output codepages
+      old_console_codepage = GetConsoleCP ();
+      old_console_output_codepage = GetConsoleOutputCP ();
+
+      // set console input and output codepages to UTF-8
+      SetConsoleCP (65001);
+      SetConsoleOutputCP (65001);
+    }
+
 #else
 int
 main (int argc, char **argv)
@@ -127,7 +144,21 @@ main (int argc, char **argv)
 
   octave::sys::env::set_program_name (argv[0]);
 
-  octave::qt_application app (argc, argv);
+  octave::qt_application app ("octave", "octave-gui", OCTAVE_VERSION,
+                              argc, argv);
 
-  return app.execute ();
+  int ret = app.execute ();
+
+#if defined (OCTAVE_USE_WINDOWS_API) && defined (_UNICODE)
+  if (IsWindows7OrGreater ())
+    {
+      // restore previous console input and output codepages
+      if (old_console_codepage)
+        SetConsoleCP (old_console_codepage);
+      if (old_console_output_codepage)
+        SetConsoleOutputCP (old_console_output_codepage);
+    }
+#endif
+
+  return ret;
 }

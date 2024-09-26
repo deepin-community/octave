@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2006-2022 The Octave Project Developers
+// Copyright (C) 2006-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -52,7 +52,7 @@
 #include "unwind-prot.h"
 #include "url-handle-manager.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFMETHOD (__ftp__, interp, args, ,
            doc: /* -*- texinfo -*-
@@ -82,7 +82,7 @@ Undocumented internal function
 
 DEFMETHOD (__ftp_pwd__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __ftp_pwd__ (@var{handle})
+@deftypefn {} {@var{pwd} =} __ftp_pwd__ (@var{handle})
 Undocumented internal function
 @end deftypefn */)
 {
@@ -102,10 +102,8 @@ DEFMETHOD (__ftp_cwd__, interp, args, ,
 Undocumented internal function
 @end deftypefn */)
 {
-  int nargin = args.length ();
-
   std::string path = "";
-  if (nargin > 1)
+  if (args.length () > 1)
     path = args(1).xstring_value ("__ftp_cwd__: PATH must be a string");
 
   url_handle_manager& uhm = interp.get_url_handle_manager ();
@@ -122,7 +120,8 @@ Undocumented internal function
 
 DEFMETHOD (__ftp_dir__, interp, args, nargout,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __ftp_dir__ (@var{handle})
+@deftypefn  {} {} __ftp_dir__ (@var{handle})
+@deftypefnx {} {@var{S} =} __ftp_dir__ (@var{handle})
 Undocumented internal function
 @end deftypefn */)
 {
@@ -248,7 +247,7 @@ Undocumented internal function
 
 DEFMETHOD (__ftp_mode__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __ftp_mode__ (@var{handle})
+@deftypefn {} {@var{mode} =} __ftp_mode__ (@var{handle})
 Undocumented internal function
 @end deftypefn */)
 {
@@ -345,7 +344,8 @@ Undocumented internal function
 
 DEFMETHOD (__ftp_mput__, interp, args, nargout,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __ftp_mput__ (@var{handle}, @var{files})
+@deftypefn  {} {} __ftp_mput__ (@var{handle}, @var{files})
+@deftypefnx {} {@var{filelist} =} __ftp_mput__ (@var{handle}, @var{files})
 Undocumented internal function
 @end deftypefn */)
 {
@@ -367,12 +367,10 @@ Undocumented internal function
     {
       std::string file = files(i);
 
-      sys::file_stat fs (file);
-
-      if (! fs.exists ())
+      if (! sys::file_exists (file))
         error ("__ftp__mput: file does not exist");
 
-      if (fs.is_dir ())
+      if (sys::dir_exists (file))
         {
           file_list.append (url_xfer.mput_directory ("", file));
 
@@ -384,7 +382,7 @@ Undocumented internal function
           // FIXME: Does ascii mode need to be flagged here?
           std::ifstream ifile =
             sys::ifstream (file.c_str (),
-                                   std::ios::in | std::ios::binary);
+                           std::ios::in | std::ios::binary);
 
           if (! ifile.is_open ())
             error ("__ftp_mput__: unable to open file");
@@ -413,13 +411,11 @@ DEFMETHOD (__ftp_mget__, interp, args, ,
 Undocumented internal function
 @end deftypefn */)
 {
-  int nargin = args.length ();
-
   std::string file = args(1).xstring_value ("__ftp_mget__: PATTERN must be a string");
 
   std::string target;
 
-  if (nargin == 3 && ! args(2).isempty ())
+  if (args.length () == 3 && ! args(2).isempty ())
     target = args(2).xstring_value ("__ftp_mget__: TARGET must be a string")
              + sys::file_ops::dir_sep_str ();
 
@@ -452,7 +448,7 @@ Undocumented internal function
             {
               std::ofstream ofile =
                 sys::ofstream ((target + sv(i)).c_str (),
-                                       std::ios::out | std::ios::binary);
+                               std::ios::out | std::ios::binary);
 
               if (! ofile.is_open ())
                 error ("__ftp_mget__: unable to open file");
@@ -479,4 +475,4 @@ Undocumented internal function
   return ovl ();
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // or <https://octave.org/copyright/>.
@@ -77,104 +77,102 @@ class QLabel;
 class QLineEdit;
 class QPushButton;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class file_editor;
+
+class find_dialog : public QDialog
 {
-  class base_qobject;
-  class file_editor;
+  Q_OBJECT
 
-  class find_dialog : public QDialog
-  {
-    Q_OBJECT
+public:
 
-  public:
+  find_dialog (octave_dock_widget *ed, QWidget *p);
 
-    find_dialog (base_qobject& oct_qobj, octave_dock_widget *ed, QWidget *p);
+  //! Set dialog visible or not and storing the new visibility state
+  void set_visible (bool visible);
 
-    //! Set dialog visible or not and storing the new visibility state
-    void set_visible (bool visible);
+  //! Init the search text with the selected text in the editor tab
+  void init_search_text ();
 
-    //! Init the search text with the selected text in the editor tab
-    void init_search_text (void);
+  //! Restore position and the search options from the given settings
+  //! where def_pos is the default position suitable for the current
+  //! editor position
+  void restore_settings (QPoint def_pos);
 
-    //! Restore position and the search options from the given settings
-    //! where def_pos is the default position suitable for the current
-    //! editor position
-    void restore_settings (QPoint def_pos);
+public slots:
 
-  public slots:
+  void find_next ();
+  void find_prev ();
 
-    void find_next (void);
-    void find_prev (void);
+  //! Slot for updating the edit area when the active tab has changed
+  void update_edit_area (octave_qscintilla *);
 
-    //! Slot for updating the edit area when the active tab has changed
-    void update_edit_area (octave_qscintilla *);
+private slots:
 
-  private slots:
+  void handle_sel_search_changed (int);
+  void handle_selection_changed (bool has_selected);
 
-    void handle_sel_search_changed (int);
-    void handle_selection_changed (bool has_selected);
+  void handle_backward_search_changed (int);
 
-    void handle_backward_search_changed (int);
+  void find (bool forward = true);
+  void replace ();
+  void replace_all ();
 
-    void find (bool forward = true);
-    void replace (void);
-    void replace_all (void);
+private:
 
-  private:
+  //! Save position and the search options in the given settings
+  void save_settings ();
 
-    base_qobject& m_octave_qobj;
+  //! Reimplemented slot: close instead of hiding
+  void reject ();
 
-    //! Save position and the search options in the given settings
-    void save_settings ();
+  //! Reimplemented close event
+  void closeEvent (QCloseEvent *e);
 
-    //! Reimplemented slot: close instead of hiding
-    void reject ();
+  //! Update mru lists with new entry
+  void mru_update (QComboBox *mru);
 
-    //! Reimplemented close event
-    void closeEvent (QCloseEvent *e);
+  void no_matches_message ();
+  void do_replace ();
 
-    //! Update mru lists with new entry
-    void mru_update (QComboBox *mru);
+  void handle_search_text_changed ();
+  void handle_replace_text_changed ();
 
-    void no_matches_message (void);
-    void do_replace (void);
+  octave_dock_widget *m_editor;
 
-    void handle_search_text_changed (void);
-    void handle_replace_text_changed (void);
+  QLabel *m_search_label;
+  QComboBox *m_search_line_edit;
+  QLabel *m_replace_label;
+  QComboBox *m_replace_line_edit;
+  QCheckBox *m_case_check_box;
+  QCheckBox *m_from_start_check_box;
+  QCheckBox *m_wrap_check_box;
+  QCheckBox *m_whole_words_check_box;
+  QCheckBox *m_regex_check_box;
+  QCheckBox *m_search_selection_check_box;
+  QCheckBox *m_backward_check_box;
+  QDialogButtonBox *m_button_box;
+  QPushButton *m_find_next_button;
+  QPushButton *m_find_prev_button;
+  QPushButton *m_replace_button;
+  QPushButton *m_replace_all_button;
+  QPushButton *m_more_button;
+  QWidget *m_extension;
+  octave_qscintilla *m_edit_area;
+  bool m_find_result_available;
+  int m_rep_all;
+  bool m_rep_active;
 
-    octave_dock_widget *m_editor;
+  bool m_in_sel;
+  int m_sel_beg;
+  int m_sel_end;
 
-    QLabel *m_search_label;
-    QComboBox *m_search_line_edit;
-    QLabel *m_replace_label;
-    QComboBox *m_replace_line_edit;
-    QCheckBox *m_case_check_box;
-    QCheckBox *m_from_start_check_box;
-    QCheckBox *m_wrap_check_box;
-    QCheckBox *m_whole_words_check_box;
-    QCheckBox *m_regex_check_box;
-    QCheckBox *m_search_selection_check_box;
-    QCheckBox *m_backward_check_box;
-    QDialogButtonBox *m_button_box;
-    QPushButton *m_find_next_button;
-    QPushButton *m_find_prev_button;
-    QPushButton *m_replace_button;
-    QPushButton *m_replace_all_button;
-    QPushButton *m_more_button;
-    QWidget *m_extension;
-    octave_qscintilla *m_edit_area;
-    bool m_find_result_available;
-    int m_rep_all;
-    bool m_rep_active;
+  QPoint m_last_position;
 
-    bool m_in_sel;
-    int m_sel_beg;
-    int m_sel_end;
+  const int m_mru_length = 10;
+};
 
-    QPoint m_last_position;
-
-    const int m_mru_length = 10;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

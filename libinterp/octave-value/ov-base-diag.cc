@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -192,7 +192,7 @@ octave_base_diag<DMT, MT>::subsasgn (const std::string& type,
                   {
                     m_matrix.dgelem (i0(0)) = val;
                     retval = this;
-                    this->count++;
+                    this->m_count++;
                     // invalidate cache
                     m_dense_cache = octave_value ();
                   }
@@ -220,7 +220,7 @@ octave_base_diag<DMT, MT>::subsasgn (const std::string& type,
                   {
                     m_matrix.dgelem (i0(0)) = val;
                     retval = this;
-                    this->count++;
+                    this->m_count++;
                     // invalidate cache
                     m_dense_cache = octave_value ();
                   }
@@ -276,10 +276,10 @@ octave_base_diag<DMT, MT>::resize (const dim_vector& dv, bool fill) const
   return retval;
 }
 
-// Return true if this matrix has all true elements (non-zero, not NA/NaN).
+// Return true if this matrix has all true elements (nonzero, not NA/NaN).
 template <typename DMT, typename MT>
 bool
-octave_base_diag<DMT, MT>::is_true (void) const
+octave_base_diag<DMT, MT>::is_true () const
 {
   if (dims ().numel () > 1)
     {
@@ -299,7 +299,8 @@ template <typename T> inline T helper_getreal (std::complex<T> x)
 // FIXME: We really need some traits so that ad hoc hooks like this
 //        are not necessary.
 template <typename T> inline T helper_iscomplex (T) { return false; }
-template <typename T> inline T helper_iscomplex (std::complex<T>) { return true; }
+template <typename T> inline T helper_iscomplex (std::complex<T>)
+{ return true; }
 
 template <typename DMT, typename MT>
 double
@@ -465,14 +466,14 @@ octave_base_diag<DMT, MT>::index_vector (bool require_integers) const
 template <typename DMT, typename MT>
 octave_value
 octave_base_diag<DMT, MT>::convert_to_str_internal (bool pad, bool force,
-                                                    char type) const
+    char type) const
 {
   return to_dense ().convert_to_str_internal (pad, force, type);
 }
 
 template <typename DMT, typename MT>
 float_display_format
-octave_base_diag<DMT, MT>::get_edit_display_format (void) const
+octave_base_diag<DMT, MT>::get_edit_display_format () const
 {
   // FIXME
   return float_display_format ();
@@ -481,8 +482,8 @@ octave_base_diag<DMT, MT>::get_edit_display_format (void) const
 template <typename DMT, typename MT>
 std::string
 octave_base_diag<DMT, MT>::edit_display (const float_display_format& fmt,
-                                         octave_idx_type i,
-                                         octave_idx_type j) const
+    octave_idx_type i,
+    octave_idx_type j) const
 {
   std::ostringstream buf;
   octave_print_internal (buf, fmt, m_matrix(i, j));
@@ -550,7 +551,7 @@ octave_base_diag<DMT, MT>::as_mxArray (bool interleaved) const
 
 template <typename DMT, typename MT>
 bool
-octave_base_diag<DMT, MT>::print_as_scalar (void) const
+octave_base_diag<DMT, MT>::print_as_scalar () const
 {
   dim_vector dv = dims ();
 
@@ -656,7 +657,7 @@ octave_base_diag<DMT, MT>::fast_elem_extract (octave_idx_type n) const
 
 template <typename DMT, typename MT>
 octave_value
-octave_base_diag<DMT, MT>::to_dense (void) const
+octave_base_diag<DMT, MT>::to_dense () const
 {
   if (! m_dense_cache.is_defined ())
     m_dense_cache = MT (m_matrix);

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -29,8 +29,7 @@
 %! visibility = get (0, "defaultfigurevisible");
 %! toolkit = graphics_toolkit ();
 %! unwind_protect
-%!   if (! __have_feature__ ("QT_OFFSCREEN")
-%!       || ! strcmp (graphics_toolkit (), "qt"))
+%!   if (! strcmp (graphics_toolkit (), "qt"))
 %!     try
 %!       graphics_toolkit ("gnuplot");
 %!     catch
@@ -61,8 +60,7 @@
 %! visibility = get (0, "defaultfigurevisible");
 %! toolkit = graphics_toolkit ();
 %! unwind_protect
-%!   if (! __have_feature__ ("QT_OFFSCREEN")
-%!       || ! strcmp (graphics_toolkit (), "qt"))
+%!   if (! strcmp (graphics_toolkit (), "qt"))
 %!     try
 %!       graphics_toolkit ("gnuplot");
 %!     catch

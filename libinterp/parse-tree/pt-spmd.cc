@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2020-2022 The Octave Project Developers
+// Copyright (C) 2020-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,12 +31,13 @@
 #include "pt-spmd.h"
 #include "pt-stmt.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+tree_spmd_command::~tree_spmd_command ()
 {
-  tree_spmd_command::~tree_spmd_command (void)
-  {
-    delete m_body;
-    delete m_lead_comm;
-    delete m_trail_comm;
-  }
+  delete m_body;
+  delete m_lead_comm;
+  delete m_trail_comm;
 }
+
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,35 +30,30 @@
 
 class QAbstractButton;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class ButtonControl : public BaseControl
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  ButtonControl (octave::interpreter& interp,
+                 const graphics_object& go, QAbstractButton *btn);
+  ~ButtonControl ();
 
-  class ButtonControl : public BaseControl
-  {
-    Q_OBJECT
+protected:
+  void update (int pId);
 
-  public:
-    ButtonControl (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-                   const graphics_object& go, QAbstractButton *btn);
-    ~ButtonControl (void);
+private slots:
+  void clicked ();
+  void toggled (bool checked);
 
-  protected:
-    void update (int pId);
+private:
+  bool m_blockCallback;
+};
 
-  private slots:
-    void clicked (void);
-    void toggled (bool checked);
-
-  private:
-    bool m_blockCallback;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

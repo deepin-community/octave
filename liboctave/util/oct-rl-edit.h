@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2000-2022 The Octave Project Developers
+// Copyright (C) 2000-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -129,7 +129,7 @@ extern void octave_rl_set_basic_word_break_characters (const char *);
 
 extern void octave_rl_set_completer_word_break_characters (const char *);
 
-extern char * octave_rl_get_completer_word_break_characters (void);
+extern const char * octave_rl_get_completer_word_break_characters (void);
 
 extern void octave_rl_set_completion_word_break_hook (rl_completion_hook_fcn_ptr);
 

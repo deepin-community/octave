@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2019-2022 The Octave Project Developers
+## Copyright (C) 2019-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -231,4 +231,3 @@ endfunction
 %! stream2 ([1 2], [2 1], [1 1], [2 2], [3 3], [4 4]);
 %#!error <non-monotonically increasing or NaN values found in mesh>
 %! stream2 ([1 2], [1 NaN], [1 1], [2 2], [3 3], [4 4]);
-

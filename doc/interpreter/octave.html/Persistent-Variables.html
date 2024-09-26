@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Persistent Variables (GNU Octave (version 7.1.0))</title>
+<title>Persistent Variables (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Persistent Variables (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Persistent Variables (GNU Octave (version 7.1.0))">
+<meta name="description" content="Persistent Variables (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Persistent Variables (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Global-Variables.html" rel="prev" title="Global Variables">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,18 +31,20 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Persistent-Variables">
-<div class="header">
+<div class="section-level-extent" id="Persistent-Variables">
+<div class="nav-panel">
 <p>
 Next: <a href="Status-of-Variables.html" accesskey="n" rel="next">Status of Variables</a>, Previous: <a href="Global-Variables.html" accesskey="p" rel="prev">Global Variables</a>, Up: <a href="Variables.html" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Persistent-Variables-1"></span><h3 class="section">7.2 Persistent Variables</h3>
-<span id="index-persistent-variables"></span>
-<span id="index-persistent-statement"></span>
-<span id="index-variables_002c-persistent"></span>
-<span id="XREFpersistent"></span>
-<p>A variable that has been declared <em>persistent</em> within a function
+<h3 class="section" id="Persistent-Variables-1"><span>7.2 Persistent Variables<a class="copiable-link" href="#Persistent-Variables-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-persistent-variables"></a>
+<a class="index-entry-id" id="index-persistent-statement"></a>
+<a class="index-entry-id" id="index-variables_002c-persistent"></a>
+
+<p>See keyword:  <a class="ref" href="Keywords.html#XREFpersistent">persistent</a>
+</p>
+<p>A variable that has been declared <em class="dfn">persistent</em> within a function
 will retain its contents in memory between subsequent calls to the
 same function.  The difference between persistent variables and global
 variables is that persistent variables are local in scope to a
@@ -64,7 +54,7 @@ particular function and are not visible elsewhere.
 that prints the number of times it has been called.
 </p>
 <div class="example">
-<pre class="example">function count_calls ()
+<div class="group"><pre class="example-preformatted">function count_calls ()
   persistent calls = 0;
   printf (&quot;'count_calls' has been called %d times\n&quot;,
           ++calls);
@@ -77,18 +67,18 @@ endfor
 -| 'count_calls' has been called 1 times
 -| 'count_calls' has been called 2 times
 -| 'count_calls' has been called 3 times
-</pre></div>
+</pre></div></div>
 
 <p>As the example shows, a variable may be declared persistent using a
-<code>persistent</code> declaration statement.  The following statements are
+<code class="code">persistent</code> declaration statement.  The following statements are
 all persistent declarations.
 </p>
 <div class="example">
-<pre class="example">persistent a
+<div class="group"><pre class="example-preformatted">persistent a
 persistent a b
 persistent c = 2
 persistent d = 3 e f = 5
-</pre></div>
+</pre></div></div>
 
 <p>The behavior of persistent variables is equivalent to the behavior of
 static variables in C.
@@ -97,23 +87,23 @@ static variables in C.
 output arguments of a function can be persistent:
 </p>
 <div class="example">
-<pre class="example">function y = foo ()
+<div class="group"><pre class="example-preformatted">function y = foo ()
   persistent y = 0;  # Not allowed!
 endfunction
 
 foo ()
 -| error: can't make function parameter y persistent
-</pre></div>
+</pre></div></div>
 
 <p>Like global variables, a persistent variable may only be initialized once.
 For example, after executing the following code
 </p>
 <div class="example">
-<pre class="example">persistent pvar = 1
+<div class="group"><pre class="example-preformatted">persistent pvar = 1
 persistent pvar = 2
-</pre></div>
+</pre></div></div>
 
-<p>the value of the persistent variable <code>pvar</code> is 1, not 2.
+<p>the value of the persistent variable <code class="code">pvar</code> is 1, not 2.
 </p>
 <p>If a persistent variable is declared but not initialized to a specific
 value, it will contain an empty matrix.  So, it is also possible to
@@ -121,7 +111,7 @@ initialize a persistent variable by checking whether it is empty, as the
 following example illustrates.
 </p>
 <div class="example">
-<pre class="example">function count_calls ()
+<div class="group"><pre class="example-preformatted">function count_calls ()
   persistent calls;
   if (isempty (calls))
     calls = 0;
@@ -129,17 +119,17 @@ following example illustrates.
   printf (&quot;'count_calls' has been called %d times\n&quot;,
           ++calls);
 endfunction
-</pre></div>
+</pre></div></div>
 
 <p>This implementation behaves in exactly the same way as the previous
-implementation of <code>count_calls</code>.
+implementation of <code class="code">count_calls</code>.
 </p>
 <p>The value of a persistent variable is kept in memory until it is
-explicitly cleared.  Assuming that the implementation of <code>count_calls</code>
+explicitly cleared.  Assuming that the implementation of <code class="code">count_calls</code>
 is saved on disk, we get the following behavior.
 </p>
 <div class="example">
-<pre class="example">for i = 1:2
+<pre class="example-preformatted">for i = 1:2
   count_calls ();
 endfor
 -| 'count_calls' has been called 1 times
@@ -170,15 +160,15 @@ endfor
 <p>That is, the persistent variable is only removed from memory when the
 function containing the variable is removed.  Note that if the function
 definition is typed directly into the Octave prompt, the persistent
-variable will be cleared by a simple <code>clear</code> command as the entire
+variable will be cleared by a simple <code class="code">clear</code> command as the entire
 function definition will be removed from memory.  If you do not want
 a persistent variable to be removed from memory even if the function is
-cleared, you should use the <code>mlock</code> function
-(see <a href="Function-Locking.html">Function Locking</a>).
+cleared, you should use the <code class="code">mlock</code> function
+(see <a class="pxref" href="Function-Locking.html">Function Locking</a>).
 </p>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Status-of-Variables.html">Status of Variables</a>, Previous: <a href="Global-Variables.html">Global Variables</a>, Up: <a href="Variables.html">Variables</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

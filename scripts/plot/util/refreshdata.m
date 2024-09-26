@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -79,7 +79,7 @@ function refreshdata (h, workspace)
           || ! any (strcmpi (workspace, {"base", "caller"})))
         error ('refreshdata: WORKSPACE must be "base" or "caller"');
       endif
-      workspace = tolower (workspace);
+      workspace = lower (workspace);
     endif
   endif
 

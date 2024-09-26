@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2004-2022 The Octave Project Developers
+## Copyright (C) 2004-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -27,7 +27,7 @@
 ## public domain.
 
 ## -*- texinfo -*-
-## @deftypefn {} {} nthroot (@var{x}, @var{n})
+## @deftypefn {} {@var{y} =} nthroot (@var{x}, @var{n})
 ##
 ## Compute the real (non-complex) @var{n}-th root of @var{x}.
 ##

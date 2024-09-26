@@ -17,6 +17,7 @@ $(DIRSTAMP_FILES):
 
 TEST_FILES += \
   fntests.m \
+  anonymous-function.tst \
   args.tst \
   bug-31371.tst \
   bug-40117.tst \
@@ -32,6 +33,7 @@ TEST_FILES += \
   bug-55322.tst \
   bug-59950.tst \
   bug-61201.tst \
+  bug-65153.tst \
   colormaps.tst \
   command.tst \
   complex.tst \
@@ -78,6 +80,7 @@ include bug-44940/module.mk
 include bug-45351/module.mk
 include bug-46660/module.mk
 include bug-47680/module.mk
+include bug-48693/module.mk
 include bug-49379/module.mk
 include bug-50014/module.mk
 include bug-50035/module.mk
@@ -107,15 +110,21 @@ include bug-60237/module.mk
 include bug-60882/module.mk
 include bug-61105/module.mk
 include bug-61191/module.mk
+include bug-63841/module.mk
+include bug-65037/module.mk
+include bug-65220/module.mk
 include class-concat/module.mk
 include classdef/module.mk
+include classdef-debug/module.mk
 include classdef-multiple-inheritance/module.mk
 include classes/module.mk
 include colon-op/module.mk
 include ctor-vs-method/module.mk
 include fcn-handle/module.mk
+include file-encoding/module.mk
 include json/module.mk
 include jupyter-notebook/module.mk
+include load-path/module.mk
 include local-functions/module.mk
 include mex/module.mk
 include nest/module.mk
@@ -123,8 +132,12 @@ include private-functions/module.mk
 include publish/module.mk
 include pkg/module.mk
 
+# run-octave (optional-prepare-commands)
+
 define run-octave-tests
-  ( $(SHELL) ../run-octave $(RUN_OCTAVE_OPTIONS) $(1) --no-init-file --silent --no-history -p $(abs_top_builddir)/test/mex $(abs_top_srcdir)/test/fntests.m $(abs_top_srcdir)/test ) && \
+  ( $(SHELL) ../run-octave $(RUN_OCTAVE_OPTIONS) --no-init-file --silent \
+      --no-history -p $(abs_top_builddir)/test/mex \
+      $(abs_top_srcdir)/test/fntests.m $(abs_top_srcdir)/test "$(1)" ) && \
   if $(AM_V_P); then \
     echo ""; \
     if [ -f fntests.log ]; then \
@@ -218,7 +231,9 @@ uninstall-test-files:
 	done
 .PHONY: uninstall-test-files
 
-BUILT_SOURCES += $(GENERATED_TEST_FILES)
+BUILT_SOURCES += \
+  $(GENERATED_TEST_FILES) \
+  $(DIRSTAMP_FILES)
 
 EXTRA_DIST += \
   bc-overloads-expected \
@@ -236,7 +251,8 @@ CLEANFILES += \
   $(GENERATED_TEST_FILES)
 
 DISTCLEANFILES += \
-  fntests.log
+  fntests.log \
+  $(DIRSTAMP_FILES)
 
 clean-local: test-clean
 

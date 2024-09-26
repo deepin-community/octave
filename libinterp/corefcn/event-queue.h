@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,98 +33,91 @@
 
 #include "action-container.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class
+event_queue : public action_container
 {
-  class
-  event_queue : public action_container
+public:
+
+  event_queue () : m_fifo () { }
+
+  OCTAVE_DISABLE_COPY_MOVE (event_queue)
+
+  // Destructor should not raise an exception, so all actions registered
+  // should be exception-safe.  If you're not sure, see event_queue_safe.
+
+  ~event_queue () { run (); }
+
+  void run_first ()
   {
-  public:
+    if (! empty ())
+      {
+        // No leak on exception!
+        std::unique_ptr<elem> ptr (m_fifo.front ());
+        m_fifo.pop ();
+        ptr->run ();
+      }
+  }
 
-    event_queue (void) : m_fifo () { }
-
-    // No copying!
-
-    event_queue (const event_queue&) = delete;
-
-    event_queue& operator = (const event_queue&) = delete;
-
-    // Destructor should not raise an exception, so all actions registered
-    // should be exception-safe.  If you're not sure, see event_queue_safe.
-
-    ~event_queue (void) { run (); }
-
-    void run_first (void)
-    {
-      if (! empty ())
-        {
-          // No leak on exception!
-          std::unique_ptr<elem> ptr (m_fifo.front ());
-          m_fifo.pop ();
-          ptr->run ();
-        }
-    }
-
-    void discard_first (void)
-    {
-      if (! empty ())
-        {
-          elem *ptr = m_fifo.front ();
-          m_fifo.pop ();
-          delete ptr;
-        }
-    }
-
-    std::size_t size (void) const { return m_fifo.size (); }
-
-  protected:
-
-    void add_action (elem *new_elem)
-    {
-      m_fifo.push (new_elem);
-    }
-
-    //--------
-
-    std::queue<elem *> m_fifo;
-  };
-
-  // Like event_queue, but this one will guard against the
-  // possibility of seeing an exception (or interrupt) in the cleanup actions.
-  // Not that we can do much about it, but at least we won't crash.
-
-  class
-  event_queue_safe : public event_queue
+  void discard_first ()
   {
-  public:
+    if (! empty ())
+      {
+        elem *ptr = m_fifo.front ();
+        m_fifo.pop ();
+        delete ptr;
+      }
+  }
 
-    event_queue_safe (void) : event_queue () { }
+  std::size_t size () const { return m_fifo.size (); }
 
-    // No copying!
+protected:
 
-    event_queue_safe (const event_queue_safe&) = delete;
+  void add_action (elem *new_elem)
+  {
+    m_fifo.push (new_elem);
+  }
 
-    event_queue_safe& operator = (const event_queue_safe&) = delete;
+  //--------
 
-    ~event_queue_safe (void)
-    {
-      while (! empty ())
-        {
-          try
-            {
-              run_first ();
-            }
-          catch (...) // Yes, the black hole.  Remember we're in a dtor.
-            {
-              warn_unhandled_exception ();
-            }
-        }
-    }
+  std::queue<elem *> m_fifo;
+};
 
-  private:
+// Like event_queue, but this one will guard against the
+// possibility of seeing an exception (or interrupt) in the cleanup actions.
+// Not that we can do much about it, but at least we won't crash.
 
-    void warn_unhandled_exception (void) const;
+class
+event_queue_safe : public event_queue
+{
+public:
 
-  };
-}
+  event_queue_safe () : event_queue () { }
+
+  OCTAVE_DISABLE_COPY_MOVE (event_queue_safe)
+
+  ~event_queue_safe ()
+  {
+    while (! empty ())
+      {
+        try
+          {
+            run_first ();
+          }
+        catch (...) // Yes, the black hole.  Remember we're in a dtor.
+          {
+            warn_unhandled_exception ();
+          }
+      }
+  }
+
+private:
+
+  void warn_unhandled_exception () const;
+
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

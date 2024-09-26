@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,378 +38,368 @@
 
 class octave_value_list;
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 class execution_exception;
 
-  class error_system
+class error_system
+{
+public:
+
+  OCTINTERP_API error_system (interpreter& interp);
+
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (error_system)
+
+  ~error_system () = default;
+
+  OCTINTERP_API octave_value
+  debug_on_error (const octave_value_list& args, int nargout);
+
+  void set_debug_on_error (bool flag) { m_debug_on_error = flag; }
+
+  bool debug_on_error () const { return m_debug_on_error; }
+
+  bool debug_on_error (bool flag)
   {
-  public:
+    bool val = m_debug_on_error;
+    m_debug_on_error = flag;
+    return val;
+  }
 
-    OCTINTERP_API error_system (interpreter& interp);
+  OCTINTERP_API octave_value
+  debug_on_caught (const octave_value_list& args, int nargout);
 
-    error_system (const error_system&) = delete;
+  void set_debug_on_caught (bool flag) { m_debug_on_caught = flag; }
 
-    error_system& operator = (const error_system&) = delete;
+  bool debug_on_caught () const { return m_debug_on_caught; }
 
-    ~error_system (void) = default;
+  bool debug_on_caught (bool flag)
+  {
+    bool val = m_debug_on_caught;
+    m_debug_on_caught = flag;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    debug_on_error (const octave_value_list& args, int nargout);
+  OCTINTERP_API octave_value
+  debug_on_warning (const octave_value_list& args, int nargout);
 
-    void set_debug_on_error (bool flag) { m_debug_on_error = flag; }
+  void set_debug_on_warning (bool flag) { m_debug_on_warning = flag; }
 
-    bool debug_on_error (void) const { return m_debug_on_error; }
+  bool debug_on_warning () const { return m_debug_on_warning; }
 
-    bool debug_on_error (bool flag)
-    {
-      bool val = m_debug_on_error;
-      m_debug_on_error = flag;
-      return val;
-    }
+  bool debug_on_warning (bool flag)
+  {
+    bool val = m_debug_on_warning;
+    m_debug_on_warning = flag;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    debug_on_caught (const octave_value_list& args, int nargout);
+  OCTINTERP_API octave_value
+  discard_warning_messages (const octave_value_list& args, int nargout);
 
-    void set_debug_on_caught (bool flag) { m_debug_on_caught = flag; }
+  void set_discard_warning_messages (bool flag)
+  {
+    m_discard_warning_messages = flag;
+  }
 
-    bool debug_on_caught (void) const { return m_debug_on_caught; }
+  bool discard_warning_messages () const
+  {
+    return m_discard_warning_messages;
+  }
 
-    bool debug_on_caught (bool flag)
-    {
-      bool val = m_debug_on_caught;
-      m_debug_on_caught = flag;
-      return val;
-    }
+  bool discard_warning_messages (bool flag)
+  {
+    bool val = m_discard_warning_messages;
+    m_discard_warning_messages = flag;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    debug_on_warning (const octave_value_list& args, int nargout);
+  OCTINTERP_API octave_value
+  beep_on_error (const octave_value_list& args, int nargout);
 
-    void set_debug_on_warning (bool flag) { m_debug_on_warning = flag; }
+  void set_beep_on_error (bool flag) { m_beep_on_error = flag; }
 
-    bool debug_on_warning (void) const { return m_debug_on_warning; }
+  bool beep_on_error () const { return m_beep_on_error; }
 
-    bool debug_on_warning (bool flag)
-    {
-      bool val = m_debug_on_warning;
-      m_debug_on_warning = flag;
-      return val;
-    }
+  bool beep_on_error (bool flag)
+  {
+    bool val = m_beep_on_error;
+    m_beep_on_error = flag;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    discard_warning_messages (const octave_value_list& args, int nargout);
+  OCTINTERP_API octave_value
+  backtrace_on_warning (const octave_value_list& args, int nargout);
 
-    void set_discard_warning_messages (bool flag)
-    {
-      m_discard_warning_messages = flag;
-    }
+  void set_backtrace_on_warning (bool flag) { m_backtrace_on_warning = flag; }
 
-    bool discard_warning_messages (void) const
-    {
-      return m_discard_warning_messages;
-    }
+  bool backtrace_on_warning () const { return m_backtrace_on_warning; }
 
-    bool discard_warning_messages (bool flag)
-    {
-      bool val = m_discard_warning_messages;
-      m_discard_warning_messages = flag;
-      return val;
-    }
+  bool backtrace_on_warning (bool flag)
+  {
+    bool val = m_backtrace_on_warning;
+    m_backtrace_on_warning = flag;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    beep_on_error (const octave_value_list& args, int nargout);
+  OCTINTERP_API octave_value
+  verbose_warning (const octave_value_list& args, int nargout);
 
-    void set_beep_on_error (bool flag) { m_beep_on_error = flag; }
+  void set_verbose_warning (bool flag) { m_verbose_warning = flag; }
 
-    bool beep_on_error (void) const { return m_beep_on_error; }
+  bool verbose_warning () const { return m_verbose_warning; }
 
-    bool beep_on_error (bool flag)
-    {
-      bool val = m_beep_on_error;
-      m_beep_on_error = flag;
-      return val;
-    }
+  bool verbose_warning (bool flag)
+  {
+    bool val = m_verbose_warning;
+    m_verbose_warning = flag;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    backtrace_on_warning (const octave_value_list& args, int nargout);
+  OCTINTERP_API octave_value
+  quiet_warning (const octave_value_list& args, int nargout);
 
-    void set_backtrace_on_warning (bool flag) { m_backtrace_on_warning = flag; }
+  void set_quiet_warning (bool flag) { m_quiet_warning = flag; }
 
-    bool backtrace_on_warning (void) const { return m_backtrace_on_warning; }
+  bool quiet_warning () const { return m_quiet_warning; }
 
-    bool backtrace_on_warning (bool flag)
-    {
-      bool val = m_backtrace_on_warning;
-      m_backtrace_on_warning = flag;
-      return val;
-    }
+  bool quiet_warning (bool flag)
+  {
+    bool val = m_quiet_warning;
+    m_quiet_warning = flag;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    verbose_warning (const octave_value_list& args, int nargout);
+  octave_map warning_options () const { return m_warning_options; }
 
-    void set_verbose_warning (bool flag) { m_verbose_warning = flag; }
+  void set_warning_options (const octave_map& val)
+  { m_warning_options = val; }
 
-    bool verbose_warning (void) const { return m_verbose_warning; }
+  octave_map warning_options (const octave_map& new_val)
+  {
+    octave_map val = m_warning_options;
+    m_warning_options = new_val;
+    return val;
+  }
 
-    bool verbose_warning (bool flag)
-    {
-      bool val = m_verbose_warning;
-      m_verbose_warning = flag;
-      return val;
-    }
+  OCTINTERP_API octave_value
+  last_error_message (const octave_value_list& args, int nargout);
 
-    OCTINTERP_API octave_value
-    quiet_warning (const octave_value_list& args, int nargout);
+  void set_last_error_message (const std::string& val)
+  { m_last_error_message = val; }
 
-    void set_quiet_warning (bool flag) { m_quiet_warning = flag; }
+  std::string last_error_message () const { return m_last_error_message; }
 
-    bool quiet_warning (void) const { return m_quiet_warning; }
+  std::string last_error_message (const std::string& s)
+  {
+    std::string val = m_last_error_message;
+    m_last_error_message = s;
+    return val;
+  }
 
-    bool quiet_warning (bool flag)
-    {
-      bool val = m_quiet_warning;
-      m_quiet_warning = flag;
-      return val;
-    }
+  OCTINTERP_API octave_value
+  last_warning_message (const octave_value_list& args, int nargout);
 
-    octave_map warning_options (void) const { return m_warning_options; }
+  void set_last_warning_message (const std::string& val)
+  { m_last_warning_message = val; }
 
-    void set_warning_options (const octave_map& val) { m_warning_options = val; }
+  std::string last_warning_message () const
+  { return m_last_warning_message; }
 
-    octave_map warning_options (const octave_map& new_val)
-    {
-      octave_map val = m_warning_options;
-      m_warning_options = new_val;
-      return val;
-    }
+  std::string last_warning_message (const std::string& s)
+  {
+    std::string val = m_last_warning_message;
+    m_last_warning_message = s;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    last_error_message (const octave_value_list& args, int nargout);
+  OCTINTERP_API octave_value
+  last_warning_id (const octave_value_list& args, int nargout);
 
-    void set_last_error_message (const std::string& val)
-    {
-      m_last_error_message = val;
-    }
+  void set_last_warning_id (const std::string& val)
+  { m_last_warning_id = val; }
 
-    std::string last_error_message (void) const { return m_last_error_message; }
+  std::string last_warning_id () const { return m_last_warning_id; }
 
-    std::string last_error_message (const std::string& s)
-    {
-      std::string val = m_last_error_message;
-      m_last_error_message = s;
-      return val;
-    }
+  std::string last_warning_id (const std::string& s)
+  {
+    std::string val = m_last_warning_id;
+    m_last_warning_id = s;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    last_warning_message (const octave_value_list& args, int nargout);
+  OCTINTERP_API octave_value
+  last_error_id (const octave_value_list& args, int nargout);
 
-    void set_last_warning_message (const std::string& val) { m_last_warning_message = val; }
+  void set_last_error_id (const std::string& val) { m_last_error_id = val; }
 
-    std::string last_warning_message (void) const { return m_last_warning_message; }
+  std::string last_error_id () const { return m_last_error_id; }
 
-    std::string last_warning_message (const std::string& s)
-    {
-      std::string val = m_last_warning_message;
-      m_last_warning_message = s;
-      return val;
-    }
+  std::string last_error_id (const std::string& s)
+  {
+    std::string val = m_last_error_id;
+    m_last_error_id = s;
+    return val;
+  }
 
-    OCTINTERP_API octave_value
-    last_warning_id (const octave_value_list& args, int nargout);
+  void set_last_error_stack (const octave_map& val)
+  {
+    m_last_error_stack = val;
+  }
 
-    void set_last_warning_id (const std::string& val) { m_last_warning_id = val; }
+  octave_map last_error_stack () const { return m_last_error_stack; }
 
-    std::string last_warning_id (void) const { return m_last_warning_id; }
+  octave_map last_error_stack (const octave_map& new_val)
+  {
+    octave_map val = m_last_error_stack;
+    m_last_error_stack = new_val;
+    return val;
+  }
 
-    std::string last_warning_id (const std::string& s)
-    {
-      std::string val = m_last_warning_id;
-      m_last_warning_id = s;
-      return val;
-    }
+  static OCTINTERP_API octave_map
+  make_stack_map (const std::list<frame_info>& frames);
 
-    OCTINTERP_API octave_value
-    last_error_id (const octave_value_list& args, int nargout);
+  static OCTINTERP_API std::list<frame_info>
+  make_stack_frame_list (const octave_map& stack);
 
-    void set_last_error_id (const std::string& val) { m_last_error_id = val; }
+  //! For given warning ID, return 0 if warnings are disabled, 1 if
+  //! enabled, and 2 if the given ID should be an error instead of a
+  //! warning.
 
-    std::string last_error_id (void) const { return m_last_error_id; }
+  OCTINTERP_API int warning_enabled (const std::string& id);
 
-    std::string last_error_id (const std::string& s)
-    {
-      std::string val = m_last_error_id;
-      m_last_error_id = s;
-      return val;
-    }
+  OCTINTERP_API void
+  verror (bool save_last_error, std::ostream& os, const char *name,
+          const char *id, const char *fmt, va_list args,
+          bool with_cfn = false);
 
-    void set_last_error_stack (const octave_map& val)
-    {
-      m_last_error_stack = val;
-    }
+  OCTINTERP_API void
+  vwarning (const char *name, const char *id, const char *fmt,
+            va_list args);
 
-    octave_map last_error_stack (void) const { return m_last_error_stack; }
+  OCTAVE_NORETURN
+  OCTINTERP_API void
+  error_1 (execution_exception& ee, const char *id, const char *fmt,
+           va_list args);
 
-    octave_map last_error_stack (const octave_map& new_val)
-    {
-      octave_map val = m_last_error_stack;
-      m_last_error_stack = new_val;
-      return val;
-    }
+  OCTAVE_NORETURN
+  OCTINTERP_API void error_1 (const char *id, const char *fmt, va_list args);
 
-    static OCTINTERP_API octave_map
-    make_stack_map (const std::list<frame_info>& frames);
+  OCTAVE_NORETURN
+  OCTINTERP_API void vusage (const char *id, const char *fmt, va_list args);
 
-    static OCTINTERP_API std::list<frame_info>
-    make_stack_frame_list (const octave_map& stack);
+  OCTINTERP_API void vwarning (const char *id, const char *fmt, va_list args);
 
-    //! For given warning ID, return 0 if warnings are disabled, 1 if
-    //! enabled, and 2 if the given ID should be an error instead of a
-    //! warning.
+  OCTAVE_NORETURN
+  OCTINTERP_API void
+  rethrow_error (const std::string& id, const std::string& msg,
+                 const octave_map& stack);
 
-    OCTINTERP_API int warning_enabled (const std::string& id);
+  OCTAVE_NORETURN
+  OCTINTERP_API void vpanic (const char *fmt, va_list args);
 
-    OCTINTERP_API void
-    verror (bool save_last_error, std::ostream& os, const char *name,
-            const char *id, const char *fmt, va_list args,
-            bool with_cfn = false);
+  OCTAVE_NORETURN
+  OCTINTERP_API void panic (const char *fmt, ...);
 
-    OCTINTERP_API void
-    vwarning (const char *name, const char *id, const char *fmt,
-              va_list args);
+  OCTINTERP_API octave_scalar_map warning_query (const std::string& id_arg);
 
-    OCTAVE_NORETURN
-    OCTINTERP_API void
-    error_1 (execution_exception& ee, const char *id, const char *fmt,
-             va_list args);
+  OCTINTERP_API std::string default_warning_state ();
 
-    OCTAVE_NORETURN
-    OCTINTERP_API void error_1 (const char *id, const char *fmt, va_list args);
+  OCTINTERP_API void display_warning_options (std::ostream& os);
 
-    OCTAVE_NORETURN
-    OCTINTERP_API void vusage (const char *id, const char *fmt, va_list args);
+  OCTINTERP_API void
+  set_warning_option (const std::string& state, const std::string& id);
 
-    OCTINTERP_API void vwarning (const char *id, const char *fmt, va_list args);
+  OCTINTERP_API void disable_warning (const std::string& id);
 
-    OCTAVE_NORETURN
-    OCTINTERP_API void
-    rethrow_error (const std::string& id, const std::string& msg,
-                   const octave_map& stack);
+  OCTINTERP_API void initialize_default_warning_state ();
 
-    OCTAVE_NORETURN
-    OCTINTERP_API void vpanic (const char *fmt, va_list args);
+  OCTINTERP_API void interpreter_try (unwind_protect& frame);
 
-    OCTAVE_NORETURN
-    OCTINTERP_API void panic (const char *fmt, ...);
+  // Throw execution_exception or, if debug_on_error is TRUE, enter
+  // debugger.  If stack_info is empty, use current call stack.
 
-    OCTINTERP_API octave_scalar_map warning_query (const std::string& id_arg);
+  OCTAVE_NORETURN
+  OCTINTERP_API void
+  throw_error (const std::string& err_type,
+               const std::string& id,
+               const std::string& message,
+               const std::list<frame_info>& stack_info
+               = std::list<frame_info> ());
 
-    OCTINTERP_API std::string default_warning_state (void);
+  OCTAVE_NORETURN
+  OCTINTERP_API void throw_error (execution_exception& ee);
 
-    OCTINTERP_API void display_warning_options (std::ostream& os);
+  OCTINTERP_API void save_exception (const execution_exception& ee);
 
-    OCTINTERP_API void
-    set_warning_option (const std::string& state, const std::string& id);
+  OCTINTERP_API void display_exception (const execution_exception& ee) const;
 
-    OCTINTERP_API void disable_warning (const std::string& id);
+private:
 
-    OCTINTERP_API void initialize_default_warning_state (void);
+  interpreter& m_interpreter;
 
-    OCTINTERP_API void interpreter_try (unwind_protect& frame);
+  //! TRUE means that Octave will try to enter the debugger when an error
+  //! is encountered.  This will also inhibit printing of the normal
+  //! traceback message (you will only see the top-level error message).
 
-    // Throw execution_exception or, if debug_on_error is TRUE, enter
-    // debugger.  If stack_info is empty, use current call stack.
+  bool m_debug_on_error;
 
-    OCTAVE_NORETURN
-    OCTINTERP_API void
-    throw_error (const std::string& err_type,
-                 const std::string& id,
-                 const std::string& message,
-                 const std::list<frame_info>& stack_info
-                 = std::list<frame_info> ());
+  //! TRUE means that Octave will try to enter the debugger when an error
+  //! is encountered within the 'try' section of a 'try' / 'catch' block.
 
-    OCTAVE_NORETURN
-    OCTINTERP_API void throw_error (execution_exception& ee);
+  bool m_debug_on_caught;
 
-    OCTINTERP_API void save_exception (const execution_exception& ee);
+  //! TRUE means that Octave will try to enter the debugger when a warning
+  //! is encountered.
 
-    // FIXME
-    //#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-    OCTAVE_DEPRECATED (7, "second argument is no longer accepted")
-    OCTINTERP_API void display_exception (const execution_exception& ee,
-                                          std::ostream& os) const;
-    //#endif
+  bool m_debug_on_warning;
 
-    OCTINTERP_API void display_exception (const execution_exception& ee) const;
+  //! TRUE means warning messages are turned off.
 
-  private:
+  bool m_discard_warning_messages;
 
-    interpreter& m_interpreter;
+  //! TRUE means that Octave will try to beep obnoxiously before
+  //! printing error messages.
+  bool m_beep_on_error;
 
-    //! TRUE means that Octave will try to enter the debugger when an error
-    //! is encountered.  This will also inhibit printing of the normal
-    //! traceback message (you will only see the top-level error message).
+  //! TRUE means that Octave will try to display a stack trace when a
+  //! warning is encountered.
+  bool m_backtrace_on_warning;
 
-    bool m_debug_on_error;
+  //! TRUE means that Octave will print a verbose warning.  Currently
+  //! unused.
+  bool m_verbose_warning;
 
-    //! TRUE means that Octave will try to enter the debugger when an error
-    //! is encountered within the 'try' section of a 'try' / 'catch' block.
+  //! TRUE means that Octave will print no warnings, but lastwarn will
+  //! be updated
+  bool m_quiet_warning;
 
-    bool m_debug_on_caught;
+  //! A structure containing (most of) the current state of warnings.
+  octave_map m_warning_options;
 
-    //! TRUE means that Octave will try to enter the debugger when a warning
-    //! is encountered.
+  //! The text of the last error message.
+  std::string m_last_error_message;
 
-    bool m_debug_on_warning;
+  //! The text of the last warning message.
+  std::string m_last_warning_message;
 
-    //! TRUE means warning messages are turned off.
+  //! The last warning message id.
+  std::string m_last_warning_id;
 
-    bool m_discard_warning_messages;
+  //! The last error message id.
+  std::string m_last_error_id;
 
-    //! TRUE means that Octave will try to beep obnoxiously before
-    //! printing error messages.
-    bool m_beep_on_error;
+  //! The last file in which an error occurred.
+  octave_map m_last_error_stack;
+};
 
-    //! TRUE means that Octave will try to display a stack trace when a
-    //! warning is encountered.
-    bool m_backtrace_on_warning;
-
-    //! TRUE means that Octave will print a verbose warning.  Currently
-    //! unused.
-    bool m_verbose_warning;
-
-    //! TRUE means that Octave will print no warnings, but lastwarn will
-    //! be updated
-    bool m_quiet_warning;
-
-    //! A structure containing (most of) the current state of warnings.
-    octave_map m_warning_options;
-
-    //! The text of the last error message.
-    std::string m_last_error_message;
-
-    //! The text of the last warning message.
-    std::string m_last_warning_message;
-
-    //! The last warning message id.
-    std::string m_last_warning_id;
-
-    //! The last error message id.
-    std::string m_last_error_id;
-
-    //! The last file in which an error occurred.
-    octave_map m_last_error_stack;
-  };
-
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 
 // FIXME: should we move the following functions inside the octave
 // namespace?  If so, should the functions outside of the namespace be
 // deprecated?  Doing that might cause a lot of trouble...  If they are
 // not deprecated and eventually removed, does it make sense to also
 // define them inside the octave namespace?
-
-#define panic_impossible()                                              \
-  panic ("impossible state reached in file '%s' at line %d", __FILE__, __LINE__)
 
 extern OCTINTERP_API void
 vmessage (const char *name, const char *fmt, va_list args);
@@ -506,7 +496,41 @@ OCTAVE_FORMAT_PRINTF (1, 2)
 OCTAVE_NORETURN
 extern OCTINTERP_API void panic (const char *fmt, ...);
 
-OCTAVE_NAMESPACE_BEGIN
+// To allow the __FILE__ and __LINE__ macros to work as expected, the
+// panic_impossible, panic_if, panic_unless, error_impossible, error_if,
+// and error_unless symbols must be defined as macros.
+
+#define panic_impossible()                                              \
+  ::panic ("impossible state reached in file '%s' at line %d", __FILE__, __LINE__)
+
+#if defined (NDEBUG)
+#  define panic_if(cond)
+#else
+#  define panic_if(cond) do { if (cond) panic_impossible (); } while (0)
+#endif
+
+#if defined (NDEBUG)
+#  define panic_unless(cond)
+#else
+#  define panic_unless(cond) panic_if (! (cond))
+#endif
+
+#define error_impossible()                                              \
+  ::error ("impossible state reached in file '%s' at line %d", __FILE__, __LINE__)
+
+#if defined (NDEBUG)
+#  define error_if(cond)
+#else
+#  define error_if(cond) do { if (cond) error_impossible (); } while (0)
+#endif
+
+#if defined (NDEBUG)
+#  define error_unless(cond)
+#else
+#  define error_unless(cond) error_if (! (cond))
+#endif
+
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 //! Helper function for print_usage defined in defun.cc.
 
@@ -526,54 +550,6 @@ extern OCTINTERP_API void disable_warning (const std::string& id);
 
 extern OCTINTERP_API void interpreter_try (octave::unwind_protect&);
 
-OCTAVE_NAMESPACE_END
-
-#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-OCTAVE_DEPRECATED (7, "use 'octave::defun_usage_message' instead")
-inline void defun_usage_message (const std::string& msg)
-{
-  octave::defun_usage_message (msg);
-}
-
-OCTAVE_DEPRECATED (7, "use 'octave::set_warning_state' instead")
-inline octave_value_list
-set_warning_state (const std::string& id, const std::string& state)
-{
-  return octave::set_warning_state (id, state);
-}
-
-OCTAVE_DEPRECATED (7, "use 'octave::set_warning_state' instead")
-inline octave_value_list set_warning_state (const octave_value_list& args)
-{
-  return octave::set_warning_state (args);
-}
-
-OCTAVE_DEPRECATED (7, "use 'octave::warning_enabled' instead")
-inline int warning_enabled (const std::string& id)
-{
-  return octave::warning_enabled (id);
-}
-
-OCTAVE_DEPRECATED (7, "use 'octave::disable_warning' instead")
-inline void disable_warning (const std::string& id)
-{
-  octave::disable_warning (id);
-}
-
-OCTAVE_DEPRECATED (7, "use 'octave::interpreter_try' instead")
-inline void interpreter_try (octave::unwind_protect& uwp)
-{
-  octave::interpreter_try (uwp);
-}
-
-OCTAVE_DEPRECATED (6, "this function is obsolete and should not be needed")
-inline void reset_error_handler (void) { }
-#endif
-
-// This symbol must have be declared with the correct visibility
-// attributes when Octave is built, so it must appear unconditionally in
-// this header file.
-OCTAVE_DEPRECATED (6, "this variable is obsolete and always has the value 0")
-extern OCTINTERP_API int error_state;
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

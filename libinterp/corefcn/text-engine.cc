@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,16 +30,17 @@
 #include "text-engine.h"
 #include "oct-tex-symbols.cc"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+uint32_t
+text_element_symbol::get_symbol_code () const
 {
-  uint32_t
-  text_element_symbol::get_symbol_code (void) const
-  {
-    uint32_t code = invalid_code;
+  uint32_t code = invalid_code;
 
-    if (0 <= m_symbol && m_symbol < num_symbol_codes)
-      code = symbol_codes[m_symbol][0];
+  if (0 <= m_symbol && m_symbol < num_symbol_codes)
+    code = symbol_codes[m_symbol][0];
 
-    return code;
-  }
+  return code;
 }
+
+OCTAVE_END_NAMESPACE(octave)

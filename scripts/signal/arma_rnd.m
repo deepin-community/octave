@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} arma_rnd (@var{a}, @var{b}, @var{v}, @var{t}, @var{n})
+## @deftypefn {} {@var{x} =} arma_rnd (@var{a}, @var{b}, @var{v}, @var{t}, @var{n})
 ## Return a simulation of the ARMA model.
 ##
 ## The ARMA model is defined by

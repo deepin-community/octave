@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -320,7 +320,7 @@ read_mat_binary_data (std::istream& is, const std::string& filename,
             read_mat_binary_data (is, ctmp, prec, 1, swap, flt_fmt);
 
             SparseComplexMatrix smc = SparseComplexMatrix (data, r, c,
-                                                           nr_new, nc_new);
+                                      nr_new, nc_new);
 
             tc = (order ? smc.transpose () : smc);
           }
@@ -372,7 +372,7 @@ read_mat_binary_data (std::istream& is, const std::string& filename,
 
             for (octave_idx_type j = 0; j < nc; j++)
               for (octave_idx_type i = 0; i < nr; i++)
-                ctmp (i,j) = Complex (re(i,j), im(i,j));
+                ctmp (i, j) = Complex (re(i, j), im(i, j));
 
             tc = (order ? ctmp.transpose () : ctmp);
           }
@@ -399,7 +399,7 @@ save_mat_binary_data (std::ostream& os, const octave_value& tc,
   mopt += tc.issparse () ? 2 : tc.is_string () ? 1 : 0;
 
   octave::mach_info::float_format flt_fmt
-    = octave::mach_info::native_float_format ();;
+    = octave::mach_info::native_float_format ();
 
   mopt += 1000 * float_format_to_mopt_digit (flt_fmt);
 

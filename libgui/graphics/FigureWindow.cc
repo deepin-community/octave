@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,31 +30,31 @@
 #include <QMenu>
 
 #include "FigureWindow.h"
+#include "gui-preferences-global.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+FigureWindow::FigureWindow (QWidget *xparent)
+: FigureWindowBase (xparent)
 {
-
-  FigureWindow::FigureWindow (QWidget *xparent)
-    : FigureWindowBase (xparent)
-  {
-    // set icon from application resources
-    setWindowIcon (QIcon (":/actions/icons/graphic_logo_Figure.png"));
-  }
-
-  FigureWindow::~FigureWindow (void)
-  { }
-
-  QMenu *
-  FigureWindow::createPopupMenu (void)
-  {
-    // For the time being, disable menubar/toolbar popup menu
-    return nullptr;
-  }
-
-  void FigureWindow::showEvent (QShowEvent *ev)
-  {
-    QMainWindow::showEvent (ev);
-    emit figureWindowShown();
-  }
-
+  // set icon from application resources
+  setWindowIcon (QIcon (global_icon_paths.at (ICON_THEME_OCTAVE)));
 }
+
+FigureWindow::~FigureWindow ()
+{ }
+
+QMenu *
+FigureWindow::createPopupMenu ()
+{
+  // For the time being, disable menubar/toolbar popup menu
+  return nullptr;
+}
+
+void FigureWindow::showEvent (QShowEvent *ev)
+{
+  QMainWindow::showEvent (ev);
+  emit figureWindowShown();
+}
+
+OCTAVE_END_NAMESPACE(octave)

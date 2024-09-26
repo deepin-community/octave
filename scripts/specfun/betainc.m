@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2018-2022 The Octave Project Developers
+## Copyright (C) 2018-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} betainc (@var{x}, @var{a}, @var{b})
-## @deftypefnx {} {} betainc (@var{x}, @var{a}, @var{b}, @var{tail})
+## @deftypefn  {} {@var{I} =} betainc (@var{x}, @var{a}, @var{b})
+## @deftypefnx {} {@var{I} =} betainc (@var{x}, @var{a}, @var{b}, @var{tail})
 ## Compute the incomplete beta function.
 ##
 ## This is defined as
@@ -72,7 +72,7 @@
 ## @seealso{beta, betaincinv, betaln}
 ## @end deftypefn
 
-function y = betainc (x, a, b, tail = "lower")
+function I = betainc (x, a, b, tail = "lower")
 
   if (nargin < 3)
     print_usage ();
@@ -87,11 +87,24 @@ function y = betainc (x, a, b, tail = "lower")
     error ("betainc: all inputs must be real");
   endif
 
+  if (! (isnumeric (x) && isnumeric (a) && isnumeric (b)))
+    error ("betainc: all inputs must be numeric");
+  endif
+
   ## Remember original shape of data, but convert to column vector for calcs.
   orig_sz = size (x);
   x = x(:);
   a = a(:);
   b = b(:);
+
+  switch (tolower (tail))
+    case "lower"
+      lower_upper_flag = true;
+    case "upper"
+      lower_upper_flag = false;
+    otherwise
+      error ("betainc: invalid value for TAIL");
+  endswitch
 
   if (any ((x < 0) | (x > 1)))
     error ("betainc: X must be in the range [0, 1]");
@@ -105,6 +118,25 @@ function y = betainc (x, a, b, tail = "lower")
     error ("betainc: B must be strictly positive");
   endif
 
+  ## Initialize output array with output class matching x, shortcut trivial
+  ## case of integer class x.
+  if (isinteger (x))
+    ## For x = 0 or 1, the output always reduces to 0 or 1.  Input validation
+    ## ensures all interger inputs must be 0 or 1.
+    I = x;
+    return;
+  else
+    I = zeros (size (x), class (x));
+  endif
+
+  ## Convert a,b to floating point if necessary.
+  if (isinteger (a))
+    a = double (a);
+  endif
+  if (isinteger (b))
+    b = double (b);
+  endif
+
   ## If any of the arguments is single then the output should be as well.
   if (strcmp (class (x), "single") || strcmp (class (a), "single")
       || strcmp (class (b), "single"))
@@ -113,38 +145,30 @@ function y = betainc (x, a, b, tail = "lower")
     x = single (x);
   endif
 
-  ## Convert to floating point if necessary
-  if (isinteger (x))
-    y = double (x);
-  endif
-  if (isinteger (a))
-    a = double (a);
-  endif
-  if (isinteger (b))
-    b = double (b);
-  endif
-
-  ## Initialize output array
-  y = zeros (size (x), class (x));
 
   ## Trivial cases (long code here trades memory for speed)
+  x_trivial = (x == 0 | x == 1);
   a_one = (a == 1);
   b_one = (b == 1);
-  a_b_one = a_one & b_one;
+  a_b_x_triv = (a_one & b_one) | x_trivial;
   a_not_one = ! a_one;
   b_not_one = ! b_one;
-  non_trivial = a_not_one & b_not_one;
-  a_one &= b_not_one;
-  b_one &= a_not_one;
+  non_trivial = a_not_one & b_not_one & ! x_trivial;
+  a_one &= b_not_one | x_trivial;
+  b_one &= a_not_one | x_trivial;
 
-  if (strcmpi (tail, "lower"))
-    y(a_b_one) = x(a_b_one);
-    y(a_one) = 1 - (1 - x(a_one)) .^ b(a_one);
-    y(b_one) = x(b_one) .^ a(b_one);
-  elseif (strcmpi (tail, "upper"))
-    y(a_b_one) = 1 - x(a_b_one);
-    y(a_one) = (1 - x(a_one)) .^ b(a_one);
-    y(b_one) = 1 - x(b_one) .^ a(b_one);
+  if (lower_upper_flag)
+    I(a_b_x_triv) = x(a_b_x_triv);
+    ## See bug #62329.
+    ## equivalent to "1 - (1 - x(a_one)) .^ b(a_one)", but less roundoff error
+    I(a_one) = - expm1 (log1p (- x(a_one)) .* b(a_one));
+    I(b_one) = x(b_one) .^ a(b_one);
+  else
+    I(a_b_x_triv) = 1 - x(a_b_x_triv);
+    ## equivalent to "(1 - x(a_one)) .^ b(a_one)", but less roundoff error
+    I(a_one) = exp (log1p (- x(a_one)) .* b(a_one));
+    ## equivalent to "1 - x(b_one) .^ a(b_one)", but less roundoff error
+    I(b_one) = - expm1 (log (x(b_one)) .* a(b_one));
   endif
 
   ## Non-Trivial cases
@@ -157,16 +181,14 @@ function y = betainc (x, a, b, tail = "lower")
   a = a(non_trivial);
   b = b(non_trivial);
 
-  if (strcmpi (tail, "lower"))
+  if (lower_upper_flag)
     fflag = (x > a./(a + b));
     x(fflag) = 1 - x(fflag);
     [a(fflag), b(fflag)] = deal (b(fflag), a(fflag));
-  elseif (strcmpi (tail, "upper"))
+  else
     fflag = (x < (a ./ (a + b)));
     x(! fflag) = 1 - x(! fflag);
     [a(! fflag), b(! fflag)] = deal (b(! fflag), a(! fflag));
-  else
-    error ("betainc: invalid value for TAIL");
   endif
 
   f = zeros (size (x), class (x));
@@ -183,10 +205,10 @@ function y = betainc (x, a, b, tail = "lower")
   y_nt = real (exp (y_nt));
   y_nt(fflag) = 1 - y_nt(fflag);
 
-  y(non_trivial) = y_nt;
+  I(non_trivial) = y_nt;
 
   ## Restore original shape
-  y = reshape (y, orig_sz);
+  I = reshape (I, orig_sz);
 
 endfunction
 
@@ -245,10 +267,20 @@ endfunction
 %! [a,b] = ndgrid (linspace (1e-4, 100, 20), linspace (1e-4, 100, 20));
 %! assert (betainc (0, a, b), zeros (20));
 %! assert (betainc (1, a, b), ones (20));
+%! assert (betainc (0, a, b, "upper"), ones (20));
+%! assert (betainc (1, a, b, "upper"), zeros (20));
+%! assert (betainc ([0 0.5 1], 2, 2), [0 0.5 1], eps);
+%! assert (betainc ([0 0.5 1], 2, 2, "upper"), [1 0.5 0], eps);
 
 %!test <*34405>
 %! assert (betainc (NaN, 1, 2), NaN);
 %! assert (betainc (0.5, 1, Inf), 1);
+
+%!test <*62329>
+%! assert (betainc (2e-20, 1, 0.5), 1e-20, -1e-15);
+%! assert (betainc (2e-5, 1, 0.5), 2e-5 / (1 + sqrt (1 - 2e-5)), -1e-15);
+%! assert (betainc (0.99, 1, 0.5, "upper"), 0.1, -1e-15);
+%! assert (betainc (0.99, 0.5, 1, "upper"), - expm1 (log (0.99)/2), -1e-15);
 
 ## Test input validation
 %!error <Invalid call> betainc ()
@@ -258,6 +290,9 @@ endfunction
 %!error <all inputs must be real> betainc (0.5i, 1, 2)
 %!error <all inputs must be real> betainc (0, 1i, 1)
 %!error <all inputs must be real> betainc (0, 1, 1i)
+%!error <all inputs must be numeric> betainc (char (1), 1, 2)
+%!error <all inputs must be numeric> betainc (0, char (1), 1)
+%!error <all inputs must be numeric> betainc (0, 1, char (1))
 %!error <X must be in the range \[0, 1\]> betainc (-0.1,1,1)
 %!error <X must be in the range \[0, 1\]> betainc (1.1,1,1)
 %!error <X must be in the range \[0, 1\]>

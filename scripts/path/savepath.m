@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,11 +24,15 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} savepath ()
-## @deftypefnx {} {} savepath (@var{file})
+## @deftypefn  {} {} savepath
+## @deftypefnx {} {} savepath @var{file}
 ## @deftypefnx {} {@var{status} =} savepath (@dots{})
-## Save the unique portion of the current function search path that is
-## not set during Octave's initialization process to @var{file}.
+## Save the unique portion of the current function search path to @var{file}.
+##
+## The list of folders that are saved in @var{file} does @emph{not} include
+## the folders that are added for Octave's own functions, those that belong to
+## Octave packages (see @ref{XREFpkg,,pkg load}), and those added via command
+## line switches.
 ##
 ## If @var{file} is omitted, Octave looks in the current directory for a
 ## project-specific @file{.octaverc} file in which to save the path
@@ -46,7 +50,7 @@
 ## @seealso{path, addpath, rmpath, genpath, pathdef}
 ## @end deftypefn
 
-function retval = savepath (file)
+function status = savepath (file)
 
   beginstring = "## Begin savepath auto-created section, do not edit";
   endstring   = "## End savepath auto-created section";
@@ -113,16 +117,28 @@ function retval = savepath (file)
     ## Determine the path to Octave's user and system wide packages.
     [pkg_user, pkg_system] = pkg ("list");
 
-    ## Conversion from cell array of structs to cellstr of archprefixes.
-    pkg_path = unique (cellfun (@(elt) elt.archprefix,
+    ## Conversion from cell array of structs to cellarray of strings with the
+    ## unique contents of the fields "dir" and "archprefix".
+    pkg_path = unique ([cellfun(@(elt) elt.dir,
                                 [pkg_user, pkg_system],
-                                "uniformoutput", false));
+                                "uniformoutput", false);
+                        cellfun(@(elt) elt.archprefix,
+                                [pkg_user, pkg_system],
+                                "uniformoutput", false)]);
+
+    ## If there are packages without binaries (or without .m files), their
+    ## "archprefix" (or "dir") field might be empty.  Remove empty paths before
+    ## trying to match the regular expression in the next step.
+    pkg_path(cellfun (@isempty, pkg_path)) = [];
 
     ## Rely on Octave's initialization to include the pkg path elements.
-    if (! isempty (pkg_path))
-      [~, n] = setdiff (path_to_preserve, strcat (pkg_path, ":"));
-      path_to_preserve = path_to_preserve(sort (n));
-    endif
+    for i_pkg = 1:numel (pkg_path)
+      ## Remove all paths that are (sub-)folders of a package folder.
+      pkg_path_pattern = [regexptranslate("escape", pkg_path{i_pkg}), ".*"];
+      not_pkg_path ...
+        = cellfun (@isempty, regexp (path_to_preserve, pkg_path_pattern));
+      path_to_preserve = path_to_preserve(not_pkg_path);
+    endfor
 
     ## Split the path to be saved into two groups.  Those path elements that
     ## belong at the beginning and those at the end.
@@ -133,7 +149,7 @@ function retval = savepath (file)
       [~, n] = setdiff (path_to_preserve, default_path);
       path_to_save = path_to_preserve(sort (n));
       ## Remove pwd
-      path_to_save(strcmp (path_to_save, ["." pathsep])) = [];
+      path_to_save(strcmp (path_to_save, ["." pathsep()])) = [];
       if (! isempty (path_to_save))
         n = ones (numel (path_to_save), 1);
         for m = 1:numel (path_to_save)
@@ -170,8 +186,8 @@ function retval = savepath (file)
 
     fprintf (fid, "%s\n", post{:});
   unwind_protect_cleanup
-    status = fclose (fid);
-    if (status < 0)
+    sts = fclose (fid);
+    if (sts < 0)
       error ("savepath: could not close savefile after writing, %s", file);
     elseif (nargin == 0)
       warning ("off", "backtrace", "local");
@@ -181,7 +197,7 @@ function retval = savepath (file)
   end_unwind_protect
 
   if (nargout > 0)
-    retval = 0;
+    status = 0;
   endif
 
 endfunction

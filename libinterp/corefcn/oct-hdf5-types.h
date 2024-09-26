@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,21 +32,11 @@
 
 // This function only needs to be defined for C++.
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 extern bool check_hdf5_types (bool warn = true);
 
-OCTAVE_NAMESPACE_END
-
-#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-
-OCTAVE_DEPRECATED (7, "use 'octave::check_hdf5_types' instead")
-inline bool check_hdf5_types (bool warn = true)
-{
-  return octave::check_hdf5_types (warn);
-}
-
-#endif
+OCTAVE_END_NAMESPACE(octave)
 
 #endif
 

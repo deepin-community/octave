@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2018-2022 The Octave Project Developers
+## Copyright (C) 2018-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -86,14 +86,14 @@ function response = webread (url, varargin)
 
   ## Flatten the cell array because the internal processing takes place on
   ## a flattened array.
-  options.HeaderFields = options.HeaderFields(:)';
+  options.HeaderFields = options.HeaderFields(:).';
 
   nargs = 1 + numel (varargin);
   if (nargs == 1)
     response = __restful_service__ (url, cell (), options);
   elseif (rem (nargs, 2) == 1)
     if (! iscellstr (varargin))
-      error ("webwrite: KEYS and VALUES must be strings");
+      error ("webread: KEYS and VALUES must be strings");
     else
       response = __restful_service__ (url, varargin, options);
     endif

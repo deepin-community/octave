@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -30,18 +30,13 @@
 ## The output data class (double, single, uint32, etc.@:) is the same as the
 ## input class of @var{n}.  The algorithm used is the Sieve of Eratosthenes.
 ##
-## Note: If you need a specific number of primes you can use the fact that the
-## distance from one prime to the next is, on average, proportional to the
-## logarithm of the prime.  Integrating, one finds that there are about
-## @math{k} primes less than
-## @tex
-## $k \log (5 k)$.
-## @end tex
-## @ifnottex
-## k*log (5*k).
-## @end ifnottex
+## Note: For a specific number @var{n} of primes, call
+## @code{list_primes (@var{n})}.  Alternatively, call
+## @code{primes (@var{n}*log (@var{k}*@var{n}))(1:@var{n})} where @var{k} is
+## about 5 or 6.  This works because the distance from one prime to the next is
+## proportional to the logarithm of the prime, on average.  On integrating,
+## there are about @var{n} primes less than @code{@var{n} * log (5*@var{n})}.
 ##
-## See also @code{list_primes} if you need a specific number @var{n} of primes.
 ## @seealso{list_primes, isprime}
 ## @end deftypefn
 
@@ -63,9 +58,9 @@ function p = primes (n)
 
   cls = class (n);     # if n is not double, store its class
   n = double (n);      # and use only double for internal use.
-  # This conversion is needed for both calculation speed (twice as fast as
-  # integer) and also for the accuracy of the sieve calculation when given
-  # integer input, to avoid unwanted rounding in the sieve lengths.
+  ## This conversion is needed for both calculation speed (twice as fast as
+  ## integer) and also for the accuracy of the sieve calculation when given
+  ## integer input, to avoid unwanted rounding in the sieve lengths.
 
   if (n > flintmax ())
     warning ("primes: input exceeds flintmax.  Results may be inaccurate.");
@@ -112,7 +107,7 @@ function p = primes (n)
     p = sort ([2, 3, 6*find(sievem)-1, 6*find(sievep)+1]);
   endif
 
-  # cast back to the type of the input
+  ## cast back to the type of the input
   p = cast (p, cls);
 
 endfunction

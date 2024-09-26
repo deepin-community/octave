@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,7 +37,7 @@
 #include "utils.h"
 #include "variables.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 static std::string Vsvd_driver = "gesvd";
 
@@ -62,7 +62,7 @@ svd_type (int nargin, int nargout, const octave_value_list& args, const T& A)
 
 template <typename T>
 static typename math::svd<T>::Driver
-svd_driver (void)
+svd_driver ()
 {
   if (Vsvd_driver == "gejsv")
     return math::svd<T>::Driver::GEJSV;
@@ -199,9 +199,9 @@ documentation for @code{svd_driver} for more information on choosing a driver.
             error ("svd: cannot take SVD of matrix containing Inf or NaN values");
 
           math::svd<FloatMatrix> result
-            (tmp,
-             svd_type<FloatMatrix> (nargin, nargout, args, tmp),
-             svd_driver<FloatMatrix> ());
+          (tmp,
+           svd_type<FloatMatrix> (nargin, nargout, args, tmp),
+           svd_driver<FloatMatrix> ());
 
           FloatDiagMatrix sigma = result.singular_values ();
 
@@ -223,9 +223,9 @@ documentation for @code{svd_driver} for more information on choosing a driver.
             error ("svd: cannot take SVD of matrix containing Inf or NaN values");
 
           math::svd<FloatComplexMatrix> result
-            (ctmp,
-             svd_type<FloatComplexMatrix> (nargin, nargout, args, ctmp),
-             svd_driver<FloatComplexMatrix> ());
+          (ctmp,
+           svd_type<FloatComplexMatrix> (nargin, nargout, args, ctmp),
+           svd_driver<FloatComplexMatrix> ());
 
           FloatDiagMatrix sigma = result.singular_values ();
 
@@ -250,9 +250,9 @@ documentation for @code{svd_driver} for more information on choosing a driver.
             error ("svd: cannot take SVD of matrix containing Inf or NaN values");
 
           math::svd<Matrix> result
-            (tmp,
-             svd_type<Matrix> (nargin, nargout, args, tmp),
-             svd_driver<Matrix> ());
+          (tmp,
+           svd_type<Matrix> (nargin, nargout, args, tmp),
+           svd_driver<Matrix> ());
 
           DiagMatrix sigma = result.singular_values ();
 
@@ -274,9 +274,9 @@ documentation for @code{svd_driver} for more information on choosing a driver.
             error ("svd: cannot take SVD of matrix containing Inf or NaN values");
 
           math::svd<ComplexMatrix> result
-            (ctmp,
-             svd_type<ComplexMatrix> (nargin, nargout, args, ctmp),
-             svd_driver<ComplexMatrix> ());
+          (ctmp,
+           svd_type<ComplexMatrix> (nargin, nargout, args, ctmp),
+           svd_driver<ComplexMatrix> ());
 
           DiagMatrix sigma = result.singular_values ();
 
@@ -400,7 +400,7 @@ DEFUN (svd_driver, args, nargout,
        doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{val} =} svd_driver ()
 @deftypefnx {} {@var{old_val} =} svd_driver (@var{new_val})
-@deftypefnx {} {} svd_driver (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} svd_driver (@var{new_val}, "local")
 Query or set the underlying @sc{lapack} driver used by @code{svd}.
 
 Currently recognized values are @qcode{"gesdd"}, @qcode{"gesvd"}, and
@@ -462,4 +462,4 @@ in Octave has been set to @qcode{"gesvd"}.
 %! assert (V1, V3 .* z, 100*eps);
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

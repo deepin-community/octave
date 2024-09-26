@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -53,7 +53,7 @@ octave_bool_matrix : public octave_base_matrix<boolNDArray>
 {
 public:
 
-  octave_bool_matrix (void)
+  octave_bool_matrix ()
     : octave_base_matrix<boolNDArray> () { }
 
   octave_bool_matrix (const boolNDArray& bnda)
@@ -77,56 +77,57 @@ public:
   octave_bool_matrix (const octave_bool_matrix& bm)
     : octave_base_matrix<boolNDArray> (bm) { }
 
-  ~octave_bool_matrix (void) = default;
+  ~octave_bool_matrix () = default;
 
-  octave_base_value * clone (void) const
+  octave_base_value * clone () const
   { return new octave_bool_matrix (*this); }
 
-  octave_base_value * empty_clone (void) const
+  octave_base_value * empty_clone () const
   { return new octave_bool_matrix (); }
 
-  type_conv_info numeric_conversion_function (void) const;
+  type_conv_info numeric_conversion_function () const;
 
-  octave_base_value * try_narrowing_conversion (void);
+  octave_base_value * try_narrowing_conversion ();
 
   octave::idx_vector index_vector (bool /* require_integers */ = false) const
   {
-    return idx_cache ? *idx_cache : set_idx_cache (octave::idx_vector (matrix));
+    return m_idx_cache ? *m_idx_cache
+           : set_idx_cache (octave::idx_vector (m_matrix));
   }
 
-  builtin_type_t builtin_type (void) const { return btyp_bool; }
+  builtin_type_t builtin_type () const { return btyp_bool; }
 
-  bool is_bool_matrix (void) const { return true; }
+  bool is_bool_matrix () const { return true; }
 
-  bool islogical (void) const { return true; }
+  bool islogical () const { return true; }
 
-  bool isreal (void) const { return true; }
+  bool isreal () const { return true; }
 
-  bool isnumeric (void) const { return false; }
+  bool isnumeric () const { return false; }
 
   int8NDArray
-  int8_array_value (void) const { return int8NDArray (matrix); }
+  int8_array_value () const { return int8NDArray (m_matrix); }
 
   int16NDArray
-  int16_array_value (void) const { return int16NDArray (matrix); }
+  int16_array_value () const { return int16NDArray (m_matrix); }
 
   int32NDArray
-  int32_array_value (void) const { return int32NDArray (matrix); }
+  int32_array_value () const { return int32NDArray (m_matrix); }
 
   int64NDArray
-  int64_array_value (void) const { return int64NDArray (matrix); }
+  int64_array_value () const { return int64NDArray (m_matrix); }
 
   uint8NDArray
-  uint8_array_value (void) const { return uint8NDArray (matrix); }
+  uint8_array_value () const { return uint8NDArray (m_matrix); }
 
   uint16NDArray
-  uint16_array_value (void) const { return uint16NDArray (matrix); }
+  uint16_array_value () const { return uint16NDArray (m_matrix); }
 
   uint32NDArray
-  uint32_array_value (void) const { return uint32NDArray (matrix); }
+  uint32_array_value () const { return uint32NDArray (m_matrix); }
 
   uint64NDArray
-  uint64_array_value (void) const { return uint64NDArray (matrix); }
+  uint64_array_value () const { return uint64NDArray (m_matrix); }
 
   double double_value (bool = false) const;
 
@@ -136,32 +137,32 @@ public:
   { return double_value (frc_str_conv); }
 
   Matrix matrix_value (bool = false) const
-  { return Matrix (boolMatrix (matrix)); }
+  { return Matrix (boolMatrix (m_matrix)); }
 
   FloatMatrix float_matrix_value (bool = false) const
-  { return FloatMatrix (boolMatrix (matrix)); }
+  { return FloatMatrix (boolMatrix (m_matrix)); }
 
   NDArray array_value (bool = false) const
-  { return NDArray (matrix); }
+  { return NDArray (m_matrix); }
 
   FloatNDArray float_array_value (bool = false) const
-  { return FloatNDArray (matrix); }
+  { return FloatNDArray (m_matrix); }
 
   Complex complex_value (bool = false) const;
 
   FloatComplex float_complex_value (bool = false) const;
 
   ComplexMatrix complex_matrix_value (bool = false) const
-  { return ComplexMatrix (boolMatrix (matrix)); }
+  { return ComplexMatrix (boolMatrix (m_matrix)); }
 
   FloatComplexMatrix float_complex_matrix_value (bool = false) const
-  { return FloatComplexMatrix (boolMatrix (matrix)); }
+  { return FloatComplexMatrix (boolMatrix (m_matrix)); }
 
   ComplexNDArray complex_array_value (bool = false) const
-  { return ComplexNDArray (matrix); }
+  { return ComplexNDArray (m_matrix); }
 
   FloatComplexNDArray float_complex_array_value (bool = false) const
-  { return FloatComplexNDArray (matrix); }
+  { return FloatComplexNDArray (m_matrix); }
 
   charNDArray
   char_array_value (bool = false) const
@@ -171,43 +172,43 @@ public:
     octave_idx_type nel = numel ();
 
     for (octave_idx_type i = 0; i < nel; i++)
-      retval(i) = static_cast<char> (matrix(i));
+      retval(i) = static_cast<char> (m_matrix(i));
 
     return retval;
   }
 
   boolMatrix bool_matrix_value (bool = false) const
-  { return boolMatrix (matrix); }
+  { return boolMatrix (m_matrix); }
 
   boolNDArray bool_array_value (bool = false) const
-  { return matrix; }
+  { return m_matrix; }
 
   SparseMatrix sparse_matrix_value (bool = false) const
-  { return SparseMatrix (Matrix (boolMatrix (matrix))); }
+  { return SparseMatrix (Matrix (boolMatrix (m_matrix))); }
 
   SparseComplexMatrix sparse_complex_matrix_value (bool = false) const
-  { return SparseComplexMatrix (ComplexMatrix (boolMatrix (matrix))); }
+  { return SparseComplexMatrix (ComplexMatrix (boolMatrix (m_matrix))); }
 
   SparseBoolMatrix sparse_bool_matrix_value (bool = false) const
-  { return SparseBoolMatrix (boolMatrix (matrix)); }
+  { return SparseBoolMatrix (boolMatrix (m_matrix)); }
 
   octave_value convert_to_str_internal (bool pad, bool force, char type) const;
 
-  octave_value as_double (void) const;
-  octave_value as_single (void) const;
+  octave_value as_double () const;
+  octave_value as_single () const;
 
-  octave_value as_int8 (void) const;
-  octave_value as_int16 (void) const;
-  octave_value as_int32 (void) const;
-  octave_value as_int64 (void) const;
+  octave_value as_int8 () const;
+  octave_value as_int16 () const;
+  octave_value as_int32 () const;
+  octave_value as_int64 () const;
 
-  octave_value as_uint8 (void) const;
-  octave_value as_uint16 (void) const;
-  octave_value as_uint32 (void) const;
-  octave_value as_uint64 (void) const;
+  octave_value as_uint8 () const;
+  octave_value as_uint16 () const;
+  octave_value as_uint32 () const;
+  octave_value as_uint64 () const;
 
   // Use matrix_ref here to clear index cache.
-  void invert (void) { matrix_ref ().invert (); }
+  void invert () { matrix_ref ().invert (); }
 
   void print_raw (std::ostream& os, bool pr_as_read_syntax = false) const;
 
@@ -227,7 +228,7 @@ public:
   int write (octave::stream& os, int block_size,
              oct_data_conv::data_type output_type, int skip,
              octave::mach_info::float_format flt_fmt) const
-  { return os.write (matrix, block_size, output_type, skip, flt_fmt); }
+  { return os.write (m_matrix, block_size, output_type, skip, flt_fmt); }
 
   mxArray * as_mxArray (bool interleaved) const;
 

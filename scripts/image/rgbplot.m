@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -62,7 +62,7 @@ function h = rgbplot (cmap, style = "profile")
     error ("rgbplot: STYLE must be a string");
   endif
 
-  switch (tolower (style))
+  switch (lower (style))
     case "profile"
       x = 1:rows (cmap);
       htmp = plot (x,cmap(:,1),"r", x,cmap(:,2),"g", x,cmap(:,3),"b");

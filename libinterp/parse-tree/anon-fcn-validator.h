@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2019-2022 The Octave Project Developers
+// Copyright (C) 2019-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,51 +32,48 @@
 
 #include "pt-walk.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class tree_expression;
+class tree_parameter_list;
+
+// How to check the semantics of the code that the parse trees represent.
+
+class anon_fcn_validator : public tree_walker
 {
-  class tree_expression;
-  class tree_parameter_list;
+public:
 
-  // How to check the semantics of the code that the parse trees represent.
+  anon_fcn_validator (tree_parameter_list *, tree_expression *expr);
 
-  class anon_fcn_validator : public tree_walker
-  {
-  public:
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (anon_fcn_validator)
 
-    anon_fcn_validator (tree_parameter_list *, tree_expression *expr);
+  ~anon_fcn_validator () = default;
 
-    // No copying!
+  void visit_postfix_expression (tree_postfix_expression&);
 
-    anon_fcn_validator (const anon_fcn_validator&) = delete;
+  void visit_prefix_expression (tree_prefix_expression&);
 
-    anon_fcn_validator& operator = (const anon_fcn_validator&) = delete;
+  void visit_multi_assignment (tree_multi_assignment&);
 
-    ~anon_fcn_validator (void) = default;
+  void visit_simple_assignment (tree_simple_assignment&);
 
-    void visit_postfix_expression (tree_postfix_expression&);
+  bool ok () const { return m_ok; }
 
-    void visit_prefix_expression (tree_prefix_expression&);
+  int line () const { return m_line; }
+  int column () const { return m_column; }
 
-    void visit_multi_assignment (tree_multi_assignment&);
+  std::string message () const { return m_message; }
 
-    void visit_simple_assignment (tree_simple_assignment&);
+private:
 
-    bool ok (void) const { return m_ok; }
+  bool m_ok;
+  int m_line;
+  int m_column;
+  std::string m_message;
 
-    int line (void) const { return m_line; }
-    int column (void) const { return m_column; }
+  void error (tree_expression& expr);
+};
 
-    std::string message (void) const { return m_message; }
-
-  private:
-
-    bool m_ok;
-    int m_line;
-    int m_column;
-    std::string m_message;
-
-    void error (tree_expression& expr);
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

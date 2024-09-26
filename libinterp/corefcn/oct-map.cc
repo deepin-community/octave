@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1995-2022 The Octave Project Developers
+// Copyright (C) 1995-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -36,7 +36,7 @@
 #include "utils.h"
 
 octave_fields::fields_rep *
-octave_fields::nil_rep (void)
+octave_fields::nil_rep ()
 {
   static fields_rep nr;
   return &nr;
@@ -50,7 +50,7 @@ octave_fields::octave_fields (const string_vector& fields)
     (*m_rep)[fields(i)] = i;
 }
 
-octave_fields::octave_fields (const char * const *fields)
+octave_fields::octave_fields (const char *const *fields)
   : m_rep (new fields_rep)
 {
   octave_idx_type n = 0;
@@ -155,7 +155,7 @@ octave_fields::equal_up_to_order (const octave_fields& other,
 }
 
 string_vector
-octave_fields::fieldnames (void) const
+octave_fields::fieldnames () const
 {
   octave_idx_type n = nfields ();
   string_vector retval(n);
@@ -167,7 +167,7 @@ octave_fields::fieldnames (void) const
 }
 
 octave_scalar_map::octave_scalar_map
-  (const std::map<std::string, octave_value>& m)
+(const std::map<std::string, octave_value>& m)
 {
   std::size_t sz = m.size ();
   m_vals.resize (sz);
@@ -205,7 +205,7 @@ octave_scalar_map::rmfield (const std::string& k)
 }
 
 octave_scalar_map
-octave_scalar_map::orderfields (void) const
+octave_scalar_map::orderfields () const
 {
   Array<octave_idx_type> perm;
   return orderfields (perm);
@@ -303,7 +303,7 @@ octave_map::rmfield (const std::string& k)
 }
 
 octave_map
-octave_map::orderfields (void) const
+octave_map::orderfields () const
 {
   Array<octave_idx_type> perm;
   return orderfields (perm);
@@ -439,7 +439,7 @@ octave_map::fast_elem_insert (octave_idx_type n,
 }
 
 octave_map
-octave_map::squeeze (void) const
+octave_map::squeeze () const
 {
   octave_map retval (*this);
   octave_idx_type nf = nfields ();
@@ -496,10 +496,8 @@ octave_map::permute (const Array<int>& vec, bool inv) const
 */
 
 octave_map
-octave_map::transpose (void) const
+octave_map::transpose () const
 {
-  assert (ndims () == 2);
-
   octave_map retval (m_keys);
 
   retval.m_dimensions = dim_vector (m_dimensions (1), m_dimensions (0));
@@ -614,7 +612,7 @@ octave_map::do_cat (int dim, octave_idx_type n,
   for (octave_idx_type j = 0; j < nf; j++)
     {
       retval.m_vals.push_back (Cell (rd));
-      assert (retval.m_vals[j].numel () == n);
+      error_unless (retval.m_vals[j].numel () == n);
       for (octave_idx_type i = 0; i < n; i++)
         retval.m_vals[j].xelem (i) = map_list[i].m_vals[j];
     }
@@ -641,17 +639,19 @@ octave_map::do_cat (int dim, octave_idx_type n, const octave_map *map_list,
 }
 
 // This is just a wrapper.
-void permute_to_correct_order1 (const octave_scalar_map& ref,
-                                const octave_scalar_map& src,
-                                octave_scalar_map& dest,
-                                Array<octave_idx_type>& perm)
+void
+permute_to_correct_order1 (const octave_scalar_map& ref,
+                           const octave_scalar_map& src,
+                           octave_scalar_map& dest,
+                           Array<octave_idx_type>& perm)
 {
   dest = src.orderfields (ref, perm);
 }
 
 // In non-scalar case, we also promote empty structs without fields.
-void permute_to_correct_order1 (const octave_map& ref, const octave_map& src,
-                                octave_map& dest, Array<octave_idx_type>& perm)
+void
+permute_to_correct_order1 (const octave_map& ref, const octave_map& src,
+                           octave_map& dest, Array<octave_idx_type>& perm)
 {
   if (src.nfields () == 0 && src.isempty ())
     dest = octave_map (src.dims (), ref.keys ());
@@ -984,7 +984,8 @@ octave_map::column (octave_idx_type k) const
 octave_map
 octave_map::page (octave_idx_type k) const
 {
-  static Array<octave::idx_vector> ia (dim_vector (3, 1), octave::idx_vector::colon);
+  static Array<octave::idx_vector> ia (dim_vector (3, 1),
+                                       octave::idx_vector::colon);
 
   ia(2) = k;
   return index (ia);
@@ -1006,7 +1007,7 @@ octave_map::assign (const octave::idx_vector& i, const octave_map& rhs)
         {
           // Use dummy array.  FIXME: Need(?) a better solution.
           Array<char> dummy (m_dimensions), rhs_dummy (rhs.m_dimensions);
-          dummy.assign (i, rhs_dummy);;
+          dummy.assign (i, rhs_dummy);
           m_dimensions = dummy.dims ();
         }
 
@@ -1032,7 +1033,7 @@ octave_map::assign (const octave::idx_vector& i, const octave_map& rhs)
           error (ee, "incompatible fields in struct assignment");
         }
 
-      assert (rhs1.m_keys.is_same (m_keys));
+      error_unless (rhs1.m_keys.is_same (m_keys));
       assign (i, rhs1);
     }
 }
@@ -1054,7 +1055,7 @@ octave_map::assign (const octave::idx_vector& i, const octave::idx_vector& j,
         {
           // Use dummy array.  FIXME: Need(?) a better solution.
           Array<char> dummy (m_dimensions), rhs_dummy (rhs.m_dimensions);
-          dummy.assign (i, j, rhs_dummy);;
+          dummy.assign (i, j, rhs_dummy);
           m_dimensions = dummy.dims ();
         }
 
@@ -1080,7 +1081,7 @@ octave_map::assign (const octave::idx_vector& i, const octave::idx_vector& j,
           error (ee, "incompatible fields in struct assignment");
         }
 
-      assert (rhs1.m_keys.is_same (m_keys));
+      error_unless (rhs1.m_keys.is_same (m_keys));
       assign (i, j, rhs1);
     }
 }
@@ -1102,7 +1103,7 @@ octave_map::assign (const Array<octave::idx_vector>& ia,
         {
           // Use dummy array.  FIXME: Need(?) a better solution.
           Array<char> dummy (m_dimensions), rhs_dummy (rhs.m_dimensions);
-          dummy.assign (ia, rhs_dummy);;
+          dummy.assign (ia, rhs_dummy);
           m_dimensions = dummy.dims ();
         }
 
@@ -1128,7 +1129,7 @@ octave_map::assign (const Array<octave::idx_vector>& ia,
           error (ee, "incompatible fields in struct assignment");
         }
 
-      assert (rhs1.m_keys.is_same (m_keys));
+      error_unless (rhs1.m_keys.is_same (m_keys));
       assign (ia, rhs1);
     }
 }
@@ -1345,7 +1346,7 @@ octave_map::concat (const octave_map& rb, const Array<octave_idx_type>& ra_idx)
 }
 
 void
-octave_map::optimize_dimensions (void)
+octave_map::optimize_dimensions ()
 {
   octave_idx_type nf = nfields ();
 

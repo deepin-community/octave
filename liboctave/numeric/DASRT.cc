@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2002-2022 The Octave Project Developers
+// Copyright (C) 2002-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -551,7 +551,7 @@ DASRT::integrate (const ColumnVector& tout, const ColumnVector& tcrit)
 }
 
 std::string
-DASRT::error_message (void) const
+DASRT::error_message () const
 {
   std::string retval;
 

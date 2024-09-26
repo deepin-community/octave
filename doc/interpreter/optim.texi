@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -72,6 +72,11 @@ The @code{glpk} function also supports variations of this problem.
 
 @c glpk scripts/optimization/glpk.m
 @anchor{XREFglpk}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{xopt}, @var{fmin}, @var{errnum}, @var{extra}] =} glpk (@var{c}, @var{A}, @var{b}, @var{lb}, @var{ub}, @var{ctype}, @var{vartype}, @var{sense}, @var{param})
 Solve a linear program using the GNU @sc{glpk} library.
 
@@ -567,6 +572,11 @@ $$
 
 @c qp scripts/optimization/qp.m
 @anchor{XREFqp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{x}, @var{obj}, @var{info}, @var{lambda}] =} qp (@var{x0}, @var{H})
 @deftypefnx {} {[@var{x}, @var{obj}, @var{info}, @var{lambda}] =} qp (@var{x0}, @var{H}, @var{q})
 @deftypefnx {} {[@var{x}, @var{obj}, @var{info}, @var{lambda}] =} qp (@var{x0}, @var{H}, @var{q}, @var{A}, @var{b})
@@ -668,6 +678,11 @@ The problem is infeasible.
 
 @c pqpnonneg scripts/optimization/pqpnonneg.m
 @anchor{XREFpqpnonneg}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} pqpnonneg (@var{c}, @var{d})
 @deftypefnx {} {@var{x} =} pqpnonneg (@var{c}, @var{d}, @var{x0})
 @deftypefnx {} {@var{x} =} pqpnonneg (@var{c}, @var{d}, @var{x0}, @var{options})
@@ -676,8 +691,8 @@ The problem is infeasible.
 @deftypefnx {} {[@var{x}, @var{minval}, @var{exitflag}, @var{output}] =} pqpnonneg (@dots{})
 @deftypefnx {} {[@var{x}, @var{minval}, @var{exitflag}, @var{output}, @var{lambda}] =} pqpnonneg (@dots{})
 
-Minimize @code{1/2*@var{x}'*@var{c}*@var{x} + @var{d}'*@var{x}} subject to
-@code{@var{x} >= 0}.
+Minimize @code{ (1/2 * @var{x}' * @var{c} * @var{x} + @var{d}' * @var{x}) }
+subject to @code{@var{x} >= 0}.
 
 @var{c} and @var{d} must be real matrices, and @var{c} must be symmetric and
 positive definite.
@@ -715,8 +730,12 @@ A structure with two fields:
 @end itemize
 
 @item lambda
-@c FIXME: Something is output from the function, but what is it?
-Undocumented output
+Lagrange multipliers.  If these are nonzero, the corresponding @var{x}
+values should be zero, indicating the solution is pressed up against a
+coordinate plane.  The magnitude indicates how much the residual would
+improve if the @code{@var{x} >= 0} constraints were relaxed in that
+direction.
+
 @end table
 @xseealso{@ref{XREFlsqnonneg,,lsqnonneg}, @ref{XREFqp,,qp}, @ref{XREFoptimset,,optimset}}
 @end deftypefn
@@ -730,6 +749,11 @@ successive quadratic programming solver.
 
 @c sqp scripts/optimization/sqp.m
 @anchor{XREFsqp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{x}, @var{obj}, @var{info}, @var{iter}, @var{nf}, @var{lambda}] =} sqp (@var{x0}, @var{phi})
 @deftypefnx {} {[@dots{}] =} sqp (@var{x0}, @var{phi}, @var{g})
 @deftypefnx {} {[@dots{}] =} sqp (@var{x0}, @var{phi}, @var{g}, @var{h})
@@ -827,8 +851,7 @@ upper bounds on @var{x}.  These must be consistent with the equality and
 inequality constraints @var{g} and @var{h}.  If the arguments are vectors
 then @var{x}(i) is bound by @var{lb}(i) and @var{ub}(i).  A bound can also
 be a scalar in which case all elements of @var{x} will share the same
-bound.  If only one bound (lb, ub) is specified then the other will
-default to (-@var{realmax}, +@var{realmax}).
+bound.
 
 The seventh argument @var{maxiter} specifies the maximum number of
 iterations.  The default value is 100.
@@ -919,6 +942,11 @@ the @code{gls} is needed.
 
 @c ols scripts/linear-algebra/ols.m
 @anchor{XREFols}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{beta}, @var{sigma}, @var{r}] =} ols (@var{y}, @var{x})
 Ordinary least squares (OLS) estimation.
 
@@ -998,6 +1026,11 @@ The matrix of OLS residuals, @code{@var{r} = @var{y} - @var{x}*@var{beta}}.
 
 @c gls scripts/linear-algebra/gls.m
 @anchor{XREFgls}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{beta}, @var{v}, @var{r}] =} gls (@var{y}, @var{x}, @var{o})
 Generalized least squares (GLS) model.
 
@@ -1064,6 +1097,11 @@ The matrix of GLS residuals, @math{@var{r} = @var{y} - @var{x}*@var{beta}}.
 
 @c lsqnonneg scripts/optimization/lsqnonneg.m
 @anchor{XREFlsqnonneg}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} lsqnonneg (@var{c}, @var{d})
 @deftypefnx {} {@var{x} =} lsqnonneg (@var{c}, @var{d}, @var{x0})
 @deftypefnx {} {@var{x} =} lsqnonneg (@var{c}, @var{d}, @var{x0}, @var{options})
@@ -1109,8 +1147,12 @@ A structure with two fields:
 @end itemize
 
 @item lambda
-@c FIXME: Something is output from the function, but what is it?
-Undocumented output
+Lagrange multipliers.  If these are nonzero, the corresponding @var{x}
+values should be zero, indicating the solution is pressed up against a
+coordinate plane.  The magnitude indicates how much the residual would
+improve if the @code{@var{x} >= 0} constraints were relaxed in that
+direction.
+
 @end table
 @xseealso{@ref{XREFpqpnonneg,,pqpnonneg}, @ref{XREFlscov,,lscov}, @ref{XREFoptimset,,optimset}}
 @end deftypefn
@@ -1118,6 +1160,11 @@ Undocumented output
 
 @c lscov scripts/linear-algebra/lscov.m
 @anchor{XREFlscov}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} lscov (@var{A}, @var{b})
 @deftypefnx {} {@var{x} =} lscov (@var{A}, @var{b}, @var{V})
 @deftypefnx {} {@var{x} =} lscov (@var{A}, @var{b}, @var{V}, @var{alg})
@@ -1155,6 +1202,11 @@ Reference: @nospell{Golub and Van Loan} (1996),
 
 @c optimset scripts/optimization/optimset.m
 @anchor{XREFoptimset}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} optimset ()
 @deftypefnx {} {@var{options} =} optimset ()
 @deftypefnx {} {@var{options} =} optimset (@var{par}, @var{val}, @dots{})
@@ -1175,7 +1227,15 @@ When the first input is an existing options structure @var{old}, the values
 are updated from either the @var{par}/@var{val} list or from the options
 structure @var{new}.
 
-Valid parameters are:
+If @var{par} does not exactly match the name of a standard parameter,
+@code{optimset} will attempt to match @var{par} to a standard parameter
+and will set the value of that parameter if a match is found.  Matching is
+case insensitive and is based on character matching at the start of the
+parameter name.  @code{optimset} produces an error if it finds multiple
+ambiguous matches.  If no standard parameter matches are found a warning is
+issued and the non-standard parameter is created.
+
+Standard list of valid parameters:
 
 @table @asis
 @item AutoScaling
@@ -1247,19 +1307,58 @@ less than @code{TolX} the optimization stops.  Must be a positive scalar.
 
 @item Updating
 @end table
+
+This list can be extended by the user or other loaded Octave packages.  An
+updated valid parameters list can be queried using the no-argument form of
+@code{optimset}.
+
+Note 1: Only parameter names from the standard list are considered when
+matching short parameter names, and @var{par} will always be expanded
+to match a standard parameter even if an exact non-standard match exists.
+The value of a non-standard parameter that is ambiguous with one or more
+standard parameters cannot be set by @code{optimset} and can only be set
+using @code{setfield} or dot notation for structs.
+
+Note 2: The optimization options structure is primarily intended for
+manipulation of known parameters by @code{optimset} and @code{optimget}.
+Unpredictable behavior on future calls to @code{optimset} or
+@code{optimget} can result from creating non-standard or ambiguous
+parameters or from loading/unloading packages that change the known
+parameter list after creation of an optimization options structure.
 @xseealso{@ref{XREFoptimget,,optimget}}
 @end deftypefn
 
 
 @c optimget scripts/optimization/optimget.m
 @anchor{XREFoptimget}
-@deftypefn  {} {} optimget (@var{options}, @var{parname})
-@deftypefnx {} {} optimget (@var{options}, @var{parname}, @var{default})
-Return the specific option @var{parname} from the optimization options
-structure @var{options} created by @code{optimset}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-If @var{parname} is not defined then return @var{default} if supplied,
-otherwise return an empty matrix.
+
+@deftypefn  {} {@var{val} =} optimget (@var{options}, @var{par})
+@deftypefnx {} {@var{val} =} optimget (@var{options}, @var{par}, @var{default})
+Return the value of the specific parameter @var{par} from the optimization
+options structure @var{options} created by @code{optimset}.
+
+If @var{par} is not defined then return the @var{default} value if
+supplied, otherwise return an empty matrix.
+
+If @var{par} does not exactly match the name of a standard parameter,
+@code{optimget} will attempt to match @var{par} to a standard parameter
+and will return that parameter's value if a match is found.  Matching is
+case insensitive and is based on character matching at the start of the
+parameter name.  @code{optimget} produces an error if it finds multiple
+ambiguous matches.  If no standard parameter matches are found a warning is
+issued.  See @code{optimset} for information about the standard options
+list.
+
+Note: Only parameter names from the standard list are considered when
+matching short parameter names, and @var{par} will always be expanded to
+match a standard parameter even if an exact non-standard match exists.  The
+value of a non-standard parameter that is ambiguous with one or more
+standard parameters cannot be returned by @code{optimget} and can only be
+accessed using @code{getfield} or dot notation for structs.
 @xseealso{@ref{XREFoptimset,,optimset}}
 @end deftypefn
 

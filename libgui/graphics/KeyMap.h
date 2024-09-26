@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,14 +28,13 @@
 
 #include <string>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+namespace KeyMap
 {
-
-  namespace KeyMap
-  {
-    std::string qKeyToKeyString (int key);
-  }
-
+  std::string qKeyToKeyString (int key);
 }
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

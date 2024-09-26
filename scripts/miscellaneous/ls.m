@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -32,14 +32,14 @@
 ##
 ## List directory contents.
 ##
-## The @code{ls} command is implemented by calling the native operating
-## system's directory listing command---available @var{options} will vary from
-## system to system.
+## The @code{ls} function forwards to the @code{ls} command if it is available.
+## It falls back to calling the native operating system's directory listing
+## command.  Available @var{options} may vary from system to system.
 ##
 ## Filenames are subject to shell expansion if they contain any wildcard
-## characters @samp{*}, @samp{?}, @samp{[]}.  To find a literal example of a
-## wildcard character the wildcard must be escaped using the backslash operator
-## @samp{\}.
+## characters @samp{*}, @samp{?}, @samp{[]}.  If these wildcard characters are
+## escaped with a backslash @samp{\} (e.g., @samp{\*}) then they are not
+## treated as wildcards, but instead as the corresponding literal character.
 ##
 ## If the optional output @var{list} is requested then @code{ls} returns a
 ## character array with one row for each file/directory name.
@@ -58,34 +58,51 @@
 ## @seealso{dir, readdir, glob, what, stat, filesep, ls_command}
 ## @end deftypefn
 
-function retval = ls (varargin)
+function list = ls (varargin)
 
   if (! iscellstr (varargin))
     error ("ls: all arguments must be character strings");
   endif
 
+  ls_cmd = ls_command ();
+
   if (nargin > 0)
     args = tilde_expand (varargin);
+
     if (ispc () && ! isunix ())
-      idx = ! strncmp (args, '/', 1);
-      ## Enclose paths, potentially having spaces, in double quotes:
-      args(idx) = strcat ('"', args(idx), '"');
-      ## shell (cmd.exe) on MinGW uses '^' as escape character
-      args = regexprep (args, '([^\w.*?])', '^$1');
+      if (strncmp (ls_cmd, "ls", 2))
+        ## Replace backslashes with forward slashes (unless they escape a
+        ## wildcard character)
+        args = regexprep (args, '\\(?![*?\[\]])', '/');
+        ## Enclose paths, potentially having spaces, in double quotes:
+        args = strcat ('"', args, '"');
+        ## Exclude glob patterns and escaped characters from quoted part of
+        ## FILENAMES string
+        args = regexprep (args, '(?<!\\)([*?])', '"$1"');
+        args = regexprep (args, '(?<!\\)\[', '"[');
+        args = regexprep (args, '(?<!\\)\]', ']"');
+        args = regexprep (args, '(\\.)', '"$1"');
+      else
+        idx = ! strncmp (args, '/', 1);
+        ## Enclose paths, potentially having spaces, in double quotes:
+        args(idx) = strcat ('"', args(idx), '"');
+        ## shell (cmd.exe) on MinGW uses '^' as escape character
+        args = regexprep (args, '([^\w.*?])', '^$1');
+      endif
     else
       ## Escape any special characters in filename
-      args = regexprep (args, '([^][\w.*?-])', '\\$1');
+      args = regexprep (args, '(?<!\\)([^][\w.*?-\\])', '\\$1');
       ## Undo escaped spaces following command args
       ## Only used for command form where single str contains many args.
       ## Example: list = ls ("-l /usr/bin")
       args = regexprep (args, '(-\w+)(?:\\ )+', '$1 ');
     endif
+
     args = sprintf ("%s ", args{:});
   else
     args = "";
   endif
 
-  ls_cmd = ls_command ();
   if (nargout > 0 && strncmp (ls_cmd, "ls", 2))
     args = ["-1 ", args];
   endif
@@ -100,7 +117,7 @@ function retval = ls (varargin)
     elseif (nargout == 0)
       puts (output);
     else
-      retval = strvcat (regexp (output, "[\r\n]+", "split"){:});
+      list = strvcat (regexp (output, "[\r\n]+", "split"){:});
     endif
   else
     ## Just let the output flow if the pager is off.  That way the

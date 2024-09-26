@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -46,11 +46,11 @@ default_null_matrix_numeric_conversion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_null_matrix::numeric_conversion_function (void) const
+octave_null_matrix::numeric_conversion_function () const
 {
   return octave_base_value::type_conv_info
-           (default_null_matrix_numeric_conversion_function,
-            octave_matrix::static_type_id ());
+         (default_null_matrix_numeric_conversion_function,
+          octave_matrix::static_type_id ());
 }
 
 DEFINE_OV_TYPEID_FUNCTIONS_AND_DATA (octave_null_str, "null_string", "char");
@@ -67,11 +67,11 @@ default_null_str_numeric_conversion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_null_str::numeric_conversion_function (void) const
+octave_null_str::numeric_conversion_function () const
 {
   return octave_base_value::type_conv_info
-          (default_null_str_numeric_conversion_function,
-           octave_char_matrix_str::static_type_id ());
+         (default_null_str_numeric_conversion_function,
+          octave_char_matrix_str::static_type_id ());
 }
 
 DEFINE_OV_TYPEID_FUNCTIONS_AND_DATA (octave_null_sq_str, "null_sq_string",
@@ -89,19 +89,19 @@ default_null_sq_str_numeric_conversion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_null_sq_str::numeric_conversion_function (void) const
+octave_null_sq_str::numeric_conversion_function () const
 {
   return octave_base_value::type_conv_info
-           (default_null_sq_str_numeric_conversion_function,
-            octave_char_matrix_sq_str::static_type_id ());
+         (default_null_sq_str_numeric_conversion_function,
+          octave_char_matrix_sq_str::static_type_id ());
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (isnull, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} isnull (@var{x})
-Return true if @var{x} is a special null matrix, string, or single quoted
+@deftypefn {} {@var{tf} =} isnull (@var{x})
+Return true if @var{x} is a special null array, string, or single quoted
 string.
 
 Indexed assignment with such a null value on the right-hand side should delete
@@ -158,4 +158,4 @@ str(7:end) = ""                # indexed deletion
 %! assert (isnull (x), false);
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

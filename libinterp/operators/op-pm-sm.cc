@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -36,14 +36,14 @@
 #include "ov-perm.h"
 #include "ov-re-sparse.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // permutation matrix by sparse matrix ops
 
 DEFBINOP (mul_pm_sm, perm_matrix, sparse_matrix)
 {
-  const octave_perm_matrix& v1 = dynamic_cast<const octave_perm_matrix&> (a1);
-  const octave_sparse_matrix& v2 = dynamic_cast<const octave_sparse_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_matrix&, v2, a2);
 
   if (v2.rows () == 1 && v2.columns () == 1)
     {
@@ -59,8 +59,8 @@ DEFBINOP (mul_pm_sm, perm_matrix, sparse_matrix)
 
 DEFBINOP (ldiv_pm_sm, perm_matrix, sparse_matrix)
 {
-  const octave_perm_matrix& v1 = dynamic_cast<const octave_perm_matrix&> (a1);
-  const octave_sparse_matrix& v2 = dynamic_cast<const octave_sparse_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_matrix&, v2, a2);
 
   return v1.perm_matrix_value ().inverse () * v2.sparse_matrix_value ();
 }
@@ -69,8 +69,8 @@ DEFBINOP (ldiv_pm_sm, perm_matrix, sparse_matrix)
 
 DEFBINOP (mul_sm_pm, sparse_matrix, perm_matrix)
 {
-  const octave_sparse_matrix& v1 = dynamic_cast<const octave_sparse_matrix&> (a1);
-  const octave_perm_matrix& v2 = dynamic_cast<const octave_perm_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v2, a2);
 
   if (v1.rows () == 1 && v1.columns () == 1)
     {
@@ -86,8 +86,8 @@ DEFBINOP (mul_sm_pm, sparse_matrix, perm_matrix)
 
 DEFBINOP (div_sm_pm, sparse_matrix, perm_matrix)
 {
-  const octave_sparse_matrix& v1 = dynamic_cast<const octave_sparse_matrix&> (a1);
-  const octave_perm_matrix& v2 = dynamic_cast<const octave_perm_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v2, a2);
 
   return v1.sparse_matrix_value () * v2.perm_matrix_value ().inverse ();
 }
@@ -105,4 +105,4 @@ install_pm_sm_ops (octave::type_info& ti)
                     div_sm_pm);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

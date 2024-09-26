@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2004-2022 The Octave Project Developers
+## Copyright (C) 2004-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} waitforbuttonpress ()
-## @deftypefnx {} {@var{b} =} waitforbuttonpress ()
+## @deftypefn {} {@var{b} =} waitforbuttonpress ()
 ## Wait for mouse click or key press over the current figure window.
 ##
 ## The return value of @var{b} is 0 if a mouse button was pressed or 1 if a

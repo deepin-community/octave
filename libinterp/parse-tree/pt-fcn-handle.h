@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2003-2022 The Octave Project Developers
+// Copyright (C) 2003-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -43,129 +43,122 @@ class octave_value_list;
 #include "ov.h"
 #include "ov-usr-fcn.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class tree_fcn_handle : public tree_expression
 {
-  class tree_fcn_handle : public tree_expression
+public:
+
+  tree_fcn_handle (int l = -1, int c = -1)
+    : tree_expression (l, c), m_name () { }
+
+  tree_fcn_handle (const std::string& n, int l = -1, int c = -1)
+    : tree_expression (l, c), m_name (n) { }
+
+  OCTAVE_DISABLE_COPY_MOVE (tree_fcn_handle)
+
+  ~tree_fcn_handle () = default;
+
+  void print (std::ostream& os, bool pr_as_read_syntax = false,
+              bool pr_orig_txt = true);
+
+  void print_raw (std::ostream& os, bool pr_as_read_syntax = false,
+                  bool pr_orig_txt = true);
+
+  std::string name () const { return m_name; }
+
+  bool rvalue_ok () const { return true; }
+
+  tree_expression * dup (symbol_scope& scope) const;
+
+  octave_value evaluate (tree_evaluator& tw, int nargout = 1);
+
+  octave_value_list evaluate_n (tree_evaluator& tw, int nargout = 1)
   {
-  public:
+    return ovl (evaluate (tw, nargout));
+  }
 
-    tree_fcn_handle (int l = -1, int c = -1)
-      : tree_expression (l, c), m_name () { }
-
-    tree_fcn_handle (const std::string& n, int l = -1, int c = -1)
-      : tree_expression (l, c), m_name (n) { }
-
-    // No copying!
-
-    tree_fcn_handle (const tree_fcn_handle&) = delete;
-
-    tree_fcn_handle& operator = (const tree_fcn_handle&) = delete;
-
-    ~tree_fcn_handle (void) = default;
-
-    void print (std::ostream& os, bool pr_as_read_syntax = false,
-                bool pr_orig_txt = true);
-
-    void print_raw (std::ostream& os, bool pr_as_read_syntax = false,
-                    bool pr_orig_txt = true);
-
-    std::string name (void) const { return m_name; }
-
-    bool rvalue_ok (void) const { return true; }
-
-    tree_expression * dup (symbol_scope& scope) const;
-
-    octave_value evaluate (tree_evaluator& tw, int nargout = 1);
-
-    octave_value_list evaluate_n (tree_evaluator& tw, int nargout = 1)
-    {
-      return ovl (evaluate (tw, nargout));
-    }
-
-    void accept (tree_walker& tw)
-    {
-      tw.visit_fcn_handle (*this);
-    }
-
-  private:
-
-    // The name of this function handle.
-    std::string m_name;
-  };
-
-  class tree_anon_fcn_handle : public tree_expression
+  void accept (tree_walker& tw)
   {
-  public:
+    tw.visit_fcn_handle (*this);
+  }
 
-    tree_anon_fcn_handle (int l = -1, int c = -1)
-      : tree_expression (l, c), m_parameter_list (nullptr),
-        m_expression (nullptr), m_scope (), m_parent_scope (),
-        m_file_name ()
-    { }
+private:
 
-    tree_anon_fcn_handle (tree_parameter_list *pl, tree_expression *ex,
-                          const symbol_scope& scope,
-                          const symbol_scope& parent_scope,
-                          int l = -1, int c = -1)
-      : tree_expression (l, c), m_parameter_list (pl), m_expression (ex),
-        m_scope (scope), m_parent_scope (parent_scope), m_file_name ()
-    { }
+  // The name of this function handle.
+  std::string m_name;
+};
 
-    // No copying!
+class tree_anon_fcn_handle : public tree_expression
+{
+public:
 
-    tree_anon_fcn_handle (const tree_anon_fcn_handle&) = delete;
+  tree_anon_fcn_handle (int l = -1, int c = -1)
+    : tree_expression (l, c), m_parameter_list (nullptr),
+      m_expression (nullptr), m_scope (symbol_scope::anonymous ()),
+      m_parent_scope (symbol_scope::invalid ()), m_file_name ()
+  { }
 
-    tree_anon_fcn_handle& operator = (const tree_anon_fcn_handle&) = delete;
+  tree_anon_fcn_handle (tree_parameter_list *pl, tree_expression *ex,
+                        const symbol_scope& scope,
+                        const symbol_scope& parent_scope,
+                        int l = -1, int c = -1)
+    : tree_expression (l, c), m_parameter_list (pl), m_expression (ex),
+      m_scope (scope), m_parent_scope (parent_scope), m_file_name ()
+  { }
 
-    ~tree_anon_fcn_handle (void);
+  OCTAVE_DISABLE_COPY_MOVE (tree_anon_fcn_handle)
 
-    bool rvalue_ok (void) const { return true; }
+  ~tree_anon_fcn_handle ();
 
-    tree_parameter_list * parameter_list (void) const
-    {
-      return m_parameter_list;
-    }
+  bool rvalue_ok () const { return true; }
 
-    tree_expression * expression (void) const { return m_expression; }
+  tree_parameter_list * parameter_list () const
+  {
+    return m_parameter_list;
+  }
 
-    symbol_scope scope (void) const { return m_scope; }
+  tree_expression * expression () const { return m_expression; }
 
-    symbol_scope parent_scope (void) const { return m_parent_scope; }
+  symbol_scope scope () const { return m_scope; }
 
-    bool has_parent_scope (void) const { return m_parent_scope.is_valid (); }
+  symbol_scope parent_scope () const { return m_parent_scope; }
 
-    tree_expression * dup (symbol_scope& scope) const;
+  bool has_parent_scope () const { return m_parent_scope.is_valid (); }
 
-    octave_value evaluate (tree_evaluator& tw, int nargout = 1);
+  tree_expression * dup (symbol_scope& scope) const;
 
-    octave_value_list evaluate_n (tree_evaluator& tw, int nargout = 1)
-    {
-      return ovl (evaluate (tw, nargout));
-    }
+  octave_value evaluate (tree_evaluator& tw, int nargout = 1);
 
-    void accept (tree_walker& tw) { tw.visit_anon_fcn_handle (*this); }
+  octave_value_list evaluate_n (tree_evaluator& tw, int nargout = 1)
+  {
+    return ovl (evaluate (tw, nargout));
+  }
 
-    void stash_file_name (const std::string& file) { m_file_name = file; }
+  void accept (tree_walker& tw) { tw.visit_anon_fcn_handle (*this); }
 
-    std::string file_name (void) const { return m_file_name; }
+  void stash_file_name (const std::string& file) { m_file_name = file; }
 
-  private:
+  std::string file_name () const { return m_file_name; }
 
-    // Inputs parameters.
-    tree_parameter_list *m_parameter_list;
+private:
 
-    // Function body, limited to a single expression.
-    tree_expression *m_expression;
+  // Inputs parameters.
+  tree_parameter_list *m_parameter_list;
 
-    // Function scope.
-    symbol_scope m_scope;
+  // Function body, limited to a single expression.
+  tree_expression *m_expression;
 
-    // Parent scope, or an invalid scope if none.
-    symbol_scope m_parent_scope;
+  // Function scope.
+  symbol_scope m_scope;
 
-    // Filename where the handle was defined.
-    std::string m_file_name;
-  };
-}
+  // Parent scope, or an invalid scope if none.
+  symbol_scope m_parent_scope;
+
+  // Filename where the handle was defined.
+  std::string m_file_name;
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

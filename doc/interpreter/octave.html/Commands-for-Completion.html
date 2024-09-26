@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Commands for Completion (GNU Octave (version 7.1.0))</title>
+<title>Commands for Completion (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Commands for Completion (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Commands for Completion (GNU Octave (version 7.1.0))">
+<meta name="description" content="Commands for Completion (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Commands for Completion (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,12 @@
 <link href="Commands-for-Text.html" rel="prev" title="Commands for Text">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+kbd.kbd {font-style: oblique}
+kbd.key {font-style: normal}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,55 +34,75 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Commands-for-Completion">
-<div class="header">
+<div class="subsection-level-extent" id="Commands-for-Completion">
+<div class="nav-panel">
 <p>
 Next: <a href="Commands-for-History.html" accesskey="n" rel="next">Commands for Manipulating the History</a>, Previous: <a href="Commands-for-Text.html" accesskey="p" rel="prev">Commands for Changing Text</a>, Up: <a href="Command-Line-Editing.html" accesskey="u" rel="up">Command Line Editing</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Letting-Readline-Type-for-You"></span><h4 class="subsection">2.4.4 Letting Readline Type for You</h4>
-<span id="index-command-completion"></span>
+<h4 class="subsection" id="Letting-Readline-Type-for-You"><span>2.4.4 Letting Readline Type for You<a class="copiable-link" href="#Letting-Readline-Type-for-You"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-command-completion"></a>
 
 <p>The following commands allow Octave to complete command and variable
 names for you.
 </p>
-<dl compact="compact">
-<dt><span><kbd><span class="key">TAB</span></kbd></span></dt>
+<dl class="table">
+<dt><kbd class="kbd"><kbd class="key">TAB</kbd></kbd></dt>
 <dd><p>Attempt to do completion on the text before the cursor.  Octave can
 complete the names of commands and variables.
 </p>
 </dd>
-<dt><span><kbd>M-?</kbd></span></dt>
+<dt><kbd class="kbd">M-?</kbd></dt>
 <dd><p>List the possible completions of the text before the cursor.
 </p></dd>
 </dl>
 
-<span id="XREFcompletion_005fappend_005fchar"></span><dl class="def">
-<dt id="index-completion_005fappend_005fchar"><span class="category">: </span><span><em><var>val</var> =</em> <strong>completion_append_char</strong> <em>()</em><a href='#index-completion_005fappend_005fchar' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-completion_005fappend_005fchar-1"><span class="category">: </span><span><em><var>old_val</var> =</em> <strong>completion_append_char</strong> <em>(<var>new_val</var>)</em><a href='#index-completion_005fappend_005fchar-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-completion_005fappend_005fchar-2"><span class="category">: </span><span><em></em> <strong>completion_append_char</strong> <em>(<var>new_val</var>, &quot;local&quot;)</em><a href='#index-completion_005fappend_005fchar-2' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFcompletion_005fappend_005fchar"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-completion_005fappend_005fchar"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">completion_append_char</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-completion_005fappend_005fchar"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-completion_005fappend_005fchar-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">completion_append_char</strong> <code class="def-code-arguments">(<var class="var">new_val</var>)</code><a class="copiable-link" href="#index-completion_005fappend_005fchar-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-completion_005fappend_005fchar-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">completion_append_char</strong> <code class="def-code-arguments">(<var class="var">new_val</var>, &quot;local&quot;)</code><a class="copiable-link" href="#index-completion_005fappend_005fchar-2"> &para;</a></span></dt>
 <dd><p>Query or set the internal character variable that is appended to
 successful command-line completion attempts.
 </p>
-<p>The default value is <code>&quot; &quot;</code> (a single space).
+<p>The default value is <code class="code">&quot; &quot;</code> (a single space).
 </p>
-<p>When called from inside a function with the <code>&quot;local&quot;</code> option, the
+<p>When called from inside a function with the <code class="code">&quot;local&quot;</code> option, the
 variable is changed locally for the function and any subroutines it calls.
 The original variable value is restored when exiting the function.
 </p></dd></dl>
 
 
-<span id="XREFcompletion_005fmatches"></span><dl class="def">
-<dt id="index-completion_005fmatches"><span class="category">: </span><span><em></em> <strong>completion_matches</strong> <em>(<var>hint</var>)</em><a href='#index-completion_005fmatches' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Generate possible completions given <var>hint</var>.
+<a class="anchor" id="XREFcompletion_005fmatches"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-completion_005fmatches"><span class="category-def">: </span><span><code class="def-type"><var class="var">completion_list</var> =</code> <strong class="def-name">completion_matches</strong> <code class="def-code-arguments">(&quot;<var class="var">hint</var>&quot;)</code><a class="copiable-link" href="#index-completion_005fmatches"> &para;</a></span></dt>
+<dd><p>Generate possible word completions for Octave given the character sequence
+<var class="var">hint</var>.
 </p>
-<p>This function is provided for the benefit of programs like Emacs which
-might be controlling Octave and handling user input.  The current
-command number is not incremented when this function is called.  This is
-a feature, not a bug.
+<p>This function is provided for the benefit of programs like Emacs which might be
+controlling Octave and handling user input.  For example:
+</p>
+<div class="example">
+<div class="group"><pre class="example-preformatted">completion_matches (&quot;sine&quot;)
+&rArr;
+sinetone
+sinewave
+</pre></div></div>
+
+<p>Programming Note: The current command number in Octave is not incremented when
+this function is called.  This is a feature, not a bug.
 </p></dd></dl>
 
 
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Commands-for-History.html">Commands for Manipulating the History</a>, Previous: <a href="Commands-for-Text.html">Commands for Changing Text</a>, Up: <a href="Command-Line-Editing.html">Command Line Editing</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

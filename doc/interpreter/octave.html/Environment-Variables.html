@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Environment Variables (GNU Octave (version 7.1.0))</title>
+<title>Environment Variables (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Environment Variables (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Environment Variables (GNU Octave (version 7.1.0))">
+<meta name="description" content="Environment Variables (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Environment Variables (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Process-ID-Information.html" rel="prev" title="Process ID Information">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,67 +32,109 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Environment-Variables">
-<div class="header">
+<div class="section-level-extent" id="Environment-Variables">
+<div class="nav-panel">
 <p>
 Next: <a href="Current-Working-Directory.html" accesskey="n" rel="next">Current Working Directory</a>, Previous: <a href="Process-ID-Information.html" accesskey="p" rel="prev">Process, Group, and User IDs</a>, Up: <a href="System-Utilities.html" accesskey="u" rel="up">System Utilities</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Environment-Variables-1"></span><h3 class="section">36.7 Environment Variables</h3>
+<h3 class="section" id="Environment-Variables-1"><span>36.7 Environment Variables<a class="copiable-link" href="#Environment-Variables-1"> &para;</a></span></h3>
 
-<span id="XREFgetenv"></span><dl class="def">
-<dt id="index-getenv"><span class="category">: </span><span><em></em> <strong>getenv</strong> <em>(<var>var</var>)</em><a href='#index-getenv' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the value of the environment variable <var>var</var>.
+<a class="anchor" id="XREFgetenv"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-getenv"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">getenv</strong> <code class="def-code-arguments">(&quot;<var class="var">var</var>&quot;)</code><a class="copiable-link" href="#index-getenv"> &para;</a></span></dt>
+<dd><p>Return the value of the environment variable <var class="var">var</var>.
 </p>
 <p>For example,
 </p>
 <div class="example">
-<pre class="example">getenv (&quot;PATH&quot;)
+<pre class="example-preformatted">getenv (&quot;PATH&quot;)
 </pre></div>
 
 <p>returns a string containing the value of your path.
 </p>
-<p><strong>See also:</strong> <a href="#XREFsetenv">setenv</a>, <a href="#XREFunsetenv">unsetenv</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFsetenv">setenv</a>, <a class="ref" href="#XREFunsetenv">unsetenv</a>, <a class="ref" href="#XREFisenv">isenv</a>.
 </p></dd></dl>
 
 
-<span id="XREFsetenv"></span><dl class="def">
-<dt id="index-setenv"><span class="category">: </span><span><em></em> <strong>setenv</strong> <em>(<var>var</var>, <var>value</var>)</em><a href='#index-setenv' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-setenv-1"><span class="category">: </span><span><em></em> <strong>setenv</strong> <em>(<var>var</var>)</em><a href='#index-setenv-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-putenv"><span class="category">: </span><span><em></em> <strong>putenv</strong> <em>(&hellip;)</em><a href='#index-putenv' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Set the value of the environment variable <var>var</var> to <var>value</var>.
+<a class="anchor" id="XREFisenv"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-isenv"><span class="category-def">: </span><span><code class="def-type"><var class="var">tf</var> =</code> <strong class="def-name">isenv</strong> <code class="def-code-arguments">(<var class="var">var</var>)</code><a class="copiable-link" href="#index-isenv"> &para;</a></span></dt>
+<dd><p>Return true if the variable <var class="var">var</var> is an environment variable, and false
+otherwise.
 </p>
-<p>If no <var>value</var> is specified then the variable will be assigned the null
+<p>For example,
+</p>
+<div class="example">
+<pre class="example-preformatted">tf = isenv (&quot;PATH&quot;)
+</pre></div>
+
+<p>will typically return true on UNIX systems because <code class="code">&quot;PATH&quot;</code> is an
+environment variable for UNIX.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgetenv">getenv</a>, <a class="ref" href="#XREFsetenv">setenv</a>, <a class="ref" href="#XREFunsetenv">unsetenv</a>.
+</p></dd></dl>
+
+
+<a class="anchor" id="XREFsetenv"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-setenv"><span class="category-def">: </span><span><strong class="def-name">setenv</strong> <code class="def-code-arguments">(&quot;<var class="var">var</var>&quot;, <var class="var">value</var>)</code><a class="copiable-link" href="#index-setenv"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-setenv-1"><span class="category-def">: </span><span><strong class="def-name">setenv</strong> <code class="def-code-arguments">(<var class="var">var</var>)</code><a class="copiable-link" href="#index-setenv-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-putenv"><span class="category-def">: </span><span><strong class="def-name">putenv</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-putenv"> &para;</a></span></dt>
+<dd><p>Set the value of the environment variable <var class="var">var</var> to <var class="var">value</var>.
+</p>
+<p>If no <var class="var">value</var> is specified then the variable will be assigned the null
 string.
 </p>
-<p><strong>See also:</strong> <a href="#XREFunsetenv">unsetenv</a>, <a href="#XREFgetenv">getenv</a>.
+<p>Programming Note: <code class="code">putenv</code> is an alias for <code class="code">setenv</code> and can be used
+interchangeably.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFunsetenv">unsetenv</a>, <a class="ref" href="#XREFgetenv">getenv</a>, <a class="ref" href="#XREFisenv">isenv</a>.
 </p></dd></dl>
 
 
-<span id="XREFunsetenv"></span><dl class="def">
-<dt id="index-unsetenv"><span class="category">: </span><span><em><var>status</var> =</em> <strong>unsetenv</strong> <em>(<var>var</var>)</em><a href='#index-unsetenv' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Delete the environment variable <var>var</var>.
+<a class="anchor" id="XREFunsetenv"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-unsetenv"><span class="category-def">: </span><span><strong class="def-name">unsetenv</strong> <code class="def-code-arguments">(&quot;<var class="var">var</var>&quot;)</code><a class="copiable-link" href="#index-unsetenv"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-unsetenv-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">status</var> =</code> <strong class="def-name">unsetenv</strong> <code class="def-code-arguments">(&quot;<var class="var">var</var>&quot;)</code><a class="copiable-link" href="#index-unsetenv-1"> &para;</a></span></dt>
+<dd><p>Delete the environment variable <var class="var">var</var>.
 </p>
 <p>Return 0 if the variable was deleted, or did not exist, and -1 if an error
 occurred.
 </p>
-<p><strong>See also:</strong> <a href="#XREFsetenv">setenv</a>, <a href="#XREFgetenv">getenv</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFsetenv">setenv</a>, <a class="ref" href="#XREFgetenv">getenv</a>, <a class="ref" href="#XREFisenv">isenv</a>.
 </p></dd></dl>
 
 
-<span id="XREFget_005fhome_005fdirectory"></span><dl class="def">
-<dt id="index-get_005fhome_005fdirectory"><span class="category">: </span><span><em><var>homedir</var> =</em> <strong>get_home_directory</strong> <em>()</em><a href='#index-get_005fhome_005fdirectory' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFget_005fhome_005fdirectory"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-get_005fhome_005fdirectory"><span class="category-def">: </span><span><code class="def-type"><var class="var">homedir</var> =</code> <strong class="def-name">get_home_directory</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-get_005fhome_005fdirectory"> &para;</a></span></dt>
 <dd><p>Return the current home directory.
 </p>
-<p>On most systems, this is equivalent to <code>getenv (&quot;HOME&quot;)</code>.  On Windows
-systems, if the environment variable <code>HOME</code> is not set then it is
+<p>On most systems, this is equivalent to <code class="code">getenv (&quot;HOME&quot;)</code>.  On Windows
+systems, if the environment variable <code class="env">HOME</code> is not set then it is
 equivalent to
-<code>fullfile (getenv (&quot;HOMEDRIVE&quot;), getenv (&quot;HOMEPATH&quot;))</code>
+<code class="code">fullfile (getenv (&quot;HOMEDRIVE&quot;), getenv (&quot;HOMEPATH&quot;))</code>
 </p>
-<p><strong>See also:</strong> <a href="#XREFgetenv">getenv</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgetenv">getenv</a>.
 </p></dd></dl>
 
 
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Current-Working-Directory.html">Current Working Directory</a>, Previous: <a href="Process-ID-Information.html">Process, Group, and User IDs</a>, Up: <a href="System-Utilities.html">System Utilities</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

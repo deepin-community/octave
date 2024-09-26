@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -44,7 +44,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // matrix by complex scalar ops.
 
@@ -54,8 +54,8 @@ DEFNDBINOP_OP (mul, matrix, complex, array, complex, *)
 
 DEFBINOP (div, matrix, complex)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_complex& v2 = dynamic_cast<const octave_complex&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v2, a2);
 
   return octave_value (v1.array_value () / v2.complex_value ());
 }
@@ -64,8 +64,8 @@ DEFBINOP_FN (pow, matrix, complex, xpow)
 
 DEFBINOP (ldiv, matrix, complex)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_complex& v2 = dynamic_cast<const octave_complex&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v2, a2);
 
   Matrix m1 = v1.matrix_value ();
   ComplexMatrix m2 = v2.complex_matrix_value ();
@@ -88,8 +88,8 @@ DEFNDBINOP_OP (el_mul, matrix, complex, array, complex, *)
 
 DEFBINOP (el_div, matrix, complex)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_complex& v2 = dynamic_cast<const octave_complex&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v2, a2);
 
   return octave_value (v1.array_value () / v2.complex_value ());
 }
@@ -98,8 +98,8 @@ DEFNDBINOP_FN (el_pow, matrix, complex, array, complex, elem_xpow)
 
 DEFBINOP (el_ldiv, matrix, complex)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_complex& v2 = dynamic_cast<const octave_complex&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v2, a2);
 
   return elem_xdiv (v2.complex_value (), v1.array_value ());
 }
@@ -139,4 +139,4 @@ install_m_cs_ops (octave::type_info& ti)
                          octave_float_complex_matrix);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

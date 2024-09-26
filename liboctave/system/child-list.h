@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,62 +34,63 @@
 
 #include "base-list.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class OCTAVE_API child
 {
-  class OCTAVE_API child
-  {
-  public:
+public:
 
-    // Do whatever to handle event for child with PID (might not
-    // actually be dead, could just be stopped).  Return true if
-    // the list element corresponding to PID should be removed from
-    // list.  This function should not call any functions that modify
-    // the child_list.
+  // Do whatever to handle event for child with PID (might not
+  // actually be dead, could just be stopped).  Return true if
+  // the list element corresponding to PID should be removed from
+  // list.  This function should not call any functions that modify
+  // the child_list.
 
-    typedef bool (*child_event_handler) (pid_t, int);
+  typedef bool (*child_event_handler) (pid_t, int);
 
-    child (pid_t pid = -1, child_event_handler f = nullptr)
-      : m_pid (pid), m_handler (f), m_have_status (0), m_status (0)
-    { }
+  child (pid_t pid = -1, child_event_handler f = nullptr)
+    : m_pid (pid), m_handler (f), m_have_status (0), m_status (0)
+  { }
 
-    child (const child&) = default;
+  child (const child&) = default;
 
-    child& operator = (const child&) = default;
+  child& operator = (const child&) = default;
 
-    ~child (void) = default;
+  ~child () = default;
 
-    // The process ID of this child.
-    pid_t m_pid;
+  // The process ID of this child.
+  pid_t m_pid;
 
-    // The function we call if an event happens for this child.
-    child_event_handler m_handler;
+  // The function we call if an event happens for this child.
+  child_event_handler m_handler;
 
-    // Nonzero if this child has stopped or terminated.
-    sig_atomic_t m_have_status;
+  // Nonzero if this child has stopped or terminated.
+  sig_atomic_t m_have_status;
 
-    // The m_status of this child; 0 if running, otherwise a m_status value
-    // from waitpid.
-    int m_status;
-  };
+  // The m_status of this child; 0 if running, otherwise a m_status value
+  // from waitpid.
+  int m_status;
+};
 
-  class OCTAVE_API child_list
-  {
-  public:
+class OCTAVE_API child_list
+{
+public:
 
-    child_list (void) { }
+  OCTAVE_DEFAULT_CONSTRUCT_COPY_MOVE_DELETE (child_list)
 
-    void insert (pid_t pid, child::child_event_handler f);
+  void insert (pid_t pid, child::child_event_handler f);
 
-    void remove (pid_t pid);
+  void remove (pid_t pid);
 
-    void reap (void);
+  void reap ();
 
-    bool wait (void);
+  bool wait ();
 
-  private:
+private:
 
-    base_list<child> m_list;
-  };
-}
+  base_list<child> m_list;
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

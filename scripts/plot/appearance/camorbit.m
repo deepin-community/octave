@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -138,7 +138,7 @@ function camorbit (varargin)
   endif
 
   if (ischar (dir))
-    switch (tolower (dir))
+    switch (lower (dir))
       case "x"
         dir = [1 0 0];
       case "y"

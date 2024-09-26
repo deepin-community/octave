@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2001-2022 The Octave Project Developers
+// Copyright (C) 2001-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,108 +35,111 @@
 #include "lo-error.h"
 #include "lo-sysdep.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+std::string file_info::get_line (std::size_t line) const
 {
-  std::string file_info::get_line (std::size_t line) const
-  {
-    std::string retval;
+  std::string retval;
 
-    if (line == 0)
-      return retval;
-
-    if (line < m_offsets.size ())
-      {
-        std::size_t bol = m_offsets[line-1];
-        std::size_t eol = m_offsets[line];
-
-        while (eol > 0 && eol > bol
-               && (m_file_buf[eol-1] == '\n' || m_file_buf[eol-1] == '\r'))
-          eol--;
-
-        retval = m_file_buf.substr (bol, eol - bol);
-      }
-
+  if (line == 0)
     return retval;
-  }
 
-  std::deque<std::string>
-  file_info::get_lines (std::size_t line, std::size_t num_lines) const
-  {
-    std::deque<std::string> retval;
+  if (line < m_offsets.size ())
+    {
+      std::size_t bol = m_offsets[line-1];
+      std::size_t eol = m_offsets[line];
 
-    for (std::size_t i = line; i < line+num_lines; i++)
-      retval.push_back (get_line (i));
+      while (eol > 0 && eol > bol
+             && (m_file_buf[eol-1] == '\n' || m_file_buf[eol-1] == '\r'))
+        eol--;
 
-    return retval;
-  }
+      retval = m_file_buf.substr (bol, eol - bol);
+    }
 
-  // Read entire file called fname and return the contents as a string
-
-  std::string file_info::snarf_file (const std::string& fname)
-  {
-    std::string retval;
-
-    sys::file_stat fs (fname);
-
-    if (! fs)
-      (*current_liboctave_error_handler) ("no such file, '%s'", fname.c_str ());
-
-    std::size_t sz = fs.size ();
-
-    std::ifstream file = sys::ifstream (fname.c_str (),
-                                        std::ios::in | std::ios::binary);
-
-    if (file)
-      {
-        std::string buf (sz+1, 0);
-
-        file.read (&buf[0], sz+1);
-
-        if (! file.eof ())
-          (*current_liboctave_error_handler)
-            ("error reading file %s", fname.c_str ());
-
-        // Expected to read the entire file.
-        retval = buf;
-      }
-
-    return retval;
-  }
-
-  std::vector<std::size_t> file_info::get_line_offsets (const std::string& buf)
-  {
-    std::deque<std::size_t> tmp_offsets;
-
-    tmp_offsets.push_back (0);
-
-    std::size_t len = buf.length ();
-
-    for (std::size_t i = 0; i < len; i++)
-      {
-        char c = buf[i];
-
-        if (c == '\r' && ++i < len)
-          {
-            c = buf[i];
-
-            if (c == '\n')
-              tmp_offsets.push_back (i+1);
-            else
-              tmp_offsets.push_back (i);
-          }
-        else if (c == '\n')
-          tmp_offsets.push_back (i+1);
-      }
-
-    tmp_offsets.push_back (len-1);
-
-    std::size_t n = tmp_offsets.size ();
-
-    std::vector<std::size_t> retval (n);
-    std::size_t i = 0;
-    for (auto& elt : tmp_offsets)
-      retval[i++] = elt;
-
-    return retval;
-  }
+  return retval;
 }
+
+std::deque<std::string>
+file_info::get_lines (std::size_t line, std::size_t num_lines) const
+{
+  std::deque<std::string> retval;
+
+  for (std::size_t i = line; i < line+num_lines; i++)
+    retval.push_back (get_line (i));
+
+  return retval;
+}
+
+// Read entire file called fname and return the contents as a string
+
+std::string
+file_info::snarf_file (const std::string& fname)
+{
+  std::string retval;
+
+  sys::file_stat fs (fname);
+
+  if (! fs)
+    (*current_liboctave_error_handler) ("no such file, '%s'", fname.c_str ());
+
+  std::size_t sz = fs.size ();
+
+  std::ifstream file = sys::ifstream (fname.c_str (),
+                                      std::ios::in | std::ios::binary);
+
+  if (file)
+    {
+      std::string buf (sz+1, 0);
+
+      file.read (&buf[0], sz+1);
+
+      if (! file.eof ())
+        (*current_liboctave_error_handler)
+          ("error reading file %s", fname.c_str ());
+
+      // Expected to read the entire file.
+      retval = buf;
+    }
+
+  return retval;
+}
+
+std::vector<std::size_t>
+file_info::get_line_offsets (const std::string& buf)
+{
+  std::deque<std::size_t> tmp_offsets;
+
+  tmp_offsets.push_back (0);
+
+  std::size_t len = buf.length ();
+
+  for (std::size_t i = 0; i < len; i++)
+    {
+      char c = buf[i];
+
+      if (c == '\r' && ++i < len)
+        {
+          c = buf[i];
+
+          if (c == '\n')
+            tmp_offsets.push_back (i+1);
+          else
+            tmp_offsets.push_back (i);
+        }
+      else if (c == '\n')
+        tmp_offsets.push_back (i+1);
+    }
+
+  tmp_offsets.push_back (len-1);
+
+  std::size_t n = tmp_offsets.size ();
+
+  std::vector<std::size_t> retval (n);
+  std::size_t i = 0;
+  for (auto& elt : tmp_offsets)
+    retval[i++] = elt;
+
+  return retval;
+}
+
+OCTAVE_END_NAMESPACE(octave)

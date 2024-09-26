@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -203,7 +203,7 @@ endfunction
 %! set (hnew, "position", [scrn(3)/2, scrn(4)/2-pos(4)/2, pos(3:4)]);
 %! drawnow ();
 
-%!testif HAVE_MAGICK; (have_window_system () && __have_feature__ ("QT_OFFSCREEN") && any (strcmp ("qt", available_graphics_toolkits ())));
+%!testif HAVE_MAGICK; (have_window_system () && any (strcmp ("qt", available_graphics_toolkits ())));
 %! toolkit = graphics_toolkit ();
 %! graphics_toolkit ("qt");
 %! unwind_protect

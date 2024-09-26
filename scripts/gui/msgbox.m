@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -158,7 +158,7 @@ function retval = msgbox (msg, varargin)
           error ('msgbox: invalid data for "custom" icon');
         elseif (ismatrix (icon.cdata) && nargs == 4)
           icon.colormap = varargin{4};
-        else
+        elseif (nargs > 3)
           print_usage ();
         endif
       elseif (nargs > 2)

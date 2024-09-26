@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,9 +24,9 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} kurtosis (@var{x})
-## @deftypefnx {} {} kurtosis (@var{x}, @var{flag})
-## @deftypefnx {} {} kurtosis (@var{x}, @var{flag}, @var{dim})
+## @deftypefn  {} {@var{y} =} kurtosis (@var{x})
+## @deftypefnx {} {@var{y} =} kurtosis (@var{x}, @var{flag})
+## @deftypefnx {} {@var{y} =} kurtosis (@var{x}, @var{flag}, @var{dim})
 ## Compute the sample kurtosis of the elements of @var{x}.
 ##
 ## The sample kurtosis is defined as

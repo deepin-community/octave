@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,7 +35,7 @@
 #include "ovl.h"
 #include "utils.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // This function should be merged with Fifft.
 
@@ -139,8 +139,8 @@ do_fft2 (const octave_value_list& args, const char *fcn, int type)
 
 DEFUN (fft2, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} fft2 (@var{A})
-@deftypefnx {} {} fft2 (@var{A}, @var{m}, @var{n})
+@deftypefn  {} {@var{B} =} fft2 (@var{A})
+@deftypefnx {} {@var{B} =} fft2 (@var{A}, @var{m}, @var{n})
 Compute the two-dimensional discrete Fourier transform of @var{A} using
 a Fast Fourier Transform (FFT) algorithm.
 
@@ -159,17 +159,17 @@ of @var{A} is treated separately.
 
 DEFUN (ifft2, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} ifft2 (@var{A})
-@deftypefnx {} {} ifft2 (@var{A}, @var{m}, @var{n})
-Compute the inverse two-dimensional discrete Fourier transform of @var{A}
+@deftypefn  {} {@var{A} =} ifft2 (@var{B})
+@deftypefnx {} {@var{A} =} ifft2 (@var{B}, @var{m}, @var{n})
+Compute the inverse two-dimensional discrete Fourier transform of @var{B}
 using a Fast Fourier Transform (FFT) algorithm.
 
 The optional arguments @var{m} and @var{n} may be used specify the number of
-rows and columns of @var{A} to use.  If either of these is larger than the
-size of @var{A}, @var{A} is resized and padded with zeros.
+rows and columns of @var{B} to use.  If either of these is larger than the
+size of @var{B}, @var{B} is resized and padded with zeros.
 
-If @var{A} is a multi-dimensional matrix, each two-dimensional sub-matrix
-of @var{A} is treated separately.
+If @var{B} is a multi-dimensional matrix, each two-dimensional sub-matrix
+of @var{B} is treated separately.
 @seealso{fft2, ifft, ifftn, fftw}
 @end deftypefn */)
 {
@@ -235,7 +235,7 @@ of @var{A} is treated separately.
 %! s = kron (sx', sy);
 %! S = fft2 (s);
 %! answer = kron (fft (sx)', fft (sy));
-%! assert (S, answer, 4*M*N*eps ("single"));
+%! assert (S, answer, 4*M*N* eps ("single"));
 
 ## Author: David Billinghurst (David.Billinghurst@riotinto.com.au)
 ##         Comalco Research and Technology
@@ -257,7 +257,7 @@ of @var{A} is treated separately.
 %! answer = kron (sx', sy);
 %! s = ifft2 (S);
 %!
-%! assert (s, answer, 30*eps ("single"));
+%! assert (s, answer, 30* eps ("single"));
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

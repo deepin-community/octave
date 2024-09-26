@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2000-2022 The Octave Project Developers
+// Copyright (C) 2000-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -86,7 +86,7 @@ octave_qhull_dims_ok (octave_idx_type dim, octave_idx_type n, const char *who)
 
 #endif
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN_DLD (convhulln, args, nargout,
            doc: /* -*- texinfo -*-
@@ -197,53 +197,53 @@ convex hull is calculated.
   octave_idx_type i = 0;
 
   FORALLfacets
-    {
-      octave_idx_type j = 0;
+  {
+    octave_idx_type j = 0;
 
-      if (! (nonsimp_seen || facet->simplicial || qh->hull_dim == 2))
-        {
-          nonsimp_seen = true;
+    if (! (nonsimp_seen || facet->simplicial || qh->hull_dim == 2))
+      {
+        nonsimp_seen = true;
 
-          if (cmd.find ("QJ") != std::string::npos)
-            // Should never happen with QJ.
-            error ("convhulln: qhull failed: option 'QJ' returned non-simplicial facet");
-        }
+        if (cmd.find ("QJ") != std::string::npos)
+          // Should never happen with QJ.
+          error ("convhulln: qhull failed: option 'QJ' returned non-simplicial facet");
+      }
 
-      if (dim == 3)
-        {
-          setT *vertices = qh_facet3vertex (qh, facet);
+    if (dim == 3)
+      {
+        setT *vertices = qh_facet3vertex (qh, facet);
 
-          vertexT *vertex, **vertexp;
+        vertexT *vertex, **vertexp;
 
-          FOREACHvertex_ (vertices)
+        FOREACHvertex_ (vertices)
+        idx(i, j++) = 1 + qh_pointid(qh, vertex->point);
+
+        qh_settempfree (qh, &vertices);
+      }
+    else
+      {
+        if (facet->toporient ^ qh_ORIENTclock)
+          {
+            vertexT *vertex, **vertexp;
+
+            FOREACHvertex_ (facet->vertices)
             idx(i, j++) = 1 + qh_pointid(qh, vertex->point);
+          }
+        else
+          {
+            vertexT *vertex, **vertexp;
 
-          qh_settempfree (qh, &vertices);
-        }
-      else
-        {
-          if (facet->toporient ^ qh_ORIENTclock)
-            {
-              vertexT *vertex, **vertexp;
+            FOREACHvertexreverse12_ (facet->vertices)
+            idx(i, j++) = 1 + qh_pointid(qh, vertex->point);
+          }
+      }
+    if (j < dim)
+      warning ("convhulln: facet %" OCTAVE_IDX_TYPE_FORMAT
+               " only has %" OCTAVE_IDX_TYPE_FORMAT
+               " vertices", i, j);
 
-              FOREACHvertex_ (facet->vertices)
-                idx(i, j++) = 1 + qh_pointid(qh, vertex->point);
-            }
-          else
-            {
-              vertexT *vertex, **vertexp;
-
-              FOREACHvertexreverse12_ (facet->vertices)
-                idx(i, j++) = 1 + qh_pointid(qh, vertex->point);
-            }
-        }
-      if (j < dim)
-        warning ("convhulln: facet %" OCTAVE_IDX_TYPE_FORMAT
-                 " only has %" OCTAVE_IDX_TYPE_FORMAT
-                 " vertices", i, j);
-
-      i++;
-    }
+    i++;
+  }
 
   // Remove extra dimension if all facets were simplicial.
 
@@ -258,28 +258,28 @@ convex hull is calculated.
       realT dist;
 
       FORALLfacets
-        {
-          if (! facet->normal)
-            continue;
+      {
+        if (! facet->normal)
+          continue;
 
-          if (facet->upperdelaunay && qh->ATinfinity)
-            continue;
+        if (facet->upperdelaunay && qh->ATinfinity)
+          continue;
 
-          facet->f.area = area = qh_facetarea (qh, facet);
-          facet->isarea = True;
+        facet->f.area = area = qh_facetarea (qh, facet);
+        facet->isarea = True;
 
-          if (qh->DELAUNAY)
-            {
-              if (facet->upperdelaunay == qh->UPPERdelaunay)
-                qh->totarea += area;
-            }
-          else
-            {
+        if (qh->DELAUNAY)
+          {
+            if (facet->upperdelaunay == qh->UPPERdelaunay)
               qh->totarea += area;
-              qh_distplane (qh, qh->interior_point, facet, &dist);
-              qh->totvol += -dist * area / qh->hull_dim;
-            }
-        }
+          }
+        else
+          {
+            qh->totarea += area;
+            qh_distplane (qh, qh->interior_point, facet, &dist);
+            qh->totvol += -dist * area / qh->hull_dim;
+          }
+      }
 
       retval(1) = octave_value (qh->totvol);
     }
@@ -304,7 +304,8 @@ convex hull is calculated.
 %! [h, v] = convhulln (cube, "Qt");
 %! assert (size (h), [12 3]);
 %! h = sortrows (sort (h, 2), [1:3]);
-%! assert (h, [1 2 4; 1 2 6; 1 4 8; 1 5 6; 1 5 8; 2 3 4; 2 3 7; 2 6 7; 3 4 7; 4 7 8; 5 6 7; 5 7 8]);
+%! assert (h,
+%!         [1 2 4; 1 2 6; 1 4 8; 1 5 6; 1 5 8; 2 3 4; 2 3 7; 2 6 7; 3 4 7; 4 7 8; 5 6 7; 5 7 8]);
 %! assert (v, 1, 10*eps);
 %! [h2, v2] = convhulln (cube);  # Test default option = "Qt"
 %! assert (size (h2), size (h));
@@ -316,7 +317,8 @@ convex hull is calculated.
 %! cube = [0 0 0;1 0 0;1 1 0;0 1 0;0 0 1;1 0 1;1 1 1;0 1 1];
 %! [h, v] = convhulln (cube, "QJ");
 %! assert (size (h), [12 3]);
-%! assert (sortrows (sort (h, 2), [1:3]), [1 2 4; 1 2 5; 1 4 5; 2 3 4; 2 3 6; 2 5 6; 3 4 8; 3 6 7; 3 7 8; 4 5 8; 5 6 8; 6 7 8]);
+%! assert (sortrows (sort (h, 2), [1:3]),
+%!         [1 2 4; 1 2 5; 1 4 5; 2 3 4; 2 3 6; 2 5 6; 3 4 8; 3 6 7; 3 7 8; 4 5 8; 5 6 8; 6 7 8]);
 %! assert (v, 1.0, 1e6*eps);
 
 %!testif HAVE_QHULL
@@ -332,4 +334,4 @@ convex hull is calculated.
 %! assert (size (h), [3 2]);
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

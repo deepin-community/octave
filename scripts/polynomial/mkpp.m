@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -96,7 +96,7 @@ endfunction
 %! b = t(1:4,:);
 %! pp = mkpp (x, [m(:),b(:)]);
 %! xi = linspace (0, pi, 50);
-%! plot (x, t, "x", xi, ppval (pp,xi));bb4af245dff7
+%! plot (x, t, "x", xi, ppval (pp,xi));
 %! legend ("control", "interp");
 
 %!demo # piecewise polynomial shape

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,10 +24,10 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} discrete_rnd (@var{v}, @var{p})
-## @deftypefnx {} {} discrete_rnd (@var{v}, @var{p}, @var{r})
-## @deftypefnx {} {} discrete_rnd (@var{v}, @var{p}, @var{r}, @var{c}, @dots{})
-## @deftypefnx {} {} discrete_rnd (@var{v}, @var{p}, [@var{sz}])
+## @deftypefn  {} {@var{rnd} =} discrete_rnd (@var{v}, @var{p})
+## @deftypefnx {} {@var{rnd} =} discrete_rnd (@var{v}, @var{p}, @var{r})
+## @deftypefnx {} {@var{rnd} =} discrete_rnd (@var{v}, @var{p}, @var{r}, @var{c}, @dots{})
+## @deftypefnx {} {@var{rnd} =} discrete_rnd (@var{v}, @var{p}, [@var{sz}])
 ## Return a matrix of random samples from the univariate distribution which
 ## assumes the values in @var{v} with probabilities @var{p}.
 ##
@@ -88,7 +88,7 @@ endfunction
 %!assert (class (discrete_rnd (1:2, 1:2)), "double")
 %!assert (class (discrete_rnd (single (1:2), 1:2)), "single")
 ## FIXME: Maybe this should work, maybe it shouldn't.
-#%!assert (class (discrete_rnd (1:2, single(1:2))), "single")
+%!#assert (class (discrete_rnd (1:2, single(1:2))), "single")
 
 ## Test input validation
 %!error <Invalid call> discrete_rnd ()

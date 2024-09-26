@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2015-2022 The Octave Project Developers
+## Copyright (C) 2015-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -23,22 +23,26 @@
 ##
 ########################################################################
 
-function u_interp = runge_kutta_interpolate (order, z, u, t, k_vals, dt, func, args)
+## -*- texinfo -*-
+## @deftypefn {} {@var{u_interp} =} odemergeopts (@var{order}, @var{z}, @var{t}, @var{u}, @var{k_vals})
+## Undocumented internal function.
+## @end deftypefn
+
+function u_interp = runge_kutta_interpolate (order, z, u, t, k_vals)
 
   switch (order)
 
     case 1
+      ## Unused
       u_interp = interp1 (z, u.', t, "linear");
 
     case 2
-      if (! isempty (k_vals))
-        der = k_vals(:,1);
-      else
-        der = feval (func, z(1) , u(:,1), args);
-      endif
+      ## ode23s with Rosenbrock scheme:
+      der = k_vals(:,1);
       u_interp = quadratic_interpolation (z, u, der, t);
 
     case 3
+      ## ode23 with Bogacki-Shampine scheme:
       u_interp = hermite_cubic_interpolation (z, u, k_vals, t);
 
     case 5
@@ -46,11 +50,10 @@ function u_interp = runge_kutta_interpolate (order, z, u, t, k_vals, dt, func, a
       u_interp = hermite_quartic_interpolation (z, u, k_vals, t);
 
     otherwise
-      warning (["High order interpolation not yet implemented: ", ...
-                "using cubic interpolation instead"]);
-      der(:,1) = feval (func, z(1), u(:,1), args);
-      der(:,2) = feval (func, z(2), u(:,2), args);
-      u_interp = hermite_cubic_interpolation (z, u, der, t);
+      ## This should never happen
+      warning (["Invalid/unimplemented interpolation order: ", ...
+                "using linear interpolation instead"]);
+      u_interp = interp1 (z, u.', t, "linear");
 
   endswitch
 

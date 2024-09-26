@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -30,6 +30,8 @@
 ## @deftypefnx {} {} movefile (@var{f1})
 ## @deftypefnx {} {} movefile (@var{f1}, @var{f2})
 ## @deftypefnx {} {} movefile (@var{f1}, @var{f2}, 'f')
+## @deftypefnx {} {[@var{status}] =} movefile (@dots{})
+## @deftypefnx {} {[@var{status}, @var{msg}] =} movefile (@dots{})
 ## @deftypefnx {} {[@var{status}, @var{msg}, @var{msgid}] =} movefile (@dots{})
 ## Move the source file or directory @var{f1} to the destination @var{f2}.
 ##

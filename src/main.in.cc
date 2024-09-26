@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -111,7 +111,7 @@ gui_driver_set_signal_handler (const char *signame,
 }
 
 static void
-install_signal_handlers (void)
+install_signal_handlers ()
 {
   // FIXME: do we need to handle and forward all the signals that Octave
   // handles, or is it sufficient to only forward things like SIGINT,
@@ -169,7 +169,7 @@ install_signal_handlers (void)
 }
 
 static std::string
-get_octave_bindir (void)
+get_octave_bindir ()
 {
   // Accept value from the environment literally, but substitute
   // OCTAVE_HOME in the configuration value OCTAVE_BINDIR in case Octave
@@ -183,7 +183,7 @@ get_octave_bindir (void)
 }
 
 static std::string
-get_octave_archlibdir (void)
+get_octave_archlibdir ()
 {
   // Accept value from the environment literally, but substitute
   // OCTAVE_HOME in the configuration value OCTAVE_ARCHLIBDIR in case
@@ -304,78 +304,78 @@ main (int argc, char **argv)
 
       switch (optc)
         {
-          case NO_GUI_LIBS_OPTION:
-            // Run the version of Octave that is not linked with any GUI
-            // libraries.  It may not be possible to do plotting or any ui*
-            // calls, but it will be a little faster to start and require less
-            // memory.  Don't pass the --no-gui-libs option on as that option
-            // is not recognized by Octave.
-            gui_libs = false;
-            file = octave_cli;
-            break;
+        case NO_GUI_LIBS_OPTION:
+          // Run the version of Octave that is not linked with any GUI
+          // libraries.  It may not be possible to do plotting or any ui*
+          // calls, but it will be a little faster to start and require less
+          // memory.  Don't pass the --no-gui-libs option on as that option
+          // is not recognized by Octave.
+          gui_libs = false;
+          file = octave_cli;
+          break;
 
-          case NO_GUI_OPTION:
-            // If we see this option, then we can just exec octave; we don't
-            // have to create a child process and wait for it to exit.  But do
-            // exec "octave-gui", not "octave-cli", because even if the
-            // --no-gui option is given, we may be asked to do some plotting or
-            // ui* calls.
-            start_gui = false;
-            new_argv[k++] = argv[old_optind];
-            break;
+        case NO_GUI_OPTION:
+          // If we see this option, then we can just exec octave; we don't
+          // have to create a child process and wait for it to exit.  But do
+          // exec "octave-gui", not "octave-cli", because even if the
+          // --no-gui option is given, we may be asked to do some plotting or
+          // ui* calls.
+          start_gui = false;
+          new_argv[k++] = argv[old_optind];
+          break;
 
-          case GUI_OPTION:
-            // If we see this option, then we fork and exec octave with the
-            // --gui option, while continuing to handle signals in the
-            // terminal.
-            // Do not copy the arg now, since we still not know if the gui
-            // should really be launched.  Just store the index.
-            start_gui = true;
-            idx_gui = old_optind;
-            break;
+        case GUI_OPTION:
+          // If we see this option, then we fork and exec octave with the
+          // --gui option, while continuing to handle signals in the
+          // terminal.
+          // Do not copy the arg now, since we still not know if the gui
+          // should really be launched.  Just store the index.
+          start_gui = true;
+          idx_gui = old_optind;
+          break;
 
-          case EXPERIMENTAL_TERMINAL_WIDGET_OPTION:
-            // If we see this option, then we don't fork and exec.
-            fork_and_exec = false;
-            new_argv[k++] = argv[old_optind];
-            break;
+        case EXPERIMENTAL_TERMINAL_WIDGET_OPTION:
+          // If we see this option, then we don't fork and exec.
+          fork_and_exec = false;
+          new_argv[k++] = argv[old_optind];
+          break;
 
-          case PERSIST_OPTION:
-            // FIXME: How can we reliably detect if this option appears after
-            //        a FILE argument.  In this case octave ignores the option,
-            //        but the GUI might still be launched if --gui is also
-            //        given.
-            persist_octave = true;
-            new_argv[k++] = argv[old_optind];
-            break;
+        case PERSIST_OPTION:
+          // FIXME: How can we reliably detect if this option appears after
+          //        a FILE argument.  In this case octave ignores the option,
+          //        but the GUI might still be launched if --gui is also
+          //        given.
+          persist_octave = true;
+          new_argv[k++] = argv[old_optind];
+          break;
 
-          case SERVER_OPTION:
-            server = true;
-            new_argv[k++] = argv[old_optind];
-            break;
+        case SERVER_OPTION:
+          server = true;
+          new_argv[k++] = argv[old_optind];
+          break;
 
-          case EVAL_OPTION:
-            eval_code = true;
-            for (int i = old_optind; i < next_optind; i++)
-              new_argv[k++] = argv[i];
-            break;
+        case EVAL_OPTION:
+          eval_code = true;
+          for (int i = old_optind; i < next_optind; i++)
+            new_argv[k++] = argv[i];
+          break;
 
-          case 'q':
-            // options "--silent" or "--quiet"
-            warn_display = false;
-            new_argv[k++] = argv[old_optind];
-            break;
+        case 'q':
+          // options "--silent" or "--quiet"
+          warn_display = false;
+          new_argv[k++] = argv[old_optind];
+          break;
 
-          case 'W':
-            // option "--no-window-system"
-            no_display = true;
-            new_argv[k++] = argv[old_optind];
-            break;
+        case 'W':
+          // option "--no-window-system"
+          no_display = true;
+          new_argv[k++] = argv[old_optind];
+          break;
 
-          default:
-            for (int i = old_optind; i < next_optind; i++)
-              new_argv[k++] = argv[i];
-            break;
+        default:
+          for (int i = old_optind; i < next_optind; i++)
+            new_argv[k++] = argv[i];
+          break;
         }
     }
 

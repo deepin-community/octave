@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2018-2022 The Octave Project Developers
+// Copyright (C) 2018-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,8 +31,7 @@
 #include "dNDArray.h"
 #include "fNDArray.h"
 
-OCTAVE_NAMESPACE_BEGIN
-
+OCTAVE_BEGIN_NAMESPACE(octave)
 DEFUN (__betainc__, args, ,
        doc: /* -*- texinfo -*-
 @deftypefn {} {@var{y} =} __betainc__ (@var{x}, @var{a}, @var{b})
@@ -119,7 +118,7 @@ Continued fraction for incomplete beta function.
               alpha_j = ((aj + j - 1) * (aj + bj + j -1) * (bj - j) * j)
                         / ((aj + 2 * j - 1) * (aj + 2 * j - 1)) * x2;
               beta_j = aj + 2 * j + ((j * (bj - j)) / (aj + 2 * j - 1)
-                       - ((aj + j) * (aj + bj + j)) / (aj + 2 * j + 1)) * xj;
+                                     - ((aj + j) * (aj + bj + j)) / (aj + 2 * j + 1)) * xj;
               j++;
             }
 
@@ -190,7 +189,7 @@ Continued fraction for incomplete beta function.
               alpha_j = ((aj + j - 1) * (aj + bj + j - 1) * (bj - j) * j)
                         / ((aj + 2 * j - 1) * (aj + 2 * j - 1)) * x2;
               beta_j = aj + 2 * j + ((j * (bj - j)) / (aj + 2 * j - 1)
-                       - ((aj + j) * (aj + bj + j)) / (aj + 2 * j + 1)) * xj;
+                                     - ((aj + j) * (aj + bj + j)) / (aj + 2 * j + 1)) * xj;
               j++;
             }
 
@@ -203,4 +202,4 @@ Continued fraction for incomplete beta function.
   return retval;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

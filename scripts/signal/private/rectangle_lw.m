@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,16 +24,18 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} rectangle_lw (@var{n}, @var{b})
-## Rectangular lag window.  Subfunction used for spectral density
-## estimation.
+## @deftypefn {} {@var{c} =} rectangle_lw (@var{n}, @var{b})
+## Rectangular lag window.
+##
+## Subfunction used for spectral density estimation.
+## @seealso{spectral_adf}
 ## @end deftypefn
 
-function retval = rectangle_lw (n, b)
+function c = rectangle_lw (n, b)
 
-  retval = zeros (n, 1);
+  c = zeros (n, 1);
   t = floor (1 / b);
 
-  retval(1:t, 1) = ones (t, 1);
+  c(1:t) = 1;
 
 endfunction

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -23,14 +23,19 @@
 ##
 ########################################################################
 
-## private function for the ind2XXX functions which have a lot of code in common
+## -*- texinfo -*-
+## @deftypefn {} {[x, map] =} ind2x (@var{caller}, @var{x}, @var{map})
+##
+## Private function for the ind2XXX functions which have a lot of code in
+## common.
+## @end deftypefn
 
 function [x, map] = ind2x (caller, x, map)
 
   ## Check if X is an indexed image.
-  ## An indexed image is defined has having only 2D, and that's how Matlab
-  ## behaves.  But we want to support ND images, so we will allow up to 4D
-  ## and check that the 3rd dimension is a singleton.
+  ## An indexed image is defined has having only 2 dimensions, and that's how
+  ## Matlab behaves.  But we want to support N-D images, so we will allow up to
+  ## 4-D and check that the 3rd dimension is a singleton.
   if (all (ndims (x) != [2 4]) || size (x, 3) != 1
       || iscomplex (x) || issparse (x)
       || ! (isfloat (x) && all (x(:) == fix (x(:)))

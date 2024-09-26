@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -26,80 +26,94 @@
 #if ! defined (octave_GLCanvas_h)
 #define octave_GLCanvas_h 1
 
-#if defined (HAVE_QOPENGLWIDGET)
-#  include <QOpenGLWidget>
-#  define OCTAVE_QT_OPENGL_WIDGET QOpenGLWidget
-#  include <QOpenGLFramebufferObject>
-#  define OCTAVE_QT_OPENGL_FBO QOpenGLFramebufferObject
-#  if defined (HAVE_QT_OFFSCREEN)
-#    include <QOpenGLContext>
-#    include <QOffscreenSurface>
-#  endif
-#elif defined (HAVE_QGLWIDGET)
-#  include <QGLWidget>
-#  define OCTAVE_QT_OPENGL_WIDGET QGLWidget
-#  include <QGLFramebufferObject>
-#  define OCTAVE_QT_OPENGL_FBO QGLFramebufferObject
-#else
-#  error "configuration error: must have <QOpenGLWidget> or <QGLWidget>."
-#endif
+#include <QOffscreenSurface>
+#include <QOpenGLContext>
+#include <QOpenGLFramebufferObject>
+#include <QOpenGLWidget>
 
 #include "Canvas.h"
 
 #include "gl-render.h"
 #include "qopengl-functions.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class GLWidget : public QOpenGLWidget
 {
-  class base_qobject;
-}
+  Q_OBJECT
 
-namespace octave
+public:
+
+  GLWidget (Canvas& parent_canvas, QWidget *parent);
+
+  ~GLWidget ();
+
+  void initializeGL ();
+
+  void draw (graphics_object go);
+  uint8NDArray  do_getPixels (graphics_object go);
+  void do_print (const QString& file_cmd, const QString& term,
+                 graphics_object go);
+  void drawZoomBox (const QPoint& p1, const QPoint& p2);
+  void resize (int /* x */, int /* y */,
+               int /* width */, int /* height */) { }
+  graphics_object selectFromAxes (const graphics_object& ax,
+                                  const QPoint& pt);
+
+  bool begin_rendering ();
+  void end_rendering ();
+
+protected:
+
+  void paintGL ();
+  void mouseDoubleClickEvent (QMouseEvent *event);
+  void mouseMoveEvent (QMouseEvent *event);
+  void mousePressEvent (QMouseEvent *event);
+  void mouseReleaseEvent (QMouseEvent *event);
+  void wheelEvent (QWheelEvent *event);
+  void keyPressEvent (QKeyEvent *event);
+  void keyReleaseEvent (QKeyEvent *event);
+
+private:
+
+  Canvas& m_parent_canvas;
+
+  qopengl_functions m_glfcns;
+  opengl_renderer m_renderer;
+
+  QOpenGLContext m_os_context;
+  QOffscreenSurface m_os_surface;
+};
+
+class GLCanvas : public Canvas
 {
-  class GLCanvas : public OCTAVE_QT_OPENGL_WIDGET, public Canvas
-  {
-  public:
-    GLCanvas (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-              const graphics_handle& handle, QWidget *parent);
-    ~GLCanvas (void);
+public:
 
-    void initializeGL (void);
+  GLCanvas (octave::interpreter& interp, const graphics_handle& handle,
+            QWidget *parent);
 
-    void draw (const graphics_handle& handle);
-    uint8NDArray  do_getPixels (const graphics_handle& handle);
-    void do_print (const QString& file_cmd, const QString& term,
-                   const graphics_handle& handle);
-    void drawZoomBox (const QPoint& p1, const QPoint& p2);
-    void resize (int /* x */, int /* y */,
-                 int /* width */, int /* height */) { }
-    graphics_object selectFromAxes (const graphics_object& ax,
-                                    const QPoint& pt);
-    QWidget * qWidget (void) { return this; }
+  ~GLCanvas ();
 
-  protected:
-    void paintGL (void);
-    void mouseDoubleClickEvent (QMouseEvent *event);
-    void mouseMoveEvent (QMouseEvent *event);
-    void mousePressEvent (QMouseEvent *event);
-    void mouseReleaseEvent (QMouseEvent *event);
-    void wheelEvent (QWheelEvent *event);
-    void keyPressEvent (QKeyEvent *event);
-    void keyReleaseEvent (QKeyEvent *event);
+  void draw (const graphics_handle& handle);
+  uint8NDArray  do_getPixels (const graphics_handle& handle);
+  void do_print (const QString& file_cmd, const QString& term,
+                 const graphics_handle& handle);
+  void drawZoomBox (const QPoint& p1, const QPoint& p2);
+  void resize (int /* x */, int /* y */,
+               int /* width */, int /* height */) { }
+  graphics_object selectFromAxes (const graphics_object& ax,
+                                  const QPoint& pt);
 
-  private:
+  QWidget * qWidget () { return m_glwidget; }
 
-    bool begin_rendering (void);
-    void end_rendering (void);
+private:
 
-    octave::qopengl_functions m_glfcns;
-    octave::opengl_renderer m_renderer;
+  GLWidget *m_glwidget;
 
-#  if defined (HAVE_QT_OFFSCREEN)
-    QOpenGLContext m_os_context;
-    QOffscreenSurface m_os_surface;
-#  endif
-  };
+  bool begin_rendering ();
+  void end_rendering ();
+};
 
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

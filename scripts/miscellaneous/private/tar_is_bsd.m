@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2019-2022 The Octave Project Developers
+## Copyright (C) 2019-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 function out = tar_is_bsd ()
 
   ## BSD tar needs to be handled differently from GNU tar
-  persistent cache
+  persistent cache;
   if (isempty (cache))
     [status, tar_ver_str] = system ("tar --version");
     if (status)

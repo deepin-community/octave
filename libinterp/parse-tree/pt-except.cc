@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -43,28 +43,29 @@
 #include "unwind-prot.h"
 #include "variables.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// Simple exception handling.
+
+tree_try_catch_command::~tree_try_catch_command ()
 {
-  // Simple exception handling.
-
-  tree_try_catch_command::~tree_try_catch_command (void)
-  {
-    delete m_expr_id;
-    delete m_try_code;
-    delete m_catch_code;
-    delete m_lead_comm;
-    delete m_mid_comm;
-    delete m_trail_comm;
-  }
-
-  // Simple exception handling.
-
-  tree_unwind_protect_command::~tree_unwind_protect_command (void)
-  {
-    delete m_unwind_protect_code;
-    delete m_cleanup_code;
-    delete m_lead_comm;
-    delete m_mid_comm;
-    delete m_trail_comm;
-  }
+  delete m_expr_id;
+  delete m_try_code;
+  delete m_catch_code;
+  delete m_lead_comm;
+  delete m_mid_comm;
+  delete m_trail_comm;
 }
+
+// Simple exception handling.
+
+tree_unwind_protect_command::~tree_unwind_protect_command ()
+{
+  delete m_unwind_protect_code;
+  delete m_cleanup_code;
+  delete m_lead_comm;
+  delete m_mid_comm;
+  delete m_trail_comm;
+}
+
+OCTAVE_END_NAMESPACE(octave)

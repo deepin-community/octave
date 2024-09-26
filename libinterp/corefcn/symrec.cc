@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -39,24 +39,26 @@
 #include "interpreter.h"
 #include "symrec.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+std::shared_ptr<symbol_record::symbol_record_rep>
+symbol_record::symbol_record_rep::dup () const
 {
-  std::shared_ptr<symbol_record::symbol_record_rep>
-  symbol_record::symbol_record_rep::dup (void) const
-  {
-    return std::shared_ptr<symbol_record::symbol_record_rep> (new symbol_record_rep (*this));
-  }
-
-  octave_value
-  symbol_record::symbol_record_rep::dump (void) const
-  {
-    std::map<std::string, octave_value> m
-      = {{ "frame_offset", m_frame_offset },
-         { "data_offset", m_data_offset },
-         { "name", m_name },
-         { "local", is_local () },
-         { "formal", is_formal () }};
-
-    return octave_value (m);
-  }
+  return std::shared_ptr<symbol_record::symbol_record_rep> (new symbol_record_rep (*this));
 }
+
+octave_value
+symbol_record::symbol_record_rep::dump () const
+{
+  std::map<std::string, octave_value> m
+  = {{ "frame_offset", m_frame_offset },
+    { "data_offset", m_data_offset },
+    { "name", m_name },
+    { "local", is_local () },
+    { "formal", is_formal () }
+  };
+
+  return octave_value (m);
+}
+
+OCTAVE_END_NAMESPACE(octave)

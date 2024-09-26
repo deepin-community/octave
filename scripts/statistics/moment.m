@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,11 +24,11 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} moment (@var{x}, @var{p})
-## @deftypefnx {} {} moment (@var{x}, @var{p}, @var{type})
-## @deftypefnx {} {} moment (@var{x}, @var{p}, @var{dim})
-## @deftypefnx {} {} moment (@var{x}, @var{p}, @var{type}, @var{dim})
-## @deftypefnx {} {} moment (@var{x}, @var{p}, @var{dim}, @var{type})
+## @deftypefn  {} {@var{m} =} moment (@var{x}, @var{p})
+## @deftypefnx {} {@var{m} =} moment (@var{x}, @var{p}, @var{type})
+## @deftypefnx {} {@var{m} =} moment (@var{x}, @var{p}, @var{dim})
+## @deftypefnx {} {@var{m} =} moment (@var{x}, @var{p}, @var{type}, @var{dim})
+## @deftypefnx {} {@var{m} =} moment (@var{x}, @var{p}, @var{dim}, @var{type})
 ## Compute the @var{p}-th central moment of the vector @var{x}.
 ##
 ## The @var{p}-th central moment of @var{x} is defined as:

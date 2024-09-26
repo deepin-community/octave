@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,10 +24,6 @@
 ########################################################################
 
 function disp (obj)
-
-  if (nargin < 1)
-    print_usage ();
-  endif
 
   printf ("  FTP object\n");
   printf ("    host: %s\n", obj.host);

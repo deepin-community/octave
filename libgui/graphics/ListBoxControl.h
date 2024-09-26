@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,44 +32,38 @@ class QListWidget;
 class QListWidgetItem;
 class QModelIndex;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class ListBoxControl : public BaseControl
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  ListBoxControl (octave::interpreter& interp, const graphics_object& go,
+                  QListWidget *list);
+  ~ListBoxControl ();
 
-  class ListBoxControl : public BaseControl
-  {
-    Q_OBJECT
+  static ListBoxControl *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  public:
-    ListBoxControl (octave::base_qobject& oct_qobj,
-                    octave::interpreter& interp, const graphics_object& go,
-                    QListWidget *list);
-    ~ListBoxControl (void);
+protected:
+  void update (int pId);
+  bool eventFilter (QObject *watched, QEvent *e);
+  void sendSelectionChange ();
 
-    static ListBoxControl *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+private slots:
+  void itemSelectionChanged ();
+  void itemActivated (const QModelIndex&);
+  void itemPressed (QListWidgetItem *);
 
-  protected:
-    void update (int pId);
-    bool eventFilter (QObject *watched, QEvent *e);
-    void sendSelectionChange ();
+private:
+  bool m_blockCallback;
+  bool m_selectionChanged;
+};
 
-  private slots:
-    void itemSelectionChanged (void);
-    void itemActivated (const QModelIndex&);
-    void itemPressed (QListWidgetItem *);
-
-  private:
-    bool m_blockCallback;
-    bool m_selectionChanged;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -128,7 +128,7 @@ SparseMatrix::operator != (const SparseMatrix& a) const
 }
 
 bool
-SparseMatrix::issymmetric (void) const
+SparseMatrix::issymmetric () const
 {
   octave_idx_type nr = rows ();
   octave_idx_type nc = cols ();
@@ -600,7 +600,7 @@ imag (const SparseComplexMatrix& a)
 */
 
 SparseMatrix
-SparseMatrix::inverse (void) const
+SparseMatrix::inverse () const
 {
   octave_idx_type info;
   double rcond;
@@ -1009,7 +1009,7 @@ SparseMatrix::inverse (MatrixType& mattype, octave_idx_type& info,
 }
 
 DET
-SparseMatrix::determinant (void) const
+SparseMatrix::determinant () const
 {
   octave_idx_type info;
   double rcond;
@@ -5837,7 +5837,7 @@ SparseMatrix::fsolve (MatrixType& mattype, const Matrix& b,
                 {
                   octave_idx_type jr = j * b.rows ();
                   for (octave_idx_type i = 0; i < b.rows (); i++)
-                    retval.xelem (i, j) = static_cast<double *>(X->x)[jr + i];
+                    retval.xelem (i, j) = static_cast<double *> (X->x)[jr + i];
                 }
 
               CHOLMOD_NAME(free_dense) (&X, cm);
@@ -6053,17 +6053,20 @@ SparseMatrix::fsolve (MatrixType& mattype, const SparseMatrix& b,
 
               cholmod_sparse *X = CHOLMOD_NAME(spsolve) (CHOLMOD_A, L, B, cm);
 
-              retval = SparseMatrix (static_cast<octave_idx_type> (X->nrow),
-                                     static_cast<octave_idx_type> (X->ncol),
-                                     static_cast<octave_idx_type> (X->nzmax));
+              retval = SparseMatrix
+                       (octave::from_size_t (X->nrow),
+                        octave::from_size_t (X->ncol),
+                        octave::from_suitesparse_long (CHOLMOD_NAME(nnz)
+                                                       (X, cm)));
               for (octave_idx_type j = 0;
                    j <= static_cast<octave_idx_type> (X->ncol); j++)
-                retval.xcidx (j) = static_cast<octave_idx_type *>(X->p)[j];
+                retval.xcidx (j) = static_cast<octave_idx_type *> (X->p)[j];
               for (octave_idx_type j = 0;
-                   j < static_cast<octave_idx_type> (X->nzmax); j++)
+                   j < octave::from_suitesparse_long (CHOLMOD_NAME(nnz) (X, cm));
+                   j++)
                 {
-                  retval.xridx (j) = static_cast<octave_idx_type *>(X->i)[j];
-                  retval.xdata (j) = static_cast<double *>(X->x)[j];
+                  retval.xridx (j) = static_cast<octave_idx_type *> (X->i)[j];
+                  retval.xdata (j) = static_cast<double *> (X->x)[j];
                 }
 
               CHOLMOD_NAME(free_sparse) (&X, cm);
@@ -6308,7 +6311,7 @@ SparseMatrix::fsolve (MatrixType& mattype, const ComplexMatrix& b,
                 {
                   octave_idx_type jr = j * b.rows ();
                   for (octave_idx_type i = 0; i < b.rows (); i++)
-                    retval.xelem (i, j) = static_cast<Complex *>(X->x)[jr + i];
+                    retval.xelem (i, j) = static_cast<Complex *> (X->x)[jr + i];
                 }
 
               CHOLMOD_NAME(free_dense) (&X, cm);
@@ -6546,17 +6549,19 @@ SparseMatrix::fsolve (MatrixType& mattype, const SparseComplexMatrix& b,
               cholmod_sparse *X = CHOLMOD_NAME(spsolve) (CHOLMOD_A, L, B, cm);
 
               retval = SparseComplexMatrix
-                       (static_cast<octave_idx_type> (X->nrow),
-                        static_cast<octave_idx_type> (X->ncol),
-                        static_cast<octave_idx_type> (X->nzmax));
+                       (octave::from_size_t (X->nrow),
+                        octave::from_size_t (X->ncol),
+                        octave::from_suitesparse_long (CHOLMOD_NAME(nnz)
+                                                       (X, cm)));
               for (octave_idx_type j = 0;
                    j <= static_cast<octave_idx_type> (X->ncol); j++)
-                retval.xcidx (j) = static_cast<octave_idx_type *>(X->p)[j];
+                retval.xcidx (j) = static_cast<octave_idx_type *> (X->p)[j];
               for (octave_idx_type j = 0;
-                   j < static_cast<octave_idx_type> (X->nzmax); j++)
+                   j < octave::from_suitesparse_long (CHOLMOD_NAME(nnz) (X, cm));
+                   j++)
                 {
-                  retval.xridx (j) = static_cast<octave_idx_type *>(X->i)[j];
-                  retval.xdata (j) = static_cast<Complex *>(X->x)[j];
+                  retval.xridx (j) = static_cast<octave_idx_type *> (X->i)[j];
+                  retval.xdata (j) = static_cast<Complex *> (X->x)[j];
                 }
 
               CHOLMOD_NAME(free_sparse) (&X, cm);
@@ -7216,7 +7221,7 @@ SparseMatrix::any_element_is_negative (bool neg_zero) const
 }
 
 bool
-SparseMatrix::any_element_is_nan (void) const
+SparseMatrix::any_element_is_nan () const
 {
   octave_idx_type nel = nnz ();
 
@@ -7231,7 +7236,7 @@ SparseMatrix::any_element_is_nan (void) const
 }
 
 bool
-SparseMatrix::any_element_is_inf_or_nan (void) const
+SparseMatrix::any_element_is_inf_or_nan () const
 {
   octave_idx_type nel = nnz ();
 
@@ -7246,7 +7251,7 @@ SparseMatrix::any_element_is_inf_or_nan (void) const
 }
 
 bool
-SparseMatrix::any_element_not_one_or_zero (void) const
+SparseMatrix::any_element_not_one_or_zero () const
 {
   octave_idx_type nel = nnz ();
 
@@ -7261,7 +7266,7 @@ SparseMatrix::any_element_not_one_or_zero (void) const
 }
 
 bool
-SparseMatrix::all_elements_are_zero (void) const
+SparseMatrix::all_elements_are_zero () const
 {
   octave_idx_type nel = nnz ();
 
@@ -7273,7 +7278,7 @@ SparseMatrix::all_elements_are_zero (void) const
 }
 
 bool
-SparseMatrix::all_elements_are_int_or_inf_or_nan (void) const
+SparseMatrix::all_elements_are_int_or_inf_or_nan () const
 {
   octave_idx_type nel = nnz ();
 
@@ -7321,13 +7326,13 @@ SparseMatrix::all_integers (double& max_val, double& min_val) const
 }
 
 bool
-SparseMatrix::too_large_for_float (void) const
+SparseMatrix::too_large_for_float () const
 {
   return test_any (octave::too_large_for_float);
 }
 
 SparseBoolMatrix
-SparseMatrix::operator ! (void) const
+SparseMatrix::operator ! () const
 {
   if (any_element_is_nan ())
     octave::err_nan_to_logical_conversion ();
@@ -7423,7 +7428,7 @@ SparseMatrix::sumsq (int dim) const
 }
 
 SparseMatrix
-SparseMatrix::abs (void) const
+SparseMatrix::abs () const
 {
   octave_idx_type nz = nnz ();
 
@@ -7442,7 +7447,7 @@ SparseMatrix::diag (octave_idx_type k) const
 }
 
 Matrix
-SparseMatrix::matrix_value (void) const
+SparseMatrix::matrix_value () const
 {
   return Sparse<double>::array_value ();
 }
@@ -7477,7 +7482,7 @@ operator >> (std::istream& is, SparseMatrix& a)
 }
 
 SparseMatrix
-SparseMatrix::squeeze (void) const
+SparseMatrix::squeeze () const
 {
   return MSparse<double>::squeeze ();
 }

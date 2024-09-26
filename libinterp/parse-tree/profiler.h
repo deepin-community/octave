@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -36,188 +36,181 @@
 
 class octave_value;
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  class
-  OCTINTERP_API
-  profiler
+class
+OCTINTERP_API
+profiler
+{
+public:
+
+  // This is a utility class that can be used to call the enter/exit
+  // functions in a manner protected from stack unwinding.
+  template <typename T> class enter
+  {
+  private:
+
+    profiler& m_profiler;
+    std::string m_fcn;
+    bool m_enabled;
+
+  public:
+
+    enter (profiler& p, const T& t) : m_profiler (p)
+    {
+      // A profiling block cannot be active if the profiler is not
+      m_enabled = m_profiler.enabled ();
+
+      if (m_enabled)
+        {
+          m_fcn = t.profiler_name ();
+
+          // NOTE: The test f != "" must be kept to prevent a blank
+          // line showing up in profiler statistics.  See bug
+          // #39524.  The root cause is that the function name is
+          // not set for the recurring readline hook function.
+          if (m_fcn == "")
+            m_enabled = false;  // Inactive profiling block
+          else
+            m_profiler.enter_function (m_fcn);
+        }
+    }
+
+    OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (enter)
+
+    ~enter ()
+    {
+      if (m_enabled)
+        m_profiler.exit_function (m_fcn);
+    }
+  };
+
+  profiler ();
+
+  OCTAVE_DISABLE_COPY_MOVE (profiler)
+
+  virtual ~profiler ();
+
+  bool enabled () const { return m_enabled; }
+  void set_active (bool);
+
+  void reset ();
+
+  octave_value get_flat () const;
+  octave_value get_hierarchical () const;
+
+private:
+
+  // One entry in the flat profile (i.e., a collection of data for a single
+  // function).  This is filled in when building the flat profile from the
+  // hierarchical call tree.
+  struct stats
   {
   public:
 
-    // This is a utility class that can be used to call the enter/exit
-    // functions in a manner protected from stack unwinding.
-    template <typename T> class enter
-    {
-    private:
+    stats ();
 
-      profiler& m_profiler;
-      std::string m_fcn;
-      bool m_enabled;
+    OCTAVE_DEFAULT_COPY_MOVE_DELETE (stats)
 
-    public:
+    typedef std::set<octave_idx_type> function_set;
 
-      enter (profiler& p, const T& t) : m_profiler (p)
-      {
-        // A profiling block cannot be active if the profiler is not
-        m_enabled = m_profiler.enabled ();
+    // Convert a function_set list to an Octave array of indices.
+    static octave_value function_set_value (const function_set&);
 
-        if (m_enabled)
-          {
-            m_fcn = t.profiler_name ();
+    //--------
 
-            // NOTE: The test f != "" must be kept to prevent a blank
-            // line showing up in profiler statistics.  See bug
-            // #39524.  The root cause is that the function name is
-            // not set for the recurring readline hook function.
-            if (m_fcn == "")
-              m_enabled = false;  // Inactive profiling block
-            else
-              m_profiler.enter_function (m_fcn);
-          }
-      }
+    double m_time;
+    std::size_t m_calls;
 
-      // No copying!
+    bool m_recursive;
 
-      enter (const enter&) = delete;
+    function_set m_parents;
+    function_set m_children;
+  };
 
-      enter& operator = (const enter&) = delete;
+  typedef std::vector<stats> flat_profile;
 
-      ~enter (void)
-      {
-        if (m_enabled)
-          m_profiler.exit_function (m_fcn);
-      }
-    };
+  // Store data for one node in the call-tree of the hierarchical profiler
+  // data we collect.
+  class tree_node
+  {
+  public:
 
-    profiler (void);
+    tree_node (tree_node *, octave_idx_type);
 
-    // No copying!
+    virtual ~tree_node ();
 
-    profiler (const profiler&) = delete;
+    OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (tree_node)
 
-    profiler& operator = (const profiler&) = delete;
+    void add_time (double dt) { m_time += dt; }
 
-    virtual ~profiler (void);
+    // Enter a child function.  It is created in the list of children if it
+    // wasn't already there.  The now-active child node is returned.
+    tree_node * enter (octave_idx_type);
 
-    bool enabled (void) const { return m_enabled; }
-    void set_active (bool);
+    // Exit function.  As a sanity-check, it is verified that the currently
+    // active function actually is the one handed in here.  Returned is the
+    // then-active node, which is our parent.
+    tree_node * exit (octave_idx_type);
 
-    void reset (void);
+    void build_flat (flat_profile&) const;
 
-    octave_value get_flat (void) const;
-    octave_value get_hierarchical (void) const;
+    // Get the hierarchical profile for this node and its children.  If total
+    // is set, accumulate total time of the subtree in that variable as
+    // additional return value.
+    octave_value get_hierarchical (double *total = nullptr) const;
 
   private:
 
-    // One entry in the flat profile (i.e., a collection of data for a single
-    // function).  This is filled in when building the flat profile from the
-    // hierarchical call tree.
-    struct stats
-    {
-    public:
-      stats (void);
+    tree_node *m_parent;
+    octave_idx_type m_fcn_id;
 
-      typedef std::set<octave_idx_type> function_set;
+    typedef std::map<octave_idx_type, tree_node *> child_map;
+    child_map m_children;
 
-      // Convert a function_set list to an Octave array of indices.
-      static octave_value function_set_value (const function_set&);
+    // This is only time spent *directly* on this level, excluding children!
+    double m_time;
 
-      //--------
-
-      double m_time;
-      std::size_t m_calls;
-
-      bool m_recursive;
-
-      function_set m_parents;
-      function_set m_children;
-    };
-
-    typedef std::vector<stats> flat_profile;
-
-    // Store data for one node in the call-tree of the hierarchical profiler
-    // data we collect.
-    class tree_node
-    {
-    public:
-
-      tree_node (tree_node*, octave_idx_type);
-
-      virtual ~tree_node (void);
-
-      // No copying!
-
-      tree_node (const tree_node&) = delete;
-
-      tree_node& operator = (const tree_node&) = delete;
-
-      void add_time (double dt) { m_time += dt; }
-
-      // Enter a child function.  It is created in the list of children if it
-      // wasn't already there.  The now-active child node is returned.
-      tree_node *enter (octave_idx_type);
-
-      // Exit function.  As a sanity-check, it is verified that the currently
-      // active function actually is the one handed in here.  Returned is the
-      // then-active node, which is our parent.
-      tree_node *exit (octave_idx_type);
-
-      void build_flat (flat_profile&) const;
-
-      // Get the hierarchical profile for this node and its children.  If total
-      // is set, accumulate total time of the subtree in that variable as
-      // additional return value.
-      octave_value get_hierarchical (double *total = nullptr) const;
-
-    private:
-
-      tree_node *m_parent;
-      octave_idx_type m_fcn_id;
-
-      typedef std::map<octave_idx_type, tree_node*> child_map;
-      child_map m_children;
-
-      // This is only time spent *directly* on this level, excluding children!
-      double m_time;
-
-      std::size_t m_calls;
-    };
-
-    // Each function we see in the profiler is given a unique index (which
-    // simply counts starting from 1).  We thus have to map profiler-names to
-    // those indices.  For all other stuff, we identify functions by their index.
-
-    typedef std::vector<std::string> function_set;
-    typedef std::map<std::string, octave_idx_type> fcn_index_map;
-
-    function_set m_known_functions;
-    fcn_index_map m_fcn_index;
-
-    bool m_enabled;
-
-    tree_node *m_call_tree;
-    tree_node *m_active_fcn;
-
-    // Store last timestamp we had, when the currently active function was called.
-    double m_last_time;
-
-    // These are private as only the unwind-protecting inner class enter
-    // should be allowed to call them.
-    void enter_function (const std::string&);
-    void exit_function (const std::string&);
-
-    // Query a timestamp, used for timing calls (obviously).
-    // This is not static because in the future, maybe we want a flag
-    // in the profiler or something to choose between cputime, wall-time,
-    // user-time, system-time, ...
-    double query_time (void) const;
-
-    // Add the time elapsed since last_time to the function we're currently in.
-    // This is called from two different positions, thus it is useful to have
-    // it as a separate function.
-    void add_current_time (void);
+    std::size_t m_calls;
   };
 
-OCTAVE_NAMESPACE_END
+  // Each function we see in the profiler is given a unique index (which
+  // simply counts starting from 1).  We thus have to map profiler-names to
+  // those indices.  For all other stuff, we identify functions by their
+  // index.
+
+  typedef std::vector<std::string> function_set;
+  typedef std::map<std::string, octave_idx_type> fcn_index_map;
+
+  function_set m_known_functions;
+  fcn_index_map m_fcn_index;
+
+  bool m_enabled;
+
+  tree_node *m_call_tree;
+  tree_node *m_active_fcn;
+
+  // Store last timestamp we had, when the currently active function was
+  // called.
+  double m_last_time;
+
+  // These are private as only the unwind-protecting inner class enter
+  // should be allowed to call them.
+  void enter_function (const std::string&);
+  void exit_function (const std::string&);
+
+  // Query a timestamp, used for timing calls (obviously).
+  // This is not static because in the future, maybe we want a flag
+  // in the profiler or something to choose between cputime, wall-time,
+  // user-time, system-time, ...
+  double query_time () const;
+
+  // Add the time elapsed since last_time to the function we're currently in.
+  // This is called from two different positions, thus it is useful to have
+  // it as a separate function.
+  void add_current_time ();
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

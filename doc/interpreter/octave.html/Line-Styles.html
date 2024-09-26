@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Line Styles (GNU Octave (version 7.1.0))</title>
+<title>Line Styles (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Line Styles (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Line Styles (GNU Octave (version 7.1.0))">
+<meta name="description" content="Line Styles (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Line Styles (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,8 @@
 <link href="Colors.html" rel="prev" title="Colors">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,47 +30,46 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Line-Styles">
-<div class="header">
+<div class="subsection-level-extent" id="Line-Styles">
+<div class="nav-panel">
 <p>
 Next: <a href="Marker-Styles.html" accesskey="n" rel="next">Marker Styles</a>, Previous: <a href="Colors.html" accesskey="p" rel="prev">Colors</a>, Up: <a href="Advanced-Plotting.html" accesskey="u" rel="up">Advanced Plotting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Line-Styles-1"></span><h4 class="subsection">15.4.2 Line Styles</h4>
-<span id="index-line-styles_002c-graphics"></span>
-<span id="index-graphics-line-styles"></span>
+<h4 class="subsection" id="Line-Styles-1"><span>15.4.2 Line Styles<a class="copiable-link" href="#Line-Styles-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-styles_002c-graphics"></a>
+<a class="index-entry-id" id="index-graphics-line-styles"></a>
 
 <p>Line styles are specified by the following properties:
 </p>
-<dl compact="compact">
-<dt><span><code>linestyle</code></span></dt>
+<dl class="table">
+<dt><code class="code">linestyle</code></dt>
 <dd><p>May be one of
 </p>
-<dl compact="compact">
-<dt><span><code>&quot;-&quot;</code></span></dt>
+<dl class="table">
+<dt><code class="code">&quot;-&quot;</code></dt>
 <dd><p>Solid line.  [default]
 </p>
-
 </dd>
-<dt><span><tt>&quot;--&quot;</tt></span></dt>
+<dt><code class="code">&quot;--&quot;</code></dt>
 <dd><p>Dashed line.
 </p>
 </dd>
-<dt><span><code>&quot;:&quot;</code></span></dt>
+<dt><code class="code">&quot;:&quot;</code></dt>
 <dd><p>Dotted line.
 </p>
 </dd>
-<dt><span><code>&quot;-.&quot;</code></span></dt>
+<dt><code class="code">&quot;-.&quot;</code></dt>
 <dd><p>A dash-dot line.
 </p>
 </dd>
-<dt><span><code>&quot;none&quot;</code></span></dt>
+<dt><code class="code">&quot;none&quot;</code></dt>
 <dd><p>No line.  Points will still be marked using the current Marker Style.
 </p></dd>
 </dl>
 
 </dd>
-<dt><span><code>linewidth</code></span></dt>
+<dt><code class="code">linewidth</code></dt>
 <dd><p>A number specifying the width of the line.  The default is 1.  A value
 of 2 is twice as wide as the default, etc.
 </p></dd>

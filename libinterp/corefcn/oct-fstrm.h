@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,7 +33,7 @@
 
 #include "oct-stream.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 class
 fstream : public base_stream
@@ -44,11 +44,7 @@ public:
            std::ios::openmode arg_md = std::ios::in | std::ios::out,
            mach_info::float_format flt_fmt = mach_info::native_float_format ());
 
-  // No copying!
-
-  fstream (const fstream&) = delete;
-
-  fstream& operator = (const fstream&) = delete;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (fstream)
 
   static stream
   create (const std::string& nm_arg,
@@ -61,25 +57,25 @@ public:
 
   // Return current stream position.
 
-  off_t tell (void);
+  off_t tell ();
 
   // Return nonzero if EOF has been reached on this stream.
 
-  bool eof (void) const;
+  bool eof () const;
 
-  void do_close (void);
+  void do_close ();
 
   // The name of the file.
 
-  std::string name (void) const { return m_name; }
+  std::string name () const { return m_name; }
 
-  std::istream * input_stream (void);
+  std::istream * input_stream ();
 
-  std::ostream * output_stream (void);
+  std::ostream * output_stream ();
 
 protected:
 
-  ~fstream (void) = default;
+  ~fstream () = default;
 
 private:
 
@@ -88,13 +84,6 @@ private:
   std::fstream m_fstream;
 };
 
-OCTAVE_NAMESPACE_END
-
-#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-
-OCTAVE_DEPRECATED (7, "use 'octave::fstream' instead")
-typedef octave::fstream octave_fstream;
-
-#endif
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

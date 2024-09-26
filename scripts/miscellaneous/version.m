@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -66,7 +66,7 @@
 ## when Octave was built instead of which library is currently used.
 ##
 ## The variant with no input and output argument is an alias for the function
-## @w{@env{OCTAVE_VERSION}} provided for compatibility.
+## @w{@env{OCTAVE_VERSION}}@ provided for compatibility.
 ## @seealso{OCTAVE_VERSION, ver}
 ## @end deftypefn
 

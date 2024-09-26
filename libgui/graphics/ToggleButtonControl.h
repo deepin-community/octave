@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,31 +30,25 @@
 
 class QPushButton;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class ToggleButtonControl : public ButtonControl
 {
-  class base_qobject;
-  class interpreter;
-}
+public:
+  ToggleButtonControl (octave::interpreter& interp,
+                       const graphics_object& go, QPushButton *box);
+  ~ToggleButtonControl ();
 
-namespace octave
-{
+  static ToggleButtonControl *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  class ToggleButtonControl : public ButtonControl
-  {
-  public:
-    ToggleButtonControl (octave::base_qobject& oct_qobj,
-                         octave::interpreter& interp,
-                         const graphics_object& go, QPushButton *box);
-    ~ToggleButtonControl (void);
+protected:
+  void update (int pId);
+};
 
-    static ToggleButtonControl *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
-
-  protected:
-    void update (int pId);
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

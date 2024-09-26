@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1999-2022 The Octave Project Developers
+## Copyright (C) 1999-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} wilkinson (@var{n})
+## @deftypefn {} {@var{W} =} wilkinson (@var{n})
 ## Return the Wilkinson matrix of order @var{n}.
 ##
 ## Wilkinson matrices are symmetric and tridiagonal with pairs of nearly, but
@@ -34,7 +34,7 @@
 ## @seealso{rosser, eig}
 ## @end deftypefn
 
-function retval = wilkinson (n)
+function W = wilkinson (n)
 
   if (nargin < 1)
     print_usage ();
@@ -46,7 +46,7 @@ function retval = wilkinson (n)
 
   side = ones (n-1, 1);
   center = abs (-(n-1)/2:(n-1)/2);
-  retval = diag (side, -1) + diag (center) + diag (side, 1);
+  W = diag (side, -1) + diag (center) + diag (side, 1);
 
 endfunction
 

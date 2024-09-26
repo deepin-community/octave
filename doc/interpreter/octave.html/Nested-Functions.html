@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Nested Functions (GNU Octave (version 7.1.0))</title>
+<title>Nested Functions (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Nested Functions (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Nested Functions (GNU Octave (version 7.1.0))">
+<meta name="description" content="Nested Functions (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Nested Functions (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Private-Functions.html" rel="prev" title="Private Functions">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,13 +31,13 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Nested-Functions">
-<div class="header">
+<div class="subsection-level-extent" id="Nested-Functions">
+<div class="nav-panel">
 <p>
 Next: <a href="Overloading-and-Autoloading.html" accesskey="n" rel="next">Overloading and Autoloading</a>, Previous: <a href="Private-Functions.html" accesskey="p" rel="prev">Private Functions</a>, Up: <a href="Function-Files.html" accesskey="u" rel="up">Function Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Nested-Functions-1"></span><h4 class="subsection">11.10.4 Nested Functions</h4>
+<h4 class="subsection" id="Nested-Functions-1"><span>11.10.4 Nested Functions<a class="copiable-link" href="#Nested-Functions-1"> &para;</a></span></h4>
 
 <p>Nested functions are similar to subfunctions in that only the main function is
 visible outside the file.  However, they also allow for child functions to
@@ -59,11 +47,11 @@ not visible to the rest of Octave.  As a programming strategy, sharing data
 this way can create code which is difficult to maintain.  It is recommended to
 use subfunctions in place of nested functions when possible.
 </p>
-<p>As a simple example, consider a parent function <code>foo</code>, that calls a nested
-child function <code>bar</code>, with a shared variable <var>x</var>.
+<p>As a simple example, consider a parent function <code class="code">foo</code>, that calls a nested
+child function <code class="code">bar</code>, with a shared variable <var class="var">x</var>.
 </p>
 <div class="example">
-<pre class="example">function y = foo ()
+<div class="group"><pre class="example-preformatted">function y = foo ()
   x = 10;
   bar ();
   y = x;
@@ -75,20 +63,20 @@ endfunction
 
 foo ()
  &rArr; 20
-</pre></div>
+</pre></div></div>
 
-<p>Notice that there is no special syntax for sharing <var>x</var>.  This can lead to
+<p>Notice that there is no special syntax for sharing <var class="var">x</var>.  This can lead to
 problems with accidental variable sharing between a parent function and its
 child.  While normally variables are inherited, child function parameters and
 return values are local to the child function.
 </p>
-<p>Now consider the function <code>foobar</code> that uses variables <var>x</var> and
-<var>y</var>.  <code>foobar</code> calls a nested function <code>foo</code> which takes
-<var>x</var> as a parameter and returns <var>y</var>.  <code>foo</code> then calls <code>bat</code>
+<p>Now consider the function <code class="code">foobar</code> that uses variables <var class="var">x</var> and
+<var class="var">y</var>.  <code class="code">foobar</code> calls a nested function <code class="code">foo</code> which takes
+<var class="var">x</var> as a parameter and returns <var class="var">y</var>.  <code class="code">foo</code> then calls <code class="code">bat</code>
 which does some computation.
 </p>
 <div class="example">
-<pre class="example">function z = foobar ()
+<div class="group"><pre class="example-preformatted">function z = foobar ()
   x = 0;
   y = 0;
   z = foo (5);
@@ -105,19 +93,19 @@ endfunction
 
 foobar ()
     &rArr; 10
-</pre></div>
+</pre></div></div>
 
-<p>It is important to note that the <var>x</var> and <var>y</var> in <code>foobar</code> remain
-zero, as in <code>foo</code> they are a return value and parameter respectively.  The
-<var>x</var> in <code>bat</code> refers to the <var>x</var> in <code>foo</code>.
+<p>It is important to note that the <var class="var">x</var> and <var class="var">y</var> in <code class="code">foobar</code> remain
+zero, as in <code class="code">foo</code> they are a return value and parameter respectively.  The
+<var class="var">x</var> in <code class="code">bat</code> refers to the <var class="var">x</var> in <code class="code">foo</code>.
 </p>
-<p>Variable inheritance leads to a problem for <code>eval</code> and scripts.  If a
+<p>Variable inheritance leads to a problem for <code class="code">eval</code> and scripts.  If a
 new variable is created in a parent function, it is not clear what should
 happen in nested child functions.  For example, consider a parent function
-<code>foo</code> with a nested child function <code>bar</code>:
+<code class="code">foo</code> with a nested child function <code class="code">bar</code>:
 </p>
 <div class="example">
-<pre class="example">function y = foo (to_eval)
+<div class="group"><pre class="example-preformatted">function y = foo (to_eval)
   bar ();
   eval (to_eval);
 
@@ -135,19 +123,19 @@ foo (&quot;y = 10;&quot;)
 
 foo (&quot;&quot;)
     &rArr; 100
-</pre></div>
+</pre></div></div>
 
-<p>The parent function <code>foo</code> is unable to create a new variable
-<var>x</var>, but the child function <code>bar</code> was successful.  Furthermore, even
-in an <code>eval</code> statement <var>y</var> in <code>bar</code> is the same <var>y</var> as in its
-parent function <code>foo</code>.  The use of <code>eval</code> in conjunction with nested
+<p>The parent function <code class="code">foo</code> is unable to create a new variable
+<var class="var">x</var>, but the child function <code class="code">bar</code> was successful.  Furthermore, even
+in an <code class="code">eval</code> statement <var class="var">y</var> in <code class="code">bar</code> is the same <var class="var">y</var> as in its
+parent function <code class="code">foo</code>.  The use of <code class="code">eval</code> in conjunction with nested
 functions is best avoided.
 </p>
 <p>As with subfunctions, only the first nested function in a file may be called
 from the outside.  Inside a function the rules are more complicated.  In
 general a nested function may call:
 </p>
-<ol start="0">
+<ol class="enumerate" start="0">
 <li> Globally visible functions
 
 </li><li> Any function that the nested function&rsquo;s parent can call
@@ -158,12 +146,12 @@ general a nested function may call:
 
 </li></ol>
 
-<p>As a complex example consider a parent function <code>ex_top</code> with two
-child functions, <code>ex_a</code> and <code>ex_b</code>.  In addition, <code>ex_a</code> has two
-more child functions, <code>ex_aa</code> and <code>ex_ab</code>.  For example:
+<p>As a complex example consider a parent function <code class="code">ex_top</code> with two
+child functions, <code class="code">ex_a</code> and <code class="code">ex_b</code>.  In addition, <code class="code">ex_a</code> has two
+more child functions, <code class="code">ex_aa</code> and <code class="code">ex_ab</code>.  For example:
 </p>
 <div class="example">
-<pre class="example">function ex_top ()
+<pre class="example-preformatted">function ex_top ()
   ## Can call: ex_top, ex_a, and ex_b
   ## Can NOT call: ex_aa and ex_ab
 
@@ -188,7 +176,7 @@ endfunction
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Overloading-and-Autoloading.html">Overloading and Autoloading</a>, Previous: <a href="Private-Functions.html">Private Functions</a>, Up: <a href="Function-Files.html">Function Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

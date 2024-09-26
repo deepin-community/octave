@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2020-2022 The Octave Project Developers
+## Copyright (C) 2020-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,11 +24,11 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {@var{value} =} subsref (@var{fcn}, @var{idx})
-## Perform subscripted function call on the inline function object @var{fcn}.
+## @deftypefn {} {@var{value} =} subsref (@var{fobj}, @var{idx})
+## Perform subscripted function call on the inline function object @var{fobj}.
 ## @end deftypefn
 
-function retval = subsref (fcn, idx)
+function retval = subsref (fobj, idx)
 
   if (nargin != 2)
     print_usage ();
@@ -41,9 +41,9 @@ function retval = subsref (fcn, idx)
   if (strcmp (idx(1).type, "()"))
     args = idx.subs;
     if (numel (args) > 0)
-      retval = feval (fcn, args{:});
+      retval = feval (fobj, args{:});
     else
-      retval = feval (fcn);
+      retval = feval (fobj);
     endif
   else
     error ("@inline/subsref: invalid subscript type");

@@ -1,11 +1,11 @@
-This is octave.info, produced by makeinfo version 6.8 from octave.texi.
+This is octave.info, produced by makeinfo version 7.1 from octave.texi.
 
 INFO-DIR-SECTION Math
 START-INFO-DIR-ENTRY
 * Octave: (octave).             Interactive language for numerical computations.
 END-INFO-DIR-ENTRY
 
-Copyright © 1996-2022 The Octave Project Developers
+Copyright © 1996-2024 The Octave Project Developers
 
    Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
@@ -19,6 +19,65 @@ permission notice identical to this one.
    Permission is granted to copy and distribute translations of this
 manual into another language, under the above conditions for modified
 versions.
+
+
+File: octave.info,  Node: Processing Data in Structures,  Prev: Manipulating Structures,  Up: Structures
+
+6.1.5 Processing Data in Structures
+-----------------------------------
+
+The simplest way to process data in a structure is within a ‘for’ loop
+(*note Looping Over Structure Elements::).  A similar effect can be
+achieved with the ‘structfun’ function, where a user defined function is
+applied to each field of the structure.  *Note structfun: XREFstructfun.
+
+   Alternatively, to process the data in a structure, the structure
+might be converted to another type of container before being treated.
+
+ -- : C = struct2cell (S)
+     Create a new cell array from the objects stored in the struct
+     object.
+
+     If F is the number of fields in the structure, the resulting cell
+     array will have a dimension vector corresponding to ‘[F size(S)]’.
+     For example:
+
+          s = struct ("name", {"Peter", "Hannah", "Robert"},
+                     "age", {23, 16, 3});
+          c = struct2cell (s)
+             ⇒ c = {2x1x3 Cell Array}
+          c(1,1,:)(:)
+             ⇒
+                {
+                  [1,1] = Peter
+                  [2,1] = Hannah
+                  [3,1] = Robert
+                }
+          c(2,1,:)(:)
+             ⇒
+                {
+                  [1,1] = 23
+                  [2,1] = 16
+                  [3,1] = 3
+                }
+
+     See also: *note cell2struct: XREFcell2struct, *note namedargs2cell:
+     XREFnamedargs2cell, *note fieldnames: XREFfieldnames.
+
+ -- : C = namedargs2cell (S)
+     Create a cell array of field name/value pairs from a scalar
+     structure.
+
+     Example:
+
+          s.Name = "Peter";
+          s.Height = 185;
+          s.Age = 42;
+
+          c = namedargs2cell (s)
+            ⇒ { "Name", "Peter", "Height", 185, "Age", 42 }
+
+     See also: *note struct2cell: XREFstruct2cell.
 
 
 File: octave.info,  Node: containers.Map,  Next: Cell Arrays,  Prev: Structures,  Up: Data Containers
@@ -65,7 +124,7 @@ File: octave.info,  Node: containers.Map,  Next: Cell Arrays,  Prev: Structures,
      See also: *note struct: XREFstruct.
 
 
-File: octave.info,  Node: Cell Arrays,  Next: Comma Separated Lists,  Prev: containers.Map,  Up: Data Containers
+File: octave.info,  Node: Cell Arrays,  Next: Comma-Separated Lists,  Prev: containers.Map,  Up: Data Containers
 
 6.3 Cell Arrays
 ===============
@@ -169,7 +228,7 @@ example:
           ⇒ ans = 0
 
 
- -- : iscell (X)
+ -- : TF = iscell (X)
      Return true if X is a cell array object.
 
      See also: *note ismatrix: XREFismatrix, *note isstruct:
@@ -219,10 +278,10 @@ arrays.  As do other functions describing the size of an object, such as
 *note length: XREFlength, *note numel: XREFnumel, *note rows: XREFrows,
 and *note columns: XREFcolumns.
 
- -- : cell (N)
- -- : cell (M, N)
- -- : cell (M, N, K, ...)
- -- : cell ([M N ...])
+ -- : C = cell (N)
+ -- : C = cell (M, N)
+ -- : C = cell (M, N, K, ...)
+ -- : C = cell ([M N ...])
      Create a new cell array object.
 
      If invoked with a single scalar integer argument, return a square
@@ -298,10 +357,10 @@ the ‘num2cell’, ‘mat2cell’ and ‘cellslices’ functions.
 
  -- : C = mat2cell (A, DIM1, DIM2, ..., DIMI, ..., DIMN)
  -- : C = mat2cell (A, ROWDIM)
-     Convert the matrix A to a cell array.
+     Convert the matrix A to a cell array C.
 
      Each dimension argument (DIM1, DIM2, etc.) is a vector of integers
-     which specifies how to divide that dimension’s elements amongst the
+     which specifies how to divide that dimension's elements amongst the
      new elements in the output C.  The number of elements in the I-th
      dimension is ‘size (A, I)’.  Because all elements in A must be
      partitioned, there is a requirement that ‘sum (DIMI) == size (A,
@@ -466,7 +525,7 @@ following command:
 
    Accessing multiple elements of a cell array with the ‘{’ and ‘}’
 operators will result in a comma-separated list of all the requested
-elements (*note Comma Separated Lists::).  Using the ‘{’ and ‘}’
+elements (*note Comma-Separated Lists::).  Using the ‘{’ and ‘}’
 operators the first two rows in the above example can be swapped back
 like this:
 
@@ -586,7 +645,7 @@ Converting Strings::).
    The function ‘iscellstr’ can be used to test if an object is a cell
 array of strings.
 
- -- : iscellstr (CELL)
+ -- : TF = iscellstr (CELL)
      Return true if every element of the cell array CELL is a character
      string.
 
@@ -620,18 +679,18 @@ using the ‘cell2mat’ and ‘cell2struct’ functions.
      See also: *note mat2cell: XREFmat2cell, *note num2cell:
      XREFnum2cell.
 
- -- : cell2struct (CELL, FIELDS)
- -- : cell2struct (CELL, FIELDS, DIM)
+ -- : S = cell2struct (CELL, FIELDS)
+ -- : S = cell2struct (CELL, FIELDS, DIM)
      Convert CELL to a structure.
 
      The number of fields in FIELDS must match the number of elements in
      CELL along dimension DIM, that is ‘numel (FIELDS) == size (CELL,
      DIM)’.  If DIM is omitted, a value of 1 is assumed.
 
-          A = cell2struct ({"Peter", "Hannah", "Robert";
+          S = cell2struct ({"Peter", "Hannah", "Robert";
                              185, 170, 168},
                            {"Name","Height"}, 1);
-          A(1)
+          S(1)
              ⇒
                 {
                   Name   = Peter
@@ -643,28 +702,28 @@ using the ‘cell2mat’ and ‘cell2struct’ functions.
      XREFcell2mat, *note struct: XREFstruct.
 
 
-File: octave.info,  Node: Comma Separated Lists,  Prev: Cell Arrays,  Up: Data Containers
+File: octave.info,  Node: Comma-Separated Lists,  Prev: Cell Arrays,  Up: Data Containers
 
-6.4 Comma Separated Lists
+6.4 Comma-Separated Lists
 =========================
 
-Comma separated lists (1) are the basic argument type to all Octave
-functions - both for input and return arguments.  In the example
+Comma-separated lists (1) are the basic argument type to all Octave
+functions--both for input and return arguments.  In the example
 
      max (A, B)
 
-‘A, B’ is a comma separated list.  Comma separated lists can appear on
+‘A, B’ is a comma-separated list.  Comma-separated lists can appear on
 both the right and left hand side of an assignment.  For example
 
      x = [1 0 1 0 0 1 1; 0 0 0 0 0 0 7];
      [I, J] = find (X, 2, "last");
 
-Here, ‘X, 2, "last"’ is a comma separated list constituting the input
-arguments of ‘find’.  ‘find’ returns a comma separated list of output
-arguments which is assigned element by element to the comma separated
+Here, ‘X, 2, "last"’ is a comma-separated list constituting the input
+arguments of ‘find’.  ‘find’ returns a comma-separated list of output
+arguments which is assigned element by element to the comma-separated
 list ‘I, J’.
 
-   Another example of where comma separated lists are used is in the
+   Another example of where comma-separated lists are used is in the
 creation of a new array with ‘[]’ (*note Matrices::) or the creation of
 a cell array with ‘{}’ (*note Basic Usage of Cell Arrays::).  In the
 expressions
@@ -672,32 +731,32 @@ expressions
      a = [1, 2, 3, 4];
      c = {4, 5, 6, 7};
 
-both ‘1, 2, 3, 4’ and ‘4, 5, 6, 7’ are comma separated lists.
+both ‘1, 2, 3, 4’ and ‘4, 5, 6, 7’ are comma-separated lists.
 
-   Comma separated lists cannot be directly manipulated by the user.
+   Comma-separated lists cannot be directly manipulated by the user.
 However, both structure arrays and cell arrays can be converted into
-comma separated lists, and thus used in place of explicitly written
-comma separated lists.  This feature is useful in many ways, as will be
+comma-separated lists, and thus used in place of explicitly written
+comma-separated lists.  This feature is useful in many ways, as will be
 shown in the following subsections.
 
 * Menu:
 
-* Comma Separated Lists Generated from Cell Arrays::
-* Comma Separated Lists Generated from Structure Arrays::
+* Comma-Separated Lists Generated from Cell Arrays::
+* Comma-Separated Lists Generated from Structure Arrays::
 
    ---------- Footnotes ----------
 
-   (1) Comma-separated lists are also sometimes informally referred to
-as “cs-lists”.
+   (1) Comma-separated lists are also sometimes referred to as
+“cs-lists”.
 
 
-File: octave.info,  Node: Comma Separated Lists Generated from Cell Arrays,  Next: Comma Separated Lists Generated from Structure Arrays,  Up: Comma Separated Lists
+File: octave.info,  Node: Comma-Separated Lists Generated from Cell Arrays,  Next: Comma-Separated Lists Generated from Structure Arrays,  Up: Comma-Separated Lists
 
-6.4.1 Comma Separated Lists Generated from Cell Arrays
+6.4.1 Comma-Separated Lists Generated from Cell Arrays
 ------------------------------------------------------
 
 As has been mentioned above (*note Indexing Cell Arrays::), elements of
-a cell array can be extracted into a comma separated list with the ‘{’
+a cell array can be extracted into a comma-separated list with the ‘{’
 and ‘}’ operators.  By surrounding this list with ‘[’ and ‘]’, it can be
 concatenated into an array.  For example:
 
@@ -731,7 +790,7 @@ cell arrays of an arbitrary size:
      printf ("%s ", c{:});
           ⊣ GNU Octave is Free Software
 
-   If used on the left-hand side of an assignment, a comma separated
+   If used on the left-hand side of an assignment, a comma-separated
 list generated with ‘{}’ can be assigned to.  An example is
 
      in{1} = [10, 20, 30];
@@ -758,12 +817,12 @@ list generated with ‘{}’ can be assigned to.  An example is
              }
 
 
-File: octave.info,  Node: Comma Separated Lists Generated from Structure Arrays,  Prev: Comma Separated Lists Generated from Cell Arrays,  Up: Comma Separated Lists
+File: octave.info,  Node: Comma-Separated Lists Generated from Structure Arrays,  Prev: Comma-Separated Lists Generated from Cell Arrays,  Up: Comma-Separated Lists
 
-6.4.2 Comma Separated Lists Generated from Structure Arrays
+6.4.2 Comma-Separated Lists Generated from Structure Arrays
 -----------------------------------------------------------
 
-Structure arrays can equally be used to create comma separated lists.
+Structure arrays can equally be used to create comma-separated lists.
 This is done by addressing one of the fields of a structure array.  For
 example:
 
@@ -795,20 +854,20 @@ variable names
 
 However, names like ‘__foo_bar_baz__’ that begin and end with two
 underscores are understood to be reserved for internal use by Octave.
-You should not use them in code you write, except to access Octave’s
+You should not use them in code you write, except to access Octave's
 documented internal variables and built-in symbolic constants.
 
    Case is significant in variable names.  The symbols ‘a’ and ‘A’ are
 distinct variables.
 
    A variable name is a valid expression by itself.  It represents the
-variable’s current value.  Variables are given new values with
+variable's current value.  Variables are given new values with
 “assignment operators” and “increment operators”.  *Note Assignment
 Expressions: Assignment Ops.
 
    There is one automatically created variable with a special meaning.
 The ‘ans’ variable always contains the result of the last computation,
-where the output wasn’t assigned to any variable.  The code ‘a = cos
+where the output wasn't assigned to any variable.  The code ‘a = cos
 (pi)’ will assign the value -1 to the variable ‘a’, but will not change
 the value of ‘ans’.  However, the code ‘cos (pi)’ will set the value of
 ‘ans’ to -1.
@@ -828,7 +887,7 @@ used before they have been given a value.  Doing so results in an error.
 
      is evaluated, the value returned by ‘ans’ is 25.
 
- -- : isvarname (NAME)
+ -- : TF = isvarname (NAME)
      Return true if NAME is a valid variable name.
 
      A valid variable name is composed of letters, digits, and
@@ -908,7 +967,7 @@ used before they have been given a value.  Doing so results in an error.
      See also: *note unique: XREFunique, *note
      matlab.lang.makeValidName: XREFmatlab_lang_makeValidName.
 
- -- : namelengthmax ()
+ -- : N = namelengthmax ()
      Return the MATLAB compatible maximum variable name length.
 
      Octave is capable of storing strings up to 2^{31} - 1 in length.
@@ -929,11 +988,13 @@ File: octave.info,  Node: Global Variables,  Next: Persistent Variables,  Up: Va
 7.1 Global Variables
 ====================
 
-A “global” variable is one that may be accessed anywhere within Octave.
-This is in contrast to a local variable which can only be accessed
-outside of its current context if it is passed explicitly, such as by
-including it as a parameter when calling a function (‘fcn (LOCAL_VAR1,
-LOCAL_VAR2)’).
+See keyword: *note global: XREFglobal.
+
+   A “global” variable is one that may be accessed anywhere within
+Octave.  This is in contrast to a local variable which can only be
+accessed outside of its current context if it is passed explicitly, such
+as by including it as a parameter when calling a function (‘fcn
+(LOCAL_VAR1, LOCAL_VAR2)’).
 
    A variable is declared global by using a ‘global’ declaration
 statement.  The following statements are all global declarations.
@@ -1007,7 +1068,7 @@ global variables can introduce systemic changes so that localizing a bug
 to a particular function, or to a particular loop within a function,
 becomes difficult.
 
- -- : isglobal (NAME)
+ -- : TF = isglobal (NAME)
      Return true if NAME is a globally visible variable.
 
      For example:
@@ -1024,7 +1085,9 @@ File: octave.info,  Node: Persistent Variables,  Next: Status of Variables,  Pre
 7.2 Persistent Variables
 ========================
 
-A variable that has been declared “persistent” within a function will
+See keyword: *note persistent: XREFpersistent.
+
+   A variable that has been declared “persistent” within a function will
 retain its contents in memory between subsequent calls to the same
 function.  The difference between persistent variables and global
 variables is that persistent variables are local in scope to a
@@ -1153,7 +1216,7 @@ about what is in memory, as the following shows.
  -- : who
  -- : who pattern ...
  -- : who option pattern ...
- -- : C = who ("pattern", ...)
+ -- : C = who (...)
      List currently defined variables matching the given patterns.
 
      Valid pattern syntax is the same as described for the ‘clear’
@@ -1242,7 +1305,7 @@ about what is in memory, as the following shows.
 
  -- : VAL = whos_line_format ()
  -- : OLD_VAL = whos_line_format (NEW_VAL)
- -- : whos_line_format (NEW_VAL, "local")
+ -- : OLD_VAL = whos_line_format (NEW_VAL, "local")
      Query or set the format string used by the command ‘whos’.
 
      A full format string is:
@@ -1326,12 +1389,12 @@ variable.  The following example illustrates this.
           NAME is a variable.
 
      2
-          NAME is an absolute filename, an ordinary file in Octave’s
-          ‘path’, or (after appending ‘.m’) a function file in Octave’s
+          NAME is an absolute filename, an ordinary file in Octave's
+          ‘path’, or (after appending ‘.m’) a function file in Octave's
           ‘path’.
 
      3
-          NAME is a ‘.oct’ or ‘.mex’ file in Octave’s ‘path’.
+          NAME is a ‘.oct’ or ‘.mex’ file in Octave's ‘path’.
 
      5
           NAME is a built-in function.
@@ -1373,7 +1436,7 @@ variable.  The following example illustrates this.
      file, class.
 
      ‘exist’ returns 2 if a regular file called NAME is present in
-     Octave’s search path.  For information about other types of files
+     Octave's search path.  For information about other types of files
      not on the search path use some combination of the functions
      ‘file_in_path’ and ‘stat’ instead.
 
@@ -1416,7 +1479,9 @@ it can be necessary to remove it manually from memory.  The ‘clear’ or
           Match the list of characters specified by LIST.  If the first
           character is ‘!’ or ‘^’, match all characters except those
           specified by LIST.  For example, the pattern ‘[a-zA-Z]’ will
-          match all lowercase and uppercase alphabetic characters.
+          match all lowercase and uppercase alphabetic characters.  On
+          Windows, square brackets are matched literally and are not
+          used to group characters.
 
      For example, the command
 
@@ -1519,13 +1584,13 @@ it can be necessary to remove it manually from memory.  The ‘clear’ or
 
      Example Code:
 
-     Clear all variables starting with ’x’ and the specific variable
+     Clear all variables starting with 'x' and the specific variable
      "foobar"
 
           clearvars x* foobar
 
      Clear the specific variable "foobar" and use regular expressions to
-     clear all variables starting with ’x’ or ’y’.
+     clear all variables starting with 'x' or 'y'.
 
           clearvars foobar -regexp ^x ^y
 
@@ -1567,7 +1632,8 @@ only useful during development of programs, and not within a program.
      Otherwise, a cell array of strings is returned, where each element
      corresponds to the contents of each requested function.
 
- -- : which name ...
+ -- : which NAME ...
+ -- : [STR, ...] = which ('NAME', ...)
      Display the type of each NAME.
 
      If NAME is defined from a function file, the full name of the file
@@ -1657,12 +1723,19 @@ File: octave.info,  Node: Index Expressions,  Next: Calling Functions,  Up: Expr
 
 An “index expression” allows you to reference or extract selected
 elements of a vector, a matrix (2-D), or a higher-dimensional array.
+Arrays may be indexed in one of three ways: *note Component Indexing:
+XREFComponentIndexing, *note Linear Indexing: XREFLinearIndexing, and
+*note Logical Indexing: XREFLogicalIndexing.
 
-   Indices may be scalars, vectors, ranges, or the special operator ‘:’,
-which selects entire rows, columns, or higher-dimensional slices.
+Component Indexing
+------------------
 
-   An index expression consists of a set of parentheses enclosing M
-expressions separated by commas.  Each individual index value, or
+Component indices may be scalars, vectors, ranges, or the special
+operator ‘:’, which selects entire rows, columns, or higher-dimensional
+slices.
+
+   Component index expression consists of a set of parentheses enclosing
+M expressions separated by commas.  Each individual index value, or
 component, is used for the respective dimension of the object that it is
 applied to.  In other words, the first index component is used for the
 first dimension (rows) of the object, the second index component is used
@@ -1737,15 +1810,16 @@ determined by the shape of the indexing component.  For example:
      A([1, 2])  # result is a row vector: ans = [1, 2]
      A([1; 2])  # result is a column vector: ans = [1; 2]
 
-   Note that it is permissible to use a 1-D index with a
-multi-dimensional object (also called linear indexing).  In this case,
-the elements of the multi-dimensional array are taken in column-first
-order like Fortran.  That is, the columns of the array are imagined to
-be stacked on top of each other to form a column vector and then the
-single linear index is applied to this vector.
+   The shape rules for A(P) are:
 
-     A(5)    # linear indexing into three-dimensional array: ans = 5
-     A(3:5)  # result has shape of index component: ans = [3, 4, 5]
+   • When at least one of A or P has two or more dimensions, then A(P)
+     takes the shape of P.  This happens when at least one of the
+     variables is a 2-D matrix or an N-D array.
+
+   • When both A and P are 1-D vectors, then A(P) takes the shape of A
+     itself.  In particular, when A is a row vector, then A(P) is also a
+     row vector irrespective of P's shape.  The case when A is a column
+     vector is analogous.
 
    A colon (‘:’) may be used as an index component to select all of the
 elements in a specified dimension.  Given the matrix,
@@ -1779,6 +1853,71 @@ used in ranges and typically eliminates the needs to call ‘size’ or
      A(2:2:end)        # even elements of A => [2, 4]
      A(end:-1:1)       # reversal of A => [4, 3, 2, 1]
 
+   For more information see the *note "end" keyword: XREFend.
+
+Linear Indexing
+---------------
+
+It is permissible to use a 1-D index with a multi-dimensional object.
+This is also called “linear indexing”.  In this case, the elements of
+the multi-dimensional array are taken in column-first order like in
+Fortran.  That is, the columns of the array are imagined to be stacked
+on top of each other to form a column vector and then the single linear
+index is applied to this vector.
+
+     A = [1, 2, 3; 4, 5, 6; 7, 8, 9];
+
+     A(4)    # linear index of 4th element in 2-D array: ans = 2
+     A(3:5)  # result has shape of index component: ans = [7, 2, 5]
+     A([1, 2, 2, 1]) # result includes repeated elements: ans = [1, 4, 4, 1]
+
+Logical Indexing
+----------------
+
+Logical values can also be used to index matrices and cell arrays.  When
+indexing with a logical array the result will be a vector containing the
+values corresponding to ‘true’ parts of the logical array.  The
+following examples illustrates this.
+
+     data = [ 1, 2; 3, 4 ];
+     idx = [true, false; false true];
+     data(idx)
+          ⇒ ans = [ 1; 4 ]
+
+     idx = (data <= 2);
+     data(idx)
+          ⇒ ans = [ 1; 2 ]
+
+Instead of creating the ‘idx’ array it is possible to replace
+‘data(idx)’ with ‘data( data <= 2 )’ in the above code.
+
+   While the size of the logical index expressions is usually the same
+as that of the array being indexed, this is not a necessary condition.
+If the logical index is a different size than the array, then elements
+from the array are matched against elements from the logical index based
+on their linear order, just as with linear indexing.
+
+     data = [ 1, 2, 3; 4, 5, 6 ];
+     idx = [ true, false, false, true ];
+     data(idx)
+          ⇒ ans = [ 1 5 ]  # idx selected the 1st and 4th position elements
+
+   If the logical index is larger than then array an out of bounds error
+will occur if any true values attempt to select a linear position larger
+than the number of elements in the array.
+
+     idx = [ true, true, false; false, true, false; true; false; false ];
+     data(idx)
+          ⇒ ans = [ 1; 2; 5; 3 ] # returns positions 1, 3, 4, 5 in a column
+
+     idx = [ true, true, false; false, true, false; true; false; true ];
+     data(idx)
+          ⇒ error: a(9): out of bound 6 (dimensions are 2x3)
+
+   False elements of a logical index outside the array size are ignored,
+but when the ninth element of the logical index is true it triggers an
+error as it tries to select a nonexistent 9th element of the array.
+
 * Menu:
 
 * Advanced Indexing::
@@ -1788,6 +1927,37 @@ File: octave.info,  Node: Advanced Indexing,  Up: Index Expressions
 
 8.1.1 Advanced Indexing
 -----------------------
+
+Chained indexing
+................
+
+Octave permits the use of repeated (chained) index expressions to
+extract subsets of an array in a single command without the need to use
+intermediate variables.  This can make it easier to write code with
+either complicated indexing operations or using multiple indexing
+methods.  The following example shows two equivalent index extraction
+operations:
+
+     A = reshape (1:16, 4, 4);
+     B = A(2:4, 2:3);
+     C = B(3:5);
+     D = C( [ true, false, true ] )
+          ⇒ D = [ 8, 11 ]
+
+     D = A(2:4, 2:3)(3:5)([ true, false, true ])
+          ⇒ D = [ 8, 11 ]
+
+   Chained indexing will necessarily be slower than a single index
+expression producing the same results, but is usually more
+computationally efficient than performing multiple discrete indexing
+operations with intermediate variable assignments.
+
+   Note that chained indexing is only compatible with right-hand
+expressions and can not be used on the left-hand side of assignment
+operations.
+
+Component to linear index conversion
+....................................
 
 When it is necessary to extract subsets of entries out of an array whose
 indices cannot be written as a Cartesian product of components, linear
@@ -1809,7 +1979,119 @@ indexing together with the function ‘sub2ind’ can be used.  For example:
      A(sub2ind (size (A), [1, 2, 1], [1, 1, 2], [1, 2, 1]))
         ⇒ ans = [A(1, 1, 1), A(2, 1, 2), A(1, 2, 1)]
 
-   An array with ‘nd’ dimensions can be indexed by an index expression
+ -- : IND = sub2ind (DIMS, I, J)
+ -- : IND = sub2ind (DIMS, S1, S2, ..., SN)
+     Convert subscripts to linear indices.
+
+     The input DIMS is a dimension vector where each element is the size
+     of the array in the respective dimension (*note ‘size’: XREFsize.).
+     The remaining inputs are scalars or vectors of subscripts to be
+     converted.
+
+     The output vector IND contains the converted linear indices.
+
+     Background: Array elements can be specified either by a linear
+     index which starts at 1 and runs through the number of elements in
+     the array, or they may be specified with subscripts for the row,
+     column, page, etc.  The functions ‘ind2sub’ and ‘sub2ind’
+     interconvert between the two forms.
+
+     The linear index traverses dimension 1 (rows), then dimension 2
+     (columns), then dimension 3 (pages), etc. until it has numbered all
+     of the elements.  Consider the following 3-by-3 matrices:
+
+          [(1,1), (1,2), (1,3)]     [1, 4, 7]
+          [(2,1), (2,2), (2,3)] ==> [2, 5, 8]
+          [(3,1), (3,2), (3,3)]     [3, 6, 9]
+
+     The left matrix contains the subscript tuples for each matrix
+     element.  The right matrix shows the linear indices for the same
+     matrix.
+
+     The following example shows how to convert the two-dimensional
+     indices ‘(2,1)’ and ‘(2,3)’ of a 3-by-3 matrix to linear indices
+     with a single call to ‘sub2ind’.
+
+          s1 = [2, 2];
+          s2 = [1, 3];
+          ind = sub2ind ([3, 3], s1, s2)
+              ⇒ ind =  2   8
+
+     See also: *note ind2sub: XREFind2sub, *note size: XREFsize.
+
+ -- : [S1, S2, ..., SN] = ind2sub (DIMS, IND)
+     Convert linear indices to subscripts.
+
+     The input DIMS is a dimension vector where each element is the size
+     of the array in the respective dimension (*note ‘size’: XREFsize.).
+     The second input IND contains linear indices to be converted.
+
+     The outputs S1, ..., SN contain the converted subscripts.
+
+     Background: Array elements can be specified either by a linear
+     index which starts at 1 and runs through the number of elements in
+     the array, or they may be specified with subscripts for the row,
+     column, page, etc.  The functions ‘ind2sub’ and ‘sub2ind’
+     interconvert between the two forms.
+
+     The linear index traverses dimension 1 (rows), then dimension 2
+     (columns), then dimension 3 (pages), etc. until it has numbered all
+     of the elements.  Consider the following 3-by-3 matrices:
+
+          [1, 4, 7]     [(1,1), (1,2), (1,3)]
+          [2, 5, 8] ==> [(2,1), (2,2), (2,3)]
+          [3, 6, 9]     [(3,1), (3,2), (3,3)]
+
+     The left matrix contains the linear indices for each matrix
+     element.  The right matrix shows the subscript tuples for the same
+     matrix.
+
+     The following example shows how to convert the linear indices ‘2’
+     and ‘8’ to appropriate subscripts of a 3-by-3 matrix.
+
+          ind = [2, 8];
+          [r, c] = ind2sub ([3, 3], ind)
+              ⇒ r =  2   2
+              ⇒ c =  1   3
+
+     If the number of output subscripts exceeds the number of
+     dimensions, the exceeded dimensions are set to ‘1’.  On the other
+     hand, if fewer subscripts than dimensions are provided, the
+     exceeding dimensions are merged into the final requested dimension.
+     For clarity, consider the following examples:
+
+          ind  = [2, 8];
+          dims = [3, 3];
+          ## same as dims = [3, 3, 1]
+          [r, c, s] = ind2sub (dims, ind)
+              ⇒ r =  2   2
+              ⇒ c =  1   3
+              ⇒ s =  1   1
+          ## same as dims = [9]
+          r = ind2sub (dims, ind)
+              ⇒ r =  2   8
+
+     See also: *note sub2ind: XREFsub2ind, *note size: XREFsize.
+
+ -- : TF = isindex (IND)
+ -- : TF = isindex (IND, N)
+     Return true if IND is a valid index.
+
+     Valid indices are either positive integers (although possibly of
+     real data type), or logical arrays.
+
+     If present, N specifies the maximum extent of the dimension to be
+     indexed.  When possible the internal result is cached so that
+     subsequent indexing using IND will not perform the check again.
+
+     Implementation Note: Strings are first converted to double values
+     before the checks for valid indices are made.  Unless a string
+     contains the NULL character "\0", it will always be a valid index.
+
+Component count not equal to dimensionality
+...........................................
+
+An array with ‘nd’ dimensions can be indexed by an index expression
 which has from 1 to ‘nd’ components.  For the ordinary and most common
 case, the number of components ‘M’ matches the number of dimensions
 ‘nd’.  In this case the ordinary indexing rules apply and each component
@@ -1854,9 +2136,12 @@ applied.  This is easiest to understand with an example:
 Note here the elegant use of the double colon to replace the call to the
 ‘reshape’ function.
 
-   Another advanced use of linear indexing is to create arrays filled
-with a single value.  This can be done by using an index of ones on a
-scalar value.  The result is an object with the dimensions of the index
+Array replication
+.................
+
+Another advanced use of linear indexing is to create arrays filled with
+a single value.  This can be done by using an index of ones on a scalar
+value.  The result is an object with the dimensions of the index
 expression and every element equal to the original scalar.  For example,
 the following statements
 
@@ -1905,7 +2190,10 @@ choose a more efficient algorithm to handle the expression.
 is to use the function ‘repmat’ for replicating smaller arrays into
 bigger ones, which uses such tricks.
 
-   A second use of indexing is to speed up code.  Indexing is a fast
+Indexing for performance enhancement
+....................................
+
+A second use of indexing is to speed up code.  Indexing is a fast
 operation and judicious use of it can reduce the requirement for looping
 over individual array elements, which is a slow operation.
 
@@ -1944,118 +2232,8 @@ is considerably faster than
 because Octave does not have to repeatedly resize the intermediate
 result.
 
- -- : IND = sub2ind (DIMS, I, J)
- -- : IND = sub2ind (DIMS, S1, S2, ..., SN)
-     Convert subscripts to linear indices.
-
-     The input DIMS is a dimension vector where each element is the size
-     of the array in the respective dimension (*note ‘size’: XREFsize.).
-     The remaining inputs are scalars or vectors of subscripts to be
-     converted.
-
-     The output vector IND contains the converted linear indices.
-
-     Background: Array elements can be specified either by a linear
-     index which starts at 1 and runs through the number of elements in
-     the array, or they may be specified with subscripts for the row,
-     column, page, etc.  The functions ‘ind2sub’ and ‘sub2ind’
-     interconvert between the two forms.
-
-     The linear index traverses dimension 1 (rows), then dimension 2
-     (columns), then dimension 3 (pages), etc. until it has numbered all
-     of the elements.  Consider the following 3-by-3 matrices:
-
-          [(1,1), (1,2), (1,3)]     [1, 4, 7]
-          [(2,1), (2,2), (2,3)] ==> [2, 5, 8]
-          [(3,1), (3,2), (3,3)]     [3, 6, 9]
-
-     The left matrix contains the subscript tuples for each matrix
-     element.  The right matrix shows the linear indices for the same
-     matrix.
-
-     The following example shows how to convert the two-dimensional
-     indices ‘(2,1)’ and ‘(2,3)’ of a 3-by-3 matrix to linear indices
-     with a single call to ‘sub2ind’.
-
-          s1 = [2, 2];
-          s2 = [1, 3];
-          ind = sub2ind ([3, 3], s1, s2)
-              ⇒ ind =  2   8
-
-     See also: *note ind2sub: XREFind2sub, *note size: XREFsize.
-
- -- : [S1, S2, ..., SN] = ind2sub (DIMS, IND)
-     Convert linear indices to subscripts.
-
-     The input DIMS is a dimension vector where each element is the size
-     of the array in the respective dimension (*note ‘size’: XREFsize.).
-     The second input IND contains linear indies to be converted.
-
-     The outputs S1, ..., SN contain the converted subscripts.
-
-     Background: Array elements can be specified either by a linear
-     index which starts at 1 and runs through the number of elements in
-     the array, or they may be specified with subscripts for the row,
-     column, page, etc.  The functions ‘ind2sub’ and ‘sub2ind’
-     interconvert between the two forms.
-
-     The linear index traverses dimension 1 (rows), then dimension 2
-     (columns), then dimension 3 (pages), etc. until it has numbered all
-     of the elements.  Consider the following 3-by-3 matrices:
-
-          [1, 4, 7]     [(1,1), (1,2), (1,3)]
-          [2, 5, 8] ==> [(2,1), (2,2), (2,3)]
-          [3, 6, 9]     [(3,1), (3,2), (3,3)]
-
-     The left matrix contains the linear indices for each matrix
-     element.  The right matrix shows the subscript tuples for the same
-     matrix.
-
-     The following example shows how to convert the two-dimensional
-     indices ‘(2,1)’ and ‘(2,3)’ of a 3-by-3 matrix to linear indices
-     with a single call to ‘sub2ind’.
-
-     The following example shows how to convert the linear indices ‘2’
-     and ‘8’ in a 3-by-3 matrix into subscripts.
-
-          ind = [2, 8];
-          [r, c] = ind2sub ([3, 3], ind)
-              ⇒ r =  2   2
-              ⇒ c =  1   3
-
-     If the number of output subscripts exceeds the number of
-     dimensions, the exceeded dimensions are set to ‘1’.  On the other
-     hand, if fewer subscripts than dimensions are provided, the
-     exceeding dimensions are merged into the final requested dimension.
-     For clarity, consider the following examples:
-
-          ind  = [2, 8];
-          dims = [3, 3];
-          ## same as dims = [3, 3, 1]
-          [r, c, s] = ind2sub (dims, ind)
-              ⇒ r =  2   2
-              ⇒ c =  1   3
-              ⇒ s =  1   1
-          ## same as dims = [9]
-          r = ind2sub (dims, ind)
-              ⇒ r =  2   8
-
-     See also: *note sub2ind: XREFsub2ind, *note size: XREFsize.
-
- -- : isindex (IND)
- -- : isindex (IND, N)
-     Return true if IND is a valid index.
-
-     Valid indices are either positive integers (although possibly of
-     real data type), or logical arrays.
-
-     If present, N specifies the maximum extent of the dimension to be
-     indexed.  When possible the internal result is cached so that
-     subsequent indexing using IND will not perform the check again.
-
-     Implementation Note: Strings are first converted to double values
-     before the checks for valid indices are made.  Unless a string
-     contains the NULL character "\0", it will always be a valid index.
+   For more performance improvement suggestions see *note Vectorization
+and Faster Code Execution::.
 
 
 File: octave.info,  Node: Calling Functions,  Next: Arithmetic Ops,  Prev: Index Expressions,  Up: Expressions
@@ -2155,7 +2333,7 @@ argument had.  For example, given a function called as
      foo = "bar";
      fcn (foo)
 
-you should not think of the argument as being “the variable ‘foo’.”
+you should not think of the argument as being "the variable ‘foo’."
 Instead, think of the argument as the string value, "bar".
 
    Even though Octave uses pass-by-value semantics for function
@@ -2205,7 +2383,7 @@ error and return to the command prompt.
 
  -- : VAL = max_recursion_depth ()
  -- : OLD_VAL = max_recursion_depth (NEW_VAL)
- -- : max_recursion_depth (NEW_VAL, "local")
+ -- : OLD_VAL = max_recursion_depth (NEW_VAL, "local")
      Query or set the internal limit on the number of times a function
      may be called recursively.
 
@@ -2221,7 +2399,7 @@ error and return to the command prompt.
 
  -- : VAL = max_stack_depth ()
  -- : OLD_VAL = max_stack_depth (NEW_VAL)
- -- : max_stack_depth (NEW_VAL, "local")
+ -- : OLD_VAL = max_stack_depth (NEW_VAL, "local")
      Query or set the internal limit on the number of times a function
      may be called recursively.
 
@@ -2237,7 +2415,7 @@ error and return to the command prompt.
 
    ---------- Footnotes ----------
 
-   (1) Some of Octave’s functions are implemented in terms of functions
+   (1) Some of Octave's functions are implemented in terms of functions
 that cannot be called recursively.  For example, the ODE solver ‘lsode’
 is ultimately implemented in a Fortran subroutine that cannot be called
 recursively, so ‘lsode’ should not be called either directly or
@@ -2318,7 +2496,7 @@ X / Y
 
           (inv (y') * x')'
 
-     but it is computed without forming the inverse of Y’.
+     but it is computed without forming the inverse of Y'.
 
      If the system is not square, or if the coefficient matrix is
      singular, a minimum norm solution is computed.
@@ -2366,17 +2544,17 @@ X .^ Y
 +X
      Unary plus.  This operator has no effect on the operand.
 
-X’
+X'
      Complex conjugate transpose.  For real arguments, this operator is
      the same as the transpose operator.  For complex arguments, this
      operator is equivalent to the expression
 
           conj (x.')
 
-X.’
+X.'
      Transpose.
 
-   Note that because Octave’s element-by-element operators begin with a
+   Note that because Octave's element-by-element operators begin with a
 ‘.’, there is a possible ambiguity for statements like
 
      1./m
@@ -2391,35 +2569,49 @@ and not
 
      (1.) / m
 
-Although this is inconsistent with the normal behavior of Octave’s
+Although this is inconsistent with the normal behavior of Octave's
 lexer, which usually prefers to break the input into tokens by
 preferring the longest possible match at any given point, it is more
 useful in this case.
 
- -- : ctranspose (X)
-     Return the complex conjugate transpose of X.
+   Note also that some combinations of binary operators and whitespace
+can create apparent ambiguities with the Command Syntax form of calling
+functions.  See *note Command Syntax and Function Syntax:: for a
+description of how Octave treats that syntax.
 
-     This function and X’ are equivalent.
+ -- : B = ctranspose (A)
+     Return the complex conjugate transpose of A.
+
+     This function and A' are equivalent.
 
      See also: *note transpose: XREFtranspose.
 
- -- : ldivide (X, Y)
-     Return the element-by-element left division of X and Y.
+ -- : Y = pagectranspose (A)
+     Return the page-wise complex conjugate transpose of the
+     N-dimensional array A.
 
-     This function and X .\ Y are equivalent.
+     This is equivalent to A(:,:, K)' for each page K.
+
+     See also: *note pagetranspose: XREFpagetranspose, *note ctranspose:
+     XREFctranspose, *note permute: XREFpermute.
+
+ -- : C = ldivide (A, B)
+     Return the element-by-element left division of A and B.
+
+     This function and A .\ B are equivalent.
 
      See also: *note rdivide: XREFrdivide, *note mldivide: XREFmldivide,
      *note times: XREFtimes, *note plus: XREFplus.
 
- -- : minus (X, Y)
-     This function and X - Y are equivalent.
+ -- : C = minus (A, B)
+     This function and A - B are equivalent.
 
      See also: *note plus: XREFplus, *note uminus: XREFuminus.
 
- -- : mldivide (X, Y)
-     Return the matrix left division of X and Y.
+ -- : C = mldivide (A, B)
+     Return the matrix left division of A and B.
 
-     This function and X \ Y are equivalent.
+     This function and A \ B are equivalent.
 
      If the system is not square, or if the coefficient matrix is
      singular, a minimum norm solution is computed.
@@ -2427,18 +2619,18 @@ useful in this case.
      See also: *note mrdivide: XREFmrdivide, *note ldivide: XREFldivide,
      *note rdivide: XREFrdivide, *note linsolve: XREFlinsolve.
 
- -- : mpower (X, Y)
-     Return the matrix power operation of X raised to the Y power.
+ -- : C = mpower (A, B)
+     Return the matrix power operation of A raised to the B power.
 
-     This function and X ^ Y are equivalent.
+     This function and A ^ B are equivalent.
 
      See also: *note power: XREFpower, *note mtimes: XREFmtimes, *note
      plus: XREFplus, *note minus: XREFminus.
 
- -- : mrdivide (X, Y)
-     Return the matrix right division of X and Y.
+ -- : C = mrdivide (A, B)
+     Return the matrix right division of A and B.
 
-     This function and X / Y are equivalent.
+     This function and A / B are equivalent.
 
      If the system is not square, or if the coefficient matrix is
      singular, a minimum norm solution is computed.
@@ -2446,36 +2638,36 @@ useful in this case.
      See also: *note mldivide: XREFmldivide, *note rdivide: XREFrdivide,
      *note plus: XREFplus, *note minus: XREFminus.
 
- -- : mtimes (X, Y)
- -- : mtimes (X1, X2, ...)
+ -- : C = mtimes (A, B)
+ -- : C = mtimes (A1, A2, ...)
      Return the matrix multiplication product of inputs.
 
-     This function and X * Y are equivalent.  If more arguments are
+     This function and A * B are equivalent.  If more arguments are
      given, the multiplication is applied cumulatively from left to
      right:
 
-          (...((X1 * X2) * X3) * ...)
+          (...((A1 * A2) * A3) * ...)
 
      See also: *note times: XREFtimes, *note plus: XREFplus, *note
      minus: XREFminus, *note rdivide: XREFrdivide, *note mrdivide:
      XREFmrdivide, *note mldivide: XREFmldivide, *note mpower:
-     XREFmpower.
+     XREFmpower, *note tensorprod: XREFtensorprod.
 
- -- : plus (X, Y)
- -- : plus (X1, X2, ...)
-     This function and X + Y are equivalent.
+ -- : C = plus (A, B)
+ -- : C = plus (A1, A2, ...)
+     This function and A + B are equivalent.
 
      If more arguments are given, the summation is applied cumulatively
      from left to right:
 
-          (...((X1 + X2) + X3) + ...)
+          (...((A1 + A2) + A3) + ...)
 
      See also: *note minus: XREFminus, *note uplus: XREFuplus.
 
- -- : power (X, Y)
-     Return the element-by-element operation of X raised to the Y power.
+ -- : C = power (A, B)
+     Return the element-by-element operation of A raised to the B power.
 
-     This function and X .^ Y are equivalent.
+     This function and A .^ B are equivalent.
 
      If several complex results are possible, returns the one with
      smallest non-negative argument (angle).  Use ‘realpow’, ‘realsqrt’,
@@ -2485,40 +2677,48 @@ useful in this case.
      *note realsqrt: XREFrealsqrt, *note cbrt: XREFcbrt, *note nthroot:
      XREFnthroot.
 
- -- : rdivide (X, Y)
-     Return the element-by-element right division of X and Y.
+ -- : C = rdivide (A, B)
+     Return the element-by-element right division of A and B.
 
-     This function and X ./ Y are equivalent.
+     This function and A ./ B are equivalent.
 
      See also: *note ldivide: XREFldivide, *note mrdivide: XREFmrdivide,
      *note times: XREFtimes, *note plus: XREFplus.
 
- -- : times (X, Y)
- -- : times (X1, X2, ...)
+ -- : C = times (A, B)
+ -- : C = times (A1, A2, ...)
      Return the element-by-element multiplication product of inputs.
 
-     This function and X .* Y are equivalent.  If more arguments are
+     This function and A .* B are equivalent.  If more arguments are
      given, the multiplication is applied cumulatively from left to
      right:
 
-          (...((X1 .* X2) .* X3) .* ...)
+          (...((A1 .* A2) .* A3) .* ...)
 
      See also: *note mtimes: XREFmtimes, *note rdivide: XREFrdivide.
 
- -- : transpose (X)
-     Return the transpose of X.
+ -- : B = transpose (A)
+     Return the transpose of A.
 
-     This function and X.’ are equivalent.
+     This function and A.' are equivalent.
 
      See also: *note ctranspose: XREFctranspose.
 
- -- : uminus (X)
-     This function and - X are equivalent.
+ -- : B = pagetranspose (A)
+     Return the page-wise transpose of the N-dimensional array A.
+
+     This is equivalent to A(:,:, K).' for each page K.
+
+     See also: *note pagectranspose: XREFpagectranspose, *note
+     transpose: XREFtranspose, *note permute: XREFpermute.
+
+ -- : B = uminus (A)
+     This function and - A are equivalent.
 
      See also: *note uplus: XREFuplus, *note minus: XREFminus.
 
- -- : uplus (X)
-     This function and + X are equivalent.
+ -- : B = uplus (A)
+     This function and + A are equivalent.
 
      See also: *note uminus: XREFuminus, *note plus: XREFplus.
 
@@ -2531,7 +2731,7 @@ File: octave.info,  Node: Comparison Ops,  Next: Boolean Expressions,  Prev: Ari
 “Comparison operators” compare numeric values for relationships such as
 equality.  They are written using _relational operators_.
 
-   All of Octave’s comparison operators return a value of 1 if the
+   All of Octave's comparison operators return a value of 1 if the
 comparison is true, or 0 if it is false.  For matrix values, they all
 work on an element-by-element basis.  Broadcasting rules apply.  *Note
 Broadcasting::.  For example:
@@ -2575,55 +2775,55 @@ but is not consistent with MATLAB, which only compares the real parts.
    String comparisons may also be performed with the ‘strcmp’ function,
 not with the comparison operators listed above.  *Note Strings::.
 
- -- : eq (X, Y)
+ -- : TF = eq (A, B)
      Return true if the two inputs are equal.
 
-     This function is equivalent to ‘X == Y’.
+     This function is equivalent to ‘A == B’.
 
      See also: *note ne: XREFne, *note isequal: XREFisequal, *note le:
      XREFle, *note ge: XREFge, *note gt: XREFgt, *note ne: XREFne, *note
      lt: XREFlt.
 
- -- : ge (X, Y)
-     This function is equivalent to ‘X >= Y’.
+ -- : TF = ge (A, B)
+     This function is equivalent to ‘A >= B’.
 
      See also: *note le: XREFle, *note eq: XREFeq, *note gt: XREFgt,
      *note ne: XREFne, *note lt: XREFlt.
 
- -- : gt (X, Y)
-     This function is equivalent to ‘X > Y’.
+ -- : TF = gt (A, B)
+     This function is equivalent to ‘A > B’.
 
      See also: *note le: XREFle, *note eq: XREFeq, *note ge: XREFge,
      *note ne: XREFne, *note lt: XREFlt.
 
- -- : isequal (X1, X2, ...)
+ -- : TF = isequal (X1, X2, ...)
      Return true if all of X1, X2, ... are equal.
 
      See also: *note isequaln: XREFisequaln.
 
- -- : isequaln (X1, X2, ...)
+ -- : TF = isequaln (X1, X2, ...)
      Return true if all of X1, X2, ... are equal under the additional
      assumption that NaN == NaN (no comparison of NaN placeholders in
      dataset).
 
      See also: *note isequal: XREFisequal.
 
- -- : le (X, Y)
-     This function is equivalent to ‘X <= Y’.
+ -- : TF = le (A, B)
+     This function is equivalent to ‘A <= B’.
 
      See also: *note eq: XREFeq, *note ge: XREFge, *note gt: XREFgt,
      *note ne: XREFne, *note lt: XREFlt.
 
- -- : lt (X, Y)
-     This function is equivalent to ‘X < Y’.
+ -- : TF = lt (A, B)
+     This function is equivalent to ‘A < B’.
 
      See also: *note le: XREFle, *note eq: XREFeq, *note ge: XREFge,
      *note gt: XREFgt, *note ne: XREFne.
 
- -- : ne (X, Y)
+ -- : TF = ne (A, B)
      Return true if the two inputs are not equal.
 
-     This function is equivalent to ‘X != Y’.
+     This function is equivalent to ‘A != B’.
 
      See also: *note eq: XREFeq, *note isequal: XREFisequal, *note le:
      XREFle, *note ge: XREFge, *note lt: XREFlt.
@@ -2646,8 +2846,8 @@ File: octave.info,  Node: Element-by-element Boolean Operators,  Next: Short-cir
 ------------------------------------------
 
 An “element-by-element boolean expression” is a combination of
-comparison expressions using the boolean operators “or” (‘|’), “and”
-(‘&’), and “not” (‘!’), along with parentheses to control nesting.  The
+comparison expressions using the boolean operators "or" (‘|’), "and"
+(‘&’), and "not" (‘!’), along with parentheses to control nesting.  The
 truth of the boolean expression is computed by combining the truth
 values of the corresponding elements of the component expressions.  A
 value is considered to be false if it is zero, and true otherwise.
@@ -2704,8 +2904,8 @@ zero.
    This behavior is necessary for the boolean operators to work as
 described for matrix-valued operands.
 
- -- : Z = and (X, Y)
- -- : Z = and (X1, X2, ...)
+ -- : TF = and (X, Y)
+ -- : TF = and (X1, X2, ...)
      Return the logical AND of X and Y.
 
      This function is equivalent to the operator syntax ‘X & Y’.  If
@@ -2723,8 +2923,8 @@ described for matrix-valued operands.
 
      See also: *note and: XREFand, *note or: XREFor, *note xor: XREFxor.
 
- -- : Z = or (X, Y)
- -- : Z = or (X1, X2, ...)
+ -- : TF = or (X, Y)
+ -- : TF = or (X1, X2, ...)
      Return the logical OR of X and Y.
 
      This function is equivalent to the operator syntax ‘X | Y’.  If
@@ -2743,34 +2943,41 @@ File: octave.info,  Node: Short-circuit Boolean Operators,  Prev: Element-by-ele
 -------------------------------------
 
 Combined with the implicit conversion to scalar values in ‘if’ and
-‘while’ conditions, Octave’s element-by-element boolean operators are
+‘while’ conditions, Octave's element-by-element boolean operators are
 often sufficient for performing most logical operations.  However, it is
 sometimes desirable to stop evaluating a boolean expression as soon as
-the overall truth value can be determined.  Octave’s “short-circuit”
+the overall truth value can be determined.  Octave's “short-circuit”
 boolean operators work this way.
 
 ‘BOOLEAN1 && BOOLEAN2’
      The expression BOOLEAN1 is evaluated and converted to a scalar
-     using the equivalent of the operation ‘all (BOOLEAN1(:))’.  If it
-     is false, the result of the overall expression is 0.  If it is
-     true, the expression BOOLEAN2 is evaluated and converted to a
-     scalar using the equivalent of the operation ‘all (BOOLEAN2(:))’.
-     If it is true, the result of the overall expression is 1.
-     Otherwise, the result of the overall expression is 0.
+     using the equivalent of the operation ‘all (BOOLEAN1(:))’.  If
+     BOOLEAN1 is not a logical value, it is considered true if its value
+     is nonzero, and false if its value is zero.  If BOOLEAN1 is an
+     array, it is considered true only if it is non-empty and all
+     elements are nonzero.  If BOOLEAN1 evaluates to false, the result
+     of the overall expression is false.  If it is true, the expression
+     BOOLEAN2 is evaluated in the same way as BOOLEAN1.  If it is true,
+     the result of the overall expression is true.  Otherwise the result
+     of the overall expression is false.
 
-     *Warning:* there is one exception to the rule of evaluating ‘all
-     (BOOLEAN1(:))’, which is when ‘boolean1’ is the empty matrix.  The
-     truth value of an empty matrix is always ‘false’ so ‘[] && true’
-     evaluates to ‘false’ even though ‘all ([])’ is ‘true’.
+     *Warning:* the one exception to the equivalence with evaluating
+     ‘all (BOOLEAN1(:))’ is when ‘boolean1’ an the empty array.  For
+     MATLAB compatibility, the truth value of an empty array is always
+     ‘false’ so ‘[] && true’ evaluates to ‘false’ even though ‘all ([])’
+     is ‘true’.
 
 ‘BOOLEAN1 || BOOLEAN2’
      The expression BOOLEAN1 is evaluated and converted to a scalar
-     using the equivalent of the operation ‘all (BOOLEAN1(:))’.  If it
-     is true, the result of the overall expression is 1.  If it is
-     false, the expression BOOLEAN2 is evaluated and converted to a
-     scalar using the equivalent of the operation ‘all (BOOLEAN2(:))’.
-     If it is true, the result of the overall expression is 1.
-     Otherwise, the result of the overall expression is 0.
+     using the equivalent of the operation ‘all (BOOLEAN1(:))’.  If
+     BOOLEAN1 is not a logical value, it is considered true if its value
+     is nonzero, and false if its value is zero.  If BOOLEAN1 is an
+     array, it is considered true only if it is non-empty and all
+     elements are nonzero.  If BOOLEAN1 evaluates to true, the result of
+     the overall expression is true.  If it is false, the expression
+     BOOLEAN2 is evaluated in the same way as BOOLEAN1.  If it is true,
+     the result of the overall expression is true.  Otherwise the result
+     of the overall expression is false.
 
      *Warning:* the truth value of an empty matrix is always ‘false’,
      see the previous list item for details.
@@ -2792,7 +2999,7 @@ it is possible write
          ...
 
 instead of having to use two ‘if’ statements to avoid attempting to
-evaluate an argument that doesn’t exist.  For example, without the
+evaluate an argument that doesn't exist.  For example, without the
 short-circuit feature, it would be necessary to write
 
      function f (a, b, c)
@@ -2821,8 +3028,8 @@ operators that always have short-circuit behavior.
 short-circuiting is not important, it can be replaced by the ‘ifelse’
 function.
 
- -- : merge (MASK, TVAL, FVAL)
- -- : ifelse (MASK, TVAL, FVAL)
+ -- : M = merge (MASK, TVAL, FVAL)
+ -- : M = ifelse (MASK, TVAL, FVAL)
      Merge elements of TRUE_VAL and FALSE_VAL, depending on the value of
      MASK.
 
@@ -2841,6 +3048,9 @@ function.
 
      MASK can also be arbitrary numeric type, in which case it is first
      converted to logical.
+
+     Programming Note: ‘ifelse’ is an alias for ‘merge’ and can be used
+     interchangeably.
 
      See also: *note logical: XREFlogical, *note diff: XREFdiff.
 
@@ -2867,6 +3077,7 @@ expression would store the value "this food is good" in the variable
      thing = "food"
      predicate = "good"
      message = [ "this " , thing , " is " , predicate ]
+     ⇒ "this food is good"
 
 (This also illustrates concatenation of strings.)
 
@@ -2890,9 +3101,9 @@ The type of a variable is simply the type of whatever value it happens
 to hold at the moment.  In the following program fragment, the variable
 ‘foo’ has a numeric value at first, and a string value later on:
 
-     octave:13> foo = 1
+     >> foo = 1
      foo = 1
-     octave:13> foo = "bar"
+     >> foo = "bar"
      foo = bar
 
 When the second assignment gives ‘foo’ a string value, the fact that it
@@ -2906,6 +3117,112 @@ that are referenced by the indices to the scalar value.  For example, if
 
 sets all the elements in the second column of ‘a’ to 5.
 
+   When an assignment sets the value of a vector, matrix, or array
+element at a position or dimension outside of that variable's current
+size, the array size will be increased to accommodate the new values:
+
+     >> a = [1, 2, 3]
+     a = 1 2 3
+     >> a(4) = 4
+     a = 1 2 3 4
+     >> a(2, :) = [5, 6, 7, 8]
+     a =
+        1   2   3   4
+        5   6   7   8
+
+   Attempting to increase the size of an array such that the desired
+output size is ambiguous will result in an error:
+
+     >> a(9) = 10
+     ⊣ error: Invalid resizing operation or ambiguous assignment to an
+     out-of-bounds array element
+
+   This is because adding the 9th element creates an ambiguity in the
+desired array position for the value 10, each possibility requiring a
+different array size expansion to accommodate the assignment.
+
+   Assignments may be made with fewer specified elements than would be
+required to fill the newly expanded array as long as the assignment is
+unambiguous.  In these cases the array will be automatically padded with
+_null_ values:
+     >> a = [1, 2]
+     a =   1   2
+     >> a(4) = 5
+     a =   1   2   0   5
+     >> a(3, :) = [6, 7, 8, 9]
+     a =
+        1   2   0   5
+        0   0   0   0
+        6   7   8   9
+     >> a(4, 5) = 10
+     a =
+         1    2    0    5    0
+         0    0    0    0    0
+         6    7    8    9    0
+         0    0    0    0   10
+
+   For all built-in types, the _null_ value will be appropriate to that
+object type.
+
+   Numeric arrays:
+     >> a = int32 ([1, 2])
+     a = 1, 2
+     >> a(4) = 5
+     a = 1 2 0 5
+
+   Logical arrays:
+     >> a = [true, false, true]
+     a = 1 0 1
+     >> d(5) = true
+     d = 1 0 1 0 1
+
+   Character arrays:
+     >> a = "abc"
+     a = abc
+     >> a(5) = "d"
+     a = abcd
+     >> double (a)
+     ans = 97 98 99 0 100
+
+   Cell arrays:
+     >> e = {1, "foo", [3, 4]};
+     >> e(5) = "bar"
+     e =
+     {
+       [1,1] = 1
+       [1,2] = foo
+       [1,3] =
+
+          3   4
+
+       [1,4] = [](0x0)
+       [1,5] = bar
+     }
+
+   Struct arrays:
+     >> a = struct("foo",1,"bar",2);
+     >> a(3) = struct("foo",3,"bar",9)
+     a =
+
+       1x3 struct array containing the fields:
+
+         foo
+         bar
+
+     >> a.foo
+     ans = 1
+     ans = [](0x0)
+     ans = 3
+     >> a.bar
+     ans = 2
+     ans = [](0x0)
+     ans = 9
+
+   Note that Octave currently is unable to concatenate arbitrary object
+types into arrays.  Such behavior must be explicitly defined within the
+object class or attempts at concatenation will result in an error.
+*Note Object Oriented Programming::
+
    Assigning an empty matrix ‘[]’ works in most cases to allow you to
 delete rows or columns of matrices and vectors.  *Note Empty Matrices::.
 For example, given a 4 by 5 matrix A, the assignment
@@ -2917,6 +3234,25 @@ deletes the third row of A, and the assignment
      A (:, 1:2:5) = []
 
 deletes the first, third, and fifth columns.
+
+   Deleting part of an array object will necessarily resize the object.
+When the deletion allows for consistent size reduction across a
+dimension, e.g., one element of a vector, or one row or column of a
+matrix, the size along that dimension will be reduced while preserving
+dimensionality.  If, however, dimensionality cannot be maintained, the
+object will be reshaped into a vector following column-wise element
+ordering:
+
+     >> a = [1, 2, 3, 4; 5, 6, 7, 8]
+     a =
+        1   2   3   4
+        5   6   7   8
+     >> a(:, 3) = []
+     a =
+        1   2   4
+        5   6   8
+     >> a(4) = []
+     a = 1 5 2 4 8
 
    An assignment is an expression, so it has a value.  Thus, ‘z = 1’ as
 an expression has the value 1.  One consequence of this is that you can
@@ -3103,7 +3439,7 @@ precedence.  Unless noted, all operators group left to right.
      These operators group right to left.
 
 ‘transpose and exponentiation’
-     ‘'’ ‘.'’  ‘^’ ‘.^’
+     ‘'’ ‘.'’ ‘^’ ‘.^’
 
 ‘unary plus, unary minus, prefix increment, prefix decrement, and logical "not"’
      ‘+’ ‘-’ ‘++’ ‘--’ ‘~’ ‘!’
@@ -3178,7 +3514,7 @@ has been computed and stored in a string, which is exactly what the
      error-capturing mechanism, rather than for the execution of
      arbitrary code strings, Consider using try/catch blocks or
      unwind_protect/unwind_protect_cleanup blocks instead.  These
-     techniques have higher performance and don’t introduce the security
+     techniques have higher performance and don't introduce the security
      considerations that the evaluation of arbitrary code does.
 
      See also: *note evalin: XREFevalin, *note evalc: XREFevalc, *note
@@ -3229,7 +3565,7 @@ are given to the function.
 
    The following example is a simple-minded function using ‘feval’ that
 finds the root of a user-supplied function of one variable using
-Newton’s method.
+Newton's method.
 
      function result = newtroot (fname, x)
 
@@ -3265,7 +3601,7 @@ function really was a function, etc.  *Note Predicates for Numeric
 Objects::, for a list of predicates for numeric objects, and *note
 Status of Variables::, for a description of the ‘exist’ function.
 
- -- : feval (NAME, ...)
+ -- : RETVAL = feval (NAME, ...)
      Evaluate the function named NAME.
 
      Any arguments after the first are passed as inputs to the named
@@ -3300,7 +3636,7 @@ are not necessarily on the user path
  -- : run ("SCRIPT")
      Run SCRIPT in the current workspace.
 
-     Scripts which reside in directories specified in Octave’s load
+     Scripts which reside in directories specified in Octave's load
      path, and which end with the extension ‘.m’, can be run simply by
      typing their name.  For scripts not located on the load path, use
      ‘run’.
@@ -3383,7 +3719,7 @@ Here, ‘caller’ is the ‘process_data’ function.
 
    These functions are rarely used in practice.  One example is the
 ‘fail (‘code’, ‘pattern’)’ function which evaluates ‘code’ in the
-caller’s context and checks that the error message it produces matches
+caller's context and checks that the error message it produces matches
 the given pattern.  Other examples such as ‘save’ and ‘load’ are written
 in C++ where all Octave variables are in the ‘caller’ context and
 ‘evalin’ is not needed.
@@ -3448,7 +3784,7 @@ File: octave.info,  Node: The if Statement,  Next: The switch Statement,  Up: St
 10.1 The if Statement
 =====================
 
-The ‘if’ statement is Octave’s decision-making statement.  There are
+The ‘if’ statement is Octave's decision-making statement.  There are
 three basic forms of an ‘if’ statement.  In its simplest form, it looks
 like this:
 
@@ -3527,7 +3863,7 @@ statement is performed.
    Note that the ‘elseif’ keyword must not be spelled ‘else if’, as is
 allowed in Fortran.  If it is, the space between the ‘else’ and ‘if’
 will tell Octave to treat this as a new ‘if’ statement within another
-‘if’ statement’s ‘else’ clause.  For example, if you write
+‘if’ statement's ‘else’ clause.  For example, if you write
 
      if (C1)
        BODY-1
@@ -3658,7 +3994,7 @@ The ‘switch’ statement is also available in the widely used C
 programming language.  There are, however, some differences between the
 statement in Octave and C
 
-   • Cases are exclusive, so they don’t ‘fall through’ as do the cases
+   • Cases are exclusive, so they don't 'fall through' as do the cases
      in the ‘switch’ statement of the C language.
 
    • The COMMAND_LIST elements are not optional.  Making the list
@@ -3703,7 +4039,7 @@ value is zero.  If the value of the conditional expression in a ‘while’
 statement is a vector or a matrix, it is considered true only if it is
 non-empty and _all_ of the elements are nonzero.
 
-   Octave’s ‘while’ statement looks like this:
+   Octave's ‘while’ statement looks like this:
 
      while (CONDITION)
        BODY
@@ -3757,7 +4093,7 @@ value of the conditional expression in a ‘do-until’ statement is a
 vector or a matrix, it is considered true only if it is non-empty and
 _all_ of the elements are nonzero.
 
-   Octave’s ‘do-until’ statement looks like this:
+   Octave's ‘do-until’ statement looks like this:
 
      do
        BODY
@@ -3800,7 +4136,7 @@ is a structure, VAR may also be a vector with two elements.  *Note
 Looping Over Structure Elements::, below.
 
    The assignment expression in the ‘for’ statement works a bit
-differently than Octave’s normal assignment statement.  Instead of
+differently than Octave's normal assignment statement.  Instead of
 assigning the complete result of the expression, it assigns each column
 of the expression to VAR in turn.  If EXPRESSION is a range, a row
 vector, or a scalar, the value of VAR will be a scalar each time the
@@ -4082,7 +4418,7 @@ In the Octave language, most statements end with a newline character and
 you must tell Octave to ignore the newline character in order to
 continue a statement from one line to the next.  Lines that end with the
 characters ‘...’ are joined with the following line before they are
-divided into tokens by Octave’s parser.  For example, the lines
+divided into tokens by Octave's parser.  For example, the lines
 
      x = long_variable_name ...
          + longer_variable_name ...
@@ -4155,9 +4491,9 @@ File: octave.info,  Node: Introduction to Function and Script Files,  Next: Defi
 There are seven different things covered in this section.
   1. Typing in a function at the command prompt.
 
-  2. Storing a group of commands in a file — called a script file.
+  2. Storing a group of commands in a file -- called a script file.
 
-  3. Storing a function in a file—called a function file.
+  3. Storing a function in a file--called a function file.
 
   4. Subfunctions in function files.
 
@@ -4215,7 +4551,7 @@ define.  The syntax for passing parameters to a function in Octave is
        BODY
      endfunction
 
-where ARG-LIST is a comma-separated list of the function’s arguments.
+where ARG-LIST is a comma-separated list of the function's arguments.
 When the function is called, the argument names are used to hold the
 argument values given in the call.  The list of arguments may be empty,
 in which case this form is equivalent to the one shown above.
@@ -4231,7 +4567,7 @@ in which case this form is equivalent to the one shown above.
 
      wakeup ("Rise and shine!");
 
-will cause Octave to ring your terminal’s bell and print the message
+will cause Octave to ring your terminal's bell and print the message
 ‘Rise and shine!’, followed by a newline character (the ‘\n’ in the
 first argument to the ‘printf’ statement).
 
@@ -4288,9 +4624,9 @@ encountered.  For example, ‘avg’ could have been written like this:
        endif
      endfunction
 
-   There is still one additional problem with this function.  What if it
+   There is still one remaining problem with this function.  What if it
 is called without an argument?  Without additional error checking,
-Octave will probably print an error message that won’t really help you
+Octave will probably print an error message that won't really help you
 track down the source of the error.  To allow you to catch errors like
 this, Octave provides each function with an automatic variable called
 ‘nargin’.  Each time a function is called, ‘nargin’ is automatically
@@ -4310,24 +4646,25 @@ this:
        endif
      endfunction
 
-   Although Octave does not automatically report an error if you call a
-function with more arguments than expected, doing so probably indicates
-that something is wrong.  Octave also does not automatically report an
-error if a function is called with too few arguments, but any attempt to
-use a variable that has not been given a value will result in an error.
-To avoid such problems and to provide useful messages, we check for both
-possibilities and issue our own error message.
+   Octave automatically reports an error for functions written in .m
+file code if they are called with more arguments than expected.  Octave
+does not automatically report an error if a function is called with too
+few arguments, since functions in general may have default arguments,
+but any attempt to use a variable that has not been given a value will
+result in an error.  Functions can check the arguments they are called
+with to avoid such problems and to provide more context-specific error
+messages.
 
- -- : nargin ()
- -- : nargin (FCN)
+ -- : N = nargin ()
+ -- : N = nargin (FCN)
      Report the number of input arguments to a function.
 
      Called from within a function, return the number of arguments
      passed to the function.  At the top level, return the number of
      command line arguments passed to Octave.
 
-     If called with the optional argument FCN—a function name or
-     handle—return the declared number of arguments that the function
+     If called with the optional argument FCN--a function name or
+     handle--return the declared number of arguments that the function
      can accept.
 
      If the last argument to FCN is VARARGIN the returned value is
@@ -4348,8 +4685,8 @@ possibilities and issue our own error message.
      XREFnarginchk, *note varargin: XREFvarargin, *note inputname:
      XREFinputname.
 
- -- : inputname (N)
- -- : inputname (N, IDS_ONLY)
+ -- : NAMESTR = inputname (N)
+ -- : NAMESTR = inputname (N, IDS_ONLY)
      Return the name of the N-th argument to the calling function.
 
      If the argument is not a simple variable name, return an empty
@@ -4371,7 +4708,7 @@ possibilities and issue our own error message.
 
  -- : VAL = silent_functions ()
  -- : OLD_VAL = silent_functions (NEW_VAL)
- -- : silent_functions (NEW_VAL, "local")
+ -- : OLD_VAL = silent_functions (NEW_VAL, "local")
      Query or set the internal variable that controls whether internal
      output from a function is suppressed.
 
@@ -4396,7 +4733,7 @@ looks like this:
 
      return
 
-   Unlike the ‘return’ statement in C, Octave’s ‘return’ statement
+   Unlike the ‘return’ statement in C, Octave's ‘return’ statement
 cannot be used to return a value from a function.  Instead, you must
 assign values to the list of return variables that are part of the
 ‘function’ statement.  The ‘return’ statement simply makes it easier to
@@ -4472,20 +4809,20 @@ values distinct names.
 the return values or several at once in a cell array.  *Note Cell Array
 Objects::.
 
- -- : nthargout (N, FUNC, ...)
- -- : nthargout (N, NTOT, FUNC, ...)
+ -- : ARG = nthargout (N, FCN, ...)
+ -- : ARG = nthargout (N, NTOT, FCN, ...)
      Return the Nth output argument of the function specified by the
-     function handle or string FUNC.
+     function handle or string FCN.
 
-     Any additional arguments are passed directly to FUNC.  The total
-     number of arguments to call FUNC with can be passed in NTOT; by
+     Any additional arguments are passed directly to FCN.  The total
+     number of arguments to call FCN with can be passed in NTOT; by
      default NTOT is N.  The input N can also be a vector of indices of
      the output, in which case the output will be a cell array of the
      requested output arguments.
 
-     The intended use ‘nthargout’ is to avoid intermediate variables.
+     The intended use of ‘nthargout’ is to avoid intermediate variables.
      For example, when finding the indices of the maximum entry of a
-     matrix, the following two compositions of nthargout
+     matrix, the following two compositions of ‘nthargout’
 
           M = magic (5);
           cell2mat (nthargout ([1, 2], @ind2sub, size (M),
@@ -4500,8 +4837,8 @@ Objects::.
           [i, j]
           ⇒ 5   3
 
-     It can also be helpful to have all output arguments in a single
-     cell in the following manner:
+     It can also be helpful to have all output arguments collected in a
+     single cell array as the following code demonstrates:
 
           USV = nthargout ([1:3], @svd, hilb (5));
 
@@ -4517,8 +4854,11 @@ of the function has requested.  The implicit assignment to the built-in
 variable ‘ans’ does not figure in the count of output arguments, so the
 value of ‘nargout’ may be zero.
 
-   The ‘svd’ and ‘lu’ functions are examples of built-in functions that
-behave differently depending on the value of ‘nargout’.
+   The ‘svd’ and ‘hist’ functions are examples of built-in functions
+that behave differently depending on the value of ‘nargout’.  For
+example, ‘hist’ will draw a histogram when called with no output
+variables, but if called with outputs it will return the frequency
+counts and/or bin centers without creating a plot.
 
    It is possible to write functions that only set some return values.
 For example, calling the function
@@ -4542,16 +4882,16 @@ produces:
 
 along with a warning.
 
- -- : nargout ()
- -- : nargout (FCN)
+ -- : N = nargout ()
+ -- : N = nargout (FCN)
      Report the number of output arguments from a function.
 
      Called from within a function, return the number of values the
      caller expects to receive.  At the top level, ‘nargout’ with no
      argument is undefined and will produce an error.
 
-     If called with the optional argument FCN—a function name or
-     handle—return the number of declared output values that the
+     If called with the optional argument FCN--a function name or
+     handle--return the number of declared output values that the
      function can produce.
 
      If the final output argument is VARARGOUT the returned value is
@@ -4591,7 +4931,7 @@ File: octave.info,  Node: Variable-length Return Lists,  Next: Variable-length A
 =================================
 
 It is possible to return a variable number of output arguments from a
-function using a syntax that’s similar to the one used with the special
+function using a syntax that's similar to the one used with the special
 ‘varargin’ parameter name.  To let a function return a variable number
 of output arguments the special output parameter name ‘varargout’ is
 used.  As with ‘varargin’, ‘varargout’ is a cell array that will contain
@@ -4643,7 +4983,7 @@ handled the same as any other parameter name.
 
           a = b = c = x;
 
-     Programming Note: ‘deal’ is often used with comma separated lists
+     Programming Note: ‘deal’ is often used with comma-separated lists
      derived from cell arrays or structures.  This is unnecessary as the
      interpreter can perform the same action without the overhead of a
      function call.  For example:
@@ -4703,7 +5043,7 @@ arrays.  The ‘smallest’ function can now be defined like this
        val = min ([varargin{:}]);
      endfunction
 
-This implementation handles any number of input arguments, but it’s also
+This implementation handles any number of input arguments, but it's also
 a very simple solution to the problem.
 
    A slightly more complex example of ‘varargin’ is a function
@@ -4780,9 +5120,9 @@ value should be ignored and not stored to any variable.
    Return arguments can also be ignored using the same syntax.  For
 example, the sort function returns both the sorted values, and an index
 vector for the original input which will result in a sorted output.
-Ignoring the second output is simple—don’t request more than one output.
-But ignoring the first, and calculating just the second output, requires
-the use of the ‘~’ placeholder.
+Ignoring the second output is simple--don't request more than one
+output.  But ignoring the first, and calculating just the second output,
+requires the use of the ‘~’ placeholder.
 
      x = [2, 3, 1];
      [s, i] = sort (x)
@@ -4801,9 +5141,9 @@ the use of the ‘~’ placeholder.
 
         3   1   2
 
-   When using the ‘~’ placeholder, commas—not whitespace—must be used to
-separate output arguments.  Otherwise, the interpreter will view ‘~’ as
-the logical not operator.
+   When using the ‘~’ placeholder, commas--not whitespace--must be used
+to separate output arguments.  Otherwise, the interpreter will view ‘~’
+as the logical not operator.
 
      [~ i] = sort (x)
      parse error:
@@ -4823,7 +5163,7 @@ query whether the output argument is wanted.  For example:
        ...
      endfunction
 
- -- : isargout (K)
+ -- : TF = isargout (K)
      Within a function, return a logical value indicating whether the
      argument K will be assigned to a variable on output.
 
@@ -4859,7 +5199,7 @@ If no value is assigned to ARG1 by the user, it will have the value
 VAL1.
 
    As an example, the following function implements a variant of the
-classic “Hello, World” program.
+classic "Hello, World" program.
 
      function hello (who = "World")
        printf ("Hello, %s!\n", who);
@@ -4870,7 +5210,7 @@ When called without an input argument the function prints the following
      hello ();
           ⊣ Hello, World!
 
-and when it’s called with an input argument it prints the following
+and when it's called with an input argument it prints the following
 
      hello ("Beautiful World of Free Software");
           ⊣ Hello, Beautiful World of Free Software!
@@ -5369,44 +5709,52 @@ checking for functions.
        4. switch (see ‘addSwitch’).
 
      After defining the function API with these methods, the supplied
-     arguments can be parsed with the ‘parse’ method and the parsing
-     results accessed with the ‘Results’ accessor.
+     arguments can be parsed with the ‘parse’ method and the results
+     accessed with the ‘Results’ accessor.
 
  -- : inputParser.Parameters
-     Return list of parameter names already defined.
+     Return the list of parameter names already defined.  (read-only)
 
  -- : inputParser.Results
-     Return structure with argument names as fieldnames and
-     corresponding values.
+     Return a structure with argument names as fieldnames and
+     corresponding values.  (read-only)
 
  -- : inputParser.Unmatched
-     Return structure similar to ‘Results’, but for unmatched
-     parameters.  See the ‘KeepUnmatched’ property.
+     Return a structure similar to ‘Results’, but for unmatched
+     parameters.  (read-only) See the ‘KeepUnmatched’ property.
 
  -- : inputParser.UsingDefaults
      Return cell array with the names of arguments that are using
-     default values.
-
- -- : inputParser.CaseSensitive = BOOLEAN
-     Set whether matching of argument names should be case sensitive.
-     Defaults to false.
+     default values.  (read-only)
 
  -- : inputParser.FunctionName = NAME
      Set function name to be used in error messages; Defaults to empty
      string.
 
+ -- : inputParser.CaseSensitive = BOOLEAN
+     Set whether matching of argument names should be case sensitive;
+     Defaults to false.
+
  -- : inputParser.KeepUnmatched = BOOLEAN
-     Set whether an error should be given for non-defined arguments.
-     Defaults to false.  If set to true, the extra arguments can be
-     accessed through ‘Unmatched’ after the ‘parse’ method.  Note that
-     since ‘Switch’ and ‘Parameter’ arguments can be mixed, it is not
-     possible to know the unmatched type.  If argument is found
-     unmatched it is assumed to be of the ‘Parameter’ type and it is
-     expected to be followed by a value.
+     Set whether string arguments which do not match any Parameter are
+     parsed and stored in the ‘Unmatched’ property; Defaults to false.
+     If false, an error will be emitted at the first unrecognized
+     argument and parsing will stop.  Note that since ‘Switch’ and
+     ‘Parameter’ arguments can be mixed, it is not possible to know the
+     type of the unmatched argument.  Octave assumes that all unmatched
+     arguments are of the ‘Parameter’ type and therefore must be
+     followed by a value.
+
+ -- : inputParser.PartialMatching = BOOLEAN
+     Set whether argument names for ‘Parameter’ and ‘Switch’ options may
+     be given in shortened form as long as the name uniquely identifies
+     an option; Defaults to true.  For example, the argument 'opt' will
+     match a parameter 'opt_color', but will fail if there is also a
+     parameter 'opt_case'.
 
  -- : inputParser.StructExpand = BOOLEAN
-     Set whether a structure can be passed to the function instead of
-     parameter/value pairs.  Defaults to true.
+     Set whether a structure passed to the function is expanded into
+     parameter/value pairs (parameter = fieldname); Defaults to true.
 
      The following example shows how to use this class:
 
@@ -5416,23 +5764,23 @@ checking for functions.
             p.addRequired ("pack", @ischar);         # mandatory argument
             p.addOptional ("path", pwd(), @ischar);  # optional argument
 
-            ## create a function handle to anonymous functions for validators
-            val_mat = @(x) isvector (x) && all (x <= 1) && all (x >= 0);
-            p.addOptional ("mat", [0 0], val_mat);
+            ## Create anonymous function handle for validators
+            valid_vec = @(x) isvector (x) && all (x >= 0) && all (x <= 1);
+            p.addOptional ("vec", [0 0], valid_vec);
 
-            ## create two arguments of type "Parameter"
-            val_type = @(x) any (strcmp (x, {"linear", "quadratic"}));
-            p.addParameter ("type", "linear", val_type);
-            val_verb = @(x) any (strcmp (x, {"low", "medium", "high"}));
-            p.addParameter ("tolerance", "low", val_verb);
+            ## Create two arguments of type "Parameter"
+            vld_type = @(x) any (strcmp (x, {"linear", "quadratic"}));
+            p.addParameter ("type", "linear", vld_type);
+            vld_tol = @(x) any (strcmp (x, {"low", "medium", "high"}));
+            p.addParameter ("tolerance", "low", vld_tol);
 
-            ## create a switch type of argument
+            ## Create a switch type of argument
             p.addSwitch ("verbose");
 
             p.parse (varargin{:});  # Run created parser on inputs
 
-            ## the rest of the function can access inputs by using p.Results.
-            ## for example, get the tolerance input with p.Results.tolerance
+            ## The rest of the function can access inputs by using p.Results.
+            ## For example, get the tolerance input with p.Results.tolerance
           endfunction
 
           check ("mech");           # valid, use defaults for other arguments
@@ -5443,19 +5791,19 @@ checking for functions.
           check ("mech", "~/dev", [0 1 0 0], "type", "linear");  # valid
 
           ## following is also valid.  Note how the Switch argument type can
-          ## be mixed into or before the Parameter argument type (but it
-          ## must still appear after any Optional argument).
+          ## be mixed in with or before the Parameter argument type (but it
+          ## must still appear after any Optional arguments).
           check ("mech", "~/dev", [0 1 0 0], "verbose", "tolerance", "high");
 
-          ## following returns an error since not all optional arguments,
-          ## 'path' and 'mat', were given before the named argument 'type'.
-          check ("mech", "~/dev", "type", "linear");
+          ## following returns an error since an Optional argument, 'path',
+          ## was given after the Parameter argument 'type'.
+          check ("mech", "type", "linear", "~/dev");
 
      _Note 1_: A function can have any mixture of the four API types but
      they must appear in a specific order.  ‘Required’ arguments must be
      first and can be followed by any ‘Optional’ arguments.  Only the
      ‘Parameter’ and ‘Switch’ arguments may be mixed together and they
-     must appear at the end.
+     must appear following the first two types.
 
      _Note 2_: If both ‘Optional’ and ‘Parameter’ arguments are mixed in
      a function API then once a string Optional argument fails to
@@ -5506,7 +5854,7 @@ definition without having to restart your Octave session.
    To avoid degrading performance unnecessarily by checking the time
 stamps on functions that are not likely to change, Octave assumes that
 function files in the directory tree
-‘OCTAVE-HOME/share/octave/VERSION/m’ will not change, so it doesn’t have
+‘OCTAVE-HOME/share/octave/VERSION/m’ will not change, so it doesn't have
 to check their time stamps every time the functions defined in those
 files are used.  This is normally a very good assumption and provides a
 significant improvement in performance for the function files that are
@@ -5693,6 +6041,7 @@ After this the directory ‘~/Octave’ will be searched for functions.
 
  -- : addpath (DIR1, ...)
  -- : addpath (DIR1, ..., OPTION)
+ -- : OLDPATH = addpath (...)
      Add named directories to the function search path.
 
      If OPTION is "-begin" or 0 (the default), prepend the directory
@@ -5720,8 +6069,8 @@ After this the directory ‘~/Octave’ will be searched for functions.
      genpath: XREFgenpath, *note pathdef: XREFpathdef, *note savepath:
      XREFsavepath, *note pathsep: XREFpathsep.
 
- -- : genpath (DIR)
- -- : genpath (DIR, SKIP, ...)
+ -- : PATHSTR = genpath (DIR)
+ -- : PATHSTR = genpath (DIR, SKIPDIR1, ...)
      Return a path constructed from DIR and all its subdirectories.
 
      The path does not include package directories (beginning with ‘+’),
@@ -5734,6 +6083,7 @@ After this the directory ‘~/Octave’ will be searched for functions.
      See also: *note path: XREFpath, *note addpath: XREFaddpath.
 
  -- : rmpath (DIR1, ...)
+ -- : OLDPATH = rmpath (DIR1, ...)
      Remove DIR1, ... from the current function search path.
 
      In addition to accepting individual directory arguments, lists of
@@ -5750,20 +6100,25 @@ After this the directory ‘~/Octave’ will be searched for functions.
      genpath: XREFgenpath, *note pathdef: XREFpathdef, *note savepath:
      XREFsavepath, *note pathsep: XREFpathsep.
 
- -- : savepath ()
- -- : savepath (FILE)
+ -- : savepath
+ -- : savepath FILE
  -- : STATUS = savepath (...)
-     Save the unique portion of the current function search path that is
-     not set during Octave’s initialization process to FILE.
+     Save the unique portion of the current function search path to
+     FILE.
+
+     The list of folders that are saved in FILE does _not_ include the
+     folders that are added for Octave's own functions, those that
+     belong to Octave packages (see *note pkg load: XREFpkg.), and those
+     added via command line switches.
 
      If FILE is omitted, Octave looks in the current directory for a
      project-specific ‘.octaverc’ file in which to save the path
-     information.  If no such file is present then the user’s
+     information.  If no such file is present then the user's
      configuration file ‘~/.octaverc’ is used.
 
      If successful, ‘savepath’ returns 0.
 
-     The ‘savepath’ function makes it simple to customize a user’s
+     The ‘savepath’ function makes it simple to customize a user's
      configuration file to restore the working paths necessary for a
      particular instance of Octave.  Assuming no filename is specified,
      Octave will automatically restore the saved directory paths from
@@ -5778,9 +6133,9 @@ After this the directory ‘~/Octave’ will be searched for functions.
  -- : path ()
  -- : STR = path ()
  -- : STR = path (PATH1, ...)
-     Modify or display Octave’s load path.
+     Modify or display Octave's load path.
 
-     If NARGIN and NARGOUT are zero, display the elements of Octave’s
+     If NARGIN and NARGOUT are zero, display the elements of Octave's
      load path in an easy to read format.
 
      If NARGIN is zero and nargout is greater than zero, return the
@@ -5808,7 +6163,7 @@ After this the directory ‘~/Octave’ will be searched for functions.
 
        3. ‘<OCTAVE_HOME>/.../<version>/m/startup/octaverc’
 
-       4. Octave’s path prior to changes by any octaverc file.
+       4. Octave's path prior to changes by any octaverc file.
 
      See also: *note path: XREFpath, *note addpath: XREFaddpath, *note
      rmpath: XREFrmpath, *note genpath: XREFgenpath, *note savepath:
@@ -5820,7 +6175,7 @@ After this the directory ‘~/Octave’ will be searched for functions.
      See also: *note filesep: XREFfilesep.
 
  -- : rehash ()
-     Reinitialize Octave’s load path directory cache.
+     Reinitialize Octave's load path directory cache.
 
  -- : FNAME = file_in_loadpath (FILE)
  -- : FNAME = file_in_loadpath (FILE, "all")
@@ -5830,7 +6185,7 @@ After this the directory ‘~/Octave’ will be searched for functions.
      If no file is found, return an empty character string.
 
      When FILE is already an absolute name, the name is checked against
-     the file system instead of Octave’s loadpath.  In this case, if
+     the file system instead of Octave's loadpath.  In this case, if
      FILE exists it will be returned in FNAME, otherwise an empty string
      is returned.
 
@@ -5845,16 +6200,19 @@ After this the directory ‘~/Octave’ will be searched for functions.
      See also: *note file_in_path: XREFfile_in_path, *note
      dir_in_loadpath: XREFdir_in_loadpath, *note path: XREFpath.
 
- -- : restoredefaultpath ()
-     Restore Octave’s path to its initial state at startup.
+ -- : PATHSTR = restoredefaultpath ()
+     Restore Octave's path to its initial state at startup.
+
+     The re-initialized path is returned as an output.
 
      See also: *note path: XREFpath, *note addpath: XREFaddpath, *note
      rmpath: XREFrmpath, *note genpath: XREFgenpath, *note pathdef:
      XREFpathdef, *note savepath: XREFsavepath, *note pathsep:
      XREFpathsep.
 
- -- : command_line_path ()
-     Return the command line path variable.
+ -- : PATHSTR = command_line_path ()
+     Return the path argument given to Octave at the command line when
+     the interpreter was started (‘--path ARG’).
 
      See also: *note path: XREFpath, *note addpath: XREFaddpath, *note
      rmpath: XREFrmpath, *note genpath: XREFgenpath, *note pathdef:
@@ -5873,7 +6231,7 @@ After this the directory ‘~/Octave’ will be searched for functions.
      "/some/dir/foo/bar", but not "/some/dir/foo/bar/baz"
      "/some/dir/allfoo/bar".  When DIR is an absolute name, rather than
      just a path fragment, it is matched against the file system instead
-     of Octave’s loadpath.  In this case, if DIR exists it will be
+     of Octave's loadpath.  In this case, if DIR exists it will be
      returned in DIRNAME, otherwise an empty string is returned.
 
      If the optional second argument is supplied, return a cell array
@@ -5882,23 +6240,49 @@ After this the directory ‘~/Octave’ will be searched for functions.
      See also: *note file_in_path: XREFfile_in_path, *note
      file_in_loadpath: XREFfile_in_loadpath, *note path: XREFpath.
 
+ -- : CURRENT_ENCODING = mfile_encoding ()
+ -- : mfile_encoding (NEW_ENCODING)
+ -- : OLD_ENCODING = mfile_encoding (NEW_ENCODING)
+     Query or set the encoding that is used for reading m-files.
+
+     The input and output are strings naming an encoding, e.g., "utf-8".
+
+     This encoding is used by Octave's parser when reading m-files
+     unless a different encoding was set for a specific directory
+     containing m-files using the function ‘dir_encoding’ or in a file
+     ‘.oct-config’ in that directory.
+
+     The special value "system" selects the encoding that matches the
+     system locale.
+
+     If the m-file encoding is changed after the m-files have already
+     been parsed, the files have to be parsed again for that change to
+     take effect.  That can be triggered with the command ‘clear all’.
+
+     Additionally, this encoding is used to load and save files with the
+     built-in editor in Octave's GUI.
+
+     See also: *note dir_encoding: XREFdir_encoding.
+
  -- : CURRENT_ENCODING = dir_encoding (DIR)
- -- : PREV_ENCODING = dir_encoding (DIR, ENCODING)
- -- : dir_encoding (...)
-     Set and query the ENCODING that is used for reading m-files in DIR.
+ -- : dir_encoding (DIR, NEW_ENCODING)
+ -- : dir_encoding (DIR, "delete")
+ -- : OLD_ENCODING = dir_encoding (DIR, NEW_ENCODING)
+     Query or set the ENCODING that is used for reading m-files in DIR.
 
-     That encoding overrides the (globally set) m-file encoding.
+     The per-directory encoding overrides the (globally set) m-file
+     encoding, *note ‘mfile_encoding’: XREFmfile_encoding.
 
-     The string DIR must match the form how the directory would appear
-     in the load path.
+     The string DIR must match how the directory would appear in the
+     load path.
 
-     The ENCODING must be a valid encoding identifier or "delete".  In
-     the latter case, the (globally set) m-file encoding will be used
-     for the given DIR.
+     The NEW_ENCODING input must be a valid encoding identifier or
+     "delete".  In the latter case, any per-directory encoding is
+     removed and the (globally set) m-file encoding will be used for the
+     given DIR.
 
-     The currently or previously used encoding is returned in
-     CURRENT_ENCODING or PREV_ENCODING, respectively.  The output
-     argument must be explicitly requested.
+     The currently or previously used encoding is returned only if an
+     output argument is requested.
 
      The directory encoding is automatically read from the file
      ‘.oct-config’ when a new path is added to the load path (for
@@ -5916,7 +6300,8 @@ After this the directory ‘~/Octave’ will be searched for functions.
      parsed, the files have to be parsed again for that change to take
      effect.  That can be done with the command ‘clear all’.
 
-     See also: *note addpath: XREFaddpath, *note path: XREFpath.
+     See also: *note addpath: XREFaddpath, *note path: XREFpath, *note
+     mfile_encoding: XREFmfile_encoding.
 
 
 File: octave.info,  Node: Subfunctions,  Next: Private Functions,  Prev: Manipulating the Load Path,  Up: Function Files
@@ -5944,7 +6329,7 @@ defines a main function ‘f’ and two subfunctions.  The subfunctions ‘g’
 and ‘h’ may only be called from the main function ‘f’ or from the other
 subfunctions, but not from outside the file ‘f.m’.
 
- -- : localfunctions ()
+ -- : SUBFCN_LIST = localfunctions ()
      Return a list of all local functions, i.e., subfunctions, within
      the current file.
 
@@ -5993,9 +6378,9 @@ File: octave.info,  Node: Nested Functions,  Next: Overloading and Autoloading, 
 Nested functions are similar to subfunctions in that only the main
 function is visible outside the file.  However, they also allow for
 child functions to access the local variables in their parent function.
-This shared access mimics using a global variable to share information —
-but a global variable which is not visible to the rest of Octave.  As a
-programming strategy, sharing data this way can create code which is
+This shared access mimics using a global variable to share information
+-- but a global variable which is not visible to the rest of Octave.  As
+a programming strategy, sharing data this way can create code which is
 difficult to maintain.  It is recommended to use subfunctions in place
 of nested functions when possible.
 
@@ -6081,7 +6466,7 @@ complicated.  In general a nested function may call:
 
   0. Globally visible functions
 
-  1. Any function that the nested function’s parent can call
+  1. Any function that the nested function's parent can call
 
   2. Sibling functions (functions that have the same parents)
 
@@ -6120,7 +6505,7 @@ File: octave.info,  Node: Overloading and Autoloading,  Next: Function Locking, 
 -----------------------------------
 
 Functions can be overloaded to work with different input arguments.  For
-example, the operator ’+’ has been overloaded in Octave to work with
+example, the operator '+' has been overloaded in Octave to work with
 single, double, uint8, int32, and many other arguments.  The preferred
 way to overload functions is through classes and object oriented
 programming (*note Function Overloading::).  Occasionally, however, one
@@ -6132,7 +6517,7 @@ with a specific type.  The ‘builtin’ function exists for this purpose.
      function for the given type signature.
 
      This is normally useful when doing object-oriented programming and
-     there is a requirement to call one of Octave’s base functions
+     there is a requirement to call one of Octave's base functions
      rather than the overloaded one of a new class.
 
      A trivial example which redefines the ‘sin’ function to be the
@@ -6154,7 +6539,7 @@ symbolic links, it is possible to create a symbolic link to the original
 file for each of the functions which it contains.
 
    However, there is at least one well known operating system that
-doesn’t support symbolic links.  Making copies of the original file for
+doesn't support symbolic links.  Making copies of the original file for
 each of the functions is undesirable as it increases the amount of disk
 space used by Octave.  Instead Octave supplies the ‘autoload’ function,
 that permits the user to define in which file a certain function will be
@@ -6171,7 +6556,7 @@ found.
      load path.
 
      Normally, calls to ‘autoload’ appear in PKG_ADD script files that
-     are evaluated when a directory is added to Octave’s load path.  To
+     are evaluated when a directory is added to Octave's load path.  To
      avoid having to hardcode directory names in FILE, if FILE is in the
      same directory as the PKG_ADD script then
 
@@ -6245,7 +6630,7 @@ session; A similar effect can be had with the
 ‘ignore_function_time_stamp’ function.
 
  -- : mlock ()
-     Lock the current function into memory so that it can’t be removed
+     Lock the current function into memory so that it can't be removed
      with ‘clear’.
 
      See also: *note munlock: XREFmunlock, *note mislocked:
@@ -6262,8 +6647,8 @@ session; A similar effect can be had with the
      See also: *note mlock: XREFmlock, *note mislocked: XREFmislocked,
      *note persistent: XREFpersistent, *note clear: XREFclear.
 
- -- : mislocked ()
- -- : mislocked (FCN)
+ -- : TF = mislocked ()
+ -- : TF = mislocked (FCN)
      Return true if the named function FCN is locked in memory.
 
      If no function is named then return true if the current function is
@@ -6347,7 +6732,7 @@ evaluate, you can use a statement that has no effect, like this:
        ...
 
    To have Octave read and compile these functions into an internal
-form, you need to make sure that the file is in Octave’s load path
+form, you need to make sure that the file is in Octave's load path
 (accessible through the ‘path’ function), then simply type the base name
 of the file that contains the commands.  (Octave uses the same rules to
 search for script files as it does to search for function files.)
@@ -6376,11 +6761,11 @@ referenced in the function ‘foo’.  This is not an error because Octave
 does not need to resolve all symbols that are referenced by a function
 until the function is actually evaluated.
 
-   Since Octave doesn’t look for definitions until they are needed, the
+   Since Octave doesn't look for definitions until they are needed, the
 following code will always print ‘bar = 3’ whether it is typed directly
 on the command line, read from a script file, or is part of a function
 body, even if there is a function or script file called ‘bar.m’ in
-Octave’s path.
+Octave's path.
 
      eval ("bar = 3");
      bar
@@ -6489,7 +6874,7 @@ enhance and customize the output.
      The structure OPTIONS can have the following field names.  If a
      field name is not specified, the default value is used:
 
-        • ‘format’ — Output format of the published script file, one of
+        • ‘format’ -- Output format of the published script file, one of
 
           ‘html’ (default), ‘doc’, ‘latex’, ‘ppt’, ‘pdf’, or ‘xml’.
 
@@ -6505,65 +6890,67 @@ enhance and customize the output.
                edit (fullfile (fileparts (which ("publish")), ...
                      "private", "__publish_html_output__.m"))
 
-        • ‘outputDir’ — Full path of the directory where the generated
+        • ‘outputDir’ -- Full path of the directory where the generated
           report will be located.  If no directory is given, the report
           is generated in a subdirectory ‘html’ relative to the current
           working directory.
 
-        • ‘stylesheet’ — Not supported, only for MATLAB compatibility.
+        • ‘stylesheet’ -- Not supported, only for MATLAB compatibility.
 
-        • ‘createThumbnail’ — Not supported, only for MATLAB
+        • ‘createThumbnail’ -- Not supported, only for MATLAB
           compatibility.
 
-        • ‘figureSnapMethod’ — Not supported, only for MATLAB
+        • ‘figureSnapMethod’ -- Not supported, only for MATLAB
           compatibility.
 
-        • ‘imageFormat’ — Desired format for any images produced while
+        • ‘imageFormat’ -- Desired format for any images produced while
           evaluating the code.  The allowed image formats depend on the
           output format:
 
-             • ‘html’, ‘xml’ — ‘png’ (default), any image format
+             • ‘html’, ‘xml’ -- ‘png’ (default), any image format
                supported by Octave
 
-             • ‘latex’ — ‘epsc2’ (default), any image format supported
+             • ‘latex’ -- ‘epsc2’ (default), any image format supported
                by Octave
 
-             • ‘pdf’ — ‘jpg’ (default) or ‘bmp’, note MATLAB uses ‘bmp’
+             • ‘pdf’ -- ‘jpg’ (default) or ‘bmp’, note MATLAB uses ‘bmp’
                as default
 
-             • ‘doc’ or ‘ppt’ — ‘png’ (default), ‘jpg’, ‘bmp’, or ‘tiff’
+             • ‘doc’ or ‘ppt’ -- ‘png’ (default), ‘jpg’, ‘bmp’, or
+               ‘tiff’
 
-        • ‘maxWidth’ and ‘maxHeight’ — Maximum width (height) of the
+        • ‘maxWidth’ and ‘maxHeight’ -- Maximum width (height) of the
           produced images in pixels.  An empty value means no
           restriction.  Both values must be set in order for the option
           to work properly.
 
           ‘[]’ (default), integer value ≥ 0
 
-        • ‘useNewFigure’ — Use a new figure window for figures created
+        • ‘useNewFigure’ -- Use a new figure window for figures created
           by the evaluated code.  This avoids side effects with already
           opened figure windows.
 
           ‘true’ (default) or ‘false’
 
-        • ‘evalCode’ — Evaluate code of the Octave source file
+        • ‘evalCode’ -- Evaluate code of the Octave source file
 
           ‘true’ (default) or ‘false’
 
-        • ‘catchError’ — Catch errors while evaluating code and continue
+        • ‘catchError’ -- Catch errors while evaluating code and
+          continue
 
           ‘true’ (default) or ‘false’
 
-        • ‘codeToEvaluate’ — Octave commands that should be evaluated
+        • ‘codeToEvaluate’ -- Octave commands that should be evaluated
           prior to publishing the script file.  These Octave commands do
           not appear in the generated report.
 
-        • ‘maxOutputLines’ — Maximum number of output lines from code
+        • ‘maxOutputLines’ -- Maximum number of output lines from code
           evaluation which are included in output.
 
           ‘Inf’ (default) or integer value > 0
 
-        • ‘showCode’ — Show the evaluated Octave commands in the
+        • ‘showCode’ -- Show the evaluated Octave commands in the
           generated report
 
           ‘true’ (default) or ‘false’
@@ -6575,8 +6962,8 @@ enhance and customize the output.
 
    The counterpart to ‘publish’ is ‘grabcode’:
 
- -- : grabcode (URL)
- -- : grabcode (FILENAME)
+ -- : grabcode FILENAME
+ -- : grabcode URL
  -- : CODE_STR = grabcode (...)
 
      Grab the code from a report created by the ‘publish’ function.
@@ -6587,7 +6974,7 @@ enhance and customize the output.
 
      If no return value is requested the code is saved to a temporary
      file and opened in the default editor.  NOTE: The temporary file
-     must be saved under a new or the code will be lost.
+     must be saved to a new filename or the code will be lost.
 
      If an output is requested the grabbed code will be returned as
      string CODE_STR.
@@ -6946,8 +7333,8 @@ publish results to a Jupyter notebook with the function
 
      ‘%plot’ magic is supported with the following settings:
 
-        • "%plot -f <format>" or "%plot –format <format>": specifies the
-          image storage format.  Supported formats are:
+        • "‘%plot -f <format>’" or "‘%plot --format <format>’":
+          specifies the image storage format.  Supported formats are:
 
              − PNG (default)
 
@@ -6958,14 +7345,14 @@ publish results to a Jupyter notebook with the function
 
              − JPG
 
-        • "%plot -r <number>" or "%plot –resolution <number>": specifies
-          the image resolution.
+        • "‘%plot -r <number>’" or "‘%plot --resolution <number>’":
+          specifies the image resolution.
 
-        • "%plot -w <number>" or "%plot –width <number>": specifies the
-          image width.
+        • "‘%plot -w <number>’" or "‘%plot --width <number>’": specifies
+          the image width.
 
-        • "%plot -h <number>" or "%plot –height <number>": specifies the
-          image height.
+        • "‘%plot -h <number>’" or "‘%plot --height <number>’":
+          specifies the image height.
 
      Examples:
 
@@ -7049,7 +7436,7 @@ list.  If there are no arguments, you must use an empty argument list
      f (pi/4)
          ⇒ 0.70711
 
- -- : is_function_handle (X)
+ -- : TF = is_function_handle (X)
      Return true if X is a function handle.
 
      See also: *note isa: XREFisa, *note typeinfo: XREFtypeinfo, *note
@@ -7100,19 +7487,25 @@ list.  If there are no arguments, you must use an empty argument list
      See also: *note func2str: XREFfunc2str, *note str2func:
      XREFstr2func.
 
- -- : func2str (FCN_HANDLE)
+ -- : STR = func2str (FCN_HANDLE)
      Return a string containing the name of the function referenced by
      the function handle FCN_HANDLE.
 
      See also: *note str2func: XREFstr2func, *note functions:
      XREFfunctions.
 
- -- : str2func (FCN_NAME)
-     Return a function handle constructed from the string FCN_NAME.
+ -- : HFCN = str2func (STR)
+     Return a function handle constructed from the string STR.
 
-     Previous versions of Octave accepted an optional second argument,
-     "global", that caused str2func to ignore locally visible functions.
-     This option is no longer supported.
+     The input may be the name of a function such as "sin" or a string
+     defining a function such as "@(x) sin (x + pi)".
+
+     Programming Note: In most cases it will be better to use anonymous
+     function syntax and let the Octave parser create the function
+     handle rather than use ‘str2func’.  For example:
+
+          hfcn = @sin ;
+          hfcn = @(x) sin (x + pi) ;
 
      See also: *note func2str: XREFfunc2str, *note functions:
      XREFfunctions.
@@ -7196,7 +7589,7 @@ File: octave.info,  Node: Command Syntax and Function Syntax,  Next: Organizatio
 11.13 Command Syntax and Function Syntax
 ========================================
 
-Additionally to the function syntax described above (i.e., calling a
+In addition to the function syntax described above (i.e., calling a
 function like ‘fun (arg1, arg2, ...)’), a function can be called using
 command syntax (for example, calling a function like ‘fun arg1 arg2
 ...’).  In that case, all arguments are passed to the function as
@@ -7228,7 +7621,7 @@ is equivalent to
    Any function can be used as a command if it accepts string input
 arguments.  For example:
 
-     toupper lower_case_arg
+     upper lower_case_arg
         ⇒ ans = LOWER_CASE_ARG
 
    Since the arguments are passed as strings to the corresponding
@@ -7237,9 +7630,9 @@ variables.  In that case, a command must be called using the function
 syntax.  For example:
 
      strvar = "hello world";
-     toupper strvar
+     upper strvar
         ⇒ ans = STRVAR
-     toupper (strvar)
+     upper (strvar)
         ⇒ ans = HELLO WORLD
 
    Additionally, the return values of functions cannot be assigned to
@@ -7248,13 +7641,70 @@ assigned to the built-in variable ‘ans’.  If the output argument of a
 command should be assigned to a variable, or multiple output arguments
 of a function should be returned, the function syntax must be used.
 
+   It should be noted that mixing command syntax and binary operators
+can create apparent ambiguities with mathematical and logical
+expressions that use function syntax.  For example, all three of the
+statements
+
+     arg1 - arg2
+     arg1 -arg2
+     arg1-arg2
+
+could be intended by a user to be subtraction operations between ‘arg1’
+and ‘arg2’.  The first two, however, could also have been meant as a
+command syntax call to function ‘arg1’, in the first case with options
+‘-’ and ‘arg2’, and in the second case with option ‘-arg2’.
+
+   Octave uses whitespace to interpret such expressions according to the
+following rules:
+
+   • Statements consisting of plain symbols without any operators that
+     are separated only by whitespace are always treated as command
+     syntax:
+
+          arg1 arg2 arg3 ... argn
+
+   • Statements without any whitespace are always treated as function
+     syntax:
+
+          arg1+arg2
+          arg1&&arg2||arg3
+          arg1+=arg2*arg3
+
+   • If the first symbol is a constant (or special-valued named constant
+     pi, i, I, j, J, e, NaN, or Inf) followed by a binary operator, the
+     statement is treated as function syntax regardless of any
+     whitespace or what follows the second symbol:
+
+          7 -arg2
+          pi+ arg2
+          j * arg2 -arg3
+
+   • If the first symbol is a function or variable and there is no
+     whitespace separating the operator and the second symbol, the
+     statement is treated as command syntax:
+
+          arg1 -arg2
+          arg1 &&arg2 ||arg3
+          arg1 +=arg2*arg3
+
+   • Any other whitespace combination will result in the statement being
+     treated as function syntax.
+
+   Note 1: If a special-valued named constant has been redefined as a
+variable, the interpreter will still process the statement with function
+syntax.
+
+   Note 2: Attempting to use a variable as ‘arg1’ in a command being
+processed as command syntax will result in an error.
+
 
 File: octave.info,  Node: Organization of Functions,  Prev: Command Syntax and Function Syntax,  Up: Functions and Scripts
 
 11.14 Organization of Functions Distributed with Octave
 =======================================================
 
-Many of Octave’s standard functions are distributed as function files.
+Many of Octave's standard functions are distributed as function files.
 They are loosely organized by topic, in subdirectories of
 ‘OCTAVE-HOME/share/octave/VERSION/m’, to make it easier to find them.
 
@@ -7288,7 +7738,7 @@ the types of functions you will find there.
      Functions for GUI elements like dialog, message box, etc.
 
 ‘help’
-     Functions for Octave’s built-in help system.
+     Functions for Octave's built-in help system.
 
 ‘image’
      Image processing tools.  These functions require the X Window
@@ -7304,7 +7754,7 @@ the types of functions you will find there.
      Functions for linear algebra.
 
 ‘miscellaneous’
-     Functions that don’t really belong anywhere else.
+     Functions that don't really belong anywhere else.
 
 ‘ode’
      Functions to solve ordinary differential equations (ODEs).
@@ -7347,7 +7797,7 @@ the types of functions you will find there.
      Vandermonde matrices.
 
 ‘startup’
-     Octave’s system-wide startup file.
+     Octave's system-wide startup file.
 
 ‘statistics’
      Statistical functions.
@@ -7372,7 +7822,7 @@ messages.  When you write functions that need to take special action
 when they encounter abnormal conditions, you should print the error
 messages using the functions described in this chapter.
 
-   Since many of Octave’s functions use these functions, it is also
+   Since many of Octave's functions use these functions, it is also
 useful to understand them, so that errors and warnings can be handled.
 
 * Menu:
@@ -7387,7 +7837,7 @@ File: octave.info,  Node: Handling Errors,  Next: Handling Warnings,  Up: Errors
 ====================
 
 An error is something that occurs when a program is in a state where it
-doesn’t make sense to continue.  An example is when a function is called
+doesn't make sense to continue.  An example is when a function is called
 with too few input arguments.  In this situation the function should
 abort with an error message informing the user of the lacking input
 arguments.
@@ -7429,8 +7879,8 @@ described in the next section.  To assign an ID to an error, simply call
 ‘error’ with two string arguments, where the first is the identification
 string, and the second is the actual error.  Note that error IDs are in
 the format "NAMESPACE:ERROR-NAME". The namespace "Octave" is used for
-Octave’s own errors.  Any other string is available as a namespace for
-user’s own errors.
+Octave's own errors.  Any other string is available as a namespace for
+user's own errors.
 
  -- : error (TEMPLATE, ...)
  -- : error (ID, TEMPLATE, ...)
@@ -7439,10 +7889,14 @@ user’s own errors.
      Format the optional arguments under the control of the template
      string TEMPLATE using the same rules as the ‘printf’ family of
      functions (*note Formatted Output::) and print the resulting
-     message on the ‘stderr’ stream.  The message is prefixed by the
-     character string ‘error: ’.
+     message on the ‘stderr’ stream.  This formatting is only done for
+     single-quoted character vectors if there are additional arguments
+     following the template string.  If there are no additional
+     arguments, the template string is used literally (i.e., without
+     interpreting any escape sequences in single-quoted character
+     vectors).  The message is prefixed by ‘error: ’.
 
-     Calling ‘error’ also sets Octave’s internal error state such that
+     Calling ‘error’ also sets Octave's internal error state such that
      control will return to the top level without evaluating any further
      commands.  This is useful for aborting from functions or scripts.
 
@@ -7506,7 +7960,7 @@ code.  When the ‘print_usage’ function is called, it reads the help text
 of the function calling ‘print_usage’, and presents a useful error.  If
 the help text is written in Texinfo it is possible to present an error
 message that only contains the function prototypes as described by the
-‘@deftypefn’ parts of the help text.  When the help text isn’t written
+‘@deftypefn’ parts of the help text.  When the help text isn't written
 in Texinfo, the error message contains the entire help message.
 
    Consider the following function.
@@ -7552,7 +8006,7 @@ error.
      Produce a beep from the speaker (or visual bell).
 
      This function sends the alarm character "\a" to the terminal.
-     Depending on the user’s configuration this may produce an audible
+     Depending on the user's configuration this may produce an audible
      beep, a visual bell, or nothing at all.
 
      See also: *note puts: XREFputs, *note fputs: XREFfputs, *note
@@ -7560,7 +8014,7 @@ error.
 
  -- : VAL = beep_on_error ()
  -- : OLD_VAL = beep_on_error (NEW_VAL)
- -- : beep_on_error (NEW_VAL, "local")
+ -- : OLD_VAL = beep_on_error (NEW_VAL, "local")
      Query or set the internal variable that controls whether Octave
      will try to ring the terminal bell before printing an error
      message.
@@ -7698,7 +8152,7 @@ the field identifier of the structure returned by the function
 errors.
 
 ‘Octave:bad-alloc’
-     Indicates that memory couldn’t be allocated.
+     Indicates that memory couldn't be allocated.
 
 ‘Octave:invalid-context’
      Indicates the error was generated by an operation that cannot be
@@ -7770,7 +8224,7 @@ occurs.
 
      See also: *note errno_list: XREFerrno_list.
 
- -- : errno_list ()
+ -- : S = errno_list ()
      Return a structure containing the system-dependent errno values.
 
      See also: *note errno: XREFerrno.
@@ -7787,8 +8241,8 @@ and finally the ‘onCleanup’ command.
 
    The ‘onCleanup’ command associates an ordinary Octave variable (the
 trigger) with an arbitrary function (the action).  Whenever the Octave
-variable ceases to exist—whether due to a function return, an error, or
-simply because the variable has been removed with ‘clear’—then the
+variable ceases to exist--whether due to a function return, an error, or
+simply because the variable has been removed with ‘clear’--then the
 assigned function is executed.
 
    The function can do anything necessary for cleanup such as closing
@@ -7804,15 +8258,27 @@ convenient idiom for Octave code.  For example:
      endfunction  # rand generator state restored by onCleanup
 
  -- : OBJ = onCleanup (FUNCTION)
-     Create a special object that executes a given function upon
+     Create a special object that executes a given FUNCTION upon
      destruction.
 
      If the object is copied to multiple variables (or cell or struct
-     array elements) or returned from a function, FUNCTION will be
-     executed after clearing the last copy of the object.  Note that if
-     multiple local onCleanup variables are created, the order in which
-     they are called is unspecified.  For similar functionality *Note
-     The unwind_protect Statement::.
+     array elements) or returned from a function, then FUNCTION will be
+     executed only after the last copy of the object is cleared.
+
+     The input FUNCTION is a handle to a function.  The handle may point
+     to an anonymous function in order to directly place commands in the
+     ‘onCleanup’ call.
+
+     Programming Note: If multiple local ‘onCleanup’ variables are
+     created, the order in which they are called is unspecified.  For
+     similar functionality *Note The unwind_protect Statement::.
+
+     Example
+
+          octave:1> trigger = onCleanup (@() disp ('onCleanup was executed'));
+          octave:2> clear trigger
+          onCleanup was executed
+          octave:3
 
 
 File: octave.info,  Node: Handling Warnings,  Prev: Handling Errors,  Up: Errors and Warnings
@@ -7821,7 +8287,7 @@ File: octave.info,  Node: Handling Warnings,  Prev: Handling Errors,  Up: Errors
 ======================
 
 Like an error, a warning is issued when something unexpected happens.
-Unlike an error, a warning doesn’t abort the currently running program.
+Unlike an error, a warning doesn't abort the currently running program.
 A simple example of a warning is when a number is divided by zero.  In
 this case Octave will issue a warning and assign the value ‘Inf’ to the
 result.
@@ -7854,7 +8320,7 @@ issues a warning and sets ‘a’ to zero.
      endif
           ⊣ 'a' must be non-negative.  Setting 'a' to zero.
 
-   Since warnings aren’t fatal to a running program, it is not possible
+   Since warnings aren't fatal to a running program, it is not possible
 to catch a warning using the ‘try’ statement or something similar.  It
 is however possible to access the last warning as a string using the
 ‘lastwarn’ function.
@@ -7865,8 +8331,8 @@ as will be described in the next section.  To assign an ID to a warning,
 simply call ‘warning’ with two string arguments, where the first is the
 identification string, and the second is the actual warning.  Note that
 warning IDs are in the format "NAMESPACE:WARNING-NAME". The namespace
-"Octave" is used for Octave’s own warnings.  Any other string is
-available as a namespace for user’s own warnings.
+"Octave" is used for Octave's own warnings.  Any other string is
+available as a namespace for user's own warnings.
 
  -- : warning (TEMPLATE, ...)
  -- : warning (ID, TEMPLATE, ...)
@@ -7879,7 +8345,7 @@ available as a namespace for user’s own warnings.
  -- : WARNING_STRUCT = warning (...)
  -- : warning (STATE, MODE)
 
-     Display a warning message or control the behavior of Octave’s
+     Display a warning message or control the behavior of Octave's
      warning system.
 
      The first call form uses a template TEMPLATE and optional
@@ -7901,7 +8367,7 @@ available as a namespace for user’s own warnings.
 
      The optional warning identifier ID allows users to enable or
      disable warnings tagged by this identifier.  A message identifier
-     is a string of the form "NAMESPACE:WARNING-NAME". Octave’s own
+     is a string of the form "NAMESPACE:WARNING-NAME". Octave's own
      warnings use the "Octave" namespace (*note ‘warning_ids’:
      XREFwarning_ids.).  For example:
 
@@ -7985,7 +8451,7 @@ available as a namespace for user’s own warnings.
 
      With one argument, set the last warning message to MSG.
 
-     With two arguments, also set the last message identifier.
+     With two arguments, also set the last message identifier to MSGID.
 
      See also: *note warning: XREFwarning, *note lasterror:
      XREFlasterror, *note lasterr: XREFlasterr.
@@ -7997,7 +8463,7 @@ warnings.
      If the ‘Octave:abbreviated-property-match’ warning is enabled, a
      warning is printed if a non-exact or ambiguous match is being used
      for a operation specifying an object property.  For example, for a
-     graphics object, FIG, with the property ’displayname’, ‘get (FIG,
+     graphics object, FIG, with the property 'displayname', ‘get (FIG,
      'dis')’ elicits a warning if the
      ‘Octave:abbreviated-property-match’ warning is enabled.  By
      default, the ‘Octave:abbreviated-property-match’ warning is
@@ -8116,10 +8582,17 @@ warnings.
      If the ‘Octave:data-file-in-path’ warning is enabled, a warning is
      issued when Octave does not find the target of a file operation
      such as ‘load’ or ‘fopen’ directly, but is able to locate the file
-     in Octave’s search ‘path’ for files.  The warning could indicate
+     in Octave's search ‘path’ for files.  The warning could indicate
      that a different file target than the programmer intended is being
      used.  By default, the ‘Octave:data-file-in-path’ warning is
      enabled.
+
+‘Octave:datevec:date-format-spec’
+     If the ‘Octave:datevec:date-format-spec’ warning is enabled, a
+     warning is printed if the date format specification contains
+     questionable date or time specifiers.  Typical bad patterns are
+     using uppercase date specifiers or lowercase time specifiers.  By
+     default, the ‘Octave:datevec:date-format-spec’ warning is enabled.
 
 ‘Octave:deprecated-function’
      If the ‘Octave:deprecated-function’ warning is enabled, a warning
@@ -8132,6 +8605,11 @@ warnings.
      issued when Octave encounters a keyword that is obsolete and
      scheduled for removal from Octave.  By default, the
      ‘Octave:deprecated-keyword’ warning is enabled.
+
+‘Octave:deprecated-option’
+     If the ‘Octave:deprecated-option’ warning is enabled, a warning is
+     issued when an obsolete option or input to a function is used.  By
+     default, the ‘Octave:deprecated-option’ warning is enabled.
 
 ‘Octave:deprecated-property’
      If the ‘Octave:deprecated-property’ warning is enabled, a warning
@@ -8173,7 +8651,7 @@ warnings.
 
 ‘Octave:glyph-render’
      If the ‘Octave:glyph-render’ warning is enabled, Octave will print
-     a warning if the glyph for a character couldn’t be rendered with
+     a warning if the glyph for a character couldn't be rendered with
      the current font.  By default, the ‘Octave:glyph-render’ warning is
      enabled.
 
@@ -8222,13 +8700,13 @@ warnings.
 
 ‘Octave:missing-glyph’
      If the ‘Octave:glyph-render’ warning is enabled, Octave will print
-     a warning if the current font doesn’t provide a glyph for a used
+     a warning if the current font doesn't provide a glyph for a used
      character.  By default, the ‘Octave:missing-glyph’ warning is
      enabled.
 
 ‘Octave:missing-semicolon’
      If the ‘Octave:missing-semicolon’ warning is enabled, Octave will
-     warn when statements in function definitions don’t end in
+     warn when statements in function definitions don't end in
      semicolons.  By default the ‘Octave:missing-semicolon’ warning is
      disabled.
 
@@ -8287,6 +8765,11 @@ warnings.
      in a condition.  By default, the
      ‘Octave:possible-matlab-short-circuit-operator’ warning is enabled.
 
+‘Octave:pow2:imaginary-ignored’
+     If the ‘Octave:pow2:imaginary-ignored’ warning is enabled, a
+     warning is printed if either input to ‘pow2’ is complex.  By
+     default, the ‘Octave:pow2:imaginary-ignored’ warning is enabled.
+
 ‘Octave:recursive-path-search’
      If the ‘Octave:recursive-path-search’ warning is enabled, Octave
      will issue a warning if ‘addpath’ is used with double trailing
@@ -8296,7 +8779,7 @@ warnings.
 ‘Octave:remove-init-dir’
      The ‘path’ function changes the search path that Octave uses to
      find functions.  It is possible to set the path to a value which
-     excludes Octave’s own built-in functions.  If the
+     excludes Octave's own built-in functions.  If the
      ‘Octave:remove-init-dir’ warning is enabled then Octave will warn
      when the ‘path’ function has been used in a way that may render
      Octave unworkable.  By default, the ‘Octave:remove-init-dir’
@@ -8325,6 +8808,12 @@ warnings.
      Print warning if a single quote character is used to introduce a
      string constant.  By default, the ‘Octave:single-quote-string’
      warning is disabled.
+
+‘Octave:sparse:double-conversion’
+     If the ‘Octave:sparse:double-conversion’ warning is enabled, a
+     warning is printed when an implicit conversion from a full, single
+     array occurs during the creation of a sparse array.  By default,
+     the ‘Octave:sparse:double-conversion’ warning is enabled.
 
 ‘Octave:sqrtm:SingularMatrix’
      If the ‘Octave:sqrtm:SingularMatrix’ warning is enabled, a warning
@@ -8361,116 +8850,4 @@ warnings.
      will print a warning if a switch label is not a constant or
      constant expression.  By default, the
      ‘Octave:variable-switch-label’ warning is disabled.
-
-
-File: octave.info,  Node: Enabling and Disabling Warnings,  Prev: Issuing Warnings,  Up: Handling Warnings
-
-12.2.2 Enabling and Disabling Warnings
---------------------------------------
-
-The ‘warning’ function also allows you to control which warnings are
-actually printed to the screen.  If the ‘warning’ function is called
-with a string argument that is either "on" or "off" all warnings will be
-enabled or disabled.
-
-   It is also possible to enable and disable individual warnings through
-their string identifications.  The following code will issue a warning
-
-     warning ("example:non-negative-variable",
-              "'a' must be non-negative.  Setting 'a' to zero.");
-
-while the following won’t issue a warning
-
-     warning ("off", "example:non-negative-variable");
-     warning ("example:non-negative-variable",
-              "'a' must be non-negative.  Setting 'a' to zero.");
-
-
-File: octave.info,  Node: Debugging,  Next: Input and Output,  Prev: Errors and Warnings,  Up: Top
-
-13 Debugging
-************
-
-Octave includes a built-in debugger to aid in the development of
-scripts.  This can be used to interrupt the execution of an Octave
-script at a certain point, or when certain conditions are met.  Once
-execution has stopped, and debug mode is entered, the symbol table at
-the point where execution has stopped can be examined and modified to
-check for errors.
-
-   The normal command-line editing and history functions are available
-in debug mode.
-
-* Menu:
-
-* Entering Debug Mode::
-* Leaving Debug Mode::
-* Breakpoints::
-* Debug Mode::
-* Call Stack::
-* Profiling::
-* Profiler Example::
-
-
-File: octave.info,  Node: Entering Debug Mode,  Next: Leaving Debug Mode,  Up: Debugging
-
-13.1 Entering Debug Mode
-========================
-
-There are two basic means of interrupting the execution of an Octave
-script.  These are breakpoints (*note Breakpoints::), discussed in the
-next section, and interruption based on some condition.
-
-   Octave supports three means to stop execution based on the values set
-in the functions ‘debug_on_interrupt’, ‘debug_on_warning’, and
-‘debug_on_error’.
-
- -- : VAL = debug_on_interrupt ()
- -- : OLD_VAL = debug_on_interrupt (NEW_VAL)
- -- : debug_on_interrupt (NEW_VAL, "local")
-     Query or set the internal variable that controls whether Octave
-     will try to enter debugging mode when it receives an interrupt
-     signal (typically generated with ‘C-c’).
-
-     If a second interrupt signal is received before reaching the
-     debugging mode, a normal interrupt will occur.
-
-     When called from inside a function with the "local" option, the
-     variable is changed locally for the function and any subroutines it
-     calls.  The original variable value is restored when exiting the
-     function.
-
-     See also: *note debug_on_error: XREFdebug_on_error, *note
-     debug_on_warning: XREFdebug_on_warning.
-
- -- : VAL = debug_on_warning ()
- -- : OLD_VAL = debug_on_warning (NEW_VAL)
- -- : debug_on_warning (NEW_VAL, "local")
-     Query or set the internal variable that controls whether Octave
-     will try to enter the debugger when a warning is encountered.
-
-     When called from inside a function with the "local" option, the
-     variable is changed locally for the function and any subroutines it
-     calls.  The original variable value is restored when exiting the
-     function.
-
-     See also: *note debug_on_error: XREFdebug_on_error, *note
-     debug_on_interrupt: XREFdebug_on_interrupt.
-
- -- : VAL = debug_on_error ()
- -- : OLD_VAL = debug_on_error (NEW_VAL)
- -- : debug_on_error (NEW_VAL, "local")
-     Query or set the internal variable that controls whether Octave
-     will try to enter the debugger when an error is encountered.
-
-     This will also inhibit printing of the normal traceback message
-     (you will only see the top-level error message).
-
-     When called from inside a function with the "local" option, the
-     variable is changed locally for the function and any subroutines it
-     calls.  The original variable value is restored when exiting the
-     function.
-
-     See also: *note debug_on_warning: XREFdebug_on_warning, *note
-     debug_on_interrupt: XREFdebug_on_interrupt.
 

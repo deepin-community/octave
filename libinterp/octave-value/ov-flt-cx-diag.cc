@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -52,14 +52,14 @@ default_numeric_conversion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_float_complex_diag_matrix::numeric_conversion_function (void) const
+octave_float_complex_diag_matrix::numeric_conversion_function () const
 {
   return octave_base_value::type_conv_info (default_numeric_conversion_function,
-                                            octave_float_complex_matrix::static_type_id ());
+         octave_float_complex_matrix::static_type_id ());
 }
 
 octave_base_value *
-octave_float_complex_diag_matrix::try_narrowing_conversion (void)
+octave_float_complex_diag_matrix::try_narrowing_conversion ()
 {
   octave_base_value *retval = nullptr;
 
@@ -122,13 +122,13 @@ octave_float_complex_diag_matrix::float_complex_diag_matrix_value (bool) const
 }
 
 octave_value
-octave_float_complex_diag_matrix::as_double (void) const
+octave_float_complex_diag_matrix::as_double () const
 {
   return ComplexDiagMatrix (m_matrix);
 }
 
 octave_value
-octave_float_complex_diag_matrix::as_single (void) const
+octave_float_complex_diag_matrix::as_single () const
 {
   return m_matrix;
 }
@@ -148,8 +148,7 @@ octave_float_complex_diag_matrix::map (unary_mapper_t umap) const
       return ::imag (m_matrix);
     case umap_sqrt:
       {
-        FloatComplexColumnVector tmp = m_matrix.extract_diag ().map<FloatComplex>
-                                       (std::sqrt);
+        FloatComplexColumnVector tmp = m_matrix.extract_diag ().map<FloatComplex> (std::sqrt);
         FloatComplexDiagMatrix retval (tmp);
         retval.resize (m_matrix.rows (), m_matrix.columns ());
         return retval;
@@ -161,7 +160,7 @@ octave_float_complex_diag_matrix::map (unary_mapper_t umap) const
 
 bool
 octave_float_complex_diag_matrix::save_binary (std::ostream& os,
-                                               bool /* save_as_floats */)
+    bool /* save_as_floats */)
 {
 
   int32_t r = m_matrix.rows ();
@@ -186,7 +185,7 @@ octave_float_complex_diag_matrix::save_binary (std::ostream& os,
 
 bool
 octave_float_complex_diag_matrix::load_binary (std::istream& is, bool swap,
-                                               octave::mach_info::float_format fmt)
+    octave::mach_info::float_format fmt)
 {
   int32_t r, c;
   char tmp;
@@ -216,7 +215,7 @@ octave_float_complex_diag_matrix::load_binary (std::istream& is, bool swap,
 
 bool
 octave_float_complex_diag_matrix::chk_valid_scalar (const octave_value& val,
-                                                    FloatComplex& x) const
+    FloatComplex& x) const
 {
   bool retval = val.is_complex_scalar () || val.is_real_scalar ();
   if (retval)

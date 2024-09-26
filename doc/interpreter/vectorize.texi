@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 2012-2022 The Octave Project Developers
+@c Copyright (C) 2012-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -44,6 +44,7 @@ code.
 * Broadcasting::               Broadcasting operations
 * Function Application::       Applying functions to arrays, cells, and structs
 * Accumulation::               Accumulation functions
+* Memoization::                Memoization techniques
 * Miscellaneous Techniques::   Other techniques for speeding up code
 * Examples::
 @end menu
@@ -344,8 +345,8 @@ subtraction takes place.
 
 A special case of broadcasting that may be familiar is when all
 dimensions of the array being broadcast are 1, i.e., the array is a
-scalar.  Thus for example, operations like @code{x - 42} and @code{max
-(x, 2)} are basic examples of broadcasting.
+scalar.  Thus, for example, operations like @code{x - 42} and
+@code{max (x, 2)} are basic examples of broadcasting.
 
 For a higher-dimensional example, suppose @code{img} is an RGB image of
 size @code{[m n 3]} and we wish to multiply each color by a different
@@ -364,7 +365,12 @@ For functions that are not written with broadcasting semantics,
 
 @c bsxfun libinterp/corefcn/bsxfun.cc
 @anchor{XREFbsxfun}
-@deftypefn {} {} bsxfun (@var{f}, @var{A}, @var{B})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{C} =} bsxfun (@var{f}, @var{A}, @var{B})
 Apply a binary function @var{f} element-by-element to two array arguments
 @var{A} and @var{B}, expanding singleton dimensions in either input argument as
 necessary.
@@ -428,10 +434,10 @@ is
       +=  -=  .*=  ./=  .\=  .^=  &=  |=
 @end example
 
-Here is a real example of the power of broadcasting.  The Floyd-Warshall
-algorithm is used to calculate the shortest path lengths between every pair of
-vertices in a graph.  A naive implementation for a graph adjacency matrix of
-order @var{n} might look like this:
+Here is a real example of the power of broadcasting.  The
+@nospell{Floyd-Warshall} algorithm is used to calculate the shortest path
+lengths between every pair of vertices in a graph.  A naive implementation for
+a graph adjacency matrix of order @var{n} might look like this:
 
 @example
 @group
@@ -489,8 +495,8 @@ A moment of thought will prove that this operation is simply the much
 faster ordinary matrix multiplication, @code{@var{c} = @var{a}*@var{b};}.
 
 A note on terminology: ``broadcasting'' is the term popularized by the
-Numpy numerical environment in the Python programming language.  In other
-programming languages and environments, broadcasting may also be known
+@nospell{Numpy} numerical environment in the Python programming language.  In
+other programming languages and environments, broadcasting may also be known
 as @emph{binary singleton expansion} (@nospell{BSX}, in @sc{matlab}, and the
 origin of the name of the @code{bsxfun} function), @emph{recycling} (R
 programming language), @emph{single-instruction multiple data} (SIMD),
@@ -544,31 +550,43 @@ array, cell, or struct.
 
 @c arrayfun libinterp/corefcn/cellfun.cc
 @anchor{XREFarrayfun}
-@deftypefn  {} {} arrayfun (@var{func}, @var{A})
-@deftypefnx {} {@var{x} =} arrayfun (@var{func}, @var{A})
-@deftypefnx {} {@var{x} =} arrayfun (@var{func}, @var{A}, @var{b}, @dots{})
-@deftypefnx {} {[@var{x}, @var{y}, @dots{}] =} arrayfun (@var{func}, @var{A}, @dots{})
-@deftypefnx {} {} arrayfun (@dots{}, "UniformOutput", @var{val})
-@deftypefnx {} {} arrayfun (@dots{}, "ErrorHandler", @var{errfunc})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} arrayfun (@var{fcn}, @var{A})
+@deftypefnx {} {@var{B} =} arrayfun (@var{fcn}, @var{A1}, @var{A2}, @dots{})
+@deftypefnx {} {[@var{B1}, @var{B2}, @dots{}] =} arrayfun (@var{fcn}, @var{A}, @dots{})
+@deftypefnx {} {@var{B} =} arrayfun (@dots{}, "UniformOutput", @var{val})
+@deftypefnx {} {@var{B} =} arrayfun (@dots{}, "ErrorHandler", @var{errfcn})
 
 Execute a function on each element of an array.
 
 This is useful for functions that do not accept array arguments.  If the
-function does accept array arguments it is better to call the function
+function does accept array arguments it is @emph{better} to call the function
 directly.
 
-The first input argument @var{func} can be a string, a function
-handle, an inline function, or an anonymous function.  The input
-argument @var{A} can be a logic array, a numeric array, a string
-array, a structure array, or a cell array.  By a call of the function
-@code{arrayfun} all elements of @var{A} are passed on to the named
-function @var{func} individually.
+The first input argument @var{fcn} can be a string, a function handle, an
+inline function, or an anonymous function.  The input argument @var{A} can be a
+logical array, a numeric array, a string array, a structure array, or a cell
+array.  @code{arrayfun} passes all elements of @var{A} individually to the
+function @var{fcn} and collects the results.  The equivalent pseudo-code is
 
-The named function can also take more than two input arguments, with
-the input arguments given as third input argument @var{b}, fourth
-input argument @var{c}, @dots{}  If given more than one array input
-argument then all input arguments must have the same sizes, for
-example:
+@example
+@group
+cls = class (@var{fcn} (@var{A}(1));
+@var{B} = zeros (size (@var{A}), cls);
+for i = 1:numel (@var{A})
+  @var{B}(i) = @var{fcn} (@var{A}(i))
+endfor
+@end group
+@end example
+
+The named function can also take more than two input arguments, with the input
+arguments given as third input argument @var{A2}, fourth input argument
+@var{A2}, @dots{}  If given more than one array input argument then all input
+arguments must have the same sizes.  For example:
 
 @example
 @group
@@ -579,10 +597,10 @@ arrayfun (@@atan2, [1, 0], [0, 1])
 
 If the parameter @var{val} after a further string input argument
 @qcode{"UniformOutput"} is set @code{true} (the default), then the named
-function @var{func} must return a single element which then will be
-concatenated into the return value and is of type matrix.  Otherwise,
-if that parameter is set to @code{false}, then the outputs are
-concatenated in a cell array.  For example:
+function @var{fcn} must return a single element which then will be concatenated
+into the return value and is of type matrix.  Otherwise, if that parameter is
+set to @code{false}, then the outputs are concatenated in a cell array.  For
+example:
 
 @example
 @group
@@ -596,9 +614,8 @@ arrayfun (@@(x,y) x:y, "abc", "def", "UniformOutput", false)
 @end group
 @end example
 
-If more than one output arguments are given then the named function
-must return the number of return values that also are expected, for
-example:
+If more than one output arguments are given then the named function must return
+the number of return values that also are expected, for example:
 
 @example
 @group
@@ -622,25 +639,24 @@ C =
 @end group
 @end example
 
-If the parameter @var{errfunc} after a further string input argument
+If the parameter @var{errfcn} after a further string input argument
 @qcode{"ErrorHandler"} is another string, a function handle, an inline
-function, or an anonymous function, then @var{errfunc} defines a
-function to call in the case that @var{func} generates an error.
-The definition of the function must be of the form
+function, or an anonymous function, then @var{errfcn} defines a function to
+call in the case that @var{fcn} generates an error.  The definition of the
+function must be of the form
 
 @example
-function [@dots{}] = errfunc (@var{s}, @dots{})
+function [@dots{}] = errfcn (@var{s}, @dots{})
 @end example
 
 @noindent
-where there is an additional input argument to @var{errfunc}
-relative to @var{func}, given by @var{s}.  This is a structure with
-the elements @qcode{"identifier"}, @qcode{"message"}, and
-@qcode{"index"} giving, respectively, the error identifier, the error
-message, and the index of the array elements that caused the error.  The
-size of the output argument of @var{errfunc} must have the same size as the
-output argument of @var{func}, otherwise a real error is thrown.  For
-example:
+where there is an additional input argument to @var{errfcn} relative to
+@var{fcn}, given by @var{s}.  This is a structure with the elements
+@qcode{"identifier"}, @qcode{"message"}, and @qcode{"index"} giving,
+respectively, the error identifier, the error message, and the index of the
+array elements that caused the error.  The size of the output argument of
+@var{errfcn} must have the same size as the output argument of @var{fcn},
+otherwise a real error is thrown.  For example:
 
 @example
 @group
@@ -660,6 +676,11 @@ arrayfun (@@str2num, [1234],
 
 @c spfun scripts/sparse/spfun.m
 @anchor{XREFspfun}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{y} =} spfun (@var{f}, @var{S})
 Compute @code{f (@var{S})} for the nonzero elements of @var{S}.
 
@@ -714,20 +735,26 @@ Compressed Column Sparse (rows = 2, cols = 2, nnz = 4 [100%])
 
 @c cellfun libinterp/corefcn/cellfun.cc
 @anchor{XREFcellfun}
-@deftypefn  {} {} cellfun (@var{name}, @var{C})
-@deftypefnx {} {} cellfun ("size", @var{C}, @var{k})
-@deftypefnx {} {} cellfun ("isclass", @var{C}, @var{class})
-@deftypefnx {} {} cellfun (@var{func}, @var{C})
-@deftypefnx {} {} cellfun (@var{func}, @var{C}, @var{D})
-@deftypefnx {} {[@var{a}, @dots{}] =} cellfun (@dots{})
-@deftypefnx {} {} cellfun (@dots{}, "ErrorHandler", @var{errfunc})
-@deftypefnx {} {} cellfun (@dots{}, "UniformOutput", @var{val})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-Evaluate the function named @var{name} on the elements of the cell array
+
+@deftypefn  {} {@var{A} =} cellfun ("@var{fcn}", @var{C})
+@deftypefnx {} {@var{A} =} cellfun ("size", @var{C}, @var{k})
+@deftypefnx {} {@var{A} =} cellfun ("isclass", @var{C}, @var{class})
+@deftypefnx {} {@var{A} =} cellfun (@@@var{fcn}, @var{C})
+@deftypefnx {} {@var{A} =} cellfun (@var{fcn}, @var{C})
+@deftypefnx {} {@var{A} =} cellfun (@var{fcn}, @var{C1}, @var{C2}, @dots{})
+@deftypefnx {} {[@var{A1}, @var{A2}, @dots{}] =} cellfun (@dots{})
+@deftypefnx {} {@var{A} =} cellfun (@dots{}, "ErrorHandler", @var{errfcn})
+@deftypefnx {} {@var{A} =} cellfun (@dots{}, "UniformOutput", @var{val})
+
+Evaluate the function named "@var{fcn}" on the elements of the cell array
 @var{C}.
 
 Elements in @var{C} are passed on to the named function individually.  The
-function @var{name} can be one of the functions
+function @var{fcn} can be one of the functions
 
 @table @code
 @item isempty
@@ -760,11 +787,10 @@ Return the size along the @var{k}-th dimension.
 Return 1 for elements of @var{class}.
 @end table
 
-Additionally, @code{cellfun} accepts an arbitrary function @var{func}
-in the form of an inline function, function handle, or the name of a
-function (in a character string).  The function can take one or more
-arguments, with the inputs arguments given by @var{C}, @var{D}, etc.
-Equally the function can return one or more output arguments.  For example:
+Additionally, @code{cellfun} accepts an arbitrary function @var{fcn} in the
+form of an inline function, function handle, or the name of a function (in a
+character string).  The function can take one or more arguments, with the
+inputs arguments given by @var{C1}, @var{C2}, etc.  For example:
 
 @example
 @group
@@ -773,9 +799,10 @@ cellfun ("atan2", @{1, 0@}, @{0, 1@})
 @end group
 @end example
 
-The number of output arguments of @code{cellfun} matches the number of
-output arguments of the function.  The outputs of the function will be
-collected into the output arguments of @code{cellfun} like this:
+The number of output arguments of @code{cellfun} matches the number of output
+arguments of the function and can be greater than one.  When there are multiple
+outputs of the function they will be collected into the output arguments of
+@code{cellfun} like this:
 
 @example
 @group
@@ -792,34 +819,34 @@ endfunction
 @end group
 @end example
 
-Note that per default the output argument(s) are arrays of the same size as
+Note that, per default, the output argument(s) are arrays of the same size as
 the input arguments.  Input arguments that are singleton (1x1) cells will be
 automatically expanded to the size of the other arguments.
 
-If the parameter @qcode{"UniformOutput"} is set to true (the default),
-then the function must return scalars which will be concatenated into the
-return array(s).  If @qcode{"UniformOutput"} is false, the outputs are
-concatenated into a cell array (or cell arrays).  For example:
+If the parameter @qcode{"UniformOutput"} is set to true (the default), then the
+function must return scalars which will be concatenated into the return
+array(s).  If @qcode{"UniformOutput"} is false, the outputs are concatenated
+into a cell array (or cell arrays).  For example:
 
 @example
 @group
-cellfun ("tolower", @{"Foo", "Bar", "FooBar"@},
+cellfun ("lower", @{"Foo", "Bar", "FooBar"@},
          "UniformOutput", false)
 @result{} @{"foo", "bar", "foobar"@}
 @end group
 @end example
 
-Given the parameter @qcode{"ErrorHandler"}, then @var{errfunc} defines a
-function to call in case @var{func} generates an error.  The form of the
+Given the parameter @qcode{"ErrorHandler"}, then @var{errfcn} defines a
+function to call in case @var{fcn} generates an error.  The form of the
 function is
 
 @example
-function [@dots{}] = errfunc (@var{s}, @dots{})
+function [@dots{}] = errfcn (@var{s}, @dots{})
 @end example
 
 @noindent
-where there is an additional input argument to @var{errfunc} relative to
-@var{func}, given by @var{s}.  This is a structure with the elements
+where there is an additional input argument to @var{errfcn} relative to
+@var{fcn}, given by @var{s}.  This is a structure with the elements
 @qcode{"identifier"}, @qcode{"message"}, and @qcode{"index"} giving
 respectively the error identifier, the error message, and the index into the
 input arguments of the element that caused the error.  For example:
@@ -832,18 +859,18 @@ cellfun ("factorial", @{-1,2@}, "ErrorHandler", @@foo)
 @end group
 @end example
 
-Use @code{cellfun} intelligently.  The @code{cellfun} function is a
-useful tool for avoiding loops.  It is often used with anonymous
-function handles; however, calling an anonymous function involves an
-overhead quite comparable to the overhead of an m-file function.
-Passing a handle to a built-in function is faster, because the
-interpreter is not involved in the internal loop.  For example:
+Use @code{cellfun} intelligently.  The @code{cellfun} function is a useful tool
+for avoiding loops.  It is often used with anonymous function handles; however,
+calling an anonymous function involves an overhead quite comparable to the
+overhead of an m-file function.  Passing a handle to a built-in function is
+faster, because the interpreter is not involved in the internal loop.  For
+example:
 
 @example
 @group
-a = @{@dots{}@}
-v = cellfun (@@(x) det (x), a); # compute determinants
-v = cellfun (@@det, a); # faster
+C = @{@dots{}@}
+v = cellfun (@@(x) det (x), C); # compute determinants
+v = cellfun (@@det, C);         # 40% faster
 @end group
 @end example
 
@@ -853,16 +880,21 @@ v = cellfun (@@det, a); # faster
 
 @c structfun scripts/general/structfun.m
 @anchor{XREFstructfun}
-@deftypefn  {} {} structfun (@var{func}, @var{S})
-@deftypefnx {} {[@var{A}, @dots{}] =} structfun (@dots{})
-@deftypefnx {} {} structfun (@dots{}, "ErrorHandler", @var{errfunc})
-@deftypefnx {} {} structfun (@dots{}, "UniformOutput", @var{val})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{A} =} structfun (@var{fcn}, @var{S})
+@deftypefnx {} {@var{A} =} structfun (@dots{}, "ErrorHandler", @var{errfcn})
+@deftypefnx {} {@var{A} =} structfun (@dots{}, "UniformOutput", @var{val})
+@deftypefnx {} {[@var{A}, @var{B}, @dots{}] =} structfun (@dots{})
 
 Evaluate the function named @var{name} on the fields of the structure
-@var{S}.  The fields of @var{S} are passed to the function @var{func}
+@var{S}.  The fields of @var{S} are passed to the function @var{fcn}
 individually.
 
-@code{structfun} accepts an arbitrary function @var{func} in the form of an
+@code{structfun} accepts an arbitrary function @var{fcn} in the form of an
 inline function, function handle, or the name of a function (in a character
 string).  In the case of a character string argument, the function must
 accept a single argument named @var{x}, and it must return a string value.
@@ -886,16 +918,16 @@ structfun (@@(x) regexp (x, '(\w+)$', "matches")@{1@}, s,
 @end group
 @end example
 
-Given the parameter @qcode{"ErrorHandler"}, @var{errfunc} defines a function
-to call in case @var{func} generates an error.  The form of the function is
+Given the parameter @qcode{"ErrorHandler"}, @var{errfcn} defines a function
+to call in case @var{fcn} generates an error.  The form of the function is
 
 @example
-function [@dots{}] = errfunc (@var{se}, @dots{})
+function [@dots{}] = errfcn (@var{se}, @dots{})
 @end example
 
 @noindent
-where there is an additional input argument to @var{errfunc} relative to
-@var{func}, given by @nospell{@var{se}}.  This is a structure with the
+where there is an additional input argument to @var{errfcn} relative to
+@var{fcn}, given by @nospell{@var{se}}.  This is a structure with the
 elements @qcode{"identifier"}, @qcode{"message"} and @qcode{"index"},
 giving respectively the error identifier, the error message, and the index
 into the input arguments of the element that caused the error.  For an
@@ -923,8 +955,16 @@ useful.
 
 @c accumarray scripts/general/accumarray.m
 @anchor{XREFaccumarray}
-@deftypefn  {} {} accumarray (@var{subs}, @var{vals}, @var{sz}, @var{func}, @var{fillval}, @var{issparse})
-@deftypefnx {} {} accumarray (@var{subs}, @var{vals}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{A} =} accumarray (@var{subs}, @var{vals})
+@deftypefnx {} {@var{A} =} accumarray (@var{subs}, @var{vals}, @var{sz})
+@deftypefnx {} {@var{A} =} accumarray (@var{subs}, @var{vals}, @var{sz}, @var{fcn})
+@deftypefnx {} {@var{A} =} accumarray (@var{subs}, @var{vals}, @var{sz}, @var{fcn}, @var{fillval})
+@deftypefnx {} {@var{A} =} accumarray (@var{subs}, @var{vals}, @var{sz}, @var{fcn}, @var{fillval}, @var{issparse})
 
 Create an array by accumulating the elements of a vector into the
 positions defined by their subscripts.
@@ -945,14 +985,14 @@ subscripts of @var{subs} are taken as the indices into it.
 
 The default action of @code{accumarray} is to sum the elements with
 the same subscripts.  This behavior can be modified by defining the
-@var{func} function.  This should be a function or function handle
+@var{fcn} function.  This should be a function or function handle
 that accepts a column vector and returns a scalar.  The result of the
 function should not depend on the order of the subscripts.
 
 The elements of the returned array that have no subscripts associated
 with them are set to zero.  Defining @var{fillval} to some other value
 allows these values to be defined.  This behavior changes, however,
-for certain values of @var{func}.  If @var{func} is @code{@@min}
+for certain values of @var{fcn}.  If @var{fcn} is @code{@@min}
 (respectively, @code{@@max}) then the result will be filled with the
 minimum (respectively, maximum) integer if @var{vals} is of integral
 type, logical false (respectively, logical true) if @var{vals} is of
@@ -1022,7 +1062,7 @@ accumarray ([@var{i}, @var{j}], @var{sv}', [], @@min, 0, true)
 The complexity of accumarray in general for the non-sparse case is
 generally O(M+N), where N is the number of subscripts and M is the
 maximum subscript (linearized in multi-dimensional case).  If
-@var{func} is one of @code{@@sum} (default), @code{@@max},
+@var{fcn} is one of @code{@@sum} (default), @code{@@max},
 @code{@@min} or @code{@@(x) @{x@}}, an optimized code path is used.
 Note that for general reduction function the interpreter overhead can
 play a major part and it may be more efficient to do multiple
@@ -1034,7 +1074,16 @@ accumarray calls and compute the results in a vectorized manner.
 
 @c accumdim scripts/general/accumdim.m
 @anchor{XREFaccumdim}
-@deftypefn {} {} accumdim (@var{subs}, @var{vals}, @var{dim}, @var{n}, @var{func}, @var{fillval})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{A} =} accumdim (@var{subs}, @var{vals})
+@deftypefnx {} {@var{A} =} accumdim (@var{subs}, @var{vals}, @var{dim})
+@deftypefnx {} {@var{A} =} accumdim (@var{subs}, @var{vals}, @var{dim}, @var{n})
+@deftypefnx {} {@var{A} =} accumdim (@var{subs}, @var{vals}, @var{dim}, @var{n}, @var{fcn})
+@deftypefnx {} {@var{A} =} accumdim (@var{subs}, @var{vals}, @var{dim}, @var{n}, @var{fcn}, @var{fillval})
 Create an array by accumulating the slices of an array into the
 positions defined by their subscripts along a specified dimension.
 
@@ -1049,7 +1098,7 @@ defined it determines this extent.
 
 The default action of @code{accumdim} is to sum the subarrays with the
 same subscripts.  This behavior can be modified by defining the
-@var{func} function.  This should be a function or function handle
+@var{fcn} function.  This should be a function or function handle
 that accepts an array and a dimension, and reduces the array along
 this dimension.  As a special exception, the built-in @code{min} and
 @code{max} functions can be used directly, and @code{accumdim}
@@ -1076,14 +1125,149 @@ accumdim ([1, 2, 1, 2, 1], [ 7, -10,   4;
 @end deftypefn
 
 
+@node Memoization
+@section Memoization
+
+Memoization is a technique to cache the results of slow function calls and
+return the cached value when the function is called with the same inputs again,
+instead of reevaluating it.  It is very common to replace function calls with
+lookup tables if the same inputs are happening over and over again in a known,
+predictable way.  Memoization is, at its core, an extension of this practice
+where the lookup table is extended even during runtime for new arguments not
+seen previously.  A basic theoretical background can be found on Wikipedia or
+any undergraduate-level computer science textbook.
+
+Octave's @code{memoize} function provides drop-in memoization functionality for
+any user function or Octave function, including compiled functions.
+
+@c memoize scripts/miscellaneous/memoize.m
+@anchor{XREFmemoize}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{mem_fcn_handle} =} memoize (@var{fcn_handle})
+
+Create a memoized version @var{mem_fcn_handle} of function @var{fcn_handle}.
+
+Each call to the memoized version @var{mem_fcn_handle} checks the inputs
+against an internally maintained table, and if the inputs have occurred
+previously, then the result of the function call is returned from the table
+itself instead of evaluating the full function again.  This speeds up the
+execution of functions that are called with the same inputs multiple times.
+
+For example, here we take a slow user-written function named @code{slow_fcn}
+and memoize it to a new handle @code{cyc}.  The first executions of both
+versions take the same time, but the subsequent executions of the memoized
+version returns the previously computed value, thus reducing 2.4 seconds of
+runtime to only 2.4 milliseconds.  The final check verifies that the same
+result was returned from both versions.
+
+@example
+@group
+>> tic; @var{p} = slow_fcn (5040); toc
+Elapsed time is 2.41244 seconds.
+>> tic; @var{p} = slow_fcn (5040); toc
+Elapsed time is 2.41542 seconds.
+
+>> cyc = memoize (@@slow_fcn);
+>> tic; @var{r} = cyc (5040); toc
+Elapsed time is 2.42609 seconds.
+>> tic; @var{r} = cyc (5040); toc
+Elapsed time is 0.00236511 seconds.
+
+>> all (@var{p} == @var{r})
+ans = 1
+@end group
+@end example
+
+@xseealso{@ref{XREFclearAllMemoizedCaches,,clearAllMemoizedCaches}}
+@end deftypefn
+
+
+To memoize a function @code{z = foo(x, y)}, use this general pattern:
+
+@example
+@group
+foo2 = memoize (@@(@var{x, y}) @var{foo(x, y)});
+z = foo2 (x, y);
+@end group
+@end example
+
+In the above example, the first line creates a memoized version @code{foo2} of
+the function @code{foo}.  For simple functions with only trivial wrapping, this
+line can also be shortened to:
+
+@example
+@group
+foo2 = memoize (@@foo);
+@end group
+@end example
+
+The second line @code{z = foo2 (x, y);} calls that memoized version @code{foo2}
+instead of the original function, allowing @code{memoize} to intercept the call
+and replace it with a looked-up value from a table if the inputs have occurred
+before, instead of evaluating the original function again.
+
+Note that this will not accelerate the @emph{first} call to the function but
+only subsequent calls.
+
+Note that due to the overhead incurred by @code{memoize} to create and manage
+the lookup tables for each function, this technique is useful only for
+functions that take at least a couple of seconds to execute.  Such functions
+can be replaced by table lookups taking only a millisecond or so, but if the
+original function itself was taking only milliseconds, memoizing it will not
+speed it up.
+
+Recursive functions can be memoized as well, using a pattern like:
+
+@example
+@group
+function z = foo (x, y)
+  persistent foo2 = memoize (@@foo);
+  foo2.CacheSize = 1e6;
+
+  ## Call the memoized version when recursing
+  z = foo2 (x, y);
+endfunction
+@end group
+@end example
+
+The @code{CacheSize} can be optionally increased in anticipation of a large
+number of function calls, such as from inside a recursive function.  If
+@code{CacheSize} is exceeded, the memoization tables are resized, causing a
+slowdown.  Increasing the @code{CacheSize} thus works like preallocation to
+speed up execution.
+
+The function @code{clearAllMemoizedCaches} clears the memoization tables when
+they are no longer needed.
+
+@c clearAllMemoizedCaches scripts/miscellaneous/clearAllMemoizedCaches.m
+@anchor{XREFclearAllMemoizedCaches}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {} clearAllMemoizedCaches ()
+Clear all memoized caches.
+
+Memoization maintains internal tables of which functions have been called
+with which inputs.  This function clears those tables to free memory,
+or for a fresh start.
+
+@xseealso{@ref{XREFmemoize,,memoize}}
+@end deftypefn
+
+
 @node Miscellaneous Techniques
 @section Miscellaneous Techniques
 @cindex execution speed
 @cindex speedups
 @cindex optimization
 
-Here are some other ways of improving the execution speed of Octave
-programs.
+Here are some other ways of improving the execution speed of Octave programs.
 
 @itemize @bullet
 

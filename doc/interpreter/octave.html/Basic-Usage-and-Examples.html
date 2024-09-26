@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Basic Usage and Examples (GNU Octave (version 7.1.0))</title>
+<title>Basic Usage and Examples (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Basic Usage and Examples (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Basic Usage and Examples (GNU Octave (version 7.1.0))">
+<meta name="description" content="Basic Usage and Examples (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Basic Usage and Examples (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,10 @@
 <link href="Structure-Arrays.html" rel="next" title="Structure Arrays">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,13 +31,13 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Basic-Usage-and-Examples">
-<div class="header">
+<div class="subsection-level-extent" id="Basic-Usage-and-Examples">
+<div class="nav-panel">
 <p>
 Next: <a href="Structure-Arrays.html" accesskey="n" rel="next">Structure Arrays</a>, Up: <a href="Structures.html" accesskey="u" rel="up">Structures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Basic-Usage-and-Examples-1"></span><h4 class="subsection">6.1.1 Basic Usage and Examples</h4>
+<h4 class="subsection" id="Basic-Usage-and-Examples-1"><span>6.1.1 Basic Usage and Examples<a class="copiable-link" href="#Basic-Usage-and-Examples-1"> &para;</a></span></h4>
 
 <p>Here are some examples of using data structures in Octave.
 </p>
@@ -56,19 +45,19 @@ Next: <a href="Structure-Arrays.html" accesskey="n" rel="next">Structure Arrays<
 expressions
 </p>
 <div class="example">
-<pre class="example">x.a = 1;
+<div class="group"><pre class="example-preformatted">x.a = 1;
 x.b = [1, 2; 3, 4];
 x.c = &quot;string&quot;;
-</pre></div>
+</pre></div></div>
 
-<span id="index-_002e-structure-field-access"></span>
-<p>create a structure with three elements.  The &lsquo;<samp>.</samp>&rsquo; character separates
-the structure name (in the example above <code>x</code>) from the field name and
+<a class="index-entry-id" id="index-_002e-structure-field-access"></a>
+<p>create a structure with three elements.  The &lsquo;<samp class="samp">.</samp>&rsquo; character separates
+the structure name (in the example above <code class="code">x</code>) from the field name and
 indicates to Octave that this variable is a structure.  To print the value
 of the structure you can type its name, just as for any other variable:
 </p>
 <div class="example">
-<pre class="example">x
+<div class="group"><pre class="example-preformatted">x
      &rArr; x =
 
          scalar structure containing the fields:
@@ -80,14 +69,14 @@ of the structure you can type its name, just as for any other variable:
               3   4
 
            c = string
-</pre></div>
+</pre></div></div>
 
 <p>Note that Octave may print the elements in any order.
 </p>
 <p>Structures may be copied just like any other variable:
 </p>
 <div class="example">
-<pre class="example">y = x
+<div class="group"><pre class="example-preformatted">y = x
      &rArr; y =
 
          scalar structure containing the fields:
@@ -99,15 +88,15 @@ of the structure you can type its name, just as for any other variable:
               3   4
 
            c = string
-</pre></div>
+</pre></div></div>
 
 <p>Since structures are themselves values, structure elements may reference
-other structures, as well.  The following statement adds the field <code>d</code>
-to the structure <code>x</code>.  The value of field <code>d</code> is itself a data
-structure containing the single field <code>a</code>, which has a value of 3.
+other structures, as well.  The following statement adds the field <code class="code">d</code>
+to the structure <code class="code">x</code>.  The value of field <code class="code">d</code> is itself a data
+structure containing the single field <code class="code">a</code>, which has a value of 3.
 </p>
 <div class="example">
-<pre class="example">x.d.a = 3;
+<pre class="example-preformatted">x.d.a = 3;
 x.d
      &rArr; ans =
 
@@ -138,7 +127,7 @@ x
 other structures, only a few levels are displayed.  For example:
 </p>
 <div class="example">
-<pre class="example">a.b.c.d.e = 1;
+<div class="group"><pre class="example-preformatted">a.b.c.d.e = 1;
 a
      &rArr; a =
 
@@ -153,66 +142,72 @@ a
                  scalar structure containing the fields:
 
                    d: 1x1 scalar struct
-</pre></div>
+</pre></div></div>
 
 <p>This prevents long and confusing output from large deeply nested
 structures.  The number of levels to print for nested structures may be
-set with the function <code>struct_levels_to_print</code>, and the function
-<code>print_struct_array_contents</code> may be used to enable printing of the
+set with the function <code class="code">struct_levels_to_print</code>, and the function
+<code class="code">print_struct_array_contents</code> may be used to enable printing of the
 contents of structure arrays.
 </p>
-<span id="XREFstruct_005flevels_005fto_005fprint"></span><dl class="def">
-<dt id="index-struct_005flevels_005fto_005fprint"><span class="category">: </span><span><em><var>val</var> =</em> <strong>struct_levels_to_print</strong> <em>()</em><a href='#index-struct_005flevels_005fto_005fprint' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-struct_005flevels_005fto_005fprint-1"><span class="category">: </span><span><em><var>old_val</var> =</em> <strong>struct_levels_to_print</strong> <em>(<var>new_val</var>)</em><a href='#index-struct_005flevels_005fto_005fprint-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-struct_005flevels_005fto_005fprint-2"><span class="category">: </span><span><em></em> <strong>struct_levels_to_print</strong> <em>(<var>new_val</var>, &quot;local&quot;)</em><a href='#index-struct_005flevels_005fto_005fprint-2' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFstruct_005flevels_005fto_005fprint"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-struct_005flevels_005fto_005fprint"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">struct_levels_to_print</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-struct_005flevels_005fto_005fprint"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-struct_005flevels_005fto_005fprint-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">struct_levels_to_print</strong> <code class="def-code-arguments">(<var class="var">new_val</var>)</code><a class="copiable-link" href="#index-struct_005flevels_005fto_005fprint-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-struct_005flevels_005fto_005fprint-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">struct_levels_to_print</strong> <code class="def-code-arguments">(<var class="var">new_val</var>, &quot;local&quot;)</code><a class="copiable-link" href="#index-struct_005flevels_005fto_005fprint-2"> &para;</a></span></dt>
 <dd><p>Query or set the internal variable that specifies the number of
 structure levels to display.
 </p>
-<p>When called from inside a function with the <code>&quot;local&quot;</code> option, the
+<p>When called from inside a function with the <code class="code">&quot;local&quot;</code> option, the
 variable is changed locally for the function and any subroutines it calls.
 The original variable value is restored when exiting the function.
 </p>
-<p><strong>See also:</strong> <a href="#XREFprint_005fstruct_005farray_005fcontents">print_struct_array_contents</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFprint_005fstruct_005farray_005fcontents">print_struct_array_contents</a>.
 </p></dd></dl>
 
 
-<span id="XREFprint_005fstruct_005farray_005fcontents"></span><dl class="def">
-<dt id="index-print_005fstruct_005farray_005fcontents"><span class="category">: </span><span><em><var>val</var> =</em> <strong>print_struct_array_contents</strong> <em>()</em><a href='#index-print_005fstruct_005farray_005fcontents' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-print_005fstruct_005farray_005fcontents-1"><span class="category">: </span><span><em><var>old_val</var> =</em> <strong>print_struct_array_contents</strong> <em>(<var>new_val</var>)</em><a href='#index-print_005fstruct_005farray_005fcontents-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-print_005fstruct_005farray_005fcontents-2"><span class="category">: </span><span><em></em> <strong>print_struct_array_contents</strong> <em>(<var>new_val</var>, &quot;local&quot;)</em><a href='#index-print_005fstruct_005farray_005fcontents-2' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFprint_005fstruct_005farray_005fcontents"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-print_005fstruct_005farray_005fcontents"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">print_struct_array_contents</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-print_005fstruct_005farray_005fcontents"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-print_005fstruct_005farray_005fcontents-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">print_struct_array_contents</strong> <code class="def-code-arguments">(<var class="var">new_val</var>)</code><a class="copiable-link" href="#index-print_005fstruct_005farray_005fcontents-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-print_005fstruct_005farray_005fcontents-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">print_struct_array_contents</strong> <code class="def-code-arguments">(<var class="var">new_val</var>, &quot;local&quot;)</code><a class="copiable-link" href="#index-print_005fstruct_005farray_005fcontents-2"> &para;</a></span></dt>
 <dd><p>Query or set the internal variable that specifies whether to print struct
 array contents.
 </p>
 <p>If true, values of struct array elements are printed.  This variable does
 not affect scalar structures whose elements are always printed.  In both
 cases, however, printing will be limited to the number of levels specified
-by <var>struct_levels_to_print</var>.
+by <var class="var">struct_levels_to_print</var>.
 </p>
-<p>When called from inside a function with the <code>&quot;local&quot;</code> option, the
+<p>When called from inside a function with the <code class="code">&quot;local&quot;</code> option, the
 variable is changed locally for the function and any subroutines it calls.
 The original variable value is restored when exiting the function.
 </p>
-<p><strong>See also:</strong> <a href="#XREFstruct_005flevels_005fto_005fprint">struct_levels_to_print</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFstruct_005flevels_005fto_005fprint">struct_levels_to_print</a>.
 </p></dd></dl>
 
 
 <p>Functions can return structures.  For example, the following function
 separates the real and complex parts of a matrix and stores them in two
-elements of the same structure variable <code>y</code>.
+elements of the same structure variable <code class="code">y</code>.
 </p>
 <div class="example">
-<pre class="example">function y = f (x)
+<div class="group"><pre class="example-preformatted">function y = f (x)
   y.re = real (x);
   y.im = imag (x);
 endfunction
-</pre></div>
+</pre></div></div>
 
-<p>When called with a complex-valued argument, the function <code>f</code> returns
+<p>When called with a complex-valued argument, the function <code class="code">f</code> returns
 the data structure containing the real and imaginary parts of the original
 function argument.
 </p>
 <div class="example">
-<pre class="example">f (rand (2) + rand (2) * I)
+<div class="group"><pre class="example-preformatted">f (rand (2) + rand (2) * I)
      &rArr; ans =
 
          scalar structure containing the fields:
@@ -226,13 +221,13 @@ function argument.
 
               0.26475  0.14828
               0.18436  0.83669
-</pre></div>
+</pre></div></div>
 
 <p>Function return lists can include structure elements, and they may be
 indexed like any other variable.  For example:
 </p>
 <div class="example">
-<pre class="example">[ x.u, x.s(2:3,2:3), x.v ] = svd ([1, 2; 3, 4]);
+<pre class="example-preformatted">[ x.u, x.s(2:3,2:3), x.v ] = svd ([1, 2; 3, 4]);
 x
 
      &rArr; x =
@@ -257,12 +252,12 @@ x
 </pre></div>
 
 <p>It is also possible to cycle through all the elements of a structure in
-a loop, using a special form of the <code>for</code> statement
-(see <a href="Looping-Over-Structure-Elements.html">Looping Over Structure Elements</a>).
+a loop, using a special form of the <code class="code">for</code> statement
+(see <a class="pxref" href="Looping-Over-Structure-Elements.html">Looping Over Structure Elements</a>).
 </p>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Structure-Arrays.html">Structure Arrays</a>, Up: <a href="Structures.html">Structures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

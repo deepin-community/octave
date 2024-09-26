@@ -78,67 +78,66 @@ extern int octave_debug;
     EXPR_OR_OR = 271,              /* EXPR_OR_OR  */
     EXPR_AND = 272,                /* EXPR_AND  */
     EXPR_OR = 273,                 /* EXPR_OR  */
-    EXPR_NOT = 274,                /* EXPR_NOT  */
-    EXPR_LT = 275,                 /* EXPR_LT  */
-    EXPR_LE = 276,                 /* EXPR_LE  */
-    EXPR_EQ = 277,                 /* EXPR_EQ  */
-    EXPR_NE = 278,                 /* EXPR_NE  */
-    EXPR_GE = 279,                 /* EXPR_GE  */
-    EXPR_GT = 280,                 /* EXPR_GT  */
-    LEFTDIV = 281,                 /* LEFTDIV  */
-    EMUL = 282,                    /* EMUL  */
-    EDIV = 283,                    /* EDIV  */
-    ELEFTDIV = 284,                /* ELEFTDIV  */
-    HERMITIAN = 285,               /* HERMITIAN  */
-    TRANSPOSE = 286,               /* TRANSPOSE  */
-    PLUS_PLUS = 287,               /* PLUS_PLUS  */
-    MINUS_MINUS = 288,             /* MINUS_MINUS  */
-    POW = 289,                     /* POW  */
-    EPOW = 290,                    /* EPOW  */
-    NUMBER = 291,                  /* NUMBER  */
-    STRUCT_ELT = 292,              /* STRUCT_ELT  */
-    NAME = 293,                    /* NAME  */
-    END = 294,                     /* END  */
-    DQ_STRING = 295,               /* DQ_STRING  */
-    SQ_STRING = 296,               /* SQ_STRING  */
-    FOR = 297,                     /* FOR  */
-    PARFOR = 298,                  /* PARFOR  */
-    WHILE = 299,                   /* WHILE  */
-    DO = 300,                      /* DO  */
-    UNTIL = 301,                   /* UNTIL  */
-    SPMD = 302,                    /* SPMD  */
-    IF = 303,                      /* IF  */
-    ELSEIF = 304,                  /* ELSEIF  */
-    ELSE = 305,                    /* ELSE  */
-    SWITCH = 306,                  /* SWITCH  */
-    CASE = 307,                    /* CASE  */
-    OTHERWISE = 308,               /* OTHERWISE  */
-    BREAK = 309,                   /* BREAK  */
-    CONTINUE = 310,                /* CONTINUE  */
-    FUNC_RET = 311,                /* FUNC_RET  */
-    UNWIND = 312,                  /* UNWIND  */
-    CLEANUP = 313,                 /* CLEANUP  */
-    TRY = 314,                     /* TRY  */
-    CATCH = 315,                   /* CATCH  */
-    GLOBAL = 316,                  /* GLOBAL  */
-    PERSISTENT = 317,              /* PERSISTENT  */
-    FCN_HANDLE = 318,              /* FCN_HANDLE  */
-    CLASSDEF = 319,                /* CLASSDEF  */
-    PROPERTIES = 320,              /* PROPERTIES  */
-    METHODS = 321,                 /* METHODS  */
-    EVENTS = 322,                  /* EVENTS  */
-    ENUMERATION = 323,             /* ENUMERATION  */
-    METAQUERY = 324,               /* METAQUERY  */
-    SUPERCLASSREF = 325,           /* SUPERCLASSREF  */
-    FQ_IDENT = 326,                /* FQ_IDENT  */
-    GET = 327,                     /* GET  */
-    SET = 328,                     /* SET  */
-    FCN = 329,                     /* FCN  */
-    ARGUMENTS = 330,               /* ARGUMENTS  */
-    LEXICAL_ERROR = 331,           /* LEXICAL_ERROR  */
-    END_OF_INPUT = 332,            /* END_OF_INPUT  */
-    INPUT_FILE = 333,              /* INPUT_FILE  */
-    UNARY = 334                    /* UNARY  */
+    EXPR_LT = 274,                 /* EXPR_LT  */
+    EXPR_LE = 275,                 /* EXPR_LE  */
+    EXPR_EQ = 276,                 /* EXPR_EQ  */
+    EXPR_NE = 277,                 /* EXPR_NE  */
+    EXPR_GE = 278,                 /* EXPR_GE  */
+    EXPR_GT = 279,                 /* EXPR_GT  */
+    LEFTDIV = 280,                 /* LEFTDIV  */
+    EMUL = 281,                    /* EMUL  */
+    EDIV = 282,                    /* EDIV  */
+    ELEFTDIV = 283,                /* ELEFTDIV  */
+    HERMITIAN = 284,               /* HERMITIAN  */
+    TRANSPOSE = 285,               /* TRANSPOSE  */
+    PLUS_PLUS = 286,               /* PLUS_PLUS  */
+    MINUS_MINUS = 287,             /* MINUS_MINUS  */
+    POW = 288,                     /* POW  */
+    EPOW = 289,                    /* EPOW  */
+    NUMBER = 290,                  /* NUMBER  */
+    STRUCT_ELT = 291,              /* STRUCT_ELT  */
+    NAME = 292,                    /* NAME  */
+    END = 293,                     /* END  */
+    DQ_STRING = 294,               /* DQ_STRING  */
+    SQ_STRING = 295,               /* SQ_STRING  */
+    FOR = 296,                     /* FOR  */
+    PARFOR = 297,                  /* PARFOR  */
+    WHILE = 298,                   /* WHILE  */
+    DO = 299,                      /* DO  */
+    UNTIL = 300,                   /* UNTIL  */
+    SPMD = 301,                    /* SPMD  */
+    IF = 302,                      /* IF  */
+    ELSEIF = 303,                  /* ELSEIF  */
+    ELSE = 304,                    /* ELSE  */
+    SWITCH = 305,                  /* SWITCH  */
+    CASE = 306,                    /* CASE  */
+    OTHERWISE = 307,               /* OTHERWISE  */
+    BREAK = 308,                   /* BREAK  */
+    CONTINUE = 309,                /* CONTINUE  */
+    FUNC_RET = 310,                /* FUNC_RET  */
+    UNWIND = 311,                  /* UNWIND  */
+    CLEANUP = 312,                 /* CLEANUP  */
+    TRY = 313,                     /* TRY  */
+    CATCH = 314,                   /* CATCH  */
+    GLOBAL = 315,                  /* GLOBAL  */
+    PERSISTENT = 316,              /* PERSISTENT  */
+    FCN_HANDLE = 317,              /* FCN_HANDLE  */
+    CLASSDEF = 318,                /* CLASSDEF  */
+    PROPERTIES = 319,              /* PROPERTIES  */
+    METHODS = 320,                 /* METHODS  */
+    EVENTS = 321,                  /* EVENTS  */
+    ENUMERATION = 322,             /* ENUMERATION  */
+    METAQUERY = 323,               /* METAQUERY  */
+    SUPERCLASSREF = 324,           /* SUPERCLASSREF  */
+    FQ_IDENT = 325,                /* FQ_IDENT  */
+    GET = 326,                     /* GET  */
+    SET = 327,                     /* SET  */
+    FCN = 328,                     /* FCN  */
+    ARGUMENTS = 329,               /* ARGUMENTS  */
+    LEXICAL_ERROR = 330,           /* LEXICAL_ERROR  */
+    END_OF_INPUT = 331,            /* END_OF_INPUT  */
+    INPUT_FILE = 332,              /* INPUT_FILE  */
+    UNARY = 333                    /* UNARY  */
   };
   typedef enum octave_tokentype octave_token_kind_t;
 #endif
@@ -147,7 +146,7 @@ extern int octave_debug;
 #if ! defined OCTAVE_STYPE && ! defined OCTAVE_STYPE_IS_DECLARED
 union OCTAVE_STYPE
 {
-#line 139 "/home/jwe/src/octave-stable/libinterp/parse-tree/oct-parse.yy"
+#line 139 "../libinterp/parse-tree/oct-parse.yy"
 
   int dummy_type;
 
@@ -212,7 +211,7 @@ union OCTAVE_STYPE
   octave::tree_classdef_enum_list* tree_classdef_enum_list_type;
   octave::tree_classdef_enum_block* tree_classdef_enum_block_type;
 
-#line 216 "libinterp/parse-tree/oct-parse.h"
+#line 215 "libinterp/parse-tree/oct-parse.h"
 
 };
 typedef union OCTAVE_STYPE OCTAVE_STYPE;

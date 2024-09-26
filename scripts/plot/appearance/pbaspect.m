@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -83,7 +83,7 @@ function pbratio = pbaspect (varargin)
         error ("pbaspect: PLOT_BOX_ASPECT_RATIO must be a 2 or 3 element vector");
       endif
     elseif (ischar (arg))
-      arg = tolower (arg);
+      arg = lower (arg);
       switch (arg)
         case "auto"
           set (hax, "plotboxaspectratiomode", "auto");
@@ -111,7 +111,7 @@ endfunction
 
 %!demo
 %! clf;
-%! x = 0:0.01:4;;
+%! x = 0:0.01:4;
 %! plot (x,cos (x), x,sin (x));
 %! pbaspect ([2 1 1]);
 %! title ("plot box aspect ratio is 2x1");

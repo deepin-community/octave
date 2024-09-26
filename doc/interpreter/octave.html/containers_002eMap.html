@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>containers.Map (GNU Octave (version 7.1.0))</title>
+<title>containers.Map (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="containers.Map (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="containers.Map (GNU Octave (version 7.1.0))">
+<meta name="description" content="containers.Map (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="containers.Map (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Structures.html" rel="prev" title="Structures">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,63 +31,66 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="containers_002eMap">
-<div class="header">
+<div class="section-level-extent" id="containers_002eMap">
+<div class="nav-panel">
 <p>
 Next: <a href="Cell-Arrays.html" accesskey="n" rel="next">Cell Arrays</a>, Previous: <a href="Structures.html" accesskey="p" rel="prev">Structures</a>, Up: <a href="Data-Containers.html" accesskey="u" rel="up">Data Containers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="containers_002eMap-1"></span><h3 class="section">6.2 containers.Map</h3>
-<span id="index-Map"></span>
-<span id="index-key_002fvalue-store"></span>
-<span id="index-hash-table"></span>
+<h3 class="section" id="containers_002eMap-1"><span>6.2 containers.Map<a class="copiable-link" href="#containers_002eMap-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-Map"></a>
+<a class="index-entry-id" id="index-key_002fvalue-store"></a>
+<a class="index-entry-id" id="index-hash-table"></a>
 
 
-<span id="XREFcontainers_005fMap"></span><dl class="def">
-<dt id="index-containers_002eMap"><span class="category">: </span><span><em><var>m</var> =</em> <strong>containers.Map</strong> <em>()</em><a href='#index-containers_002eMap' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-containers_002eMap-1"><span class="category">: </span><span><em><var>m</var> =</em> <strong>containers.Map</strong> <em>(<var>keys</var>, <var>vals</var>)</em><a href='#index-containers_002eMap-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-containers_002eMap-2"><span class="category">: </span><span><em><var>m</var> =</em> <strong>containers.Map</strong> <em>(<var>keys</var>, <var>vals</var>, <code>&quot;UniformValues&quot;</code>, <var>is_uniform</var>)</em><a href='#index-containers_002eMap-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-containers_002eMap-3"><span class="category">: </span><span><em><var>m</var> =</em> <strong>containers.Map</strong> <em>(<code>&quot;KeyType&quot;</code>, <var>kt</var>, <code>&quot;ValueType&quot;</code>, <var>vt</var>)</em><a href='#index-containers_002eMap-3' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFcontainers_005fMap"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-containers_002eMap"><span class="category-def">: </span><span><code class="def-type"><var class="var">m</var> =</code> <strong class="def-name">containers.Map</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-containers_002eMap"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-containers_002eMap-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">m</var> =</code> <strong class="def-name">containers.Map</strong> <code class="def-code-arguments">(<var class="var">keys</var>, <var class="var">vals</var>)</code><a class="copiable-link" href="#index-containers_002eMap-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-containers_002eMap-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">m</var> =</code> <strong class="def-name">containers.Map</strong> <code class="def-code-arguments">(<var class="var">keys</var>, <var class="var">vals</var>, <code class="code">&quot;UniformValues&quot;</code>, <var class="var">is_uniform</var>)</code><a class="copiable-link" href="#index-containers_002eMap-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-containers_002eMap-3"><span class="category-def">: </span><span><code class="def-type"><var class="var">m</var> =</code> <strong class="def-name">containers.Map</strong> <code class="def-code-arguments">(<code class="code">&quot;KeyType&quot;</code>, <var class="var">kt</var>, <code class="code">&quot;ValueType&quot;</code>, <var class="var">vt</var>)</code><a class="copiable-link" href="#index-containers_002eMap-3"> &para;</a></span></dt>
 <dd>
 <p>Create an object of the containers.Map class that stores a list of
 key/value pairs.
 </p>
-<p><var>keys</var> is an array of <em>unique</em> keys for the map.  The keys can be
+<p><var class="var">keys</var> is an array of <em class="emph">unique</em> keys for the map.  The keys can be
 numeric scalars or strings.  The type for numeric keys may be one of
-<code>&quot;double&quot;</code>, <code>&quot;single&quot;</code>, <code>&quot;int32&quot;</code>, <code>&quot;uint32&quot;</code>,
-<code>&quot;int64&quot;</code>, or <code>&quot;uint64&quot;</code>.  Other numeric or logical keys will
-be converted to <code>&quot;double&quot;</code>.  A single string key may be entered as
+<code class="code">&quot;double&quot;</code>, <code class="code">&quot;single&quot;</code>, <code class="code">&quot;int32&quot;</code>, <code class="code">&quot;uint32&quot;</code>,
+<code class="code">&quot;int64&quot;</code>, or <code class="code">&quot;uint64&quot;</code>.  Other numeric or logical keys will
+be converted to <code class="code">&quot;double&quot;</code>.  A single string key may be entered as
 is.  Multiple string keys are entered as a cell array of strings.
 </p>
-<p><var>vals</var> is an array of values for the map with the <em>same</em> number
-of elements as <var>keys</var>.
+<p><var class="var">vals</var> is an array of values for the map with the <em class="emph">same</em> number
+of elements as <var class="var">keys</var>.
 </p>
 <p>When called with no input arguments a default map is created with strings
-as the key type and <code>&quot;any&quot;</code> as the value type.
+as the key type and <code class="code">&quot;any&quot;</code> as the value type.
 </p>
-<p>The <code>&quot;UniformValues&quot;</code> option specifies whether the values of
-the map must be strictly of the same type.  If <var>is_uniform</var> is true,
+<p>The <code class="code">&quot;UniformValues&quot;</code> option specifies whether the values of
+the map must be strictly of the same type.  If <var class="var">is_uniform</var> is true,
 any values which would be added to the map are first validated to ensure
 they are of the correct type.
 </p>
-<p>When called with <code>&quot;KeyType&quot;</code> and <code>&quot;ValueType&quot;</code> arguments,
-create an empty map with the specified types.  The inputs <var>kt</var> and
-<var>vt</var> are the types for the keys and values of the map respectively.
-Allowed values for <var>kt</var> are <code>&quot;char&quot;</code>, <code>&quot;double&quot;</code>,
-<code>&quot;single&quot;</code>, <code>&quot;int32&quot;</code>, <code>&quot;uint32&quot;</code>, <code>&quot;int64&quot;</code>,
-<code>&quot;uint64&quot;</code>.  Allowed values for <var>vt</var> are <code>&quot;any&quot;</code>,
-<code>&quot;char&quot;</code>, <code>&quot;double&quot;</code>, <code>&quot;single&quot;</code>, <code>&quot;int32&quot;</code>,
-<code>&quot;uint32&quot;</code>, <code>&quot;int64&quot;</code>, <code>&quot;uint64&quot;</code>, <code>&quot;logical&quot;</code>.
+<p>When called with <code class="code">&quot;KeyType&quot;</code> and <code class="code">&quot;ValueType&quot;</code> arguments,
+create an empty map with the specified types.  The inputs <var class="var">kt</var> and
+<var class="var">vt</var> are the types for the keys and values of the map respectively.
+Allowed values for <var class="var">kt</var> are <code class="code">&quot;char&quot;</code>, <code class="code">&quot;double&quot;</code>,
+<code class="code">&quot;single&quot;</code>, <code class="code">&quot;int32&quot;</code>, <code class="code">&quot;uint32&quot;</code>, <code class="code">&quot;int64&quot;</code>,
+<code class="code">&quot;uint64&quot;</code>.  Allowed values for <var class="var">vt</var> are <code class="code">&quot;any&quot;</code>,
+<code class="code">&quot;char&quot;</code>, <code class="code">&quot;double&quot;</code>, <code class="code">&quot;single&quot;</code>, <code class="code">&quot;int32&quot;</code>,
+<code class="code">&quot;uint32&quot;</code>, <code class="code">&quot;int64&quot;</code>, <code class="code">&quot;uint64&quot;</code>, <code class="code">&quot;logical&quot;</code>.
 </p>
-<p>The return value <var>m</var> is an object of the containers.Map class.
+<p>The return value <var class="var">m</var> is an object of the containers.Map class.
 </p>
-<p><strong>See also:</strong> <a href="Creating-Structures.html#XREFstruct">struct</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Creating-Structures.html#XREFstruct">struct</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Cell-Arrays.html">Cell Arrays</a>, Previous: <a href="Structures.html">Structures</a>, Up: <a href="Data-Containers.html">Data Containers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

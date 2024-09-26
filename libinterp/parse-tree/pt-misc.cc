@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1994-2022 The Octave Project Developers
+// Copyright (C) 1994-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,51 +30,52 @@
 #include "pt-idx.h"
 #include "pt-misc.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// Parameter lists.
+
+tree_parameter_list::~tree_parameter_list ()
 {
-  // Parameter lists.
-
-  tree_parameter_list::~tree_parameter_list (void)
-  {
-    while (! empty ())
-      {
-        auto p = begin ();
-        delete *p;
-        erase (p);
-      }
-  }
-
-  void
-  tree_parameter_list::mark_as_formal_parameters (void)
-  {
-    for (tree_decl_elt *elt : *this)
-      elt->mark_as_formal_parameter ();
-  }
-
-  std::list<std::string>
-  tree_parameter_list::variable_names (void) const
-  {
-    std::list<std::string> retval;
-
-    for (tree_decl_elt *elt : *this)
-      retval.push_back (elt->name ());
-
-    if (m_marked_for_varargs)
-      retval.push_back (varargs_symbol_name ());
-
-    return retval;
-  }
-
-  tree_parameter_list *
-  tree_parameter_list::dup (symbol_scope& scope) const
-  {
-    tree_parameter_list *new_list = new tree_parameter_list (m_in_or_out);
-
-    new_list->m_marked_for_varargs = m_marked_for_varargs;
-
-    for (const tree_decl_elt *elt : *this)
-      new_list->append (elt->dup (scope));
-
-    return new_list;
-  }
+  while (! empty ())
+    {
+      auto p = begin ();
+      delete *p;
+      erase (p);
+    }
 }
+
+void
+tree_parameter_list::mark_as_formal_parameters ()
+{
+  for (tree_decl_elt *elt : *this)
+    elt->mark_as_formal_parameter ();
+}
+
+std::list<std::string>
+tree_parameter_list::variable_names () const
+{
+  std::list<std::string> retval;
+
+  for (tree_decl_elt *elt : *this)
+    retval.push_back (elt->name ());
+
+  if (m_marked_for_varargs)
+    retval.push_back (varargs_symbol_name ());
+
+  return retval;
+}
+
+tree_parameter_list *
+tree_parameter_list::dup (symbol_scope& scope) const
+{
+  tree_parameter_list *new_list = new tree_parameter_list (m_in_or_out);
+
+  new_list->m_marked_for_varargs = m_marked_for_varargs;
+
+  for (const tree_decl_elt *elt : *this)
+    new_list->append (elt->dup (scope));
+
+  return new_list;
+}
+
+OCTAVE_END_NAMESPACE(octave)

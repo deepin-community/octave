@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2005-2022 The Octave Project Developers
+// Copyright (C) 2005-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -45,13 +45,17 @@
 #include "parse.h"
 #include "variables.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 #if defined (HAVE_ARPACK)
 
 struct eigs_callback
 {
 public:
+
+  eigs_callback (octave::interpreter& interp)
+    : m_interpreter (interp)
+  { }
 
   ColumnVector
   eigs_func (const ColumnVector& x, int& eigs_error);
@@ -60,6 +64,8 @@ public:
   eigs_complex_func (const ComplexColumnVector& x, int& eigs_error);
 
   //--------
+
+  octave::interpreter& m_interpreter;
 
   // Pointer for user defined function.
   octave_value m_eigs_fcn;
@@ -84,7 +90,7 @@ eigs_callback::eigs_func (const ColumnVector& x, int& eigs_error)
 
       try
         {
-          tmp = octave::feval (m_eigs_fcn, args, 1);
+          tmp = m_interpreter.feval (m_eigs_fcn, args, 1);
         }
       catch (octave::execution_exception& ee)
         {
@@ -125,7 +131,7 @@ eigs_callback::eigs_complex_func (const ComplexColumnVector& x,
 
       try
         {
-          tmp = octave::feval (m_eigs_fcn, args, 1);
+          tmp = m_interpreter.feval (m_eigs_fcn, args, 1);
         }
       catch (octave::execution_exception& ee)
         {
@@ -195,7 +201,7 @@ Undocumented internal function.
   SparseComplexMatrix ascm, bscm, bsct;
   int b_arg = 0;
   bool have_b = false;
-  bool have_a_fun = false;
+  bool have_a_fcn = false;
   bool a_is_complex = false;
   bool b_is_complex = false;
   bool symmetric = false;
@@ -213,7 +219,7 @@ Undocumented internal function.
   ComplexColumnVector cresid;
   octave_idx_type info = 1;
 
-  eigs_callback callback;
+  eigs_callback callback (interp);
 
   unwind_protect_var<int> restore_var (call_depth);
   call_depth++;
@@ -234,7 +240,7 @@ Undocumented internal function.
 
       n = args(1).nint_value ();
       arg_offset = 1;
-      have_a_fun = true;
+      have_a_fcn = true;
     }
   else
     {
@@ -327,7 +333,8 @@ Undocumented internal function.
       if (! args(3+arg_offset).isstruct ())
         error ("eigs: OPTS argument must be a structure");
 
-      octave_scalar_map map = args(3+arg_offset).xscalar_map_value ("eigs: OPTS argument must be a scalar structure");
+      octave_scalar_map map = args(3
+                                   +arg_offset).xscalar_map_value ("eigs: OPTS argument must be a scalar structure");
 
       octave_value tmp;
 
@@ -343,7 +350,7 @@ Undocumented internal function.
         }
 
       // isreal is ignored if A is not a function
-      if (have_a_fun)
+      if (have_a_fcn)
         {
           tmp = map.getfield ("isreal");
           if (tmp.is_defined ())
@@ -398,7 +405,7 @@ Undocumented internal function.
     error ("eigs: incorrect number of arguments");
 
   // Test undeclared (no issym) matrix inputs for symmetry
-  if (! sym_tested && ! have_a_fun)
+  if (! sym_tested && ! have_a_fcn)
     {
       if (a_is_complex)
         {
@@ -445,14 +452,14 @@ Undocumented internal function.
       EigsComplexFunc
       eigs_complex_fcn = [&callback] (const ComplexColumnVector& x,
                                       int& eigs_error)
-                           {
-                             return callback.eigs_complex_func (x, eigs_error);
-                           };
+      {
+        return callback.eigs_complex_func (x, eigs_error);
+      };
 
       ComplexMatrix eig_vec;
       ComplexColumnVector eig_val;
 
-      if (have_a_fun)
+      if (have_a_fcn)
         {
           if (b_is_sparse)
             nconv = EigsComplexNonSymmetricFunc
@@ -512,15 +519,15 @@ Undocumented internal function.
       EigsComplexFunc
       eigs_complex_fcn = [&callback] (const ComplexColumnVector& x,
                                       int& eigs_error)
-                           {
-                             return callback.eigs_complex_func (x, eigs_error);
-                           };
+      {
+        return callback.eigs_complex_func (x, eigs_error);
+      };
 
       // Promote real problem to a complex one.
       ComplexMatrix eig_vec;
       ComplexColumnVector eig_val;
 
-      if (have_a_fun)
+      if (have_a_fcn)
         {
           if (b_is_sparse)
             nconv = EigsComplexNonSymmetricFunc
@@ -565,16 +572,16 @@ Undocumented internal function.
   else
     {
       EigsFunc eigs_fcn = [&callback] (const ColumnVector& x, int& eigs_error)
-                            {
-                              return callback.eigs_func (x, eigs_error);
-                            };
+      {
+        return callback.eigs_func (x, eigs_error);
+      };
 
       if (symmetric)
         {
           Matrix eig_vec;
           ColumnVector eig_val;
 
-          if (have_a_fun)
+          if (have_a_fcn)
             {
               if (b_is_sparse)
                 nconv = EigsRealSymmetricFunc
@@ -624,7 +631,7 @@ Undocumented internal function.
           ComplexMatrix eig_vec;
           ComplexColumnVector eig_val;
 
-          if (have_a_fun)
+          if (have_a_fcn)
             {
               if (b_is_sparse)
                 nconv = EigsRealNonSymmetricFunc
@@ -707,4 +714,4 @@ Undocumented internal function.
 %!assert (1)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

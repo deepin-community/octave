@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,36 +31,31 @@
 class QAction;
 class QIcon;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class Container;
+
+template <typename T>
+class ToolBarButton : public Object
 {
-  class base_qobject;
-  class interpreter;
-}
+public:
+  ToolBarButton (octave::interpreter& interp,
+                 const graphics_object& go, QAction *action);
+  ~ToolBarButton ();
 
-namespace octave
-{
+  Container * innerContainer () { return nullptr; }
 
-  class Container;
+protected:
+  void update (int pId);
 
-  template <typename T>
-  class ToolBarButton : public Object
-  {
-  public:
-    ToolBarButton (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-                   const graphics_object& go, QAction *action);
-    ~ToolBarButton (void);
+private:
+  QAction *m_separator;
 
-    Container * innerContainer (void) { return nullptr; }
-
-  protected:
-    void update (int pId);
-
-  private:
-    QAction *m_separator;
-
-    QIcon get_icon (const std::string& name);
-  };
-
+  QIcon get_icon (const std::string& name);
 };
+
+OCTAVE_END_NAMESPACE(octave);
 
 #endif

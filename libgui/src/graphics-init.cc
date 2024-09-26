@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2019-2022 The Octave Project Developers
+// Copyright (C) 2019-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,7 +32,6 @@
 #include <QThread>
 
 #include "graphics-init.h"
-#include "octave-qobject.h"
 #include "qt-graphics-toolkit.h"
 #include "QtHandlesUtils.h"
 
@@ -40,39 +39,31 @@
 #include "gtk-manager.h"
 #include "interpreter.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+void graphics_init (interpreter& interp)
 {
-  void graphics_init (interpreter& interp, base_qobject& oct_qobj)
-  {
-#if defined (HAVE_QT_GRAPHICS)
+  gh_manager& gh_mgr = interp.get_gh_manager ();
 
-    gh_manager& gh_mgr = interp.get_gh_manager ();
+  autolock guard (gh_mgr.graphics_lock ());
 
-    autolock guard (gh_mgr.graphics_lock ());
+  qRegisterMetaType<graphics_object> ("graphics_object");
 
-    qRegisterMetaType<graphics_object> ("graphics_object");
+  gh_mgr.enable_event_processing (true);
 
-    gh_mgr.enable_event_processing (true);
+  qt_graphics_toolkit *qt_gtk = new qt_graphics_toolkit (interp);
 
-    qt_graphics_toolkit *qt_gtk = new qt_graphics_toolkit (interp, oct_qobj);
+  if (QThread::currentThread ()
+      != QApplication::instance ()->thread ())
+    qt_gtk->moveToThread (QApplication::instance ()->thread ());
 
-    if (QThread::currentThread ()
-        != QApplication::instance ()->thread ())
-      qt_gtk->moveToThread (QApplication::instance ()->thread ());
+  graphics_toolkit tk (qt_gtk);
 
-    graphics_toolkit tk (qt_gtk);
+  gtk_manager& gtk_mgr = interp.get_gtk_manager ();
 
-    gtk_manager& gtk_mgr = interp.get_gtk_manager ();
+  gtk_mgr.register_toolkit ("qt");
 
-    gtk_mgr.register_toolkit ("qt");
-
-    gtk_mgr.load_toolkit (tk);
-
-#else
-
-    octave_unused_parameter (interp);
-    octave_unused_parameter (oct_qobj);
-
-#endif
-  }
+  gtk_mgr.load_toolkit (tk);
 }
+
+OCTAVE_END_NAMESPACE(octave)

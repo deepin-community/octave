@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2004-2022 The Octave Project Developers
+## Copyright (C) 2004-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,9 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} delete (@var{file})
+## @deftypefn  {} {} delete @var{file}
+## @deftypefnx {} {} delete @var{file1} @var{file2} @dots{}
+## @deftypefnx {} {} delete (@var{file})
 ## @deftypefnx {} {} delete (@var{file1}, @var{file2}, @dots{})
 ## @deftypefnx {} {} delete (@var{handle})
 ## Delete the named file or graphics handle.

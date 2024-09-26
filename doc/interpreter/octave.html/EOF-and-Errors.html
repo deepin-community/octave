@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>EOF and Errors (GNU Octave (version 7.1.0))</title>
+<title>EOF and Errors (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="EOF and Errors (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="EOF and Errors (GNU Octave (version 7.1.0))">
+<meta name="description" content="EOF and Errors (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="EOF and Errors (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Temporary-Files.html" rel="prev" title="Temporary Files">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,87 +32,99 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="EOF-and-Errors">
-<div class="header">
+<div class="subsection-level-extent" id="EOF-and-Errors">
+<div class="nav-panel">
 <p>
 Next: <a href="File-Positioning.html" accesskey="n" rel="next">File Positioning</a>, Previous: <a href="Temporary-Files.html" accesskey="p" rel="prev">Temporary Files</a>, Up: <a href="C_002dStyle-I_002fO-Functions.html" accesskey="u" rel="up">C-Style I/O Functions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="End-of-File-and-Errors"></span><h4 class="subsection">14.2.18 End of File and Errors</h4>
+<h4 class="subsection" id="End-of-File-and-Errors"><span>14.2.18 End of File and Errors<a class="copiable-link" href="#End-of-File-and-Errors"> &para;</a></span></h4>
 
 <p>Once a file has been opened its status can be acquired.  As an example
-the <code>feof</code> functions determines if the end of the file has been
+the <code class="code">feof</code> functions determines if the end of the file has been
 reached.  This can be very useful when reading small parts of a file
 at a time.  The following example shows how to read one line at a time
 from a file until the end has been reached.
 </p>
 <div class="example">
-<pre class="example">filename = &quot;myfile.txt&quot;;
+<div class="group"><pre class="example-preformatted">filename = &quot;myfile.txt&quot;;
 fid = fopen (filename, &quot;r&quot;);
 while (! feof (fid) )
   text_line = fgetl (fid);
 endwhile
 fclose (fid);
-</pre></div>
+</pre></div></div>
 
 <p>Note that in some situations it is more efficient to read the entire
 contents of a file and then process it, than it is to read it line by
 line.  This has the potential advantage of removing the loop in the
 above code.
 </p>
-<span id="XREFfeof"></span><dl class="def">
-<dt id="index-feof"><span class="category">: </span><span><em><var>status</var> =</em> <strong>feof</strong> <em>(<var>fid</var>)</em><a href='#index-feof' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFfeof"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-feof"><span class="category-def">: </span><span><code class="def-type"><var class="var">status</var> =</code> <strong class="def-name">feof</strong> <code class="def-code-arguments">(<var class="var">fid</var>)</code><a class="copiable-link" href="#index-feof"> &para;</a></span></dt>
 <dd><p>Return 1 if an end-of-file condition has been encountered for the file
-specified by file descriptor <var>fid</var> and 0 otherwise.
+specified by file descriptor <var class="var">fid</var> and 0 otherwise.
 </p>
-<p>Note that <code>feof</code> will only return 1 if the end of the file has already
+<p>Note that <code class="code">feof</code> will only return 1 if the end of the file has already
 been encountered, not if the next read operation will result in an
 end-of-file condition.
 </p>
-<p><strong>See also:</strong> <a href="Binary-I_002fO.html#XREFfread">fread</a>, <a href="File-Positioning.html#XREFfrewind">frewind</a>, <a href="File-Positioning.html#XREFfseek">fseek</a>, <a href="#XREFfclear">fclear</a>, <a href="Opening-and-Closing-Files.html#XREFfopen">fopen</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Binary-I_002fO.html#XREFfread">fread</a>, <a class="ref" href="File-Positioning.html#XREFfrewind">frewind</a>, <a class="ref" href="File-Positioning.html#XREFfseek">fseek</a>, <a class="ref" href="#XREFfclear">fclear</a>, <a class="ref" href="Opening-and-Closing-Files.html#XREFfopen">fopen</a>.
 </p></dd></dl>
 
 
-<span id="XREFferror"></span><dl class="def">
-<dt id="index-ferror"><span class="category">: </span><span><em><var>msg</var> =</em> <strong>ferror</strong> <em>(<var>fid</var>)</em><a href='#index-ferror' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ferror-1"><span class="category">: </span><span><em>[<var>msg</var>, <var>err</var>] =</em> <strong>ferror</strong> <em>(<var>fid</var>)</em><a href='#index-ferror-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ferror-2"><span class="category">: </span><span><em>[&hellip;] =</em> <strong>ferror</strong> <em>(<var>fid</var>, &quot;clear&quot;)</em><a href='#index-ferror-2' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Query the error status of the stream specified by file descriptor <var>fid</var>.
+<a class="anchor" id="XREFferror"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-ferror"><span class="category-def">: </span><span><code class="def-type"><var class="var">msg</var> =</code> <strong class="def-name">ferror</strong> <code class="def-code-arguments">(<var class="var">fid</var>)</code><a class="copiable-link" href="#index-ferror"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ferror-1"><span class="category-def">: </span><span><code class="def-type">[<var class="var">msg</var>, <var class="var">err</var>] =</code> <strong class="def-name">ferror</strong> <code class="def-code-arguments">(<var class="var">fid</var>)</code><a class="copiable-link" href="#index-ferror-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ferror-2"><span class="category-def">: </span><span><code class="def-type">[&hellip;] =</code> <strong class="def-name">ferror</strong> <code class="def-code-arguments">(<var class="var">fid</var>, &quot;clear&quot;)</code><a class="copiable-link" href="#index-ferror-2"> &para;</a></span></dt>
+<dd><p>Query the error status of the stream specified by file descriptor <var class="var">fid</var>.
 </p>
-<p>If an error condition exists then return a string <var>msg</var> describing the
-error.  Otherwise, return an empty string <code>&quot;&quot;</code>.
+<p>If an error condition exists then return a string <var class="var">msg</var> describing the
+error.  Otherwise, return an empty string <code class="code">&quot;&quot;</code>.
 </p>
-<p>The second input <code>&quot;clear&quot;</code> is optional.  If supplied, the error
+<p>The second input <code class="code">&quot;clear&quot;</code> is optional.  If supplied, the error
 state on the stream will be cleared.
 </p>
 <p>The optional second output is a numeric indication of the error status.
-<var>err</var> is 1 if an error condition has been encountered and 0 otherwise.
+<var class="var">err</var> is 1 if an error condition has been encountered and 0 otherwise.
 </p>
-<p>Note that <code>ferror</code> indicates if an error has already occurred, not
+<p>Note that <code class="code">ferror</code> indicates if an error has already occurred, not
 whether the next operation will result in an error condition.
 </p>
-<p><strong>See also:</strong> <a href="#XREFfclear">fclear</a>, <a href="Opening-and-Closing-Files.html#XREFfopen">fopen</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFfclear">fclear</a>, <a class="ref" href="Opening-and-Closing-Files.html#XREFfopen">fopen</a>.
 </p></dd></dl>
 
 
-<span id="XREFfclear"></span><dl class="def">
-<dt id="index-fclear"><span class="category">: </span><span><em></em> <strong>fclear</strong> <em>(<var>fid</var>)</em><a href='#index-fclear' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFfclear"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-fclear"><span class="category-def">: </span><span><strong class="def-name">fclear</strong> <code class="def-code-arguments">(<var class="var">fid</var>)</code><a class="copiable-link" href="#index-fclear"> &para;</a></span></dt>
 <dd><p>Clear the stream state for the file specified by the file descriptor
-<var>fid</var>.
+<var class="var">fid</var>.
 </p>
-<p><strong>See also:</strong> <a href="#XREFferror">ferror</a>, <a href="Opening-and-Closing-Files.html#XREFfopen">fopen</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFferror">ferror</a>, <a class="ref" href="Opening-and-Closing-Files.html#XREFfopen">fopen</a>.
 </p></dd></dl>
 
 
-<span id="XREFfreport"></span><dl class="def">
-<dt id="index-freport"><span class="category">: </span><span><em></em> <strong>freport</strong> <em>()</em><a href='#index-freport' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFfreport"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-freport"><span class="category-def">: </span><span><strong class="def-name">freport</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-freport"> &para;</a></span></dt>
 <dd><p>Print a list of which files have been opened, and whether they are open
 for reading, writing, or both.
 </p>
 <p>For example:
 </p>
 <div class="example">
-<pre class="example">freport ()
+<div class="group"><pre class="example-preformatted">freport ()
 
      -|  number  mode  arch       name
      -|  ------  ----  ----       ----
@@ -131,15 +132,15 @@ for reading, writing, or both.
      -|     1     w    ieee-le    stdout
      -|     2     w    ieee-le    stderr
      -|     3     r    ieee-le    myfile
-</pre></div>
+</pre></div></div>
 
-<p><strong>See also:</strong> <a href="Opening-and-Closing-Files.html#XREFfopen">fopen</a>, <a href="Opening-and-Closing-Files.html#XREFfclose">fclose</a>, <a href="Opening-and-Closing-Files.html#XREFis_005fvalid_005ffile_005fid">is_valid_file_id</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Opening-and-Closing-Files.html#XREFfopen">fopen</a>, <a class="ref" href="Opening-and-Closing-Files.html#XREFfclose">fclose</a>, <a class="ref" href="Opening-and-Closing-Files.html#XREFis_005fvalid_005ffile_005fid">is_valid_file_id</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="File-Positioning.html">File Positioning</a>, Previous: <a href="Temporary-Files.html">Temporary Files</a>, Up: <a href="C_002dStyle-I_002fO-Functions.html">C-Style I/O Functions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

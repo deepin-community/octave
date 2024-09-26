@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2004-2022 The Octave Project Developers
+## Copyright (C) 2004-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,13 +24,13 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} flipdim (@var{x})
-## @deftypefnx {} {} flipdim (@var{x}, @var{dim})
+## @deftypefn  {} {@var{B} =} flipdim (@var{A})
+## @deftypefnx {} {@var{B} =} flipdim (@var{A}, @var{dim})
 ## This function is obsolete.  Use @code{flip} instead.
 ## @seealso{flip, fliplr, flipud, rot90, rotdim}
 ## @end deftypefn
 
-function y = flipdim (varargin)
+function B = flipdim (varargin)
 
   persistent warned = false;
   if (! warned)
@@ -39,6 +39,6 @@ function y = flipdim (varargin)
              "flipdim is obsolete; please use flip instead");
   endif
 
-  y = flip (varargin{:});
+  B = flip (varargin{:});
 
 endfunction

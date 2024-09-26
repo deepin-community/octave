@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -44,150 +44,160 @@
 
 #include "quit.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  static int readline_event_hook (void)
-  {
-    event_manager& evmgr = __get_event_manager__ ("octave_readline_hook");
+static int readline_event_hook ()
+{
+  event_manager& evmgr = __get_event_manager__ ();
 
-    evmgr.process_events ();
+  evmgr.process_events ();
 
-    return 0;
-  }
+  return 0;
+}
 
-  void interpreter_events::display_exception (const execution_exception& ee,
-                                              bool beep)
-  {
-    if (beep)
-      std::cerr << "\a";
+void
+interpreter_events::display_exception (const execution_exception& ee,
+                                       bool beep)
+{
+  if (beep)
+    std::cerr << "\a";
 
-    ee.display (std::cerr);
-  }
+  ee.display (std::cerr);
+}
 
-  event_manager::event_manager (interpreter& interp)
-    : m_event_queue_mutex (new mutex ()), m_gui_event_queue (),
-      m_debugging (false), m_link_enabled (true),
-      m_interpreter (interp), m_instance (new interpreter_events ()),
-      m_qt_event_handlers ()
-  {
-    push_event_queue ();
-    command_editor::add_event_hook (readline_event_hook);
-  }
+event_manager::event_manager (interpreter& interp)
+  : m_event_queue_mutex (new mutex ()), m_gui_event_queue (),
+    m_debugging (false), m_link_enabled (true),
+    m_interpreter (interp), m_instance (new interpreter_events ()),
+    m_qt_event_handlers ()
+{
+  push_event_queue ();
+  command_editor::add_event_hook (readline_event_hook);
+}
 
-  event_manager::~event_manager (void)
-  {
-    delete m_event_queue_mutex;
-  }
+event_manager::~event_manager ()
+{
+  delete m_event_queue_mutex;
+}
 
-  // Programming Note: It is possible to disable the link without deleting
-  // the connection.  This allows it to be temporarily disabled.  But if
-  // the link is removed, we also set the link_enabled flag to false
-  // because if there is no link, it can't be enabled.  Also, access to
-  // instance is only protected by a check on the link_enabled flag.
+// Programming Note: It is possible to disable the link without deleting
+// the connection.  This allows it to be temporarily disabled.  But if
+// the link is removed, we also set the link_enabled flag to false
+// because if there is no link, it can't be enabled.  Also, access to
+// instance is only protected by a check on the link_enabled flag.
 
-  void
-  event_manager::connect_link (const std::shared_ptr<interpreter_events>& obj)
-  {
-    if (! obj)
-      disable ();
+void
+event_manager::connect_link (const std::shared_ptr<interpreter_events>& obj)
+{
+  if (! obj)
+    disable ();
 
-    m_instance = obj;
-  }
+  m_instance = obj;
+}
 
-  bool event_manager::enable (void)
-  {
-    bool retval = m_link_enabled;
+bool
+event_manager::enable ()
+{
+  bool retval = m_link_enabled;
 
-    if (m_instance)
-      m_link_enabled = true;
-    else
-      warning ("event_manager: must have connected link to enable");
+  if (m_instance)
+    m_link_enabled = true;
+  else
+    warning ("event_manager: must have connected link to enable");
 
-    return retval;
-  }
+  return retval;
+}
 
-  void event_manager::process_events (bool disable_flag)
-  {
-    if (enabled ())
-      {
-        if (disable_flag)
-          disable ();
+void
+event_manager::process_events (bool disable_flag)
+{
+  if (enabled ())
+    {
+      if (disable_flag)
+        disable ();
 
-        m_event_queue_mutex->lock ();
-        std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
-        m_event_queue_mutex->unlock ();
+      m_event_queue_mutex->lock ();
+      std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
+      m_event_queue_mutex->unlock ();
 
-        evq->run ();
-      }
-  }
+      evq->run ();
+    }
+}
 
-  void event_manager::discard_events (void)
-  {
-    if (enabled ())
-      {
-        m_event_queue_mutex->lock ();
-        std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
-        m_event_queue_mutex->unlock ();
+void
+event_manager::discard_events ()
+{
+  if (enabled ())
+    {
+      m_event_queue_mutex->lock ();
+      std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
+      m_event_queue_mutex->unlock ();
 
-        evq->discard ();
-      }
-  }
+      evq->discard ();
+    }
+}
 
-  void event_manager::push_event_queue (void)
-  {
-    std::shared_ptr<event_queue> evq (new event_queue ());
-    m_gui_event_queue.push (evq);
-  }
+void
+event_manager::push_event_queue ()
+{
+  std::shared_ptr<event_queue> evq (new event_queue ());
+  m_gui_event_queue.push (evq);
+}
 
-  void event_manager::pop_event_queue (void)
-  {
-    // FIXME: Should we worry about the possibility of events remaining
-    // in the queue when we pop back to the previous queue?  If so, then
-    // we will probably want to push them on to the front of the
-    // previous queue so they will be executed before any other events
-    // that were in the previous queue.  This case could happen if
-    // graphics callback functions were added to the event queue during a
-    // debug session just after a dbcont command was added but before it
-    // executed and brought us here, for example.
+void
+event_manager::pop_event_queue ()
+{
+  // FIXME: Should we worry about the possibility of events remaining
+  // in the queue when we pop back to the previous queue?  If so, then
+  // we will probably want to push them on to the front of the
+  // previous queue so they will be executed before any other events
+  // that were in the previous queue.  This case could happen if
+  // graphics callback functions were added to the event queue during a
+  // debug session just after a dbcont command was added but before it
+  // executed and brought us here, for example.
 
-    std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
-    m_gui_event_queue.pop ();
-  }
+  std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
+  m_gui_event_queue.pop ();
+}
 
-  void event_manager::post_event (const fcn_callback& fcn)
-  {
-    if (enabled ())
-      {
-        std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
-        evq->add (fcn);
-      }
-  }
+void
+event_manager::post_event (const fcn_callback& fcn)
+{
+  if (enabled ())
+    {
+      std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
+      evq->add (fcn);
+    }
+}
 
-  void event_manager::post_event (const meth_callback& meth)
-  {
-    if (enabled ())
-      {
-        std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
-        evq->add (std::bind (meth, std::ref (m_interpreter)));
-      }
-  }
+void
+event_manager::post_event (const meth_callback& meth)
+{
+  if (enabled ())
+    {
+      std::shared_ptr<event_queue> evq = m_gui_event_queue.top ();
+      evq->add (std::bind (meth, std::ref (m_interpreter)));
+    }
+}
 
-  void event_manager::set_workspace (void)
-  {
-    if (enabled ())
-      {
-        tree_evaluator& tw = m_interpreter.get_evaluator ();
+void
+event_manager::set_workspace ()
+{
+  if (enabled ())
+    {
+      tree_evaluator& tw = m_interpreter.get_evaluator ();
 
-        m_instance->set_workspace (tw.at_top_level (), m_debugging,
+      m_instance->set_workspace (tw.at_top_level (), m_debugging,
                                  tw.get_symbol_info (), true);
-      }
-  }
+    }
+}
 
-  void event_manager::set_history (void)
-  {
-    if (enabled ())
-      m_instance->set_history (command_history::list ());
-  }
+void
+event_manager::set_history ()
+{
+  if (enabled ())
+    m_instance->set_history (command_history::list ());
+}
 
 // FIXME: Should the following function be __event_manager_desktop__
 // with the desktop function implemented in a .m file, similar to the
@@ -225,7 +235,7 @@ If running in command-line mode, start the GUI desktop.
 
 DEFMETHOD (__event_manager_enabled__, interp, , ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_enabled__ ()
+@deftypefn {} {@var{tf} =} __event_manager_enabled__ ()
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -236,7 +246,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_have_dialogs__, interp, , ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_have_dialogs__ ()
+@deftypefn {} {@var{tf} =} __event_manager_have_dialogs__ ()
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -247,7 +257,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_edit_file__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_edit_file__ (@var{file})
+@deftypefn {} {@var{status} =} __event_manager_edit_file__ (@var{file})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -279,7 +289,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_question_dialog__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_question_dialog__ (@var{msg}, @var{title}, @var{btn1}, @var{btn2}, @var{btn3}, @var{default})
+@deftypefn {} {@var{btn_val} =} __event_manager_question_dialog__ (@var{msg}, @var{title}, @var{btn1}, @var{btn2}, @var{btn3}, @var{default})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -306,7 +316,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_file_dialog__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_file_dialog__ (@var{filterlist}, @var{title}, @var{filename}, @var{multiselect}, @var{pathname})
+@deftypefn {} {[@var{fname}, @var{fpath}, @var{fltidx}] =} __event_manager_file_dialog__ (@var{filterlist}, @var{title}, @var{filename}, @var{multiselect}, @var{pathname})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -375,7 +385,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_list_dialog__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_list_dialog__ (@var{list}, @var{mode}, @var{size}, @var{initial}, @var{name}, @var{prompt}, @var{ok_string}, @var{cancel_string})
+@deftypefn {} {[@var{sel}, @var{ok}] =} __event_manager_list_dialog__ (@var{list}, @var{mode}, @var{size}, @var{initial}, @var{name}, @var{prompt}, @var{ok_string}, @var{cancel_string})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -431,7 +441,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_input_dialog__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_input_dialog__ (@var{prompt}, @var{title}, @var{rowscols}, @var{defaults})
+@deftypefn {} {@var{cstr} =} __event_manager_input_dialog__ (@var{prompt}, @var{title}, @var{rowscols}, @var{defaults})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -483,7 +493,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_named_icon__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_dialog_icons__ (@var{icon_name})
+@deftypefn {} {@var{icon} =} __event_manager_dialog_icons__ (@var{icon_name})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -501,9 +511,10 @@ Undocumented internal function.
   return ovl (retval);
 }
 
+// FIXME: Why does this function return any value at all?
 DEFMETHOD (__event_manager_show_preferences__, interp, , ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_show_preferences__ ()
+@deftypefn {} {@var{status} =} __event_manager_show_preferences__ ()
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -514,7 +525,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_apply_preferences__, interp, , ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_apply_preferences__ ()
+@deftypefn {} {@var{status} =} __event_manager_apply_preferences__ ()
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -525,7 +536,8 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_gui_preference__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_gui_preference__ ()
+@deftypefn  {} {@var{prefval} =} __event_manager_gui_preference__ (@var{key})
+@deftypefnx {} {@var{prefval} =} __event_manager_gui_preference__ (@var{key}, @var{value})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -645,7 +657,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_show_documentation__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_show_documentation__ (@var{filename})
+@deftypefn {} {@var{status} =} __event_manager_show_documentation__ (@var{filename})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -661,7 +673,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_register_documentation__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_register_documentation__ (@var{filename})
+@deftypefn {} {@var{status} =} __event_manager_register_documentation__ (@var{filename})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -677,7 +689,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_unregister_documentation__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_unregister_documentation__ (@var{filename})
+@deftypefn {} {@var{status} =} __event_manager_unregister_documentation__ (@var{filename})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -758,7 +770,7 @@ Undocumented internal function.
 
 DEFMETHOD (__event_manager_gui_status_update__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_gui_status_update__ (@var{feature}, @var{status})
+@deftypefn {} {@var{status} =} __event_manager_gui_status_update__ (@var{feature}, @var{status})
 Internal function for updating the status of some features in the GUI.
 @end deftypefn */)
 {
@@ -792,7 +804,7 @@ Internal function for updating the status of some features in the GUI.
 
 DEFMETHOD (__event_manager_update_gui_lexer__, interp, , ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __event_manager_update_gui_lexer__ ()
+@deftypefn {} {@var{status} =} __event_manager_update_gui_lexer__ ()
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -877,4 +889,4 @@ Show the GUI workspace window and give it the keyboard focus.
   return ovl ();
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

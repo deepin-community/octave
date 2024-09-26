@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -42,7 +42,7 @@
 ## The default stem width is 10.
 ##
 ## The output of @code{stemleaf} is composed of two parts: a
-## "Fenced Letter Display," followed by the stem-and-leaf plot itself.
+## "Fenced Letter Display", followed by the stem-and-leaf plot itself.
 ## The Fenced Letter Display is described in @cite{Exploratory Data Analysis}.
 ## Briefly, the entries are as shown:
 ##

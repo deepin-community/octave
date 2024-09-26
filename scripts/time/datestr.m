@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -107,7 +107,7 @@
 ## If @var{f} is not specified or is @code{-1}, then use 0, 1 or 16, depending
 ## on whether the date portion or the time portion of @var{date} is empty.
 ##
-## If @var{p} is nor specified, it defaults to the current year minus 50.
+## If @var{p} is not specified, it defaults to the current year minus 50.
 ##
 ## If a matrix or cell array of dates is given, a column vector of date strings
 ## is returned.
@@ -330,16 +330,16 @@ endfunction
 ## Mac OS X interprets %p parameter to strftime as lower case am/pm indicator.
 ## Accommodate this, although no other UNIX-based OS does this.
 %!test
-%! obs = toupper (datestr (testtime,14));
+%! obs = upper (datestr (testtime,14));
 %! assert (obs, " 2:33:17 AM");
 %!assert (datestr (testtime,15), "02:33")
 %!test
-%! obs = toupper (datestr (testtime,16));
+%! obs = upper (datestr (testtime,16));
 %! assert (obs, " 2:33 AM");
 %!test <*48071>
 %! testtime2 = testtime;
 %! testtime2(4) = 15;
-%! obs = toupper (datestr (testtime2,16));
+%! obs = upper (datestr (testtime2,16));
 %! assert (obs, " 3:33 PM");
 %!assert (datestr (testtime,17), "Q4-05")
 %!assert (datestr (testtime,18), "Q4")

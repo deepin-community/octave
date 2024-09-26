@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2006-2022 The Octave Project Developers
+// Copyright (C) 2006-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,20 +31,21 @@
 
 #include "octave-config.h"
 
-namespace octave
-{
-  template <typename T>
-  OCTAVE_API void
-  rand_gamma (T a, octave_idx_type n, T *p);
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  template <typename T>
-  T
-  rand_gamma (T a)
-  {
-    T retval;
-    rand_gamma (a, 1, &retval);
-    return retval;
-  }
+template <typename T>
+OCTAVE_API void
+rand_gamma (T a, octave_idx_type n, T *p);
+
+template <typename T>
+T
+rand_gamma (T a)
+{
+  T retval;
+  rand_gamma (a, 1, &retval);
+  return retval;
 }
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,9 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {@var{hui} =} uicontrol (@var{property}, @var{value}, @dots{})
+## @deftypefn  {} {@var{hui} =} uicontrol ()
+## @deftypefnx {} {@var{hui} =} uicontrol (@var{property}, @var{value}, @dots{})
+## @deftypefnx {} {@var{hui} =} uicontrol (@var{parent})
 ## @deftypefnx {} {@var{hui} =} uicontrol (@var{parent}, @var{property}, @var{value}, @dots{})
 ## @deftypefnx {} {} uicontrol (@var{h})
 ##
@@ -84,6 +86,11 @@
 ## the user to select between two states.
 ##
 ## @end table
+##
+## Note:  For the @qcode{"edit"} and @qcode{"listbox"} styles, the single or
+## multiple line/selection behavior is determined by the @qcode{"Min"} and
+## @qcode{"Max"} properties, permitting multiple lines/selections when the
+## values are set such that @w{@code{Max - Min > 1}}.
 ##
 ## Examples:
 ##

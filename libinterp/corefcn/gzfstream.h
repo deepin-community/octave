@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2005-2022 The Octave Project Developers
+// Copyright (C) 2005-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -58,11 +58,7 @@ public:
   //  Default constructor.
   gzfilebuf ();
 
-  // No copying!
-
-  gzfilebuf (const gzfilebuf&) = delete;
-
-  gzfilebuf& operator = (const gzfilebuf&) = delete;
+  OCTAVE_DISABLE_COPY_MOVE (gzfilebuf)
 
   //  Destructor.
   virtual ~gzfilebuf ();
@@ -307,7 +303,7 @@ public:
   */
   gzfilebuf *
   rdbuf () const
-  { return const_cast<gzfilebuf *>(&m_sb); }
+  { return const_cast<gzfilebuf *> (&m_sb); }
 
   /**
    *  @brief  Check if file is open.
@@ -394,7 +390,7 @@ public:
   */
   gzfilebuf *
   rdbuf () const
-  { return const_cast<gzfilebuf *>(&m_sb); }
+  { return const_cast<gzfilebuf *> (&m_sb); }
 
   /**
    *  @brief  Check if file is open.
@@ -469,11 +465,11 @@ public:
 private:
   // Underlying manipulator function
   gzofstream&
-  (*func)(gzofstream&, T1, T2);
+  (*m_fcn)(gzofstream&, T1, T2);
 
   // Arguments for manipulator function
-  T1 val1;
-  T2 val2;
+  T1 m_val1;
+  T2 m_val2;
 };
 
 // Manipulator function thunks through to stream buffer
@@ -490,19 +486,19 @@ inline
 gzomanip2<T1, T2>::gzomanip2 (gzofstream &(*f)(gzofstream&, T1, T2),
                               T1 v1,
                               T2 v2)
-  : func(f), val1(v1), val2(v2)
+  : m_fcn(f), m_val1(v1), m_val2(v2)
 { }
 
 // Insertor applies underlying manipulator function to stream
 template <typename T1, typename T2>
 inline gzofstream&
 operator<<(gzofstream& s, const gzomanip2<T1, T2>& m)
-{ return (*m.func)(s, m.val1, m.val2); }
+{ return (*m.m_fcn) (s, m.m_val1, m.m_val2); }
 
 // Insert this onto stream to simplify setting of compression level
 inline gzomanip2<int, int>
 setcompression (int l, int s = Z_DEFAULT_STRATEGY)
-{ return gzomanip2<int, int>(&setcompression, l, s); }
+{ return gzomanip2<int, int> (&setcompression, l, s); }
 
 #endif
 

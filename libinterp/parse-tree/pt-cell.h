@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1999-2022 The Octave Project Developers
+// Copyright (C) 1999-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -36,47 +36,44 @@ class octave_value_list;
 #include "pt-mat.h"
 #include "pt-walk.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class symbol_scope;
+class tree_argument_list;
+
+// General cells.
+
+class tree_cell : public tree_array_list
 {
-  class symbol_scope;
-  class tree_argument_list;
+public:
 
-  // General cells.
+  tree_cell (tree_argument_list *row = nullptr, int l = -1, int c = -1)
+    : tree_array_list (row, l, c)
+  { }
 
-  class tree_cell : public tree_array_list
+  OCTAVE_DISABLE_COPY_MOVE (tree_cell)
+
+  ~tree_cell () = default;
+
+  bool iscell () const { return true; }
+
+  bool rvalue_ok () const { return true; }
+
+  tree_expression * dup (symbol_scope& scope) const;
+
+  octave_value evaluate (tree_evaluator&, int nargout = 1);
+
+  octave_value_list evaluate_n (tree_evaluator& tw, int nargout = 1)
   {
-  public:
+    return ovl (evaluate (tw, nargout));
+  }
 
-    tree_cell (tree_argument_list *row = nullptr, int l = -1, int c = -1)
-      : tree_array_list (row, l, c)
-    { }
+  void accept (tree_walker& tw)
+  {
+    tw.visit_cell (*this);
+  }
+};
 
-    // No copying!
-
-    tree_cell (const tree_cell&) = delete;
-
-    tree_cell& operator = (const tree_cell&) = delete;
-
-    ~tree_cell (void) = default;
-
-    bool iscell (void) const { return true; }
-
-    bool rvalue_ok (void) const { return true; }
-
-    tree_expression * dup (symbol_scope& scope) const;
-
-    octave_value evaluate (tree_evaluator&, int nargout = 1);
-
-    octave_value_list evaluate_n (tree_evaluator& tw, int nargout = 1)
-    {
-      return ovl (evaluate (tw, nargout));
-    }
-
-    void accept (tree_walker& tw)
-    {
-      tw.visit_cell (*this);
-    }
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

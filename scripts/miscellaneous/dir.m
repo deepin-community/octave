@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2004-2022 The Octave Project Developers
+## Copyright (C) 2004-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -25,7 +25,7 @@
 
 ## -*- texinfo -*-
 ## @deftypefn  {} {} dir
-## @deftypefnx {} {} dir (@var{directory})
+## @deftypefnx {} {} dir @var{directory}
 ## @deftypefnx {} {[@var{list}] =} dir (@var{directory})
 ## Display file listing for directory @var{directory}.
 ##
@@ -61,27 +61,31 @@
 ## than a single directory or file.
 ##
 ## @var{directory} is subject to shell expansion if it contains any wildcard
-## characters @samp{*}, @samp{?}, @samp{[]}.  To find a literal example of a
-## wildcard character the wildcard must be escaped using the backslash operator
-## @samp{\}.
+## characters @samp{*}, @samp{?}, @samp{[]}.  If these wildcard characters are
+## escaped with a backslash @samp{\} (e.g., @samp{\*}) on a POSIX platform,
+## then they are not treated as wildcards, but as the corresponding literal
+## character.  On Windows, it is not possible to escape wildcard characters
+## because backslash @samp{\} is treated as a file separator.  On Windows, use
+## @code{ls} for file or folder names that contain characters that would be
+## treated as wildcards by @code{dir}.
 ##
 ## Note that for symbolic links, @code{dir} returns information about the
-## file that the symbolic link points to rather than the link itself.
-## However, if the link points to a nonexistent file, @code{dir} returns
-## information about the link.
+## file that the symbolic link points to rather than the link itself.  However,
+## if the link points to a nonexistent file, @code{dir} returns information
+## about the link.
 ## @seealso{ls, readdir, glob, what, stat, lstat}
 ## @end deftypefn
 
 ## FIXME: This is quite slow for large directories.
 ##        Perhaps it should be converted to C++?
 
-function retval = dir (directory = ".")
+function list = dir (directory = ".")
 
   if (! ischar (directory))
     error ("dir: DIRECTORY argument must be a string");
   endif
 
-  ## Prep the retval.
+  ## Prep the list.
   info = struct (zeros (0, 1),
            {"name", "folder" "date", "bytes", "isdir", "datenum", "statinfo"});
 
@@ -146,42 +150,41 @@ function retval = dir (directory = ".")
         endif
         fn = regexprep (fn, re, '$2$3');
         info(++cnt).name = fn;
-        if (no_dir && ! strcmp (fn, "."))
-          tmpdir = ".";
-        endif
-        if (! is_same_file (last_dir, tmpdir))
-          ## Caching mechanism to speed up function
-          last_dir = tmpdir;
-          if (ispc () && strncmp (last_dir, '\\', 2))
-            ## Windows UNC network file name is used as is
-            last_absdir = last_dir;
-          else
+        if (nargout > 0)
+          if (no_dir && ! strcmp (fn, "."))
+            tmpdir = ".";
+          endif
+          if (! is_same_file (last_dir, tmpdir))
+            ## Caching mechanism to speed up function
+            last_dir = tmpdir;
             last_absdir = canonicalize_file_name (last_dir);
           endif
+          info(cnt).folder = last_absdir;
+          lt = localtime (st.mtime);
+          info(cnt).date = strftime ("%d-%b-%Y %T", lt);
+          info(cnt).bytes = st.size;
+          info(cnt).isdir = S_ISDIR (st.mode);
+          info(cnt).datenum = [lt.year + 1900, lt.mon + 1, lt.mday, ...
+                               lt.hour, lt.min, lt.sec];
+          info(cnt).statinfo = st;
         endif
-        info(cnt).folder = last_absdir;
-        lt = localtime (st.mtime);
-        info(cnt).date = strftime ("%d-%b-%Y %T", lt);
-        info(cnt).bytes = st.size;
-        info(cnt).isdir = S_ISDIR (st.mode);
-        info(cnt).datenum = [lt.year + 1900, lt.mon + 1, lt.mday, ...
-                             lt.hour, lt.min, lt.sec];
-        info(cnt).statinfo = st;
       endif
     endfor
     info((cnt+1):end) = [];  # remove any unused entries
-    ## A lot of gymnastics in order to call datenum just once.  2x speed up.
-    dvec = [info.datenum]([[1:6:end]', [2:6:end]', [3:6:end]', ...
-                           [4:6:end]', [5:6:end]', [6:6:end]']);
-    dnum = datenum (dvec);
-    ctmp = mat2cell (dnum, ones (cnt,1), 1);
-    [info.datenum] = ctmp{:};
+    if (nargout > 0)
+      ## A lot of gymnastics in order to call datenum just once.  2x speed up.
+      dvec = [info.datenum]([[1:6:end]', [2:6:end]', [3:6:end]', ...
+                             [4:6:end]', [5:6:end]', [6:6:end]']);
+      dnum = datenum (dvec);
+      ctmp = mat2cell (dnum, ones (cnt,1), 1);
+      [info.datenum] = ctmp{:};
+    endif
   endif
 
   ## Return the output arguments.
   if (nargout > 0)
     ## Return the requested structure.
-    retval = info;
+    list = info;
   elseif (numel (info) > 0)
     ## Print the structure to the screen.
     printf ("%s", list_in_columns ({info.name}));

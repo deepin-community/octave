@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,47 +32,44 @@
 
 #include "pt-walk.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class tree_decl_command;
+
+// How to check the semantics of the code that the parse trees represent.
+
+class tree_checker : public tree_walker
 {
-  class tree_decl_command;
+public:
 
-  // How to check the semantics of the code that the parse trees represent.
+  tree_checker ()
+    : m_do_lvalue_check (false), m_file_name () { }
 
-  class tree_checker : public tree_walker
-  {
-  public:
+  OCTAVE_DISABLE_COPY_MOVE (tree_checker)
 
-    tree_checker (void)
-      : m_do_lvalue_check (false), m_file_name () { }
+  ~tree_checker () = default;
 
-    // No copying!
+  void visit_argument_list (tree_argument_list&);
 
-    tree_checker (const tree_checker&) = delete;
+  void visit_simple_for_command (tree_simple_for_command&);
 
-    tree_checker& operator = (const tree_checker&) = delete;
+  void visit_complex_for_command (tree_complex_for_command&);
 
-    ~tree_checker (void) = default;
+  void visit_multi_assignment (tree_multi_assignment&);
 
-    void visit_argument_list (tree_argument_list&);
+  void visit_simple_assignment (tree_simple_assignment&);
 
-    void visit_simple_for_command (tree_simple_for_command&);
+  void visit_try_catch_command (tree_try_catch_command&);
 
-    void visit_complex_for_command (tree_complex_for_command&);
+private:
 
-    void visit_multi_assignment (tree_multi_assignment&);
+  bool m_do_lvalue_check;
 
-    void visit_simple_assignment (tree_simple_assignment&);
+  std::string m_file_name;
 
-    void visit_try_catch_command (tree_try_catch_command&);
+  OCTAVE_NORETURN void errmsg (const std::string& msg, int line);
+};
 
-  private:
-
-    bool m_do_lvalue_check;
-
-    std::string m_file_name;
-
-    OCTAVE_NORETURN void errmsg (const std::string& msg, int line);
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

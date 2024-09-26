@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,16 +24,17 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} cross (@var{x}, @var{y})
-## @deftypefnx {} {} cross (@var{x}, @var{y}, @var{dim})
+## @deftypefn  {} {@var{z} =} cross (@var{x}, @var{y})
+## @deftypefnx {} {@var{z} =} cross (@var{x}, @var{y}, @var{dim})
 ## Compute the vector cross product of two 3-dimensional vectors @var{x} and
 ## @var{y}.
 ##
-## If @var{x} and @var{y} are matrices, the cross product is applied along the
+## If @var{x} and @var{y} are arrays, the cross product is applied along the
 ## first dimension with three elements.
 ##
 ## The optional argument  @var{dim} forces the cross product to be calculated
-## along the specified dimension.
+## along the specified dimension.  An error will be produced if the specified
+## dimension is not three elements in size.
 ##
 ## Example Code:
 ##
@@ -41,7 +42,17 @@
 ## @group
 ## cross ([1, 1, 0], [0, 1, 1])
 ##   @result{}
-##        1   -1   1
+##        1  -1   1
+## @end group
+## @end example
+##
+## @example
+## @group
+## cross (magic (3), eye (3), 2)
+##   @result{}
+##        0   6  -1
+##       -7   0   3
+##        9  -4   0
 ## @end group
 ## @end example
 ##
@@ -54,7 +65,9 @@ function z = cross (x, y, dim)
     print_usage ();
   endif
 
-  if (ndims (x) < 3 && ndims (y) < 3 && nargin < 3)
+  nd = ndims (x);
+
+  if (nargin < 3 && nd < 3 && ndims (y) < 3)
     ## COMPATIBILITY -- opposite behavior for cross(row,col)
     ## Swap x and y in the assignments below to get the matlab behavior.
     ## Better yet, fix the calling code so that it uses conformant vectors.
@@ -67,19 +80,25 @@ function z = cross (x, y, dim)
     endif
   endif
 
+  sz = size (x);
+
   if (nargin == 2)
-     dim = find (size (x) == 3, 1);
+     dim = find (sz == 3, 1);
      if (isempty (dim))
        error ("cross: must have at least one dimension with 3 elements");
      endif
-   else
-     if (size (x, dim) != 3)
-       error ("cross: dimension DIM must have 3 elements");
-     endif
+  else
+    if (! (isnumeric (dim) && dim > 0 && isreal (dim) && ...
+          isscalar (dim) && dim == fix (dim)))
+      error ("cross: DIM must be a positive scalar whole number");
+    endif
+
+    if (dim > nd || sz(dim) != 3 || ...
+         dim > ndims (y) || size (y, dim) != 3)
+      error ("cross: X and Y must have three elements in dimension DIM");
+    endif
   endif
 
-  nd = ndims (x);
-  sz = size (x);
   idx2 = idx3 = idx1 = {':'}(ones (1, nd));
   idx1(dim) = 1;
   idx2(dim) = 2;
@@ -101,26 +120,48 @@ endfunction
 
 
 %!test
-%! x = [1 0 0];
-%! y = [0 1 0];
-%! r = [0 0 1];
-%! assert (cross (x, y), r, 2e-8);
+%! x = [1, 0, 0];
+%! y = [0, 1, 0];
+%! r = [0, 0, 1];
+%! assert (cross (x, y), r, eps);
 
 %!test
-%! x = [1 2 3];
-%! y = [4 5 6];
-%! r = [(2*6-3*5) (3*4-1*6) (1*5-2*4)];
-%! assert (cross (x, y), r, 2e-8);
+%! x = [1, 2, 3];
+%! y = [4, 5, 6];
+%! r = [(2*6-3*5), (3*4-1*6), (1*5-2*4)];
+%! assert (cross (x, y), r, eps);
 
 %!test
-%! x = [1 0 0; 0 1 0; 0 0 1];
-%! y = [0 1 0; 0 0 1; 1 0 0];
-%! r = [0 0 1; 1 0 0; 0 1 0];
-%! assert (cross (x, y, 2), r, 2e-8);
-%! assert (cross (x, y, 1), -r, 2e-8);
+%! x = [1, 0, 0; 0, 1, 0; 0, 0, 1];
+%! y = [0, 1, 0; 0, 0, 1; 1, 0, 0];
+%! r = [0, 0, 1; 1, 0, 0; 0, 1, 0];
+%! assert (cross (x, y, 2), r, eps);
+%! assert (cross (x, y, 1), -r, eps);
 
 ## Test input validation
 %!error <Invalid call> cross ()
 %!error <Invalid call> cross (1)
-## FIXME: Need tests for other error() conditions and warning() calls.
-%!error <must have at least one dimension with 3 elements> cross (0,0)
+%!error <must have at least one dimension with 3 elements> cross (0, 0)
+%!error <must have at least one dimension with 3 elements> cross ([1, 2], [3, 4])
+%!error <must have at least one dimension with 3 elements> cross ([1, 2], [3, 4, 5])
+%!error <X and Y must have three elements in dimension DIM> cross (0, 0, 1)
+%!error <X and Y must have three elements in dimension DIM> cross ([1, 2, 3], [1, 2, 3], 1)
+%!error <X and Y must have three elements in dimension DIM> cross ([1, 2, 3], [1, 2, 3], 9)
+%!error <X and Y must have three elements in dimension DIM> cross (magic (3), magic (3), 4)
+%!error <DIM must be a positive scalar whole number> cross ([1, 2, 3], [4, 5, 6], {1})
+%!error <DIM must be a positive scalar whole number> cross ([1, 2, 3], [4, 5, 6], "a")
+%!error <DIM must be a positive scalar whole number> cross ([1, 2, 3], [4, 5, 6], true)
+%!error <DIM must be a positive scalar whole number> cross ([1, 2, 3], [4, 5, 6], [1, 2])
+%!error <DIM must be a positive scalar whole number> cross ([1, 2, 3], [4, 5, 6], 0)
+%!error <DIM must be a positive scalar whole number> cross ([1, 2, 3], [4, 5, 6], -1)
+%!error <DIM must be a positive scalar whole number> cross ([1, 2, 3], [4, 5, 6], 1.5)
+%!error <DIM must be a positive scalar whole number> cross ([1, 2, 3], [4, 5, 6], 2i)
+%!error <X and Y must have the same dimensions> cross ([1, 2, 3], [3, 4])
+%!warning <taking cross product of column by row> cross ([1, 2, 3]', [4, 5, 6]);
+%!warning <taking cross product of row by column> cross ([1, 2, 3], [4, 5, 6]');
+
+%!test
+%! x = cat (3, [1, 1, 1]', [1, 1, 1]');
+%! y = cat (3, [1, 0, 0], [1, 0, 0]);
+%! fail ("cross (x, y)", "X and Y must have the same dimensions");
+%! fail ("cross (y, x)", "X and Y must have the same dimensions");

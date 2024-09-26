@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,58 +34,53 @@ class QFrame;
 class QLabel;
 class QRadioButton;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class Container;
+
+class ButtonGroup : public Object
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  ButtonGroup (octave::interpreter& interp,
+               const graphics_object& go, QButtonGroup *buttongroup,
+               QFrame *frame);
+  ~ButtonGroup ();
 
-  class Container;
+  Container * innerContainer () { return m_container; }
 
-  class ButtonGroup : public Object
-  {
-    Q_OBJECT
+  bool eventFilter (QObject *watched, QEvent *event);
 
-  public:
-    ButtonGroup (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-                 const graphics_object& go, QButtonGroup *buttongroup,
-                 QFrame *frame);
-    ~ButtonGroup (void);
+  static ButtonGroup *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-    Container * innerContainer (void) { return m_container; }
+  void addButton (QAbstractButton *btn);
 
-    bool eventFilter (QObject *watched, QEvent *event);
+  void selectNothing ();
 
-    static ButtonGroup *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+protected:
+  void update (int pId);
+  void redraw ();
 
-    void addButton (QAbstractButton *btn);
+private slots:
+  void buttonToggled (bool toggled);
+  void buttonClicked (QAbstractButton *btn);
 
-    void selectNothing (void);
+private:
+  void updateLayout ();
 
-  protected:
-    void update (int pId);
-    void redraw (void);
+private:
+  QButtonGroup *m_buttongroup;
+  QRadioButton *m_hiddenbutton;
+  Container *m_container;
+  QLabel *m_title;
+  bool m_blockUpdates;
+};
 
-  private slots:
-    void buttonToggled (bool toggled);
-    void buttonClicked (QAbstractButton *btn);
-
-  private:
-    void updateLayout (void);
-
-  private:
-    QButtonGroup *m_buttongroup;
-    QRadioButton *m_hiddenbutton;
-    Container *m_container;
-    QLabel *m_title;
-    bool m_blockUpdates;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

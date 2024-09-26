@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -82,7 +82,7 @@ function daratio = daspect (varargin)
         error ("daspect: DATA_ASPECT_RATIO must be a 2 or 3 element vector");
       endif
     elseif (ischar (arg))
-      arg = tolower (arg);
+      arg = lower (arg);
       switch (arg)
         case "auto"
           set (hax, "dataaspectratiomode", "auto");

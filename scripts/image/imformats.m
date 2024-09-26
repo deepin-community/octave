@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -89,7 +89,7 @@ function varargout = imformats (arg1, arg2, arg3)
       formats = arg1;
 
     elseif (ischar (arg1))
-      switch (tolower (arg1))
+      switch (lower (arg1))
         case "add",
           if (! isstruct (arg2))
             error ("imformats: FORMAT to %s must be a structure", arg1);
@@ -289,7 +289,7 @@ function bool = isa_magick (coder, filename)
   bool = false;
   try
     info = __magick_ping__ (filename, 1);
-    bool = strcmp (coder, info.Format);
+    bool = strcmp (coder, info.format);
   end_try_catch
 
 endfunction

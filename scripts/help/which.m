@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} which name @dots{}
+## @deftypefn  {} {} which @var{name} @dots{}
+## @deftypefnx {} {[@var{str}, @dots{}] =} which ('@var{name}', @dots{})
 ## Display the type of each @var{name}.
 ##
 ## If @var{name} is defined from a function file, the full name of the file is
@@ -36,6 +37,15 @@ function varargout = which (varargin)
 
   if (nargin == 0 || ! iscellstr (varargin))
     print_usage ();
+  endif
+
+  ## FIXME: "-all" option not implemented.  Warn user that only the first
+  ##        result found will be returned.  See bug #32088.
+  if (any (isall = strcmpi (varargin, "-all")))
+    warning (["which: '-all' not yet implemented - only the first result ", ...
+             "will be returned\n"]);
+    varargin = varargin(! isall);
+    nargin = nargin - sum (isall);
   endif
 
   m = __which__ (varargin{:});
@@ -93,7 +103,7 @@ endfunction
 %!test
 %! str = which ("fftw");
 %! assert (str(end-7:end), "fftw.oct");
-%!assert <*49434> (which ("inputParser"), file_in_loadpath ("inputParser.m"));
+%!assert <*49434> (which ("inputParser"), file_in_loadpath ("inputParser.m"))
 %!test
 %! x = 3;
 %! str = which ("x");
@@ -113,4 +123,4 @@ endfunction
 
 %!error <Invalid call> which ()
 %!error <Invalid call> which (1)
-
+%!warning <'-all' not yet implemented> which ("1", "-all")

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} blanks (@var{n})
+## @deftypefn {} {@var{str} =} blanks (@var{n})
 ## Return a string of @var{n} blanks.
 ##
 ## For example:
@@ -42,7 +42,7 @@
 ## @seealso{repmat}
 ## @end deftypefn
 
-function s = blanks (n)
+function str = blanks (n)
 
   if (nargin < 1)
     print_usage ();
@@ -52,7 +52,7 @@ function s = blanks (n)
 
   ## If 1:n is empty, the following expression will create an empty
   ## character string.  Otherwise, it will create a row vector.
-  s(1:n) = " ";
+  str(1:n) = " ";
 
 endfunction
 

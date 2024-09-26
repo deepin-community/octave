@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -26,6 +26,8 @@
 #if ! defined (octave_qt_interpreter_events_h)
 #define octave_qt_interpreter_events_h 1
 
+#include "octave-config.h"
+
 #include <list>
 #include <string>
 
@@ -36,7 +38,6 @@
 #include <QWaitCondition>
 
 #include "dialog.h"
-#include "gui-settings.h"
 
 #include "event-manager.h"
 
@@ -45,285 +46,283 @@ typedef QList<int> QIntList;
 
 class octave_value;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class base_qobject;
+
+// The functions in this class are not normally called directly, but
+// are invoked from the Octave interpreter thead by methods in the
+// event_manager class.  In most cases, they should only translate
+// data from the types typically used in the interpreter to whatever
+// is required by the GUI (for example, std::string to QString) and
+// emit a Qt signal.
+//
+// The use of Qt signals provides a thread-safe way for the Octave
+// interpreter to notify the GUI of events (directory or workspace has
+// changed, for example) or to request that the GUI perform actions
+// (display a dialog, for example).
+//
+// By using this class as a wrapper around the Qt signals, we maintain
+// a separation between the Octave interpreter and any specific GUI
+// toolkit (no Qt headers are used in the Octave interpreter sources).
+
+class qt_interpreter_events : public QObject, public interpreter_events
 {
-  class base_qobject;
+  Q_OBJECT
 
-  // The functions in this class are not normally called directly, but
-  // are invoked from the Octave interpreter thead by methods in the
-  // event_manager class.  In most cases, they should only translate
-  // data from the types typically used in the interpreter to whatever
-  // is required by the GUI (for example, std::string to QString) and
-  // emit a Qt signal.
-  //
-  // The use of Qt signals provides a thread-safe way for the Octave
-  // interpreter to notify the GUI of events (directory or workspace has
-  // changed, for example) or to request that the GUI perform actions
-  // (display a dialog, for example).
-  //
-  // By using this class as a wrapper around the Qt signals, we maintain
-  // a separation between the Octave interpreter and any specific GUI
-  // toolkit (no Qt headers are used in the Octave interpreter sources).
+public:
 
-  class qt_interpreter_events : public QObject, public interpreter_events
-  {
-    Q_OBJECT
+  qt_interpreter_events (base_qobject& oct_qobj);
 
-  public:
+  OCTAVE_DISABLE_COPY_MOVE (qt_interpreter_events)
 
-    qt_interpreter_events (base_qobject& oct_qobj);
+  ~qt_interpreter_events () = default;
 
-    // No copying!
+  // Note: these functions currently do nothing with the old terminal
+  // widget.
+  void start_gui (bool gui_app = false);
+  void close_gui ();
 
-    qt_interpreter_events (const qt_interpreter_events&) = delete;
+  bool have_dialogs () const { return true; }
 
-    qt_interpreter_events& operator = (const qt_interpreter_events&) = delete;
+  std::list<std::string>
+  file_dialog (const filter_list& filter, const std::string& title,
+               const std::string& filename, const std::string& pathname,
+               const std::string& multimode);
 
-    ~qt_interpreter_events (void) = default;
+  std::list<std::string>
+  input_dialog (const std::list<std::string>& prompt,
+                const std::string& title, const std::list<float>& nr,
+                const std::list<float>& nc,
+                const std::list<std::string>& defaults);
 
-    // Note: these functions currently do nothing with the old terminal
-    // widget.
-    void start_gui (bool gui_app = false);
-    void close_gui (void);
+  std::pair<std::list<int>, int>
+  list_dialog (const std::list<std::string>& list,
+               const std::string& mode, int width, int height,
+               const std::list<int>& initial_value,
+               const std::string& name,
+               const std::list<std::string>& prompt,
+               const std::string& ok_string,
+               const std::string& cancel_string);
 
-    bool have_dialogs (void) const { return true; }
+  std::string
+  question_dialog (const std::string& msg, const std::string& title,
+                   const std::string& btn1, const std::string& btn2,
+                   const std::string& btn3, const std::string& btndef);
 
-    std::list<std::string>
-    file_dialog (const filter_list& filter, const std::string& title,
-                 const std::string& filename, const std::string& pathname,
-                 const std::string& multimode);
+  void update_path_dialog ();
 
-    std::list<std::string>
-    input_dialog (const std::list<std::string>& prompt,
-                  const std::string& title, const std::list<float>& nr,
-                  const std::list<float>& nc,
-                  const std::list<std::string>& defaults);
+  void show_preferences ();
 
-    std::pair<std::list<int>, int>
-    list_dialog (const std::list<std::string>& list,
-                 const std::string& mode, int width, int height,
-                 const std::list<int>& initial_value,
-                 const std::string& name,
-                 const std::list<std::string>& prompt,
-                 const std::string& ok_string,
-                 const std::string& cancel_string);
+  void apply_preferences ();
 
-    std::string
-    question_dialog (const std::string& msg, const std::string& title,
-                     const std::string& btn1, const std::string& btn2,
-                     const std::string& btn3, const std::string& btndef);
+  void show_terminal_window ();
 
-    void update_path_dialog (void);
+  bool show_documentation (const std::string& file);
 
-    void show_preferences (void);
+  void show_file_browser ();
 
-    void apply_preferences (void);
+  void show_command_history ();
 
-    void show_terminal_window (void);
+  void show_workspace ();
 
-    bool show_documentation (const std::string& file);
+  void show_community_news (int serial);
+  void show_release_notes ();
 
-    void show_file_browser (void);
+  bool edit_file (const std::string& file);
 
-    void show_command_history (void);
+  void edit_variable (const std::string& name, const octave_value& val);
 
-    void show_workspace (void);
+  bool confirm_shutdown ();
 
-    void show_community_news (int serial);
-    void show_release_notes (void);
+  bool prompt_new_edit_file (const std::string& file);
 
-    bool edit_file (const std::string& file);
+  int debug_cd_or_addpath_error (const std::string& file,
+                                 const std::string& dir,
+                                 bool addpath_option);
 
-    void edit_variable (const std::string& name, const octave_value& val);
+  uint8NDArray get_named_icon (const std::string& icon_name);
 
-    bool confirm_shutdown (void);
+  std::string gui_preference (const std::string& key,
+                              const std::string& value);
 
-    bool prompt_new_edit_file (const std::string& file);
+  bool copy_image_to_clipboard (const std::string& file);
 
-    int debug_cd_or_addpath_error (const std::string& file,
-                                   const std::string& dir,
-                                   bool addpath_option);
+  void focus_window (const std::string win_name);
 
-    uint8NDArray get_named_icon (const std::string& icon_name);
+  void execute_command_in_terminal (const std::string& command);
 
-    std::string gui_preference (const std::string& key,
-                                const std::string& value);
+  void register_documentation (const std::string& file);
 
-    bool copy_image_to_clipboard (const std::string& file);
+  void unregister_documentation (const std::string& file);
 
-    void focus_window (const std::string win_name);
+  // Note: this function currently does nothing with the old terminal
+  // widget.
+  void interpreter_output (const std::string& msg);
 
-    void execute_command_in_terminal (const std::string& command);
+  void display_exception (const execution_exception& ee, bool beep);
 
-    void register_documentation (const std::string& file);
+  void gui_status_update (const std::string& feature, const std::string& status);
 
-    void unregister_documentation (const std::string& file);
+  void update_gui_lexer ();
 
-    // Note: this function currently does nothing with the old terminal
-    // widget.
-    void interpreter_output (const std::string& msg);
+  void directory_changed (const std::string& dir);
 
-    void display_exception (const execution_exception& ee, bool beep);
+  void file_remove (const std::string& old_name,
+                    const std::string& new_name);
 
-    void gui_status_update (const std::string& feature, const std::string& status);
+  void file_renamed (bool load_new = true);
 
-    void update_gui_lexer (void);
+  void set_workspace (bool top_level, bool debug,
+                      const symbol_info_list& syminfo,
+                      bool update_variable_editor);
 
-    void directory_changed (const std::string& dir);
+  void clear_workspace ();
 
-    void file_remove (const std::string& old_name,
-                      const std::string& new_name);
+  void update_prompt (const std::string& prompt);
 
-    void file_renamed (bool load_new = true);
+  void set_history (const string_vector& hist);
 
-    void set_workspace (bool top_level, bool debug,
-                        const symbol_info_list& syminfo,
-                        bool update_variable_editor);
+  void append_history (const std::string& hist_entry);
 
-    void clear_workspace (void);
+  void clear_history ();
 
-    void update_prompt (const std::string& prompt);
+  void pre_input_event ();
 
-    void set_history (const string_vector& hist);
+  void post_input_event ();
 
-    void append_history (const std::string& hist_entry);
+  void enter_debugger_event (const std::string& fcn_name,
+                             const std::string& fcn_file_name, int line);
 
-    void clear_history (void);
+  void execute_in_debugger_event (const std::string& file, int line);
 
-    void pre_input_event (void);
+  void exit_debugger_event ();
 
-    void post_input_event (void);
+  void update_breakpoint (bool insert, const std::string& file, int line,
+                          const std::string& cond);
 
-    void enter_debugger_event (const std::string& fcn_name,
-                               const std::string& fcn_file_name, int line);
+  void lock () { m_mutex.lock (); }
 
-    void execute_in_debugger_event (const std::string& file, int line);
+  void wait () { m_waitcondition.wait (&m_mutex); }
 
-    void exit_debugger_event (void);
+  void unlock () { m_mutex.unlock (); }
 
-    void update_breakpoint (bool insert, const std::string& file, int line,
-                            const std::string& cond);
+  void wake_all () { m_waitcondition.wakeAll (); }
 
-    void lock (void) { m_mutex.lock (); }
+public slots:
 
-    void wait (void) { m_waitcondition.wait (&m_mutex); }
+  void confirm_shutdown_octave ();
 
-    void unlock (void) { m_mutex.unlock (); }
+  void get_named_icon_slot (const QString& name);
 
-    void wake_all (void) { m_waitcondition.wakeAll (); }
+  void gui_preference_slot (const QString& key, const QString& value);
 
-  public slots:
+signals:
 
-    void confirm_shutdown_octave (void);
+  // Note: these signals are not currently used by the old terminal widget.
+  void start_gui_signal (bool gui_app);
+  void close_gui_signal ();
 
-    void get_named_icon_slot (const QString& name);
+  void copy_image_to_clipboard_signal (const QString& file, bool remove_file);
 
-    void gui_preference_slot (const QString& key, const QString& value);
+  void focus_window_signal (const QString& win_name);
 
-  signals:
+  void edit_file_signal (const QString& file);
 
-    // Note: these signals are not currently used by the old terminal widget.
-    void start_gui_signal (bool gui_app);
-    void close_gui_signal (void);
+  void directory_changed_signal (const QString& dir);
 
-    void copy_image_to_clipboard_signal (const QString& file, bool remove_file);
+  void update_path_dialog_signal ();
 
-    void focus_window_signal (const QString& win_name);
+  void file_remove_signal (const QString& old_name, const QString& new_name);
 
-    void edit_file_signal (const QString& file);
+  void file_renamed_signal (bool load_new);
 
-    void directory_changed_signal (const QString& dir);
+  void execute_command_in_terminal_signal (const QString& command);
 
-    void update_path_dialog_signal (void);
+  void set_workspace_signal (bool top_level, bool debug,
+                             const symbol_info_list& syminfo);
 
-    void file_remove_signal (const QString& old_name, const QString& new_name);
+  void clear_workspace_signal ();
 
-    void file_renamed_signal (bool load_new);
+  void update_prompt_signal (const QString& prompt);
 
-    void execute_command_in_terminal_signal (const QString& command);
+  void set_history_signal (const QStringList& hist);
 
-    void set_workspace_signal (bool top_level, bool debug,
-                               const symbol_info_list& syminfo);
+  void append_history_signal (const QString& hist_entry);
 
-    void clear_workspace_signal (void);
+  void clear_history_signal ();
 
-    void update_prompt_signal (const QString& prompt);
+  void enter_debugger_signal ();
 
-    void set_history_signal (const QStringList& hist);
+  void exit_debugger_signal ();
 
-    void append_history_signal (const QString& hist_entry);
+  void update_breakpoint_marker_signal (bool insert, const QString& file,
+                                        int line, const QString& cond);
 
-    void clear_history_signal (void);
+  void insert_debugger_pointer_signal (const QString&, int);
 
-    void enter_debugger_signal (void);
+  void delete_debugger_pointer_signal (const QString&, int);
 
-    void exit_debugger_signal (void);
+  void show_preferences_signal ();
 
-    void update_breakpoint_marker_signal (bool insert, const QString& file,
-                                          int line, const QString& cond);
+  void gui_preference_signal (const QString& key, const QString& value);
 
-    void insert_debugger_pointer_signal (const QString&, int);
+  void show_terminal_window_signal ();
 
-    void delete_debugger_pointer_signal (const QString&, int);
+  void show_documentation_signal (const QString& file);
 
-    void show_preferences_signal (void);
+  void register_documentation_signal (const QString& file);
 
-    void gui_preference_signal (const QString& key, const QString& value);
+  void unregister_documentation_signal (const QString& file);
 
-    void show_terminal_window_signal (void);
+  void show_file_browser_signal ();
 
-    void show_documentation_signal (const QString& file);
+  void show_command_history_signal ();
 
-    void register_documentation_signal (const QString& file);
+  void show_workspace_signal ();
 
-    void unregister_documentation_signal (const QString& file);
+  void show_community_news_signal (int serial);
+  void show_release_notes_signal ();
 
-    void show_file_browser_signal (void);
+  // Note: the next two signals are currently not used by the old terminal widget.
+  void interpreter_output_signal (const QString& msg);
+  void new_command_line_signal (const QString& msg = QString ());
 
-    void show_command_history_signal (void);
+  void gui_status_update_signal (const QString& feature, const QString& status);
 
-    void show_workspace_signal (void);
+  void update_gui_lexer_signal (bool update_apis_only);
 
-    void show_community_news_signal (int serial);
-    void show_release_notes_signal (void);
+  void edit_variable_signal (const QString& name, const octave_value& val);
 
-    // Note: this signal currently not used by the old terminal widget.
-    void interpreter_output_signal (const QString& msg);
+  void refresh_variable_editor_signal ();
 
-    void gui_status_update_signal (const QString& feature, const QString& status);
+  void confirm_shutdown_signal ();
 
-    void update_gui_lexer_signal (bool update_apis_only);
+  void get_named_icon_signal (const QString& name);
 
-    void edit_variable_signal (const QString& name, const octave_value& val);
+  void settings_changed (bool);
 
-    void refresh_variable_editor_signal (void);
+  void apply_new_settings ();
 
-    void confirm_shutdown_signal (void);
+private:
 
-    void get_named_icon_signal (const QString& name);
+  QString gui_preference_adjust (const QString& key, const QString& value);
 
-    void settings_changed (const gui_settings *, bool);
+  void insert_debugger_pointer (const std::string& file, int line);
 
-    void apply_new_settings (void);
+  void delete_debugger_pointer (const std::string& file, int line);
 
-  private:
+  base_qobject& m_octave_qobj;
 
-    QString gui_preference_adjust (const QString& key, const QString& value);
+  QUIWidgetCreator m_uiwidget_creator;
 
-    void insert_debugger_pointer (const std::string& file, int line);
+  QVariant m_result;
 
-    void delete_debugger_pointer (const std::string& file, int line);
+  QMutex m_mutex;
 
-    base_qobject& m_octave_qobj;
+  QWaitCondition m_waitcondition;
+};
 
-    QUIWidgetCreator m_uiwidget_creator;
-
-    QVariant m_result;
-
-    QMutex m_mutex;
-
-    QWaitCondition m_waitcondition;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

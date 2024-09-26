@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // matrix unary ops.
 
@@ -48,7 +48,7 @@ DEFNDUNOP_OP (uminus, matrix, array, -)
 
 DEFUNOP (transpose, matrix)
 {
-  const octave_matrix& v = dynamic_cast<const octave_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v, a);
 
   if (v.ndims () > 2)
     error ("transpose not defined for N-D objects");
@@ -69,8 +69,8 @@ DEFBINOP_OP (mul, matrix, matrix, *)
 
 DEFBINOP (div, matrix, matrix)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
   MatrixType typ = v2.matrix_type ();
 
   Matrix ret = xdiv (v1.matrix_value (), v2.matrix_value (), typ);
@@ -86,8 +86,8 @@ DEFBINOPX (pow, matrix, matrix)
 
 DEFBINOP (ldiv, matrix, matrix)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
   MatrixType typ = v1.matrix_type ();
 
   Matrix ret = xleftdiv (v1.matrix_value (), v2.matrix_value (), typ);
@@ -98,24 +98,24 @@ DEFBINOP (ldiv, matrix, matrix)
 
 DEFBINOP (trans_mul, matrix, matrix)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
   return octave_value(xgemm (v1.matrix_value (), v2.matrix_value (),
                              blas_trans, blas_no_trans));
 }
 
 DEFBINOP (mul_trans, matrix, matrix)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
   return octave_value(xgemm (v1.matrix_value (), v2.matrix_value (),
                              blas_no_trans, blas_trans));
 }
 
 DEFBINOP (trans_ldiv, matrix, matrix)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
   MatrixType typ = v1.matrix_type ();
 
   Matrix ret = xleftdiv (v1.matrix_value (), v2.matrix_value (),
@@ -138,8 +138,8 @@ DEFNDBINOP_FN (el_pow, matrix, matrix, array, array, elem_xpow)
 
 DEFBINOP (el_ldiv, matrix, matrix)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
 
   return octave_value (quotient (v2.array_value (), v1.array_value ()));
 }
@@ -226,4 +226,4 @@ install_m_m_ops (octave::type_info& ti)
                        assign_el_div);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

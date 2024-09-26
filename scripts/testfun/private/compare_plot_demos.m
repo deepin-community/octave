@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -27,7 +27,7 @@
 ## @deftypefn  {} {} compare_plot_demos ()
 ## @deftypefnx {} {} compare_plot_demos ("toolkits", @{@var{toolkit1}, @var{toolkit2}, @dots{}@})
 ##
-## Uses @code{dump_demos} and @code{html_compare_plot_demos} to produce an
+## Use @code{dump_demos} and @code{html_compare_plot_demos} to produce an
 ## html comparison of the plot demos for each of Octave's graphics toolkits.
 ##
 ## An m-file named @file{dump_plots.m} will be created in the current working

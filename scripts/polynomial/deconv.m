@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -70,7 +70,7 @@ function [b, r] = deconv (y, a)
     r = y;
   endif
 
-  if (isargout (2))
+  if (nargout > 1)
     if (ly >= la)
       r = [zeros(ly - la + 1, 1); r(1:la - 1)];
       ## Respect the orientation of Y

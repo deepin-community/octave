@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2018-2022 The Octave Project Developers
+// Copyright (C) 2018-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,30 +34,34 @@
 #include "settings.h"
 #include "variables.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  settings::settings (void)
-    : m_display_tokens (false), m_token_count (0),
-      m_lexer_debug_flag (false)
-  { }
+settings::settings ()
+  : m_display_tokens (false), m_token_count (0),
+    m_lexer_debug_flag (false)
+{ }
 
-  octave_value settings::display_tokens (const octave_value_list& args,
-                                         int nargout)
-  {
-    return set_internal_variable (m_display_tokens, args, nargout,
-                                  "__display_tokens__");
-  }
+octave_value
+settings::display_tokens (const octave_value_list& args,
+                          int nargout)
+{
+  return set_internal_variable (m_display_tokens, args, nargout,
+                                "__display_tokens__");
+}
 
-  octave_value settings::lexer_debug_flag (const octave_value_list& args,
-                                           int nargout)
-  {
-    return set_internal_variable (m_lexer_debug_flag, args, nargout,
-                                  "__lexer_debug_flag__");
-  }
+octave_value
+settings::lexer_debug_flag (const octave_value_list& args,
+                            int nargout)
+{
+  return set_internal_variable (m_lexer_debug_flag, args, nargout,
+                                "__lexer_debug_flag__");
+}
 
 DEFMETHOD (__display_tokens__, interp, args, nargout,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __display_tokens__ ()
+@deftypefn  {} {@var{val} =} __display_tokens__ ()
+@deftypefnx {} {@var{old_val} =} __display_tokens__ (@var{new_val})
+@deftypefnx {} {@var{old_val} =} __display_tokens__ (@var{new_val}, "local")
 Query or set the internal variable that determines whether Octave's
 lexer displays tokens as they are read.
 @seealso{__lexer_debug_flag__, __token_count__}
@@ -70,7 +74,7 @@ lexer displays tokens as they are read.
 
 DEFMETHOD (__token_count__, interp, , ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __token_count__ ()
+@deftypefn {} {@var{n} =} __token_count__ ()
 Return the number of language tokens processed since Octave startup.
 @seealso{__lexer_debug_flag__, __display_tokens__}
 @end deftypefn */)
@@ -94,4 +98,4 @@ debug information as it processes an expression.
   return stgs.lexer_debug_flag (args, nargout);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

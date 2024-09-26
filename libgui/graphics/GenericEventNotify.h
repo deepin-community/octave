@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,66 +32,67 @@ class QEvent;
 class QObject;
 class QWidget;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class GenericEventNotifyReceiver;
+
+class GenericEventNotifySender
 {
+public:
+  GenericEventNotifySender () : m_receivers () { }
+  virtual ~GenericEventNotifySender () = default;
 
-  class GenericEventNotifyReceiver;
+  void addReceiver (GenericEventNotifyReceiver *r)
+  { m_receivers.insert (r); }
 
-  class GenericEventNotifySender
-  {
-  public:
-    GenericEventNotifySender (void) : m_receivers () { }
-    virtual ~GenericEventNotifySender (void) = default;
+  void removeReceiver (GenericEventNotifyReceiver *r)
+  { m_receivers.remove (r); }
 
-    void addReceiver (GenericEventNotifyReceiver *r)
-    { m_receivers.insert (r); }
+protected:
+  bool notifyReceiversBefore (QObject *obj, QEvent *evt);
+  void notifyReceiversAfter (QObject *obj, QEvent *evt);
 
-    void removeReceiver (GenericEventNotifyReceiver *r)
-    { m_receivers.remove (r); }
+private:
+  QSet<GenericEventNotifyReceiver *> m_receivers;
+};
 
-  protected:
-    bool notifyReceiversBefore (QObject *obj, QEvent *evt);
-    void notifyReceiversAfter (QObject *obj, QEvent *evt);
+class GenericEventNotifyReceiver
+{
+public:
+  GenericEventNotifyReceiver () { }
+  virtual ~GenericEventNotifyReceiver () = default;
 
-  private:
-    QSet<GenericEventNotifyReceiver *> m_receivers;
-  };
+  virtual bool eventNotifyBefore (QObject *obj, QEvent *evt) = 0;
+  virtual void eventNotifyAfter (QObject *obj, QEvent *evt) = 0;
+};
 
-  class GenericEventNotifyReceiver
-  {
-  public:
-    GenericEventNotifyReceiver (void) { }
-    virtual ~GenericEventNotifyReceiver (void) = default;
+inline
+bool GenericEventNotifySender::notifyReceiversBefore (QObject *obj,
+                                                      QEvent *evt)
+{
+  for (auto *r : m_receivers)
+    if (r->eventNotifyBefore (obj, evt))
+      return true;
 
-    virtual bool eventNotifyBefore (QObject *obj, QEvent *evt) = 0;
-    virtual void eventNotifyAfter (QObject *obj, QEvent *evt) = 0;
-  };
+  return false;
+}
 
-  inline
-  bool GenericEventNotifySender::notifyReceiversBefore (QObject *obj,
-      QEvent *evt)
-  {
-    for (auto *r : m_receivers)
-      if (r->eventNotifyBefore (obj, evt))
-        return true;
+inline
+void GenericEventNotifySender::notifyReceiversAfter (QObject *obj,
+                                                     QEvent *evt)
+{
+  for (auto *r : m_receivers)
+    r->eventNotifyAfter (obj, evt);
+}
 
-    return false;
-  }
-
-  inline
-  void GenericEventNotifySender::notifyReceiversAfter (QObject *obj,
-      QEvent *evt)
-  {
-    for (auto *r : m_receivers)
-      r->eventNotifyAfter (obj, evt);
-  }
+OCTAVE_END_NAMESPACE(octave)
 
 #define DECLARE_GENERICEVENTNOTIFY_SENDER(T,B) \
 class T : public B, public GenericEventNotifySender \
 { \
 public: \
   T (QWidget *xparent) : B (xparent), GenericEventNotifySender () { } \
-  ~ T (void) = default; \
+  ~ T () = default; \
 \
   bool event (QEvent *evt) \
     { \
@@ -102,7 +103,5 @@ public: \
       return result; \
     } \
 }
-
-};
 
 #endif

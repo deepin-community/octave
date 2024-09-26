@@ -16,7 +16,6 @@ rebuild_pkg_database () {
 
 case "$1" in
     configure)
-	ldconfig
         rebuild_pkg_database
         ;;
 

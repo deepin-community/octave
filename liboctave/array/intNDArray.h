@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2004-2022 The Octave Project Developers
+// Copyright (C) 2004-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -41,13 +41,13 @@ public:
 
   using typename MArray<T>::element_type;
 
-  intNDArray (void) = default;
+  intNDArray () = default;
 
   intNDArray (const intNDArray<T>& a) = default;
 
   intNDArray& operator = (const intNDArray<T>& a) = default;
 
-  ~intNDArray (void) = default;
+  ~intNDArray () = default;
 
   intNDArray (T val) : MArray<T> (dim_vector (1, 1), val) { }
 
@@ -65,16 +65,16 @@ public:
   template <typename U>
   intNDArray (const intNDArray<U>& a) : MArray<T> (a) { }
 
-  OCTAVE_API boolNDArray operator ! (void) const;
+  OCTAVE_API boolNDArray operator ! () const;
 
-  bool any_element_is_nan (void) const { return false; }
-  OCTAVE_API bool any_element_not_one_or_zero (void) const;
+  bool any_element_is_nan () const { return false; }
+  OCTAVE_API bool any_element_not_one_or_zero () const;
 
   OCTAVE_API intNDArray diag (octave_idx_type k = 0) const;
 
   OCTAVE_API intNDArray diag (octave_idx_type m, octave_idx_type n) const;
 
-  intNDArray& changesign (void)
+  intNDArray& changesign ()
   {
     MArray<T>::changesign ();
     return *this;
@@ -106,13 +106,13 @@ public:
 
   OCTAVE_API intNDArray diff (octave_idx_type order = 1, int dim = -1) const;
 
-  OCTAVE_API intNDArray abs (void) const;
-  OCTAVE_API intNDArray signum (void) const;
+  OCTAVE_API intNDArray abs () const;
+  OCTAVE_API intNDArray signum () const;
 
-  intNDArray squeeze (void) const
+  intNDArray squeeze () const
   { return intNDArray<T> (MArray<T>::squeeze ()); }
 
-  intNDArray transpose (void) const
+  intNDArray transpose () const
   { return intNDArray<T> (MArray<T>::transpose ()); }
 
   OCTAVE_API intNDArray

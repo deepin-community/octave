@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -60,14 +60,19 @@ function mtds = methods (obj, fullopt)
   endif
 
   if (isobject (obj))
-    ## Call internal C++ function for Octave objects
+    ## Call internal C++ function for Octave objects.
     mtds_list = __methods__ (obj);
   elseif (ischar (obj))
-    ## Could be a classname for an Octave class or Java class.
+    ## CLASSNAME could be an Octave class or Java class.
     ## Try Octave class first.
-    mtds_list = __methods__ (obj);
-    if (isempty (mtds_list))
-      mtds_str = javaMethod ("getMethods", "org.octave.ClassHelper", obj);
+    [mtds_list, valid] = __methods__ (obj);
+    if (! valid)
+      ## Try Java class second.
+      try
+        mtds_str = javaMethod ("getMethods", "org.octave.ClassHelper", obj);
+      catch
+        error ("methods: class '%s' not found", obj);
+      end_try_catch
       mtds_list = ostrsplit (mtds_str, ';');
       mtds_list = mtds_list(:);  # return a column vector for compatibility
       havesigs = true;
@@ -115,10 +120,23 @@ function mtds = methods (obj, fullopt)
 endfunction
 
 
+## test classdef object
+%!test
+%! ip = inputParser ();
+%! assert (methods (ip),
+%!         {"addOptional"; "addParamValue"; "addParameter"; "addRequired";
+%!          "addSwitch"; "delete"; "disp"; "parse"; });
+
+## test classdef classname
+%!assert (methods ("inputParser"),
+%!        {"addOptional"; "addParamValue"; "addParameter"; "addRequired";
+%!         "addSwitch"; "delete"; "disp"; "parse"; });
+
 ## test old-style @classname
 %!test
 %! mtds = methods ("ftp");
 %! assert (mtds{1}, "ascii");
+%! assert (numel (mtds), 15);
 
 ## test Java classname
 %!testif HAVE_JAVA; usejava ("jvm")
@@ -132,20 +150,18 @@ endfunction
 %! search = strfind (mtds, "java.lang.Double valueOf");
 %! assert (! isempty ([search{:}]));
 
-## test that methods does the right thing when passed a String object
-%!testif HAVE_JAVA; usejava ("jvm") <*48758>
-%! object = javaObject ("java.lang.String", "java.lang.Integer");
-%! assert (methods (object), methods ("java.lang.String"));
+## test Java object
+%!testif HAVE_JAVA; usejava ("jvm")
+%! jobject = javaObject ("java.lang.Double", pi);
+%! assert (methods (jobject), methods ("java.lang.Double"));
 
-## test classdef classname
-%!assert (methods ("inputParser"),
-%!        {"addOptional"; "addParamValue"; "addParameter";
-%!         "addRequired"; "addSwitch"; "add_missing"; "delete";
-%!         "disp"; "error"; "is_argname"; "parse"; "validate_arg";
-%!         "validate_name"});
+## test exceptional case of Java String object
+%!testif HAVE_JAVA; usejava ("jvm") <*48758>
+%! jobject = javaObject ("java.lang.String", "java.lang.Integer");
+%! assert (methods (jobject), methods ("java.lang.String"));
 
 ## Test input validation
 %!error <Invalid call> methods ()
-%!error methods ("a", "b", "c")
 %!error <invalid option> methods ("ftp", "option1")
+%!error <class 'foobar' not found> methods ('foobar')
 %!error <invalid input argument> methods (1)

@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 2004-2022 The Octave Project Developers
+@c Copyright (C) 2004-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -152,9 +152,9 @@ contents of these three vectors for the above matrix will be
 
 Note that this is the representation of these elements with the first row
 and column assumed to start at zero, while in Octave itself the row and
-column indexing starts at one.  Thus the number of elements in the
-@var{i}-th column is given by @code{@var{cidx} (@var{i} + 1) -
-@var{cidx} (@var{i})}.
+column indexing starts at one.  Thus, the number of elements in the
+@var{i}-th column is given by
+@code{@var{cidx} (@var{i} + 1) - @var{cidx} (@var{i})}.
 
 Although Octave uses a compressed column format, it should be noted
 that compressed row formats are equally possible.  However, in the
@@ -225,6 +225,11 @@ diagonal defined.
 
 @c spdiags scripts/sparse/spdiags.m
 @anchor{XREFspdiags}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{B} =} spdiags (@var{A})
 @deftypefnx {} {[@var{B}, @var{d}] =} spdiags (@var{A})
 @deftypefnx {} {@var{B} =} spdiags (@var{A}, @var{d})
@@ -266,23 +271,33 @@ spdiags (reshape (1:12, 4, 3), [-1 0 1], 5, 4)
 
 @c speye scripts/sparse/speye.m
 @anchor{XREFspeye}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} speye (@var{m}, @var{n})
 @deftypefnx {} {@var{s} =} speye (@var{m})
-@deftypefnx {} {@var{s} =} speye (@var{sz})
+@deftypefnx {} {@var{s} =} speye ([@var{m}, @var{n}])
 Return a sparse identity matrix of size @var{m}x@var{n}.
 
 The implementation is significantly more efficient than
-@code{sparse (eye (@var{m}))} as the full matrix is not constructed.
+@w{@code{sparse (eye (@var{m}))}} as the full matrix is not constructed.
 
-Called with a single argument a square matrix of size
-@var{m}-by-@var{m} is created.  If called with a single vector argument
-@var{sz}, this argument is taken to be the size of the matrix to create.
+When called with a single argument, a square matrix of size
+@var{m}-by-@var{m} is created.  If called with a single vector argument,
+this argument is taken to be the size of the matrix to create.
 @xseealso{@ref{XREFsparse,,sparse}, @ref{XREFspdiags,,spdiags}, @ref{XREFeye,,eye}}
 @end deftypefn
 
 
 @c spones scripts/sparse/spones.m
 @anchor{XREFspones}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{r} =} spones (@var{S})
 Replace the nonzero entries of @var{S} with ones.
 
@@ -293,9 +308,14 @@ This creates a sparse matrix with the same structure as @var{S}.
 
 @c sprand scripts/sparse/sprand.m
 @anchor{XREFsprand}
-@deftypefn  {} {} sprand (@var{m}, @var{n}, @var{d})
-@deftypefnx {} {} sprand (@var{m}, @var{n}, @var{d}, @var{rc})
-@deftypefnx {} {} sprand (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{s} =} sprand (@var{m}, @var{n}, @var{d})
+@deftypefnx {} {@var{s} =} sprand (@var{m}, @var{n}, @var{d}, @var{rc})
+@deftypefnx {} {@var{s} =} sprand (@var{s})
 Generate a sparse matrix with uniformly distributed random values.
 
 The size of the matrix is @var{m}x@var{n} with a density of values @var{d}.
@@ -316,9 +336,14 @@ matrix (@code{length (@var{rc}) <= min (@var{m}, @var{n})}).
 
 @c sprandn scripts/sparse/sprandn.m
 @anchor{XREFsprandn}
-@deftypefn  {} {} sprandn (@var{m}, @var{n}, @var{d})
-@deftypefnx {} {} sprandn (@var{m}, @var{n}, @var{d}, @var{rc})
-@deftypefnx {} {} sprandn (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{s} =} sprandn (@var{m}, @var{n}, @var{d})
+@deftypefnx {} {@var{s} =} sprandn (@var{m}, @var{n}, @var{d}, @var{rc})
+@deftypefnx {} {@var{s} =} sprandn (@var{s})
 Generate a sparse matrix with normally distributed random values.
 
 The size of the matrix is @var{m}x@var{n} with a density of values @var{d}.
@@ -339,8 +364,13 @@ matrix (@code{length (@var{rc}) <= min (@var{m}, @var{n})}).
 
 @c sprandsym scripts/sparse/sprandsym.m
 @anchor{XREFsprandsym}
-@deftypefn  {} {} sprandsym (@var{n}, @var{d})
-@deftypefnx {} {} sprandsym (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{S} =} sprandsym (@var{n}, @var{d})
+@deftypefnx {} {@var{S} =} sprandsym (@var{s})
 Generate a symmetric random sparse matrix.
 
 The size of the matrix will be @var{n}x@var{n}, with a density of values
@@ -419,15 +449,25 @@ number of memory allocations.
 
 @c full libinterp/corefcn/data.cc
 @anchor{XREFfull}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{FM} =} full (@var{SM})
 Return a full storage matrix from a sparse, diagonal, or permutation matrix,
-or a range.
+or from a range.
 @xseealso{@ref{XREFsparse,,sparse}, @ref{XREFissparse,,issparse}}
 @end deftypefn
 
 
 @c spalloc libinterp/corefcn/sparse.cc
 @anchor{XREFspalloc}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{s} =} spalloc (@var{m}, @var{n}, @var{nz})
 Create an @var{m}-by-@var{n} sparse matrix with pre-allocated space for at
 most @var{nz} nonzero elements.
@@ -470,44 +510,71 @@ even if @var{nz} is 0.
 
 @c sparse libinterp/corefcn/sparse.cc
 @anchor{XREFsparse}
-@deftypefn  {} {@var{s} =} sparse (@var{a})
-@deftypefnx {} {@var{s} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n})
-@deftypefnx {} {@var{s} =} sparse (@var{i}, @var{j}, @var{sv})
-@deftypefnx {} {@var{s} =} sparse (@var{m}, @var{n})
-@deftypefnx {} {@var{s} =} sparse (@var{i}, @var{j}, @var{s}, @var{m}, @var{n}, "unique")
-@deftypefnx {} {@var{s} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n}, @var{nzmax})
-Create a sparse matrix from a full matrix, or row, column, value triplets.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-If @var{a} is a full matrix, convert it to a sparse matrix representation,
-removing all zero values in the process.
+
+@deftypefn  {} {@var{S} =} sparse (@var{A})
+@deftypefnx {} {@var{S} =} sparse (@var{m}, @var{n})
+@deftypefnx {} {@var{S} =} sparse (@var{i}, @var{j}, @var{sv})
+@deftypefnx {} {@var{S} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n})
+@deftypefnx {} {@var{S} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n}, "unique")
+@deftypefnx {} {@var{S} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n}, @var{nzmax})
+Create a sparse matrix from a full matrix @var{A} or row, column, value
+triplets.
+
+If @var{A} is a full matrix, convert it to a sparse matrix representation,
+removing all zero values in the process.  The matrix @var{A} should be of type
+logical or double.
+
+If two inputs @var{m} (rows) and @var{n} (columns) are specified then create
+an empty sparse matrix with the specified dimensions.
 
 Given the integer index vectors @var{i} and @var{j}, and a 1-by-@code{nnz}
 vector of real or complex values @var{sv}, construct the sparse matrix
 @code{S(@var{i}(@var{k}),@var{j}(@var{k})) = @var{sv}(@var{k})} with overall
-dimensions @var{m} and @var{n}.  If any of @var{sv}, @var{i} or @var{j} are
+dimensions @var{m} and @var{n}.  If any of @var{i}, @var{j}, or @var{sv} are
 scalars, they are expanded to have a common size.
 
-If @var{m} or @var{n} are not specified their values are derived from the
+If @var{m} or @var{n} are not specified then their values are derived from the
 maximum index in the vectors @var{i} and @var{j} as given by
-@code{@var{m} = max (@var{i})}, @code{@var{n} = max (@var{j})}.
+@w{@code{@var{m} = max (@var{i})}}, @w{@code{@var{n} = max (@var{j})}}.
 
-@strong{Note}: if multiple values are specified with the same @var{i},
-@var{j} indices, the corresponding value in @var{s} will be the sum of the
+@strong{Note}: If multiple values are specified with the same @var{i},
+@var{j} indices, the corresponding value in @var{S} will be the sum of the
 values at the repeated location.  @xref{XREFaccumarray,,@code{accumarray}}, for
 an example of how to produce different behavior such as taking the minimum
 instead.
 
-If the option @qcode{"unique"} is given, and more than one value is
-specified at the same @var{i}, @var{j} indices, then the last specified
-value will be used.
+If the option @qcode{"unique"} is given, and more than one value is specified
+at the same @var{i}, @var{j} indices, then only the last specified value will
+be used.  For completeness, the option @qcode{"sum"} can be given and will
+be ignored as the default behavior is to sum values at repeated locations.
 
 @code{sparse (@var{m}, @var{n})} will create an empty @var{m}x@var{n} sparse
 matrix and is equivalent to @code{sparse ([], [], [], @var{m}, @var{n})}
 
-The argument @var{nzmax} is ignored but accepted for compatibility with
-@sc{matlab}.
+The optional final argument reserves space for @var{nzmax} values in the sparse
+array and is useful if the eventual number of nonzero values will be greater
+than the number of values in @var{sv} used during the initial construction of
+the array.  @xref{XREFspalloc,,@code{spalloc}}, for more information and usage
+instructions.
 
-Example 1 (sum at repeated indices):
+Example 1 (convert full matrix to sparse to save memory):
+
+@example
+@group
+x = full (diag (1:1000));
+sizeof (x)
+@result{}  8000000
+s = sparse (x);
+sizeof (xs)
+@result{}  24008
+@end group
+@end example
+
+Example 2 (sum at repeated indices):
 
 @example
 @group
@@ -521,7 +588,7 @@ sparse (@var{i}, @var{j}, @var{sv}, 3, 4)
 @end group
 @end example
 
-Example 2 ("unique" option):
+Example 3 ("unique" option):
 
 @example
 @group
@@ -540,6 +607,11 @@ sparse (@var{i}, @var{j}, @var{sv}, 3, 4, "unique")
 
 @c spconvert scripts/sparse/spconvert.m
 @anchor{XREFspconvert}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{x} =} spconvert (@var{m})
 Convert a simple sparse matrix format easily generated by other programs
 into Octave's internal sparse format.
@@ -578,7 +650,12 @@ mean and the variance of each column.
 
 @c issparse libinterp/corefcn/sparse.cc
 @anchor{XREFissparse}
-@deftypefn {} {} issparse (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} issparse (@var{x})
 Return true if @var{x} is a sparse matrix.
 @xseealso{@ref{XREFismatrix,,ismatrix}}
 @end deftypefn
@@ -586,14 +663,24 @@ Return true if @var{x} is a sparse matrix.
 
 @c nnz libinterp/corefcn/data.cc
 @anchor{XREFnnz}
-@deftypefn {} {@var{n} =} nnz (@var{a})
-Return the number of nonzero elements in @var{a}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{n} =} nnz (@var{A})
+Return the number of nonzero elements in @var{A}.
 @xseealso{@ref{XREFnzmax,,nzmax}, @ref{XREFnonzeros,,nonzeros}, @ref{XREFfind,,find}}
 @end deftypefn
 
 
 @c nonzeros scripts/sparse/nonzeros.m
 @anchor{XREFnonzeros}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{v} =} nonzeros (@var{A})
 Return a column vector of the nonzero values of the matrix @var{A}.
 @xseealso{@ref{XREFfind,,find}, @ref{XREFnnz,,nnz}}
@@ -602,6 +689,11 @@ Return a column vector of the nonzero values of the matrix @var{A}.
 
 @c nzmax libinterp/corefcn/data.cc
 @anchor{XREFnzmax}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{n} =} nzmax (@var{SM})
 Return the amount of storage allocated to the sparse matrix @var{SM}.
 
@@ -617,6 +709,11 @@ for empty matrices @code{nnz} will report 0, but @code{nzmax} will report 1.
 
 @c spstats scripts/sparse/spstats.m
 @anchor{XREFspstats}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{count}, @var{mean}, @var{var}] =} spstats (@var{S})
 @deftypefnx {} {[@var{count}, @var{mean}, @var{var}] =} spstats (@var{S}, @var{j})
 Return the stats for the nonzero elements of the sparse matrix @var{S}.
@@ -721,6 +818,11 @@ symmetric or @code{treeplot (etree (A+A'))} otherwise.
 
 @c spy scripts/sparse/spy.m
 @anchor{XREFspy}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} spy (@var{x})
 @deftypefnx {} {} spy (@dots{}, @var{markersize})
 @deftypefnx {} {} spy (@dots{}, @var{line_spec})
@@ -737,6 +839,11 @@ and determines the appearance of the plot.
 
 @c etree libinterp/corefcn/colamd.cc
 @anchor{XREFetree}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{p} =} etree (@var{S})
 @deftypefnx {} {@var{p} =} etree (@var{S}, @var{typ})
 @deftypefnx {} {[@var{p}, @var{q}] =} etree (@var{S}, @var{typ})
@@ -756,6 +863,11 @@ permutations on the tree.
 
 @c etreeplot scripts/sparse/etreeplot.m
 @anchor{XREFetreeplot}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} etreeplot (@var{A})
 @deftypefnx {} {} etreeplot (@var{A}, @var{node_style}, @var{edge_style})
 Plot the elimination tree of the matrix @var{A} or
@@ -769,6 +881,11 @@ output style.
 
 @c gplot scripts/sparse/gplot.m
 @anchor{XREFgplot}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} gplot (@var{A}, @var{xy})
 @deftypefnx {} {} gplot (@var{A}, @var{xy}, @var{line_style})
 @deftypefnx {} {[@var{x}, @var{y}] =} gplot (@var{A}, @var{xy})
@@ -786,6 +903,11 @@ Otherwise, return the coordinates of the plot in @var{x} and @var{y}.
 
 @c treeplot scripts/sparse/treeplot.m
 @anchor{XREFtreeplot}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} treeplot (@var{tree})
 @deftypefnx {} {} treeplot (@var{tree}, @var{node_style}, @var{edge_style})
 Produce a graph of tree or forest.
@@ -803,13 +925,19 @@ requirements.
 
 @c treelayout scripts/sparse/treelayout.m
 @anchor{XREFtreelayout}
-@deftypefn  {} {} treelayout (@var{tree})
-@deftypefnx {} {} treelayout (@var{tree}, @var{permutation})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {[@var{x}, @var{y}] =} treelayout (@var{tree})
+@deftypefnx {} {[@var{x}, @var{y}] =} treelayout (@var{tree}, @var{permutation})
+@deftypefnx {} {[@var{x}, @var{y}, @var{h}, @var{s}] =} treelayout (@dots{})
 treelayout lays out a tree or a forest.
 
 The first argument @var{tree} is a vector of predecessors.
 
-The parameter @var{permutation} is an optional postorder permutation.
+The optional parameter @var{permutation} is a postorder permutation.
 
 The complexity of the algorithm is O(n) in terms of time and memory
 requirements.
@@ -909,13 +1037,6 @@ speye (3) + 0
 @noindent
 returns a full matrix as can be seen.
 
-
-Additionally, if @code{sparse_auto_mutate} is true, all sparse functions
-test the amount of memory occupied by the sparse matrix to see if the
-amount of storage used is larger than the amount used by the full
-equivalent.  Therefore @code{speye (2) * 1} will return a full matrix as
-the memory used is smaller for the full version than the sparse version.
-
 As all of the mixed operators and functions between full and sparse
 matrices exist, in general this does not cause any problems.  However,
 one area where it does cause a problem is where a sparse matrix is
@@ -939,39 +1060,6 @@ should return a sparse matrix.  To ensure this actually happens, the
 @dfn{sparse} function, and other functions based on it like @dfn{speye},
 always returns a sparse matrix, even if the memory used will be larger
 than its full representation.
-
-@c sparse_auto_mutate libinterp/octave-value/ov-base.cc
-@anchor{XREFsparse_auto_mutate}
-@deftypefn  {} {@var{val} =} sparse_auto_mutate ()
-@deftypefnx {} {@var{old_val} =} sparse_auto_mutate (@var{new_val})
-@deftypefnx {} {} sparse_auto_mutate (@var{new_val}, "local")
-Query or set the internal variable that controls whether Octave will
-automatically mutate sparse matrices to full matrices to save memory.
-
-For example:
-
-@example
-@group
-s = speye (3);
-sparse_auto_mutate (false);
-s(:, 1) = 1;
-typeinfo (s)
-@result{} sparse matrix
-sparse_auto_mutate (true);
-s(1, :) = 1;
-typeinfo (s)
-@result{} matrix
-@end group
-@end example
-
-When called from inside a function with the @qcode{"local"} option, the
-variable is changed locally for the function and any subroutines it calls.
-The original variable value is restored when exiting the function.
-@end deftypefn
-
-
-Note that the @code{sparse_auto_mutate} option is incompatible with
-@sc{matlab}, and so it is off by default.
 
 @node Mathematical Considerations
 @subsubsection Mathematical Considerations
@@ -1128,6 +1216,11 @@ reorder the matrix to maximize performance.
 
 @c amd libinterp/corefcn/amd.cc
 @anchor{XREFamd}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{p} =} amd (@var{S})
 @deftypefnx {} {@var{p} =} amd (@var{S}, @var{opts})
 
@@ -1162,6 +1255,11 @@ The author of the code itself is Timothy A. Davis
 
 @c ccolamd libinterp/corefcn/ccolamd.cc
 @anchor{XREFccolamd}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{p} =} ccolamd (@var{S})
 @deftypefnx {} {@var{p} =} ccolamd (@var{S}, @var{knobs})
 @deftypefnx {} {@var{p} =} ccolamd (@var{S}, @var{knobs}, @var{cmember})
@@ -1255,6 +1353,11 @@ csymamd, amd, colamd, symamd, and other related orderings.
 
 @c colamd libinterp/corefcn/colamd.cc
 @anchor{XREFcolamd}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{p} =} colamd (@var{S})
 @deftypefnx {} {@var{p} =} colamd (@var{S}, @var{knobs})
 @deftypefnx {} {[@var{p}, @var{stats}] =} colamd (@var{S})
@@ -1326,6 +1429,11 @@ Laboratory.  (see @url{http://faculty.cse.tamu.edu/davis/suitesparse.html})
 
 @c colperm scripts/sparse/colperm.m
 @anchor{XREFcolperm}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{p} =} colperm (@var{s})
 Return the column permutations such that the columns of
 @code{@var{s}(:, @var{p})} are ordered in terms of increasing number of
@@ -1339,6 +1447,11 @@ increasing number of nonzero elements.
 
 @c csymamd libinterp/corefcn/ccolamd.cc
 @anchor{XREFcsymamd}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{p} =} csymamd (@var{S})
 @deftypefnx {} {@var{p} =} csymamd (@var{S}, @var{knobs})
 @deftypefnx {} {@var{p} =} csymamd (@var{S}, @var{knobs}, @var{cmember})
@@ -1406,6 +1519,11 @@ colamd, csymamd, amd, colamd, symamd, and other related orderings.
 
 @c dmperm libinterp/corefcn/dmperm.cc
 @anchor{XREFdmperm}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{p} =} dmperm (@var{A})
 @deftypefnx {} {[@var{p}, @var{q}, @var{r}, @var{s}, @var{cc}, @var{rr}] =} dmperm (@var{A})
 
@@ -1471,6 +1589,11 @@ The method used is described in: @nospell{A. Pothen & C.-J. Fan.}
 
 @c symamd libinterp/corefcn/colamd.cc
 @anchor{XREFsymamd}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{p} =} symamd (@var{S})
 @deftypefnx {} {@var{p} =} symamd (@var{S}, @var{knobs})
 @deftypefnx {} {[@var{p}, @var{stats}] =} symamd (@var{S})
@@ -1537,6 +1660,11 @@ Laboratory.  (see @url{http://faculty.cse.tamu.edu/davis/suitesparse.html})
 
 @c symrcm libinterp/corefcn/symrcm.cc
 @anchor{XREFsymrcm}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{p} =} symrcm (@var{S})
 Return the symmetric reverse @nospell{Cuthill-McKee} permutation of @var{S}.
 
@@ -1658,6 +1786,11 @@ used with care.
 
 @c normest scripts/linear-algebra/normest.m
 @anchor{XREFnormest}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{nest} =} normest (@var{A})
 @deftypefnx {} {@var{nest} =} normest (@var{A}, @var{tol})
 @deftypefnx {} {[@var{nest}, @var{iter}] =} normest (@dots{})
@@ -1678,10 +1811,15 @@ required for @code{normest} to converge.
 
 @c normest1 scripts/linear-algebra/normest1.m
 @anchor{XREFnormest1}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{nest} =} normest1 (@var{A})
 @deftypefnx {} {@var{nest} =} normest1 (@var{A}, @var{t})
 @deftypefnx {} {@var{nest} =} normest1 (@var{A}, @var{t}, @var{x0})
-@deftypefnx {} {@var{nest} =} normest1 (@var{Afun}, @var{t}, @var{x0}, @var{p1}, @var{p2}, @dots{})
+@deftypefnx {} {@var{nest} =} normest1 (@var{Afcn}, @var{t}, @var{x0}, @var{p1}, @var{p2}, @dots{})
 @deftypefnx {} {[@var{nest}, @var{v}] =} normest1 (@var{A}, @dots{})
 @deftypefnx {} {[@var{nest}, @var{v}, @var{w}] =} normest1 (@var{A}, @dots{})
 @deftypefnx {} {[@var{nest}, @var{v}, @var{w}, @var{iter}] =} normest1 (@var{A}, @dots{})
@@ -1693,7 +1831,7 @@ the norm is required.  For small to medium sized matrices, consider using
 estimate of the 1-norm of a linear operator @var{A} when matrix-vector
 products @code{@var{A} * @var{x}} and @code{@var{A}' * @var{x}} can be
 cheaply computed.  In this case, instead of the matrix @var{A}, a function
-@code{@var{Afun} (@var{flag}, @var{x})} is used; it must return:
+@code{@var{Afcn} (@var{flag}, @var{x})} is used; it must return:
 
 @itemize @bullet
 @item
@@ -1723,7 +1861,7 @@ endfor
 @end example
 
 The parameters @var{p1}, @var{p2}, @dots{} are arguments of
-@code{@var{Afun} (@var{flag}, @var{x}, @var{p1}, @var{p2}, @dots{})}.
+@code{@var{Afcn} (@var{flag}, @var{x}, @var{p1}, @var{p2}, @dots{})}.
 
 The default value for @var{t} is 2.  The algorithm requires matrix-matrix
 products with sizes @var{n} x @var{n} and @var{n} x @var{t}.
@@ -1758,6 +1896,11 @@ pp.@: 1185--1201, Vol 21, No.@: 4, 2000.
 
 @c condest scripts/linear-algebra/condest.m
 @anchor{XREFcondest}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{cest} =} condest (@var{A})
 @deftypefnx {} {@var{cest} =} condest (@var{A}, @var{t})
 @deftypefnx {} {@var{cest} =} condest (@var{A}, @var{Ainvfcn})
@@ -1850,6 +1993,11 @@ Pseudospectra}.  @url{https://citeseer.ist.psu.edu/223007.html}
 
 @c spparms libinterp/corefcn/spparms.cc
 @anchor{XREFspparms}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} { } spparms ()
 @deftypefnx {} {@var{vals} =} spparms ()
 @deftypefnx {} {[@var{keys}, @var{vals}] =} spparms ()
@@ -1923,6 +2071,11 @@ longer running time.
 
 @c sprank libinterp/corefcn/dmperm.cc
 @anchor{XREFsprank}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{p} =} sprank (@var{S})
 @cindex structural rank
 
@@ -1939,6 +2092,11 @@ such the numerical rank of the matrix @var{S} is bounded by
 
 @c symbfact libinterp/corefcn/symbfact.cc
 @anchor{XREFsymbfact}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{count}, @var{h}, @var{parent}, @var{post}, @var{R}] =} symbfact (@var{S})
 @deftypefnx {} {[@dots{}] =} symbfact (@var{S}, @var{typ})
 @deftypefnx {} {[@dots{}] =} symbfact (@var{S}, @var{typ}, @var{mode})
@@ -2006,6 +2164,11 @@ function to find a least squares solution to a linear equation.
 
 @c spaugment scripts/sparse/spaugment.m
 @anchor{XREFspaugment}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{s} =} spaugment (@var{A}, @var{c})
 Create the augmented matrix of @var{A}.
 
@@ -2071,6 +2234,11 @@ singular values and vectors.
 
 @c eigs scripts/sparse/eigs.m
 @anchor{XREFeigs}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{d} =} eigs (@var{A})
 @deftypefnx {} {@var{d} =} eigs (@var{A}, @var{k})
 @deftypefnx {} {@var{d} =} eigs (@var{A}, @var{k}, @var{sigma})
@@ -2266,6 +2434,11 @@ information see @url{http://www.caam.rice.edu/software/ARPACK/}.
 
 @c svds scripts/sparse/svds.m
 @anchor{XREFsvds}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} svds (@var{A})
 @deftypefnx {} {@var{s} =} svds (@var{A}, @var{k})
 @deftypefnx {} {@var{s} =} svds (@var{A}, @var{k}, @var{sigma})
@@ -2352,6 +2525,11 @@ functions to solve sparse linear equations using iterative techniques.
 
 @c pcg scripts/sparse/pcg.m
 @anchor{XREFpcg}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} pcg (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{m1}, @var{m2}, @var{x0}, @dots{})
 @deftypefnx {} {@var{x} =} pcg (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M}, [], @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}, @var{eigest}] =} pcg (@var{A}, @var{b}, @dots{})
@@ -2364,8 +2542,8 @@ The input arguments are:
 @itemize
 @item @var{A} is the matrix of the linear system and it must be square.
 @var{A} can be passed as a matrix, function handle, or inline function
-@code{Afun} such that @code{Afun(x) = A * x}.  Additional parameters to
-@code{Afun} may be passed after @var{x0}.
+@code{Afcn} such that @code{Afcn(x) = A * x}.  Additional parameters to
+@code{Afcn} may be passed after @var{x0}.
 
 @var{A} has to be Hermitian and Positive Definite (@nospell{HPD})@.  If
 @code{pcg} detects @var{A} not to be positive definite, a warning is printed
@@ -2491,10 +2669,10 @@ b = A * ones (n, 1);
 M1 = ichol (A); # in this tridiagonal case it corresponds to chol (A)'
 M2 = M1';
 M = M1 * M2;
-Afun = @@(x) A * x;
-Mfun = @@(x) M \ x;
-M1fun = @@(x) M1 \ x;
-M2fun = @@(x) M2 \ x;
+Afcn = @@(x) A * x;
+Mfcn = @@(x) M \ x;
+M1fcn = @@(x) M1 \ x;
+M2fcn = @@(x) M2 \ x;
 @end group
 @end example
 
@@ -2508,7 +2686,7 @@ x = pcg (A, b)
 @code{@var{A} * @var{x}}
 
 @example
-x = pcg (Afun, b)
+x = pcg (Afcn, b)
 @end example
 
 @sc{Example 3:} @code{pcg} with a preconditioner matrix @var{M}
@@ -2520,7 +2698,7 @@ x = pcg (A, b, 1e-06, 100, M)
 @sc{Example 4:} @code{pcg} with a function as preconditioner
 
 @example
-x = pcg (Afun, b, 1e-6, 100, Mfun)
+x = pcg (Afcn, b, 1e-6, 100, Mfcn)
 @end example
 
 @sc{Example 5:} @code{pcg} with preconditioner matrices @var{M1}
@@ -2533,7 +2711,7 @@ x = pcg (A, b, 1e-6, 100, M1, M2)
 @sc{Example 6:} @code{pcg} with functions as preconditioners
 
 @example
-x = pcg (Afun, b, 1e-6, 100, M1fun, M2fun)
+x = pcg (Afcn, b, 1e-6, 100, M1fcn, M2fcn)
 @end example
 
 @sc{Example 7:} @code{pcg} with as input a function requiring an argument
@@ -2546,8 +2724,8 @@ x = pcg (Afun, b, 1e-6, 100, M1fun, M2fun)
        y = A * y;
      endfor
   endfunction
-Apfun = @@(x, p) Ap (A, x, p);
-x = pcg (Apfun, b, [], [], [], [], [], 2);
+Apfcn = @@(x, p) Ap (A, x, p);
+x = pcg (Apfcn, b, [], [], [], [], [], 2);
 @end group
 @end example
 
@@ -2590,6 +2768,11 @@ Revised version of this book is available online at
 
 @c pcr scripts/sparse/pcr.m
 @anchor{XREFpcr}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} pcr (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{m}, @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}] =} pcr (@dots{})
 
@@ -2752,6 +2935,11 @@ are partial factorizations of the original matrix.
 
 @c ichol scripts/sparse/ichol.m
 @anchor{XREFichol}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{L} =} ichol (@var{A})
 @deftypefnx {} {@var{L} =} ichol (@var{A}, @var{opts})
 
@@ -2889,8 +3077,13 @@ Cholesky Factorization}, 1992.
 
 @c ilu scripts/sparse/ilu.m
 @anchor{XREFilu}
-@deftypefn  {} {} ilu (@var{A})
-@deftypefnx {} {} ilu (@var{A}, @var{opts})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{LUA} =} ilu (@var{A})
+@deftypefnx {} {@var{LUA} =} ilu (@var{A}, @var{opts})
 @deftypefnx {} {[@var{L}, @var{U}] =} ilu (@dots{})
 @deftypefnx {} {[@var{L}, @var{U}, @var{P}] =} ilu (@dots{})
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,47 +33,42 @@ class QAction;
 class QMenu;
 class QWidget;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class Menu : public Object, public MenuContainer
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  Menu (octave::interpreter& interp,
+        const graphics_object& go, QAction *action, Object *parent);
+  ~Menu ();
 
-  class Menu : public Object, public MenuContainer
-  {
-    Q_OBJECT
+  static Menu *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  public:
-    Menu (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-          const graphics_object& go, QAction *action, Object *parent);
-    ~Menu (void);
+  Container * innerContainer () { return nullptr; }
 
-    static Menu *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+  QWidget * menu ();
 
-    Container * innerContainer (void) { return nullptr; }
+protected:
+  void update (int pId);
 
-    QWidget * menu (void);
+private slots:
+  void actionTriggered ();
+  void actionHovered ();
 
-  protected:
-    void update (int pId);
+private:
+  void updateSiblingPositions ();
 
-  private slots:
-    void actionTriggered (void);
-    void actionHovered (void);
+private:
+  QWidget *m_parent;
+  QAction *m_separator;
+};
 
-  private:
-    void updateSiblingPositions (void);
-
-  private:
-    QWidget *m_parent;
-    QAction *m_separator;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

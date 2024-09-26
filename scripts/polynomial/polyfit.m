@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -157,7 +157,7 @@ function [p, s, mu] = polyfit (x, y, n)
   p = r \ (q' * y);
   p(k) = p;
 
-  if (isargout (2))
+  if (nargout > 1)
     yf = v*p;
     if (y_is_row_vector)
       s.yf = yf.';

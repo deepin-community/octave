@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2003-2022 The Octave Project Developers
+// Copyright (C) 2003-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -298,23 +298,14 @@ vector_equivalent (const dim_vector& dv)
   return true;
 }
 
+// FIXME: Deprecated in Octave 9.
 bool
 all_ok (const Array<octave::idx_vector>& ra_idx)
 {
-  bool retval = true;
+  octave_unused_parameter (ra_idx);
 
-  octave_idx_type n = ra_idx.numel ();
-
-  for (octave_idx_type i = 0; i < n; i++)
-    {
-      if (! ra_idx(i))
-        {
-          retval = false;
-          break;
-        }
-    }
-
-  return retval;
+  // idx_vector objects are always valid once constructed
+  return true;
 }
 
 bool
@@ -409,18 +400,6 @@ get_ra_idx (octave_idx_type idx, const dim_vector& dims)
     increment_index (retval, dims);
 
   // FIXME: the solution using increment_index is not efficient.
-
-#if 0
-  octave_idx_type var = 1;
-  for (int i = 0; i < n_dims; i++)
-    {
-      std::cout << "idx: " << idx << ", var: " << var
-                << ", dims(" << i << "): " << dims(i) <<"\n";
-      retval(i) = ((int)floor(((idx) / (double)var))) % dims(i);
-      idx -= var * retval(i);
-      var = dims(i);
-    }
-#endif
 
   return retval;
 }
@@ -623,17 +602,16 @@ ind2sub (const dim_vector& dv, const octave::idx_vector& idx)
   Array<octave::idx_vector> retval (dim_vector (n, 1));
   octave_idx_type numel = dv.numel ();
 
-  if (idx.extent (numel) > numel)
-    (*current_liboctave_error_handler) ("ind2sub: index out of range");
-
   if (idx.is_scalar ())
     {
       octave_idx_type k = idx(0);
-      for (octave_idx_type j = 0; j < n; j++)
+      for (octave_idx_type j = 0; j < n-1; j++)
         {
           retval(j) = k % dv(j);
           k /= dv(j);
         }
+
+      retval(n-1) = idx(0) < numel ? k % dv(n-1) : k;
     }
   else
     {
@@ -646,11 +624,13 @@ ind2sub (const dim_vector& dv, const octave::idx_vector& idx)
       for (octave_idx_type i = 0; i < len; i++)
         {
           octave_idx_type k = idx(i);
-          for (octave_idx_type j = 0; j < n; j++)
+          for (octave_idx_type j = 0; j < n-1; j++)
             {
               rdata[j](i) = k % dv(j);
               k /= dv(j);
             }
+
+          rdata[n-1](i) = idx(i) < numel ? k % dv(n-1) : k;
         }
 
       for (octave_idx_type j = 0; j < n; j++)

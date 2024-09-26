@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -39,13 +39,13 @@
 // unary operations
 
 boolNDArray
-boolNDArray::operator ! (void) const
+boolNDArray::operator ! () const
 {
   return do_mx_unary_op<bool, bool> (*this, mx_inline_not);
 }
 
 boolNDArray&
-boolNDArray::invert (void)
+boolNDArray::invert ()
 {
   if (is_shared ())
     *this = ! *this;

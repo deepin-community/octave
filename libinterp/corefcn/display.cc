@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,25 +37,25 @@
 #include "ov.h"
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  void display_info::initialize (void)
-  {
-    int avail = 0;
+void display_info::initialize ()
+{
+  int avail = 0;
 
-    const char *msg
-      = octave_get_display_info (nullptr, &m_ht, &m_wd, &m_dp,
-                                 &m_rx, &m_ry, &avail);
+  const char *msg
+    = octave_get_display_info (nullptr, &m_ht, &m_wd, &m_dp,
+                               &m_rx, &m_ry, &avail);
 
-    m_dpy_avail = avail;
+  m_dpy_avail = avail;
 
-    if (msg)
-      m_msg = msg;
-  }
+  if (msg)
+    m_msg = msg;
+}
 
 DEFMETHOD (have_window_system, interp, , ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} have_window_system ()
+@deftypefn {} {@var{tf} =} have_window_system ()
 Return true if a window system is available (X11, Windows, or Apple OS X)
 and false otherwise.
 @seealso{isguirunning}
@@ -66,4 +66,4 @@ and false otherwise.
   return ovl (dpy_info.display_available ());
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

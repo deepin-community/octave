@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -87,17 +87,20 @@ extern OCTAVE_API void octave_get_signal_mask (void *mask);
 
 extern OCTAVE_API void octave_set_signal_mask (void *mask);
 
-extern OCTAVE_API void octave_block_async_signals (void);
-
-extern OCTAVE_API void octave_unblock_async_signals (void);
-
 extern OCTAVE_API int octave_raise_wrapper (int signum);
+
+// This function can be useful for debugging.
+
+extern OCTAVE_API void octave_show_sigmask (const char *);
+
+// The next three functions are defined in cxx-signal-helpers.cc.
 
 extern OCTAVE_API void
 octave_create_interrupt_watcher_thread (octave_sig_handler *handler);
 
-// This can be useful for debugging.
-extern OCTAVE_API void octave_show_sigmask (const char *);
+extern OCTAVE_API void octave_block_async_signals (void);
+
+extern OCTAVE_API void octave_unblock_async_signals (void);
 
 #if defined __cplusplus
 }

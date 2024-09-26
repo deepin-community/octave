@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -29,37 +29,36 @@
 #include "documentation.h"
 #include "octave-dock-widget.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class documentation_dock_widget : public octave_dock_widget
 {
-  class base_qobject;
+  Q_OBJECT
 
-  class documentation_dock_widget : public octave_dock_widget
-  {
-    Q_OBJECT
+public:
 
-  public:
+  documentation_dock_widget (QWidget *parent);
 
-    documentation_dock_widget (QWidget *parent, base_qobject& oct_qobj);
+  ~documentation_dock_widget () = default;
 
-    ~documentation_dock_widget (void) = default;
+public slots:
 
-  public slots:
+  void notice_settings ();
+  void save_settings ();
 
-    void notice_settings (const gui_settings *settings);
-    void save_settings (void);
+  void copyClipboard ();
+  void pasteClipboard ();
+  void selectAll ();
 
-    void copyClipboard (void);
-    void pasteClipboard (void);
-    void selectAll (void);
+  void showDoc (const QString& name);
+  void registerDoc (const QString& name);
+  void unregisterDoc (const QString& name);
 
-    void showDoc (const QString& name);
-    void registerDoc (const QString& name);
-    void unregisterDoc (const QString& name);
+private:
 
-  private:
+  documentation *m_docs;
+};
 
-    documentation *m_docs;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

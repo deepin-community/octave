@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 2008-2022 The Octave Project Developers
+@c Copyright (C) 2008-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -169,7 +169,12 @@ isa (p, "polynomial")
 
 @c isobject libinterp/octave-value/ov-class.cc
 @anchor{XREFisobject}
-@deftypefn {} {} isobject (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isobject (@var{x})
 Return true if @var{x} is a class object.
 @xseealso{@ref{XREFclass,,class}, @ref{XREFtypeinfo,,typeinfo}, @ref{XREFisa,,isa}, @ref{XREFismethod,,ismethod}, @ref{XREFisprop,,isprop}}
 @end deftypefn
@@ -181,6 +186,11 @@ function.
 
 @c methods scripts/miscellaneous/methods.m
 @anchor{XREFmethods}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} methods (@var{obj})
 @deftypefnx {} {} methods ("@var{classname}")
 @deftypefnx {} {} methods (@dots{}, "-full")
@@ -208,8 +218,13 @@ To inquire whether a particular method exists for a user class, the
 
 @c ismethod scripts/miscellaneous/ismethod.m
 @anchor{XREFismethod}
-@deftypefn  {} {} ismethod (@var{obj}, @var{method})
-@deftypefnx {} {} ismethod (@var{class_name}, @var{method})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{tf} =} ismethod (@var{obj}, @var{method})
+@deftypefnx {} {@var{tf} =} ismethod (@var{class_name}, @var{method})
 Return true if the string @var{method} is a valid method of the object
 @var{obj} or of the class @var{clsname}.
 @xseealso{@ref{XREFisprop,,isprop}, @ref{XREFisobject,,isobject}, @ref{XREFisjava,,isjava}, @ref{XREFmethods,,methods}}
@@ -392,6 +407,11 @@ This can be done with the @code{saveobj} method of the class.
 
 @c saveobj scripts/miscellaneous/saveobj.m
 @anchor{XREFsaveobj}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{b} =} saveobj (@var{a})
 Method of a class to manipulate an object prior to saving it to a file.
 
@@ -424,6 +444,11 @@ object.
 
 @c loadobj scripts/miscellaneous/loadobj.m
 @anchor{XREFloadobj}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{b} =} loadobj (@var{a})
 Method of a class to manipulate an object after loading it from a file.
 
@@ -467,7 +492,12 @@ determined by the @code{subsref} method.
 
 @c subsref libinterp/octave-value/ov.cc
 @anchor{XREFsubsref}
-@deftypefn {} {} subsref (@var{val}, @var{idx})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{newval} =} subsref (@var{val}, @var{idx})
 Perform the subscripted element selection operation on @var{val} according
 to the subscript specified by @var{idx}.
 
@@ -498,6 +528,9 @@ Note that this is the same as writing @code{val(:, 1:2)}.
 
 If @var{idx} is an empty structure array with fields @samp{type} and
 @samp{subs}, return @var{val}.
+
+The keyword @code{end} cannot be used within @code{subsref} for indexing
+assignments.
 @xseealso{@ref{XREFsubsasgn,,subsasgn}, @ref{XREFsubstruct,,substruct}}
 @end deftypefn
 
@@ -561,7 +594,12 @@ The equivalent functionality for subscripted assignments uses the
 
 @c subsasgn libinterp/octave-value/ov.cc
 @anchor{XREFsubsasgn}
-@deftypefn {} {} subsasgn (@var{val}, @var{idx}, @var{rhs})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{newval} =} subsasgn (@var{val}, @var{idx}, @var{rhs})
 Perform the subscripted assignment operation according to the subscript
 specified by @var{idx}.
 
@@ -578,7 +616,7 @@ matrix to zero.
 val = magic (3);
 idx.type = "()";
 idx.subs = @{":", 1:2@};
-subsasgn (val, idx, 0)
+val = subsasgn (val, idx, 0)
      @result{}  [ 0   0   6
            0   0   7
            0   0   2 ]
@@ -589,15 +627,23 @@ Note that this is the same as writing @code{val(:, 1:2) = 0}.
 
 If @var{idx} is an empty structure array with fields @samp{type} and
 @samp{subs}, return @var{rhs}.
+
+The keyword @code{end} cannot be used within @code{subsasgn} for indexing
+assignments.
 @xseealso{@ref{XREFsubsref,,subsref}, @ref{XREFsubstruct,,substruct}, @ref{XREFoptimize_subsasgn_calls,,optimize_subsasgn_calls}}
 @end deftypefn
 
 
 @c optimize_subsasgn_calls libinterp/octave-value/ov-usr-fcn.cc
 @anchor{XREFoptimize_subsasgn_calls}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} optimize_subsasgn_calls ()
 @deftypefnx {} {@var{old_val} =} optimize_subsasgn_calls (@var{new_val})
-@deftypefnx {} {} optimize_subsasgn_calls (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} optimize_subsasgn_calls (@var{new_val}, "local")
 Query or set the internal flag for @code{subsasgn} method call
 optimizations.
 
@@ -654,6 +700,11 @@ and this is controlled by the @code{subsindex} function.
 
 @c subsindex scripts/general/subsindex.m
 @anchor{XREFsubsindex}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{idx} =} subsindex (@var{obj})
 Convert an object to an index vector.
 
@@ -702,6 +753,11 @@ Finally, objects can be used like ranges by providing a @code{colon} method.
 
 @c colon libinterp/corefcn/data.cc
 @anchor{XREFcolon}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{r} =} colon (@var{base}, @var{limit})
 @deftypefnx {} {@var{r} =} colon (@var{base}, @var{increment}, @var{limit})
 Return the result of the colon expression corresponding to @var{base},
@@ -992,6 +1048,11 @@ be used
 
 @c superiorto libinterp/octave-value/ov-class.cc
 @anchor{XREFsuperiorto}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} superiorto (@var{class_name}, @dots{})
 When called from a class constructor, mark the object currently constructed
 as having a higher precedence than @var{class_name}.
@@ -1004,6 +1065,11 @@ may @emph{only} be called from a class constructor.
 
 @c inferiorto libinterp/octave-value/ov-class.cc
 @anchor{XREFinferiorto}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} inferiorto (@var{class_name}, @dots{})
 When called from a class constructor, mark the object currently constructed
 as having a lower precedence than @var{class_name}.
@@ -1170,6 +1236,11 @@ function.
 
 @c display libinterp/corefcn/pr-output.cc
 @anchor{XREFdisplay}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} display (@var{obj})
 Display the contents of the object @var{obj} prepended by its name.
 
@@ -1413,8 +1484,6 @@ endclassdef
 @end group
 @end example
 
-
-
 In contrast to old style classes, the @code{properties}-@code{endproperties}
 block as well as the @code{methods}-@code{endmethods} block can be used to
 define properties and methods of the class.  Because both blocks are empty,
@@ -1552,17 +1621,22 @@ public read and write access.
 
 @c properties libinterp/octave-value/ov-classdef.cc
 @anchor{XREFproperties}
-@deftypefn  {} {} properties (@var{class_name})
-@deftypefnx {} {} properties (@var{obj})
-@deftypefnx {} {@var{plist} =} properties (@dots{})
-Return or display the public properties for the named class
-@var{class_name} or classdef object @var{obj}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-If an output value is requested, return the list of property names in a
-cell array.
 
-Programming Note: Property names are returned if the @code{GetAccess}
-attribute is public and if the @code{Hidden} attribute is false.
+@deftypefn  {} {} properties (@var{obj})
+@deftypefnx {} {} properties (@var{class_name})
+@deftypefnx {} {@var{proplist} =} properties (@dots{})
+Display or return the public properties for the classdef object @var{obj} or
+the named class @var{class_name}.
+
+If an output value is requested, return the list of property names in a cell
+array.
+
+Programming Note: Property names are returned if the @code{GetAccess} attribute
+is public and if the @code{Hidden} attribute is false.
 @xseealso{@ref{XREFmethods,,methods}}
 @end deftypefn
 
@@ -1785,4 +1859,3 @@ persistently:
 @result{} ans =  3
 @end group
 @end example
-

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,7 +34,7 @@
 #include "errwarn.h"
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (hess, args, nargout,
        doc: /* -*- texinfo -*-
@@ -154,4 +154,4 @@ IEEE Transactions on Automatic Control, 1979).
 %!error <must be a square matrix> hess ([1, 2; 3, 4; 5, 6])
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

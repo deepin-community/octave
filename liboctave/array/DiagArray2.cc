@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -66,7 +66,7 @@ DiagArray2<T>::extract_diag (octave_idx_type k) const
 
 template <typename T>
 DiagArray2<T>
-DiagArray2<T>::transpose (void) const
+DiagArray2<T>::transpose () const
 {
   return DiagArray2<T> (*this, m_d2, m_d1);
 }
@@ -113,7 +113,7 @@ DiagArray2<T>::resize (octave_idx_type r, octave_idx_type c,
 
 template <typename T>
 Array<T>
-DiagArray2<T>::array_value (void) const
+DiagArray2<T>::array_value () const
 {
   Array<T> result (dims (), T (0));
 

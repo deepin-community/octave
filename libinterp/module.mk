@@ -71,6 +71,9 @@ LIBINTERP_BUILT_NODISTFILES = \
   %reldir%/liboctinterp-build-info.cc \
   %reldir%/operators/ops.cc
 
+## C++ files with templates that are #included, not compiled
+LIBINTERP_TEMPLATE_SRC =
+
 %canon_reldir%_EXTRA_DIST += \
   %reldir%/DOCSTRINGS \
   %reldir%/build-env.in.cc \
@@ -87,9 +90,11 @@ octinclude_HEADERS += \
   %reldir%/octave.h \
   $(COREFCN_INC) \
   $(LIBINTERP_OPERATORS_INC) \
+  $(LIBINTERP_TEMPLATE_SRC) \
   $(OCTAVE_VALUE_INC) \
   $(PARSE_TREE_INC) \
-  $(PARSER_INC)
+  $(PARSER_INC) \
+  $(TEMPLATE_INST_INC)
 
 noinst_HEADERS += \
   %reldir%/options.h \
@@ -103,6 +108,7 @@ nodist_octinclude_HEADERS += \
 
 DIST_SRC += \
   %reldir%/octave.cc \
+  $(LIBINTERP_TEMPLATE_SRC) \
   $(OCTAVE_VALUE_SRC) \
   $(PARSE_TREE_SRC) \
   $(COREFCN_SRC)
@@ -150,8 +156,8 @@ endif
 ## Increment the following version numbers as needed and according
 ## to the rules in the etc/HACKING.md file:
 
-%canon_reldir%_liboctinterp_current = 10
-%canon_reldir%_liboctinterp_revision = 0
+%canon_reldir%_liboctinterp_current = 12
+%canon_reldir%_liboctinterp_revision = 1
 %canon_reldir%_liboctinterp_age = 0
 
 %canon_reldir%_liboctinterp_version_info = $(%canon_reldir%_liboctinterp_current):$(%canon_reldir%_liboctinterp_revision):$(%canon_reldir%_liboctinterp_age)
@@ -168,21 +174,16 @@ ULT_DIST_SRC := \
   $(ULT_PARSER_SRC)
 
 LIBINTERP_FOUND_DEFUN_FILES := \
-  $(shell $(SHELL) $(srcdir)/build-aux/find-defun-files.sh "$(srcdir)" $(ULT_DIST_SRC))
+  $(shell $(SHELL) build-aux/find-defun-files.sh "$(srcdir)" $(ULT_DIST_SRC))
 
 BUILT_IN_DEFUN_FILES := $(OPT_HANDLERS) $(LIBINTERP_FOUND_DEFUN_FILES)
 
 LIBINTERP_DEFUN_FILES += \
   $(BUILT_IN_DEFUN_FILES)
 
-## FIXME: The following two variables are deprecated and should be removed
-##        in Octave version 3.12.
-DLL_CDEFS = @OCTINTERP_DLL_DEFS@
-DLL_CXXDEFS = @OCTINTERP_DLL_DEFS@
-
 ## Rules to build test files
 
-LIBINTERP_TST_FILES_SRC := $(shell $(SHELL) $(srcdir)/build-aux/find-files-with-tests.sh "$(srcdir)" $(ULT_DIST_SRC) $(DLDFCN_SRC))
+LIBINTERP_TST_FILES_SRC := $(shell $(SHELL) build-aux/find-files-with-tests.sh "$(srcdir)" $(ULT_DIST_SRC) $(DLDFCN_SRC))
 
 LIBINTERP_TST_FILES := $(addsuffix -tst,$(LIBINTERP_TST_FILES_SRC))
 
@@ -246,8 +247,6 @@ install-built-in-docstrings: %reldir%/DOCSTRINGS
 uninstall-built-in-docstrings:
 	rm -f $(DESTDIR)$(octetcdir)/built-in-docstrings
 .PHONY: uninstall-built-in-docstrings
-
-pkgconfig_DATA += $(%canon_reldir%_pkgconfig_DATA)
 
 EXTRA_DIST += $(%canon_reldir%_EXTRA_DIST)
 

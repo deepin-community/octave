@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2014-2022 The Octave Project Developers
+## Copyright (C) 2014-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} im2frame (@var{rgb})
-## @deftypefnx {} {} im2frame (@var{x}, @var{map})
+## @deftypefn  {} {@var{frame} =} im2frame (@var{rgb})
+## @deftypefnx {} {@var{frame} =} im2frame (@var{x}, @var{map})
 ## Convert image to movie frame.
 ##
 ## A movie frame is simply a struct with the fields @qcode{"cdata"} and

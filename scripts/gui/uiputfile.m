@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -37,7 +37,8 @@
 ## @item @qcode{"/path/to/filename.ext"}
 ## If a filename is given the file extension is extracted and used as filter.
 ## In addition the path is selected as current path in the dialog and the
-## filename is selected as default file.  Example: @code{uiputfile ("myfun.m")}
+## filename is selected as default file.  Example:
+## @code{uiputfile ("myfcn.m")}
 ##
 ## @item @qcode{"*.ext"}
 ## A single file extension.
@@ -45,15 +46,13 @@
 ##
 ## @item @code{@{"*.ext", "My Description"@}}
 ## A 2-column cell array containing the file extension in the 1st column and
-## a brief description in the 2nd column.
-## Example: @code{uiputfile (@{"*.ext","My Description";"*.xyz",
-## "XYZ-Format"@})}
+## a brief description in the 2nd column.  Example:
+## @code{uiputfile (@{"*.ext","My Description";"*.xyz", "XYZ-Format"@})}
 ## @end table
 ##
 ## The filter string can also contain a semicolon separated list of filter
-## extensions.
-## Example: @code{uiputfile (@{"*.gif;*.png;*.jpg",
-## "Supported Picture Formats"@})}
+## extensions.  Example:
+## @code{uiputfile (@{"*.gif;*.png;*.jpg", "Supported Picture Formats"@})}
 ##
 ## @var{dialog_name} can be used to customize the dialog title.
 ## If @var{default_file} is given it is preselected in the GUI dialog.

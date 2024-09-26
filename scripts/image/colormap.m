@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -106,7 +106,7 @@ function cmap = colormap (varargin)
   if (nargin == 1)
     map = varargin{1};
     if (ischar (map))
-      map = tolower (map);
+      map = lower (map);
       if (strcmp (map, "default"))
         map = viridis (64);
       else

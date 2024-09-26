@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -71,10 +71,10 @@ function [y, c] = stft (x, win_size = 80, inc = 24, num_coef = 64, win_type = 1)
   endif
 
   if (ischar (win_type))
-    switch (tolower (win_type))
-      case "hanning"    win_type = 1;
-      case "hamming"    win_type = 2;
-      case "rectangle"  win_type = 3;
+    switch (lower (win_type))
+      case "hanning"   , win_type = 1;
+      case "hamming"   , win_type = 2;
+      case "rectangle" , win_type = 3;
       otherwise
         error ("stft: unknown window type '%s'", win_type);
     endswitch
@@ -95,9 +95,9 @@ function [y, c] = stft (x, win_size = 80, inc = 24, num_coef = 64, win_type = 1)
 
   ## compute the window coefficients
   switch (win_type)
-    case 1  win_coef = hanning (win_size);
-    case 2  win_coef = hamming (win_size);
-    case 3  win_coef = ones (win_size, 1);
+    case 1 , win_coef = hanning (win_size);
+    case 2 , win_coef = hamming (win_size);
+    case 3 , win_coef = ones (win_size, 1);
   endswitch
 
   ## Create a matrix Z whose columns contain the windowed time-slices.

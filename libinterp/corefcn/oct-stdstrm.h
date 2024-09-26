@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,7 +33,7 @@
 #include "oct-stream.h"
 #include "c-file-ptr-stream.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 template <typename BUF_T, typename STREAM_T, typename FILE_T>
 class
@@ -50,11 +50,7 @@ public:
       m_stream (f ? new STREAM_T (f, cf) : nullptr), m_fnum (fid)
   { }
 
-  // No copying!
-
-  tstdiostream (const tstdiostream&) = delete;
-
-  tstdiostream& operator = (const tstdiostream&) = delete;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (tstdiostream)
 
   // Position a stream at OFFSET relative to ORIGIN.
 
@@ -65,43 +61,43 @@ public:
 
   // Return current stream position.
 
-  off_t tell (void) { return m_stream ? m_stream->tell () : -1; }
+  off_t tell () { return m_stream ? m_stream->tell () : -1; }
 
   // Return nonzero if EOF has been reached on this stream.
 
-  bool eof (void) const { return m_stream ? m_stream->eof () : true; }
+  bool eof () const { return m_stream ? m_stream->eof () : true; }
 
   // The name of the file.
 
-  std::string name (void) const { return m_name; }
+  std::string name () const { return m_name; }
 
-  std::istream * input_stream (void)
+  std::istream * input_stream ()
   {
     return (m_mode & std::ios::in) ? m_stream : nullptr;
   }
 
-  std::ostream * output_stream (void)
+  std::ostream * output_stream ()
   {
     return (m_mode & std::ios::out) ? m_stream : nullptr;
   }
 
   // FIXME: should not have to cast away const here.
-  BUF_T * rdbuf (void) const
+  BUF_T * rdbuf () const
   {
     return m_stream ? (const_cast<STREAM_T *> (m_stream))->rdbuf () : nullptr;
   }
 
-  int file_number (void) const { return m_fnum; }
+  int file_number () const { return m_fnum; }
 
-  bool bad (void) const { return m_stream ? m_stream->bad () : true; }
+  bool bad () const { return m_stream ? m_stream->bad () : true; }
 
-  void clear (void)
+  void clear ()
   {
     if (m_stream)
       m_stream->clear ();
   }
 
-  void do_close (void)
+  void do_close ()
   {
     if (m_stream)
       m_stream->stream_close ();
@@ -109,7 +105,7 @@ public:
 
 protected:
 
-  ~tstdiostream (void) { delete m_stream; }
+  ~tstdiostream () { delete m_stream; }
 
   //--------
 
@@ -135,7 +131,7 @@ public:
                const std::string& encoding = "utf-8",
                c_file_ptr_buf::close_fcn cf = c_file_ptr_buf::file_close)
     : tstdiostream<c_file_ptr_buf, io_c_file_ptr_stream, FILE *>
-       (n, f, f ? fileno (f) : -1, m, ff, encoding, cf) { }
+      (n, f, f ? fileno (f) : -1, m, ff, encoding, cf) { }
 
   static stream
   create (const std::string& n, FILE *f = nullptr,
@@ -147,15 +143,11 @@ public:
     return stream (new stdiostream (n, f, m, ff, encoding, cf));
   }
 
-  // No copying!
-
-  stdiostream (const stdiostream&) = delete;
-
-  stdiostream& operator = (const stdiostream&) = delete;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (stdiostream)
 
 protected:
 
-  ~stdiostream (void) = default;
+  ~stdiostream () = default;
 };
 
 #if defined (HAVE_ZLIB)
@@ -172,7 +164,7 @@ public:
                 const std::string& encoding = "utf-8",
                 c_zfile_ptr_buf::close_fcn cf = c_zfile_ptr_buf::file_close)
     : tstdiostream<c_zfile_ptr_buf, io_c_zfile_ptr_stream, gzFile>
-       (n, f, fid, m, ff, encoding, cf) { }
+      (n, f, fid, m, ff, encoding, cf) { }
 
   static stream
   create (const std::string& n, gzFile f = nullptr, int fid = 0,
@@ -184,29 +176,15 @@ public:
     return stream (new zstdiostream (n, f, fid, m, ff, encoding, cf));
   }
 
-  // No copying!
-
-  zstdiostream (const zstdiostream&) = delete;
-
-  zstdiostream& operator = (const zstdiostream&) = delete;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (zstdiostream)
 
 protected:
 
-  ~zstdiostream (void) = default;
+  ~zstdiostream () = default;
 };
 
 #endif
 
-OCTAVE_NAMESPACE_END
-
-#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-
-OCTAVE_DEPRECATED (7, "use 'octave::stdiostream' instead")
-typedef octave::stdiostream octave_stdiostream;
-
-OCTAVE_DEPRECATED (7, "use 'octave::zstdiostream' instead")
-typedef octave::zstdiostream octave_zstdiostream;
-
-#endif
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

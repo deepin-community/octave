@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2007-2022 The Octave Project Developers
+// Copyright (C) 2007-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,6 @@
 #include "oct-map.h"
 #include "ov-colon.h"
 #include "ov-fcn-handle.h"
-#include "parse.h"
 #include "unwind-prot.h"
 #include "variables.h"
 
@@ -131,7 +130,8 @@ do_bsxfun_real_pow (const octave_value& x, const octave_value& y)
     return octave_value (bsxfun_pow (xa, ya));
 }
 
-static void maybe_fill_table (void)
+static void
+maybe_fill_table ()
 {
   static bool filled = false;
   if (filled)
@@ -283,30 +283,6 @@ maybe_update_column (octave_value& Ac, const octave_value& A,
     }
 }
 
-#if 0
-// FIXME: this function is not used; is it OK to delete it?
-static void
-update_index (octave_value_list& idx, const dim_vector& dv, octave_idx_type i)
-{
-  octave_idx_type nd = dv.ndims ();
-
-  if (i == 0)
-    {
-      for (octave_idx_type j = nd - 1; j > 0; j--)
-        idx(j) = octave_value (1.0);
-      idx(0) = octave_value (':');
-    }
-  else
-    {
-      for (octave_idx_type j = 1; j < nd; j++)
-        {
-          idx (j) = octave_value (i % dv(j) + 1);
-          i /= dv(j);
-        }
-    }
-}
-#endif
-
 static void
 update_index (Array<int>& idx, const dim_vector& dv, octave_idx_type i)
 {
@@ -320,11 +296,11 @@ update_index (Array<int>& idx, const dim_vector& dv, octave_idx_type i)
     }
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFMETHOD (bsxfun, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} bsxfun (@var{f}, @var{A}, @var{B})
+@deftypefn {} {@var{C} =} bsxfun (@var{f}, @var{A}, @var{B})
 Apply a binary function @var{f} element-by-element to two array arguments
 @var{A} and @var{B}, expanding singleton dimensions in either input argument as
 necessary.
@@ -343,16 +319,16 @@ as the other array.
   if (args.length () != 3)
     print_usage ();
 
-  octave_value func = args(0);
-  if (func.is_string ())
+  octave_value fcn = args(0);
+  if (fcn.is_string ())
     {
-      std::string name = func.string_value ();
+      std::string name = fcn.string_value ();
 
       symbol_table& symtab = interp.get_symbol_table ();
 
-      func = symtab.find_function (name);
+      fcn = symtab.find_function (name);
 
-      if (func.is_undefined ())
+      if (fcn.is_undefined ())
         error ("bsxfun: invalid function name: %s", name.c_str ());
     }
   else if (! (args(0).is_function_handle () || args(0).is_inline_function ()))
@@ -363,14 +339,14 @@ as the other array.
   const octave_value A = args(1);
   const octave_value B = args(2);
 
-  if (func.is_builtin_function ()
-      || (func.is_function_handle () && ! A.isobject () && ! B.isobject ()))
+  if (fcn.is_builtin_function ()
+      || (fcn.is_function_handle () && ! A.isobject () && ! B.isobject ()))
     {
       // This may break if the default behavior is overridden.  But if you
       // override arithmetic operators for builtin classes, you should expect
       // mayhem anyway (constant folding etc).  Querying is_overloaded() may
       // not be exactly what we need here.
-      octave_function *fcn_val = func.function_value ();
+      octave_function *fcn_val = fcn.function_value ();
       if (fcn_val)
         {
           octave_value tmp = maybe_optimized_builtin (fcn_val->name (), A, B);
@@ -405,23 +381,23 @@ as the other array.
 
       for (octave_idx_type i = 0; i < nd; i++)
         dvc(i) = (dva(i) < 1 ? dva(i)
-                             : (dvb(i) < 1 ? dvb(i)
-                                           : (dva(i) > dvb(i) ? dva(i)
-                                                              : dvb(i))));
+                  : (dvb(i) < 1 ? dvb(i)
+                     : (dva(i) > dvb(i) ? dva(i)
+                        : dvb(i))));
 
       if (dva == dvb || dva.numel () == 1 || dvb.numel () == 1)
         {
           octave_value_list inputs (2);
           inputs(0) = A;
           inputs(1) = B;
-          retval = feval (func, inputs, 1);
+          retval = interp.feval (fcn, inputs, 1);
         }
       else if (dvc.numel () < 1)
         {
           octave_value_list inputs (2);
           inputs(0) = A.resize (dvc);
           inputs(1) = B.resize (dvc);
-          retval = feval (func, inputs, 1);
+          retval = interp.feval (fcn, inputs, 1);
         }
       else
         {
@@ -463,7 +439,7 @@ as the other array.
               if (maybe_update_column (Bc, B, dvb, dvc, i, idxB))
                 inputs(1) = Bc;
 
-              octave_value_list tmp = feval (func, inputs, 1);
+              octave_value_list tmp = interp.feval (fcn, inputs, 1);
 
 #define BSXINIT(T, CLS, EXTRACTOR)                                      \
               (result_type == CLS)                                      \
@@ -512,19 +488,19 @@ as the other array.
                             }
                         }
                       else if BSXINIT(boolNDArray, "logical", bool)
-                      else if BSXINIT(int8NDArray, "int8", int8)
-                      else if BSXINIT(int16NDArray, "int16", int16)
-                      else if BSXINIT(int32NDArray, "int32", int32)
-                      else if BSXINIT(int64NDArray, "int64", int64)
-                      else if BSXINIT(uint8NDArray, "uint8", uint8)
-                      else if BSXINIT(uint16NDArray, "uint16", uint16)
-                      else if BSXINIT(uint32NDArray, "uint32", uint32)
-                      else if BSXINIT(uint64NDArray, "uint64", uint64)
-                      else
-                        {
-                          C = tmp(0);
-                          C = C.resize (dvc);
-                        }
+                        else if BSXINIT(int8NDArray, "int8", int8)
+                          else if BSXINIT(int16NDArray, "int16", int16)
+                            else if BSXINIT(int32NDArray, "int32", int32)
+                              else if BSXINIT(int64NDArray, "int64", int64)
+                                else if BSXINIT(uint8NDArray, "uint8", uint8)
+                                  else if BSXINIT(uint16NDArray, "uint16", uint16)
+                                    else if BSXINIT(uint32NDArray, "uint32", uint32)
+                                      else if BSXINIT(uint64NDArray, "uint64", uint64)
+                                        else
+                                          {
+                                            C = tmp(0);
+                                            C = C.resize (dvc);
+                                          }
                     }
                   else  // Skip semi-fast path for sparse matrices
                     {
@@ -551,7 +527,7 @@ as the other array.
                           result_ComplexNDArray
                             = ComplexNDArray (result_NDArray);
                           result_ComplexNDArray.insert
-                            (tmp(0).complex_array_value (), ra_idx);
+                          (tmp(0).complex_array_value (), ra_idx);
                           have_NDArray = false;
                           have_ComplexNDArray = true;
                         }
@@ -566,13 +542,13 @@ as the other array.
                         }
                       else if (tmp(0).isreal ())
                         result_FloatNDArray.insert
-                          (tmp(0).float_array_value (), ra_idx);
+                        (tmp(0).float_array_value (), ra_idx);
                       else
                         {
                           result_FloatComplexNDArray
                             = FloatComplexNDArray (result_FloatNDArray);
                           result_FloatComplexNDArray.insert
-                            (tmp(0).float_complex_array_value (), ra_idx);
+                          (tmp(0).float_complex_array_value (), ra_idx);
                           have_FloatNDArray = false;
                           have_FloatComplexNDArray = true;
                         }
@@ -592,18 +568,18 @@ as the other array.
                     }
 
                   else if BSXLOOP(ComplexNDArray, "double", complex)
-                  else if BSXLOOP(FloatComplexNDArray, "single", float_complex)
-                  else if BSXLOOP(boolNDArray, "logical", bool)
-                  else if BSXLOOP(int8NDArray, "int8", int8)
-                  else if BSXLOOP(int16NDArray, "int16", int16)
-                  else if BSXLOOP(int32NDArray, "int32", int32)
-                  else if BSXLOOP(int64NDArray, "int64", int64)
-                  else if BSXLOOP(uint8NDArray, "uint8", uint8)
-                  else if BSXLOOP(uint16NDArray, "uint16", uint16)
-                  else if BSXLOOP(uint32NDArray, "uint32", uint32)
-                  else if BSXLOOP(uint64NDArray, "uint64", uint64)
-                  else
-                    C = cat_op (C, tmp(0), ra_idx);
+                    else if BSXLOOP(FloatComplexNDArray, "single", float_complex)
+                      else if BSXLOOP(boolNDArray, "logical", bool)
+                        else if BSXLOOP(int8NDArray, "int8", int8)
+                          else if BSXLOOP(int16NDArray, "int16", int16)
+                            else if BSXLOOP(int32NDArray, "int32", int32)
+                              else if BSXLOOP(int64NDArray, "int64", int64)
+                                else if BSXLOOP(uint8NDArray, "uint8", uint8)
+                                  else if BSXLOOP(uint16NDArray, "uint16", uint16)
+                                    else if BSXLOOP(uint32NDArray, "uint32", uint32)
+                                      else if BSXLOOP(uint64NDArray, "uint64", uint64)
+                                        else
+                                          C = cat_op (C, tmp(0), ra_idx);
                 }
             }
 
@@ -612,20 +588,20 @@ as the other array.
             retval(0) = result_ ## T;
 
           if BSXEND(NDArray)
-          else if BSXEND(ComplexNDArray)
-          else if BSXEND(FloatNDArray)
-          else if BSXEND(FloatComplexNDArray)
-          else if BSXEND(boolNDArray)
-          else if BSXEND(int8NDArray)
-          else if BSXEND(int16NDArray)
-          else if BSXEND(int32NDArray)
-          else if BSXEND(int64NDArray)
-          else if BSXEND(uint8NDArray)
-          else if BSXEND(uint16NDArray)
-          else if BSXEND(uint32NDArray)
-          else if BSXEND(uint64NDArray)
-          else
-            retval(0) = C;
+            else if BSXEND(ComplexNDArray)
+              else if BSXEND(FloatNDArray)
+                else if BSXEND(FloatComplexNDArray)
+                  else if BSXEND(boolNDArray)
+                    else if BSXEND(int8NDArray)
+                      else if BSXEND(int16NDArray)
+                        else if BSXEND(int32NDArray)
+                          else if BSXEND(int64NDArray)
+                            else if BSXEND(uint8NDArray)
+                              else if BSXEND(uint16NDArray)
+                                else if BSXEND(uint32NDArray)
+                                  else if BSXEND(uint64NDArray)
+                                    else
+                                      retval(0) = C;
         }
     }
 
@@ -719,10 +695,12 @@ as the other array.
 %!assert (bsxfun (f, a, b), a - repmat (b, [4, 1, 1]))
 %!assert (bsxfun (f, a, c), a - repmat (c, [1, 4, 1]))
 %!assert (bsxfun (f, a, d), a - repmat (d, [1, 1, 4]))
-%!assert (bsxfun ("minus", ones ([4, 0, 4]), ones ([4, 1, 4])), zeros ([4, 0, 4]))
+%!assert (bsxfun ("minus", ones ([4, 0, 4]), ones ([4, 1, 4])),
+%!        zeros ([4, 0, 4]))
 
 ## The test below is a very hard case to treat
-%!assert (bsxfun (f, ones ([4, 1, 4, 1]), ones ([1, 4, 1, 4])), zeros ([4, 4, 4, 4]))
+%!assert (bsxfun (f, ones ([4, 1, 4, 1]), ones ([1, 4, 1, 4])),
+%!        zeros ([4, 4, 4, 4]))
 
 %!shared a, b, aa, bb
 %! ## FIXME: Set a known "good" random seed.  See bug #51779.
@@ -754,7 +732,7 @@ as the other array.
 ## Test automatic bsxfun
 %
 %!test
-%! funs = {@plus, @minus, @times, @rdivide, @ldivide, @power, @max, @min, ...
+%! fcns = {@plus, @minus, @times, @rdivide, @ldivide, @power, @max, @min, ...
 %!         @rem, @mod, @atan2, @hypot, @eq, @ne, @lt, @le, @gt, @ge, ...
 %!         @and, @or, @xor };
 %!
@@ -770,28 +748,28 @@ as the other array.
 %! x = rand (3) * 10-5;
 %! y = rand (3,1) * 10-5;
 %!
-%! for i=1:length (funs)
+%! for i=1:length (fcns)
 %!   for j = 1:length (float_types)
 %!     for k = 1:length (int_types)
 %!
-%!       fun = funs{i};
+%!       fcn = fcns{i};
 %!       f_type = float_types{j};
 %!       i_type = int_types{k};
 %!
-%!         assert (bsxfun (fun, f_type (x), i_type (y)), ...
-%!                 fun (f_type(x), i_type (y)));
-%!         assert (bsxfun (fun, f_type (y), i_type (x)), ...
-%!                 fun (f_type(y), i_type (x)));
+%!         assert (bsxfun (fcn, f_type (x), i_type (y)), ...
+%!                 fcn (f_type(x), i_type (y)));
+%!         assert (bsxfun (fcn, f_type (y), i_type (x)), ...
+%!                 fcn (f_type(y), i_type (x)));
 %!
-%!         assert (bsxfun (fun, i_type (x), i_type (y)), ...
-%!                 fun (i_type (x), i_type (y)));
-%!         assert (bsxfun (fun, i_type (y), i_type (x)), ...
-%!                 fun (i_type (y), i_type (x)));
+%!         assert (bsxfun (fcn, i_type (x), i_type (y)), ...
+%!                 fcn (i_type (x), i_type (y)));
+%!         assert (bsxfun (fcn, i_type (y), i_type (x)), ...
+%!                 fcn (i_type (y), i_type (x)));
 %!
-%!         assert (bsxfun (fun, f_type (x), f_type (y)), ...
-%!                 fun (f_type (x), f_type (y)));
-%!         assert (bsxfun (fun, f_type(y), f_type(x)), ...
-%!                 fun (f_type (y), f_type (x)));
+%!         assert (bsxfun (fcn, f_type (x), f_type (y)), ...
+%!                 fcn (f_type (x), f_type (y)));
+%!         assert (bsxfun (fcn, f_type(y), f_type(x)), ...
+%!                 fcn (f_type (y), f_type (x)));
 %!     endfor
 %!   endfor
 %! endfor
@@ -813,6 +791,33 @@ as the other array.
 %! r = bsxfun (@times, im, mask);
 %! assert (r(:,:,1), repmat (single ([0, 0, 1+i, 1+i]), [4, 1]));
 
+## automatic broadcasting with inplace times operator
+%!test <*38466>
+%! a = ones (2, 2, 2);
+%! b = 2 * ones (2, 1);
+%! a .*= b;
+%! assert (a, 2 * ones (2, 2, 2));
+
+%!test <*38466>
+%! a = ones (2, 2, 2);
+%! b = 2 * ones (1, 2);
+%! a .*= b;
+%! assert (a, 2 * ones (2, 2, 2));
+
+%!test <*38466>
+%! a = ones (2, 2, 2);
+%! b = 2 * ones (2, 2);
+%! a .*= b;
+%! assert (a, 2 * ones (2, 2, 2));
+
+%!test <*38466>
+%! a = ones (2, 2, 2);
+%! b = 2 * ones (1, 1, 2);
+%! a .*= b;
+%! assert (a, 2 * ones (2, 2, 2));
+
+%!assert (ones (2,2,2) .* ones (1,2), ones (2,2,2));
+
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

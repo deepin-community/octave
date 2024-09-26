@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2004-2022 The Octave Project Developers
+## Copyright (C) 2004-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} sprandsym (@var{n}, @var{d})
-## @deftypefnx {} {} sprandsym (@var{s})
+## @deftypefn  {} {@var{S} =} sprandsym (@var{n}, @var{d})
+## @deftypefnx {} {@var{S} =} sprandsym (@var{s})
 ## Generate a symmetric random sparse matrix.
 ##
 ## The size of the matrix will be @var{n}x@var{n}, with a density of values

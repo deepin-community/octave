@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,7 +31,7 @@
 
 #include "procstream.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 procstreambase::procstreambase (const std::string& command, int mode)
 {
@@ -59,7 +59,7 @@ procstreambase::open (const char *command, int mode)
 }
 
 int
-procstreambase::close (void)
+procstreambase::close ()
 {
   int status = 0;
 
@@ -74,4 +74,4 @@ procstreambase::close (void)
   return status;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

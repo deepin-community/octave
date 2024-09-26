@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} empirical_pdf (@var{x}, @var{data})
+## @deftypefn {} {@var{pdf} =} empirical_pdf (@var{x}, @var{data})
 ## For each element of @var{x}, compute the probability density function (PDF)
 ## at @var{x} of the empirical distribution obtained from the
 ## univariate sample @var{data}.

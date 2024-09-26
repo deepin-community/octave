@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1994-2022 The Octave Project Developers
+// Copyright (C) 1994-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -39,6 +39,7 @@
 #include "file-ops.h"
 #include "file-stat.h"
 #include "glob-match.h"
+#include "lo-sysdep.h"
 #include "oct-env.h"
 #include "oct-glob.h"
 #include "pathsearch.h"
@@ -62,7 +63,7 @@
 #include "utils.h"
 #include "variables.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // TRUE means we ask for confirmation before recursively removing a
 // directory tree.
@@ -91,8 +92,8 @@ changes the current working directory to @file{~/octave}.  If the
 directory does not exist, an error message is printed and the working
 directory is not changed.
 
-@code{chdir} is an alias for @code{cd} and can be used in all of the same
-calling formats.
+Programming Note: @code{chdir} is an alias for @code{cd} and can be used with
+all of the same calling formats.
 
 Compatibility Note: When called with no arguments, @sc{matlab} prints the
 present working directory rather than changing to the user's home directory.
@@ -131,8 +132,7 @@ DEFALIAS (chdir, cd);
 
 DEFUN (pwd, , ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} pwd ()
-@deftypefnx {} {@var{dir} =} pwd ()
+@deftypefn {} {@var{dir} =} pwd ()
 Return the current working directory.
 @seealso{cd, dir, ls, mkdir, rmdir}
 @end deftypefn */)
@@ -182,7 +182,9 @@ error message.
 
 DEFUN (__mkdir__, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} __mkdir__ (@var{parent}, @var{dir})
+@deftypefn  {} {} __mkdir__ (@var{dir})
+@deftypefnx {} {} __mkdir__ (@var{parent}, @var{dir})
+@deftypefnx {} {[@var{status}, @var{msg}, @var{msgid}] =} __mkdir__ (@dots{})
 Internal function called by mkdir.m.
 @seealso{mkdir, rmdir, pwd, cd, umask}
 @end deftypefn */)
@@ -206,9 +208,7 @@ Internal function called by mkdir.m.
 
   dirname = sys::file_ops::tilde_expand (dirname);
 
-  sys::file_stat fs (dirname);
-
-  if (fs && fs.is_dir ())
+  if (sys::dir_exists (dirname))
     {
       // For Matlab compatibility, return true when directory already exists.
       return ovl (true, "directory exists", "mkdir");
@@ -392,7 +392,7 @@ error message.
 
 DEFUNX ("readlink", Freadlink, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn  {} {} readlink @var{symlink}
+@deftypefn  {} {@var{result} =} readlink @var{symlink}
 @deftypefnx {} {[@var{result}, @var{err}, @var{msg}] =} readlink (@var{symlink})
 Read the value of the symbolic link @var{symlink}.
 
@@ -470,7 +470,7 @@ error message.
 
 DEFUN (glob, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} glob (@var{pattern})
+@deftypefn {} {@var{cstr} =} glob (@var{pattern})
 Given an array of pattern strings (as a char array or a cell array) in
 @var{pattern}, return a cell array of filenames that match any of
 them, or an empty cell array if no patterns match.
@@ -534,10 +534,50 @@ supported.
   return ovl (Cell (pattern.glob ()));
 }
 
+/*
+%!test
+%! tmpdir = tempname ();
+%! filename = {"file1", "file2", "file3", "myfile1", "myfile1b"};
+%! if (mkdir (tmpdir))
+%!   cwd = pwd ();
+%!   cd (tmpdir);
+%!   if (strcmp (canonicalize_file_name (pwd), canonicalize_file_name (tmpdir)))
+%!     a = 0;
+%!     for n = 1:5
+%!       save (filename{n}, "a");
+%!     endfor
+%!   else
+%!     sts = rmdir (tmpdir);
+%!     error ("Couldn't change to temporary directory");
+%!   endif
+%! else
+%!   error ("Couldn't create temporary directory");
+%! endif
+%! result1 = glob ("*file1");
+%! result2 = glob ("myfile?");
+%! result3 = glob ("file[12]");
+%! for n = 1:5
+%!   delete (filename{n});
+%! endfor
+%! cd (cwd);
+%! sts = rmdir (tmpdir);
+%! assert (result1, {"file1"; "myfile1"});
+%! assert (result2, {"myfile1"});
+%! assert (result3, {"file1"; "file2"});
+
+## Check backslash handling on Windows
+%!testif ; ispc ()
+%! win_dir = getenv ("WINDIR");
+%! assert (glob (win_dir), {win_dir});
+%! assert (glob ([win_dir, filesep]), {[win_dir, filesep]});
+%! win_dir2 = strrep(win_dir, filesep, '/');
+%! assert (glob (win_dir2), {win_dir});
+%! assert (glob ([win_dir2, '/']), {[win_dir, filesep]});
+*/
 
 DEFUN (__wglob__, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} __wglob__ (@var{pattern})
+@deftypefn {} {@var{cstr} =} __wglob__ (@var{pattern})
 Windows-like glob for dir.
 
 Given an array of pattern strings (as a char array or a cell array) in
@@ -602,40 +642,55 @@ glob ("*.*")
 }
 
 /*
-%!test
-%! tmpdir = tempname ();
-%! filename = {"file1", "file2", "file3", "myfile1", "myfile1b"};
-%! if (mkdir (tmpdir))
-%!   cwd = pwd ();
-%!   cd (tmpdir);
-%!   if (strcmp (canonicalize_file_name (pwd), canonicalize_file_name (tmpdir)))
-%!     a = 0;
-%!     for n = 1:5
-%!       save (filename{n}, "a");
-%!     endfor
-%!   else
-%!     sts = rmdir (tmpdir);
-%!     error ("Couldn't change to temporary directory");
-%!   endif
-%! else
-%!   error ("Couldn't create temporary directory");
+%!test <*62414>
+%! ## get name of current directory and one file in it
+%! [~, curr_dir, ext] = fileparts (pwd ());
+%! curr_dir = [curr_dir, ext];
+%! files = dir ();
+%! if (numel (files) < 3)
+%!   return;
 %! endif
-%! result1 = glob ("*file1");
-%! result2 = glob ("myfile?");
-%! result3 = glob ("file[12]");
-%! for n = 1:5
-%!   delete (filename{n});
-%! endfor
-%! cd (cwd);
-%! sts = rmdir (tmpdir);
-%! assert (result1, {"file1"; "myfile1"});
-%! assert (result2, {"myfile1"});
-%! assert (result3, {"file1"; "file2"});
+%! ## check some patterns including "." and ".."
+%! file_in_pwd = files(3).name;
+%! assert (__wglob__ (file_in_pwd), {file_in_pwd});
+%! glob_pattern = fullfile (".", file_in_pwd);
+%! assert (__wglob__ (glob_pattern), {glob_pattern});
+%! glob_pattern = fullfile ("..", curr_dir, file_in_pwd);
+%! assert (__wglob__ (glob_pattern), {glob_pattern});
+%! glob_pattern = fullfile ("..", curr_dir, "..", ".", curr_dir, ".", file_in_pwd);
+%! assert (__wglob__ (glob_pattern), {glob_pattern});
+
+%!test <*62414>
+%! old_dir = cd (fileparts (which ("plot.m")));
+%! unwind_protect
+%!   assert (__wglob__ (fullfile (".", "*.m")), ...
+%!           fullfile (".", __wglob__ ("*.m")));
+%! unwind_protect_cleanup
+%!   cd (old_dir);
+%! end_unwind_protect
+
+## retain trailing file separator
+%!test <*62414>
+%! old_dir = cd (fileparts (which ("plot.m")));
+%! unwind_protect
+%!   assert (__wglob__ ("private"), {"private"});
+%!   assert (__wglob__ ("private/"), {["private", filesep()]});
+%!   assert (__wglob__ ("private///"), {["private", filesep()]});
+%!   assert (__wglob__ ("./private"), {fullfile(".", "private")});
+%!   assert (__wglob__ ("./private/"), ...
+%!           {[fullfile(".", "private"), filesep()]});
+%!   assert (__wglob__ ("./private///"), ...
+%!           {[fullfile(".", "private"), filesep()]});
+%!   assert (__wglob__ (["./p*","/"]), ...
+%!           {[fullfile(".", "private"), filesep()]});
+%! unwind_protect_cleanup
+%!   cd (old_dir);
+%! end_unwind_protect
 */
 
 DEFUN (__fnmatch__, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} fnmatch (@var{pattern}, @var{string})
+@deftypefn {} {@var{TF} =} fnmatch (@var{pattern}, @var{string})
 Return true or false for each element of @var{string} that matches any of
 the elements of the string array @var{pattern}, using the rules of
 filename pattern matching.
@@ -664,7 +719,7 @@ fnmatch ("a*b", @{"ab"; "axyzb"; "xyzab"@})
 
 DEFUN (filesep, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} filesep ()
+@deftypefn  {} {@var{sep} =} filesep ()
 @deftypefnx {} {} filesep ("all")
 Return the system-dependent character used to separate directory names.
 
@@ -713,7 +768,7 @@ DEFUN (confirm_recursive_rmdir, args, nargout,
        doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{val} =} confirm_recursive_rmdir ()
 @deftypefnx {} {@var{old_val} =} confirm_recursive_rmdir (@var{new_val})
-@deftypefnx {} {} confirm_recursive_rmdir (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} confirm_recursive_rmdir (@var{new_val}, "local")
 Query or set the internal variable that controls whether Octave
 will ask for confirmation before recursively removing a directory tree.
 
@@ -727,4 +782,4 @@ The original variable value is restored when exiting the function.
                                 "confirm_recursive_rmdir");
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

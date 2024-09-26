@@ -1,4 +1,4 @@
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -50,12 +50,19 @@ combinations of these with various operators.
 @opindex :
 
 An @dfn{index expression} allows you to reference or extract selected
-elements of a vector, a matrix (2-D), or a higher-dimensional array.
+elements of a vector, a matrix (2-D), or a higher-dimensional array.  Arrays
+may be indexed in one of three ways:
+@ref{XREFComponentIndexing,,Component Indexing}, 
+@ref{XREFLinearIndexing,,Linear Indexing}, and
+@ref{XREFLogicalIndexing,,Logical Indexing}.
 
-Indices may be scalars, vectors, ranges, or the special operator @samp{:},
-which selects entire rows, columns, or higher-dimensional slices.
+@anchor{XREFComponentIndexing}
+@subheading Component Indexing
+@cindex Component Indexing
+Component indices may be scalars, vectors, ranges, or the special operator
+@samp{:}, which selects entire rows, columns, or higher-dimensional slices.
 
-An index expression consists of a set of parentheses enclosing @math{M}
+Component index expression consists of a set of parentheses enclosing @math{M}
 expressions separated by commas.  Each individual index value, or component,
 is used for the respective dimension of the object that it is applied to.  In
 other words, the first index component is used for the first dimension (rows)
@@ -144,19 +151,18 @@ A([1; 2])  # result is a column vector: ans = [1; 2]
 @end group
 @end example
 
-Note that it is permissible to use a 1-D index with a multi-dimensional
-object (also called linear indexing).  In this case, the elements of the
-multi-dimensional array are taken in column-first order like Fortran.  That is,
-the columns of the array are imagined to be stacked on top of each other to
-form a column vector and then the single linear index is applied to this
-vector.
+The shape rules for @var{A}(@var{P}) are:
 
-@example
-@group
-A(5)    # linear indexing into three-dimensional array: ans = 5
-A(3:5)  # result has shape of index component: ans = [3, 4, 5]
-@end group
-@end example
+@itemize @bullet
+@item When at least one of @var{A} or @var{P} has two or more dimensions, then
+@var{A}(@var{P}) takes the shape of @var{P}.  This happens when at least one
+of the variables is a 2-D matrix or an N-D array.
+
+@item When both @var{A} and @var{P} are 1-D vectors, then @var{A}(@var{P}) takes
+the shape of @var{A} itself.  In particular, when @var{A} is a row vector, then
+@var{A}(@var{P}) is also a row vector irrespective of @var{P}'s shape.  The
+case when @var{A} is a column vector is analogous.
+@end itemize
 
 @opindex :, indexing expressions
 
@@ -210,6 +216,88 @@ A(end:-1:1)       # reversal of A => [4, 3, 2, 1]
 @end group
 @end example
 
+For more information see the @ref{XREFend, , @qcode{"end" keyword}}.
+
+@anchor{XREFLinearIndexing}
+@subheading Linear Indexing
+@cindex Linear Indexing
+It is permissible to use a 1-D index with a multi-dimensional object.  This is
+also called @dfn{linear indexing}.  In this case, the elements of the
+multi-dimensional array are taken in column-first order like in Fortran.  That
+is, the columns of the array are imagined to be stacked on top of each other
+to form a column vector and then the single linear index is applied to this
+vector.
+
+@example
+@group
+A = [1, 2, 3; 4, 5, 6; 7, 8, 9];
+
+A(4)    # linear index of 4th element in 2-D array: ans = 2
+A(3:5)  # result has shape of index component: ans = [7, 2, 5]
+A([1, 2, 2, 1]) # result includes repeated elements: ans = [1, 4, 4, 1]
+@end group
+@end example
+
+@anchor{XREFLogicalIndexing}
+@subheading Logical Indexing
+@cindex Logical Indexing
+Logical values can also be used to index matrices and cell arrays.
+When indexing with a logical array the result will be a vector containing
+the values corresponding to @code{true} parts of the logical array. The
+following examples illustrates this.
+
+@example
+@group
+data = [ 1, 2; 3, 4 ];
+idx = [true, false; false true];
+data(idx)
+     @result{} ans = [ 1; 4 ]
+
+idx = (data <= 2);
+data(idx)
+     @result{} ans = [ 1; 2 ]
+@end group
+@end example
+
+@noindent
+Instead of creating the @code{idx} array it is possible to replace
+@code{data(idx)} with @w{@code{data( data <= 2 )}} in the above code.
+
+While the size of the logical index expressions is usually the same as that
+of the array being indexed, this is not a necessary condition.  If the logical
+index is a different size than the array, then elements from the array are
+matched against elements from the logical index based on their linear order,
+just as with linear indexing.
+
+@example
+@group
+data = [ 1, 2, 3; 4, 5, 6 ];
+idx = [ true, false, false, true ];
+data(idx)
+     @result{} ans = [ 1 5 ]  # idx selected the 1st and 4th position elements
+@end group
+@end example
+
+If the logical index is larger than then array an out of bounds error will
+occur if any true values attempt to select a linear position larger than the
+number of elements in the array.
+
+@example
+@group
+idx = [ true, true, false; false, true, false; true; false; false ];
+data(idx)
+     @result{} ans = [ 1; 2; 5; 3 ] # returns positions 1, 3, 4, 5 in a column
+
+idx = [ true, true, false; false, true, false; true; false; true ];
+data(idx)
+     @result{} error: a(9): out of bound 6 (dimensions are 2x3)
+@end group
+@end example
+
+False elements of a logical index outside the array size are ignored, but when
+the ninth element of the logical index is true it triggers an error as it tries
+to select a nonexistent 9th element of the array.
+
 @menu
 * Advanced Indexing::
 @end menu
@@ -217,6 +305,36 @@ A(end:-1:1)       # reversal of A => [4, 3, 2, 1]
 @node Advanced Indexing
 @subsection Advanced Indexing
 
+@subsubheading Chained indexing
+@cindex Chained indexing
+Octave permits the use of repeated (chained) index expressions to extract
+subsets of an array in a single command without the need to use intermediate
+variables.  This can make it easier to write code with either complicated 
+indexing operations or using multiple indexing methods. The following example
+shows two equivalent index extraction operations:
+
+@example
+@group
+A = reshape (1:16, 4, 4);
+B = A(2:4, 2:3);
+C = B(3:5);
+D = C( [ true, false, true ] )
+     @result{} D = [ 8, 11 ]
+
+D = A(2:4, 2:3)(3:5)([ true, false, true ])
+     @result{} D = [ 8, 11 ]
+@end group
+@end example
+
+Chained indexing will necessarily be slower than a single index expression
+producing the same results, but is usually more computationally efficient
+than performing  multiple discrete indexing operations with intermediate
+variable assignments.
+
+Note that chained indexing is only compatible with right-hand expressions and
+can not be used on the left-hand side of assignment operations.
+
+@subsubheading Component to linear index conversion
 When it is necessary to extract subsets of entries out of an array whose
 indices cannot be written as a Cartesian product of components, linear
 indexing together with the function @code{sub2ind} can be used.  For example:
@@ -241,6 +359,13 @@ A(sub2ind (size (A), [1, 2, 1], [1, 1, 2], [1, 2, 1]))
 @end group
 @end example
 
+@DOCSTRING(sub2ind)
+
+@DOCSTRING(ind2sub)
+
+@DOCSTRING(isindex)
+
+@subsubheading Component count not equal to dimensionality
 An array with @samp{nd} dimensions can be indexed by an index expression which
 has from 1 to @samp{nd} components.  For the ordinary and most common case, the
 number of components @samp{M} matches the number of dimensions @samp{nd}.  In
@@ -289,6 +414,7 @@ A(:,:)   # Reshape to 2x4 matrix, select all rows & columns, ans = Atmp
 Note here the elegant use of the double colon to replace the call to the
 @code{reshape} function.
 
+@subsubheading Array replication
 Another advanced use of linear indexing is to create arrays filled with a
 single value.  This can be done by using an index of ones on a scalar value.
 The result is an object with the dimensions of the index expression and every
@@ -360,8 +486,9 @@ A general recommendation for users unfamiliar with these techniques is to use
 the function @code{repmat} for replicating smaller arrays into bigger ones,
 which uses such tricks.
 
-A second use of indexing is to speed up code.  Indexing is a fast operation and
-judicious use of it can reduce the requirement for looping over individual
+@subsubheading Indexing for performance enhancement
+A second use of indexing is to speed up code.  Indexing is a fast operation
+and judicious use of it can reduce the requirement for looping over individual
 array elements, which is a slow operation.
 
 Consider the following example which creates a 10-element row vector
@@ -422,11 +549,8 @@ endfor
 @noindent
 because Octave does not have to repeatedly resize the intermediate result.
 
-@DOCSTRING(sub2ind)
-
-@DOCSTRING(ind2sub)
-
-@DOCSTRING(isindex)
+For more performance improvement suggestions see
+@ref{Vectorization and Faster Code Execution,,}.
 
 @node Calling Functions
 @section Calling Functions
@@ -814,8 +938,15 @@ lexer, which usually prefers to break the input into tokens by
 preferring the longest possible match at any given point, it is more
 useful in this case.
 
+Note also that some combinations of binary operators and whitespace can
+create apparent ambiguities with the Command Syntax form of calling
+functions.  See @ref{Command Syntax and Function Syntax} for a description
+of how Octave treats that syntax.
+
 @opindex @code{'}
 @DOCSTRING(ctranspose)
+
+@DOCSTRING(pagectranspose)
 
 @opindex .\
 @DOCSTRING(ldivide)
@@ -849,6 +980,8 @@ useful in this case.
 
 @opindex @code{.'}
 @DOCSTRING(transpose)
+
+@DOCSTRING(pagetranspose)
 
 @opindex -
 @DOCSTRING(uminus)
@@ -1077,32 +1210,38 @@ soon as the overall truth value can be determined.  Octave's
 @table @code
 @item @var{boolean1} && @var{boolean2}
 @opindex &&
-The expression @var{boolean1} is evaluated and converted to a scalar
-using the equivalent of the operation @code{all (@var{boolean1}(:))}.
-If it is false, the result of the overall expression is 0.  If it is
-true, the expression @var{boolean2} is evaluated and converted to a
-scalar using the equivalent of the operation @code{all
-(@var{boolean2}(:))}.  If it is true, the result of the overall expression
-is 1.  Otherwise, the result of the overall expression is 0.
+The expression @var{boolean1} is evaluated and converted to a scalar using
+the equivalent of the operation @code{all (@var{boolean1}(:))}.  If
+@var{boolean1} is not a logical value, it is considered true if its value
+is nonzero, and false if its value is zero.  If @var{boolean1} is an array,
+it is considered true only if it is non-empty and all elements are
+nonzero.  If @var{boolean1} evaluates to false, the result of the overall
+expression is false.  If it is true, the expression @var{boolean2} is
+evaluated in the same way as @var{boolean1}.  If it is true, the result of
+the overall expression is true.  Otherwise the result of the overall
+expression is false.
 
-@strong{Warning:} there is one exception to the rule of evaluating
-@code{all (@var{boolean1}(:))}, which is when @code{boolean1} is the
-empty matrix.  The truth value of an empty matrix is always @code{false}
-so @code{[] && true} evaluates to @code{false} even though
+@strong{Warning:} the one exception to the equivalence with evaluating
+@code{all (@var{boolean1}(:))} is when @code{boolean1} an the empty array.
+For @sc{matlab} compatibility, the truth value of an empty array is always
+@code{false} so @code{[] && true} evaluates to @code{false} even though
 @code{all ([])} is @code{true}.
 
 @item @var{boolean1} || @var{boolean2}
 @opindex ||
-The expression @var{boolean1} is evaluated and converted to a scalar
-using the equivalent of the operation @code{all (@var{boolean1}(:))}.
-If it is true, the result of the overall expression is 1.  If it is
-false, the expression @var{boolean2} is evaluated and converted to a
-scalar using the equivalent of the operation @code{all
-(@var{boolean2}(:))}.  If it is true, the result of the overall expression
-is 1.  Otherwise, the result of the overall expression is 0.
+The expression @var{boolean1} is evaluated and converted to a scalar using
+the equivalent of the operation @code{all (@var{boolean1}(:))}.  If
+@var{boolean1} is not a logical value, it is considered true if its value
+is nonzero, and false if its value is zero.  If @var{boolean1} is an array,
+it is considered true only if it is non-empty and all elements are
+nonzero.  If @var{boolean1} evaluates to true, the result of the overall
+expression is true.  If it is false, the expression @var{boolean2} is
+evaluated in the same way as @var{boolean1}.  If it is true, the result of
+the overall expression is true.  Otherwise the result of the overall
+expression is false.
 
-@strong{Warning:} the truth value of an empty matrix is always @code{false},
-see the previous list item for details.
+@strong{Warning:} the truth value of an empty matrix is always
+@code{false}, see the previous list item for details.
 @end table
 
 The fact that both operands may not be evaluated before determining the
@@ -1159,11 +1298,12 @@ arguments because Octave would be forced to try to evaluate both of the
 operands for the operator @samp{&}.
 
 @sc{matlab} has special behavior that allows the operators @samp{&} and
-@samp{|} to short-circuit when used in the truth expression for @code{if} and
-@code{while} statements.  Octave behaves the same way for compatibility,
-however, the use of the @samp{&} and @samp{|} operators in this way is
-strongly discouraged and a warning will be issued.  Instead, you should use
-the @samp{&&} and @samp{||} operators that always have short-circuit behavior.
+@samp{|} to short-circuit when used in the truth expression for @code{if}
+and @code{while} statements.  Octave behaves the same way for
+compatibility, however, the use of the @samp{&} and @samp{|} operators in
+this way is strongly discouraged and a warning will be issued.  Instead,
+you should use the @samp{&&} and @samp{||} operators that always have
+short-circuit behavior.
 
 Finally, the ternary operator (?:) is not supported in Octave.  If
 short-circuiting is not important, it can be replaced by the @code{ifelse}
@@ -1202,6 +1342,7 @@ variable @code{message}:
 thing = "food"
 predicate = "good"
 message = [ "this " , thing , " is " , predicate ]
+@result{} "this food is good"
 @end group
 @end example
 
@@ -1233,9 +1374,9 @@ to hold at the moment.  In the following program fragment, the variable
 
 @example
 @group
-octave:13> foo = 1
+>> foo = 1
 foo = 1
-octave:13> foo = "bar"
+>> foo = "bar"
 foo = bar
 @end group
 @end example
@@ -1249,13 +1390,148 @@ that are referenced by the indices to the scalar value.  For example, if
 @code{a} is a matrix with at least two columns,
 
 @example
-@group
 a(:, 2) = 5
-@end group
 @end example
 
 @noindent
 sets all the elements in the second column of @code{a} to 5.
+
+When an assignment sets the value of a vector, matrix, or array element at a
+position or dimension outside of that variable's current size, the array size
+will be increased to accommodate the new values:
+
+@example
+@group
+>> a = [1, 2, 3]
+a = 1 2 3
+>> a(4) = 4
+a = 1 2 3 4
+>> a(2, :) = [5, 6, 7, 8]
+a =
+   1   2   3   4
+   5   6   7   8
+@end group
+@end example
+
+Attempting to increase the size of an array such that the desired output size
+is ambiguous will result in an error:
+
+@example
+@group
+>> a(9) = 10
+@print{} error: Invalid resizing operation or ambiguous assignment to an
+out-of-bounds array element
+@end group
+@end example
+
+This is because adding the 9th element creates an ambiguity in the desired
+array position for the value 10, each possibility requiring a different array
+size expansion to accommodate the assignment.
+
+Assignments may be made with fewer specified elements than would be required to
+fill the newly expanded array as long as the assignment is unambiguous.  In
+these cases the array will be automatically padded with @emph{null} values:
+@example
+@group
+>> a = [1, 2]
+a =   1   2
+>> a(4) = 5
+a =   1   2   0   5
+>> a(3, :) = [6, 7, 8, 9]
+a =
+   1   2   0   5
+   0   0   0   0
+   6   7   8   9
+>> a(4, 5) = 10
+a =
+    1    2    0    5    0
+    0    0    0    0    0
+    6    7    8    9    0
+    0    0    0    0   10
+@end group
+@end example
+
+For all built-in types, the @emph{null} value will be appropriate to that object
+type.
+
+Numeric arrays:
+@example
+@group
+>> a = int32 ([1, 2])
+a = 1, 2
+>> a(4) = 5
+a = 1 2 0 5
+@end group
+@end example
+
+Logical arrays:
+@example
+@group
+>> a = [true, false, true]
+a = 1 0 1
+>> d(5) = true
+d = 1 0 1 0 1
+@end group
+@end example
+
+Character arrays:
+@example
+@group
+>> a = "abc"
+a = abc
+>> a(5) = "d"
+a = abcd
+>> double (a)
+ans = 97 98 99 0 100
+@end group
+@end example
+
+Cell arrays:
+@example
+@group
+>> e = @{1, "foo", [3, 4]@};
+>> e(5) = "bar"
+e =
+@{
+  [1,1] = 1
+  [1,2] = foo
+  [1,3] =
+
+     3   4
+
+  [1,4] = [](0x0)
+  [1,5] = bar
+@}
+@end group
+@end example
+
+Struct arrays:
+@example
+@group
+>> a = struct("foo",1,"bar",2);
+>> a(3) = struct("foo",3,"bar",9)
+a =
+
+  1x3 struct array containing the fields:
+
+    foo
+    bar
+
+>> a.foo
+ans = 1
+ans = [](0x0)
+ans = 3
+>> a.bar
+ans = 2
+ans = [](0x0)
+ans = 9
+@end group
+@end example
+
+Note that Octave currently is unable to concatenate arbitrary object types
+into arrays.  Such behavior must be explicitly defined within the object class
+or attempts at concatenation will result in an error.
+@xref{Object Oriented Programming}
 
 Assigning an empty matrix @samp{[]} works in most cases to allow you to
 delete rows or columns of matrices and vectors.  @xref{Empty Matrices}.
@@ -1274,6 +1550,28 @@ A (:, 1:2:5) = []
 
 @noindent
 deletes the first, third, and fifth columns.
+
+Deleting part of an array object will necessarily resize the object.  When the
+deletion allows for consistent size reduction across a dimension, e.g., one
+element of a vector, or one row or column of a matrix, the size along that
+dimension will be reduced while preserving dimensionality.  If, however,
+dimensionality cannot be maintained, the object will be reshaped into a vector
+following column-wise element ordering:
+
+@example
+@group
+>> a = [1, 2, 3, 4; 5, 6, 7, 8]
+a =
+   1   2   3   4
+   5   6   7   8
+>> a(:, 3) = []
+a =
+   1   2   4
+   5   6   8
+>> a(4) = []
+a = 1 5 2 4 8
+@end group
+@end example
 
 An assignment is an expression, so it has a value.  Thus, @code{z = 1}
 as an expression has the value 1.  One consequence of this is that you

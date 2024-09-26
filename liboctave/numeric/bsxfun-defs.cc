@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -146,7 +146,7 @@ do_inplace_bsxfun_op (Array<R>& r, const Array<X>& x,
   dim_vector dvr = r.dims ();
   dim_vector dvx = x.dims ();
   octave_idx_type nd = r.ndims ();
-  dvx.redim (nd);
+  dvx = dvx.redim (nd);
 
   const X *xvec = x.data ();
   R *rvec = r.fortran_vec ();

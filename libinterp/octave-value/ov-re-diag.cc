@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -51,10 +51,10 @@ default_numeric_conversion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_diag_matrix::numeric_conversion_function (void) const
+octave_diag_matrix::numeric_conversion_function () const
 {
   return octave_base_value::type_conv_info (default_numeric_conversion_function,
-                                            octave_matrix::static_type_id ());
+         octave_matrix::static_type_id ());
 }
 
 static octave_base_value *
@@ -66,15 +66,15 @@ default_numeric_demotion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_diag_matrix::numeric_demotion_function (void) const
+octave_diag_matrix::numeric_demotion_function () const
 {
   return octave_base_value::type_conv_info
-           (default_numeric_demotion_function,
-            octave_float_diag_matrix::static_type_id ());
+         (default_numeric_demotion_function,
+          octave_float_diag_matrix::static_type_id ());
 }
 
 octave_base_value *
-octave_diag_matrix::try_narrowing_conversion (void)
+octave_diag_matrix::try_narrowing_conversion ()
 {
   octave_base_value *retval = nullptr;
 
@@ -118,7 +118,7 @@ octave_diag_matrix::do_index_op (const octave_value_list& idx,
               else
                 {
                   retval = this;
-                  this->count++;
+                  this->m_count++;
                 }
             }
         }
@@ -161,61 +161,61 @@ octave_diag_matrix::float_complex_diag_matrix_value (bool) const
 }
 
 octave_value
-octave_diag_matrix::as_double (void) const
+octave_diag_matrix::as_double () const
 {
   return m_matrix;
 }
 
 octave_value
-octave_diag_matrix::as_single (void) const
+octave_diag_matrix::as_single () const
 {
   return FloatDiagMatrix (m_matrix);
 }
 
 octave_value
-octave_diag_matrix::as_int8 (void) const
+octave_diag_matrix::as_int8 () const
 {
   return int8_array_value ();
 }
 
 octave_value
-octave_diag_matrix::as_int16 (void) const
+octave_diag_matrix::as_int16 () const
 {
   return int16_array_value ();
 }
 
 octave_value
-octave_diag_matrix::as_int32 (void) const
+octave_diag_matrix::as_int32 () const
 {
   return int32_array_value ();
 }
 
 octave_value
-octave_diag_matrix::as_int64 (void) const
+octave_diag_matrix::as_int64 () const
 {
   return int64_array_value ();
 }
 
 octave_value
-octave_diag_matrix::as_uint8 (void) const
+octave_diag_matrix::as_uint8 () const
 {
   return uint8_array_value ();
 }
 
 octave_value
-octave_diag_matrix::as_uint16 (void) const
+octave_diag_matrix::as_uint16 () const
 {
   return uint16_array_value ();
 }
 
 octave_value
-octave_diag_matrix::as_uint32 (void) const
+octave_diag_matrix::as_uint32 () const
 {
   return uint32_array_value ();
 }
 
 octave_value
-octave_diag_matrix::as_uint64 (void) const
+octave_diag_matrix::as_uint64 () const
 {
   return uint64_array_value ();
 }

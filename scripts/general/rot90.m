@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1993-2022 The Octave Project Developers
+## Copyright (C) 1993-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} rot90 (@var{A})
-## @deftypefnx {} {} rot90 (@var{A}, @var{k})
+## @deftypefn  {} {@var{B} =} rot90 (@var{A})
+## @deftypefnx {} {@var{B} =} rot90 (@var{A}, @var{k})
 ## Rotate array by 90 degree increments.
 ##
 ## Return a copy of @var{A} with the elements rotated counterclockwise in

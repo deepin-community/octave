@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,11 +24,11 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} deblank (@var{s})
+## @deftypefn {} {@var{s} =} deblank (@var{s})
 ## Remove trailing whitespace and nulls from @var{s}.
 ##
 ## If @var{s} is a matrix, @var{deblank} trims each row to the length of
-## longest string.  If @var{s} is a cell array of strings, operate
+## the longest string.  If @var{s} is a cell array of strings, operate
 ## recursively on each string element.
 ##
 ## Examples:
@@ -47,7 +47,7 @@
 
 function s = deblank (s)
 
-  if (nargin < 1)
+  if (nargin != 1)
     print_usage ();
   endif
 

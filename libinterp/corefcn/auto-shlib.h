@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2022 The Octave Project Developers
+// Copyright (C) 2022-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,7 +30,7 @@
 
 #include "oct-shlib.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // This is a convenience class that calls the
 // octave::get_dynamic_library function automatically at construction
@@ -43,15 +43,15 @@ auto_shlib : public dynamic_library
 {
 public:
 
-  auto_shlib (void);
+  auto_shlib ();
 
-  ~auto_shlib (void) = default;
+  ~auto_shlib () = default;
 
   auto_shlib (const auto_shlib&) = default;
 
   auto_shlib& operator = (const auto_shlib&) = default;
 };
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -48,17 +48,17 @@
 ## @seealso{thetaticks, xticks, yticks, zticks, polar, get, set}
 ## @end deftypefn
 
-function retval = rticks (varargin)
+function tickval = rticks (varargin)
 
   hax = [];
   switch (nargin)
     case 0
-      retval = get (gca (), "rtick");  # will error if no rtick exists.
+      tickval = get (gca (), "rtick");  # will error if no rtick exists.
       return;
 
     case 1
       if (isaxes (varargin{1}))
-        retval = get (varargin{1}, "rtick");
+        tickval = get (varargin{1}, "rtick");
         return;
       else
         arg = varargin{1};
@@ -92,10 +92,10 @@ function retval = rticks (varargin)
     error ("rticks: MODE is not yet implemented for the rtick property");
 
     ## FIXME: Enable mode args if/when they are available in polar/polarplot
-    ## arg = tolower (arg);
+    ## arg = lower (arg);
     ## switch (arg)
     ##   case "mode"
-    ##     retval = get (hax, "rtickmode");
+    ##     tickval = get (hax, "rtickmode");
     ##
     ##   case {"auto", "manual"}
     ##     if (nargout > 0)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,13 +37,13 @@
 #include "ov-null-mat.h"
 #include "ops.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // cell ops.
 
 DEFUNOP (transpose, cell)
 {
-  const octave_cell& v = dynamic_cast<const octave_cell&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_cell&, v, a);
 
   if (v.ndims () > 2)
     error ("transpose not defined for N-D objects");
@@ -74,4 +74,4 @@ install_cell_ops (octave::type_info& ti)
                        null_assign);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Recorder Properties (GNU Octave (version 7.1.0))</title>
+<title>Recorder Properties (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Recorder Properties (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Recorder Properties (GNU Octave (version 7.1.0))">
+<meta name="description" content="Recorder Properties (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Recorder Properties (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,9 @@
 <link href="Data-Retrieval.html" rel="prev" title="Data Retrieval">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,44 +30,61 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Recorder-Properties">
-<div class="header">
+<div class="subsection-level-extent" id="Recorder-Properties">
+<div class="nav-panel">
 <p>
 Previous: <a href="Data-Retrieval.html" accesskey="p" rel="prev">Data Retrieval</a>, Up: <a href="Audio-Recorder.html" accesskey="u" rel="up">Audio Recorder</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Properties-2"></span><h4 class="subsection">33.4.3 Properties</h4>
+<h4 class="subsection" id="Properties-2"><span>33.4.3 Properties<a class="copiable-link" href="#Properties-2"> &para;</a></span></h4>
 
 <p>The remaining two methods allow you to read or alter the properties of
 audiorecorder objects.
 </p>
-<span id="XREF_0040audiorecorder_002fget"></span><dl class="def">
-<dt id="index-get-4"><span class="category">: </span><span><em><var>value</var> =</em> <strong>get</strong> <em>(<var>recorder</var>, <var>name</var>)</em><a href='#index-get-4' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-get-5"><span class="category">: </span><span><em><var>values</var> =</em> <strong>get</strong> <em>(<var>recorder</var>)</em><a href='#index-get-5' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the <var>value</var> of the property identified by <var>name</var>.
+<a class="anchor" id="XREF_0040audiorecorder_002fget"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-get-5"><span class="category-def">: </span><span><code class="def-type"><var class="var">value</var> =</code> <strong class="def-name">get</strong> <code class="def-code-arguments">(<var class="var">recorder</var>, <var class="var">name</var>)</code><a class="copiable-link" href="#index-get-5"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-get-6"><span class="category-def">: </span><span><code class="def-type"><var class="var">values</var> =</code> <strong class="def-name">get</strong> <code class="def-code-arguments">(<var class="var">recorder</var>, {<var class="var">name1</var>, <var class="var">name2</var>, &hellip;})</code><a class="copiable-link" href="#index-get-6"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-get-7"><span class="category-def">: </span><span><code class="def-type"><var class="var">values</var> =</code> <strong class="def-name">get</strong> <code class="def-code-arguments">(<var class="var">recorder</var>)</code><a class="copiable-link" href="#index-get-7"> &para;</a></span></dt>
+<dd><p>Return the <var class="var">value</var> of the property identified by <var class="var">name</var>.
 </p>
-<p>If <var>name</var> is a cell array, return the values of the properties
-corresponding to the elements of the cell array.  Given only the recorder
-object, return a scalar structure with values of all properties of
-<var>recorder</var>.  The field names of the structure correspond to property
+<p>If <var class="var">name</var> is a cell array return the values of the properties
+identified by the elements of the cell array.  Given only the recorder
+object, return a scalar structure with values for all properties of
+<var class="var">recorder</var>.  The field names of the structure correspond to the property
 names.
-</p></dd></dl>
-
-
-<span id="XREF_0040audiorecorder_002fset"></span><dl class="def">
-<dt id="index-set-8"><span class="category">: </span><span><em></em> <strong>set</strong> <em>(<var>recorder</var>, <var>name</var>, <var>value</var>)</em><a href='#index-set-8' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-set-9"><span class="category">: </span><span><em></em> <strong>set</strong> <em>(<var>recorder</var>, <var>properties</var>)</em><a href='#index-set-9' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-set-10"><span class="category">: </span><span><em><var>properties</var> =</em> <strong>set</strong> <em>(<var>recorder</var>)</em><a href='#index-set-10' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Set the value of property specified by <var>name</var> to a given <var>value</var>.
 </p>
-<p>If <var>name</var> and <var>value</var> are cell arrays of the same size, set each
-property to a corresponding value.  Given a structure with fields
-corresponding to property names, set the value of those properties to the
-corresponding field values.  Given only the recorder object, return a
-structure of settable properties.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREF_0040audiorecorder_002fset">@audiorecorder/set</a>, <a class="ref" href="Audio-Recorder.html#XREF_0040audiorecorder_002faudiorecorder">@audiorecorder/audiorecorder</a>.
 </p></dd></dl>
 
 
+<a class="anchor" id="XREF_0040audiorecorder_002fset"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-set-9"><span class="category-def">: </span><span><strong class="def-name">set</strong> <code class="def-code-arguments">(<var class="var">recorder</var>, <var class="var">name</var>, <var class="var">value</var>)</code><a class="copiable-link" href="#index-set-9"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-set-10"><span class="category-def">: </span><span><strong class="def-name">set</strong> <code class="def-code-arguments">(<var class="var">recorder</var>, <var class="var">name_cell</var>, <var class="var">value_cell</var>)</code><a class="copiable-link" href="#index-set-10"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-set-11"><span class="category-def">: </span><span><strong class="def-name">set</strong> <code class="def-code-arguments">(<var class="var">recorder</var>, <var class="var">properties_struct</var>)</code><a class="copiable-link" href="#index-set-11"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-set-12"><span class="category-def">: </span><span><code class="def-type"><var class="var">properties</var> =</code> <strong class="def-name">set</strong> <code class="def-code-arguments">(<var class="var">recorder</var>)</code><a class="copiable-link" href="#index-set-12"> &para;</a></span></dt>
+<dd><p>Set the value of property specified by <var class="var">name</var> to a given <var class="var">value</var>.
+</p>
+<p>If <var class="var">name</var> and <var class="var">value</var> are cell arrays, set each property to a
+corresponding value.  Given a structure of properties with fields
+corresponding to property names, set the value of those properties to the
+corresponding field values.  Given only a recorder object, return a
+structure of configurable properties (i.e., writeable properties).
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREF_0040audiorecorder_002fget">@audiorecorder/get</a>, <a class="ref" href="Audio-Recorder.html#XREF_0040audiorecorder_002faudiorecorder">@audiorecorder/audiorecorder</a>.
+</p></dd></dl>
+
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Previous: <a href="Data-Retrieval.html">Data Retrieval</a>, Up: <a href="Audio-Recorder.html">Audio Recorder</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

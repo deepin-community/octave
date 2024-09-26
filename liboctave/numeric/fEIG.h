@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1994-2022 The Octave Project Developers
+// Copyright (C) 1994-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -44,7 +44,7 @@ FloatEIG
 
 public:
 
-  FloatEIG (void) : m_lambda (), m_v (), m_w () { }
+  FloatEIG () : m_lambda (), m_v (), m_w () { }
 
   FloatEIG (const FloatMatrix& a, bool calc_rev = true,
             bool calc_lev = true, bool balance = true)
@@ -116,11 +116,11 @@ public:
     return *this;
   }
 
-  ~FloatEIG (void) = default;
+  ~FloatEIG () = default;
 
-  FloatComplexColumnVector eigenvalues (void) const { return m_lambda; }
-  FloatComplexMatrix right_eigenvectors (void) const { return m_v; }
-  FloatComplexMatrix left_eigenvectors (void) const { return m_w; }
+  FloatComplexColumnVector eigenvalues () const { return m_lambda; }
+  FloatComplexMatrix right_eigenvectors () const { return m_v; }
+  FloatComplexMatrix left_eigenvectors () const { return m_w; }
 
   friend std::ostream&  operator << (std::ostream& os, const FloatEIG& a);
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2019-2022 The Octave Project Developers
+// Copyright (C) 2019-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -53,7 +53,7 @@
 #include "error.h"
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Coordinates of a point in C-Space (unit square mesh)
 
@@ -137,17 +137,18 @@ static inline bool
 is_in_definition_set2d (const Cell2 X, const octave_idx_type cols,
                         const octave_idx_type rows)
 {
- return ( (((X.idx >= 0) && (X.idx < cols-1)) ||
-           ((X.idx == cols-1) && (X.fcx == 0.0))) &&
-          (((X.idy >= 0) && (X.idy < rows-1)) ||
-           ((X.idy == rows-1) && (X.fcy == 0.0))) );
+  return ( (((X.idx >= 0) && (X.idx < cols-1)) ||
+            ((X.idx == cols-1) && (X.fcx == 0.0))) &&
+           (((X.idy >= 0) && (X.idy < rows-1)) ||
+            ((X.idy == rows-1) && (X.fcy == 0.0))) );
 }
 
 static inline Vector2
 add2d (const Cell2 X, const Vector2 Y)
 {
   Vector2 Z = {X.idx + X.fcx + Y.x,
-               X.idy + X.fcy + Y.y};
+               X.idy + X.fcy + Y.y
+              };
 
   return (Z);
 }
@@ -243,7 +244,8 @@ euler2d (const octave_idx_type cols, const octave_idx_type rows,
 
       // Runge Kutta - Heun's Scheme
       const Vector2 S = {0.5 * (S0.x + S1.x),
-                         0.5 * (S0.y + S1.y)};
+                         0.5 * (S0.y + S1.y)
+                        };
       Xnxt = add2d (X0f, S);
 
       X0f = vector_to_cell2d (Xnxt);
@@ -306,7 +308,8 @@ add3d (const Cell3 X, const Vector3 Y)
 {
   Vector3 Z = {X.idx + X.fcx + Y.x,
                X.idy + X.fcy + Y.y,
-               X.idz + X.fcz + Y.z};
+               X.idz + X.fcz + Y.z
+              };
 
   return (Z);
 }
@@ -417,7 +420,8 @@ euler3d (const octave_idx_type nx, const octave_idx_type ny, const octave_idx_ty
       // Runge Kutta - Heun's Scheme
       const Vector3 S = {0.5 * (S0.x + S1.x),
                          0.5 * (S0.y + S1.y),
-                         0.5 * (S0.z + S1.z)};
+                         0.5 * (S0.z + S1.z)
+                        };
       Xnxt = add3d (X0f, S);
 
       X0f = vector_to_cell3d (Xnxt);
@@ -506,8 +510,8 @@ streameuler3d_internal (const octave_value_list& args, const char *fcn)
 
 DEFUN (__streameuler2d__, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} __streameuler2d__ (@var{U}, @var{V}, @var{TX}, @var{TY}, @var{ZETA}, @var{XI}, @var{H}, @var{MAXNVERTS})
-Calculates the streamline in a vector field @code{[@var{U}, @var{V}]} starting
+@deftypefn {} {@var{output} =} __streameuler2d__ (@var{U}, @var{V}, @var{TX}, @var{TY}, @var{ZETA}, @var{XI}, @var{H}, @var{MAXNVERTS})
+Calculate the streamline in a vector field @code{[@var{U}, @var{V}]} starting
 from a seed point at position @code{[@var{ZETA}, @var{XI}]}.  The integrator
 used is Heun's Scheme.  The step size can be controlled by @var{H}.  The
 Jacobian matrix can be defined for each grid cell by
@@ -521,8 +525,8 @@ Jacobian matrix can be defined for each grid cell by
 
 DEFUN (__streameuler3d__, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} __streameuler3d__ (@var{U}, @var{V}, @var{W}, @var{TX}, @var{TY}, @var{TZ}, @var{ZETA}, @var{XI}, @var{RHO}, @var{H}, @var{MAXNVERTS})
-Calculates the streamline in a vector field @code{[@var{U}, @var{V}, @var{W}]}
+@deftypefn {} {@var{output} =} __streameuler3d__ (@var{U}, @var{V}, @var{W}, @var{TX}, @var{TY}, @var{TZ}, @var{ZETA}, @var{XI}, @var{RHO}, @var{H}, @var{MAXNVERTS})
+Calculate the streamline in a vector field @code{[@var{U}, @var{V}, @var{W}]}
 starting from a seed point at position
 @code{[@var{ZETA}, @var{XI}, @var{RHO}]}.  The integrator used is Heun's
 Scheme.  The step size can be controlled by @var{H}.  The Jacobian matrix can
@@ -534,4 +538,4 @@ be defined for each grid cell by @code{[@var{TX}, @var{TY}, @var{TZ}]}.
   return streameuler3d_internal (args, "__streameuler3d__");
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

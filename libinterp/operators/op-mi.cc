@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2020-2022 The Octave Project Developers
+// Copyright (C) 2020-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,7 +35,7 @@
 #include "ov-typeinfo.h"
 #include "ov.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Magic integer unary ops.  Only + and - are allowed so that
 // expressions like
@@ -47,7 +47,7 @@ OCTAVE_NAMESPACE_BEGIN
 static octave_value
 oct_unop_unsigned_uplus (const octave_base_value& a)
 {
-  const octave_magic_uint& v = dynamic_cast<const octave_magic_uint&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_magic_uint&, v, a);
   // no-op.
   // FIXME: but can we do this just by incrementing the reference count?
   return octave_value (v.clone ());
@@ -56,7 +56,7 @@ oct_unop_unsigned_uplus (const octave_base_value& a)
 static octave_value
 oct_unop_unsigned_uminus (const octave_base_value& a)
 {
-  const octave_magic_uint& v = dynamic_cast<const octave_magic_uint&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_magic_uint&, v, a);
 
   // We are storing a uint64 value, so some fakery is needed here.
   // Is there a better way?
@@ -96,7 +96,7 @@ oct_unop_unsigned_uminus (const octave_base_value& a)
 static octave_value
 oct_unop_signed_uplus (const octave_base_value& a)
 {
-  const octave_magic_int& v = dynamic_cast<const octave_magic_int&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_magic_int&, v, a);
   // no-op.
   // FIXME: but can we do this just by incrementing the reference count?
   return octave_value (v.clone ());
@@ -105,7 +105,7 @@ oct_unop_signed_uplus (const octave_base_value& a)
 static octave_value
 oct_unop_signed_uminus (const octave_base_value& a)
 {
-  const octave_magic_int& v = dynamic_cast<const octave_magic_int&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_magic_int&, v, a);
 
   // FIXME: Maybe there should also be octave_magic_int::as_TYPE_value
   // functions?
@@ -124,4 +124,4 @@ install_mi_ops (octave::type_info& ti)
   INSTALL_UNOP_TI (ti, op_uminus, octave_magic_int, signed_uminus);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

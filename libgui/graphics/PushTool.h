@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,35 +28,30 @@
 
 #include "ToolBarButton.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class PushTool : public ToolBarButton<uipushtool>
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  PushTool (octave::interpreter& interp,
+            const graphics_object& go, QAction *action);
+  ~PushTool ();
 
-  class PushTool : public ToolBarButton<uipushtool>
-  {
-    Q_OBJECT
+  static PushTool *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  public:
-    PushTool (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-              const graphics_object& go, QAction *action);
-    ~PushTool (void);
+protected:
+  void update (int pId);
 
-    static PushTool *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+private slots:
+  void clicked ();
+};
 
-  protected:
-    void update (int pId);
-
-  private slots:
-    void clicked (void);
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

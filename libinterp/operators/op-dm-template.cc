@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -39,7 +39,7 @@
 #  include "ov-null-mat.h"
 #endif
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // matrix by diag matrix ops.
 
@@ -66,8 +66,8 @@ DEFBINOP_OP (mul, LMATRIX, RMATRIX, *)
 #if defined (DEFINEDIV)
 DEFBINOP (div, LMATRIX, RMATRIX)
 {
-  const OCTAVE_LMATRIX& v1 = dynamic_cast<const OCTAVE_LMATRIX&> (a1);
-  const OCTAVE_RMATRIX& v2 = dynamic_cast<const OCTAVE_RMATRIX&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_LMATRIX&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_RMATRIX&, v2, a2);
 
   return xdiv (v1.LDMATRIX_VALUE (), v2.RMATRIX_VALUE ());
 }
@@ -76,8 +76,8 @@ DEFBINOP (div, LMATRIX, RMATRIX)
 #if defined (DEFINELDIV)
 DEFBINOP (ldiv, LMATRIX, RMATRIX)
 {
-  const OCTAVE_LMATRIX& v1 = dynamic_cast<const OCTAVE_LMATRIX&> (a1);
-  const OCTAVE_RMATRIX& v2 = dynamic_cast<const OCTAVE_RMATRIX&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_LMATRIX&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_RMATRIX&, v2, a2);
 
   return xleftdiv (v1.LMATRIX_VALUE (), v2.RDMATRIX_VALUE ());
 }
@@ -105,4 +105,4 @@ INST_NAME (octave::type_info& ti)
 #endif
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

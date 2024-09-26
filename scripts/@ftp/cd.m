@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,9 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} cd (@var{f})
+## @deftypefn  {} {@var{cwd} =} cd (@var{f})
 ## @deftypefnx {} {} cd (@var{f}, @var{path})
+## @deftypefnx {} {@var{new_cwd} =} cd (@var{f}, @var{path})
 ## Get or set the remote directory on the FTP connection @var{f}.
 ##
 ## @var{f} is an FTP object returned by the @code{ftp} function.
@@ -36,13 +37,10 @@
 ##
 ## If the directory does not exist, an error message is printed and the
 ## working directory is not changed.
+## @seealso{@ftp/dir, @ftp/ftp}
 ## @end deftypefn
 
 function path = cd (f, path)
-
-  if (nargin < 1)
-    print_usage ();
-  endif
 
   if (nargin == 2)
     __ftp_cwd__ (f.curlhandle, path);

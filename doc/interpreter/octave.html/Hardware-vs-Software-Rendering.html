@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Hardware vs Software Rendering (GNU Octave (version 9.2.0))</title>
+
+<meta name="description" content="Hardware vs Software Rendering (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Hardware vs Software Rendering (GNU Octave (version 9.2.0))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Graphics-Toolkits.html" rel="up" title="Graphics Toolkits">
+<link href="Precision-issues.html" rel="next" title="Precision issues">
+<link href="Customizing-Toolkit-Behavior.html" rel="prev" title="Customizing Toolkit Behavior">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="octave.css">
+
+
+</head>
+
+<body lang="en">
+<div class="subsubsection-level-extent" id="Hardware-vs-Software-Rendering">
+<div class="nav-panel">
+<p>
+Next: <a href="Precision-issues.html" accesskey="n" rel="next">Precision issues</a>, Previous: <a href="Customizing-Toolkit-Behavior.html" accesskey="p" rel="prev">Customizing Toolkit Behavior</a>, Up: <a href="Graphics-Toolkits.html" accesskey="u" rel="up">Graphics Toolkits</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="subsubsection" id="Hardware-vs-Software-Rendering-1"><span>15.4.8.2 Hardware vs Software Rendering<a class="copiable-link" href="#Hardware-vs-Software-Rendering-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-opengl-rendering-slow-windows"></a>
+
+<p>When using the Windows installer for Octave, the user has the option to select
+between &quot;System OpenGL&quot; and &quot;Software OpenGL&quot; renderers.  The choice between
+hardware or software rendering affects the OpenGL graphics toolkits
+(<code class="code">&quot;qt&quot;</code> and <code class="code">&quot;fltk&quot;</code>) only.  Software rendering can be used to
+avoid rendering and printing issues due to imperfect OpenGL driver
+implementations for diverse graphic cards from different vendors (notably
+integrated Intel graphics).  The downside is that software rendering may be
+considerably slower than hardware-accelerated rendering (and it might not work
+correctly on 32-bit platforms or WoW64).  To permanently switch
+between hardware-accelerated rendering with your graphics card drivers and
+software rendering, use the &quot;OpenGL Switcher&quot; application from the Start menu
+while Octave is closed.  Alternatively, rename the following file while Octave
+is closed:
+</p>
+<p><samp class="file"><var class="var">octave-home</var>\bin\opengl32.dll</samp>
+<br>where <var class="var">octave-home</var> is the directory returned by
+<a class="ref" href="System-Information.html#XREFOCTAVE_005fHOME"><code class="code">OCTAVE_HOME</code><!-- /@w --></a>, i.e., the directory in which
+Octave is installed (the default is
+<samp class="file">C:\Program Files\GNU Octave\Octave\Octave-<var class="var">version</var>\mingw64</samp>).
+Change the file extension to <samp class="file">.bak</samp> for hardware rendering or to
+<samp class="file">.dll</samp> for software rendering.
+</p>
+</div>
+
+
+
+</body>
+</html>

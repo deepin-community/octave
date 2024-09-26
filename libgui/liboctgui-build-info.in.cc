@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,7 +32,7 @@
 #include "liboctgui-build-info.h"
 
 std::string
-liboctgui_hg_id (void)
+liboctgui_hg_id ()
 {
   return "%OCTAVE_HG_ID%";
 }

@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -31,6 +31,11 @@ been computed and stored in a string, which is exactly what the
 
 @c eval libinterp/parse-tree/oct-parse.yy
 @anchor{XREFeval}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} eval (@var{try})
 @deftypefnx {} {} eval (@var{try}, @var{catch})
 Parse the string @var{try} and evaluate it as if it were an Octave
@@ -75,6 +80,11 @@ produced by the evaluated expression.
 
 @c evalc libinterp/parse-tree/oct-parse.yy
 @anchor{XREFevalc}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} evalc (@var{try})
 @deftypefnx {} {@var{s} =} evalc (@var{try}, @var{catch})
 Parse and evaluate the string @var{try} as if it were an Octave program,
@@ -159,7 +169,12 @@ Variables}, for a description of the @code{exist} function.
 
 @c feval libinterp/parse-tree/oct-parse.yy
 @anchor{XREFfeval}
-@deftypefn {} {} feval (@var{name}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{retval} =} feval (@var{name}, @dots{})
 Evaluate the function named @var{name}.
 
 Any arguments after the first are passed as inputs to the named function.
@@ -203,6 +218,11 @@ are not necessarily on the user path
 
 @c run scripts/miscellaneous/run.m
 @anchor{XREFrun}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} run @var{script}
 @deftypefnx {} {} run ("@var{script}")
 Run @var{script} in the current workspace.
@@ -315,6 +335,11 @@ are in the @samp{caller} context and @code{evalin} is not needed.
 
 @c evalin libinterp/parse-tree/oct-parse.yy
 @anchor{XREFevalin}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} evalin (@var{context}, @var{try})
 @deftypefnx {} {} evalin (@var{context}, @var{try}, @var{catch})
 Like @code{eval}, except that the expressions are evaluated in the context
@@ -325,6 +350,11 @@ Like @code{eval}, except that the expressions are evaluated in the context
 
 @c assignin libinterp/parse-tree/oct-parse.yy
 @anchor{XREFassignin}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} assignin (@var{context}, @var{varname}, @var{value})
 Assign @var{value} to @var{varname} in context @var{context}, which
 may be either @qcode{"base"} or @qcode{"caller"}.

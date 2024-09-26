@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -87,10 +87,7 @@ function [s, i] = sortrows (A, c)
     i = sort_rows_idx_generic (default_mode, reverse_mode, A, c);
   endif
 
-  ## Only bother to compute s if needed.
-  if (isargout (1))
-    s = A(i,:);
-  endif
+  s = A(i,:);
 
 endfunction
 

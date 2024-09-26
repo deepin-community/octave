@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -132,7 +132,7 @@
 
 %!test <*50893>
 %! cnt = 0;
-%! for k = zeros (0,3);
+%! for k = zeros (0,3)
 %!   cnt++;
 %! endfor
 %! assert (cnt, 0);
@@ -140,7 +140,7 @@
 
 %!test <*50893>
 %! cnt = 0;
-%! for k = zeros (3,0);
+%! for k = zeros (3,0)
 %!   cnt++;
 %! endfor
 %! assert (cnt, 0);
@@ -148,7 +148,7 @@
 
 %!test <*50893>
 %! cnt = 0;
-%! for k = zeros (3,0, "uint32");
+%! for k = zeros (3,0, "uint32")
 %!   cnt++;
 %! endfor
 %! assert (cnt, 0);
@@ -156,7 +156,7 @@
 
 %!test <*50893>
 %! cnt = 0;
-%! for k = cell (0,3);
+%! for k = cell (0,3)
 %!   cnt++;
 %! endfor
 %! assert (cnt, 0);
@@ -169,24 +169,51 @@
 %!
 %! fail ("for i = 0:-1:-inf; break; end", "warning",
 %!       "FOR loop limit is infinite");
+%!
+%! fail ("for i = inf:-1:1; break; end", "warning",
+%!       "FOR loop limit is infinite");
+%!
+%! fail ("for i = -inf:+1:1; break; end", "warning",
+%!       "FOR loop limit is infinite");
 
 %!test <*45143>
 %! warning ("on", "Octave:infinite-loop", "local");
-%! k = 0;
-%! for i = 1:Inf
-%!   if (++k > 10)
-%!     break;
-%!   endif
-%! endfor
-%! assert (i, 11);
+%
+%! code = cstrcat ("k = 0;               ",
+%!                 "for i = 1:Inf;       ",
+%!                 "  if (++k > 10);     ",
+%!                 "    break;           ",
+%!                 "  endif;             ",
+%!                 "endfor;              ",
+%!                 "assert (i, 11);      ");
+%! fail (code, "warning", "FOR loop limit is infinite");
 %!
-%! k = 0;
-%! for i = -1:-1:-Inf
-%!   if (++k > 10)
-%!     break;
-%!   endif
-%! endfor
-%! assert (i, -11);
+%! code = cstrcat ("k = 0;               ",
+%!                 "for i = -1:-1:-Inf;  ",
+%!                 "  if (++k > 10);     ",
+%!                 "    break;           ",
+%!                 "  endif;             ",
+%!                 "endfor;              ",
+%!                 "assert (i, -11);     ");
+%! fail (code, "warning", "FOR loop limit is infinite");
+%!
+%! code = cstrcat ("k = 0;               ",
+%!                 "for i = Inf:-1:1;    ",
+%!                 "  if (++k > 10);     ",
+%!                 "    break;           ",
+%!                 "  endif;             ",
+%!                 "endfor;              ",
+%!                 "assert (i, Inf);     ");
+%! fail (code, "warning", "FOR loop limit is infinite");
+%!
+%! code = cstrcat ("k = 0;               ",
+%!                 "for i = -Inf:+1:1;   ",
+%!                 "  if (++k > 10);     ",
+%!                 "    break;           ",
+%!                 "  endif;             ",
+%!                 "endfor;              ",
+%!                 "assert (i, -Inf);    ");
+%! fail (code, "warning", "FOR loop limit is infinite");
 %!
 %! k = 0;
 %! for i = 1:-Inf

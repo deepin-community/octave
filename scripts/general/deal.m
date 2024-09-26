@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1998-2022 The Octave Project Developers
+## Copyright (C) 1998-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -63,7 +63,7 @@
 ## a = b = c = x;
 ## @end example
 ##
-## Programming Note: @code{deal} is often used with comma separated lists
+## Programming Note: @code{deal} is often used with comma-separated lists
 ## derived from cell arrays or structures.  This is unnecessary as the
 ## interpreter can perform the same action without the overhead of a function
 ## call.  For example:

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1993-2022 The Octave Project Developers
+## Copyright (C) 1993-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -421,6 +421,26 @@ f (2, 2)
 Object Oriented Programming for a detailed description.)
 @seealso{function, functions, func2str, str2func}
 @end deftypefn
+__FILE__
+@c libinterp/parse-tree/lex.ll
+-*- texinfo -*-
+@deftypefn {} {} __FILE__
+When the lexer recognizes the @qcode{"__FILE__"} keyword it returns a
+character array containing the full name and path of the file that is being
+executed. @qcode{"__FILE__"} will return @code{stdin} if called from the
+command line.
+@seealso{__LINE__}
+@end deftypefn
+__LINE__
+@c libinterp/parse-tree/lex.ll
+-*- texinfo -*-
+@deftypefn {} {} __LINE__
+When the lexer recognizes the @qcode{"__LINE__"} keyword it returns a numeric
+value containing the current input line number of the function or file being
+executed.  @qcode{"__LINE__"} will return @code{1} if called from the command
+line.
+@seealso{__FILE__}
+@end deftypefn
 break
 @c libinterp/parse-tree/oct-parse.yy
 -*- texinfo -*-
@@ -698,12 +718,13 @@ endif
 @end deftypefn
 @c ## FIXME: Can't have duplicate DOCSTRING entries.  The function methods()
 @c ##        already has a docstring which overrides this keyword definition.
-@c #methods
-@c #@c libinterp/parse-tree/oct-parse.yy
-@c #-*- texinfo -*-
-@c #@deftypefn {} {} methods
-@c #Begin a methods block in a classdef definition.
-@c #@end deftypefn
+@c ##        If this is fixed, place \x1d char before keyword "methods".
+@c ## methods
+@c ## @c libinterp/parse-tree/oct-parse.yy
+@c ## -*- texinfo -*-
+@c ## @deftypefn {} {} methods
+@c ## Begin a methods block in a classdef definition.
+@c ## @end deftypefn
 otherwise
 @c libinterp/parse-tree/oct-parse.yy
 -*- texinfo -*-
@@ -755,8 +776,9 @@ elsewhere.
 @end deftypefn
 @c ## FIXME: Can't have duplicate DOCSTRING entries.  The function properties()
 @c ##        already has a docstring which overrides this keyword definition.
-@c ## properties
-@c ##  libinterp/parse-tree/oct-parse.yy
+@c ##        If this is fixed, place \x1d char before keyword "properties".
+@c ## properties
+@c ## @c libinterp/parse-tree/oct-parse.yy
 @c ## -*- texinfo -*-
 @c ## @deftypefn {} {} properties
 @c ## Begin a properties block in a classdef definition.

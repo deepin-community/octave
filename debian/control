@@ -8,7 +8,7 @@ Build-Depends: automake,
                bison,
                debhelper-compat (= 13),
                debhelper (>= 12.8~),
-               default-jdk [!hppa !hurd-any !kfreebsd-any],
+               default-jdk [!hppa !hurd-any],
                desktop-file-utils,
                epstool,
                fig2dev,
@@ -25,19 +25,18 @@ Build-Depends: automake,
                libcurl4-gnutls-dev,
                libfftw3-dev,
                libfltk1.3-dev,
-               libfontconfig1-dev,
+               libfontconfig-dev,
                libgl2ps-dev,
                libglpk-dev,
                libglu1-mesa-dev,
                libgraphicsmagick++1-dev,
                libhdf5-dev,
                liblapack-dev,
-               libncurses5-dev,
-               libpcre3-dev,
+               libncurses-dev,
+               libpcre2-dev,
                libqhull-dev,
                libqrupdate-dev,
-               libqscintilla2-qt5-dev,
-               libqt5opengl5-dev,
+               libqscintilla2-qt6-dev,
                libreadline-dev,
                librsvg2-bin,
                libsndfile1-dev,
@@ -46,9 +45,8 @@ Build-Depends: automake,
                libxft-dev,
                portaudio19-dev,
                pstoedit,
-               qtbase5-dev,
-               qttools5-dev,
-               qttools5-dev-tools,
+               qt6-tools-dev,
+               qt6-5compat-dev,
                rapidjson-dev,
                texinfo,
                texlive-fonts-recommended,
@@ -57,7 +55,7 @@ Build-Depends: automake,
                unzip,
                xauth,
                zip
-Standards-Version: 4.6.0
+Standards-Version: 4.7.0
 Vcs-Browser: https://salsa.debian.org/pkg-octave-team/octave
 Vcs-Git: https://salsa.debian.org/pkg-octave-team/octave.git
 Homepage: https://www.octave.org/
@@ -70,15 +68,15 @@ Depends: ${shlibs:Depends},
          texinfo,
          octave-common (= ${source:Version}),
 Recommends: gnuplot-qt | gnuplot-x11 | gnuplot-nox,
-            libopenblas0 | libatlas3-base,
+            libopenblas0 | libblis4,
             pstoedit,
             epstool,
-            default-jre-headless [!armel !hppa !hurd-any !kfreebsd-any !mipsel !powerpc],
+            default-jre-headless [!hppa !hurd-any],
             octave-doc
 Suggests: octave-dev
 Provides: ${octave-abi:Provides}
-Breaks: liboctave3v5, liboctave4, liboctave5, liboctave6, liboctave7, liboctave8,
-        octave-nlopt (<< 2.6.1-8~)
+Breaks: octave-ga (<< 0.10.4),
+        octave-queueing (<< 1.2.8)
 Description: GNU Octave language for numerical computations
  Octave is a (mostly MATLAB® compatible) high-level language, primarily
  intended for numerical computations. It provides a convenient command-line
@@ -134,9 +132,9 @@ Depends: ${shlibs:Depends},
          ${misc:Depends},
          octave (= ${binary:Version}),
          libreadline-dev | libreadline-gplv2-dev,
-         libncurses5-dev,
+         libncurses-dev,
          libhdf5-dev | libhdf5-openmpi-dev | libhdf5-mpich-dev,
-         libgl1-mesa-dev | libgl-dev,
+         libgl-dev,
          libblas-dev | libblas.so,
          liblapack-dev | liblapack.so,
          libfftw3-dev,
@@ -151,12 +149,3 @@ Description: development files for the GNU Octave language
  .
  This package provides the header files and the mkoctfile script used for
  extending Octave via compiled code.
-
-Package: liboctave-dev
-Architecture: all
-Section: oldlibs
-Depends: ${misc:Depends},
-         octave-dev
-Description: transitional dummy package for GNU Octave development
- The only purpose of this package is to ensure a smooth upgrade to the new
- 'octave-dev' package which replaces 'liboctave-dev'. It can be safely removed.

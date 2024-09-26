@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -52,12 +52,19 @@ combinations of these with various operators.
 @opindex :
 
 An @dfn{index expression} allows you to reference or extract selected
-elements of a vector, a matrix (2-D), or a higher-dimensional array.
+elements of a vector, a matrix (2-D), or a higher-dimensional array.  Arrays
+may be indexed in one of three ways:
+@ref{XREFComponentIndexing,,Component Indexing}, 
+@ref{XREFLinearIndexing,,Linear Indexing}, and
+@ref{XREFLogicalIndexing,,Logical Indexing}.
 
-Indices may be scalars, vectors, ranges, or the special operator @samp{:},
-which selects entire rows, columns, or higher-dimensional slices.
+@anchor{XREFComponentIndexing}
+@subheading Component Indexing
+@cindex Component Indexing
+Component indices may be scalars, vectors, ranges, or the special operator
+@samp{:}, which selects entire rows, columns, or higher-dimensional slices.
 
-An index expression consists of a set of parentheses enclosing @math{M}
+Component index expression consists of a set of parentheses enclosing @math{M}
 expressions separated by commas.  Each individual index value, or component,
 is used for the respective dimension of the object that it is applied to.  In
 other words, the first index component is used for the first dimension (rows)
@@ -146,19 +153,18 @@ A([1; 2])  # result is a column vector: ans = [1; 2]
 @end group
 @end example
 
-Note that it is permissible to use a 1-D index with a multi-dimensional
-object (also called linear indexing).  In this case, the elements of the
-multi-dimensional array are taken in column-first order like Fortran.  That is,
-the columns of the array are imagined to be stacked on top of each other to
-form a column vector and then the single linear index is applied to this
-vector.
+The shape rules for @var{A}(@var{P}) are:
 
-@example
-@group
-A(5)    # linear indexing into three-dimensional array: ans = 5
-A(3:5)  # result has shape of index component: ans = [3, 4, 5]
-@end group
-@end example
+@itemize @bullet
+@item When at least one of @var{A} or @var{P} has two or more dimensions, then
+@var{A}(@var{P}) takes the shape of @var{P}.  This happens when at least one
+of the variables is a 2-D matrix or an N-D array.
+
+@item When both @var{A} and @var{P} are 1-D vectors, then @var{A}(@var{P}) takes
+the shape of @var{A} itself.  In particular, when @var{A} is a row vector, then
+@var{A}(@var{P}) is also a row vector irrespective of @var{P}'s shape.  The
+case when @var{A} is a column vector is analogous.
+@end itemize
 
 @opindex :, indexing expressions
 
@@ -212,6 +218,88 @@ A(end:-1:1)       # reversal of A => [4, 3, 2, 1]
 @end group
 @end example
 
+For more information see the @ref{XREFend, , @qcode{"end" keyword}}.
+
+@anchor{XREFLinearIndexing}
+@subheading Linear Indexing
+@cindex Linear Indexing
+It is permissible to use a 1-D index with a multi-dimensional object.  This is
+also called @dfn{linear indexing}.  In this case, the elements of the
+multi-dimensional array are taken in column-first order like in Fortran.  That
+is, the columns of the array are imagined to be stacked on top of each other
+to form a column vector and then the single linear index is applied to this
+vector.
+
+@example
+@group
+A = [1, 2, 3; 4, 5, 6; 7, 8, 9];
+
+A(4)    # linear index of 4th element in 2-D array: ans = 2
+A(3:5)  # result has shape of index component: ans = [7, 2, 5]
+A([1, 2, 2, 1]) # result includes repeated elements: ans = [1, 4, 4, 1]
+@end group
+@end example
+
+@anchor{XREFLogicalIndexing}
+@subheading Logical Indexing
+@cindex Logical Indexing
+Logical values can also be used to index matrices and cell arrays.
+When indexing with a logical array the result will be a vector containing
+the values corresponding to @code{true} parts of the logical array. The
+following examples illustrates this.
+
+@example
+@group
+data = [ 1, 2; 3, 4 ];
+idx = [true, false; false true];
+data(idx)
+     @result{} ans = [ 1; 4 ]
+
+idx = (data <= 2);
+data(idx)
+     @result{} ans = [ 1; 2 ]
+@end group
+@end example
+
+@noindent
+Instead of creating the @code{idx} array it is possible to replace
+@code{data(idx)} with @w{@code{data( data <= 2 )}} in the above code.
+
+While the size of the logical index expressions is usually the same as that
+of the array being indexed, this is not a necessary condition.  If the logical
+index is a different size than the array, then elements from the array are
+matched against elements from the logical index based on their linear order,
+just as with linear indexing.
+
+@example
+@group
+data = [ 1, 2, 3; 4, 5, 6 ];
+idx = [ true, false, false, true ];
+data(idx)
+     @result{} ans = [ 1 5 ]  # idx selected the 1st and 4th position elements
+@end group
+@end example
+
+If the logical index is larger than then array an out of bounds error will
+occur if any true values attempt to select a linear position larger than the
+number of elements in the array.
+
+@example
+@group
+idx = [ true, true, false; false, true, false; true; false; false ];
+data(idx)
+     @result{} ans = [ 1; 2; 5; 3 ] # returns positions 1, 3, 4, 5 in a column
+
+idx = [ true, true, false; false, true, false; true; false; true ];
+data(idx)
+     @result{} error: a(9): out of bound 6 (dimensions are 2x3)
+@end group
+@end example
+
+False elements of a logical index outside the array size are ignored, but when
+the ninth element of the logical index is true it triggers an error as it tries
+to select a nonexistent 9th element of the array.
+
 @menu
 * Advanced Indexing::
 @end menu
@@ -219,6 +307,36 @@ A(end:-1:1)       # reversal of A => [4, 3, 2, 1]
 @node Advanced Indexing
 @subsection Advanced Indexing
 
+@subsubheading Chained indexing
+@cindex Chained indexing
+Octave permits the use of repeated (chained) index expressions to extract
+subsets of an array in a single command without the need to use intermediate
+variables.  This can make it easier to write code with either complicated 
+indexing operations or using multiple indexing methods. The following example
+shows two equivalent index extraction operations:
+
+@example
+@group
+A = reshape (1:16, 4, 4);
+B = A(2:4, 2:3);
+C = B(3:5);
+D = C( [ true, false, true ] )
+     @result{} D = [ 8, 11 ]
+
+D = A(2:4, 2:3)(3:5)([ true, false, true ])
+     @result{} D = [ 8, 11 ]
+@end group
+@end example
+
+Chained indexing will necessarily be slower than a single index expression
+producing the same results, but is usually more computationally efficient
+than performing  multiple discrete indexing operations with intermediate
+variable assignments.
+
+Note that chained indexing is only compatible with right-hand expressions and
+can not be used on the left-hand side of assignment operations.
+
+@subsubheading Component to linear index conversion
 When it is necessary to extract subsets of entries out of an array whose
 indices cannot be written as a Cartesian product of components, linear
 indexing together with the function @code{sub2ind} can be used.  For example:
@@ -243,6 +361,158 @@ A(sub2ind (size (A), [1, 2, 1], [1, 1, 2], [1, 2, 1]))
 @end group
 @end example
 
+@c sub2ind libinterp/corefcn/sub2ind.cc
+@anchor{XREFsub2ind}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{ind} =} sub2ind (@var{dims}, @var{i}, @var{j})
+@deftypefnx {} {@var{ind} =} sub2ind (@var{dims}, @var{s1}, @var{s2}, @dots{}, @var{sN})
+Convert subscripts to linear indices.
+
+The input @var{dims} is a dimension vector where each element is the size of
+the array in the respective dimension (@pxref{XREFsize,,@code{size}}).  The
+remaining inputs are scalars or vectors of subscripts to be converted.
+
+The output vector @var{ind} contains the converted linear indices.
+
+Background: Array elements can be specified either by a linear index which
+starts at 1 and runs through the number of elements in the array, or they may
+be specified with subscripts for the row, column, page, etc.  The functions
+@code{ind2sub} and @code{sub2ind} interconvert between the two forms.
+
+The linear index traverses dimension 1 (rows), then dimension 2 (columns), then
+dimension 3 (pages), etc.@: until it has numbered all of the elements.
+Consider the following 3-by-3 matrices:
+
+@example
+@group
+[(1,1), (1,2), (1,3)]     [1, 4, 7]
+[(2,1), (2,2), (2,3)] ==> [2, 5, 8]
+[(3,1), (3,2), (3,3)]     [3, 6, 9]
+@end group
+@end example
+
+@noindent
+The left matrix contains the subscript tuples for each matrix element.  The
+right matrix shows the linear indices for the same matrix.
+
+The following example shows how to convert the two-dimensional indices
+@code{(2,1)} and @code{(2,3)} of a 3-by-3 matrix to linear indices with a
+single call to @code{sub2ind}.
+
+@example
+@group
+s1 = [2, 2];
+s2 = [1, 3];
+ind = sub2ind ([3, 3], s1, s2)
+    @result{} ind =  2   8
+@end group
+@end example
+@xseealso{@ref{XREFind2sub,,ind2sub}, @ref{XREFsize,,size}}
+@end deftypefn
+
+
+@c ind2sub libinterp/corefcn/sub2ind.cc
+@anchor{XREFind2sub}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {[@var{s1}, @var{s2}, @dots{}, @var{sN}] =} ind2sub (@var{dims}, @var{ind})
+Convert linear indices to subscripts.
+
+The input @var{dims} is a dimension vector where each element is the size of
+the array in the respective dimension (@pxref{XREFsize,,@code{size}}).  The
+second input @var{ind} contains linear indices to be converted.
+
+The outputs @var{s1}, @dots{}, @var{sN} contain the converted subscripts.
+
+Background: Array elements can be specified either by a linear index which
+starts at 1 and runs through the number of elements in the array, or they may
+be specified with subscripts for the row, column, page, etc.  The functions
+@code{ind2sub} and @code{sub2ind} interconvert between the two forms.
+
+The linear index traverses dimension 1 (rows), then dimension 2 (columns), then
+dimension 3 (pages), etc.@: until it has numbered all of the elements.
+Consider the following 3-by-3 matrices:
+
+@example
+@group
+[1, 4, 7]     [(1,1), (1,2), (1,3)]
+[2, 5, 8] ==> [(2,1), (2,2), (2,3)]
+[3, 6, 9]     [(3,1), (3,2), (3,3)]
+@end group
+@end example
+
+@noindent
+The left matrix contains the linear indices for each matrix element.  The right
+matrix shows the subscript tuples for the same matrix.
+
+The following example shows how to convert the linear indices @code{2} and
+@code{8} to appropriate subscripts of a 3-by-3 matrix.
+
+@example
+@group
+ind = [2, 8];
+[r, c] = ind2sub ([3, 3], ind)
+    @result{} r =  2   2
+    @result{} c =  1   3
+@end group
+@end example
+
+If the number of output subscripts exceeds the number of dimensions, the
+exceeded dimensions are set to @code{1}.  On the other hand, if fewer
+subscripts than dimensions are provided, the exceeding dimensions are merged
+into the final requested dimension.  For clarity, consider the following
+examples:
+
+@example
+@group
+ind  = [2, 8];
+dims = [3, 3];
+## same as dims = [3, 3, 1]
+[r, c, s] = ind2sub (dims, ind)
+    @result{} r =  2   2
+    @result{} c =  1   3
+    @result{} s =  1   1
+## same as dims = [9]
+r = ind2sub (dims, ind)
+    @result{} r =  2   8
+@end group
+@end example
+@xseealso{@ref{XREFsub2ind,,sub2ind}, @ref{XREFsize,,size}}
+@end deftypefn
+
+
+@c isindex libinterp/corefcn/utils.cc
+@anchor{XREFisindex}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{tf} =} isindex (@var{ind})
+@deftypefnx {} {@var{tf} =} isindex (@var{ind}, @var{n})
+Return true if @var{ind} is a valid index.
+
+Valid indices are either positive integers (although possibly of real data
+type), or logical arrays.
+
+If present, @var{n} specifies the maximum extent of the dimension to be
+indexed.  When possible the internal result is cached so that subsequent
+indexing using @var{ind} will not perform the check again.
+
+Implementation Note: Strings are first converted to double values before the
+checks for valid indices are made.  Unless a string contains the NULL
+character @nospell{"@backslashchar{}0"}, it will always be a valid index.
+@end deftypefn
+
+
+@subsubheading Component count not equal to dimensionality
 An array with @samp{nd} dimensions can be indexed by an index expression which
 has from 1 to @samp{nd} components.  For the ordinary and most common case, the
 number of components @samp{M} matches the number of dimensions @samp{nd}.  In
@@ -291,6 +561,7 @@ A(:,:)   # Reshape to 2x4 matrix, select all rows & columns, ans = Atmp
 Note here the elegant use of the double colon to replace the call to the
 @code{reshape} function.
 
+@subsubheading Array replication
 Another advanced use of linear indexing is to create arrays filled with a
 single value.  This can be done by using an index of ones on a scalar value.
 The result is an object with the dimensions of the index expression and every
@@ -362,8 +633,9 @@ A general recommendation for users unfamiliar with these techniques is to use
 the function @code{repmat} for replicating smaller arrays into bigger ones,
 which uses such tricks.
 
-A second use of indexing is to speed up code.  Indexing is a fast operation and
-judicious use of it can reduce the requirement for looping over individual
+@subsubheading Indexing for performance enhancement
+A second use of indexing is to speed up code.  Indexing is a fast operation
+and judicious use of it can reduce the requirement for looping over individual
 array elements, which is a slow operation.
 
 Consider the following example which creates a 10-element row vector
@@ -424,145 +696,8 @@ endfor
 @noindent
 because Octave does not have to repeatedly resize the intermediate result.
 
-@c sub2ind libinterp/corefcn/sub2ind.cc
-@anchor{XREFsub2ind}
-@deftypefn  {} {@var{ind} =} sub2ind (@var{dims}, @var{i}, @var{j})
-@deftypefnx {} {@var{ind} =} sub2ind (@var{dims}, @var{s1}, @var{s2}, @dots{}, @var{sN})
-Convert subscripts to linear indices.
-
-The input @var{dims} is a dimension vector where each element is the size of
-the array in the respective dimension (@pxref{XREFsize,,@code{size}}).  The
-remaining inputs are scalars or vectors of subscripts to be converted.
-
-The output vector @var{ind} contains the converted linear indices.
-
-Background: Array elements can be specified either by a linear index which
-starts at 1 and runs through the number of elements in the array, or they may
-be specified with subscripts for the row, column, page, etc.  The functions
-@code{ind2sub} and @code{sub2ind} interconvert between the two forms.
-
-The linear index traverses dimension 1 (rows), then dimension 2 (columns), then
-dimension 3 (pages), etc.@: until it has numbered all of the elements.
-Consider the following 3-by-3 matrices:
-
-@example
-@group
-[(1,1), (1,2), (1,3)]     [1, 4, 7]
-[(2,1), (2,2), (2,3)] ==> [2, 5, 8]
-[(3,1), (3,2), (3,3)]     [3, 6, 9]
-@end group
-@end example
-
-@noindent
-The left matrix contains the subscript tuples for each matrix element.  The
-right matrix shows the linear indices for the same matrix.
-
-The following example shows how to convert the two-dimensional indices
-@code{(2,1)} and @code{(2,3)} of a 3-by-3 matrix to linear indices with a
-single call to @code{sub2ind}.
-
-@example
-@group
-s1 = [2, 2];
-s2 = [1, 3];
-ind = sub2ind ([3, 3], s1, s2)
-    @result{} ind =  2   8
-@end group
-@end example
-@xseealso{@ref{XREFind2sub,,ind2sub}, @ref{XREFsize,,size}}
-@end deftypefn
-
-
-@c ind2sub libinterp/corefcn/sub2ind.cc
-@anchor{XREFind2sub}
-@deftypefn {} {[@var{s1}, @var{s2}, @dots{}, @var{sN}] =} ind2sub (@var{dims}, @var{ind})
-Convert linear indices to subscripts.
-
-The input @var{dims} is a dimension vector where each element is the size of
-the array in the respective dimension (@pxref{XREFsize,,@code{size}}).  The
-second input @var{ind} contains linear indies to be converted.
-
-The outputs @var{s1}, @dots{}, @var{sN} contain the converted subscripts.
-
-Background: Array elements can be specified either by a linear index which
-starts at 1 and runs through the number of elements in the array, or they may
-be specified with subscripts for the row, column, page, etc.  The functions
-@code{ind2sub} and @code{sub2ind} interconvert between the two forms.
-
-The linear index traverses dimension 1 (rows), then dimension 2 (columns), then
-dimension 3 (pages), etc.@: until it has numbered all of the elements.
-Consider the following 3-by-3 matrices:
-
-@example
-@group
-[1, 4, 7]     [(1,1), (1,2), (1,3)]
-[2, 5, 8] ==> [(2,1), (2,2), (2,3)]
-[3, 6, 9]     [(3,1), (3,2), (3,3)]
-@end group
-@end example
-
-@noindent
-The left matrix contains the linear indices for each matrix element.  The right
-matrix shows the subscript tuples for the same matrix.
-
-The following example shows how to convert the two-dimensional indices
-@code{(2,1)} and @code{(2,3)} of a 3-by-3 matrix to linear indices with a
-single call to @code{sub2ind}.
-
-The following example shows how to convert the linear indices @code{2} and
-@code{8} in a 3-by-3 matrix into subscripts.
-
-@example
-@group
-ind = [2, 8];
-[r, c] = ind2sub ([3, 3], ind)
-    @result{} r =  2   2
-    @result{} c =  1   3
-@end group
-@end example
-
-If the number of output subscripts exceeds the number of dimensions, the
-exceeded dimensions are set to @code{1}.  On the other hand, if fewer
-subscripts than dimensions are provided, the exceeding dimensions are merged
-into the final requested dimension.  For clarity, consider the following
-examples:
-
-@example
-@group
-ind  = [2, 8];
-dims = [3, 3];
-## same as dims = [3, 3, 1]
-[r, c, s] = ind2sub (dims, ind)
-    @result{} r =  2   2
-    @result{} c =  1   3
-    @result{} s =  1   1
-## same as dims = [9]
-r = ind2sub (dims, ind)
-    @result{} r =  2   8
-@end group
-@end example
-@xseealso{@ref{XREFsub2ind,,sub2ind}, @ref{XREFsize,,size}}
-@end deftypefn
-
-
-@c isindex libinterp/corefcn/utils.cc
-@anchor{XREFisindex}
-@deftypefn  {} {} isindex (@var{ind})
-@deftypefnx {} {} isindex (@var{ind}, @var{n})
-Return true if @var{ind} is a valid index.
-
-Valid indices are either positive integers (although possibly of real data
-type), or logical arrays.
-
-If present, @var{n} specifies the maximum extent of the dimension to be
-indexed.  When possible the internal result is cached so that subsequent
-indexing using @var{ind} will not perform the check again.
-
-Implementation Note: Strings are first converted to double values before the
-checks for valid indices are made.  Unless a string contains the NULL
-character @nospell{"@backslashchar{}0"}, it will always be a valid index.
-@end deftypefn
-
+For more performance improvement suggestions see
+@ref{Vectorization and Faster Code Execution,,}.
 
 @node Calling Functions
 @section Calling Functions
@@ -743,9 +878,14 @@ error and return to the command prompt.
 
 @c max_recursion_depth libinterp/parse-tree/pt-eval.cc
 @anchor{XREFmax_recursion_depth}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} max_recursion_depth ()
 @deftypefnx {} {@var{old_val} =} max_recursion_depth (@var{new_val})
-@deftypefnx {} {} max_recursion_depth (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} max_recursion_depth (@var{new_val}, "local")
 Query or set the internal limit on the number of times a function may
 be called recursively.
 
@@ -762,9 +902,14 @@ The original variable value is restored when exiting the function.
 
 @c max_stack_depth libinterp/corefcn/call-stack.cc
 @anchor{XREFmax_stack_depth}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} max_stack_depth ()
 @deftypefnx {} {@var{old_val} =} max_stack_depth (@var{new_val})
-@deftypefnx {} {} max_stack_depth (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} max_stack_depth (@var{new_val}, "local")
 Query or set the internal limit on the number of times a function may
 be called recursively.
 
@@ -984,24 +1129,56 @@ lexer, which usually prefers to break the input into tokens by
 preferring the longest possible match at any given point, it is more
 useful in this case.
 
+Note also that some combinations of binary operators and whitespace can
+create apparent ambiguities with the Command Syntax form of calling
+functions.  See @ref{Command Syntax and Function Syntax} for a description
+of how Octave treats that syntax.
+
 @opindex @code{'}
 @c ctranspose libinterp/corefcn/data.cc
 @anchor{XREFctranspose}
-@deftypefn {} {} ctranspose (@var{x})
-Return the complex conjugate transpose of @var{x}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-This function and @tcode{@var{x}'} are equivalent.
+
+@deftypefn {} {@var{B} =} ctranspose (@var{A})
+Return the complex conjugate transpose of @var{A}.
+
+This function and @tcode{@var{A}'} are equivalent.
 @xseealso{@ref{XREFtranspose,,transpose}}
+@end deftypefn
+
+
+@c pagectranspose scripts/general/pagectranspose.m
+@anchor{XREFpagectranspose}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} pagectranspose (@var{A})
+Return the page-wise complex conjugate transpose of the N-dimensional array
+@var{A}.
+
+This is equivalent to @tcode{@var{A}(:,:, @var{k})'} for each page @var{k}.
+
+@xseealso{@ref{XREFpagetranspose,,pagetranspose}, @ref{XREFctranspose,,ctranspose}, @ref{XREFpermute,,permute}}
 @end deftypefn
 
 
 @opindex .\
 @c ldivide libinterp/corefcn/data.cc
 @anchor{XREFldivide}
-@deftypefn {} {} ldivide (@var{x}, @var{y})
-Return the element-by-element left division of @var{x} and @var{y}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-This function and @w{@tcode{@var{x} .@backslashchar{} @var{y}}} are
+
+@deftypefn {} {@var{C} =} ldivide (@var{A}, @var{B})
+Return the element-by-element left division of @var{A} and @var{B}.
+
+This function and @w{@tcode{@var{A} .@backslashchar{} @var{B}}} are
 equivalent.
 @xseealso{@ref{XREFrdivide,,rdivide}, @ref{XREFmldivide,,mldivide}, @ref{XREFtimes,,times}, @ref{XREFplus,,plus}}
 @end deftypefn
@@ -1010,8 +1187,13 @@ equivalent.
 @opindex -
 @c minus libinterp/corefcn/data.cc
 @anchor{XREFminus}
-@deftypefn {} {} minus (@var{x}, @var{y})
-This function and @w{@tcode{@var{x} - @var{y}}} are equivalent.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{C} =} minus (@var{A}, @var{B})
+This function and @w{@tcode{@var{A} - @var{B}}} are equivalent.
 @xseealso{@ref{XREFplus,,plus}, @ref{XREFuminus,,uminus}}
 @end deftypefn
 
@@ -1019,10 +1201,15 @@ This function and @w{@tcode{@var{x} - @var{y}}} are equivalent.
 @opindex \
 @c mldivide libinterp/corefcn/data.cc
 @anchor{XREFmldivide}
-@deftypefn {} {} mldivide (@var{x}, @var{y})
-Return the matrix left division of @var{x} and @var{y}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-This function and @w{@tcode{@var{x} @backslashchar{} @var{y}}} are equivalent.
+
+@deftypefn {} {@var{C} =} mldivide (@var{A}, @var{B})
+Return the matrix left division of @var{A} and @var{B}.
+
+This function and @w{@tcode{@var{A} @backslashchar{} @var{B}}} are equivalent.
 
 If the system is not square, or if the coefficient matrix is singular, a
 minimum norm solution is computed.
@@ -1033,10 +1220,15 @@ minimum norm solution is computed.
 @opindex ^
 @c mpower libinterp/corefcn/data.cc
 @anchor{XREFmpower}
-@deftypefn {} {} mpower (@var{x}, @var{y})
-Return the matrix power operation of @var{x} raised to the @var{y} power.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-This function and @w{@tcode{@var{x} ^ @var{y}}} are equivalent.
+
+@deftypefn {} {@var{C} =} mpower (@var{A}, @var{B})
+Return the matrix power operation of @var{A} raised to the @var{B} power.
+
+This function and @w{@tcode{@var{A} ^ @var{B}}} are equivalent.
 @xseealso{@ref{XREFpower,,power}, @ref{XREFmtimes,,mtimes}, @ref{XREFplus,,plus}, @ref{XREFminus,,minus}}
 @end deftypefn
 
@@ -1044,10 +1236,15 @@ This function and @w{@tcode{@var{x} ^ @var{y}}} are equivalent.
 @opindex /
 @c mrdivide libinterp/corefcn/data.cc
 @anchor{XREFmrdivide}
-@deftypefn {} {} mrdivide (@var{x}, @var{y})
-Return the matrix right division of @var{x} and @var{y}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-This function and @w{@tcode{@var{x} / @var{y}}} are equivalent.
+
+@deftypefn {} {@var{C} =} mrdivide (@var{A}, @var{B})
+Return the matrix right division of @var{A} and @var{B}.
+
+This function and @w{@tcode{@var{A} / @var{B}}} are equivalent.
 
 If the system is not square, or if the coefficient matrix is singular, a
 minimum norm solution is computed.
@@ -1058,34 +1255,44 @@ minimum norm solution is computed.
 @opindex *
 @c mtimes libinterp/corefcn/data.cc
 @anchor{XREFmtimes}
-@deftypefn  {} {} mtimes (@var{x}, @var{y})
-@deftypefnx {} {} mtimes (@var{x1}, @var{x2}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{C} =} mtimes (@var{A}, @var{B})
+@deftypefnx {} {@var{C} =} mtimes (@var{A1}, @var{A2}, @dots{})
 Return the matrix multiplication product of inputs.
 
-This function and @w{@tcode{@var{x} * @var{y}}} are equivalent.
+This function and @w{@tcode{@var{A} * @var{B}}} are equivalent.
 If more arguments are given, the multiplication is applied
 cumulatively from left to right:
 
 @example
-(@dots{}((@var{x1} * @var{x2}) * @var{x3}) * @dots{})
+(@dots{}((@var{A1} * @var{A2}) * @var{A3}) * @dots{})
 @end example
 
-@xseealso{@ref{XREFtimes,,times}, @ref{XREFplus,,plus}, @ref{XREFminus,,minus}, @ref{XREFrdivide,,rdivide}, @ref{XREFmrdivide,,mrdivide}, @ref{XREFmldivide,,mldivide}, @ref{XREFmpower,,mpower}}
+@xseealso{@ref{XREFtimes,,times}, @ref{XREFplus,,plus}, @ref{XREFminus,,minus}, @ref{XREFrdivide,,rdivide}, @ref{XREFmrdivide,,mrdivide}, @ref{XREFmldivide,,mldivide}, @ref{XREFmpower,,mpower}, @ref{XREFtensorprod,,tensorprod}}
 @end deftypefn
 
 
 @opindex +
 @c plus libinterp/corefcn/data.cc
 @anchor{XREFplus}
-@deftypefn  {} {} plus (@var{x}, @var{y})
-@deftypefnx {} {} plus (@var{x1}, @var{x2}, @dots{})
-This function and @w{@tcode{@var{x} + @var{y}}} are equivalent.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{C} =} plus (@var{A}, @var{B})
+@deftypefnx {} {@var{C} =} plus (@var{A1}, @var{A2}, @dots{})
+This function and @w{@tcode{@var{A} + @var{B}}} are equivalent.
 
 If more arguments are given, the summation is applied
 cumulatively from left to right:
 
 @example
-(@dots{}((@var{x1} + @var{x2}) + @var{x3}) + @dots{})
+(@dots{}((@var{A1} + @var{A2}) + @var{A3}) + @dots{})
 @end example
 
 @xseealso{@ref{XREFminus,,minus}, @ref{XREFuplus,,uplus}}
@@ -1095,11 +1302,16 @@ cumulatively from left to right:
 @opindex .^
 @c power libinterp/corefcn/data.cc
 @anchor{XREFpower}
-@deftypefn {} {} power (@var{x}, @var{y})
-Return the element-by-element operation of @var{x} raised to the
-@var{y} power.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-This function and @w{@tcode{@var{x} .^ @var{y}}} are equivalent.
+
+@deftypefn {} {@var{C} =} power (@var{A}, @var{B})
+Return the element-by-element operation of @var{A} raised to the
+@var{B} power.
+
+This function and @w{@tcode{@var{A} .^ @var{B}}} are equivalent.
 
 If several complex results are possible, returns the one with smallest
 non-negative argument (angle).  Use @code{realpow}, @code{realsqrt},
@@ -1112,10 +1324,15 @@ non-negative argument (angle).  Use @code{realpow}, @code{realsqrt},
 @opindex ./
 @c rdivide libinterp/corefcn/data.cc
 @anchor{XREFrdivide}
-@deftypefn {} {} rdivide (@var{x}, @var{y})
-Return the element-by-element right division of @var{x} and @var{y}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-This function and @w{@tcode{@var{x} ./ @var{y}}} are equivalent.
+
+@deftypefn {} {@var{C} =} rdivide (@var{A}, @var{B})
+Return the element-by-element right division of @var{A} and @var{B}.
+
+This function and @w{@tcode{@var{A} ./ @var{B}}} are equivalent.
 @xseealso{@ref{XREFldivide,,ldivide}, @ref{XREFmrdivide,,mrdivide}, @ref{XREFtimes,,times}, @ref{XREFplus,,plus}}
 @end deftypefn
 
@@ -1123,16 +1340,21 @@ This function and @w{@tcode{@var{x} ./ @var{y}}} are equivalent.
 @opindex .*
 @c times libinterp/corefcn/data.cc
 @anchor{XREFtimes}
-@deftypefn  {} {} times (@var{x}, @var{y})
-@deftypefnx {} {} times (@var{x1}, @var{x2}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{C} =} times (@var{A}, @var{B})
+@deftypefnx {} {@var{C} =} times (@var{A1}, @var{A2}, @dots{})
 Return the element-by-element multiplication product of inputs.
 
-This function and @w{@tcode{@var{x} .* @var{y}}} are equivalent.
+This function and @w{@tcode{@var{A} .* @var{B}}} are equivalent.
 If more arguments are given, the multiplication is applied
 cumulatively from left to right:
 
 @example
-(@dots{}((@var{x1} .* @var{x2}) .* @var{x3}) .* @dots{})
+(@dots{}((@var{A1} .* @var{A2}) .* @var{A3}) .* @dots{})
 @end example
 
 @xseealso{@ref{XREFmtimes,,mtimes}, @ref{XREFrdivide,,rdivide}}
@@ -1142,19 +1364,46 @@ cumulatively from left to right:
 @opindex @code{.'}
 @c transpose libinterp/corefcn/data.cc
 @anchor{XREFtranspose}
-@deftypefn {} {} transpose (@var{x})
-Return the transpose of @var{x}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-This function and @tcode{@var{x}.'@:} are equivalent.
+
+@deftypefn {} {@var{B} =} transpose (@var{A})
+Return the transpose of @var{A}.
+
+This function and @tcode{@var{A}.'@:} are equivalent.
 @xseealso{@ref{XREFctranspose,,ctranspose}}
+@end deftypefn
+
+
+@c pagetranspose scripts/general/pagetranspose.m
+@anchor{XREFpagetranspose}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{B} =} pagetranspose (@var{A})
+Return the page-wise transpose of the N-dimensional array @var{A}.
+
+This is equivalent to @tcode{@var{A}(:,:, @var{k}).@:'} for each page
+@var{k}.
+
+@xseealso{@ref{XREFpagectranspose,,pagectranspose}, @ref{XREFtranspose,,transpose}, @ref{XREFpermute,,permute}}
 @end deftypefn
 
 
 @opindex -
 @c uminus libinterp/corefcn/data.cc
 @anchor{XREFuminus}
-@deftypefn {} {} uminus (@var{x})
-This function and @w{@tcode{- @var{x}}} are equivalent.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{B} =} uminus (@var{A})
+This function and @w{@tcode{- @var{A}}} are equivalent.
 @xseealso{@ref{XREFuplus,,uplus}, @ref{XREFminus,,minus}}
 @end deftypefn
 
@@ -1162,8 +1411,13 @@ This function and @w{@tcode{- @var{x}}} are equivalent.
 @opindex +
 @c uplus libinterp/corefcn/data.cc
 @anchor{XREFuplus}
-@deftypefn {} {} uplus (@var{x})
-This function and @w{@tcode{+ @var{x}}} are equivalent.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{B} =} uplus (@var{A})
+This function and @w{@tcode{+ @var{A}}} are equivalent.
 @xseealso{@ref{XREFuminus,,uminus}, @ref{XREFplus,,plus}}
 @end deftypefn
 
@@ -1251,10 +1505,15 @@ function, not with the comparison operators listed above.
 @opindex ==
 @c eq libinterp/corefcn/data.cc
 @anchor{XREFeq}
-@deftypefn {} {} eq (@var{x}, @var{y})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{TF} =} eq (@var{A}, @var{B})
 Return true if the two inputs are equal.
 
-This function is equivalent to @w{@code{@var{x} == @var{y}}}.
+This function is equivalent to @w{@code{@var{A} == @var{B}}}.
 @xseealso{@ref{XREFne,,ne}, @ref{XREFisequal,,isequal}, @ref{XREFle,,le}, @ref{XREFge,,ge}, @ref{XREFgt,,gt}, @ref{XREFne,,ne}, @ref{XREFlt,,lt}}
 @end deftypefn
 
@@ -1262,8 +1521,13 @@ This function is equivalent to @w{@code{@var{x} == @var{y}}}.
 @opindex >=
 @c ge libinterp/corefcn/data.cc
 @anchor{XREFge}
-@deftypefn {} {} ge (@var{x}, @var{y})
-This function is equivalent to @w{@code{@var{x} >= @var{y}}}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{TF} =} ge (@var{A}, @var{B})
+This function is equivalent to @w{@code{@var{A} >= @var{B}}}.
 @xseealso{@ref{XREFle,,le}, @ref{XREFeq,,eq}, @ref{XREFgt,,gt}, @ref{XREFne,,ne}, @ref{XREFlt,,lt}}
 @end deftypefn
 
@@ -1271,15 +1535,25 @@ This function is equivalent to @w{@code{@var{x} >= @var{y}}}.
 @opindex >
 @c gt libinterp/corefcn/data.cc
 @anchor{XREFgt}
-@deftypefn {} {} gt (@var{x}, @var{y})
-This function is equivalent to @w{@code{@var{x} > @var{y}}}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{TF} =} gt (@var{A}, @var{B})
+This function is equivalent to @w{@code{@var{A} > @var{B}}}.
 @xseealso{@ref{XREFle,,le}, @ref{XREFeq,,eq}, @ref{XREFge,,ge}, @ref{XREFne,,ne}, @ref{XREFlt,,lt}}
 @end deftypefn
 
 
 @c isequal scripts/general/isequal.m
 @anchor{XREFisequal}
-@deftypefn {} {} isequal (@var{x1}, @var{x2}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isequal (@var{x1}, @var{x2}, @dots{})
 Return true if all of @var{x1}, @var{x2}, @dots{} are equal.
 @xseealso{@ref{XREFisequaln,,isequaln}}
 @end deftypefn
@@ -1287,7 +1561,12 @@ Return true if all of @var{x1}, @var{x2}, @dots{} are equal.
 
 @c isequaln scripts/general/isequaln.m
 @anchor{XREFisequaln}
-@deftypefn {} {} isequaln (@var{x1}, @var{x2}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isequaln (@var{x1}, @var{x2}, @dots{})
 Return true if all of @var{x1}, @var{x2}, @dots{} are equal under the
 additional assumption that NaN == NaN (no comparison of NaN placeholders
 in dataset).
@@ -1298,8 +1577,13 @@ in dataset).
 @opindex <=
 @c le libinterp/corefcn/data.cc
 @anchor{XREFle}
-@deftypefn {} {} le (@var{x}, @var{y})
-This function is equivalent to @w{@code{@var{x} <= @var{y}}}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{TF} =} le (@var{A}, @var{B})
+This function is equivalent to @w{@code{@var{A} <= @var{B}}}.
 @xseealso{@ref{XREFeq,,eq}, @ref{XREFge,,ge}, @ref{XREFgt,,gt}, @ref{XREFne,,ne}, @ref{XREFlt,,lt}}
 @end deftypefn
 
@@ -1307,8 +1591,13 @@ This function is equivalent to @w{@code{@var{x} <= @var{y}}}.
 @opindex <
 @c lt libinterp/corefcn/data.cc
 @anchor{XREFlt}
-@deftypefn {} {} lt (@var{x}, @var{y})
-This function is equivalent to @w{@code{@var{x} < @var{y}}}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{TF} =} lt (@var{A}, @var{B})
+This function is equivalent to @w{@code{@var{A} < @var{B}}}.
 @xseealso{@ref{XREFle,,le}, @ref{XREFeq,,eq}, @ref{XREFge,,ge}, @ref{XREFgt,,gt}, @ref{XREFne,,ne}}
 @end deftypefn
 
@@ -1317,10 +1606,15 @@ This function is equivalent to @w{@code{@var{x} < @var{y}}}.
 @opindex ~=
 @c ne libinterp/corefcn/data.cc
 @anchor{XREFne}
-@deftypefn {} {} ne (@var{x}, @var{y})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{TF} =} ne (@var{A}, @var{B})
 Return true if the two inputs are not equal.
 
-This function is equivalent to @w{@code{@var{x} != @var{y}}}.
+This function is equivalent to @w{@code{@var{A} != @var{B}}}.
 @xseealso{@ref{XREFeq,,eq}, @ref{XREFisequal,,isequal}, @ref{XREFle,,le}, @ref{XREFge,,ge}, @ref{XREFlt,,lt}}
 @end deftypefn
 
@@ -1422,8 +1716,13 @@ described for matrix-valued operands.
 @opindex &
 @c and libinterp/corefcn/data.cc
 @anchor{XREFand}
-@deftypefn  {} {@var{z} =} and (@var{x}, @var{y})
-@deftypefnx {} {@var{z} =} and (@var{x1}, @var{x2}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{TF} =} and (@var{x}, @var{y})
+@deftypefnx {} {@var{TF} =} and (@var{x1}, @var{x2}, @dots{})
 Return the logical AND of @var{x} and @var{y}.
 
 This function is equivalent to the operator syntax
@@ -1442,6 +1741,11 @@ logical AND is applied cumulatively from left to right:
 @opindex !
 @c not libinterp/corefcn/data.cc
 @anchor{XREFnot}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{z} =} not (@var{x})
 Return the logical NOT of @var{x}.
 
@@ -1453,8 +1757,13 @@ This function is equivalent to the operator syntax @w{@code{! @var{x}}}.
 @opindex |
 @c or libinterp/corefcn/data.cc
 @anchor{XREFor}
-@deftypefn  {} {@var{z} =} or (@var{x}, @var{y})
-@deftypefnx {} {@var{z} =} or (@var{x1}, @var{x2}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{TF} =} or (@var{x}, @var{y})
+@deftypefnx {} {@var{TF} =} or (@var{x1}, @var{x2}, @dots{})
 Return the logical OR of @var{x} and @var{y}.
 
 This function is equivalent to the operator syntax
@@ -1483,32 +1792,38 @@ soon as the overall truth value can be determined.  Octave's
 @table @code
 @item @var{boolean1} && @var{boolean2}
 @opindex &&
-The expression @var{boolean1} is evaluated and converted to a scalar
-using the equivalent of the operation @code{all (@var{boolean1}(:))}.
-If it is false, the result of the overall expression is 0.  If it is
-true, the expression @var{boolean2} is evaluated and converted to a
-scalar using the equivalent of the operation @code{all
-(@var{boolean2}(:))}.  If it is true, the result of the overall expression
-is 1.  Otherwise, the result of the overall expression is 0.
+The expression @var{boolean1} is evaluated and converted to a scalar using
+the equivalent of the operation @code{all (@var{boolean1}(:))}.  If
+@var{boolean1} is not a logical value, it is considered true if its value
+is nonzero, and false if its value is zero.  If @var{boolean1} is an array,
+it is considered true only if it is non-empty and all elements are
+nonzero.  If @var{boolean1} evaluates to false, the result of the overall
+expression is false.  If it is true, the expression @var{boolean2} is
+evaluated in the same way as @var{boolean1}.  If it is true, the result of
+the overall expression is true.  Otherwise the result of the overall
+expression is false.
 
-@strong{Warning:} there is one exception to the rule of evaluating
-@code{all (@var{boolean1}(:))}, which is when @code{boolean1} is the
-empty matrix.  The truth value of an empty matrix is always @code{false}
-so @code{[] && true} evaluates to @code{false} even though
+@strong{Warning:} the one exception to the equivalence with evaluating
+@code{all (@var{boolean1}(:))} is when @code{boolean1} an the empty array.
+For @sc{matlab} compatibility, the truth value of an empty array is always
+@code{false} so @code{[] && true} evaluates to @code{false} even though
 @code{all ([])} is @code{true}.
 
 @item @var{boolean1} || @var{boolean2}
 @opindex ||
-The expression @var{boolean1} is evaluated and converted to a scalar
-using the equivalent of the operation @code{all (@var{boolean1}(:))}.
-If it is true, the result of the overall expression is 1.  If it is
-false, the expression @var{boolean2} is evaluated and converted to a
-scalar using the equivalent of the operation @code{all
-(@var{boolean2}(:))}.  If it is true, the result of the overall expression
-is 1.  Otherwise, the result of the overall expression is 0.
+The expression @var{boolean1} is evaluated and converted to a scalar using
+the equivalent of the operation @code{all (@var{boolean1}(:))}.  If
+@var{boolean1} is not a logical value, it is considered true if its value
+is nonzero, and false if its value is zero.  If @var{boolean1} is an array,
+it is considered true only if it is non-empty and all elements are
+nonzero.  If @var{boolean1} evaluates to true, the result of the overall
+expression is true.  If it is false, the expression @var{boolean2} is
+evaluated in the same way as @var{boolean1}.  If it is true, the result of
+the overall expression is true.  Otherwise the result of the overall
+expression is false.
 
-@strong{Warning:} the truth value of an empty matrix is always @code{false},
-see the previous list item for details.
+@strong{Warning:} the truth value of an empty matrix is always
+@code{false}, see the previous list item for details.
 @end table
 
 The fact that both operands may not be evaluated before determining the
@@ -1565,11 +1880,12 @@ arguments because Octave would be forced to try to evaluate both of the
 operands for the operator @samp{&}.
 
 @sc{matlab} has special behavior that allows the operators @samp{&} and
-@samp{|} to short-circuit when used in the truth expression for @code{if} and
-@code{while} statements.  Octave behaves the same way for compatibility,
-however, the use of the @samp{&} and @samp{|} operators in this way is
-strongly discouraged and a warning will be issued.  Instead, you should use
-the @samp{&&} and @samp{||} operators that always have short-circuit behavior.
+@samp{|} to short-circuit when used in the truth expression for @code{if}
+and @code{while} statements.  Octave behaves the same way for
+compatibility, however, the use of the @samp{&} and @samp{|} operators in
+this way is strongly discouraged and a warning will be issued.  Instead,
+you should use the @samp{&&} and @samp{||} operators that always have
+short-circuit behavior.
 
 Finally, the ternary operator (?:) is not supported in Octave.  If
 short-circuiting is not important, it can be replaced by the @code{ifelse}
@@ -1577,8 +1893,13 @@ function.
 
 @c merge libinterp/corefcn/data.cc
 @anchor{XREFmerge}
-@deftypefn  {} {} merge (@var{mask}, @var{tval}, @var{fval})
-@deftypefnx {} {} ifelse (@var{mask}, @var{tval}, @var{fval})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{M} =} merge (@var{mask}, @var{tval}, @var{fval})
+@deftypefnx {} {@var{M} =} ifelse (@var{mask}, @var{tval}, @var{fval})
 Merge elements of @var{true_val} and @var{false_val}, depending on the
 value of @var{mask}.
 
@@ -1601,6 +1922,9 @@ result(! mask) = fval(! mask);
 
 @var{mask} can also be arbitrary numeric type, in which case it is first
 converted to logical.
+
+Programming Note: @code{ifelse} is an alias for @code{merge} and can be used
+interchangeably.
 @xseealso{@ref{XREFlogical,,logical}, @ref{XREFdiff,,diff}}
 @end deftypefn
 
@@ -1636,6 +1960,7 @@ variable @code{message}:
 thing = "food"
 predicate = "good"
 message = [ "this " , thing , " is " , predicate ]
+@result{} "this food is good"
 @end group
 @end example
 
@@ -1667,9 +1992,9 @@ to hold at the moment.  In the following program fragment, the variable
 
 @example
 @group
-octave:13> foo = 1
+>> foo = 1
 foo = 1
-octave:13> foo = "bar"
+>> foo = "bar"
 foo = bar
 @end group
 @end example
@@ -1683,13 +2008,148 @@ that are referenced by the indices to the scalar value.  For example, if
 @code{a} is a matrix with at least two columns,
 
 @example
-@group
 a(:, 2) = 5
-@end group
 @end example
 
 @noindent
 sets all the elements in the second column of @code{a} to 5.
+
+When an assignment sets the value of a vector, matrix, or array element at a
+position or dimension outside of that variable's current size, the array size
+will be increased to accommodate the new values:
+
+@example
+@group
+>> a = [1, 2, 3]
+a = 1 2 3
+>> a(4) = 4
+a = 1 2 3 4
+>> a(2, :) = [5, 6, 7, 8]
+a =
+   1   2   3   4
+   5   6   7   8
+@end group
+@end example
+
+Attempting to increase the size of an array such that the desired output size
+is ambiguous will result in an error:
+
+@example
+@group
+>> a(9) = 10
+@print{} error: Invalid resizing operation or ambiguous assignment to an
+out-of-bounds array element
+@end group
+@end example
+
+This is because adding the 9th element creates an ambiguity in the desired
+array position for the value 10, each possibility requiring a different array
+size expansion to accommodate the assignment.
+
+Assignments may be made with fewer specified elements than would be required to
+fill the newly expanded array as long as the assignment is unambiguous.  In
+these cases the array will be automatically padded with @emph{null} values:
+@example
+@group
+>> a = [1, 2]
+a =   1   2
+>> a(4) = 5
+a =   1   2   0   5
+>> a(3, :) = [6, 7, 8, 9]
+a =
+   1   2   0   5
+   0   0   0   0
+   6   7   8   9
+>> a(4, 5) = 10
+a =
+    1    2    0    5    0
+    0    0    0    0    0
+    6    7    8    9    0
+    0    0    0    0   10
+@end group
+@end example
+
+For all built-in types, the @emph{null} value will be appropriate to that object
+type.
+
+Numeric arrays:
+@example
+@group
+>> a = int32 ([1, 2])
+a = 1, 2
+>> a(4) = 5
+a = 1 2 0 5
+@end group
+@end example
+
+Logical arrays:
+@example
+@group
+>> a = [true, false, true]
+a = 1 0 1
+>> d(5) = true
+d = 1 0 1 0 1
+@end group
+@end example
+
+Character arrays:
+@example
+@group
+>> a = "abc"
+a = abc
+>> a(5) = "d"
+a = abcd
+>> double (a)
+ans = 97 98 99 0 100
+@end group
+@end example
+
+Cell arrays:
+@example
+@group
+>> e = @{1, "foo", [3, 4]@};
+>> e(5) = "bar"
+e =
+@{
+  [1,1] = 1
+  [1,2] = foo
+  [1,3] =
+
+     3   4
+
+  [1,4] = [](0x0)
+  [1,5] = bar
+@}
+@end group
+@end example
+
+Struct arrays:
+@example
+@group
+>> a = struct("foo",1,"bar",2);
+>> a(3) = struct("foo",3,"bar",9)
+a =
+
+  1x3 struct array containing the fields:
+
+    foo
+    bar
+
+>> a.foo
+ans = 1
+ans = [](0x0)
+ans = 3
+>> a.bar
+ans = 2
+ans = [](0x0)
+ans = 9
+@end group
+@end example
+
+Note that Octave currently is unable to concatenate arbitrary object types
+into arrays.  Such behavior must be explicitly defined within the object class
+or attempts at concatenation will result in an error.
+@xref{Object Oriented Programming}
 
 Assigning an empty matrix @samp{[]} works in most cases to allow you to
 delete rows or columns of matrices and vectors.  @xref{Empty Matrices}.
@@ -1708,6 +2168,28 @@ A (:, 1:2:5) = []
 
 @noindent
 deletes the first, third, and fifth columns.
+
+Deleting part of an array object will necessarily resize the object.  When the
+deletion allows for consistent size reduction across a dimension, e.g., one
+element of a vector, or one row or column of a matrix, the size along that
+dimension will be reduced while preserving dimensionality.  If, however,
+dimensionality cannot be maintained, the object will be reshaped into a vector
+following column-wise element ordering:
+
+@example
+@group
+>> a = [1, 2, 3, 4; 5, 6, 7, 8]
+a =
+   1   2   3   4
+   5   6   7   8
+>> a(:, 3) = []
+a =
+   1   2   4
+   5   6   8
+>> a(4) = []
+a = 1 5 2 4 8
+@end group
+@end example
 
 An assignment is an expression, so it has a value.  Thus, @code{z = 1}
 as an expression has the value 1.  One consequence of this is that you

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,11 +38,12 @@
 class octave_value;
 class octave_value_list;
 
-namespace octave
-{
-  class tree_evaluator;
-  class interpreter;
-}
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class tree_evaluator;
+class interpreter;
+
+OCTAVE_END_NAMESPACE(octave)
 
 // Builtin functions.
 
@@ -52,7 +53,7 @@ octave_builtin : public octave_function
 {
 public:
 
-  octave_builtin (void)
+  octave_builtin ()
     : octave_function (), m_fcn (nullptr), m_meth (nullptr), m_file ()
   { }
 
@@ -81,27 +82,23 @@ public:
     : octave_function (nm, ds), m_fcn (nullptr), m_meth (mm), m_file (fnm)
   { }
 
-  // No copying!
+  OCTAVE_DISABLE_COPY_MOVE (octave_builtin)
 
-  octave_builtin (const octave_builtin& ob) = delete;
+  ~octave_builtin () = default;
 
-  octave_builtin& operator = (const octave_builtin& ob) = delete;
-
-  ~octave_builtin (void) = default;
-
-  std::string src_file_name (void) const { return m_file; }
+  std::string src_file_name () const { return m_file; }
 
   octave_function * function_value (bool = false) { return this; }
 
-  bool is_builtin_function (void) const { return true; }
+  bool is_builtin_function () const { return true; }
 
   octave_value_list
   execute (octave::tree_evaluator& tw, int nargout = 0,
            const octave_value_list& args = octave_value_list ());
 
-  fcn function (void) const;
+  fcn function () const;
 
-  meth method (void) const;
+  meth method () const;
 
   void push_dispatch_class (const std::string& dispatch_type);
 

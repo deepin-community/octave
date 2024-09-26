@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,9 +24,9 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} betaincinv (@var{y}, @var{a}, @var{b})
-## @deftypefnx {} {} betaincinv (@var{y}, @var{a}, @var{b}, "lower")
-## @deftypefnx {} {} betaincinv (@var{y}, @var{a}, @var{b}, "upper")
+## @deftypefn  {} {@var{x} =} betaincinv (@var{y}, @var{a}, @var{b})
+## @deftypefnx {} {@var{x} =} betaincinv (@var{y}, @var{a}, @var{b}, "lower")
+## @deftypefnx {} {@var{x} =} betaincinv (@var{y}, @var{a}, @var{b}, "upper")
 ## Compute the inverse of the normalized incomplete beta function.
 ##
 ## The normalized incomplete beta function is defined as
@@ -209,7 +209,7 @@ function x = betaincinv (y, a, b, tail = "lower")
 
 endfunction
 
-function x = newton_method (F, JF, x, a, b, y);
+function x = newton_method (F, JF, x, a, b, y)
 
   Bln = betaln (a, b);
   ## Exclude special values that have been already computed.
@@ -262,7 +262,7 @@ endfunction
 %! a = [0.1:0.1:1];
 %! [x,a,b] = ndgrid (x,a,a);
 %! xx = betaincinv (betainc (x, a, b, "upper"), a, b, "upper");
-%! assert (xx, x, 5e-15);
+%! assert (xx, x, 24*eps);
 
 ## Test the conservation of the input class
 %!assert (class (betaincinv (0.5, 1, 1)), "double")

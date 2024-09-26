@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -117,19 +117,19 @@ function h = colorbar (varargin)
       error ("colorbar: expected string argument at position %d", i-1);
     endif
 
-    switch (tolower (arg))
+    switch (lower (arg))
       case {"north", "south", "east", "west", ...
             "northoutside", "southoutside", "eastoutside", "westoutside"}
         if (i <= nargin)
           error ("colorbar: LOC specification must occur as final argument");
         endif
-        loc = tolower (arg);
+        loc = lower (arg);
 
       case "location"
         if (i > nargin)
           error ('colorbar: missing value after "location"');
         endif
-        loc = tolower (varargin{i++});
+        loc = lower (varargin{i++});
 
       case {"delete", "hide", "off"}
         delete_cbar = true;
@@ -294,7 +294,7 @@ function h = colorbar (varargin)
       addproperty ("tickdirection", hcb, "AxesTickdir", "in");
       ## FIXME: Matlab uses just a scalar for ticklength, but axes already
       ##        has a 2-element ticklength property which cannot be overridden.
-      ##addproperty ("ticklength", hcb, "double", 0.01);
+      ## addproperty ("ticklength", hcb, "double", 0.01);
 
       ## Add a pointer from colorbar directly to axes
       addproperty ("__axes_handle__", hcb, "handle", hax);
@@ -488,7 +488,7 @@ function cb_colormap (h, ~, hax, hcb, hi, init_sz)
       endif
       sz = clen;
       ## Also update limits on colorbar axes or there will be white gaps
-      cb_clim (hax, d, hcb, hi);
+      cb_clim (hax, [], hcb, hi);
     endif
   endif
 
@@ -906,6 +906,19 @@ endfunction
 
 ## FIXME: need many BIST tests for colorbar
 
+%!test <*64287>
+%! unwind_protect
+%!   hf = figure ("visible", "off");
+%!   h = subplot (1, 1, 1);
+%!   imagesc (reshape (1:100, 10, 10));
+%!   colorbar;
+%!   lasterror ("reset");
+%!   colormap (h, flip (gray (10)));
+%!   assert (isempty (lasterr));
+%! unwind_protect_cleanup
+%!   close (hf);
+%! end_unwind_protect
+
 ## Test input validation
 %!error <expected string argument at position 1> colorbar (-pi)
 %!error <LOC specification must occur as final arg> colorbar ("east", "p", "v")
@@ -914,4 +927,3 @@ endfunction
 %!error <invalid axes handle following "peer"> colorbar ("peer", -1)
 %!error <PROP/VAL inputs must occur in pairs> colorbar ("PROP")
 %!error <unrecognized colorbar location> colorbar ("location", "foobar")
-

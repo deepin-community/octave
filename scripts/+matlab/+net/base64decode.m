@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2020-2022 The Octave Project Developers
+## Copyright (C) 2020-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -52,11 +52,11 @@ endfunction
 
 
 ## Test char vector input
-%!assert (matlab.net.base64decode ("AQ=="), uint8 (1));
-%!assert (matlab.net.base64decode ("/w=="), uint8 (255));
-%!assert (matlab.net.base64decode ("AQID"), uint8 (1:3));
-%!assert (matlab.net.base64decode ("YQ=="), uint8 ("a"));
-%!assert (matlab.net.base64decode ("YWJjZGVmZw=="), uint8 ("abcdefg"));
+%!assert (matlab.net.base64decode ("AQ=="), uint8 (1))
+%!assert (matlab.net.base64decode ("/w=="), uint8 (255))
+%!assert (matlab.net.base64decode ("AQID"), uint8 (1:3))
+%!assert (matlab.net.base64decode ("YQ=="), uint8 ("a"))
+%!assert (matlab.net.base64decode ("YWJjZGVmZw=="), uint8 ("abcdefg"))
 
 ## Test input validation
 %!error <Invalid call> matlab.net.base64decode ()

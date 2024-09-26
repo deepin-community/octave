@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,7 +33,7 @@
 #include "ov.h"
 #include "xnorm.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 octave_value xnorm (const octave_value& x, const octave_value& p)
 {
@@ -92,7 +92,8 @@ octave_value xnorm (const octave_value& x, const octave_value& p)
   return retval;
 }
 
-octave_value xcolnorms (const octave_value& x, const octave_value& p)
+octave_value
+xcolnorms (const octave_value& x, const octave_value& p)
 {
   octave_value retval;
 
@@ -131,7 +132,8 @@ octave_value xcolnorms (const octave_value& x, const octave_value& p)
   return retval;
 }
 
-octave_value xrownorms (const octave_value& x, const octave_value& p)
+octave_value
+xrownorms (const octave_value& x, const octave_value& p)
 {
   octave_value retval;
 
@@ -170,7 +172,8 @@ octave_value xrownorms (const octave_value& x, const octave_value& p)
   return retval;
 }
 
-octave_value xfrobnorm (const octave_value& x)
+octave_value
+xfrobnorm (const octave_value& x)
 {
   octave_value retval;
 
@@ -203,4 +206,4 @@ octave_value xfrobnorm (const octave_value& x)
   return retval;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

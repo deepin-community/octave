@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2020-2022 The Octave Project Developers
+// Copyright (C) 2020-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -39,7 +39,7 @@
 #  include <rapidjson/error/en.h>
 #endif
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 #if defined (HAVE_RAPIDJSON)
 
@@ -134,7 +134,7 @@ decode_numeric_array (const rapidjson::Value& val)
   octave_idx_type index = 0;
   for (const auto& elem : val.GetArray ())
     retval(index++) = elem.IsNull () ? octave_NaN
-                                     : decode_number (elem).double_value ();
+                      : decode_number (elem).double_value ();
   return retval;
 }
 
@@ -250,7 +250,7 @@ decode_object_array (const rapidjson::Value& val,
             {
               for (octave_idx_type k = 0; k < struct_cell.numel (); ++k)
                 value(k) = struct_cell(k).scalar_map_value ()
-                                         .getfield (field_names(i));
+                           .getfield (field_names(i));
               struct_array.assign (field_names(i), value);
             }
         }
@@ -299,7 +299,7 @@ decode_array_of_arrays (const rapidjson::Value& val,
   bool is_bool = cell(0).is_bool_matrix ();
   bool is_struct = cell(0).isstruct ();
   string_vector field_names = is_struct ? cell(0).map_value ().fieldnames ()
-                                        : string_vector ();
+                              : string_vector ();
   dim_vector sub_array_dims = cell(0).dims ();
   octave_idx_type sub_array_ndims = cell(0).ndims ();
   octave_idx_type cell_numel = cell.numel ();
@@ -349,7 +349,7 @@ decode_array_of_arrays (const rapidjson::Value& val,
               for (octave_idx_type k = 0; k < cell_numel; ++k)
                 {
                   Cell sub_array_value = cell(k).map_value ()
-                                                .getfield (field_names(j));
+                                         .getfield (field_names(j));
                   for (octave_idx_type i = 0; i < sub_array_numel; ++i)
                     value(k + i * cell_numel) = sub_array_value(i);
                 }
@@ -421,8 +421,8 @@ decode_array (const rapidjson::Value& val,
         // RapidJSON doesn't have kBoolean Type it has kTrueType and kFalseType
         if (! ((current_elem_type == rapidjson::kTrueType
                 && array_type == rapidjson::kFalseType)
-            || (current_elem_type == rapidjson::kFalseType
-                && array_type == rapidjson::kTrueType)))
+               || (current_elem_type == rapidjson::kFalseType
+                   && array_type == rapidjson::kTrueType)))
           same_type = false;
     }
 
@@ -610,9 +610,9 @@ jsondecode ('@{"1": "one", "2": "two"@}', 'Prefix', 'm_')
 
   make_valid_name_options *options
     = use_makeValidName ? new make_valid_name_options (make_valid_name_params)
-                        : nullptr;
+      : nullptr;
 
-  unwind_action del_opts ([options] (void) { if (options) delete options; });
+  unwind_action del_opts ([options] () { if (options) delete options; });
 
   if (! args(0).is_string ())
     error ("jsondecode: JSON_TXT must be a character string");
@@ -654,4 +654,4 @@ Functional BIST tests are located in test/json/jsondecode_BIST.tst
 
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

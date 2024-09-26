@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -356,8 +356,7 @@ save_mat_ascii_data (std::ostream& os, const octave_value& val,
     }
   catch (const octave::execution_exception&)
     {
-      octave::interpreter& interp
-        = octave::__get_interpreter__ ("save_mat_ascii_data");
+      octave::interpreter& interp = octave::__get_interpreter__ ();
 
       interp.recover_from_exception ();
 

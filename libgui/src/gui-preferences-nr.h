@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017-2022 The Octave Project Developers
+// Copyright (C) 2017-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -27,17 +27,13 @@
 #define octave_gui_preferences_nr_h 1
 
 #include "gui-preferences.h"
-#include <QDateTime>
 
 // News Reader properties
 
-const gui_pref
-nr_last_time ("news/last_time_checked", QVariant (QDateTime ()));
+extern gui_pref nr_last_time;
 
-const gui_pref
-nr_last_news ("news/last_news_item", QVariant (0));
+extern gui_pref nr_last_news;
 
-const gui_pref
-nr_allow_connection ("news/allow_web_connection", QVariant (false));
+extern gui_pref nr_allow_connection;
 
 #endif

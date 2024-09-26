@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} strmatch (@var{s}, @var{A})
-## @deftypefnx {} {} strmatch (@var{s}, @var{A}, "exact")
+## @deftypefn  {} {@var{idx} =} strmatch (@var{s}, @var{A})
+## @deftypefnx {} {@var{idx} =} strmatch (@var{s}, @var{A}, "exact")
 ##
 ## This function is obsolete.  @strong{Use an alternative} such as
 ## @code{strncmp} or @code{strcmp} instead.

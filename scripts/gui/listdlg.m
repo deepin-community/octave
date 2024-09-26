@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -115,7 +115,7 @@ function [sel, ok] = listdlg (varargin)
     if (strcmpi (varargin{i}, "ListString"))
       listcell = varargin{i+1};
     elseif (strcmpi (varargin{i}, "SelectionMode"))
-      selmode = tolower (varargin{i+1});
+      selmode = lower (varargin{i+1});
     elseif (strcmpi (varargin{i}, "ListSize"))
       listsize = varargin{i+1};
     elseif (strcmpi (varargin{i}, "InitialValue"))

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,13 +30,14 @@
 #include "error.h"
 #include "event-queue.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+void
+event_queue_safe::warn_unhandled_exception () const
 {
-  void
-  event_queue_safe::warn_unhandled_exception (void) const
-  {
-    warning ("unhandled exception in event_queue_safe handler.  "
-             "It is a bug in Octave for this to happen.  "
-             "Please help improve Octave by reporting it.");
-  }
+  warning ("unhandled exception in event_queue_safe handler.  "
+           "It is a bug in Octave for this to happen.  "
+           "Please help improve Octave by reporting it.");
 }
+
+OCTAVE_END_NAMESPACE(octave)

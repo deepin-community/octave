@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -159,7 +159,7 @@ function [cstr, matches] = strsplit (str, del, varargin)
   fields = fieldnames (args);
   for n = 1:2:numel (params)
     if (any (strcmpi (params{n}, fields)))
-      args.(tolower (params{n})) = params{n+1};
+      args.(lower (params{n})) = params{n+1};
     elseif (ischar (varargin{n}))
       error ("Octave:strsplit:invalid_parameter_name",
              "strsplit: invalid parameter name, '%s'", varargin{n});

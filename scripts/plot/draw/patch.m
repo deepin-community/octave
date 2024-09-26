@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -28,7 +28,7 @@
 ## @deftypefnx {} {} patch (@var{x}, @var{y}, @var{c})
 ## @deftypefnx {} {} patch (@var{x}, @var{y}, @var{z}, @var{c})
 ## @deftypefnx {} {} patch ("Faces", @var{faces}, "Vertices", @var{verts}, @dots{})
-## @deftypefnx {} {} patch (@dots{}, @var{prop}, @var{val}, @dots{})
+## @deftypefnx {} {} patch (@dots{}, "@var{prop}", @var{val}, @dots{})
 ## @deftypefnx {} {} patch (@dots{}, @var{propstruct}, @dots{})
 ## @deftypefnx {} {} patch (@var{hax}, @dots{})
 ## @deftypefnx {} {@var{h} =} patch (@dots{})
@@ -71,10 +71,20 @@
 ## The optional return value @var{h} is a graphics handle to the created patch
 ## object.
 ##
-## Programming Note: The full list of properties is documented at
-## @ref{Patch Properties}.  Useful patch properties include:
-## @qcode{"cdata"}, @qcode{"edgecolor"}, @qcode{"facecolor"}, @qcode{"faces"},
-## and @qcode{"facevertexcdata"}.
+## Programming Notes:
+## @enumerate
+## @item
+## The full list of properties is documented at @ref{Patch Properties}.
+## Useful patch properties include: @qcode{"edgecolor"}, @qcode{"facecolor"},
+## @qcode{"faces"}, @qcode{"vertices"}, and @qcode{"facevertexcdata"}.
+## @item
+## Unexpected geometry results can occur from mixing x-y-z and
+## face-vertex forms of defining geometry.
+## @item
+## Unexpected patch color results can occur from using @qcode{"cdata"} color
+## definitons with face-vertex defined geometry or @qcode{"facevertexcdata"}
+## color definitions with x-y-z defined geometry.
+## @end enumerate
 ## @seealso{fill, get, set}
 ## @end deftypefn
 
@@ -82,17 +92,11 @@ function h = patch (varargin)
 
   [hax, varargin] = __plt_get_axis_arg__ ("patch", varargin{:});
 
-  if (isempty (hax))
-    hax = gca ();
-  else
+  if (! isempty (hax))
     hax = hax(1);
   endif
 
-  [htmp, failed] = __patch__ (hax, varargin{:});
-
-  if (failed)
-    print_usage ();
-  endif
+  htmp = __patch__ (hax, varargin{:});
 
   if (nargout > 0)
     h = htmp;
@@ -308,3 +312,9 @@ endfunction
 %! unwind_protect_cleanup
 %!   close (hf);
 %! end_unwind_protect
+
+## Test input validation
+%!error <invalid color specification C> patch (1, 1, 'x')
+%!error <invalid TrueColor data C> patch (1, 1, rand (1,2,3))
+%!error <size of X, Y, and C must be equal> patch (1, 1, [1, 2])
+%!error <invalid color specification C> patch (1, 1, {1})

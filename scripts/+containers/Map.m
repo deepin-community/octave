@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -217,7 +217,7 @@ classdef Map < handle
         this.map = cell2struct (vals, keys);
       elseif (nargin == 4)
         for i = [1, 3]
-          switch (tolower (varargin{i}))
+          switch (lower (varargin{i}))
             case "keytype"
               this.KeyType = varargin{i+1};
             case "valuetype"
@@ -230,6 +230,7 @@ classdef Map < handle
       else
         error ("containers.Map: incorrect number of inputs specified");
       endif
+
     endfunction
 
     function keySet = keys (this)
@@ -241,6 +242,7 @@ classdef Map < handle
 
       keySet = fieldnames (this.map).';  # compatibility requires row vector
       keySet = decode_keys (this, keySet);
+
     endfunction
 
     function valueSet = values (this, keySet)
@@ -271,6 +273,7 @@ classdef Map < handle
           end_try_catch
         endfor
       endif
+
     endfunction
 
     function tf = isKey (this, keySet)
@@ -299,12 +302,14 @@ classdef Map < handle
       endif
       keySet = encode_keys (this, keySet(in));
       tf(in) = isfield (this.map, keySet);
+
     endfunction
 
     function this = remove (this, keySet)
 
       ## -*- texinfo -*-
       ## @deftypefn {} {} Map.remove (@var{keySet})
+      ## @deftypefn {} {@var{newMap) =} Map.remove (@var{keySet})
       ## Remove the list of key/value pairs specified by a cell array of keys
       ## @var{keySet} from the map.
       ##
@@ -326,6 +331,7 @@ classdef Map < handle
       keySet = encode_keys (this, keySet(in));
       in = isfield (this.map, keySet);
       this.map = rmfield (this.map, keySet(in));
+
     endfunction
 
     function varargout = size (this, n)
@@ -358,6 +364,7 @@ classdef Map < handle
           varargout = { 1 };
         endif
       endif
+
     endfunction
 
     function len = length (this)
@@ -368,6 +375,7 @@ classdef Map < handle
       ## @end deftypefn
 
       len = double (this.Count);
+
     endfunction
 
     function tf = isempty (this)

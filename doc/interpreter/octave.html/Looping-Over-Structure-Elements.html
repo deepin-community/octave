@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Looping Over Structure Elements (GNU Octave (version 7.1.0))</title>
+<title>Looping Over Structure Elements (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Looping Over Structure Elements (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Looping Over Structure Elements (GNU Octave (version 7.1.0))">
+<meta name="description" content="Looping Over Structure Elements (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Looping Over Structure Elements (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -18,21 +18,9 @@
 <link href="The-for-Statement.html" rel="up" title="The for Statement">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -41,32 +29,32 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Looping-Over-Structure-Elements">
-<div class="header">
+<div class="subsection-level-extent" id="Looping-Over-Structure-Elements">
+<div class="nav-panel">
 <p>
 Up: <a href="The-for-Statement.html" accesskey="u" rel="up">The for Statement</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Looping-Over-Structure-Elements-1"></span><h4 class="subsection">10.5.1 Looping Over Structure Elements</h4>
-<span id="index-structure-elements_002c-looping-over"></span>
-<span id="index-looping-over-structure-elements"></span>
+<h4 class="subsection" id="Looping-Over-Structure-Elements-1"><span>10.5.1 Looping Over Structure Elements<a class="copiable-link" href="#Looping-Over-Structure-Elements-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-structure-elements_002c-looping-over"></a>
+<a class="index-entry-id" id="index-looping-over-structure-elements"></a>
 
-<p>A special form of the <code>for</code> statement allows you to loop over all
+<p>A special form of the <code class="code">for</code> statement allows you to loop over all
 the elements of a structure:
 </p>
 <div class="example">
-<pre class="example">for [ <var>val</var>, <var>key</var> ] = <var>expression</var>
-  <var>body</var>
+<div class="group"><pre class="example-preformatted">for [ <var class="var">val</var>, <var class="var">key</var> ] = <var class="var">expression</var>
+  <var class="var">body</var>
 endfor
-</pre></div>
+</pre></div></div>
 
-<p>In this form of the <code>for</code> statement, the value of <var>expression</var>
-must be a structure.  If it is, <var>key</var> and <var>val</var> are set to the
+<p>In this form of the <code class="code">for</code> statement, the value of <var class="var">expression</var>
+must be a structure.  If it is, <var class="var">key</var> and <var class="var">val</var> are set to the
 name of the element and the corresponding value in turn, until there are
 no more elements.  For example:
 </p>
 <div class="example">
-<pre class="example">x.a = 1
+<div class="group"><pre class="example-preformatted">x.a = 1
 x.b = [1, 2; 3, 4]
 x.c = &quot;string&quot;
 for [val, key] = x
@@ -84,11 +72,11 @@ endfor
      -|
      -| key = c
      -| val = string
-</pre></div>
+</pre></div></div>
 
 <p>The elements are not accessed in any particular order.  If you need to
 cycle through the list in a particular way, you will have to use the
-function <code>fieldnames</code> and sort the list yourself.
+function <code class="code">fieldnames</code> and sort the list yourself.
 </p>
 </div>
 

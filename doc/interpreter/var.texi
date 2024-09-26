@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -68,6 +68,11 @@ before they have been given a value.  Doing so results in an error.
 @cindex @code{ans}
 @c ans scripts/help/ans.m
 @anchor{XREFans}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @defvr {Automatic Variable} ans
 The most recently computed result that was not explicitly assigned to a
 variable.
@@ -85,7 +90,12 @@ is evaluated, the value returned by @code{ans} is 25.
 
 @c isvarname libinterp/corefcn/utils.cc
 @anchor{XREFisvarname}
-@deftypefn {} {} isvarname (@var{name})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isvarname (@var{name})
 Return true if @var{name} is a valid variable name.
 
 A valid variable name is composed of letters, digits, and underscores ("_"),
@@ -96,6 +106,11 @@ and the first character must not be a digit.
 
 @c matlab.lang.makeValidName scripts/+matlab/+lang/makeValidName.m
 @anchor{XREFmatlab_lang_makeValidName}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{varname} =} matlab.lang.makeValidName (@var{str})
 @deftypefnx {} {@var{varname} =} matlab.lang.makeValidName (@dots{}, @qcode{"ReplacementStyle"}, @var{rs})
 @deftypefnx {} {@var{varname} =} matlab.lang.makeValidName (@dots{}, @qcode{"Prefix"}, @var{pfx})
@@ -140,6 +155,11 @@ the respective element in @var{str} was a valid name or not.
 
 @c matlab.lang.makeUniqueStrings scripts/+matlab/+lang/makeUniqueStrings.m
 @anchor{XREFmatlab_lang_makeUniqueStrings}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{uniqstr} =} matlab.lang.makeUniqueStrings (@var{str})
 @deftypefnx {} {@var{uniqstr} =} matlab.lang.makeUniqueStrings (@var{str}, @var{ex})
 @deftypefnx {} {@var{uniqstr} =} matlab.lang.makeUniqueStrings (@var{str}, @var{ex}, @var{maxlength})
@@ -174,7 +194,12 @@ each element in @var{str} was modified to make it unique.
 
 @c namelengthmax scripts/miscellaneous/namelengthmax.m
 @anchor{XREFnamelengthmax}
-@deftypefn {} {} namelengthmax ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{n} =} namelengthmax ()
 Return the @sc{matlab} compatible maximum variable name length.
 
 Octave is capable of storing strings up to @math{2^{31} - 1} in length.
@@ -196,6 +221,8 @@ format (@file{*.mat}) will have their names truncated to this length.
 @cindex global variables
 @cindex @code{global} statement
 @cindex variables, global
+
+See keyword:  @ref{XREFglobal, , global}
 
 A @dfn{global} variable is one that may be accessed anywhere within Octave.
 This is in contrast to a local variable which can only be accessed outside
@@ -306,7 +333,12 @@ particular loop within a function, becomes difficult.
 
 @c isglobal libinterp/corefcn/variables.cc
 @anchor{XREFisglobal}
-@deftypefn {} {} isglobal (@var{name})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isglobal (@var{name})
 Return true if @var{name} is a globally visible variable.
 
 For example:
@@ -327,7 +359,8 @@ isglobal ("x")
 @cindex persistent variables
 @cindex @code{persistent} statement
 @cindex variables, persistent
-@anchor{XREFpersistent}
+
+See keyword:  @ref{XREFpersistent, , persistent}
 
 A variable that has been declared @dfn{persistent} within a function
 will retain its contents in memory between subsequent calls to the
@@ -484,10 +517,15 @@ who
 
 @c who libinterp/corefcn/call-stack.cc
 @anchor{XREFwho}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} who
 @deftypefnx {} {} who pattern @dots{}
 @deftypefnx {} {} who option pattern @dots{}
-@deftypefnx {} {C =} who ("pattern", @dots{})
+@deftypefnx {} {C =} who (@dots{})
 List currently defined variables matching the given patterns.
 
 Valid pattern syntax is the same as described for the @code{clear} command.
@@ -520,6 +558,11 @@ matching the given patterns.
 
 @c whos libinterp/corefcn/call-stack.cc
 @anchor{XREFwhos}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} whos
 @deftypefnx {} {} whos pattern @dots{}
 @deftypefnx {} {} whos option pattern @dots{}
@@ -581,9 +624,14 @@ complex, nesting, persistent.
 
 @c whos_line_format libinterp/parse-tree/pt-eval.cc
 @anchor{XREFwhos_line_format}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} whos_line_format ()
 @deftypefnx {} {@var{old_val} =} whos_line_format (@var{new_val})
-@deftypefnx {} {} whos_line_format (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} whos_line_format (@var{new_val}, "local")
 Query or set the format string used by the command @code{whos}.
 
 A full format string is:
@@ -671,6 +719,11 @@ endif
 
 @c exist libinterp/corefcn/variables.cc
 @anchor{XREFexist}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{c} =} exist (@var{name})
 @deftypefnx {} {@var{c} =} exist (@var{name}, @var{type})
 Check for the existence of @var{name} as a variable, function, file, directory,
@@ -760,6 +813,11 @@ or @code{clearvars} functions do this.
 
 @c clear libinterp/corefcn/variables.cc
 @anchor{XREFclear}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} clear
 @deftypefnx {} {} clear @var{pattern} @dots{}
 @deftypefnx {} {} clear @var{options} @var{pattern} @dots{}
@@ -778,7 +836,8 @@ Match zero or more characters.
 Match the list of characters specified by @var{list}.  If the first character
 is @code{!} or @code{^}, match all characters except those specified by
 @var{list}.  For example, the pattern @code{[a-zA-Z]} will match all lowercase
-and uppercase alphabetic characters.
+and uppercase alphabetic characters.  On Windows, square brackets are matched
+literally and are not used to group characters.
 @end table
 
 For example, the command
@@ -851,6 +910,11 @@ variables.
 
 @c clearvars scripts/miscellaneous/clearvars.m
 @anchor{XREFclearvars}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} clearvars
 @deftypefnx {} {} clearvars @var{pattern} @dots{}
 @deftypefnx {} {} clearvars -regexp @var{pattern} @dots{}
@@ -921,6 +985,11 @@ clearvars foo* -except -regexp bar$
 
 @c pack scripts/miscellaneous/pack.m
 @anchor{XREFpack}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} pack ()
 Consolidate workspace memory in @sc{matlab}.
 
@@ -935,6 +1004,11 @@ only useful during development of programs, and not within a program.
 
 @c type scripts/help/type.m
 @anchor{XREFtype}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} type @var{name} @dots{}
 @deftypefnx {} {} type -q @var{name} @dots{}
 @deftypefnx {} {text =} type ("@var{name}", @dots{})
@@ -953,7 +1027,13 @@ corresponds to the contents of each requested function.
 
 @c which scripts/help/which.m
 @anchor{XREFwhich}
-@deftypefn {} {} which name @dots{}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {} which @var{name} @dots{}
+@deftypefnx {} {[@var{str}, @dots{}] =} which ('@var{name}', @dots{})
 Display the type of each @var{name}.
 
 If @var{name} is defined from a function file, the full name of the file is
@@ -964,6 +1044,11 @@ also displayed.
 
 @c what scripts/miscellaneous/what.m
 @anchor{XREFwhat}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} what
 @deftypefnx {} {} what @var{dir}
 @deftypefnx {} {w =} what (@var{dir})

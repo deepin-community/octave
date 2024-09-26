@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Creating Sparse Matrices in Oct-Files (GNU Octave (version 7.1.0))</title>
+<title>Creating Sparse Matrices in Oct-Files (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Creating Sparse Matrices in Oct-Files (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Creating Sparse Matrices in Oct-Files (GNU Octave (version 7.1.0))">
+<meta name="description" content="Creating Sparse Matrices in Oct-Files (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Creating Sparse Matrices in Oct-Files (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Array-and-Sparse-Class-Differences.html" rel="prev" title="Array and Sparse Class Differences">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,13 +31,13 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsubsection" id="Creating-Sparse-Matrices-in-Oct_002dFiles">
-<div class="header">
+<div class="subsubsection-level-extent" id="Creating-Sparse-Matrices-in-Oct_002dFiles">
+<div class="nav-panel">
 <p>
 Next: <a href="Using-Sparse-Matrices-in-Oct_002dFiles.html" accesskey="n" rel="next">Using Sparse Matrices in Oct-Files</a>, Previous: <a href="Array-and-Sparse-Class-Differences.html" accesskey="p" rel="prev">Array and Sparse Class Differences</a>, Up: <a href="Sparse-Matrices-in-Oct_002dFiles.html" accesskey="u" rel="up">Sparse Matrices in Oct-Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Creating-Sparse-Matrices-in-Oct_002dFiles-1"></span><h4 class="subsubsection">A.1.6.2 Creating Sparse Matrices in Oct-Files</h4>
+<h4 class="subsubsection" id="Creating-Sparse-Matrices-in-Oct_002dFiles-1"><span>A.1.6.2 Creating Sparse Matrices in Oct-Files<a class="copiable-link" href="#Creating-Sparse-Matrices-in-Oct_002dFiles-1"> &para;</a></span></h4>
 
 <p>There are two useful strategies for creating a sparse matrix.  The first is to
 create three vectors representing the row index, column index, and data values,
@@ -60,7 +48,7 @@ techniques have their advantages and disadvantages.
 <p>Below is an example of creating a small sparse matrix using the first technique
 </p>
 <div class="example">
-<pre class="example">int nz, nr, nc;
+<div class="group"><pre class="example-preformatted">int nz, nr, nc;
 nz = 4, nr = 3, nc = 4;
 
 ColumnVector ridx (nz);
@@ -72,9 +60,9 @@ ridx(1) = 2; cidx(1) = 2; data(1) = 2;
 ridx(2) = 2; cidx(2) = 4; data(2) = 3;
 ridx(3) = 3; cidx(3) = 4; data(3) = 4;
 SparseMatrix sm (data, ridx, cidx, nr, nc);
-</pre></div>
+</pre></div></div>
 
-<p>which creates the matrix given in section <a href="Storage-of-Sparse-Matrices.html">Storage of Sparse Matrices</a>.
+<p>which creates the matrix given in section <a class="ref" href="Storage-of-Sparse-Matrices.html">Storage of Sparse Matrices</a>.
 Note that the compressed matrix format is not used at the time of the creation
 of the matrix itself, but is used internally.
 </p>
@@ -92,11 +80,11 @@ matrix.
 nonzero elements and then later fill those elements in.  Sample code:
 </p>
 <div class="example">
-<pre class="example">int nz, nr, nc;
+<div class="group"><pre class="example-preformatted">int nz, nr, nc;
 nz = 4, nr = 3, nc = 4;
 SparseMatrix sm (nr, nc, nz);
 sm(0,0) = 1; sm(0,1) = 2; sm(1,3) = 3; sm(2,3) = 4;
-</pre></div>
+</pre></div></div>
 
 <p>This creates the same matrix as previously.  Again, although not strictly
 necessary, it is significantly faster if the sparse matrix is created and the
@@ -110,33 +98,33 @@ matrix.  First, it is possible to create a sparse matrix with fewer elements
 than are actually inserted in the matrix.  Therefore,
 </p>
 <div class="example">
-<pre class="example">int nr, nc;
+<div class="group"><pre class="example-preformatted">int nr, nc;
 nr = 3, nc = 4;
 SparseMatrix sm (nr, nc, 0);
 sm(0,0) = 1; sm(0,1) = 2; sm(1,3) = 3; sm(2,3) = 4;
-</pre></div>
+</pre></div></div>
 
 <p>is perfectly valid.  However, it is a very bad idea because as each new element
 is added to the sparse matrix the matrix needs to request more space and
 reallocate memory.  This is an expensive operation that will significantly slow
 this means of creating a sparse matrix.  It is possible to create a sparse
-matrix with excess storage, so having <var>nz</var> greater than 4 in this example
+matrix with excess storage, so having <var class="var">nz</var> greater than 4 in this example
 is also valid.  The disadvantage is that the matrix occupies more memory than
 strictly needed.
 </p>
 <p>Of course, it is not always possible to know the number of nonzero elements
 prior to filling a matrix.  For this reason the additional unused storage of a
-sparse matrix can be removed after its creation with the <code>maybe_compress</code>
-function.  In addition to deallocating unused storage, <code>maybe_compress</code>
+sparse matrix can be removed after its creation with the <code class="code">maybe_compress</code>
+function.  In addition to deallocating unused storage, <code class="code">maybe_compress</code>
 can also remove zero elements from the matrix.  The removal of zero elements
 from the matrix is controlled by setting the argument of the
-<code>maybe_compress</code> function to be <code>true</code>.  However, the cost of
+<code class="code">maybe_compress</code> function to be <code class="code">true</code>.  However, the cost of
 removing the zeros is high because it implies re-sorting the elements.  If
 possible, it is better for the user to avoid adding the unnecessary zeros in
-the first place.  An example of the use of <code>maybe_compress</code> is
+the first place.  An example of the use of <code class="code">maybe_compress</code> is
 </p>
 <div class="example">
-<pre class="example">int nz, nr, nc;
+<div class="group"><pre class="example-preformatted">int nz, nr, nc;
 nz = 6, nr = 3, nc = 4;
 
 SparseMatrix sm1 (nr, nc, nz);
@@ -147,17 +135,17 @@ SparseMatrix sm2 (nr, nc, nz);
 sm2(0,0) = 1; sm2(0,1) = 2; sm(0,2) = 0; sm(1,2) = 0;
 sm1(1,3) = 3; sm1(2,3) = 4;
 sm2.maybe_compress (true);  // Zero elements were added
-</pre></div>
+</pre></div></div>
 
-<p>The use of the <code>maybe_compress</code> function should be avoided if possible as
+<p>The use of the <code class="code">maybe_compress</code> function should be avoided if possible as
 it will slow the creation of the matrix.
 </p>
 <p>A third means of creating a sparse matrix is to work directly with the data in
 compressed row format.  An example of this advanced technique might be
 </p>
 <div class="example">
-<pre class="example">octave_value arg;
-&hellip;
+<pre class="example-preformatted">octave_value arg;
+...
 int nz, nr, nc;
 nz = 6, nr = 3, nc = 4;   // Assume we know the max # nz
 SparseMatrix sm (nr, nc, nz);
@@ -186,12 +174,12 @@ sm.maybe_compress ();  // If don't know a priori the final # of nz.
 </p>
 <p>Finally, it may sometimes arise that the amount of storage initially created is
 insufficient to completely store the sparse matrix.  Therefore, the method
-<code>change_capacity</code> exists to reallocate the sparse memory.  The above
+<code class="code">change_capacity</code> exists to reallocate the sparse memory.  The above
 example would then be modified as
 </p>
 <div class="example">
-<pre class="example">octave_value arg;
-&hellip;
+<pre class="example-preformatted">octave_value arg;
+...
 int nz, nr, nc;
 nz = 6, nr = 3, nc = 4;   // Guess the number of nz elements
 SparseMatrix sm (nr, nc, nz);
@@ -229,7 +217,7 @@ changing capacity.
 </p>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Using-Sparse-Matrices-in-Oct_002dFiles.html">Using Sparse Matrices in Oct-Files</a>, Previous: <a href="Array-and-Sparse-Class-Differences.html">Array and Sparse Class Differences</a>, Up: <a href="Sparse-Matrices-in-Oct_002dFiles.html">Sparse Matrices in Oct-Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

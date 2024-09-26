@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -25,7 +25,7 @@
 
 ## -*- texinfo -*-
 ## @deftypefn  {} {} camroll (@var{theta})
-## @deftypefnx {} {} camroll (@var{ax}, @var{theta})
+## @deftypefnx {} {} camroll (@var{hax}, @var{theta})
 ## Roll the camera.
 ##
 ## Roll the camera clockwise by @var{theta} degrees.
@@ -60,7 +60,7 @@
 ## @end example
 ##
 ## By default, these commands affect the current axis; alternatively, an axis
-## can be specified by the optional argument @var{ax}.
+## can be specified by the optional argument @var{hax}.
 ##
 ## @seealso{camzoom, camorbit, camlookat, camup}
 ## @end deftypefn
@@ -149,7 +149,7 @@ endfunction
 %!   close (hf);
 %! end_unwind_protect
 
-## test ax input by creating another axis
+## test hax input by creating another axis
 %!test
 %! hf = figure ("visible", "off");
 %! unwind_protect

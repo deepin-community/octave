@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Documentation and Testing of Oct-Files (GNU Octave (version 7.1.0))</title>
+<title>Documentation and Testing of Oct-Files (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Documentation and Testing of Oct-Files (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Documentation and Testing of Oct-Files (GNU Octave (version 7.1.0))">
+<meta name="description" content="Documentation and Testing of Oct-Files (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Documentation and Testing of Oct-Files (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,9 @@
 <link href="Exception-and-Error-Handling-in-Oct_002dFiles.html" rel="prev" title="Exception and Error Handling in Oct-Files">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,16 +30,16 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Documentation-and-Testing-of-Oct_002dFiles">
-<div class="header">
+<div class="subsection-level-extent" id="Documentation-and-Testing-of-Oct_002dFiles">
+<div class="nav-panel">
 <p>
 Previous: <a href="Exception-and-Error-Handling-in-Oct_002dFiles.html" accesskey="p" rel="prev">Exception and Error Handling in Oct-Files</a>, Up: <a href="Oct_002dFiles.html" accesskey="u" rel="up">Oct-Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Documentation-and-Testing-of-Oct_002dFiles-1"></span><h4 class="subsection">A.1.13 Documentation and Testing of Oct-Files</h4>
+<h4 class="subsection" id="Documentation-and-Testing-of-Oct_002dFiles-1"><span>A.1.13 Documentation and Testing of Oct-Files<a class="copiable-link" href="#Documentation-and-Testing-of-Oct_002dFiles-1"> &para;</a></span></h4>
 
 <p>The documentation for an oct-file is contained in the fourth string parameter
-of the <code><span class="nolinebreak">DEFUN_DLD</span></code><!-- /@w --> macro.  This string can be formatted in the same
+of the <code class="code">DEFUN_DLD</code><!-- /@w -->&nbsp;macro.  This string can be formatted in the same
 manner as the help strings for user functions, however there are some issues
 that are particular to the formatting of help strings within oct-files.
 </p>
@@ -61,25 +49,25 @@ taken into account.  There are several possible solutions, but the most common
 is illustrated in the following example,
 </p>
 <div class="example">
-<pre class="example">DEFUN_DLD (do_what_i_want, args, nargout,
+<div class="group"><pre class="example-preformatted">DEFUN_DLD (do_what_i_want, args, nargout,
   &quot;-*- texinfo -*-\n\
 @deftypefn {} {} do_what_i_say (@var{n})\n\
 A function that does what the user actually wants rather\n\
 than what they requested.\n\
 @end deftypefn&quot;)
 {
-&hellip;
+...
 }
-</pre></div>
+</pre></div></div>
 
-<p>where each line of text is terminated by <code>\n\</code> which is an embedded
+<p>where each line of text is terminated by <code class="code">\n\</code> which is an embedded
 newline in the string together with a C++ string continuation character.  Note
-that the final <code>\</code> must be the last character on the line.
+that the final <code class="code">\</code> must be the last character on the line.
 </p>
 <p>Octave also includes the ability to embed test and demonstration code for a
-function within the code itself (see <a href="Test-and-Demo-Functions.html">Test and Demo Functions</a>).  This can be
+function within the code itself (see <a class="pxref" href="Test-and-Demo-Functions.html">Test and Demo Functions</a>).  This can be
 used from within oct-files (or in fact any file) with certain provisos.  First,
-the test and demo functions of Octave look for <code>%!</code> as the first two
+the test and demo functions of Octave look for <code class="code">%!</code> as the first two
 characters of a line to identify test and demonstration code.  This is a
 requirement for oct-files as well.  In addition, the test and demonstration
 code must be wrapped in a comment block to avoid it being interpreted by the
@@ -88,17 +76,17 @@ the original source code of the oct-file&mdash;not just the compiled code&mdash;
 tests are stripped from the compiled code.  An example in an oct-file might be
 </p>
 <div class="example">
-<pre class="example">/*
+<div class="group"><pre class="example-preformatted">/*
 %!assert (sin ([1,2]), [sin(1),sin(2)])
 %!error (sin ())
 %!error (sin (1,1))
 */
-</pre></div>
+</pre></div></div>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Previous: <a href="Exception-and-Error-Handling-in-Oct_002dFiles.html">Exception and Error Handling in Oct-Files</a>, Up: <a href="Oct_002dFiles.html">Oct-Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

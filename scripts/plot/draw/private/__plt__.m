@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1993-2022 The Octave Project Developers
+## Copyright (C) 1993-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,9 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __plt__ (@var{caller}, @var{hp}, @var{varargin})
-## Undocumented internal function.
+## @deftypefn {} {@var{h} =} __plt__ (@var{caller}, @var{hp}, @var{varargin})
+## Internal function with common code to implement several 2-D plot types.
+## @seealso{plot, polar, loglog, semilogx, semilogy}
 ## @end deftypefn
 
 function retval = __plt__ (caller, hp, varargin)

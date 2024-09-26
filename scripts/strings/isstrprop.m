@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} isstrprop (@var{str}, @var{prop})
+## @deftypefn  {} {@var{tf} =} isstrprop (@var{str}, @var{prop})
+## @deftypefnx {} {@var{tf} =} isstrprop (@var{str}, @var{prop}, 'ForceCellOutput', @var{flag})
 ## Test character string properties.
 ##
 ## For example:
@@ -87,44 +88,61 @@
 ##
 ## @end table
 ##
+## If the option @nospell{@qcode{'ForceCellOutput'}} is given and @var{flag} is
+## true then a cell value is returned rather than a logical array.
+##
 ## @seealso{isalpha, isalnum, islower, isupper, isdigit, isxdigit,
 ## isspace, ispunct, iscntrl, isgraph, isprint, isascii}
 ## @end deftypefn
 
-function retval = isstrprop (str, prop)
+function tf = isstrprop (str, prop, opt, flag)
 
-  if (nargin != 2)
+  if (nargin != 2 && nargin != 4)
     print_usage ();
+  endif
+
+  force_cell_output = false;
+  if (nargin > 2)
+    if (! (isrow (opt) && strcmpi (opt, 'ForceCellOutput')))
+      error ("isstrprop: only accepted option is 'ForceCellOutput'");
+    elseif (! (isscalar (flag) && isreal (flag)))
+      error ("isstrprop: FLAG must be a real scalar");
+    endif
+    force_cell_output = flag;
   endif
 
   switch (prop)
     case "alpha"
-      retval = isalpha (str);
+      tf = isalpha (str);
     case {"alnum", "alphanum"}
-      retval = isalnum (str);
+      tf = isalnum (str);
     case "ascii"
-      retval = isascii (str);
+      tf = isascii (str);
     case "cntrl"
-      retval = iscntrl (str);
+      tf = iscntrl (str);
     case "digit"
-      retval = isdigit (str);
+      tf = isdigit (str);
     case {"graph", "graphic"}
-      retval = isgraph (str);
+      tf = isgraph (str);
     case "lower"
-      retval = islower (str);
+      tf = islower (str);
     case "print"
-      retval = isprint (str);
+      tf = isprint (str);
     case "punct"
-      retval = ispunct (str);
+      tf = ispunct (str);
     case {"space", "wspace"}
-      retval = isspace (str);
+      tf = isspace (str);
     case "upper"
-      retval = isupper (str);
+      tf = isupper (str);
     case "xdigit"
-      retval = isxdigit (str);
+      tf = isxdigit (str);
     otherwise
       error ("isstrprop: invalid string property");
   endswitch
+
+  if (force_cell_output)
+    tf = {tf};
+  endif
 
 endfunction
 
@@ -134,11 +152,21 @@ endfunction
 %!assert (isstrprop ("Hello World", "wspace"), isspace ("Hello World"))
 %!assert (isstrprop ("Hello World", "graphic"), isgraph ("Hello World"))
 %!assert (isstrprop (char ("AbC", "123"), "upper"), logical ([1 0 1; 0 0 0]))
+%!assert (isstrprop (char ("AbC", "123"), "upper", 'ForceCellOutput', true),
+%!        {logical([1 0 1; 0 0 0])})
 %!assert (isstrprop ({"AbC", "123"}, "lower"),
 %!        {logical([0 1 0]), logical([0 0 0])})
 
 ## Test input validation
 %!error <Invalid call> isstrprop ()
-%!error isstrprop ("abc123")
-%!error isstrprop ("abc123", "alpha", "alpha")
+%!error <Invalid call> isstrprop ("abc")
+%!error <Invalid call> isstrprop ("abc", 'alpha', 'ForceCellOutput')
+%!error <only accepted option is 'ForceCellOutput'>
+%! isstrprop ('a', 'alpha', ['ForceCellOutput';'ForceCellOutput'], true)
+%!error <only accepted option is 'ForceCellOutput'>
+%! isstrprop ('a', 'alpha', 'Foobar', true)
+%!error <FLAG must be a real scalar>
+%! isstrprop ('a', 'alpha', 'ForceCellOutput', [true, true])
+%!error <FLAG must be a real scalar>
+%! isstrprop ('a', 'alpha', 'ForceCellOutput', {true})
 %!error <invalid string property> isstrprop ("abc123", "foo")
