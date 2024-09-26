@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -41,7 +41,7 @@
 #include "ov.h"
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 /*
 ## Restore all rand* "state" values
@@ -116,6 +116,7 @@ DEFUN (qr, args, nargout,
 @deftypefnx {} {@var{X} =} qr (@var{A}, @var{B}) # sparse A
 @deftypefnx {} {[@var{C}, @var{R}] =} qr (@var{A}, @var{B})
 @deftypefnx {} {[@dots{}] =} qr (@dots{}, 0)
+@deftypefnx {} {[@dots{}] =} qr (@dots{}, "econ")
 @deftypefnx {} {[@dots{}] =} qr (@dots{}, "vector")
 @deftypefnx {} {[@dots{}] =} qr (@dots{}, "matrix")
 @cindex QR factorization
@@ -249,15 +250,15 @@ approximation of @code{@var{A} \ @var{B}} to be calculated as
 @end group
 @end example
 
-If @var{A} is a sparse MxN matrix and an additional matrix @var{B} is
+If @var{A} is a sparse @nospell{MxN} matrix and an additional matrix @var{B} is
 supplied, one or two return values are possible.  If one return value @var{X}
 is requested and M < N, then @var{X} is the minimum 2-norm solution of
 @w{@code{@var{A} \ @var{B}}}.  If M >= N, @var{X} is the least squares
 approximation @w{of @code{@var{A} \ @var{B}}}.  If two return values are
 requested, @var{C} and @var{R} have the same meaning as in the dense case
-(@var{C} is dense and @var{R} is sparse).
-The version with one return parameter should be preferred because
-it uses less memory and can handle rank-deficient matrices better.
+(@var{C} is dense and @var{R} is sparse).  The version with one return
+parameter should be preferred because it uses less memory and can handle
+rank-deficient matrices better.
 
 If the final argument is the string @qcode{"vector"} then @var{P} is a
 permutation vector (of the columns of @var{A}) instead of a permutation
@@ -270,14 +271,14 @@ matrix.  In this case, the defining relationship is:
 The default, however, is to return a permutation matrix and this may be
 explicitly specified by using a final argument of @qcode{"matrix"}.
 
-If the final argument is the scalar 0 an @qcode{"economy"} factorization is
-returned.  If the original matrix @var{A} has size MxN and M > N, then the
-@qcode{"economy"} factorization will calculate just N rows in @var{R} and N
-columns in @var{Q} and omit the zeros in @var{R}.  If M @leq{} N, there is no
-difference between the economy and standard factorizations.  When calculating
-an @qcode{"economy"} factorization and @var{A} is dense, the output @var{P} is
-always a vector rather than a matrix.  If @var{A} is sparse, output
-@var{P} is a sparse permutation matrix.
+If the final argument is the scalar 0 or the string @qcode{"econ"}, an economy
+factorization is returned.  If the original matrix @var{A} has size
+@nospell{MxN} and M > N, then the economy factorization will calculate just N
+rows in @var{R} and N columns in @var{Q} and omit the zeros in @var{R}.  If M
+@leq{} N, there is no difference between the economy and standard
+factorizations.  When calculating an economy factorization and @var{A} is
+dense, the output @var{P} is always a vector rather than a matrix.  If @var{A}
+is sparse, output @var{P} is a sparse permutation matrix.
 
 Background: The QR factorization has applications in the solution of least
 squares problems
@@ -320,8 +321,8 @@ orthogonal basis of @code{span (A)}.
 
   bool economy = false;
   bool is_cmplx = false;
-  bool have_b = 0;
-  bool vector_p = 0;
+  bool have_b = false;
+  bool vector_p = false;
 
   if (arg.iscomplex ())
     is_cmplx = true;
@@ -344,9 +345,14 @@ orthogonal basis of @code{span (A)}.
           std::string str = args(nargin-1).string_value ();
           if (str == "vector")
             vector_p = true;
+          else if (str == "econ")
+            {
+              economy = true;
+              have_b = (nargin > 2);
+            }
           else if (str != "matrix")
-            error ("qr: type for P must be 'matrix' or 'vector', not %s",
-                   str.c_str ());
+            error ("qr: option string must be 'econ' or 'matrix' or " \
+                   "'vector', not \"%s\"", str.c_str ());
           have_b = (nargin > 2);
         }
       else if (! args(nargin-1).is_matrix_type ())
@@ -371,28 +377,28 @@ orthogonal basis of @code{span (A)}.
 
               if (! args(1).issparse () && args(1).iscomplex ())
                 retval = ovl
-                  (math::sparse_qr<SparseComplexMatrix>::solve
-                     <MArray<Complex>, ComplexMatrix>
-                     (arg.sparse_complex_matrix_value (),
-                      args(1).complex_matrix_value (), info));
+                         (math::sparse_qr<SparseComplexMatrix>::solve
+                          <MArray<Complex>, ComplexMatrix>
+                          (arg.sparse_complex_matrix_value (),
+                           args(1).complex_matrix_value (), info));
               else if (args(1).issparse () && args(1).iscomplex ())
                 retval = ovl
-                  (math::sparse_qr<SparseComplexMatrix>::solve
-                     <SparseComplexMatrix, SparseComplexMatrix>
-                     (arg.sparse_complex_matrix_value (),
-                      args(1).sparse_complex_matrix_value (), info));
+                         (math::sparse_qr<SparseComplexMatrix>::solve
+                          <SparseComplexMatrix, SparseComplexMatrix>
+                          (arg.sparse_complex_matrix_value (),
+                           args(1).sparse_complex_matrix_value (), info));
               else if (! args(1).issparse () && ! args(1).iscomplex ())
                 retval = ovl
-                  (math::sparse_qr<SparseComplexMatrix>::solve
-                     <MArray<double>, ComplexMatrix>
-                     (arg.sparse_complex_matrix_value (),
-                      args(1).matrix_value (), info));
+                         (math::sparse_qr<SparseComplexMatrix>::solve
+                          <MArray<double>, ComplexMatrix>
+                          (arg.sparse_complex_matrix_value (),
+                           args(1).matrix_value (), info));
               else if (args(1).issparse () && ! args(1).iscomplex ())
                 retval = ovl
-                  (math::sparse_qr<SparseComplexMatrix>::solve
-                     <SparseMatrix, SparseComplexMatrix>
-                     (arg.sparse_complex_matrix_value (),
-                      args(1).sparse_matrix_value (), info));
+                         (math::sparse_qr<SparseComplexMatrix>::solve
+                          <SparseMatrix, SparseComplexMatrix>
+                          (arg.sparse_complex_matrix_value (),
+                           args(1).sparse_matrix_value (), info));
               else
                 error ("qr: b is not valid");
             }
@@ -447,25 +453,25 @@ orthogonal basis of @code{span (A)}.
               octave_idx_type info;
               if (args(1).issparse () && ! args(1).iscomplex ())
                 retval = ovl (math::sparse_qr<SparseMatrix>::solve
-                                <SparseMatrix, SparseMatrix>
-                                (arg.sparse_matrix_value (),
-                                 args (1).sparse_matrix_value (), info));
+                              <SparseMatrix, SparseMatrix>
+                              (arg.sparse_matrix_value (),
+                               args (1).sparse_matrix_value (), info));
               else if (! args(1).issparse () && args(1).iscomplex ())
                 retval = ovl (math::sparse_qr<SparseMatrix>::solve
-                                <MArray<Complex>, ComplexMatrix>
-                                (arg.sparse_matrix_value (),
-                                 args (1).complex_matrix_value (), info));
+                              <MArray<Complex>, ComplexMatrix>
+                              (arg.sparse_matrix_value (),
+                               args (1).complex_matrix_value (), info));
               else if (! args(1).issparse () && ! args(1).iscomplex ())
                 retval = ovl (math::sparse_qr<SparseMatrix>::solve
-                                <MArray<double>, Matrix>
-                                (arg.sparse_matrix_value (),
-                                 args (1).matrix_value (), info));
+                              <MArray<double>, Matrix>
+                              (arg.sparse_matrix_value (),
+                               args (1).matrix_value (), info));
               else if (args(1).issparse () &&  args(1).iscomplex ())
                 retval = ovl (math::sparse_qr<SparseMatrix>::solve
-                                <SparseComplexMatrix, SparseComplexMatrix>
-                                (arg.sparse_matrix_value (),
-                                 args(1).sparse_complex_matrix_value (),
-                                 info));
+                              <SparseComplexMatrix, SparseComplexMatrix>
+                              (arg.sparse_matrix_value (),
+                               args(1).sparse_complex_matrix_value (),
+                               info));
               else
                 error ("qr: b is not valid");
             }
@@ -704,45 +710,44 @@ orthogonal basis of @code{span (A)}.
 %!
 %! [q, r] = qr (a);
 %! [qe, re] = qr (a, 0);
+%! [qe2, re2] = qr (a, "econ");
 %!
 %! assert (q * r, a, sqrt (eps));
 %! assert (qe * re, a, sqrt (eps));
-
-%!test
-%! a = [0, 2, 1; 2, 1, 2];
-%!
-%! [q, r] = qr (a);
-%! [qe, re] = qr (a, 0);
-%!
-%! assert (q * r, a, sqrt (eps));
-%! assert (qe * re, a, sqrt (eps));
+%! assert (qe2 * re2, a, sqrt (eps));
 
 %!test
 %! a = [0, 2, 1; 2, 1, 2];
 %!
 %! [q, r, p] = qr (a);  # FIXME: not giving right dimensions.
 %! [qe, re, pe] = qr (a, 0);
+%! [qe2, re2, pe2] = qr (a, "econ");
 %!
 %! assert (q * r, a * p, sqrt (eps));
 %! assert (qe * re, a(:, pe), sqrt (eps));
+%! assert (qe2 * re2, a(:, pe2), sqrt (eps));
 
 %!test
 %! a = [0, 2; 2, 1; 1, 2];
 %!
 %! [q, r] = qr (a);
 %! [qe, re] = qr (a, 0);
+%! [qe2, re2] = qr (a, "econ");
 %!
 %! assert (q * r, a, sqrt (eps));
 %! assert (qe * re, a, sqrt (eps));
+%! assert (qe2 * re2, a, sqrt (eps));
 
 %!test
 %! a = [0, 2; 2, 1; 1, 2];
 %!
 %! [q, r, p] = qr (a);
 %! [qe, re, pe] = qr (a, 0);
+%! [qe2, re2, pe2] = qr (a, "econ");
 %!
 %! assert (q * r, a * p, sqrt (eps));
 %! assert (qe * re, a(:, pe), sqrt (eps));
+%! assert (qe2 * re2, a(:, pe2), sqrt (eps));
 
 %!test
 %! a = [0, 2, 1; 2, 1, 2; 3, 1, 2];
@@ -784,20 +789,28 @@ orthogonal basis of @code{span (A)}.
 %! assert (r, re, sqrt (eps));
 %! assert (q'*b, c, sqrt (eps));
 
+## Empty matrices
 %!test
 %! assert (qr (zeros (0, 0)), zeros (0, 0))
 %! assert (qr (zeros (1, 0)), zeros (1, 0))
 %! assert (qr (zeros (0, 1)), zeros (0, 1))
 
+%!testif ; (__have_feature__ ("SPQR") && __have_feature__ ("CHOLMOD")) || __have_feature__ ("CXSPARSE") <*63069>
+%! assert (qr (sparse (0, 0)), sparse (0, 0))
+%! assert (qr (sparse (1, 0)), sparse (1, 0))
+%! assert (qr (sparse (0, 1)), sparse (0, 1))
+
 %!error qr ()
 %!error qr ([1, 2; 3, 4], 0, 2)
+%!error <option string must be .*, not "foo"> qr (magic (3), "foo")
+%!error <option string must be .*, not "foo"> qr (magic (3), rand (3, 1), "foo")
 %!error <too many output arguments for dense A with B>
 %! [q, r, p] = qr (rand (3, 2), rand (3, 1));
 %!error <too many output arguments for dense A with B>
 %! [q, r, p] = qr (rand (3, 2), rand (3, 1), 0);
 
 %!function retval = __testqr (q, r, a, p)
-%!  tol = 100*eps (class (q));
+%!  tol = 100* eps (class (q));
 %!  retval = 0;
 %!  if (nargin == 3)
 %!    n1 = norm (q*r - a);
@@ -868,7 +881,10 @@ orthogonal basis of @code{span (A)}.
 %!        29   -44    52   -23   208   208  -911    99 ];
 %! [q,r] = qr (a);
 %!
-%! assert (all (t) && norm (q*r - a) < 5000*eps);
+%! assert (all (t));
+%! if (all (t))
+%!   assert (norm (q*r - a), 0, 5000*eps);
+%! endif
 
 %!test
 %! a = single ([0, 2, 1; 2, 1, 2]);
@@ -957,7 +973,7 @@ orthogonal basis of @code{span (A)}.
 %!   [q,r,p] = qr (a, 0);  t(j++) = __testqr (q, r, a, p);
 %!   [q,r,p] = qr (a',0);  t(j++) = __testqr (q, r, a', p);
 %!
-%!   a = a+1i*eps ("single");
+%!   a = a+1i* eps ("single");
 %!   [q,r]   = qr (a, 0);  t(j++) = __testqr (q, r, a);
 %!   [q,r]   = qr (a',0);  t(j++) = __testqr (q, r, a');
 %!   [q,r,p] = qr (a, 0);  t(j++) = __testqr (q, r, a, p);
@@ -970,7 +986,7 @@ orthogonal basis of @code{span (A)}.
 %! [q,r,p] = qr (a);   t(j++) = __testqr (q, r, a, p);
 %! [q,r,p] = qr (a');  t(j++) = __testqr (q, r, a', p);
 %!
-%! a = a+1i*eps ("single");
+%! a = a+1i* eps ("single");
 %! [q,r]   = qr (a);   t(j++) = __testqr (q, r, a);
 %! [q,r]   = qr (a');  t(j++) = __testqr (q, r, a');
 %! [q,r,p] = qr (a);   t(j++) = __testqr (q, r, a, p);
@@ -982,7 +998,7 @@ orthogonal basis of @code{span (A)}.
 %! [q,r,p] = qr (a, 0);  t(j++) = __testqr (q, r, a, p);
 %! [q,r,p] = qr (a',0);  t(j++) = __testqr (q, r, a', p);
 %!
-%! a = a+1i*eps ("single");
+%! a = a+1i* eps ("single");
 %! [q,r]   = qr (a, 0);  t(j++) = __testqr (q, r, a);
 %! [q,r]   = qr (a',0);  t(j++) = __testqr (q, r, a');
 %! [q,r,p] = qr (a, 0);  t(j++) = __testqr (q, r, a, p);
@@ -998,7 +1014,10 @@ orthogonal basis of @code{span (A)}.
 %!        29   -44    52   -23   208   208  -911    99 ];
 %! [q,r] = qr (a);
 %!
-%! assert (all (t) && norm (q*r-a) < 5000*eps ("single"));
+%! assert (all (t));
+%! if (all (t))
+%!   assert (norm (q*r - a), 0, 5000 * eps ("single"));
+%! endif
 
 ## The deactivated tests below can't be tested till rectangular back-subs is
 ## implemented for sparse matrices.
@@ -1058,16 +1077,16 @@ orthogonal basis of @code{span (A)}.
 %! ## initialize generators to make behavior reproducible
 %! rand ("state", 42);
 %! randn ("state", 42);
-%! a = 1i*sprandn (n,n,d) + speye (n,n);
+%! a = 1i* sprandn (n,n,d) + speye (n,n);
 %! r = qr (a);
-%! assert (r'*r,a'*a,1e-10);
+%! assert (r'*r, a'*a, 1e-10);
 
 %!testif HAVE_COLAMD; (__have_feature__ ("SPQR") && __have_feature__ ("CHOLMOD")) || __have_feature__ ("CXSPARSE")
 %! n = 20;  d = 0.2;
 %! ## initialize generators to make behavior reproducible
 %! rand ("state", 42);
 %! randn ("state", 42);
-%! a = 1i*sprandn (n,n,d) + speye (n,n);
+%! a = 1i* sprandn (n,n,d) + speye (n,n);
 %! q = symamd (a);
 %! a = a(q,q);
 %! r = qr (a);
@@ -1078,7 +1097,7 @@ orthogonal basis of @code{span (A)}.
 %! ## initialize generators to make behavior reproducible
 %! rand ("state", 42);
 %! randn ("state", 42);
-%! a = 1i*sprandn (n,n,d) + speye (n,n);
+%! a = 1i* sprandn (n,n,d) + speye (n,n);
 %! [c,r] = qr (a, ones (n,1));
 %! assert (r\c, full (a)\ones (n,1), 10e-10);
 
@@ -1087,7 +1106,7 @@ orthogonal basis of @code{span (A)}.
 %! ## initialize generators to make behavior reproducible
 %! rand ("state", 42);
 %! randn ("state", 42);
-%! a = 1i*sprandn (n,n,d) + speye (n,n);
+%! a = 1i* sprandn (n,n,d) + speye (n,n);
 %! b = randn (n,2);
 %! [c,r] = qr (a, b);
 %! assert (r\c, full (a)\b, 10e-10);
@@ -1098,7 +1117,7 @@ orthogonal basis of @code{span (A)}.
 %! ## initialize generators to make behavior reproducible
 %! rand ("state", 42);
 %! randn ("state", 42);
-%! a = 1i*sprandn (n,n+1,d) + speye (n,n+1);
+%! a = 1i* sprandn (n,n+1,d) + speye (n,n+1);
 %! b = randn (n, 2);
 %! [c, r] = qr (a, b);
 %! assert (r\c, full (a)\b, 10e-10);
@@ -1246,8 +1265,9 @@ orthogonal basis of @code{span (A)}.
 */
 
 static
-bool check_qr_dims (const octave_value& q, const octave_value& r,
-                    bool allow_ecf = false)
+bool
+check_qr_dims (const octave_value& q, const octave_value& r,
+               bool allow_ecf = false)
 {
   octave_idx_type m = q.rows ();
   octave_idx_type k = r.rows ();
@@ -1257,7 +1277,8 @@ bool check_qr_dims (const octave_value& q, const octave_value& r,
 }
 
 static
-bool check_index (const octave_value& i, bool vector_allowed = false)
+bool
+check_index (const octave_value& i, bool vector_allowed = false)
 {
   return ((i.isreal () || i.isinteger ())
           && (i.is_scalar_type () || vector_allowed));
@@ -1401,30 +1422,34 @@ economized (R is square).
 %!test
 %! [Q,R] = qr (A);
 %! [Q,R] = qrupdate (Q, R, u, v);
-%! assert (norm (vec (Q'*Q - eye (5)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R)-R), Inf) == 0);
-%! assert (norm (vec (Q*R - A - u*v'), Inf) < norm (A)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (5)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R)-R), Inf), 0);
+%! assert (norm (vec (Q*R - A - u*v'), Inf), 0, norm (A)*1e1*eps);
 %!
 %!test
 %! [Q,R] = qr (Ac);
 %! [Q,R] = qrupdate (Q, R, uc, vc);
-%! assert (norm (vec (Q'*Q - eye (5)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R)-R), Inf) == 0);
-%! assert (norm (vec (Q*R - Ac - uc*vc'), Inf) < norm (Ac)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (5)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R)-R), Inf), 0);
+%! assert (norm (vec (Q*R - Ac - uc*vc'), Inf), 0, norm (Ac)*1e1*eps);
 
 %!test
 %! [Q,R] = qr (single (A));
 %! [Q,R] = qrupdate (Q, R, single (u), single (v));
-%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R)-R), Inf) == 0);
-%! assert (norm (vec (Q*R - single (A) - single (u)*single (v)'), Inf) < norm (single (A))*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R)-R), Inf), single (0));
+%! assert (norm (vec (Q*R - single (A) - single (u)* single (v)'), Inf), ...
+%!         single (0), norm (single (A))*1e1 * eps ("single"));
 %!
 %!test
 %! [Q,R] = qr (single (Ac));
 %! [Q,R] = qrupdate (Q, R, single (uc), single (vc));
-%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R)-R), Inf) == 0);
-%! assert (norm (vec (Q*R - single (Ac) - single (uc)*single (vc)'), Inf) < norm (single (Ac))*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R)-R), Inf), single (0));
+%! assert (norm (vec (Q*R - single (Ac) - single (uc)* single (vc)'), Inf), ...
+%!         single (0), norm (single (Ac))*1e1 * eps ("single"));
 */
 
 DEFUN (qrinsert, args, ,
@@ -1568,60 +1593,70 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 %!test
 %! [Q,R] = qr (A);
 %! [Q,R] = qrinsert (Q, R, 3, u);
-%! assert (norm (vec (Q'*Q - eye (5)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [A(:,1:2) u A(:,3)]), Inf) < norm (A)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (5)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - [A(:,1:2) u A(:,3)]), Inf), 0, norm (A)*1e1*eps);
 %!test
 %! [Q,R] = qr (Ac);
 %! [Q,R] = qrinsert (Q, R, 3, uc);
-%! assert (norm (vec (Q'*Q - eye (5)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [Ac(:,1:2) uc Ac(:,3)]), Inf) < norm (Ac)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (5)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - [Ac(:,1:2) uc Ac(:,3)]), Inf), 0, ...
+%!         norm (Ac) * 1e1 * eps);
 %!test
 %! x = [0.85082  0.76426  0.42883 ];
 %!
 %! [Q,R] = qr (A);
 %! [Q,R] = qrinsert (Q, R, 3, x, "row");
-%! assert (norm (vec (Q'*Q - eye (6)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [A(1:2,:);x;A(3:5,:)]), Inf) < norm (A)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (6)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - [A(1:2,:);x;A(3:5,:)]), Inf), 0, norm (A)*1e1*eps);
 %!test
 %! x = [0.20351 + 0.05401i  0.13141 + 0.43708i  0.29808 + 0.08789i ];
 %!
 %! [Q,R] = qr (Ac);
 %! [Q,R] = qrinsert (Q, R, 3, x, "row");
-%! assert (norm (vec (Q'*Q - eye (6)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [Ac(1:2,:);x;Ac(3:5,:)]), Inf) < norm (Ac)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (6)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - [Ac(1:2,:);x;Ac(3:5,:)]), Inf), 0, ...
+%!         norm (Ac) * 1e1 * eps);
 
 %!test
 %! [Q,R] = qr (single (A));
 %! [Q,R] = qrinsert (Q, R, 3, single (u));
-%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - single ([A(:,1:2) u A(:,3)])), Inf) < norm (single (A))*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - single ([A(:,1:2) u A(:,3)])), Inf), ...
+%!         single (0), norm (single (A))*1e1 * eps ("single"));
 %!test
 %! [Q,R] = qr (single (Ac));
 %! [Q,R] = qrinsert (Q, R, 3, single (uc));
-%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - single ([Ac(:,1:2) uc Ac(:,3)])), Inf) < norm (single (Ac))*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - single ([Ac(:,1:2) uc Ac(:,3)])), Inf), ...
+%!         single (0), norm (single (Ac))*1e1 * eps ("single"));
 %!test
 %! x = single ([0.85082  0.76426  0.42883 ]);
 %!
 %! [Q,R] = qr (single (A));
 %! [Q,R] = qrinsert (Q, R, 3, x, "row");
-%! assert (norm (vec (Q'*Q - eye (6,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - single ([A(1:2,:);x;A(3:5,:)])), Inf) < norm (single (A))*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (6,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - single ([A(1:2,:);x;A(3:5,:)])), Inf), ...
+%!         single (0), norm (single (A))*1e1 * eps ("single"));
 %!test
 %! x = single ([0.20351 + 0.05401i  0.13141 + 0.43708i  0.29808 + 0.08789i ]);
 %!
 %! [Q,R] = qr (single (Ac));
 %! [Q,R] = qrinsert (Q, R, 3, x, "row");
-%! assert (norm (vec (Q'*Q - eye (6,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - single ([Ac(1:2,:);x;Ac(3:5,:)])), Inf) < norm (single (Ac))*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (6,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - single ([Ac(1:2,:);x;Ac(3:5,:)])), Inf), ...
+%!         single (0), norm (single (Ac))*1e1 * eps ("single"));
 */
 
 DEFUN (qrdelete, args, ,
@@ -1761,9 +1796,9 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrdelete (Q, R, 3);
-%! assert (norm (vec (Q'*Q - eye (5)), Inf) < 16*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [AA(:,1:2) AA(:,4)]), Inf) < norm (AA)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (5)), Inf), 0, 16*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - [AA(:,1:2) AA(:,4)]), Inf), 0, norm (AA)*1e1*eps);
 %!
 %!test
 %! AA = [0.364554 + 0.993117i  0.669818 + 0.510234i  0.426568 + 0.041337i  0.847051 + 0.233291i;
@@ -1787,9 +1822,9 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrdelete (Q, R, 3, "row");
-%! assert (norm (vec (Q'*Q - eye (4)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf) < norm (AA)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (4)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf), 0, norm (AA)*1e1*eps);
 %!
 %!test
 %! AA = [0.364554 + 0.993117i  0.669818 + 0.510234i  0.426568 + 0.041337i  0.847051 + 0.233291i;
@@ -1800,9 +1835,9 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrdelete (Q, R, 3, "row");
-%! assert (norm (vec (Q'*Q - eye (4)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf) < norm (AA)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (4)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf), 0, norm (AA)*1e1*eps);
 
 %!test
 %! AA = single ([0.091364  0.613038  0.027504  0.999083;
@@ -1813,9 +1848,11 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrdelete (Q, R, 3);
-%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [AA(:,1:2) AA(:,4)]), Inf) < norm (AA)*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - [AA(:,1:2) AA(:,4)]), Inf), single (0), ...
+%!         norm (AA)*1e1 * eps ("single"));
 %!
 %!test
 %! AA = single ([0.364554 + 0.993117i  0.669818 + 0.510234i  0.426568 + 0.041337i  0.847051 + 0.233291i;
@@ -1826,10 +1863,12 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrdelete (Q, R, 3);
-%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [AA(:,1:2) AA(:,4)]), Inf) < norm (AA)*1e1*eps ("single"));
-%!
+%! assert (norm (vec (Q'*Q - eye (5,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - [AA(:,1:2) AA(:,4)]), Inf), single (0), ...
+%!         norm (AA)*1e1 * eps ("single"));
+
 %!test
 %! AA = single ([0.091364  0.613038  0.027504  0.999083;
 %!               0.594638  0.425302  0.562834  0.603537;
@@ -1839,9 +1878,11 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrdelete (Q, R, 3, "row");
-%! assert (norm (vec (Q'*Q - eye (4,"single")), Inf) < 1.5e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf) < norm (AA)*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (4,"single")), Inf), single (0), ...
+%!         1.5e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf), single (0), ...
+%!         norm (AA)*1e1 * eps ("single"));
 %!testif HAVE_QRUPDATE
 %! ## Same test as above but with more precicision
 %! AA = single ([0.091364  0.613038  0.027504  0.999083;
@@ -1852,9 +1893,11 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrdelete (Q, R, 3, "row");
-%! assert (norm (vec (Q'*Q - eye (4,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf) < norm (AA)*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (4,"single")), Inf), single (0), ...
+%!         1e1* eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf), single (0), ...
+%!         norm (AA)*1e1 * eps ("single"));
 %!
 %!test
 %! AA = single ([0.364554 + 0.993117i  0.669818 + 0.510234i  0.426568 + 0.041337i  0.847051 + 0.233291i;
@@ -1865,9 +1908,11 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrdelete (Q, R, 3, "row");
-%! assert (norm (vec (Q'*Q - eye (4,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf) < norm (AA)*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (4,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - [AA(1:2,:);AA(4:5,:)]), Inf), single (0), ...
+%!         norm (AA)*1e1 * eps ("single"));
 */
 
 DEFUN (qrshift, args, ,
@@ -1970,17 +2015,17 @@ of @w{@var{A}(:,p)}, where @w{p} is the permutation @*
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrshift (Q, R, i, j);
-%! assert (norm (vec (Q'*Q - eye (3)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - AA(:,p)), Inf) < norm (AA)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (3)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - AA(:,p)), Inf), 0, norm (AA)*1e1*eps);
 %!
 %! j = 2;  i = 4;  p = [1:j-1, shift(j:i,+1), i+1:5];
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrshift (Q, R, i, j);
-%! assert (norm (vec (Q'*Q - eye (3)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - AA(:,p)), Inf) < norm (AA)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (3)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - AA(:,p)), Inf), 0, norm (AA)*1e1*eps);
 %!
 %!test
 %! AA = Ac.';
@@ -1988,17 +2033,17 @@ of @w{@var{A}(:,p)}, where @w{p} is the permutation @*
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrshift (Q, R, i, j);
-%! assert (norm (vec (Q'*Q - eye (3)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - AA(:,p)), Inf) < norm (AA)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (3)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - AA(:,p)), Inf), 0, norm (AA)*1e1*eps);
 %!
 %! j = 2;  i = 4;  p = [1:j-1, shift(j:i,+1), i+1:5];
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrshift (Q, R, i, j);
-%! assert (norm (vec (Q'*Q - eye (3)), Inf) < 1e1*eps);
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - AA(:,p)), Inf) < norm (AA)*1e1*eps);
+%! assert (norm (vec (Q'*Q - eye (3)), Inf), 0, 1e1*eps);
+%! assert (norm (vec (triu (R) - R), Inf), 0);
+%! assert (norm (vec (Q*R - AA(:,p)), Inf), 0, norm (AA)*1e1*eps);
 
 %!test
 %! AA = single (A).';
@@ -2006,17 +2051,21 @@ of @w{@var{A}(:,p)}, where @w{p} is the permutation @*
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrshift (Q, R, i, j);
-%! assert (norm (vec (Q'*Q - eye (3,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - AA(:,p)), Inf) < norm (AA)*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (3,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - AA(:,p)), Inf), single (0), ...
+%!         norm (AA)*1e1 * eps ("single"));
 %!
 %! j = 2;  i = 4;  p = [1:j-1, shift(j:i,+1), i+1:5];
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrshift (Q, R, i, j);
-%! assert (norm (vec (Q'*Q - eye (3,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - AA(:,p)), Inf) < norm (AA)*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (3,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - AA(:,p)), Inf), single (0), ...
+%!         norm (AA)*1e1 * eps ("single"));
 %!
 %!test
 %! AA = single (Ac).';
@@ -2024,17 +2073,21 @@ of @w{@var{A}(:,p)}, where @w{p} is the permutation @*
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrshift (Q, R, i, j);
-%! assert (norm (vec (Q'*Q - eye (3,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - AA(:,p)), Inf) < norm (AA)*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (3,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - AA(:,p)), Inf), single (0), ...
+%!         norm (AA)*1e1 * eps ("single"));
 %!
 %! j = 2;  i = 4;  p = [1:j-1, shift(j:i,+1), i+1:5];
 %!
 %! [Q,R] = qr (AA);
 %! [Q,R] = qrshift (Q, R, i, j);
-%! assert (norm (vec (Q'*Q - eye (3,"single")), Inf) < 1e1*eps ("single"));
-%! assert (norm (vec (triu (R) - R), Inf) == 0);
-%! assert (norm (vec (Q*R - AA(:,p)), Inf) < norm (AA)*1e1*eps ("single"));
+%! assert (norm (vec (Q'*Q - eye (3,"single")), Inf), single (0), ...
+%!         1e1 * eps ("single"));
+%! assert (norm (vec (triu (R) - R), Inf), single (0));
+%! assert (norm (vec (Q*R - AA(:,p)), Inf), single (0), ...
+%!         norm (AA)*1e1 * eps ("single"));
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

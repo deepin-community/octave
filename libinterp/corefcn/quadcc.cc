@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2010-2022 The Octave Project Developers
+// Copyright (C) 2010-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,15 +37,15 @@
 #include "defun.h"
 #include "error.h"
 #include "interpreter-private.h"
+#include "interpreter.h"
 #include "ovl.h"
-#include "parse.h"
 #include "utils.h"
 #include "variables.h"
 
 // Extended debugging.
 #define DEBUG_QUADCC 0
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Define the minimum size of the interval heap.
 static const int MIN_CQUAD_HEAPSIZE = 200;
@@ -68,19 +68,19 @@ static const double DROP_RELTOL = std::numeric_limits<double>::epsilon () * 10;
 static const double xi[33] =
 {
   -1., -0.99518472667219688624, -0.98078528040323044912,
-  -0.95694033573220886493, -0.92387953251128675612,
-  -0.88192126434835502970, -0.83146961230254523708,
-  -0.77301045336273696082, -0.70710678118654752440,
-  -0.63439328416364549822, -0.55557023301960222475,
-  -0.47139673682599764857, -0.38268343236508977173,
-  -0.29028467725446236764, -0.19509032201612826785,
-  -0.098017140329560601995, 0., 0.098017140329560601995,
-  0.19509032201612826785, 0.29028467725446236764, 0.38268343236508977173,
-  0.47139673682599764857, 0.55557023301960222475, 0.63439328416364549822,
-  0.70710678118654752440, 0.77301045336273696082, 0.83146961230254523708,
-  0.88192126434835502970, 0.92387953251128675612, 0.95694033573220886493,
-  0.98078528040323044912, 0.99518472667219688624, 1.
-};
+    -0.95694033573220886493, -0.92387953251128675612,
+    -0.88192126434835502970, -0.83146961230254523708,
+    -0.77301045336273696082, -0.70710678118654752440,
+    -0.63439328416364549822, -0.55557023301960222475,
+    -0.47139673682599764857, -0.38268343236508977173,
+    -0.29028467725446236764, -0.19509032201612826785,
+    -0.098017140329560601995, 0., 0.098017140329560601995,
+    0.19509032201612826785, 0.29028467725446236764, 0.38268343236508977173,
+    0.47139673682599764857, 0.55557023301960222475, 0.63439328416364549822,
+    0.70710678118654752440, 0.77301045336273696082, 0.83146961230254523708,
+    0.88192126434835502970, 0.92387953251128675612, 0.95694033573220886493,
+    0.98078528040323044912, 0.99518472667219688624, 1.
+  };
 
 static const double bee[68] =
 {
@@ -1488,7 +1488,7 @@ downdate (double *c, int n, int d, int *nans, int nnans)
 
 // The actual integration routine.
 
-DEFMETHOD (quadcc, interp, args, ,
+DEFMETHOD (quadcc, interp, args, nargout,
            doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{q} =} quadcc (@var{f}, @var{a}, @var{b})
 @deftypefnx {} {@var{q} =} quadcc (@var{f}, @var{a}, @var{b}, @var{tol})
@@ -1537,8 +1537,11 @@ The result of the integration is returned in @var{q}.
 @var{nr_points} is the number of points at which the integrand was evaluated.
 
 If the adaptive integration did not converge, the value of @var{err} will be
-larger than the requested tolerance.  Therefore, it is recommended to verify
-this value for difficult integrands.
+larger than the requested tolerance.  If only a single output is requested then
+a warning will be emitted when the requested tolerance is not met.  If the
+second output @var{err} is requested then no warning is issued and it is the
+responsibility of the programmer to inspect and determine whether the results
+are satisfactory.
 
 @code{quadcc} is capable of dealing with non-numeric values of the integrand
 such as @code{NaN} or @code{Inf}.  If the integral diverges, and @code{quadcc}
@@ -1654,7 +1657,7 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
     nivals = 1 + args(4).numel ();
 
   int cquad_heapsize = (nivals >= MIN_CQUAD_HEAPSIZE ? nivals + 1
-                                                     : MIN_CQUAD_HEAPSIZE);
+                        : MIN_CQUAD_HEAPSIZE);
   // The interval heap.
   OCTAVE_LOCAL_BUFFER (cquad_ival, ivals, cquad_heapsize);
   OCTAVE_LOCAL_BUFFER (double, iivals, cquad_heapsize);
@@ -1668,7 +1671,8 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
   else
     {
       // Intervals around singularities.
-      sing = args(4).array_value ().fortran_vec ();
+      NDArray arr = args(4).array_value ();
+      sing = arr.fortran_vec ();
       iivals[0] = a;
       std::copy_n (sing, nivals-1, iivals+1);
       iivals[nivals] = b;
@@ -1711,7 +1715,7 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
             ex(i) = m + xi[i]*h;
         }
       fargs(0) = ex;
-      fvals = feval (fcn, fargs, 1);
+      fvals = interp.feval (fcn, fargs, 1);
       if (fvals.length () != 1 || ! fvals(0).is_real_matrix ())
         error ("quadcc: integrand F must return a single, real-valued vector");
 
@@ -1821,7 +1825,7 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
                   ex(i) = m + xi[(2*i + 1) * skip[d]] * h;
               }
             fargs(0) = ex;
-            fvals = feval (fcn, fargs, 1);
+            fvals = interp.feval (fcn, fargs, 1);
             if (fvals.length () != 1 || ! fvals(0).is_real_matrix ())
               error ("quadcc: integrand F must return a single, real-valued vector");
 
@@ -1954,7 +1958,7 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
                   ex(i) = ml + xi[(i + 1) * skip[0]] * hl;
               }
             fargs(0) = ex;
-            fvals = feval (fcn, fargs, 1);
+            fvals = interp.feval (fcn, fargs, 1);
             if (fvals.length () != 1 || ! fvals(0).is_real_matrix ())
               error ("quadcc: integrand F must return a single, real-valued vector");
 
@@ -2045,7 +2049,7 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
                   ex(i) = mr + xi[(i + 1) * skip[0]] * hr;
               }
             fargs(0) = ex;
-            fvals = feval (fcn, fargs, 1);
+            fvals = interp.feval (fcn, fargs, 1);
             if (fvals.length () != 1 || ! fvals(0).is_real_matrix ())
               error ("quadcc: integrand F must return a single, real-valued vector");
 
@@ -2204,6 +2208,9 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
     }
 #endif
 
+  if (nargout < 2 && err > std::max (abstol, reltol * std::abs (igral)))
+    warning ("quadcc: Error tolerance not met.  Estimated error: %g\n", err);
+
   if (issingle)
     return ovl (static_cast<float> (igral), err, neval);
   else
@@ -2212,14 +2219,16 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
 
 /*
 %!assert (quadcc (@sin, -pi, pi), 0, 1e-10)
-%!assert (quadcc (inline ("sin"), -pi, pi), 0, 1e-10)
+%!test
+%! warning ("off", "Octave:legacy-function", "local");
+%! assert (quadcc (inline ("sin"), -pi, pi), 0, 1e-10);
 %!assert (quadcc ("sin", -pi, pi), 0, 1e-10)
 
 %!assert (quadcc (@sin, -pi, 0), -2, 1e-10)
 %!assert (quadcc (@sin, 0, pi), 2, 1e-10)
 %!assert (quadcc (@(x) 1./sqrt (x), 0, 1), 2, -1e-6)
 %!assert (quadcc (@(x) 1./(sqrt (x).*(x+1)), 0, Inf), pi, -1e-6)
-%!assert (quadcc (@(x) 1./(sqrt (x).*(x+1)), 0, Inf, [0, 1e-8]), pi, -1e-8)
+%!assert (quadcc (@(x) 1./(sqrt (x).*(x+1)), 0, Inf, [0, 2e-7]), pi, -2e-7)
 
 %!assert (quadcc (@(x) exp (-x .^ 2), -Inf, Inf), sqrt (pi), 1e-10)
 %!assert (quadcc (@(x) exp (-x .^ 2), -Inf, 0), sqrt (pi)/2, 1e-10)
@@ -2243,6 +2252,12 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
 %! assert (class (quadcc (@sin, 0, single (1))), "single");
 %! assert (class (quadcc (@sin, single (0), single (1))), "single");
 
+%!test <*62412>
+%! f = @(t) -1 ./ t.^1.1;
+%! fail ("quadcc (f, 1, Inf)", "warning", "Error tolerance not met");
+%! [q, err] = quadcc (f, 1, Inf);
+%! assert (err > 1e-5);
+
 ## Test input validation
 %!error quadcc ()
 %!error quadcc (@sin)
@@ -2258,4 +2273,4 @@ Mathematical Software, Vol.@: 37, Issue 3, Article No.@: 3, 2010.
 %!error <SING.* must be .* real values> (quadcc (@sin, 0, pi, 1e-6, [ i ]))
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

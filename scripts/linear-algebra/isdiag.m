@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2014-2022 The Octave Project Developers
+## Copyright (C) 2014-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,24 +24,25 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} isdiag (@var{A})
-## Return true if @var{A} is a diagonal matrix.
+## @deftypefn {} {@var{tf} =} isdiag (@var{A})
+## Return true if @var{A} is a diagonal numeric matrix which is defined as a
+## 2-D array where all elements above and below the main diagonal are zero.
 ## @seealso{isbanded, istril, istriu, diag, bandwidth}
 ## @end deftypefn
 
-function retval = isdiag (A)
+function tf = isdiag (A)
 
   if (nargin < 1)
     print_usage ();
   endif
 
   if (strfind (typeinfo (A), "diagonal matrix"))
-    retval = true;
+    tf = true;
   elseif ((isnumeric (A) || islogical (A)) && ndims (A) == 2)
     [i, j] = find (A);
-    retval = all (i == j);
+    tf = all (i == j);
   else
-    retval = false;
+    tf = false;
   endif
 
 endfunction

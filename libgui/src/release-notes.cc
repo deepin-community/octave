@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -27,103 +27,96 @@
 #  include "config.h"
 #endif
 
-#include <QDesktopWidget>
+#include <QApplication>
 #include <QFile>
 #include <QIcon>
 #include <QLayout>
+#include <QScreen>
 #include <QTextBrowser>
 #include <QTextStream>
 #include <QThread>
 
 #include "release-notes.h"
+#include "gui-utils.h"
+#include "gui-preferences-dw.h"
 #include "gui-preferences-nr.h"
+#include "gui-settings.h"
 #include "news-reader.h"
-#include "octave-qobject.h"
 
 #include "defaults.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+release_notes::release_notes ()
+  : QWidget (nullptr), m_browser (nullptr)
 {
-  release_notes::release_notes (void)
-    : QWidget (nullptr), m_browser (nullptr),
-      m_release_notes_icon (":/actions/icons/logo.png")
-  {
-#if 0
-    // The following code was in main-window.cc.  How should that be
-    // handled here?
-    if (dw_icon_set_names[icon_set_found].name != "NONE")
-      m_release_notes_icon = dw_icon_set_names[icon_set_found].path
-                             + "ReleaseWidget.png";
-    else
-      m_release_notes_icon = ":/actions/icons/logo.png";
-#endif
 
-    std::string news_file = config::oct_etc_dir () + "/NEWS";
+  gui_settings settings;
 
-    QString news;
+  // The icon
+  QString icon_set = settings.string_value (dw_icon_set);
 
-    QFile *file = new QFile (QString::fromStdString (news_file));
-    if (file->open (QFile::ReadOnly))
-      {
-        QTextStream *stream = new QTextStream (file);
-        news = stream->readAll ();
-        if (! news.isEmpty ())
-          {
-            // Convert '<', '>' which would be interpreted as HTML
-            news.replace ("<", "&lt;");
-            news.replace (">", "&gt;");
-            // Add HTML tags for pre-formatted text
-            news.prepend ("<pre>");
-            news.append ("</pre>");
-          }
-        else
-          news = (tr ("The release notes file '%1' is empty.")
-                  . arg (QString::fromStdString (news_file)));
-      }
-    else
-      news = (tr ("The release notes file '%1' cannot be read.")
-              . arg (QString::fromStdString (news_file)));
+  if (icon_set != "NONE")
+    m_release_notes_icon = dw_icon_set_names[icon_set]
+                           + "ReleaseWidget.png";
+  else
+    m_release_notes_icon = dw_icon_set_names[icon_set];
 
+  std::string news_file = config::oct_etc_dir () + "/NEWS";
 
-    m_browser = new QTextBrowser (this);
-    m_browser->setText (news);
+  QString news;
 
-    QVBoxLayout *vlayout = new QVBoxLayout;
-    vlayout->addWidget (m_browser);
+  QFile *file = new QFile (QString::fromStdString (news_file));
+  if (file->open (QFile::ReadOnly))
+    {
+      QTextStream *stream = new QTextStream (file);
+      news = stream->readAll ();
+      if (! news.isEmpty ())
+        {
+          // Convert '<', '>' which would be interpreted as HTML
+          news.replace ("<", "&lt;");
+          news.replace (">", "&gt;");
+          // Add HTML tags for pre-formatted text
+          news.prepend ("<pre>");
+          news.append ("</pre>");
+        }
+      else
+        news = (tr ("The release notes file '%1' is empty.")
+                . arg (QString::fromStdString (news_file)));
+    }
+  else
+    news = (tr ("The release notes file '%1' cannot be read.")
+            . arg (QString::fromStdString (news_file)));
 
-    setLayout (vlayout);
-    setWindowTitle (tr ("Octave Release Notes"));
+  m_browser = new QTextBrowser (this);
+  m_browser->setText (news);
 
-    m_browser->document ()->adjustSize ();
+  QVBoxLayout *vlayout = new QVBoxLayout;
+  vlayout->addWidget (m_browser);
 
-    int win_x, win_y;
-    get_screen_geometry (win_x, win_y);
+  setLayout (vlayout);
+  setWindowTitle (tr ("Octave Release Notes"));
 
-    resize (win_x*2/5, win_y*2/3);
-    move (20, 20);  // move to the top left corner
-  }
+  m_browser->document ()->adjustSize ();
 
-  void release_notes::display (void)
-  {
-    if (! isVisible ())
-      show ();
-    else if (isMinimized ())
-      showNormal ();
+  int win_x, win_y;
+  get_screen_geometry (win_x, win_y);
 
-    setWindowIcon (QIcon (m_release_notes_icon));
-
-    raise ();
-    activateWindow ();
-  }
-
-  // FIXME: This function is duplicated in main_window.cc.  Maybe it
-  // should be a utility function?
-
-  void release_notes::get_screen_geometry (int& width, int& height)
-  {
-    QRect screen_geometry = QApplication::desktop ()->availableGeometry (this);
-
-    width = screen_geometry.width ();
-    height = screen_geometry.height ();
-  }
+  resize (win_x*2/5, win_y*2/3);
+  move (20, 20);  // move to the top left corner
 }
+
+void release_notes::display ()
+{
+  if (! isVisible ())
+    show ();
+  else if (isMinimized ())
+    showNormal ();
+
+  setWindowIcon (QIcon (m_release_notes_icon));
+
+  raise ();
+  activateWindow ();
+}
+
+OCTAVE_END_NAMESPACE(octave)

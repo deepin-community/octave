@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2010-2022 The Octave Project Developers
+// Copyright (C) 2010-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,7 +33,6 @@
 #include "ov-oncleanup.h"
 #include "ov-fcn.h"
 #include "ov-usr-fcn.h"
-#include "parse.h"
 #include "pt-misc.h"
 
 DEFINE_OV_TYPEID_FUNCTIONS_AND_DATA (octave_oncleanup, "onCleanup",
@@ -66,13 +65,13 @@ octave_oncleanup::octave_oncleanup (const octave_value& f)
     }
 }
 
-octave_oncleanup::~octave_oncleanup (void)
+octave_oncleanup::~octave_oncleanup ()
 {
   call_object_destructor ();
 }
 
 octave_scalar_map
-octave_oncleanup::scalar_map_value (void) const
+octave_oncleanup::scalar_map_value () const
 {
   octave_scalar_map retval;
   retval.setfield ("task", m_fcn);
@@ -146,7 +145,7 @@ octave_oncleanup::print_raw (std::ostream& os, bool pr_as_read_syntax) const
 }
 
 void
-octave_oncleanup::call_object_destructor (void)
+octave_oncleanup::call_object_destructor ()
 {
   if (m_fcn.is_undefined ())
     return;
@@ -164,15 +163,14 @@ octave_oncleanup::call_object_destructor (void)
   frame.protect_var (quit_allowed);
   quit_allowed = false;
 
-  octave::interpreter& interp
-    = octave::__get_interpreter__ ("octave_oncleanup::call_object_destructor");
+  octave::interpreter& interp = octave::__get_interpreter__ ();
 
   octave::interpreter_try (frame);
 
   try
     {
       // Run the actual code.
-      octave::feval (the_fcn);
+      interp.feval (the_fcn);
     }
   catch (const octave::interrupt_exception&)
     {
@@ -202,18 +200,36 @@ octave_oncleanup::call_object_destructor (void)
     }
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (onCleanup, args, ,
        doc: /* -*- texinfo -*-
 @deftypefn {} {@var{obj} =} onCleanup (@var{function})
-Create a special object that executes a given function upon destruction.
+Create a special object that executes a given @var{function} upon destruction.
 
 If the object is copied to multiple variables (or cell or struct array
-elements) or returned from a function, @var{function} will be executed after
-clearing the last copy of the object.  Note that if multiple local onCleanup
-variables are created, the order in which they are called is unspecified.
-For similar functionality @xref{The unwind_protect Statement}.
+elements) or returned from a function, then @var{function} will be executed
+only after the last copy of the object is cleared.
+
+The input @var{function} is a handle to a function.  The handle may point to an
+anonymous function in order to directly place commands in the @code{onCleanup}
+call.
+
+Programming Note: If multiple local @code{onCleanup} variables are created, the
+order in which they are called is unspecified.  For similar functionality
+@xref{The unwind_protect Statement}.
+
+Example
+
+@example
+@group
+octave:1> trigger = onCleanup (@@() disp ('onCleanup was executed'));
+octave:2> clear trigger
+onCleanup was executed
+octave:3
+@end group
+@end example
+
 @end deftypefn */)
 {
   if (args.length () != 1)
@@ -236,4 +252,4 @@ For similar functionality @xref{The unwind_protect Statement}.
 %! end_unwind_protect
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

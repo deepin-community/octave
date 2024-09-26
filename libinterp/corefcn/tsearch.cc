@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2002-2022 The Octave Project Developers
+// Copyright (C) 2002-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,33 +35,26 @@
 #include "error.h"
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-inline double max (double a, double b, double c)
+inline double
+max (double a, double b, double c)
 {
-  if (a < b)
-    return (b < c ? c : b);
-  else
-    return (a < c ? c : a);
+  return (a > b) ? (a > c ? a : c) : (b > c ? b : c);
 }
 
-inline double min (double a, double b, double c)
+inline double
+min (double a, double b, double c)
 {
-  if (a > b)
-    return (b > c ? c : b);
-  else
-    return (a > c ? c : a);
+  return (a < b) ? (a < c ? a : c) : (b < c ? b : c);
 }
 
 #define REF(x,k,i) x(static_cast<octave_idx_type> (elem((k), (i))) - 1)
 
-// for large data set the algorithm is very slow
-// one should presort (how?) either the elements of the points of evaluation
-// to cut down the time needed to decide which triangle contains the
-// given point
-
-// e.g., build up a neighbouring triangle structure and use a simplex-like
-// method to traverse it
+// The algorithm is O(M*N) for M points and N triangles.
+// Faster performance (closer to linear) happens if the points form a
+// contiguous path, such as a person on a walk recording their position every
+// few seconds and querying which map sector they are in.
 
 DEFUN (tsearch, args, ,
        doc: /* -*- texinfo -*-
@@ -71,6 +64,13 @@ Search for the enclosing Delaunay convex hull.
 For @code{@var{t} = delaunay (@var{x}, @var{y})}, finds the index in @var{t}
 containing the points @code{(@var{xi}, @var{yi})}.  For points outside the
 convex hull, @var{idx} is NaN.
+
+Programming Note: The algorithm is @qcode{O}(@var{M}*@var{N}) for locating
+@var{M} points in @var{N} triangles.  Performance is typically much faster if
+the points to be located are in a single continuous path; a point is first
+checked against the region its predecessor was found in, speeding up lookups
+for points along a continuous path.
+
 @seealso{delaunay, delaunayn}
 @end deftypefn */)
 {
@@ -102,39 +102,42 @@ convex hull, @var{idx} is NaN.
   const octave_idx_type np = xi.numel ();
   ColumnVector values (np);
 
-  double x0, y0, a11, a12, a21, a22, det;
-  x0 = y0 = 0.0;
-  a11 = a12 = a21 = a22 = 0.0;
-  det = 0.0;
+  double x0 = 0.0, y0 = 0.0;
+  double a11 = 0.0, a12 = 0.0, a21 = 0.0, a22 = 0.0, det = 0.0;
+  double xt = 0.0, yt = 0.0;
+  double dx1 = 0.0, dx2 = 0.0, c1 = 0.0, c2 = 0.0;
 
-  octave_idx_type k = nelem; // k is a counter of elements
-  for (octave_idx_type kp = 0; kp < np; kp++)
+  octave_idx_type k = nelem;   // k is more than just an index variable.
+
+  for (octave_idx_type kp = 0; kp < np; kp++)   // for each point
     {
-      const double xt = xi(kp);
-      const double yt = yi(kp);
+      xt = xi (kp);
+      yt = yi (kp);
 
-      // check if last triangle contains the next point
-      if (k < nelem)
+      // Check if point (xt,yt) is in the triangle that was last examined.
+      // This is for inputs where points are in contiguous order,
+      // like when the points are sampled from a continuous path.
+      if (k < nelem)  // This check will be false for the very first point.
         {
-          const double dx1 = xt - x0;
-          const double dx2 = yt - y0;
-          const double c1 = (a22 * dx1 - a21 * dx2) / det;
-          const double c2 = (-a12 * dx1 + a11 * dx2) / det;
-          if (c1 >= -eps && c2 >= -eps && (c1 + c2) <= (1 + eps))
+          // If we are here, then x0, y0, det all exist from before.
+          dx1 = xt - x0;
+          dx2 = yt - y0;
+          c1 = (a22 * dx1 - a21 * dx2) / det;
+          c2 = (-a12 * dx1 + a11 * dx2) / det;
+          if (c1 >= -eps && c2 >= -eps && (c1 + c2) <= 1 + eps)
             {
-              values(kp) = double(k+1);
+              values (kp) = k+1;
               continue;
             }
         }
 
-      // it doesn't, so go through all elements
+      // The point is not in the same triangle, so go through all triangles.
       for (k = 0; k < nelem; k++)
         {
-          octave_quit ();
-
           if (xt >= minx(k) && xt <= maxx(k) && yt >= miny(k) && yt <= maxy(k))
             {
-              // element inside the minimum rectangle: examine it closely
+              // Point is inside the triangle's bounding rectangle:
+              // See if it's inside the triangle itself.
               x0  = REF (x, k, 0);
               y0  = REF (y, k, 0);
               a11 = REF (x, k, 1) - x0;
@@ -144,22 +147,22 @@ convex hull, @var{idx} is NaN.
               det = a11 * a22 - a21 * a12;
 
               // solve the system
-              const double dx1 = xt - x0;
-              const double dx2 = yt - y0;
-              const double c1 = (a22 * dx1 - a21 * dx2) / det;
-              const double c2 = (-a12 * dx1 + a11 * dx2) / det;
-              if ((c1 >= -eps) && (c2 >= -eps) && ((c1 + c2) <= (1 + eps)))
+              dx1 = xt - x0;
+              dx2 = yt - y0;
+              c1 = (a22 * dx1 - a21 * dx2) / det;
+              c2 = (-a12 * dx1 + a11 * dx2) / det;
+              if (c1 >= -eps && c2 >= -eps && (c1 + c2) <= 1 + eps)
                 {
-                  values(kp) = double(k+1);
+                  values (kp) = k+1;
                   break;
                 }
-            } //endif # examine this element closely
-        } //endfor # each element
+            } //end see if it's inside the triangle itself
+        } //end for each triangle
 
       if (k == nelem)
-        values(kp) = lo_ieee_nan_value ();
+        values (kp) = lo_ieee_nan_value ();
 
-    } //endfor # kp
+    } //end for each point
 
   return ovl (values);
 }
@@ -178,4 +181,4 @@ convex hull, @var{idx} is NaN.
 %!error tsearch ()
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

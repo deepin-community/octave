@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,115 +37,110 @@ class QMainWindow;
 class QToolBar;
 class QScreen;
 
-namespace octave
-{
-  class base_qobject;
-  class interpreter;
-}
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-namespace octave
-{
+class interpreter;
 
-  enum MouseMode
+enum MouseMode
+{
+  NoMode,
+  RotateMode,
+  ZoomInMode,
+  ZoomOutMode,
+  PanMode,
+  SelectMode,
+  TextMode
+};
+
+class Container;
+class FigureWindow;
+class MenuBar;
+class ToolBar;
+
+class Figure :
+  public Object,
+  public MenuContainer,
+  public GenericEventNotifyReceiver
+{
+  Q_OBJECT
+
+  friend class ToolBar;
+
+public:
+  Figure (octave::interpreter& interp,
+          const graphics_object& go, FigureWindow *win);
+  ~Figure ();
+
+  static Figure *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
+
+  QString fileName ();
+  void setFileName (const QString& name);
+
+  MouseMode mouseMode ();
+
+  Container * innerContainer ();
+  QWidget * menu ();
+  void updateStatusBar (ColumnVector pt);
+
+  void do_connections (const QObject *receiver,
+                       const QObject *emitter = nullptr);
+
+  bool eventNotifyBefore (QObject *watched, QEvent *event);
+  void eventNotifyAfter (QObject *watched, QEvent *event);
+
+protected:
+  enum UpdateBoundingBoxFlag
   {
-    NoMode,
-    RotateMode,
-    ZoomInMode,
-    ZoomOutMode,
-    PanMode,
-    SelectMode,
-    TextMode
+    UpdateBoundingBoxPosition = 0x1,
+    UpdateBoundingBoxSize     = 0x2,
+    UpdateBoundingBoxAll      = 0x3
   };
 
-  class Container;
-  class FigureWindow;
-  class MenuBar;
-  class ToolBar;
+protected:
+  void redraw ();
+  void show ();
+  void print (const QString& file_cmd, const QString& term);
+  void update (int pId);
+  void updateBoundingBox (bool internal = false, int flags = 0);
+  void beingDeleted ();
 
-  class Figure :
-    public Object,
-    public MenuContainer,
-    public GenericEventNotifyReceiver
-  {
-    Q_OBJECT
+private:
+  void showFigureStatusBar (bool visible);
+  void addCustomToolBar (QToolBar *bar, bool visible, bool isdefault);
+  void showCustomToolBar (QToolBar *bar, bool visible);
+  void set_geometry (QRect r);
 
-    friend class ToolBar;
+  void enableMouseTracking ();
 
-  public:
-    Figure (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go, FigureWindow *win);
-    ~Figure (void);
+private slots:
+  void updateFigureHeight (int delta_h);
+  void updateContainer ();
+  void figureWindowShown ();
+  void screenChanged (QScreen *);
 
-    static Figure *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+public slots:
+  uint8NDArray slotGetPixels ();
 
-    QString fileName (void);
-    void setFileName (const QString& name);
+signals:
+  void asyncUpdate ();
+  void interpreter_event (const octave::fcn_callback& fcn);
+  void interpreter_event (const octave::meth_callback& meth);
 
-    MouseMode mouseMode (void);
+private:
+  Container *m_container;
+  bool m_blockUpdates;
+  QToolBar *m_figureToolBar;
+  MenuBar *m_menuBar;
+  QStatusBar *m_statusBar;
+  QRect m_innerRect;
+  QRect m_outerRect;
+  QImage m_pointer_cdata;
+  int m_previousHeight;
+  bool m_resizable;
+};
 
-    Container * innerContainer (void);
-    QWidget * menu (void);
-    void updateStatusBar (ColumnVector pt);
-
-    void do_connections (const QObject *receiver,
-                         const QObject *emitter = nullptr);
-
-    bool eventNotifyBefore (QObject *watched, QEvent *event);
-    void eventNotifyAfter (QObject *watched, QEvent *event);
-
-  protected:
-    enum UpdateBoundingBoxFlag
-    {
-      UpdateBoundingBoxPosition = 0x1,
-      UpdateBoundingBoxSize     = 0x2,
-      UpdateBoundingBoxAll      = 0x3
-    };
-
-  protected:
-    void redraw (void);
-    void show (void);
-    void print (const QString& file_cmd, const QString& term);
-    void update (int pId);
-    void updateBoundingBox (bool internal = false, int flags = 0);
-    void beingDeleted (void);
-
-  private:
-    void showFigureStatusBar (bool visible);
-    void addCustomToolBar (QToolBar *bar, bool visible, bool isdefault);
-    void showCustomToolBar (QToolBar *bar, bool visible);
-    void set_geometry (QRect r);
-
-    void enableMouseTracking (void);
-
-  private slots:
-    void updateFigureHeight (int delta_h);
-    void updateContainer (void);
-    void figureWindowShown ();
-    void screenChanged (QScreen *);
-
-  public slots:
-    uint8NDArray slotGetPixels (void);
-
-  signals:
-    void asyncUpdate (void);
-    void interpreter_event (const octave::fcn_callback& fcn);
-    void interpreter_event (const octave::meth_callback& meth);
-
-  private:
-    Container *m_container;
-    bool m_blockUpdates;
-    QToolBar *m_figureToolBar;
-    MenuBar *m_menuBar;
-    QStatusBar *m_statusBar;
-    QRect m_innerRect;
-    QRect m_outerRect;
-    QImage m_pointer_cdata;
-    int m_previousHeight;
-    bool m_resizable;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

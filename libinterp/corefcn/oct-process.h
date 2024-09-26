@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2019-2022 The Octave Project Developers
+// Copyright (C) 2019-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,55 +30,58 @@
 
 #include <string>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class
+process_execution_result
 {
-  class
-  process_execution_result
-  {
-  public:
+public:
 
-    process_execution_result (void)
-      : m_status (-1), m_err_msg (), m_exit_status (-1), m_stdout_output ()
-    { }
+  process_execution_result ()
+    : m_status (-1), m_err_msg (), m_exit_status (-1), m_stdout_output ()
+  { }
 
-    process_execution_result (int status, int exit_status,
-                              const std::string& stdout_output,
-                              const std::string& err_msg)
-      : m_status (status), m_err_msg (err_msg), m_exit_status (exit_status),
-        m_stdout_output (stdout_output)
-    { }
+  process_execution_result (int status, int exit_status,
+                            const std::string& stdout_output,
+                            const std::string& err_msg)
+    : m_status (status), m_err_msg (err_msg), m_exit_status (exit_status),
+      m_stdout_output (stdout_output)
+  { }
 
-    static OCTINTERP_API process_execution_result
-    of_success (int exit_status, const std::string& stdout_output);
+  OCTAVE_DEFAULT_COPY_MOVE_DELETE (process_execution_result)
 
-    static OCTINTERP_API process_execution_result
-    of_error (int status, const std::string& err_msg);
+  static OCTINTERP_API process_execution_result
+  of_success (int exit_status, const std::string& stdout_output);
 
-    int status (void) const { return m_status; }
+  static OCTINTERP_API process_execution_result
+  of_error (int status, const std::string& err_msg);
 
-    int exit_status (void) const { return m_exit_status; }
+  int status () const { return m_status; }
 
-    std::string err_msg (void) const { return m_err_msg; }
+  int exit_status () const { return m_exit_status; }
 
-    std::string stdout_output (void) const { return m_stdout_output; }
+  std::string err_msg () const { return m_err_msg; }
 
-  private:
+  std::string stdout_output () const { return m_stdout_output; }
 
-    // Launch status of the process, 0 for success, nonzero for error.
-    int m_status;
+private:
 
-    // Error message if executing command failed.
-    std::string m_err_msg;
+  // Launch status of the process, 0 for success, nonzero for error.
+  int m_status;
 
-    // Exit status of the process.
-    int m_exit_status;
+  // Error message if executing command failed.
+  std::string m_err_msg;
 
-    // Collected stdout output of the process.
-    std::string m_stdout_output;
-  };
+  // Exit status of the process.
+  int m_exit_status;
 
-  extern OCTINTERP_API process_execution_result
-  run_command_and_return_output (const std::string& cmd_str);
-}
+  // Collected stdout output of the process.
+  std::string m_stdout_output;
+};
+
+extern OCTINTERP_API process_execution_result
+run_command_and_return_output (const std::string& cmd_str);
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

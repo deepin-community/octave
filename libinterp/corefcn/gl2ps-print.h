@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,13 +32,14 @@
 
 #include "graphics.h"
 
-namespace octave
-{
-  class opengl_functions;
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  extern OCTINTERP_API void
-  gl2ps_print (opengl_functions& glfcns, const graphics_object& fig,
-               const std::string& stream, const std::string& term);
-}
+class opengl_functions;
+
+extern OCTINTERP_API void
+gl2ps_print (opengl_functions& glfcns, const graphics_object& fig,
+             const std::string& stream, const std::string& term);
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

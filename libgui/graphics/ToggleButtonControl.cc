@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,78 +34,73 @@
 #include "Container.h"
 #include "QtHandlesUtils.h"
 
-#include "octave-qobject.h"
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-namespace octave
+ToggleButtonControl *
+ToggleButtonControl::create (octave::interpreter& interp,
+                             const graphics_object& go)
 {
+  Object *parent = parentObject (interp, go);
 
-  ToggleButtonControl *
-  ToggleButtonControl::create (octave::base_qobject& oct_qobj,
-                               octave::interpreter& interp,
-                               const graphics_object& go)
-  {
-    Object *parent = parentObject (interp, go);
+  if (parent)
+    {
+      Container *container = parent->innerContainer ();
 
-    if (parent)
+      if (container)
+        return new ToggleButtonControl (interp, go,
+                                        new QPushButton (container));
+    }
+
+  return nullptr;
+}
+
+ToggleButtonControl::ToggleButtonControl (octave::interpreter& interp,
+                                          const graphics_object& go,
+                                          QPushButton *btn)
+  : ButtonControl (interp, go, btn)
+{
+  Object *parent = parentObject (interp, go);
+  ButtonGroup *btnGroup = dynamic_cast<ButtonGroup *>(parent);
+  if (btnGroup)
+    btnGroup->addButton (btn);
+
+  uicontrol::properties& up = properties<uicontrol> ();
+
+  btn->setCheckable (true);
+  btn->setAutoFillBackground (true);
+  octave_value cdat = up.get_cdata ();
+  QImage img = Utils::makeImageFromCData (cdat,
+                                          cdat.columns (), cdat.rows ());
+  btn->setIcon (QIcon (QPixmap::fromImage (img)));
+  btn->setIconSize (QSize (cdat.columns (), cdat.rows ()));
+}
+
+ToggleButtonControl::~ToggleButtonControl ()
+{ }
+
+void
+ToggleButtonControl::update (int pId)
+{
+  uicontrol::properties& up = properties<uicontrol> ();
+  QPushButton *btn = qWidget<QPushButton> ();
+
+  switch (pId)
+    {
+    case uicontrol::properties::ID_CDATA:
       {
-        Container *container = parent->innerContainer ();
-
-        if (container)
-          return new ToggleButtonControl (oct_qobj, interp, go,
-                                          new QPushButton (container));
+        octave_value cdat = up.get_cdata ();
+        QImage img = Utils::makeImageFromCData (cdat,
+                                                cdat.rows (),
+                                                cdat.columns ());
+        btn->setIcon (QIcon (QPixmap::fromImage (img)));
+        btn->setIconSize (QSize (cdat.columns (), cdat.rows ()));
       }
+      break;
 
-    return nullptr;
-  }
+    default:
+      ButtonControl::update (pId);
+      break;
+    }
+}
 
-  ToggleButtonControl::ToggleButtonControl (octave::base_qobject& oct_qobj,
-                                            octave::interpreter& interp,
-                                            const graphics_object& go,
-                                            QPushButton *btn)
-    : ButtonControl (oct_qobj, interp, go, btn)
-  {
-    Object *parent = parentObject (interp, go);
-    ButtonGroup *btnGroup = dynamic_cast<ButtonGroup *>(parent);
-    if (btnGroup)
-      btnGroup->addButton (btn);
-
-    uicontrol::properties& up = properties<uicontrol> ();
-
-    btn->setCheckable (true);
-    btn->setAutoFillBackground (true);
-    octave_value cdat = up.get_cdata ();
-    QImage img = Utils::makeImageFromCData (cdat,
-                                            cdat.columns (), cdat.rows ());
-    btn->setIcon (QIcon (QPixmap::fromImage (img)));
-    btn->setIconSize (QSize (cdat.columns (), cdat.rows ()));
-  }
-
-  ToggleButtonControl::~ToggleButtonControl (void)
-  { }
-
-  void
-  ToggleButtonControl::update (int pId)
-  {
-    uicontrol::properties& up = properties<uicontrol> ();
-    QPushButton *btn = qWidget<QPushButton> ();
-
-    switch (pId)
-      {
-      case uicontrol::properties::ID_CDATA:
-        {
-          octave_value cdat = up.get_cdata ();
-          QImage img = Utils::makeImageFromCData (cdat,
-                                                  cdat.rows (),
-                                                  cdat.columns ());
-          btn->setIcon (QIcon (QPixmap::fromImage (img)));
-          btn->setIconSize (QSize (cdat.columns (), cdat.rows ()));
-        }
-        break;
-
-      default:
-        ButtonControl::update (pId);
-        break;
-      }
-  }
-
-};
+OCTAVE_END_NAMESPACE(octave);

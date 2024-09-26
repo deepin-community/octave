@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>The DESCRIPTION File (GNU Octave (version 7.1.0))</title>
+<title>The DESCRIPTION File (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="The DESCRIPTION File (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="The DESCRIPTION File (GNU Octave (version 7.1.0))">
+<meta name="description" content="The DESCRIPTION File (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="The DESCRIPTION File (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,10 @@
 <link href="The-INDEX-File.html" rel="next" title="The INDEX File">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+ul.mark-bullet {list-style-type: disc}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,31 +31,31 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="The-DESCRIPTION-File">
-<div class="header">
+<div class="subsection-level-extent" id="The-DESCRIPTION-File">
+<div class="nav-panel">
 <p>
 Next: <a href="The-INDEX-File.html" accesskey="n" rel="next">The INDEX File</a>, Up: <a href="Creating-Packages.html" accesskey="u" rel="up">Creating Packages</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="The-DESCRIPTION-File-1"></span><h4 class="subsection">37.4.1 The DESCRIPTION File</h4>
+<h4 class="subsection" id="The-DESCRIPTION-File-1"><span>37.4.1 The DESCRIPTION File<a class="copiable-link" href="#The-DESCRIPTION-File-1"> &para;</a></span></h4>
 
-<p>The <samp>DESCRIPTION</samp> file contains various information about the
+<p>The <samp class="file">DESCRIPTION</samp> file contains various information about the
 package, such as its name, author, and version.  This file has a very
 simple format
 </p>
-<ul>
-<li> Lines starting with &lsquo;<samp>#</samp>&rsquo; are comments.
+<ul class="itemize mark-bullet">
+<li>Lines starting with &lsquo;<samp class="samp">#</samp>&rsquo; are comments.
 
-</li><li> Lines starting with a blank character are continuations from the
+</li><li>Lines starting with a blank character are continuations from the
 previous line.
 
-</li><li> Everything else is of the form <code>NameOfOption: ValueOfOption</code>.
+</li><li>Everything else is of the form <code class="code">NameOfOption: ValueOfOption</code>.
 </li></ul>
 
-<p>The following is a simple example of a <samp>DESCRIPTION</samp> file
+<p>The following is a simple example of a <samp class="file">DESCRIPTION</samp> file
 </p>
 <div class="example">
-<pre class="example">Name: The name of my package
+<div class="group"><pre class="example-preformatted">Name: The name of my package
 Version: 1.0.0
 Date: 2007-18-04
 Author: The name (and possibly email) of the package author.
@@ -78,114 +67,114 @@ Description: A short description of the package.  If this
  on the next by adding a space to the beginning of the
  following lines.
 License: GPLv3+
-</pre></div>
+</pre></div></div>
 
 <p>The package manager currently recognizes the following keywords
 </p>
-<dl compact="compact">
-<dt><span><code>Name</code></span></dt>
+<dl class="table">
+<dt><code class="code">Name</code></dt>
 <dd><p>Name of the package.
 </p>
 </dd>
-<dt><span><code>Version</code></span></dt>
+<dt><code class="code">Version</code></dt>
 <dd><p>Version of the package.  A package version is typically digits separated by
-dots but may also contain &lsquo;<samp>+</samp>&rsquo;, &lsquo;<samp>-</samp>&rsquo;, &lsquo;<samp>~</samp>&rsquo;, and alphanumeric
-characters (in the &quot;C&quot; locale).  For example, <code>&quot;2.1.0+&quot;</code> could indicate
+dots but may also contain &lsquo;<samp class="samp">+</samp>&rsquo;, &lsquo;<samp class="samp">-</samp>&rsquo;, &lsquo;<samp class="samp">~</samp>&rsquo;, and alphanumeric
+characters (in the &quot;C&quot; locale).  For example, <code class="code">&quot;2.1.0+&quot;</code> could indicate
 a development version of a package.
-Versions are compared using <a href="System-Information.html#XREFcompare_005fversions">compare_versions</a>.
+Versions are compared using <a class="ref" href="System-Information.html#XREFcompare_005fversions">compare_versions</a>.
 </p>
 </dd>
-<dt><span><code>Date</code></span></dt>
+<dt><code class="code">Date</code></dt>
 <dd><p>Date of last update.
 </p>
 </dd>
-<dt><span><code>Author</code></span></dt>
+<dt><code class="code">Author</code></dt>
 <dd><p>Original author of the package.
 </p>
 </dd>
-<dt><span><code>Maintainer</code></span></dt>
+<dt><code class="code">Maintainer</code></dt>
 <dd><p>Maintainer of the package.
 </p>
 </dd>
-<dt><span><code>Title</code></span></dt>
+<dt><code class="code">Title</code></dt>
 <dd><p>A one line description of the package.
 </p>
 </dd>
-<dt><span><code>Description</code></span></dt>
+<dt><code class="code">Description</code></dt>
 <dd><p>A one paragraph description of the package.
 </p>
 </dd>
-<dt><span><code>Categories</code></span></dt>
-<dd><p>Optional keyword describing the package (if no <samp>INDEX</samp> file is
+<dt><code class="code">Categories</code></dt>
+<dd><p>Optional keyword describing the package (if no <samp class="file">INDEX</samp> file is
 given this is mandatory).
 </p>
 </dd>
-<dt><span><code>Problems</code></span></dt>
+<dt><code class="code">Problems</code></dt>
 <dd><p>Optional list of known problems.
 </p>
 </dd>
-<dt><span><code>Url</code></span></dt>
+<dt><code class="code">Url</code></dt>
 <dd><p>Optional list of homepages related to the package.
 </p>
 </dd>
-<dt><span><code>Depends</code></span></dt>
+<dt><code class="code">Depends</code></dt>
 <dd><p>A list of other Octave packages that this package depends on.  This can include
 dependencies on particular versions, with the following format:
 </p>
 <div class="example">
-<pre class="example">Depends: package (&gt;= 1.0.0)
+<pre class="example-preformatted">Depends: package (&gt;= 1.0.0)
 </pre></div>
 
-<p>Possible operators are <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>&gt;=</code> or <code>&gt;</code>.
-If the part of the dependency in <code>()</code> is missing, any version of the
+<p>Possible operators are <code class="code">&lt;</code>, <code class="code">&lt;=</code>, <code class="code">==</code>, <code class="code">&gt;=</code> or <code class="code">&gt;</code>.
+If the part of the dependency in <code class="code">()</code> is missing, any version of the
 package is acceptable.  Multiple dependencies can be defined as a comma
 separated list.  This can be used to define a range of versions of a particular
 package:
 </p>
 <div class="example">
-<pre class="example">Depends: package (&gt;= 1.0.0), package (&lt; 1.5.0)
+<pre class="example-preformatted">Depends: package (&gt;= 1.0.0), package (&lt; 1.5.0)
 </pre></div>
 
 <p>It is also possible to depend on particular versions of Octave core:
 </p>
 <div class="example">
-<pre class="example">Depends: octave (&gt;= 3.8.0)
+<pre class="example-preformatted">Depends: octave (&gt;= 3.8.0)
 </pre></div>
 
 </dd>
-<dt><span><code>License</code></span></dt>
+<dt><code class="code">License</code></dt>
 <dd><p>An optional short description of the used license (e.g., GPL version 3
-or newer).  This is optional since the file <samp>COPYING</samp> is mandatory.
+or newer).  This is optional since the file <samp class="file">COPYING</samp> is mandatory.
 </p>
 </dd>
-<dt><span><code>SystemRequirements</code></span></dt>
+<dt><code class="code">SystemRequirements</code></dt>
 <dd><p>These are the external install dependencies of the package and are not
 checked by the package manager.  This is here as a hint to the
 distribution packager.  They follow the same conventions as the
-<code>Depends</code> keyword.
+<code class="code">Depends</code> keyword.
 </p>
 </dd>
-<dt><span><code>BuildRequires</code></span></dt>
+<dt><code class="code">BuildRequires</code></dt>
 <dd><p>These are the external build dependencies of the package and are not checked by
 the package manager.  This is here as a hint to the distribution packager.
-They follow the same conventions as the <code>Depends</code> keyword.  Note that in
-general, packaging systems such as <code>rpm</code> or <code>deb</code> autoprobe the
+They follow the same conventions as the <code class="code">Depends</code> keyword.  Note that in
+general, packaging systems such as <code class="code">rpm</code> or <code class="code">deb</code> autoprobe the
 install dependencies from the build dependencies, and therefore a
-<code>BuildRequires</code> dependency usually removes the need for a
-<code>SystemRequirements</code> dependency.
+<code class="code">BuildRequires</code> dependency usually removes the need for a
+<code class="code">SystemRequirements</code> dependency.
 </p>
 </dd>
 </dl>
 
 <p>The developer is free to add additional arguments to the
-<samp>DESCRIPTION</samp> file for their own purposes.  One further detail to
-aid the packager is that the <code>SystemRequirements</code> and
-<code>BuildRequires</code> keywords can have a distribution dependent section,
+<samp class="file">DESCRIPTION</samp> file for their own purposes.  One further detail to
+aid the packager is that the <code class="code">SystemRequirements</code> and
+<code class="code">BuildRequires</code> keywords can have a distribution dependent section,
 and the automatic build process will use these.  An example of the
 format of this is
 </p>
 <div class="example">
-<pre class="example">BuildRequires: libtermcap-devel [Mandriva] libtermcap2-devel
+<pre class="example-preformatted">BuildRequires: libtermcap-devel [Mandriva] libtermcap2-devel
 </pre></div>
 
 <p>where the first package name will be used as a default and if the
@@ -194,7 +183,7 @@ name will be used instead.
 </p>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="The-INDEX-File.html">The INDEX File</a>, Up: <a href="Creating-Packages.html">Creating Packages</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

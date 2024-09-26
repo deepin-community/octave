@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -259,7 +259,7 @@ function validateattributes (A, cls, attr, varargin)
     ## FIXME: once we use this in Octave core, it might be worthy to find
     ## which attributes are checked more often, and place them in that
     ## order inside the switch block.
-    switch (tolower (attr{idx++}))
+    switch (lower (attr{idx++}))
       case "2d",
         problem = ndims (A) != 2;
         err_id = "Octave:expected-2d";

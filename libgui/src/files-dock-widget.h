@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -29,6 +29,7 @@
 #include <QAction>
 #include <QComboBox>
 #include <QDate>
+#include <QFileIconProvider>
 #include <QFileSystemModel>
 #include <QList>
 #include <QListView>
@@ -44,195 +45,197 @@
 
 #include "octave-dock-widget.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+//!  Dock widget to display files in the current directory.
+
+class files_dock_widget : public octave_dock_widget
 {
-  class base_qobject;
+  Q_OBJECT
 
-  //!  Dock widget to display files in the current directory.
+public:
 
-  class files_dock_widget : public octave_dock_widget
-  {
-    Q_OBJECT
+  files_dock_widget (QWidget *parent);
 
-  public:
+  ~files_dock_widget () = default;
 
-    files_dock_widget (QWidget *parent, base_qobject& oct_qobj);
+signals:
 
-    ~files_dock_widget (void) = default;
+  //! Emitted, whenever the user requested to open a file.
 
-  signals:
+  void open_file (const QString& fileName);
 
-    //! Emitted, whenever the user requested to open a file.
+  //! Emitted, whenever the currently displayed directory changed.
 
-    void open_file (const QString& fileName);
+  void displayed_directory_changed (const QString& dir);
 
-    //! Emitted, whenever the currently displayed directory changed.
+  //! Emitted, whenever the user requested to load a file in the text editor.
 
-    void displayed_directory_changed (const QString& dir);
+  void load_file_signal (const QString& fileName);
 
-    //! Emitted, whenever the user requested to load a file in the text editor.
+  //! Emitted, whenever the user requested to open an unknown type file.
 
-    void load_file_signal (const QString& fileName);
+  void open_any_signal (const QString& fileName);
 
-    //! Emitted, whenever the user requested to open an unknown type file.
+  //! Emitted, whenever the user requested to run a file.
 
-    void open_any_signal (const QString& fileName);
+  void run_file_signal (const QFileInfo& info);
 
-    //! Emitted, whenever the user requested to run a file.
+  //! Emitted, whenever wants to search for a file .
 
-    void run_file_signal (const QFileInfo& info);
+  void find_files_signal (const QString& startdir);
 
-    //! Emitted, whenever wants to search for a file .
+  //! Emitted, whenever the user removes or renames a file.
 
-    void find_files_signal (const QString& startdir);
+  void file_remove_signal (const QString& old_name, const QString& new_name);
 
-    //! Emitted, whenever the user removes or renames a file.
+  //! Emitted, when a file or directory is renamed.
 
-    void file_remove_signal (const QString& old_name, const QString& new_name);
+  void file_renamed_signal (bool);
 
-    //! Emitted, when a file or directory is renamed.
+  //! Emitted, when the path has to be modified
 
-    void file_renamed_signal (bool);
+  void modify_path_signal (const QStringList& dir_list, bool rm,
+                           bool subdirs);
 
-    //! Emitted, when the path has to be modified
+public slots:
 
-    void modify_path_signal (const QStringList& dir_list, bool rm,
-                             bool subdirs);
+  //! Slot for handling a change in directory via double click.
 
-  public slots:
+  void item_double_clicked (const QModelIndex& index);
 
-    //! Slot for handling a change in directory via double click.
+  //! Slot for handling the up-directory button in the toolbar.
 
-    void item_double_clicked (const QModelIndex& index);
+  void change_directory_up ();
 
-    //! Slot for handling the up-directory button in the toolbar.
+  //! Slot for handling the sync octave directory button in the toolbar.
 
-    void change_directory_up (void);
+  void do_sync_octave_directory ();
 
-    //! Slot for handling the sync octave directory button in the toolbar.
+  //! Slot for handling the sync browser directory button in the toolbar.
 
-    void do_sync_octave_directory (void);
+  void do_sync_browser_directory ();
 
-    //! Slot for handling the sync browser directory button in the toolbar.
+  //! Sets the current directory being displayed.
 
-    void do_sync_browser_directory (void);
+  void set_current_directory (const QString& dir);
 
-    //! Sets the current directory being displayed.
+  //! Accepts user input a the line edit for the current directory.
 
-    void set_current_directory (const QString& dir);
+  void accept_directory_line_edit ();
 
-    //! Accepts user input a the line edit for the current directory.
+  //! Set the internal variable that holds the actual octave variable.
 
-    void accept_directory_line_edit (void);
+  void update_octave_directory (const QString& dir);
 
-    //! Set the internal variable that holds the actual octave variable.
+  //! Tells the widget to react on changed settings.
 
-    void update_octave_directory (const QString& dir);
+  void notice_settings ();
 
-    //! Tells the widget to react on changed settings.
+  void save_settings ();
 
-    void notice_settings (const gui_settings *settings);
+private slots:
 
-    void save_settings (void);
+  void restore_header_state ();
+  void headercontextmenu_requested (const QPoint& pos);
+  void toggle_header (int col);
 
-  private slots:
+  //! Context menu wanted.
 
-    void headercontextmenu_requested (const QPoint& pos);
-    void toggle_header (int col);
+  void contextmenu_requested (const QPoint& pos);
 
-    //! Context menu wanted.
+  //! Context menu actions.
+  //!@{
+  void contextmenu_open (bool);
+  void contextmenu_open_in_editor (bool);
+  void contextmenu_open_in_app (bool);
+  void contextmenu_copy_selection (bool);
+  void contextmenu_run (bool);
+  void contextmenu_load (bool);
+  void contextmenu_rename (bool);
+  void contextmenu_delete (bool);
+  void contextmenu_newfile (bool);
+  void contextmenu_newdir (bool);
+  void contextmenu_setcurrentdir (bool);
+  void contextmenu_add_to_path (bool, bool rm=false, bool subdirs=false);
+  void contextmenu_add_to_path_subdirs (bool);
+  void contextmenu_rm_from_path (bool);
+  void contextmenu_rm_from_path_subdirs (bool);
+  void contextmenu_findfiles (bool);
+  //!@}
 
-    void contextmenu_requested (const QPoint& pos);
+  //! Popdown menu options.
+  //!@{
+  void popdownmenu_newfile (bool);
+  void popdownmenu_newdir (bool);
+  void popdownmenu_search_dir (bool);
+  void popdownmenu_findfiles (bool);
+  void popdownmenu_home (bool);
+  //!@}
 
-    //! Context menu actions.
-    //!@{
-    void contextmenu_open (bool);
-    void contextmenu_open_in_editor (bool);
-    void contextmenu_open_in_app (bool);
-    void contextmenu_copy_selection (bool);
-    void contextmenu_run (bool);
-    void contextmenu_load (bool);
-    void contextmenu_rename (bool);
-    void contextmenu_delete (bool);
-    void contextmenu_newfile (bool);
-    void contextmenu_newdir (bool);
-    void contextmenu_setcurrentdir (bool);
-    void contextmenu_add_to_path (bool, bool rm=false, bool subdirs=false);
-    void contextmenu_add_to_path_subdirs (bool);
-    void contextmenu_rm_from_path (bool);
-    void contextmenu_rm_from_path_subdirs (bool);
-    void contextmenu_findfiles (bool);
-    //!@}
+  //! Inherited from octave_doc_widget.
+  //!@{
+  void copyClipboard ();
+  void pasteClipboard ();
+  void selectAll ();
+  //!@}
 
-    //! Popdown menu options.
-    //!@{
-    void popdownmenu_newfile (bool);
-    void popdownmenu_newdir (bool);
-    void popdownmenu_search_dir (bool);
-    void popdownmenu_findfiles (bool);
-    void popdownmenu_home (bool);
-    //!@}
+private:
 
-    //! Inherited from octave_doc_widget.
-    //!@{
-    void copyClipboard ();
-    void pasteClipboard ();
-    void selectAll ();
-    //!@}
+  //! Get currently selected QFileInfo object.
 
-  private:
+  QList<QFileInfo> get_selected_items_info (bool);
 
-    //! Get currently selected QFileInfo object.
+  //! Process new file/directory actions
 
-    QList<QFileInfo> get_selected_items_info (bool);
+  void process_new_file (const QString& parent_name);
+  void process_new_dir (const QString& parent_name);
 
-    //! Process new file/directory actions
+  //! Process setting current dir or find in files
 
-    void process_new_file (const QString& parent_name);
-    void process_new_dir (const QString& parent_name);
+  void process_set_current_dir (const QString& parent_name);
+  void process_find_files (const QString& dir_name);
 
-    //! Process setting current dir or find in files
+  //! set a new directory or open a file
 
-    void process_set_current_dir (const QString& parent_name);
-    void process_find_files (const QString& dir_name);
+  void display_directory (const QString& dir, bool set_octave_dir = true);
 
-    //! set a new directory or open a file
+  void open_item_in_app (const QModelIndex& index);
 
-    void display_directory (const QString& dir, bool set_octave_dir = true);
+  //! Variables for the actions
 
-    void open_item_in_app (const QModelIndex& index);
+  QToolBar *m_navigation_tool_bar;
+  QAction *m_sync_octave_directory_action;
+  QAction *m_sync_browser_directory_action;
+  QAction *m_rename_action;
 
-    //! Variables for the actions
+  //! The file system model.
 
-    QToolBar *m_navigation_tool_bar;
-    QAction *m_sync_octave_directory_action;
-    QAction *m_sync_browser_directory_action;
+  QFileSystemModel *m_file_system_model;
+  QFileIconProvider *m_file_icon_provider;
 
-    //! The file system model.
+  //! The file system view.
+  //!@{
+  QTreeView *m_file_tree_view;
+  QComboBox *m_current_directory;
+  //!@}
 
-    QFileSystemModel *m_file_system_model;
+  //! Flag if syncing with Octave.
 
-    //! The file system view.
-    //!@{
-    QTreeView *m_file_tree_view;
-    QComboBox *m_current_directory;
-    //!@}
+  bool m_sync_octave_dir;
 
-    //! Flag if syncing with Octave.
+  //! The actual Octave directory.
 
-    bool m_sync_octave_dir;
+  QString m_octave_dir;
 
-    //! The actual Octave directory.
+  enum { MaxMRUDirs = 10 };
 
-    QString m_octave_dir;
+  QStringList m_columns_shown;
+  QStringList m_columns_shown_keys;
+  QList <QVariant> m_columns_shown_defs;
+  QSignalMapper *m_sig_mapper;
+};
 
-    enum { MaxMRUDirs = 10 };
-
-    QStringList m_columns_shown;
-    QStringList m_columns_shown_keys;
-    QList <QVariant> m_columns_shown_defs;
-    QSignalMapper *m_sig_mapper;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

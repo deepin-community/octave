@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "ov-re-sparse.h"
 #include "ov-bool-sparse.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // unary sparse bool matrix ops.
 
@@ -46,22 +46,19 @@ DEFUNOP_OP (not, sparse_bool_matrix, !)
 
 DEFUNOP (uplus, sparse_bool_matrix)
 {
-  const octave_sparse_bool_matrix& v
-    = dynamic_cast<const octave_sparse_bool_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_bool_matrix&, v, a);
   return octave_value (v.sparse_matrix_value ());
 }
 
 DEFUNOP (uminus, sparse_bool_matrix)
 {
-  const octave_sparse_bool_matrix& v
-    = dynamic_cast<const octave_sparse_bool_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_bool_matrix&, v, a);
   return octave_value (- v.sparse_matrix_value ());
 }
 
 DEFUNOP (transpose, sparse_bool_matrix)
 {
-  const octave_sparse_bool_matrix& v
-    = dynamic_cast<const octave_sparse_bool_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_bool_matrix&, v, a);
   return octave_value (v.sparse_bool_matrix_value ().transpose ());
 }
 
@@ -110,4 +107,4 @@ install_sbm_sbm_ops (octave::type_info& ti)
                        octave_sparse_bool_matrix, assign);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

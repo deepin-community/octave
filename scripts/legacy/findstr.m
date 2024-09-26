@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} findstr (@var{s}, @var{t})
-## @deftypefnx {} {} findstr (@var{s}, @var{t}, @var{overlap})
+## @deftypefn  {} {@var{v} =} findstr (@var{s}, @var{t})
+## @deftypefnx {} {@var{v} =} findstr (@var{s}, @var{t}, @var{overlap})
 ##
 ## This function is obsolete.  Use @code{strfind} instead.
 ##

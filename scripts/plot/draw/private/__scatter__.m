@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2007-2022 The Octave Project Developers
+## Copyright (C) 2007-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -87,7 +87,7 @@ function hs = __scatter__ (varargin)
       c = c(:);
     endif
   elseif (firstnonnumeric == istart && ischar (varargin{istart})
-          && any (tolower (varargin{istart}(1)) == "ymcrgbwk"))
+          && any (lower (varargin{istart}(1)) == "ymcrgbwk"))
     [linespec, valid] = __pltopt__ (fcn, varargin{istart}, false);
     if (valid)
       c = varargin{istart};

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,23 +30,24 @@
 #include "lo-error.h"
 #include "unwind-prot.h"
 
-namespace octave
-{
-  void
-  unwind_protect_safe::warn_unhandled_exception (void) const
-  {
-    (*current_liboctave_warning_handler)
-      ("unhandled exception in unwind_protect_safe handler.  "
-       "It is a bug in Octave for this to happen.  "
-       "Please help improve Octave by reporting it.");
-  }
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  void
-  unwind_action_safe::warn_unhandled_exception (void) const
-  {
-    (*current_liboctave_warning_handler)
-      ("unhandled exception in unwind_action_safe handler.  "
-       "It is a bug in Octave for this to happen.  "
-       "Please help improve Octave by reporting it.");
-  }
+void
+unwind_protect_safe::warn_unhandled_exception () const
+{
+  (*current_liboctave_warning_handler)
+    ("unhandled exception in unwind_protect_safe handler.  "
+     "It is a bug in Octave for this to happen.  "
+     "Please help improve Octave by reporting it.");
 }
+
+void
+unwind_action_safe::warn_unhandled_exception () const
+{
+  (*current_liboctave_warning_handler)
+    ("unhandled exception in unwind_action_safe handler.  "
+     "It is a bug in Octave for this to happen.  "
+     "Please help improve Octave by reporting it.");
+}
+
+OCTAVE_END_NAMESPACE(octave)

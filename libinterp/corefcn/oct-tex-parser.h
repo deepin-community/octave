@@ -53,7 +53,7 @@
 extern int octave_tex_debug;
 #endif
 /* "%code requires" blocks.  */
-#line 62 "/home/jwe/src/octave-stable/libinterp/corefcn/oct-tex-parser.yy"
+#line 62 "../libinterp/corefcn/oct-tex-parser.yy"
 #include <string>
 
 #line 60 "libinterp/corefcn/oct-tex-parser.h"
@@ -92,7 +92,7 @@ extern int octave_tex_debug;
 #if ! defined OCTAVE_TEX_STYPE && ! defined OCTAVE_TEX_STYPE_IS_DECLARED
 union OCTAVE_TEX_STYPE
 {
-#line 65 "/home/jwe/src/octave-stable/libinterp/corefcn/oct-tex-parser.yy"
+#line 65 "../libinterp/corefcn/oct-tex-parser.yy"
 
   // Leaf symbols produced by the scanner.
   char ch;

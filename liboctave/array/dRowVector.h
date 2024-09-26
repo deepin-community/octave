@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1994-2022 The Octave Project Developers
+// Copyright (C) 1994-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,7 +37,7 @@ RowVector : public MArray<double>
 {
 public:
 
-  RowVector (void) : MArray<double> (dim_vector (1, 0)) { }
+  RowVector () : MArray<double> (dim_vector (1, 0)) { }
 
   explicit RowVector (octave_idx_type n)
     : MArray<double> (dim_vector (1, n)) { }
@@ -59,6 +59,8 @@ public:
     return *this;
   }
 
+  ~RowVector () = default;
+
   OCTAVE_API bool operator == (const RowVector& a) const;
   OCTAVE_API bool operator != (const RowVector& a) const;
 
@@ -71,7 +73,7 @@ public:
 
   OCTAVE_API RowVector append (const RowVector& a) const;
 
-  OCTAVE_API ColumnVector transpose (void) const;
+  OCTAVE_API ColumnVector transpose () const;
 
   friend OCTAVE_API RowVector real (const ComplexRowVector& a);
   friend OCTAVE_API RowVector imag (const ComplexRowVector& a);
@@ -88,8 +90,8 @@ public:
 
   // other operations
 
-  OCTAVE_API double min (void) const;
-  OCTAVE_API double max (void) const;
+  OCTAVE_API double min () const;
+  OCTAVE_API double max () const;
 
   // i/o
 

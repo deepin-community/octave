@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} polyaffine (@var{f}, @var{mu})
+## @deftypefn {} {@var{g} =} polyaffine (@var{f}, @var{mu})
 ## Return the coefficients of the polynomial vector @var{f} after an affine
 ## transformation.
 ##

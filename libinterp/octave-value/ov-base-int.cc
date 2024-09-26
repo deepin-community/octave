@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2004-2022 The Octave Project Developers
+// Copyright (C) 2004-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -144,13 +144,13 @@ struct octave_base_int_helper_traits<unsigned char>
 
 template <typename T>
 octave_base_value *
-octave_base_int_matrix<T>::try_narrowing_conversion (void)
+octave_base_int_matrix<T>::try_narrowing_conversion ()
 {
   octave_base_value *retval = nullptr;
 
-  if (this->matrix.numel () == 1)
+  if (this->m_matrix.numel () == 1)
     retval = new typename octave_value_int_traits<T>::scalar_type
-               (this->matrix (0));
+    (this->m_matrix (0));
 
   return retval;
 }
@@ -171,7 +171,7 @@ octave_base_int_matrix<T>::convert_to_str_internal (bool, bool, char type) const
     {
       octave_quit ();
 
-      typename T::element_type tmp = this->matrix(i);
+      typename T::element_type tmp = this->m_matrix(i);
 
       typedef typename T::element_type::val_type val_type;
 
@@ -205,82 +205,82 @@ octave_base_int_matrix<T>::convert_to_str_internal (bool, bool, char type) const
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_double (void) const
+octave_base_int_matrix<MT>::as_double () const
 {
-  return NDArray (this->matrix);
+  return NDArray (this->m_matrix);
 }
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_single (void) const
+octave_base_int_matrix<MT>::as_single () const
 {
-  return FloatNDArray (this->matrix);
+  return FloatNDArray (this->m_matrix);
 }
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_int8 (void) const
+octave_base_int_matrix<MT>::as_int8 () const
 {
-  return int8NDArray (this->matrix);
+  return int8NDArray (this->m_matrix);
 }
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_int16 (void) const
+octave_base_int_matrix<MT>::as_int16 () const
 {
-  return int16NDArray (this->matrix);
+  return int16NDArray (this->m_matrix);
 }
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_int32 (void) const
+octave_base_int_matrix<MT>::as_int32 () const
 {
-  return int32NDArray (this->matrix);
+  return int32NDArray (this->m_matrix);
 }
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_int64 (void) const
+octave_base_int_matrix<MT>::as_int64 () const
 {
-  return int64NDArray (this->matrix);
+  return int64NDArray (this->m_matrix);
 }
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_uint8 (void) const
+octave_base_int_matrix<MT>::as_uint8 () const
 {
-  return uint8NDArray (this->matrix);
+  return uint8NDArray (this->m_matrix);
 }
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_uint16 (void) const
+octave_base_int_matrix<MT>::as_uint16 () const
 {
-  return uint16NDArray (this->matrix);
+  return uint16NDArray (this->m_matrix);
 }
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_uint32 (void) const
+octave_base_int_matrix<MT>::as_uint32 () const
 {
-  return uint32NDArray (this->matrix);
+  return uint32NDArray (this->m_matrix);
 }
 
 template <typename MT>
 octave_value
-octave_base_int_matrix<MT>::as_uint64 (void) const
+octave_base_int_matrix<MT>::as_uint64 () const
 {
-  return uint64NDArray (this->matrix);
+  return uint64NDArray (this->m_matrix);
 }
 
 template <typename T>
 std::string
 octave_base_int_matrix<T>::edit_display (const float_display_format& fmt,
-                                         octave_idx_type i,
-                                         octave_idx_type j) const
+    octave_idx_type i,
+    octave_idx_type j) const
 {
   std::ostringstream buf;
-  octave_print_internal (buf, fmt, this->matrix(i, j));
+  octave_print_internal (buf, fmt, this->m_matrix(i, j));
   return buf.str ();
 }
 
@@ -295,7 +295,7 @@ octave_base_int_matrix<T>::save_ascii (std::ostream& os)
   for (int i = 0; i < dv.ndims (); i++)
     os << ' ' << dv(i);
 
-  os << "\n" << this->matrix;
+  os << "\n" << this->m_matrix;
 
   return true;
 }
@@ -325,7 +325,7 @@ octave_base_int_matrix<T>::load_ascii (std::istream& is)
   if (! is)
     error ("load: failed to load matrix constant");
 
-  this->matrix = tmp;
+  this->m_matrix = tmp;
 
   return true;
 }
@@ -347,7 +347,7 @@ octave_base_int_matrix<T>::save_binary (std::ostream& os, bool)
       os.write (reinterpret_cast<char *> (&tmp), 4);
     }
 
-  os.write (reinterpret_cast<const char *> (this->matrix.data ()),
+  os.write (reinterpret_cast<const char *> (this->m_matrix.data ()),
             this->byte_size ());
 
   return true;
@@ -419,15 +419,15 @@ octave_base_int_matrix<T>::load_binary (std::istream& is, bool swap,
           }
     }
 
-  this->matrix = m;
+  this->m_matrix = m;
   return true;
 }
 
 template <typename T>
 bool
 octave_base_int_matrix<T>::save_hdf5_internal (octave_hdf5_id loc_id,
-                                               octave_hdf5_id save_type,
-                                               const char *name, bool)
+    octave_hdf5_id save_type,
+    const char *name, bool)
 {
   bool retval = false;
 
@@ -453,7 +453,8 @@ octave_base_int_matrix<T>::save_hdf5_internal (octave_hdf5_id loc_id,
   if (space_hid < 0) return false;
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (loc_id, name, save_type_hid, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (loc_id, name, save_type_hid, space_hid,
                         octave_H5P_DEFAULT);
@@ -465,7 +466,7 @@ octave_base_int_matrix<T>::save_hdf5_internal (octave_hdf5_id loc_id,
     }
 
   retval = H5Dwrite (data_hid, save_type_hid, octave_H5S_ALL, octave_H5S_ALL,
-                     octave_H5P_DEFAULT, this->matrix.data ()) >= 0;
+                     octave_H5P_DEFAULT, this->m_matrix.data ()) >= 0;
 
   H5Dclose (data_hid);
   H5Sclose (space_hid);
@@ -484,8 +485,8 @@ octave_base_int_matrix<T>::save_hdf5_internal (octave_hdf5_id loc_id,
 template <typename T>
 bool
 octave_base_int_matrix<T>::load_hdf5_internal (octave_hdf5_id loc_id,
-                                               octave_hdf5_id save_type,
-                                               const char *name)
+    octave_hdf5_id save_type,
+    const char *name)
 {
   bool retval = false;
 
@@ -495,7 +496,7 @@ octave_base_int_matrix<T>::load_hdf5_internal (octave_hdf5_id loc_id,
   dim_vector dv;
   int empty = load_hdf5_empty (loc_id, name, dv);
   if (empty > 0)
-    this->matrix.resize (dv);
+    this->m_matrix.resize (dv);
   if (empty)
     return (empty > 0);
 
@@ -539,7 +540,7 @@ octave_base_int_matrix<T>::load_hdf5_internal (octave_hdf5_id loc_id,
                octave_H5P_DEFAULT, m.fortran_vec ()) >= 0)
     {
       retval = true;
-      this->matrix = m;
+      this->m_matrix = m;
     }
 
   H5Sclose (space_id);
@@ -561,7 +562,7 @@ void
 octave_base_int_matrix<T>::print_raw (std::ostream& os,
                                       bool pr_as_read_syntax) const
 {
-  octave_print_internal (os, this->matrix, pr_as_read_syntax,
+  octave_print_internal (os, this->m_matrix, pr_as_read_syntax,
                          this->current_print_indent_level ());
 }
 
@@ -598,70 +599,70 @@ octave_base_int_scalar<T>::convert_to_str_internal (bool, bool, char type) const
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_double (void) const
+octave_base_int_scalar<T>::as_double () const
 {
   return static_cast<double> (this->scalar);
 }
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_single (void) const
+octave_base_int_scalar<T>::as_single () const
 {
   return static_cast<float> (this->scalar);
 }
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_int8 (void) const
+octave_base_int_scalar<T>::as_int8 () const
 {
   return octave_int8 (this->scalar);
 }
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_int16 (void) const
+octave_base_int_scalar<T>::as_int16 () const
 {
   return octave_int16 (this->scalar);
 }
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_int32 (void) const
+octave_base_int_scalar<T>::as_int32 () const
 {
   return octave_int32 (this->scalar);
 }
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_int64 (void) const
+octave_base_int_scalar<T>::as_int64 () const
 {
   return octave_int64 (this->scalar);
 }
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_uint8 (void) const
+octave_base_int_scalar<T>::as_uint8 () const
 {
   return octave_uint8 (this->scalar);
 }
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_uint16 (void) const
+octave_base_int_scalar<T>::as_uint16 () const
 {
   return octave_uint16 (this->scalar);
 }
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_uint32 (void) const
+octave_base_int_scalar<T>::as_uint32 () const
 {
   return octave_uint32 (this->scalar);
 }
 
 template <typename T>
 octave_value
-octave_base_int_scalar<T>::as_uint64 (void) const
+octave_base_int_scalar<T>::as_uint64 () const
 {
   return octave_uint64 (this->scalar);
 }
@@ -669,8 +670,8 @@ octave_base_int_scalar<T>::as_uint64 (void) const
 template <typename ST>
 std::string
 octave_base_int_scalar<ST>::edit_display (const float_display_format& fmt,
-                                          octave_idx_type,
-                                          octave_idx_type) const
+    octave_idx_type,
+    octave_idx_type) const
 {
   std::ostringstream buf;
   octave_print_internal (buf, fmt, this->scalar);
@@ -725,8 +726,8 @@ octave_base_int_scalar<T>::load_binary (std::istream& is, bool swap,
 template <typename T>
 bool
 octave_base_int_scalar<T>::save_hdf5_internal (octave_hdf5_id loc_id,
-                                               octave_hdf5_id save_type,
-                                               const char *name, bool)
+    octave_hdf5_id save_type,
+    const char *name, bool)
 {
   bool retval = false;
 
@@ -742,7 +743,8 @@ octave_base_int_scalar<T>::save_hdf5_internal (octave_hdf5_id loc_id,
 
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (loc_id, name, save_type_hid, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (loc_id, name, save_type_hid, space_hid,
                         octave_H5P_DEFAULT);
@@ -773,8 +775,8 @@ octave_base_int_scalar<T>::save_hdf5_internal (octave_hdf5_id loc_id,
 template <typename T>
 bool
 octave_base_int_scalar<T>::load_hdf5_internal (octave_hdf5_id loc_id,
-                                               octave_hdf5_id save_type,
-                                               const char *name)
+    octave_hdf5_id save_type,
+    const char *name)
 {
 #if defined (HAVE_HDF5)
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -49,31 +49,32 @@ octave_magic_colon : public octave_base_value
 {
 public:
 
-  octave_magic_colon (void)
+  octave_magic_colon ()
     : octave_base_value () { }
 
   octave_magic_colon (const octave_magic_colon&)
     : octave_base_value () { }
 
-  ~octave_magic_colon (void) = default;
+  ~octave_magic_colon () = default;
 
-  octave_base_value * clone (void) const
+  octave_base_value * clone () const
   { return new octave_magic_colon (*this); }
-  octave_base_value * empty_clone (void) const
+  octave_base_value * empty_clone () const
   { return new octave_magic_colon (); }
 
   octave::idx_vector index_vector (bool /* require_integers */ = false) const
   { return octave::idx_vector (':'); }
 
-  bool is_defined (void) const { return true; }
+  bool is_defined () const { return true; }
 
-  bool is_constant (void) const { return true; }
+  bool is_constant () const { return true; }
 
-  bool is_magic_colon (void) const { return true; }
+  bool is_magic_colon () const { return true; }
 
   OCTINTERP_API void print (std::ostream& os, bool pr_as_read_syntax = false);
 
-  OCTINTERP_API void print_raw (std::ostream& os, bool pr_as_read_syntax = false) const;
+  OCTINTERP_API void print_raw (std::ostream& os,
+                                bool pr_as_read_syntax = false) const;
 
 private:
 

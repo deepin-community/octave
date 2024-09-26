@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -134,10 +134,10 @@ function [tok, rem] = strtok (str, delim)
       tmp = [tmp{:}];
     endif
     tok(midx) = tmp(1:2:end);
-    if (isargout (2))
+    if (nargout > 1)
       rem = cell (size (str));
       rem(eidx) = {""};
-      rem (midx) = tmp(2:2:end);
+      rem(midx) = tmp(2:2:end);
     endif
   endif
 

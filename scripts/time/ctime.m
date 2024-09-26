@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} ctime (@var{t})
+## @deftypefn {} {@var{str} =} ctime (@var{t})
 ## Convert a value returned from @code{time} (or any other non-negative
 ## integer), to the local time and return a string of the same form as
 ## @code{asctime}.
@@ -41,13 +41,13 @@
 ## @seealso{asctime, time, localtime}
 ## @end deftypefn
 
-function retval = ctime (t)
+function str = ctime (t)
 
-  if (nargin < 1)
+  if (nargin != 1)
     print_usage ();
   endif
 
-  retval = asctime (localtime (t));
+  str = asctime (localtime (t));
 
 endfunction
 

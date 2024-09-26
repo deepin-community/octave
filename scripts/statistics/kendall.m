@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} kendall (@var{x})
-## @deftypefnx {} {} kendall (@var{x}, @var{y})
+## @deftypefn  {} {@var{tau} =} kendall (@var{x})
+## @deftypefnx {} {@var{tau} =} kendall (@var{x}, @var{y})
 ## @cindex Kendall's Tau
 ## Compute Kendall's
 ## @tex
@@ -144,8 +144,8 @@ endfunction
 %! assert (kendall (x,y), 1, 5*eps);
 %! assert (kendall (x,fliplr (y)), -1, 5*eps);
 
-%!assert (kendall (logical (1)), 1)
-%!assert (kendall (single (1)), single (1))
+%!assert (kendall (1), NaN)
+%!assert (kendall (single (1)), single (NaN))
 
 ## Test input validation
 %!error <Invalid call> kendall ()

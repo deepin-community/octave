@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,143 +32,135 @@
 #include "pt-id.h"
 #include "pt-walk.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class comment_list;
+class tree_statement_list;
+
+// Simple exception handling.
+
+class tree_try_catch_command : public tree_command
 {
-  class comment_list;
-  class tree_statement_list;
+public:
 
-  // Simple exception handling.
+  tree_try_catch_command (int l = -1, int c = -1)
+    : tree_command (l, c), m_try_code (nullptr), m_catch_code (nullptr),
+      m_expr_id (nullptr), m_lead_comm (nullptr), m_mid_comm (nullptr),
+      m_trail_comm (nullptr)
+  { }
 
-  class tree_try_catch_command : public tree_command
+  tree_try_catch_command (tree_statement_list *tc, tree_statement_list *cc,
+                          tree_identifier *id,
+                          comment_list *cl = nullptr,
+                          comment_list *cm = nullptr,
+                          comment_list *ct = nullptr,
+                          int l = -1, int c = -1)
+    : tree_command (l, c), m_try_code (tc), m_catch_code (cc),
+      m_expr_id (id), m_lead_comm (cl), m_mid_comm (cm), m_trail_comm (ct)
+  { }
+
+  OCTAVE_DISABLE_COPY_MOVE (tree_try_catch_command)
+
+  ~tree_try_catch_command ();
+
+  tree_identifier * identifier () { return m_expr_id; }
+
+  tree_statement_list * body () { return m_try_code; }
+
+  tree_statement_list * cleanup () { return m_catch_code; }
+
+  comment_list * leading_comment () { return m_lead_comm; }
+
+  comment_list * middle_comment () { return m_mid_comm; }
+
+  comment_list * trailing_comment () { return m_trail_comm; }
+
+  void accept (tree_walker& tw)
   {
-  public:
+    tw.visit_try_catch_command (*this);
+  }
 
-    tree_try_catch_command (int l = -1, int c = -1)
-      : tree_command (l, c), m_try_code (nullptr), m_catch_code (nullptr),
-        m_expr_id (nullptr), m_lead_comm (nullptr), m_mid_comm (nullptr),
-        m_trail_comm (nullptr)
-    { }
+private:
 
-    tree_try_catch_command (tree_statement_list *tc, tree_statement_list *cc,
-                            tree_identifier *id,
-                            comment_list *cl = nullptr,
-                            comment_list *cm = nullptr,
-                            comment_list *ct = nullptr,
-                            int l = -1, int c = -1)
-      : tree_command (l, c), m_try_code (tc), m_catch_code (cc),
-        m_expr_id (id), m_lead_comm (cl), m_mid_comm (cm), m_trail_comm (ct)
-    { }
+  // The first block of code to attempt to execute.
+  tree_statement_list *m_try_code;
 
-    // No copying!
+  // The code to execute if an error occurs in the first block.
+  tree_statement_list *m_catch_code;
 
-    tree_try_catch_command (const tree_try_catch_command&) = delete;
+  // Identifier to modify.
+  tree_identifier *m_expr_id;
 
-    tree_try_catch_command& operator = (const tree_try_catch_command&) = delete;
+  // Comment preceding TRY token.
+  comment_list *m_lead_comm;
 
-    ~tree_try_catch_command (void);
+  // Comment preceding CATCH token.
+  comment_list *m_mid_comm;
 
-    tree_identifier * identifier (void) { return m_expr_id; }
+  // Comment preceding END_TRY_CATCH token.
+  comment_list *m_trail_comm;
+};
 
-    tree_statement_list * body (void) { return m_try_code; }
+// Simple exception handling.
 
-    tree_statement_list * cleanup (void) { return m_catch_code; }
+class tree_unwind_protect_command : public tree_command
+{
+public:
 
-    comment_list * leading_comment (void) { return m_lead_comm; }
+  tree_unwind_protect_command (int l = -1, int c = -1)
+    : tree_command (l, c),
+      m_unwind_protect_code (nullptr), m_cleanup_code (nullptr),
+      m_lead_comm (nullptr), m_mid_comm (nullptr), m_trail_comm (nullptr)
+  { }
 
-    comment_list * middle_comment (void) { return m_mid_comm; }
+  tree_unwind_protect_command (tree_statement_list *tc,
+                               tree_statement_list *cc,
+                               comment_list *cl = nullptr,
+                               comment_list *cm = nullptr,
+                               comment_list *ct = nullptr,
+                               int l = -1, int c = -1)
+    : tree_command (l, c), m_unwind_protect_code (tc), m_cleanup_code (cc),
+      m_lead_comm (cl), m_mid_comm (cm), m_trail_comm (ct)
+  { }
 
-    comment_list * trailing_comment (void) { return m_trail_comm; }
+  OCTAVE_DISABLE_COPY_MOVE (tree_unwind_protect_command)
 
-    void accept (tree_walker& tw)
-    {
-      tw.visit_try_catch_command (*this);
-    }
+  ~tree_unwind_protect_command ();
 
-  private:
+  tree_statement_list * body () { return m_unwind_protect_code; }
 
-    // The first block of code to attempt to execute.
-    tree_statement_list *m_try_code;
+  tree_statement_list * cleanup () { return m_cleanup_code; }
 
-    // The code to execute if an error occurs in the first block.
-    tree_statement_list *m_catch_code;
+  comment_list * leading_comment () { return m_lead_comm; }
 
-    // Identifier to modify.
-    tree_identifier *m_expr_id;
+  comment_list * middle_comment () { return m_mid_comm; }
 
-    // Comment preceding TRY token.
-    comment_list *m_lead_comm;
+  comment_list * trailing_comment () { return m_trail_comm; }
 
-    // Comment preceding CATCH token.
-    comment_list *m_mid_comm;
-
-    // Comment preceding END_TRY_CATCH token.
-    comment_list *m_trail_comm;
-  };
-
-  // Simple exception handling.
-
-  class tree_unwind_protect_command : public tree_command
+  void accept (tree_walker& tw)
   {
-  public:
+    tw.visit_unwind_protect_command (*this);
+  }
 
-    tree_unwind_protect_command (int l = -1, int c = -1)
-      : tree_command (l, c),
-        m_unwind_protect_code (nullptr), m_cleanup_code (nullptr),
-        m_lead_comm (nullptr), m_mid_comm (nullptr), m_trail_comm (nullptr)
-    { }
+private:
 
-    tree_unwind_protect_command (tree_statement_list *tc,
-                                 tree_statement_list *cc,
-                                 comment_list *cl = nullptr,
-                                 comment_list *cm = nullptr,
-                                 comment_list *ct = nullptr,
-                                 int l = -1, int c = -1)
-      : tree_command (l, c), m_unwind_protect_code (tc), m_cleanup_code (cc),
-        m_lead_comm (cl), m_mid_comm (cm), m_trail_comm (ct)
-    { }
+  // The first body of code to attempt to execute.
+  tree_statement_list *m_unwind_protect_code;
 
-    // No copying!
+  // The body of code to execute no matter what happens in the first
+  // body of code.
+  tree_statement_list *m_cleanup_code;
 
-    tree_unwind_protect_command (const tree_unwind_protect_command&) = delete;
+  // Comment preceding UNWIND_PROTECT token.
+  comment_list *m_lead_comm;
 
-    tree_unwind_protect_command&
-    operator = (const tree_unwind_protect_command&) = delete;
+  // Comment preceding UNWIND_PROTECT_CLEANUP token.
+  comment_list *m_mid_comm;
 
-    ~tree_unwind_protect_command (void);
+  // Comment preceding END_UNWIND_PROTECT token.
+  comment_list *m_trail_comm;
+};
 
-    tree_statement_list * body (void) { return m_unwind_protect_code; }
-
-    tree_statement_list * cleanup (void) { return m_cleanup_code; }
-
-    comment_list * leading_comment (void) { return m_lead_comm; }
-
-    comment_list * middle_comment (void) { return m_mid_comm; }
-
-    comment_list * trailing_comment (void) { return m_trail_comm; }
-
-    void accept (tree_walker& tw)
-    {
-      tw.visit_unwind_protect_command (*this);
-    }
-
-  private:
-
-    // The first body of code to attempt to execute.
-    tree_statement_list *m_unwind_protect_code;
-
-    // The body of code to execute no matter what happens in the first
-    // body of code.
-    tree_statement_list *m_cleanup_code;
-
-    // Comment preceding UNWIND_PROTECT token.
-    comment_list *m_lead_comm;
-
-    // Comment preceding UNWIND_PROTECT_CLEANUP token.
-    comment_list *m_mid_comm;
-
-    // Comment preceding END_UNWIND_PROTECT token.
-    comment_list *m_trail_comm;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

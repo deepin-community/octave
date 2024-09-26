@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2005-2022 The Octave Project Developers
+// Copyright (C) 2005-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -167,7 +167,7 @@ glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
           break;
         }
 
-      glp_set_row_bnds (lp, i+1, typx, b[i], b[i]);
+      glp_set_row_bnds (lp, i+1, typx, typx == GLP_DB ? -b[i] : b[i], b[i]);
 
     }
 
@@ -307,7 +307,7 @@ glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 
 #endif
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 #define OCTAVE_GLPK_GET_REAL_PARAM(NAME, VAL)                           \
   do                                                                    \
@@ -646,4 +646,4 @@ Undocumented internal function.
 %!assert (1)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

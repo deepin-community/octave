@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -67,36 +67,10 @@ default_numeric_conversion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_sparse_bool_matrix::numeric_conversion_function (void) const
+octave_sparse_bool_matrix::numeric_conversion_function () const
 {
   return octave_base_value::type_conv_info (default_numeric_conversion_function,
-                                            octave_sparse_matrix::static_type_id ());
-}
-
-octave_base_value *
-octave_sparse_bool_matrix::try_narrowing_conversion (void)
-{
-  octave_base_value *retval = nullptr;
-
-  if (Vsparse_auto_mutate)
-    {
-      // Don't use numel, since it can overflow for very large matrices
-      // Note that for the second test, this means it becomes approximative
-      // since it involves a cast to double to avoid issues of overflow
-      if (matrix.rows () == 1 && matrix.cols () == 1)
-        {
-          // Const copy of the matrix, so the right version of () operator used
-          const SparseBoolMatrix tmp (matrix);
-
-          retval = new octave_bool (tmp (0));
-        }
-      else if (matrix.cols () > 0 && matrix.rows () > 0
-               && (double (matrix.byte_size ()) > double (matrix.rows ())
-                   * double (matrix.cols ()) * sizeof (bool)))
-        retval = new octave_bool_matrix (matrix.matrix_value ());
-    }
-
-  return retval;
+         octave_sparse_matrix::static_type_id ());
 }
 
 double
@@ -127,7 +101,7 @@ octave_sparse_bool_matrix::complex_value (bool) const
 
 octave_value
 octave_sparse_bool_matrix::convert_to_str_internal (bool pad, bool force,
-                                                    char type) const
+    char type) const
 {
   octave_value tmp = octave_value (array_value ());
   return tmp.convert_to_str (pad, force, type);
@@ -198,7 +172,7 @@ octave_sparse_bool_matrix::sparse_complex_matrix_value (bool) const
 }
 
 octave_value
-octave_sparse_bool_matrix::as_double (void) const
+octave_sparse_bool_matrix::as_double () const
 {
   return SparseMatrix (this->matrix);
 }
@@ -213,9 +187,20 @@ octave_sparse_bool_matrix::save_binary (std::ostream& os, bool)
   // Ensure that additional memory is deallocated
   matrix.maybe_compress ();
 
-  int nr = dv(0);
-  int nc = dv(1);
-  int nz = nnz ();
+  octave_idx_type nr = dv(0);
+  octave_idx_type nc = dv(1);
+  octave_idx_type nz = nnz ();
+
+  // For compatiblity, indices are always saved with 4 bytes
+#if OCTAVE_SIZEOF_IDX_TYPE == OCTAVE_SIZEOF_INT
+  if (nr < 0 || nc < 0 || nz < 0)
+    return false;
+#else
+  octave_idx_type max_val = std::numeric_limits<uint32_t>::max ();
+  if (nr < 0 || nr > max_val || nc < 0 || nc > max_val
+      || nz < 0 || nz > max_val)
+    return false;
+#endif
 
   int32_t itmp;
   // Use negative value for ndims to be consistent with other formats

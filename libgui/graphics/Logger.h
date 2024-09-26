@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,29 +30,28 @@
 
 class QMutex;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class Logger
 {
+public:
+  static void debug (const char *fmt, ...);
 
-  class Logger
-  {
-  public:
-    static void debug (const char *fmt, ...);
+private:
+  bool m_debugEnabled;
 
-  private:
-    bool m_debugEnabled;
+  static Logger *s_instance;
+  static QMutex *s_mutex;
 
-    static Logger *s_instance;
-    static QMutex *s_mutex;
+private:
+  Logger ();
+  ~Logger ();
 
-  private:
-    Logger (void);
-    ~Logger (void);
+  static Logger * instance ();
 
-    static Logger * instance (void);
+  void debugV (const char *fmt, va_list arg);
+};
 
-    void debugV (const char *fmt, va_list arg);
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

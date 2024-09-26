@@ -2,7 +2,7 @@
 
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -116,7 +116,7 @@ if ($make_header)
 
 #include \"ovl.h\"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 class interpreter;
 
@@ -148,24 +148,7 @@ $name (const octave_value_list& = octave_value_list (), int = 0);
 ";
   }
 
-  print "\nOCTAVE_NAMESPACE_END\n";
-
-  print "\n#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)\n\n";
-
-  foreach $name (sort (@fcn_names))
-  {
-    print "OCTAVE_DEPRECATED (7, \"use 'octave::$name' instead\")
-inline octave_value_list
-$name (const octave_value_list& args = octave_value_list (), int nargout = 0)
-{
-  return octave::$name (args, nargout);
-}
-
-";
-  }
-
-  ## end OCTAVE_PROVIDE_DEPRECATED_SYMBOLS block
-  print "\n\n#endif\n";
+  print "\nOCTAVE_END_NAMESPACE(octave)\n";
 
   print "\n#endif\n";
 }
@@ -183,8 +166,9 @@ elsif ($make_source)
 #include \"symtab.h\"
 #include \"variables.h\"
 
-namespace octave
-{";
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+";
 
   @installer_functions = ();
 
@@ -313,7 +297,7 @@ namespace octave
 
   print "
   void
-  symbol_table::install_builtins (void)
+  symbol_table::install_builtins ()
   {
 ";
 
@@ -322,5 +306,6 @@ namespace octave
     print "    $fcn (*this);\n"
   }
 
-  print "  }\n}\n";
+  print "  }\n";
+  print "OCTAVE_END_NAMESPACE(octave)\n";
 }

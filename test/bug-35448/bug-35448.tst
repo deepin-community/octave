@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,14 +24,14 @@
 ########################################################################
 
 %!test <*35448>
-%! global gfun
+%! global gfun;
 %! gfun = @fB;
 %! y = fA (e);
 %! assert (y, e);
 %! clear -global gfun;  # cleanup after test
 
 %!test <*35448>
-%! global gfun
+%! global gfun;
 %! gfun = @fC;
 %! y = fA (e);
 %! assert (y, e);

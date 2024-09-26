@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -59,7 +59,9 @@ function arg_st = __print_parse_opts__ (varargin)
   arg_st.ghostscript.antialiasing_textalphabits = 4;
   arg_st.ghostscript.antialiasing_graphicsalphabits = 1;
   arg_st.lpr_binary = __quote_path__ (__find_binary__ ("lpr"));
+  arg_st.polymerge = 1;
   arg_st.name = "";
+  arg_st.append_file_extension = true;
   arg_st.orientation = "";
   arg_st.pstoedit_binary = __quote_path__ (__find_binary__ ("pstoedit"));
   arg_st.preview = "";
@@ -69,7 +71,7 @@ function arg_st = __print_parse_opts__ (varargin)
   arg_st.rgb_output = false;
   arg_st.send_to_printer = false;
   arg_st.special_flag = "textnormal";
-  arg_st.svgconvert = false;
+  arg_st.svgconvert = true;
   arg_st.svgconvert_binary = __quote_path__ (__svgconv_binary__ ());
   arg_st.tight = true;
   arg_st.use_color = 0; # 0=default, -1=mono, +1=color
@@ -86,6 +88,11 @@ function arg_st = __print_parse_opts__ (varargin)
   if (nargin > 0 && isfigure (varargin{1}))
     arg_st.figure = varargin{1};
     varargin(1) = [];
+  endif
+
+  if (! isempty (findall (arg_st.figure, "type", "patch", ...
+                          "-or", "type", "surface")))
+    arg_st.polymerge = 2;
   endif
 
   for i = 1:numel (varargin)
@@ -108,6 +115,10 @@ function arg_st = __print_parse_opts__ (varargin)
         arg_st.force_solid = -1;
       elseif (any (strcmp (arg, {"-opengl", "-painters"})))
         arg_st.renderer = arg(2:end);
+      elseif (strcmp (arg, "-image"))
+        arg_st.renderer = "opengl";
+      elseif (strcmp (arg, "-vector"))
+        arg_st.renderer = "painters";
       elseif (strcmp (arg, "-RGBImage"))
         arg_st.rgb_output = true;
         arg_st.renderer = "opengl";
@@ -121,6 +132,14 @@ function arg_st = __print_parse_opts__ (varargin)
         arg_st.tight = true;
       elseif (strcmp (arg, "-svgconvert"))
         arg_st.svgconvert = true;
+      elseif (strcmp (arg, "-nosvgconvert"))
+        arg_st.svgconvert = false;
+      elseif (strcmp (arg, "-polymerge"))
+        arg_st.polymerge = 1;
+      elseif (strcmp (arg, "-nopolymerge"))
+        arg_st.polymerge = 0;
+      elseif (strcmp (arg, "-polymerge-all"))
+        arg_st.polymerge = 2;
       elseif (strcmp (arg, "-textspecial"))
         arg_st.special_flag = "textspecial";
       elseif (strcmp (arg, "-fillpage"))
@@ -130,6 +149,8 @@ function arg_st = __print_parse_opts__ (varargin)
       elseif (any (strcmp (arg,
                            {"-interchange", "-metafile", "-pict", "-tiff"})))
         arg_st.preview = arg(2:end);
+      elseif (strcmp (arg, "-no-append-file-extension"))
+        arg_st.append_file_extension = false;
       elseif (strncmp (arg, "-debug", 6))
         arg_st.debug = true;
         arg_st.ghostscript.debug = true;
@@ -137,7 +158,7 @@ function arg_st = __print_parse_opts__ (varargin)
           arg_st.debug_file = arg(8:end);
         endif
       elseif (length (arg) > 2 && arg(1:2) == "-d")
-        arg_st.devopt = tolower (arg(3:end));
+        arg_st.devopt = lower (arg(3:end));
       elseif (length (arg) > 2 && arg(1:2) == "-P")
         arg_st.printer = arg;
       elseif (strncmp (arg, "-EPSTOOL:", 9))
@@ -215,10 +236,10 @@ function arg_st = __print_parse_opts__ (varargin)
   if (isempty (arg_st.devopt))
     if (arg_st.rgb_output)
       arg_st.devopt = "png";
-    elseif (dot == 0)
+    elseif (dot == 0 || ! arg_st.append_file_extension)
       arg_st.devopt = "psc";
     else
-      arg_st.devopt = tolower (arg_st.name(dot+1:end));
+      arg_st.devopt = lower (arg_st.name(dot+1:end));
     endif
   endif
 
@@ -228,13 +249,8 @@ function arg_st = __print_parse_opts__ (varargin)
 
   if (any (strcmp (unsupported, arg_st.devopt)))
     warning ('Octave:print:deprecated-format',
-             'print: "%s" format is no more officially supported', ...
+             'print: "%s" format is no longer officially supported',
              arg_st.devopt);
-  endif
-
-  ## By default, postprocess svg files using svgconvert.
-  if (strcmp (arg_st.devopt, "svg"))
-    arg_st.svgconvert = true;
   endif
 
   ## By default, use the "opengl" renderer for all raster outputs
@@ -342,7 +358,8 @@ function arg_st = __print_parse_opts__ (varargin)
     default_suffix = suffixes{match};
   endif
 
-  if (dot == 0 && ! isempty (arg_st.name) && ! isempty (default_suffix))
+  if (arg_st.append_file_extension && dot == 0 && ! isempty (arg_st.name) ...
+      && ! isempty (default_suffix))
     arg_st.name = [arg_st.name "." default_suffix];
   endif
 
@@ -487,8 +504,10 @@ function arg_st = __print_parse_opts__ (varargin)
                            6 / get (0, "screenpixelsperinch");
     arg_st.ghostscript.resolution = 72;
     arg_st.ghostscript.papersize = arg_st.canvas_size;
+    papersize_points = arg_st.canvas_size * 72;
     arg_st.ghostscript.epscrop = true;
     arg_st.ghostscript.pageoffset = [0, 0];
+    paperposition = [0, 0];
   endif
 
   if (arg_st.formatted_for_printing)
@@ -519,7 +538,7 @@ endfunction
 
 
 ## Test blocks are not allowed (and not needed) for private functions
-#%!test
+%!#test
 %! opts = __print_parse_opts__ ();
 %! assert (opts.devopt, "pswrite");
 %! assert (opts.use_color, 1);
@@ -527,11 +546,11 @@ endfunction
 %! assert (opts.canvas_size, [576, 432]);
 %! assert (opts.ghostscript.device, "pswrite");
 
-#%!test
+%!#test
 %! opts = __print_parse_opts__ ("test.pdf", "-S640,480");
 %! assert (opts.canvas_size, [307.2, 230.4], 0.1);
 
-#%!test
+%!#test
 %! opts = __print_parse_opts__ ("-dpsc", "-append", "-loose");
 %! assert (opts.devopt, "pswrite");
 %! assert (opts.send_to_printer, true);
@@ -540,14 +559,14 @@ endfunction
 %! assert (opts.ghostscript.device, "pswrite");
 %! assert (opts.ghostscript.epscrop, false);
 
-#%!test
+%!#test
 %! opts = __print_parse_opts__ ("-deps", "-tight");
 %! assert (opts.tight, true);
 %! assert (opts.send_to_printer, true);
 %! assert (opts.use_color, -1);
 %! assert (opts.ghostscript.device, "");
 
-#%!test
+%!#test
 %! opts = __print_parse_opts__ ("-djpg", "foobar", "-mono", "-loose");
 %! assert (opts.devopt, "jpeg");
 %! assert (opts.name, "foobar.jpg");
@@ -559,7 +578,7 @@ endfunction
 %! assert (opts.printer, "");
 %! assert (opts.use_color, -1);
 
-#%!test
+%!#test
 %! opts = __print_parse_opts__ ("-ddeskjet", "foobar", "-mono", "-Pmyprinter");
 %! assert (opts.ghostscript.output, "foobar.deskjet");
 %! assert (opts.ghostscript.device, "deskjet");
@@ -568,7 +587,7 @@ endfunction
 %! assert (opts.printer, "-Pmyprinter");
 %! assert (opts.use_color, -1);
 
-#%!test
+%!#test
 %! opts = __print_parse_opts__ ("-f5", "-dljet3");
 %! assert (opts.ghostscript.device, "ljet3");
 %! assert (strfind (opts.ghostscript.output, ".ljet3"));
@@ -794,10 +813,10 @@ function aliases = gs_aliases (do_eps)
   aliases.tiffn = "tiff24nc";
 
   if (do_eps)
-    aliases.eps   = "ps2write";
-    aliases.eps2  = "ps2write";
-    aliases.epsc  = "ps2write";
-    aliases.epsc2 = "ps2write";
+    aliases.eps   = "eps2write";
+    aliases.eps2  = "eps2write";
+    aliases.epsc  = "eps2write";
+    aliases.epsc2 = "eps2write";
   endif
 
 endfunction

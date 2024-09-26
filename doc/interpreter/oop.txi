@@ -1,4 +1,4 @@
-@c Copyright (C) 2008-2022 The Octave Project Developers
+@c Copyright (C) 2008-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -816,8 +816,6 @@ endclassdef
 @end group
 @end example
 
-
-
 In contrast to old style classes, the @code{properties}-@code{endproperties}
 block as well as the @code{methods}-@code{endmethods} block can be used to
 define properties and methods of the class.  Because both blocks are empty,
@@ -1120,4 +1118,3 @@ persistently:
 @result{} ans =  3
 @end group
 @end example
-

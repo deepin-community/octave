@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1994-2022 The Octave Project Developers
+// Copyright (C) 1994-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -122,13 +122,13 @@ FloatColumnVector::stack (const FloatColumnVector& a) const
 }
 
 FloatRowVector
-FloatColumnVector::transpose (void) const
+FloatColumnVector::transpose () const
 {
   return MArray<float>::transpose ();
 }
 
 FloatColumnVector
-FloatColumnVector::abs (void) const
+FloatColumnVector::abs () const
 {
   return do_mx_unary_map<float, float, std::abs> (*this);
 }
@@ -242,7 +242,7 @@ operator * (const FloatDiagMatrix& m, const FloatColumnVector& a)
 // other operations
 
 float
-FloatColumnVector::min (void) const
+FloatColumnVector::min () const
 {
   octave_idx_type len = numel ();
   if (len == 0)
@@ -258,7 +258,7 @@ FloatColumnVector::min (void) const
 }
 
 float
-FloatColumnVector::max (void) const
+FloatColumnVector::max () const
 {
   octave_idx_type len = numel ();
   if (len == 0)

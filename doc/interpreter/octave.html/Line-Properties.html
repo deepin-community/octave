@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Line Properties (GNU Octave (version 7.1.0))</title>
+<title>Line Properties (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Line Properties (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Line Properties (GNU Octave (version 7.1.0))">
+<meta name="description" content="Line Properties (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Line Properties (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,8 @@
 <link href="Legend-Properties.html" rel="prev" title="Legend Properties">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,229 +30,265 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsubsection" id="Line-Properties">
-<div class="header">
+<div class="subsubsection-level-extent" id="Line-Properties">
+<div class="nav-panel">
 <p>
 Next: <a href="Text-Properties.html" accesskey="n" rel="next">Text Properties</a>, Previous: <a href="Legend-Properties.html" accesskey="p" rel="prev">Legend Properties</a>, Up: <a href="Graphics-Object-Properties.html" accesskey="u" rel="up">Graphics Object Properties</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Line-Properties-1"></span><h4 class="subsubsection">15.3.3.5 Line Properties</h4>
-<span id="index--Line-PropertiesLine-Properties"></span>
+<h4 class="subsubsection" id="Line-Properties-1"><span>15.3.3.5 Line Properties<a class="copiable-link" href="#Line-Properties-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-Line-Properties"></a>
 
 
 
-<p>Properties of <code>line</code> objects (see <a href="Graphics-Objects.html#XREFline">line</a>):
+<p>Properties of <code class="code">line</code> objects (see <a class="pxref" href="Graphics-Objects.html#XREFline">line</a>):
 </p>
-<dl compact="compact">
+<h4 class="subsubheading" id="Categories_003a-4"><span>Categories:<a class="copiable-link" href="#Categories_003a-4"> &para;</a></span></h4>
+
+<p><a class="ref" href="#XREFlinecategoryCallbackExecution">Callback&nbsp;Execution<!-- /@w --></a> | <a class="ref" href="#XREFlinecategoryCoordinateData">Coordinate&nbsp;Data<!-- /@w --></a> | <a class="ref" href="#XREFlinecategoryCreation_002fDeletion">Creation/Deletion<!-- /@w --></a> | <a class="ref" href="#XREFlinecategoryDisplay">Display<!-- /@w --></a> | <a class="ref" href="#XREFlinecategoryLegendOptions">Legend&nbsp;Options<!-- /@w --></a> | <a class="ref" href="#XREFlinecategoryLineAppearance">Line&nbsp;Appearance<!-- /@w --></a> | <a class="ref" href="#XREFlinecategoryMarkerAppearance">Marker&nbsp;Appearance<!-- /@w --></a> | <a class="ref" href="#XREFlinecategoryMouseInteraction">Mouse&nbsp;Interaction<!-- /@w --></a> | <a class="ref" href="#XREFlinecategoryObjectIdentification">Object&nbsp;Identification<!-- /@w --></a> | <a class="ref" href="#XREFlinecategoryParent_002fChildren">Parent/Children<!-- /@w --></a> 
+</p>
+<a class="anchor" id="XREFlinecategoryCallbackExecution"></a><h4 class="subsubheading" id="Callback-Execution-4"><span>Callback Execution<a class="copiable-link" href="#Callback-Execution-4"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-CallbackExecution"></a>
+
+<dl class="table">
 <dd>
-<span id="XREFlinebeingdeleted"></span><span id="index-line-beingdeleted"></span>
+<a class="anchor" id="XREFlinebusyaction"></a></dd>
+<dt><a id="index-line-busyaction"></a><span><code class="code">busyaction</code>: <code class="code">&quot;cancel&quot;</code> | {<code class="code">&quot;queue&quot;</code>}<a class="copiable-link" href="#index-line-busyaction"> &para;</a></span></dt>
+<dd><p>Define how Octave handles the execution of this object&rsquo;s callback properties when it is unable to interrupt another object&rsquo;s executing callback.  This is only relevant when the currently executing callback object has its <code class="code">interruptible</code> property set to <code class="code">&quot;off&quot;</code>.  The <code class="code">busyaction</code> property of the interrupting callback object indicates whether the interrupting callback is queued (<code class="code">&quot;queue&quot;</code> (default)) or discarded (<code class="code">&quot;cancel&quot;</code>).
+See <a class="xref" href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
+</p>
+
+<a class="anchor" id="XREFlineinterruptible"></a></dd>
+<dt><a id="index-line-interruptible"></a><span><code class="code">interruptible</code>: <code class="code">&quot;off&quot;</code> | {<code class="code">&quot;on&quot;</code>}<a class="copiable-link" href="#index-line-interruptible"> &para;</a></span></dt>
+<dd><p>Specify whether this object&rsquo;s callback functions may be interrupted by other callbacks.  By default <code class="code">interruptible</code> is <code class="code">&quot;on&quot;</code> and callbacks that make use of <code class="code">drawnow</code>, <code class="code">figure</code>, <code class="code">waitfor</code>, <code class="code">getframe</code> or <code class="code">pause</code> functions are eventually interrupted.
+See <a class="xref" href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
+</p>
 </dd>
-<dt><span><code>beingdeleted</code>: {<code>&quot;off&quot;</code>} | <code>&quot;on&quot;</code></span></dt>
+</dl>
+
+<a class="anchor" id="XREFlinecategoryCoordinateData"></a><h4 class="subsubheading" id="Coordinate-Data"><span>Coordinate Data<a class="copiable-link" href="#Coordinate-Data"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-CoordinateData"></a>
+
+<dl class="table">
 <dd>
-
-
-<span id="XREFlinebusyaction"></span><span id="index-line-busyaction"></span>
-</dd>
-<dt><span><code>busyaction</code>: <code>&quot;cancel&quot;</code> | {<code>&quot;queue&quot;</code>}</span></dt>
-<dd><p>Define how Octave handles the execution of this object&rsquo;s callback properties when it is unable to interrupt another object&rsquo;s executing callback.  This is only relevant when the currently executing callback object has its <code>interruptible</code> property set to <code>&quot;off&quot;</code>.  The <code>busyaction</code> property of the interrupting callback object indicates whether the interrupting callback is queued (<code>&quot;queue&quot;</code> (default)) or discarded (<code>&quot;cancel&quot;</code>).
-See <a href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
-</p>
-
-<span id="XREFlinebuttondownfcn"></span><span id="index-line-buttondownfcn"></span>
-</dd>
-<dt><span><code>buttondownfcn</code>: string | function handle, def. <code>[](0x0)</code></span></dt>
-<dd><p>For information on how to write graphics listener functions see <a href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
-</p>
-
-<span id="XREFlinechildren"></span><span id="index-line-children"></span>
-</dd>
-<dt><span><code>children</code> (read-only): vector of graphics handles, def. <code>[](0x1)</code></span></dt>
-<dd><p><code>children</code> is unused.
-</p>
-
-<span id="XREFlineclipping"></span><span id="index-line-clipping"></span>
-</dd>
-<dt><span><code>clipping</code>: <code>&quot;off&quot;</code> | {<code>&quot;on&quot;</code>}</span></dt>
-<dd><p>If <code>clipping</code> is <code>&quot;on&quot;</code>, the line is clipped in its parent axes limits.
-</p>
-
-<span id="XREFlinecolor"></span><span id="index-line-color"></span>
-</dd>
-<dt><span><code>color</code>: colorspec, def. <code>[0   0   0]</code></span></dt>
-<dd><p>Color of the line object.  See <a href="Colors.html">colorspec</a>.
-</p>
-
-<span id="XREFlinecontextmenu"></span><span id="index-line-contextmenu"></span>
-</dd>
-<dt><span><code>contextmenu</code>: graphics handle, def. <code>[](0x0)</code></span></dt>
-<dd><p>Graphics handle of the uicontextmenu object that is currently associated to this line object.
-</p>
-
-<span id="XREFlinecreatefcn"></span><span id="index-line-createfcn"></span>
-</dd>
-<dt><span><code>createfcn</code>: string | function handle, def. <code>[](0x0)</code></span></dt>
-<dd><p>Callback function executed immediately after line has been created.  Function is set by using default property on root object, e.g., <code>set (groot, &quot;defaultlinecreatefcn&quot;, 'disp (&quot;line created!&quot;)')</code>.
-</p>
-<p>For information on how to write graphics listener functions see <a href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
-</p>
-
-<span id="XREFlinedeletefcn"></span><span id="index-line-deletefcn"></span>
-</dd>
-<dt><span><code>deletefcn</code>: string | function handle, def. <code>[](0x0)</code></span></dt>
-<dd><p>Callback function executed immediately before line is deleted.
-</p>
-<p>For information on how to write graphics listener functions see <a href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
-</p>
-
-<span id="XREFlinedisplayname"></span><span id="index-line-displayname"></span>
-</dd>
-<dt><span><code>displayname</code>: string | cell array of strings, def. <code>&quot;&quot;</code></span></dt>
-<dd><p>Text for the legend entry corresponding to this line.
-</p>
-
-<span id="XREFlinehandlevisibility"></span><span id="index-line-handlevisibility"></span>
-</dd>
-<dt><span><code>handlevisibility</code>: <code>&quot;callback&quot;</code> | <code>&quot;off&quot;</code> | {<code>&quot;on&quot;</code>}</span></dt>
-<dd><p>If <code>handlevisibility</code> is <code>&quot;off&quot;</code>, the line&rsquo;s handle is not visible in its parent&rsquo;s &quot;children&quot; property.
-</p>
-
-<span id="XREFlinehittest"></span><span id="index-line-hittest"></span>
-</dd>
-<dt><span><code>hittest</code>: <code>&quot;off&quot;</code> | {<code>&quot;on&quot;</code>}</span></dt>
-<dd><p>Specify whether line processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the <code>&quot;buttondownfcn&quot;</code>, showing the uicontextmenu, and eventually becoming the root <code>&quot;currentobject&quot;</code>.  This property is only relevant when the object can accept mouse clicks which is determined by the <code>&quot;pickableparts&quot;</code> property.  See <a href="#XREFlinepickableparts">pickableparts&nbsp;property<!-- /@w --></a>.
-</p>
-
-<span id="XREFlineinterruptible"></span><span id="index-line-interruptible"></span>
-</dd>
-<dt><span><code>interruptible</code>: <code>&quot;off&quot;</code> | {<code>&quot;on&quot;</code>}</span></dt>
-<dd><p>Specify whether this object&rsquo;s callback functions may be interrupted by other callbacks.  By default <code>interruptible</code> is <code>&quot;on&quot;</code> and callbacks that make use of <code>drawnow</code>, <code>figure</code>, <code>waitfor</code>, <code>getframe</code> or <code>pause</code> functions are eventually interrupted.
-See <a href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
-</p>
-
-<span id="XREFlinelinejoin"></span><span id="index-line-linejoin"></span>
-</dd>
-<dt><span><code>linejoin</code>: <code>&quot;chamfer&quot;</code> | <code>&quot;miter&quot;</code> | {<code>&quot;round&quot;</code>}</span></dt>
-<dd><p>Control the shape of the junction of line segments. This property currently only affects the printed output.
-</p>
-
-<span id="XREFlinelinestyle"></span><span id="index-line-linestyle"></span>
-</dd>
-<dt><span><code>linestyle</code>: {<code>&quot;-&quot;</code>} | <code>&quot;--&quot;</code> | <code>&quot;-.&quot;</code> | <code>&quot;:&quot;</code> | <code>&quot;none&quot;</code></span></dt>
-<dd><p>See <a href="Line-Styles.html">Line Styles</a>.
-</p>
-
-<span id="XREFlinelinewidth"></span><span id="index-line-linewidth"></span>
-</dd>
-<dt><span><code>linewidth</code>: def. <code>0.5000</code></span></dt>
-<dd><p>Width of the line object measured in points.
-</p>
-
-<span id="XREFlinemarker"></span><span id="index-line-marker"></span>
-</dd>
-<dt><span><code>marker</code>: <code>&quot;*&quot;</code> | <code>&quot;+&quot;</code> | <code>&quot;.&quot;</code> | <code>&quot;&lt;&quot;</code> | <code>&quot;&gt;&quot;</code> | <code>&quot;^&quot;</code> | <code>&quot;_&quot;</code> | <code>&quot;d&quot;</code> | <code>&quot;diamond&quot;</code> | <code>&quot;h&quot;</code> | <code>&quot;hexagram&quot;</code> | {<code>&quot;none&quot;</code>} | <code>&quot;o&quot;</code> | <code>&quot;p&quot;</code> | <code>&quot;pentagram&quot;</code> | <code>&quot;s&quot;</code> | <code>&quot;square&quot;</code> | <code>&quot;v&quot;</code> | <code>&quot;x&quot;</code> | <code>&quot;|&quot;</code></span></dt>
-<dd><p>Shape of the marker for each data point.  See <a href="Marker-Styles.html">Marker Styles</a>.
-</p>
-
-<span id="XREFlinemarkeredgecolor"></span><span id="index-line-markeredgecolor"></span>
-</dd>
-<dt><span><code>markeredgecolor</code>: {<code>&quot;auto&quot;</code>} | <code>&quot;none&quot;</code></span></dt>
-<dd><p>Color of the edge of the markers.  When set to <code>&quot;auto&quot;</code>, the marker edges have the same color as the line.  If set to <code>&quot;none&quot;</code>, no marker edges are displayed.  This property can also be set to any color.  See <a href="Colors.html">colorspec</a>.
-</p>
-
-<span id="XREFlinemarkerfacecolor"></span><span id="index-line-markerfacecolor"></span>
-</dd>
-<dt><span><code>markerfacecolor</code>: <code>&quot;auto&quot;</code> | {<code>&quot;none&quot;</code>}</span></dt>
-<dd><p>Color of the face of the markers.  When set to <code>&quot;auto&quot;</code>, the marker faces have the same color as the line.  If set to <code>&quot;none&quot;</code>, the marker faces are not displayed.  This property can also be set to any color.  See <a href="Colors.html">colorspec</a>.
-</p>
-
-<span id="XREFlinemarkersize"></span><span id="index-line-markersize"></span>
-</dd>
-<dt><span><code>markersize</code>: scalar, def. <code>6</code></span></dt>
-<dd><p>Size of the markers measured in points.
-</p>
-
-<span id="XREFlineparent"></span><span id="index-line-parent"></span>
-</dd>
-<dt><span><code>parent</code>: graphics handle</span></dt>
-<dd><p>Handle of the parent graphics object.
-</p>
-
-<span id="XREFlinepickableparts"></span><span id="index-line-pickableparts"></span>
-</dd>
-<dt><span><code>pickableparts</code>: <code>&quot;all&quot;</code> | <code>&quot;none&quot;</code> | {<code>&quot;visible&quot;</code>}</span></dt>
-<dd><p>Specify whether line will accept mouse clicks.  By default, <code>pickableparts</code> is <code>&quot;visible&quot;</code> and only visible parts of the line or its children may react to mouse clicks.  When <code>pickableparts</code> is <code>&quot;all&quot;</code> both visible and invisible parts (or children) may react to mouse clicks.  When <code>pickableparts</code> is <code>&quot;none&quot;</code> mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the <code>&quot;hittest&quot;</code> property will determine how they are processed.  See <a href="#XREFlinehittest">hittest&nbsp;property<!-- /@w --></a>.
-</p>
-
-<span id="XREFlineselected"></span><span id="index-line-selected"></span>
-</dd>
-<dt><span><code>selected</code>: {<code>&quot;off&quot;</code>} | <code>&quot;on&quot;</code></span></dt>
-<dd>
-
-
-<span id="XREFlineselectionhighlight"></span><span id="index-line-selectionhighlight"></span>
-</dd>
-<dt><span><code>selectionhighlight</code>: <code>&quot;off&quot;</code> | {<code>&quot;on&quot;</code>}</span></dt>
-<dd>
-
-
-<span id="XREFlinetag"></span><span id="index-line-tag"></span>
-</dd>
-<dt><span><code>tag</code>: string, def. <code>&quot;&quot;</code></span></dt>
-<dd><p>A user-defined string to label the graphics object.
-</p>
-
-<span id="XREFlinetype"></span><span id="index-line-type"></span>
-</dd>
-<dt><span><code>type</code> (read-only): string</span></dt>
-<dd><p>Class name of the graphics object.  <code>type</code> is always <code>&quot;line&quot;</code>
-</p>
-
-<span id="XREFlineuserdata"></span><span id="index-line-userdata"></span>
-</dd>
-<dt><span><code>userdata</code>: Any Octave data, def. <code>[](0x0)</code></span></dt>
-<dd><p>User-defined data to associate with the graphics object.
-</p>
-
-<span id="XREFlinevisible"></span><span id="index-line-visible"></span>
-</dd>
-<dt><span><code>visible</code>: <code>&quot;off&quot;</code> | {<code>&quot;on&quot;</code>}</span></dt>
-<dd><p>If <code>visible</code> is <code>&quot;off&quot;</code>, the line is not rendered on screen.
-</p>
-
-<span id="XREFlinexdata"></span><span id="index-line-xdata"></span>
-</dd>
-<dt><span><code>xdata</code>: vector, def. <code>[0   1]</code></span></dt>
+<a class="anchor" id="XREFlinexdata"></a></dd>
+<dt><a id="index-line-xdata"></a><span><code class="code">xdata</code>: vector, def. <code class="code">[0   1]</code><a class="copiable-link" href="#index-line-xdata"> &para;</a></span></dt>
 <dd><p>Vector of x data to be plotted.
 </p>
 
-<span id="XREFlinexdatasource"></span><span id="index-line-xdatasource"></span>
-</dd>
-<dt><span><code>xdatasource</code>: string, def. <code>&quot;&quot;</code></span></dt>
+<a class="anchor" id="XREFlinexdatasource"></a></dd>
+<dt><a id="index-line-xdatasource"></a><span><code class="code">xdatasource</code>: string, def. <code class="code">&quot;&quot;</code><a class="copiable-link" href="#index-line-xdatasource"> &para;</a></span></dt>
 <dd><p>Name of a vector in the current base workspace to use as x data.
 </p>
 
-<span id="XREFlineydata"></span><span id="index-line-ydata"></span>
-</dd>
-<dt><span><code>ydata</code>: vector, def. <code>[0   1]</code></span></dt>
+<a class="anchor" id="XREFlineydata"></a></dd>
+<dt><a id="index-line-ydata"></a><span><code class="code">ydata</code>: vector, def. <code class="code">[0   1]</code><a class="copiable-link" href="#index-line-ydata"> &para;</a></span></dt>
 <dd><p>Vector of y data to be plotted.
 </p>
 
-<span id="XREFlineydatasource"></span><span id="index-line-ydatasource"></span>
-</dd>
-<dt><span><code>ydatasource</code>: string, def. <code>&quot;&quot;</code></span></dt>
+<a class="anchor" id="XREFlineydatasource"></a></dd>
+<dt><a id="index-line-ydatasource"></a><span><code class="code">ydatasource</code>: string, def. <code class="code">&quot;&quot;</code><a class="copiable-link" href="#index-line-ydatasource"> &para;</a></span></dt>
 <dd><p>Name of a vector in the current base workspace to use as y data.
 </p>
 
-<span id="XREFlinezdata"></span><span id="index-line-zdata"></span>
-</dd>
-<dt><span><code>zdata</code>: vector, def. <code>[](0x0)</code></span></dt>
+<a class="anchor" id="XREFlinezdata"></a></dd>
+<dt><a id="index-line-zdata"></a><span><code class="code">zdata</code>: vector, def. <code class="code">[](0x0)</code><a class="copiable-link" href="#index-line-zdata"> &para;</a></span></dt>
 <dd><p>Vector of z data to be plotted.
 </p>
 
-<span id="XREFlinezdatasource"></span><span id="index-line-zdatasource"></span>
-</dd>
-<dt><span><code>zdatasource</code>: string, def. <code>&quot;&quot;</code></span></dt>
+<a class="anchor" id="XREFlinezdatasource"></a></dd>
+<dt><a id="index-line-zdatasource"></a><span><code class="code">zdatasource</code>: string, def. <code class="code">&quot;&quot;</code><a class="copiable-link" href="#index-line-zdatasource"> &para;</a></span></dt>
 <dd><p>Name of a vector in the current base workspace to use as z data.
+</p>
+</dd>
+</dl>
+
+<a class="anchor" id="XREFlinecategoryCreation_002fDeletion"></a><h4 class="subsubheading" id="Creation_002fDeletion-2"><span>Creation/Deletion<a class="copiable-link" href="#Creation_002fDeletion-2"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-Creation_002fDeletion"></a>
+
+<dl class="table">
+<dd>
+<a class="anchor" id="XREFlinebeingdeleted"></a></dd>
+<dt><a id="index-line-beingdeleted"></a><span><code class="code">beingdeleted</code>: {<code class="code">&quot;off&quot;</code>} | <code class="code">&quot;on&quot;</code><a class="copiable-link" href="#index-line-beingdeleted"> &para;</a></span></dt>
+<dd><p>Property indicating that a function has initiated deletion of the object.  <code class="code">beingdeleted</code> is set to true until the object no longer exists.
+</p>
+
+<a class="anchor" id="XREFlinecreatefcn"></a></dd>
+<dt><a id="index-line-createfcn"></a><span><code class="code">createfcn</code>: string | function handle, def. <code class="code">[](0x0)</code><a class="copiable-link" href="#index-line-createfcn"> &para;</a></span></dt>
+<dd><p>Callback function executed immediately after line has been created.  Function is set by using default property on root object, e.g., <code class="code">set (groot, &quot;defaultlinecreatefcn&quot;, 'disp (&quot;line created!&quot;)')</code>.
+</p>
+<p>For information on how to write graphics listener functions see <a class="ref" href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
+</p>
+
+<a class="anchor" id="XREFlinedeletefcn"></a></dd>
+<dt><a id="index-line-deletefcn"></a><span><code class="code">deletefcn</code>: string | function handle, def. <code class="code">[](0x0)</code><a class="copiable-link" href="#index-line-deletefcn"> &para;</a></span></dt>
+<dd><p>Callback function executed immediately before line is deleted.
+</p>
+<p>For information on how to write graphics listener functions see <a class="ref" href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
+</p>
+</dd>
+</dl>
+
+<a class="anchor" id="XREFlinecategoryDisplay"></a><h4 class="subsubheading" id="Display-2"><span>Display<a class="copiable-link" href="#Display-2"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-Display"></a>
+
+<dl class="table">
+<dd>
+<a class="anchor" id="XREFlineclipping"></a></dd>
+<dt><a id="index-line-clipping"></a><span><code class="code">clipping</code>: <code class="code">&quot;off&quot;</code> | {<code class="code">&quot;on&quot;</code>}<a class="copiable-link" href="#index-line-clipping"> &para;</a></span></dt>
+<dd><p>If <code class="code">clipping</code> is <code class="code">&quot;on&quot;</code>, the line is clipped in its parent axes limits.
+</p>
+
+<a class="anchor" id="XREFlinevisible"></a></dd>
+<dt><a id="index-line-visible"></a><span><code class="code">visible</code>: <code class="code">&quot;off&quot;</code> | {<code class="code">&quot;on&quot;</code>}<a class="copiable-link" href="#index-line-visible"> &para;</a></span></dt>
+<dd><p>If <code class="code">visible</code> is <code class="code">&quot;off&quot;</code>, the line is not rendered on screen.
+</p>
+</dd>
+</dl>
+
+<a class="anchor" id="XREFlinecategoryLegendOptions"></a><h4 class="subsubheading" id="Legend-Options"><span>Legend Options<a class="copiable-link" href="#Legend-Options"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-LegendOptions"></a>
+
+<dl class="table">
+<dd>
+<a class="anchor" id="XREFlinedisplayname"></a></dd>
+<dt><a id="index-line-displayname"></a><span><code class="code">displayname</code>: string | cell array of strings, def. <code class="code">&quot;&quot;</code><a class="copiable-link" href="#index-line-displayname"> &para;</a></span></dt>
+<dd><p>Text for the legend entry corresponding to this line.
+</p>
+</dd>
+</dl>
+
+<a class="anchor" id="XREFlinecategoryLineAppearance"></a><h4 class="subsubheading" id="Line-Appearance"><span>Line Appearance<a class="copiable-link" href="#Line-Appearance"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-LineAppearance"></a>
+
+<dl class="table">
+<dd>
+<a class="anchor" id="XREFlinecolor"></a></dd>
+<dt><a id="index-line-color"></a><span><code class="code">color</code>: colorspec, def. <code class="code">[0   0   0]</code><a class="copiable-link" href="#index-line-color"> &para;</a></span></dt>
+<dd><p>Color of the line object.  See <a class="xref" href="Colors.html">colorspec</a>.
+</p>
+
+<a class="anchor" id="XREFlinelinejoin"></a></dd>
+<dt><a id="index-line-linejoin"></a><span><code class="code">linejoin</code>: <code class="code">&quot;chamfer&quot;</code> | <code class="code">&quot;miter&quot;</code> | {<code class="code">&quot;round&quot;</code>}<a class="copiable-link" href="#index-line-linejoin"> &para;</a></span></dt>
+<dd><p>Control the shape of the junction of line segments.  This property currently only affects the printed output.
+</p>
+
+<a class="anchor" id="XREFlinelinestyle"></a></dd>
+<dt><a id="index-line-linestyle"></a><span><code class="code">linestyle</code>: {<code class="code">&quot;-&quot;</code>} | <code class="code">&quot;--&quot;</code> | <code class="code">&quot;-.&quot;</code> | <code class="code">&quot;:&quot;</code> | <code class="code">&quot;none&quot;</code><a class="copiable-link" href="#index-line-linestyle"> &para;</a></span></dt>
+<dd><p>See <a class="xref" href="Line-Styles.html">Line Styles</a>.
+</p>
+
+<a class="anchor" id="XREFlinelinewidth"></a></dd>
+<dt><a id="index-line-linewidth"></a><span><code class="code">linewidth</code>: scalar, def. <code class="code">0.5000</code><a class="copiable-link" href="#index-line-linewidth"> &para;</a></span></dt>
+<dd><p>Width of the line object measured in points.
+</p>
+</dd>
+</dl>
+
+<a class="anchor" id="XREFlinecategoryMarkerAppearance"></a><h4 class="subsubheading" id="Marker-Appearance"><span>Marker Appearance<a class="copiable-link" href="#Marker-Appearance"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-MarkerAppearance"></a>
+
+<dl class="table">
+<dd>
+<a class="anchor" id="XREFlinemarker"></a></dd>
+<dt><a id="index-line-marker"></a><span><code class="code">marker</code>: <code class="code">&quot;*&quot;</code> | <code class="code">&quot;+&quot;</code> | <code class="code">&quot;.&quot;</code> | <code class="code">&quot;&lt;&quot;</code> | <code class="code">&quot;&gt;&quot;</code> | <code class="code">&quot;^&quot;</code> | <code class="code">&quot;_&quot;</code> | <code class="code">&quot;d&quot;</code> | <code class="code">&quot;diamond&quot;</code> | <code class="code">&quot;h&quot;</code> | <code class="code">&quot;hexagram&quot;</code> | {<code class="code">&quot;none&quot;</code>} | <code class="code">&quot;o&quot;</code> | <code class="code">&quot;p&quot;</code> | <code class="code">&quot;pentagram&quot;</code> | <code class="code">&quot;s&quot;</code> | <code class="code">&quot;square&quot;</code> | <code class="code">&quot;v&quot;</code> | <code class="code">&quot;x&quot;</code> | <code class="code">&quot;|&quot;</code><a class="copiable-link" href="#index-line-marker"> &para;</a></span></dt>
+<dd><p>Shape of the marker for each data point.  See <a class="xref" href="Marker-Styles.html">Marker Styles</a>.
+</p>
+
+<a class="anchor" id="XREFlinemarkeredgecolor"></a></dd>
+<dt><a id="index-line-markeredgecolor"></a><span><code class="code">markeredgecolor</code>: {<code class="code">&quot;auto&quot;</code>} | <code class="code">&quot;none&quot;</code><a class="copiable-link" href="#index-line-markeredgecolor"> &para;</a></span></dt>
+<dd><p>Color of the edge of the markers.  When set to <code class="code">&quot;auto&quot;</code>, the marker edges have the same color as the line.  If set to <code class="code">&quot;none&quot;</code>, no marker edges are displayed.  This property can also be set to any color.  See <a class="xref" href="Colors.html">colorspec</a>.
+</p>
+
+<a class="anchor" id="XREFlinemarkerfacecolor"></a></dd>
+<dt><a id="index-line-markerfacecolor"></a><span><code class="code">markerfacecolor</code>: <code class="code">&quot;auto&quot;</code> | {<code class="code">&quot;none&quot;</code>}<a class="copiable-link" href="#index-line-markerfacecolor"> &para;</a></span></dt>
+<dd><p>Color of the face of the markers.  When set to <code class="code">&quot;auto&quot;</code>, the marker faces have the same color as the line.  If set to <code class="code">&quot;none&quot;</code>, the marker faces are not displayed.  This property can also be set to any color.  See <a class="xref" href="Colors.html">colorspec</a>.
+</p>
+
+<a class="anchor" id="XREFlinemarkersize"></a></dd>
+<dt><a id="index-line-markersize"></a><span><code class="code">markersize</code>: scalar, def. <code class="code">6</code><a class="copiable-link" href="#index-line-markersize"> &para;</a></span></dt>
+<dd><p>Size of the markers measured in points.
+</p>
+</dd>
+</dl>
+
+<a class="anchor" id="XREFlinecategoryMouseInteraction"></a><h4 class="subsubheading" id="Mouse-Interaction-3"><span>Mouse Interaction<a class="copiable-link" href="#Mouse-Interaction-3"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-MouseInteraction"></a>
+
+<dl class="table">
+<dd>
+<a class="anchor" id="XREFlinebuttondownfcn"></a></dd>
+<dt><a id="index-line-buttondownfcn"></a><span><code class="code">buttondownfcn</code>: string | function handle, def. <code class="code">[](0x0)</code><a class="copiable-link" href="#index-line-buttondownfcn"> &para;</a></span></dt>
+<dd><p>For information on how to write graphics listener functions see <a class="ref" href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
+</p>
+
+<a class="anchor" id="XREFlinecontextmenu"></a></dd>
+<dt><a id="index-line-contextmenu"></a><span><code class="code">contextmenu</code>: graphics handle, def. <code class="code">[](0x0)</code><a class="copiable-link" href="#index-line-contextmenu"> &para;</a></span></dt>
+<dd><p>Graphics handle of the uicontextmenu object that is currently associated to this line object.
+</p>
+
+<a class="anchor" id="XREFlinehittest"></a></dd>
+<dt><a id="index-line-hittest"></a><span><code class="code">hittest</code>: <code class="code">&quot;off&quot;</code> | {<code class="code">&quot;on&quot;</code>}<a class="copiable-link" href="#index-line-hittest"> &para;</a></span></dt>
+<dd><p>Specify whether line processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the <code class="code">&quot;buttondownfcn&quot;</code>, showing the uicontextmenu, and eventually becoming the root <code class="code">&quot;currentobject&quot;</code>.  This property is only relevant when the object can accept mouse clicks which is determined by the <code class="code">&quot;pickableparts&quot;</code> property.  See <a class="xref" href="#XREFlinepickableparts">pickableparts&nbsp;property<!-- /@w --></a>.
+</p>
+
+<a class="anchor" id="XREFlinepickableparts"></a></dd>
+<dt><a id="index-line-pickableparts"></a><span><code class="code">pickableparts</code>: <code class="code">&quot;all&quot;</code> | <code class="code">&quot;none&quot;</code> | {<code class="code">&quot;visible&quot;</code>}<a class="copiable-link" href="#index-line-pickableparts"> &para;</a></span></dt>
+<dd><p>Specify whether line will accept mouse clicks.  By default, <code class="code">pickableparts</code> is <code class="code">&quot;visible&quot;</code> and only visible parts of the line or its children may react to mouse clicks.  When <code class="code">pickableparts</code> is <code class="code">&quot;all&quot;</code> both visible and invisible parts (or children) may react to mouse clicks.  When <code class="code">pickableparts</code> is <code class="code">&quot;none&quot;</code> mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the <code class="code">&quot;hittest&quot;</code> property will determine how they are processed.  See <a class="xref" href="#XREFlinehittest">hittest&nbsp;property<!-- /@w --></a>.
+</p>
+
+<a class="anchor" id="XREFlineselected"></a></dd>
+<dt><a id="index-line-selected"></a><span><code class="code">selected</code>: {<code class="code">&quot;off&quot;</code>} | <code class="code">&quot;on&quot;</code><a class="copiable-link" href="#index-line-selected"> &para;</a></span></dt>
+<dd><p>Property indicates whether this line is selected.
+</p>
+
+<a class="anchor" id="XREFlineselectionhighlight"></a></dd>
+<dt><a id="index-line-selectionhighlight"></a><span><code class="code">selectionhighlight</code>: <code class="code">&quot;off&quot;</code> | {<code class="code">&quot;on&quot;</code>}<a class="copiable-link" href="#index-line-selectionhighlight"> &para;</a></span></dt>
+<dd><p>If <code class="code">selectionhighlight</code> is <code class="code">&quot;on&quot;</code>, then the line&rsquo;s selection state is visually highlighted.
+</p>
+</dd>
+</dl>
+
+<a class="anchor" id="XREFlinecategoryObjectIdentification"></a><h4 class="subsubheading" id="Object-Identification-4"><span>Object Identification<a class="copiable-link" href="#Object-Identification-4"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-ObjectIdentification"></a>
+
+<dl class="table">
+<dd>
+<a class="anchor" id="XREFlinetag"></a></dd>
+<dt><a id="index-line-tag"></a><span><code class="code">tag</code>: string, def. <code class="code">&quot;&quot;</code><a class="copiable-link" href="#index-line-tag"> &para;</a></span></dt>
+<dd><p>A user-defined string to label the graphics object.
+</p>
+
+<a class="anchor" id="XREFlinetype"></a></dd>
+<dt><a id="index-line-type"></a><span><code class="code">type</code> (read-only): string<a class="copiable-link" href="#index-line-type"> &para;</a></span></dt>
+<dd><p>Class name of the graphics object.  <code class="code">type</code> is always <code class="code">&quot;line&quot;</code>.
+</p>
+
+<a class="anchor" id="XREFlineuserdata"></a></dd>
+<dt><a id="index-line-userdata"></a><span><code class="code">userdata</code>: Any Octave data, def. <code class="code">[](0x0)</code><a class="copiable-link" href="#index-line-userdata"> &para;</a></span></dt>
+<dd><p>User-defined data to associate with the graphics object.
+</p>
+</dd>
+</dl>
+
+<a class="anchor" id="XREFlinecategoryParent_002fChildren"></a><h4 class="subsubheading" id="Parent_002fChildren-3"><span>Parent/Children<a class="copiable-link" href="#Parent_002fChildren-3"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-line-Parent_002fChildren"></a>
+
+<dl class="table">
+<dd>
+<a class="anchor" id="XREFlinechildren"></a></dd>
+<dt><a id="index-line-children"></a><span><code class="code">children</code> (read-only): vector of graphics handles, def. <code class="code">[](0x1)</code><a class="copiable-link" href="#index-line-children"> &para;</a></span></dt>
+<dd><p>Child objects for lines is not yet implemented for line objects.  <code class="code">children</code> is unused.
+</p>
+
+<a class="anchor" id="XREFlinehandlevisibility"></a></dd>
+<dt><a id="index-line-handlevisibility"></a><span><code class="code">handlevisibility</code>: <code class="code">&quot;callback&quot;</code> | <code class="code">&quot;off&quot;</code> | {<code class="code">&quot;on&quot;</code>}<a class="copiable-link" href="#index-line-handlevisibility"> &para;</a></span></dt>
+<dd><p>If <code class="code">handlevisibility</code> is <code class="code">&quot;off&quot;</code>, the line&rsquo;s handle is not visible in its parent&rsquo;s <code class="code">&quot;children&quot;</code> property.
+</p>
+
+<a class="anchor" id="XREFlineparent"></a></dd>
+<dt><a id="index-line-parent"></a><span><code class="code">parent</code>: graphics handle<a class="copiable-link" href="#index-line-parent"> &para;</a></span></dt>
+<dd><p>Handle of the parent graphics object.
 </p>
 </dd>
 </dl>
@@ -273,7 +296,7 @@ See <a href="Callbacks.html">Callbacks&nbsp;section<!-- /@w --></a>.
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Text-Properties.html">Text Properties</a>, Previous: <a href="Legend-Properties.html">Legend Properties</a>, Up: <a href="Graphics-Object-Properties.html">Graphics Object Properties</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

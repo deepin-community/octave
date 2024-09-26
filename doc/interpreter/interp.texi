@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 2007-2022 The Octave Project Developers
+@c Copyright (C) 2007-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -35,6 +35,11 @@ and @ref{Interpolation on Scattered Data} describe additional methods.
 
 @c interp1 scripts/general/interp1.m
 @anchor{XREFinterp1}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{yi} =} interp1 (@var{x}, @var{y}, @var{xi})
 @deftypefnx {} {@var{yi} =} interp1 (@var{y}, @var{xi})
 @deftypefnx {} {@var{yi} =} interp1 (@dots{}, @var{method})
@@ -183,8 +188,13 @@ reconverted to the time domain.
 
 @c interpft scripts/general/interpft.m
 @anchor{XREFinterpft}
-@deftypefn  {} {} interpft (@var{x}, @var{n})
-@deftypefnx {} {} interpft (@var{x}, @var{n}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} interpft (@var{x}, @var{n})
+@deftypefnx {} {@var{y} =} interpft (@var{x}, @var{n}, @var{dim})
 
 Fourier interpolation.
 
@@ -240,6 +250,11 @@ underlie the @code{interp1} function can be called directly.
 
 @c spline scripts/polynomial/spline.m
 @anchor{XREFspline}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{pp} =} spline (@var{x}, @var{y})
 @deftypefnx {} {@var{yi} =} spline (@var{x}, @var{y}, @var{xi})
 Return the cubic spline interpolant of points @var{x} and @var{y}.
@@ -301,6 +316,11 @@ in @ref{Interpolation on Scattered Data}.
 
 @c interp2 scripts/general/interp2.m
 @anchor{XREFinterp2}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{zi} =} interp2 (@var{x}, @var{y}, @var{z}, @var{xi}, @var{yi})
 @deftypefnx {} {@var{zi} =} interp2 (@var{z}, @var{xi}, @var{yi})
 @deftypefnx {} {@var{zi} =} interp2 (@var{z}, @var{n})
@@ -346,7 +366,8 @@ Piecewise cubic Hermite interpolating polynomial---shape-preserving
 interpolation with smooth first derivative.
 
 @item @qcode{"cubic"}
-Cubic interpolation (same as @qcode{"pchip"}).
+Cubic interpolation using a convolution kernel function---third order
+method with smooth first derivative.
 
 @item @qcode{"spline"}
 Cubic spline interpolation---smooth first and second derivatives
@@ -365,6 +386,11 @@ is @qcode{"NA"}.
 
 @c interp3 scripts/general/interp3.m
 @anchor{XREFinterp3}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{vi} =} interp3 (@var{x}, @var{y}, @var{z}, @var{v}, @var{xi}, @var{yi}, @var{zi})
 @deftypefnx {} {@var{vi} =} interp3 (@var{v}, @var{xi}, @var{yi}, @var{zi})
 @deftypefnx {} {@var{vi} =} interp3 (@var{v}, @var{n})
@@ -429,6 +455,11 @@ any other @var{method} is @qcode{"NA"}.
 
 @c interpn scripts/general/interpn.m
 @anchor{XREFinterpn}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{vi} =} interpn (@var{x1}, @var{x2}, @dots{}, @var{v}, @var{y1}, @var{y2}, @dots{})
 @deftypefnx {} {@var{vi} =} interpn (@var{v}, @var{y1}, @var{y2}, @dots{})
 @deftypefnx {} {@var{vi} =} interpn (@var{v}, @var{m})

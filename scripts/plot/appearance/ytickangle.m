@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2020-2022 The Octave Project Developers
+## Copyright (C) 2020-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -39,28 +39,35 @@
 ## If the first argument @var{hax} is an axes handle, then operate on this axes
 ## rather than the current axes returned by @code{gca}.
 ##
-## Programming Note: Requesting a return value while also setting a specified
+## Programming Notes:
+## @enumerate
+## @item
+## The @qcode{"YTickLabelRotation"} property is currently unimplemented in
+## Octave.  The property can be set and queried, but has no effect on the plot.
+## @item
+## Requesting a return value while also setting a specified
 ## rotation will result in an error.
+## @end enumerate
 ##
 ## @seealso{xtickangle, ztickangle, get, set}
 ## @end deftypefn
 
-function retval = ytickangle (hax, angle)
+function angle = ytickangle (hax, angle)
 
   switch (nargin)
     case 0
-      retval = __tickangle__ (mfilename ());
+      angle = __tickangle__ (mfilename ());
 
     case 1
       if (nargout > 0)
-        retval = __tickangle__ (mfilename (), hax);
+        angle = __tickangle__ (mfilename (), hax);
       else
         __tickangle__ (mfilename (), hax);
       endif
 
     case 2
       if (nargout > 0)
-        retval = __tickangle__ (mfilename (), hax, angle);
+        angle = __tickangle__ (mfilename (), hax, angle);
       else
         __tickangle__ (mfilename (), hax, angle);
       endif

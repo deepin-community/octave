@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -26,70 +26,62 @@
 #if ! defined (octave_dw_main_window_h)
 #define octave_dw_main_window_h 1
 
+#include "octave-config.h"
+
 #include <QMainWindow>
 
-#include "gui-settings.h"
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-namespace octave
+class dw_main_window : public QMainWindow
 {
-  class base_qobject;
+  Q_OBJECT
 
-  class dw_main_window : public QMainWindow
-  {
-    Q_OBJECT
+public:
 
-  public:
+  dw_main_window (QWidget *parent = nullptr);
 
-    dw_main_window (base_qobject& oct_qboj, QWidget *parent = nullptr);
+  ~dw_main_window () = default;
 
-    ~dw_main_window (void) = default;
+  OCTAVE_DISABLE_COPY_MOVE (dw_main_window)
 
-    // No copying!
+public slots:
 
-    dw_main_window (const dw_main_window&) = delete;
+  void notice_settings ();
 
-    dw_main_window& operator = (const dw_main_window&) = delete;
+protected slots:
 
-  public slots:
+  virtual QMenu * createPopupMenu ();
 
-    void notice_settings (const gui_settings *);
+  virtual bool event (QEvent *ev);
 
-  protected slots:
+private slots:
 
-    virtual QMenu * createPopupMenu ();
+  void request_close ();
+  void request_close_all ();
+  void request_close_other ();
 
-    virtual bool event (QEvent *ev);
+  void request_switch_left ();
+  void request_switch_right ();
 
-  private slots:
+private:
 
-    void request_close ();
-    void request_close_all ();
-    void request_close_other ();
+  void request_switch (int direction);
 
-    void request_switch_left ();
-    void request_switch_right ();
+  QAction * add_action (QMenu *menu, const QIcon& icon, const QString& text,
+                        const char *member, QWidget *receiver);
 
-  private:
+  QList<QDockWidget *> m_dw_list;
 
-    void request_switch (int direction);
+  QAction *m_close_action;
+  QAction *m_close_all_action;
+  QAction *m_close_others_action;
 
-    QAction * add_action (QMenu *menu, const QIcon& icon, const QString& text,
-                          const char *member, QWidget *receiver);
+  QAction *m_switch_left_action;
+  QAction *m_switch_right_action;
 
-    base_qobject& m_octave_qobj;
+  QList<QAction *> m_actions_list;
+};
 
-    QList<QDockWidget *> m_dw_list;
-
-    QAction *m_close_action;
-    QAction *m_close_all_action;
-    QAction *m_close_others_action;
-
-    QAction *m_switch_left_action;
-    QAction *m_switch_right_action;
-
-    QList<QAction *> m_actions_list;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

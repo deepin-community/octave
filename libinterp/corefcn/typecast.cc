@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2007-2022 The Octave Project Developers
+// Copyright (C) 2007-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "ovl.h"
 #include "unwind-prot.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 static dim_vector
 get_vec_dims (const dim_vector& old_dims, octave_idx_type n)
@@ -54,7 +54,7 @@ get_vec_dims (const dim_vector& old_dims, octave_idx_type n)
 template <typename ArrayType>
 static void
 get_data_and_bytesize (const ArrayType& array,
-                       const void *& data,
+                       const void *&data,
                        octave_idx_type& byte_size,
                        dim_vector& old_dims,
                        unwind_protect& frame)
@@ -206,8 +206,6 @@ typecast (@var{x}, "uint8")
       else if (array.is_uint64_type ())
         get_data_and_bytesize (array.uint64_array_value (), data, byte_size,
                                old_dims, frame);
-      else
-        assert (0);
     }
   else if (array.iscomplex ())
     {
@@ -239,8 +237,8 @@ typecast (@var{x}, "uint8")
     ;
   else if (numclass == "char")
     retval = octave_value (reinterpret_copy<charNDArray>
-                           (data, byte_size, old_dims), array.is_dq_string () ? '"'
-                           : '\'');
+                           (data, byte_size, old_dims),
+                           array.is_dq_string () ? '"' : '\'');
   else if (numclass[0] == 'i')
     {
       if (numclass == "int8")
@@ -258,13 +256,13 @@ typecast (@var{x}, "uint8")
         retval = reinterpret_int_copy<uint8NDArray> (data, byte_size, old_dims);
       else if (numclass == "uint16")
         retval = reinterpret_int_copy<uint16NDArray> (data, byte_size,
-                                                      old_dims);
+                 old_dims);
       else if (numclass == "uint32")
         retval = reinterpret_int_copy<uint32NDArray> (data, byte_size,
-                                                      old_dims);
+                 old_dims);
       else if (numclass == "uint64")
         retval = reinterpret_int_copy<uint64NDArray> (data, byte_size,
-                                                      old_dims);
+                 old_dims);
     }
   else if (numclass == "single")
     retval = reinterpret_copy<FloatNDArray> (data, byte_size, old_dims);
@@ -272,7 +270,7 @@ typecast (@var{x}, "uint8")
     retval = reinterpret_copy<NDArray> (data, byte_size, old_dims);
   else if (numclass == "single complex")
     retval = reinterpret_copy<FloatComplexNDArray> (data, byte_size,
-                                                    old_dims);
+             old_dims);
   else if (numclass == "double complex")
     retval = reinterpret_copy<ComplexNDArray> (data, byte_size, old_dims);
 
@@ -548,8 +546,6 @@ column vector.
         retval = do_bitunpack (array.uint32_array_value ());
       else if (array.is_uint64_type ())
         retval = do_bitunpack (array.uint64_array_value ());
-      else
-        assert (0);
     }
   else if (array.iscomplex ())
     {
@@ -592,4 +588,4 @@ column vector.
 %!error bitunpack ({})
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

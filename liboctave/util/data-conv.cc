@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -616,7 +616,7 @@ oct_data_conv::data_type_as_string (oct_data_conv::data_type dt)
 
 OCTAVE_NORETURN static
 void
-err_unrecognized_float_fmt (void)
+err_unrecognized_float_fmt ()
 {
   (*current_liboctave_error_handler)
     ("unrecognized floating point format requested");

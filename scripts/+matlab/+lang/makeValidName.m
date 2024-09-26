@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -119,9 +119,8 @@ endfunction
 %! assert (varname, "octave");
 
 ## Check for keywords
-%!test
-%! assert (matlab.lang.makeValidName ("for"), "xFor")
-%! assert (matlab.lang.makeValidName ("For"), "For")
+%!assert (matlab.lang.makeValidName ("for"), "xFor")
+%!assert (matlab.lang.makeValidName ("For"), "For")
 %!error matlab.lang.makeValidName ("for", "Prefix", "for")
 
 ## Test input validation

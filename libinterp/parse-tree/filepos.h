@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2019-2022 The Octave Project Developers
+// Copyright (C) 2019-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,47 +28,48 @@
 
 #include "octave-config.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class filepos
 {
-  class filepos
+public:
+
+  filepos () : m_line (0), m_column (0) { }
+
+  filepos (int l, int c) : m_line (l), m_column (c) { }
+
+  filepos (const filepos&) = default;
+
+  filepos& operator = (const filepos&) = default;
+
+  ~filepos () = default;
+
+  operator bool () { return m_line > 0 && m_column > 0; }
+
+  void line (int l) { m_line = l; }
+  void column (int c) { m_column = c; }
+
+  int line () const { return m_line; }
+  int column () const { return m_column; }
+
+  void increment_line (int val = 1) { m_line += val; }
+  void increment_column (int val = 1) { m_column += val; }
+
+  void decrement_line (int val = 1) { m_line -= val; }
+  void decrement_column (int val = 1) { m_column -= val; }
+
+  void next_line ()
   {
-  public:
+    m_line++;
+    m_column = 1;
+  }
 
-    filepos (void) : m_line (0), m_column (0) { }
+private:
 
-    filepos (int l, int c) : m_line (l), m_column (c) { }
+  int m_line;
+  int m_column;
+};
 
-    filepos (const filepos&) = default;
-
-    filepos& operator = (const filepos&) = default;
-
-    ~filepos (void) = default;
-
-    operator bool () { return m_line > 0 && m_column > 0; }
-
-    void line (int l) { m_line = l; }
-    void column (int c) { m_column = c; }
-
-    int line (void) const { return m_line; }
-    int column (void) const { return m_column; }
-
-    void increment_line (int val = 1) { m_line += val; }
-    void increment_column (int val = 1) { m_column += val; }
-
-    void decrement_line (int val = 1) { m_line -= val; }
-    void decrement_column (int val = 1) { m_column -= val; }
-
-    void next_line (void)
-    {
-      m_line++;
-      m_column = 1;
-    }
-
-  private:
-
-    int m_line;
-    int m_column;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,43 +31,44 @@
 #include <QList>
 #include <QStringList>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class find_files_model : public QAbstractListModel
 {
-  class find_files_model : public QAbstractListModel
-  {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
+public:
 
-    find_files_model (QObject *p = nullptr);
+  find_files_model (QObject *p = nullptr);
 
-    ~find_files_model (void) = default;
+  ~find_files_model () = default;
 
-    void clear (void);
+  void clear ();
 
-    void addFile (const QFileInfo& info);
+  void addFile (const QFileInfo& info);
 
-    int rowCount (const QModelIndex& p = QModelIndex ()) const;
+  int rowCount (const QModelIndex& p = QModelIndex ()) const;
 
-    int columnCount (const QModelIndex& p = QModelIndex ()) const;
+  int columnCount (const QModelIndex& p = QModelIndex ()) const;
 
-    QVariant data (const QModelIndex& idx, int role) const;
+  QVariant data (const QModelIndex& idx, int role) const;
 
-    QVariant headerData (int section, Qt::Orientation orientation,
-                         int role = Qt::DisplayRole) const;
+  QVariant headerData (int section, Qt::Orientation orientation,
+                       int role = Qt::DisplayRole) const;
 
-    void sort (int column, Qt::SortOrder order = Qt::AscendingOrder);
+  void sort (int column, Qt::SortOrder order = Qt::AscendingOrder);
 
-    QFileInfo fileInfo (const QModelIndex& p) const;
+  QFileInfo fileInfo (const QModelIndex& p) const;
 
-    QIcon fileIcon (const QModelIndex& p) const;
+  QIcon fileIcon (const QModelIndex& p) const;
 
-  private:
+private:
 
-    QList<QFileInfo> m_files;
-    QStringList m_columnNames;
-    int m_sortorder;
-  };
-}
+  QList<QFileInfo> m_files;
+  QStringList m_columnNames;
+  int m_sortorder;
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

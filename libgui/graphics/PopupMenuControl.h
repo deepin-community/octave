@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,39 +30,33 @@
 
 class QComboBox;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class PopupMenuControl : public BaseControl
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  PopupMenuControl (octave::interpreter& interp, const graphics_object& go,
+                    QComboBox *box);
+  ~PopupMenuControl ();
 
-  class PopupMenuControl : public BaseControl
-  {
-    Q_OBJECT
+  static PopupMenuControl *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  public:
-    PopupMenuControl (octave::base_qobject& oct_qobj,
-                      octave::interpreter& interp, const graphics_object& go,
-                      QComboBox *box);
-    ~PopupMenuControl (void);
+protected:
+  void update (int pId);
 
-    static PopupMenuControl *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+private slots:
+  void currentIndexChanged (int index);
 
-  protected:
-    void update (int pId);
+private:
+  bool m_blockUpdate;
+};
 
-  private slots:
-    void currentIndexChanged (int index);
-
-  private:
-    bool m_blockUpdate;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

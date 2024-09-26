@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -46,55 +46,17 @@ octave_value_list
 octave_builtin::execute (octave::tree_evaluator& tw, int nargout,
                          const octave_value_list& args)
 {
-  octave_value_list retval;
-
-  if (args.has_magic_colon ())
-    error ("invalid use of colon in function argument list");
-
-  octave::profiler& profiler = tw.get_profiler ();
-
-  octave::profiler::enter<octave_builtin> block (profiler, *this);
-
-  if (m_fcn)
-    retval = (*m_fcn) (args, nargout);
-  else
-    {
-      octave::interpreter& interp
-        = octave::__get_interpreter__ ("octave_builtin::call");
-
-      retval = (*m_meth) (interp, args, nargout);
-    }
-
-  // Do not allow null values to be returned from functions.
-  // FIXME: perhaps true builtins should be allowed?
-
-  retval.make_storable_values ();
-
-  // Fix the case of a single undefined value.
-  // This happens when a compiled function uses
-  //
-  //   octave_value retval;
-  //
-  // instead of
-  //
-  //   octave_value_list retval;
-  //
-  // the idiom is very common, so we solve that here.
-
-  if (retval.length () == 1 && retval.xelem (0).is_undefined ())
-    retval.clear ();
-
-  return retval;
+  return tw.execute_builtin_function (*this, nargout, args);
 }
 
 octave_builtin::fcn
-octave_builtin::function (void) const
+octave_builtin::function () const
 {
   return m_fcn;
 }
 
 octave_builtin::meth
-octave_builtin::method (void) const
+octave_builtin::method () const
 {
   return m_meth;
 }

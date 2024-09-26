@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -26,48 +26,54 @@
 #if ! defined (octave_qt_application_h)
 #define octave_qt_application_h 1
 
+#include "octave-config.h"
+
+#include <string>
+
 #include "octave.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// Programming Note: This file must not include any Qt headers.  Any
+// Qt header files required by the qt_application::execute function
+// must be included only in the corresponding .cc file.
+
+//! This class inherits from the pure-virtual base class
+//! application and provides an implementation of the
+//! application::execute method that starts an interface to Octave
+//! that is based on Qt.  It may start a command-line interface that
+//! allows Qt graphics to be used or it may start an interface that
+//! provides the full GUI experience.
+
+class OCTGUI_API qt_application  : public application
 {
-  // Programming Note: This file must not include any Qt headers.  Any
-  // Qt header files required by the qt_application::execute function
-  // must be included only in the corresponding .cc file.
+public:
 
-  //! This class inherits from the pure-virtual base class
-  //! application and provides an implementation of the
-  //! application::execute method that starts an interface to Octave
-  //! that is based on Qt.  It may start a command-line interface that
-  //! allows Qt graphics to be used or it may start an interface that
-  //! provides the full GUI experience.
+  qt_application (const std::string& organization_name,
+                  const std::string& application_name,
+                  const std::string& application_version,
+                  int argc, char **argv);
 
-  class OCTGUI_API qt_application  : public application
-  {
-  public:
+  qt_application (int argc, char **argv);
 
-    qt_application (int argc, char **argv);
+  OCTAVE_DISABLE_COPY_MOVE (qt_application)
 
-    // No copying, at least not yet.
+  ~qt_application () = default;
 
-    qt_application (const qt_application&) = delete;
+  // Should we start the GUI or fall back to the CLI?
+  bool start_gui_p () const;
 
-    qt_application& operator = (const qt_application&) = delete;
+  int execute ();
 
-    ~qt_application (void) = default;
+  bool gui_running () const { return m_gui_running; }
+  void gui_running (bool arg) { m_gui_running = arg; }
 
-    // Should we start the GUI or fall back to the CLI?
-    bool start_gui_p (void) const;
+private:
 
-    int execute (void);
+  // If TRUE, the GUI should be started.
+  bool m_gui_running = false;
+};
 
-    bool gui_running (void) const { return m_gui_running; }
-    void gui_running (bool arg) { m_gui_running = arg; }
-
-  private:
-
-    // If TRUE, the GUI should be started.
-    bool m_gui_running = false;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

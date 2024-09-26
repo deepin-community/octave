@@ -14,7 +14,7 @@ and after the nested call.
 %top {
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -183,28 +183,6 @@ and after the nested call.
      }                                                                  \
    while (0)
 
-#define CMD_OR_DEPRECATED_OP(PATTERN, REPLACEMENT, VERSION, TOK)        \
-   do                                                                   \
-     {                                                                  \
-       curr_lexer->lexer_debug (PATTERN);                               \
-                                                                        \
-       if (curr_lexer->looks_like_command_arg ())                       \
-         {                                                              \
-           yyless (0);                                                  \
-           curr_lexer->push_start_state (COMMAND_START);                \
-         }                                                              \
-       else                                                             \
-         {                                                              \
-           curr_lexer->warn_deprecated_operator (PATTERN, REPLACEMENT,  \
-                                                 #VERSION);             \
-           /* set COMPAT to true here to avoid warning about            \
-              compatibility since we've already warned about the        \
-              operator being deprecated.  */                            \
-           return curr_lexer->handle_op (TOK, false, true);             \
-         }                                                              \
-     }                                                                  \
-   while (0)
-
 #define CMD_OR_UNARY_OP(PATTERN, TOK, COMPAT)                           \
    do                                                                   \
      {                                                                  \
@@ -338,7 +316,7 @@ is_space_or_tab_or_eol (char c)
   return c == ' ' || c == '\t' || c == '\n' || c == '\r';
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
   bool iskeyword (const std::string& s)
   {
@@ -357,7 +335,7 @@ OCTAVE_NAMESPACE_BEGIN
                   || s == "methods" || s == "properties"));
   }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 
 %}
 
@@ -366,7 +344,7 @@ D_      [0-9_]
 S       [ \t]
 NL      ((\n)|(\r)|(\r\n))
 CCHAR   [#%]
-IDENT   ([_$a-zA-Z][_$a-zA-Z0-9]*)
+IDENT   ([_a-zA-Z][_a-zA-Z0-9]*)
 FQIDENT ({IDENT}({S}*\.{S}*{IDENT})*)
 
 %{
@@ -476,8 +454,9 @@ ANY_INCLUDING_NL (.|{NL})
 
     curr_lexer->m_filepos.next_line ();
     curr_lexer->m_looking_for_object_index = false;
-    curr_lexer->m_at_beginning_of_statement = true;
     curr_lexer->pop_start_state ();
+    curr_lexer->m_comment_uses_hash_char = yytext[0] == '#';
+    curr_lexer->finish_comment (octave::comment_elt::end_of_line);
 
     return curr_lexer->handle_token ('\n');
   }
@@ -699,7 +678,7 @@ ANY_INCLUDING_NL (.|{NL})
         curr_lexer->m_looking_for_object_index = false;
         curr_lexer->m_at_beginning_of_statement = false;
 
-        if (curr_lexer->m_defining_func
+        if (curr_lexer->m_defining_fcn
             && ! curr_lexer->m_parsed_function_name.top ())
           curr_lexer->m_looking_at_return_list = true;
         else
@@ -756,6 +735,8 @@ ANY_INCLUDING_NL (.|{NL})
 
     if (curr_lexer->m_block_comment_nesting_level)
       curr_lexer->m_comment_text = "\n";
+    else
+      curr_lexer->check_comment_for_hash_char (yytext, yyleng);
 
     curr_lexer->m_block_comment_nesting_level++;
 
@@ -780,20 +761,24 @@ ANY_INCLUDING_NL (.|{NL})
     if (curr_lexer->m_block_comment_nesting_level > 1)
       curr_lexer->m_comment_text = "\n";
     else
-      curr_lexer->finish_comment (octave::comment_elt::block);
+      {
+        curr_lexer->check_comment_for_hash_char (yytext, yyleng);
+        curr_lexer->finish_comment (octave::comment_elt::block);
+      }
 
     curr_lexer->m_block_comment_nesting_level--;
 
-    int status = -1;
-
     if (curr_lexer->m_block_comment_nesting_level == 0)
       {
-        status = -2;
-
         curr_lexer->pop_start_state ();
-      }
 
-    HANDLE_EOB_OR_EOF (status);
+        if (curr_lexer->pending_token_count () > 0)
+          HANDLE_EOB_OR_EOF (-1);
+        else
+          HANDLE_EOB_OR_EOF (-2);
+      }
+    else
+      HANDLE_EOB_OR_EOF (-1);
   }
 
 %{
@@ -865,8 +850,25 @@ ANY_INCLUDING_NL (.|{NL})
 
     bool have_space = (i > 0);
 
-    while (i < yyleng && (yytext[i] == '#' || yytext[i] == '%'))
-      i++;
+    bool first = true;
+
+    while (i < yyleng)
+      {
+        char c = yytext[i];
+
+        if (c == '#' || c == '%')
+          {
+            if (first && c == '#')
+              {
+                curr_lexer->m_comment_uses_hash_char = true;
+                first = false;
+              }
+
+            i++;
+          }
+        else
+          break;
+      }
 
     curr_lexer->m_comment_text += &yytext[i];
 
@@ -1088,28 +1090,6 @@ ANY_INCLUDING_NL (.|{NL})
     curr_lexer->m_string_text += '\v';
   }
 
-<DQ_STRING_START>(\.\.\.){S}*{NL} {
-    curr_lexer->lexer_debug ("<DQ_STRING_START>(\\.\\.\\.){S}*{NL}");
-
-    /* FIXME: Remove support for '...' continuation in Octave 9 */
-    static const char *msg = "'...' continuations in double-quoted character strings were deprecated in version 7 and will not be allowed in a future version of Octave; please use '\\' instead";
-
-    curr_lexer->warn_deprecated_syntax (msg);
-
-    HANDLE_STRING_CONTINUATION;
-  }
-
-<DQ_STRING_START>\\{S}+{NL} {
-    curr_lexer->lexer_debug ("<DQ_STRING_START>\\\\{S}+{NL}");
-
-    /* FIXME: Remove support for WS after line continuation in Octave 9 */
-    static const char *msg = "whitespace after continuation markers in double-quoted character strings were deprecated in version 7 and will not be allowed in a future version of Octave";
-
-    curr_lexer->warn_deprecated_syntax (msg);
-
-    HANDLE_STRING_CONTINUATION;
-  }
-
 <DQ_STRING_START>\\{NL} {
     curr_lexer->lexer_debug ("<DQ_STRING_START>\\\\{NL}");
 
@@ -1302,17 +1282,6 @@ ANY_INCLUDING_NL (.|{NL})
 // Deprecated C preprocessor style continuation markers.
 %}
 
-\\{S}*{NL} |
-\\{S}*{CCHAR}{ANY_EXCEPT_NL}*{NL} {
-    curr_lexer->lexer_debug ("\\\\{S}*{NL}|\\\\{S}*{CCHAR}{ANY_EXCEPT_NL}*{NL}");
-
-    /* FIXME: Remove support for '\\' line continuation in Octave 9 */
-    static const char *msg = "using continuation marker \\ outside of double quoted strings was deprecated in version 7 and will be removed from a future version of Octave, use ... instead";
-
-    curr_lexer->warn_deprecated_syntax (msg);
-
-    curr_lexer->handle_continuation ();
-  }
 
 %{
 // End of file.
@@ -1644,13 +1613,10 @@ ANY_INCLUDING_NL (.|{NL})
 %}
 
 ":"   { CMD_OR_OP (":", ':', true); }
-".+"  { CMD_OR_DEPRECATED_OP (".+", "+", 7, '+'); }
-".-"  { CMD_OR_DEPRECATED_OP (".-", "-", 7, '-'); }
 ".*"  { CMD_OR_OP (".*", EMUL, true); }
 "./"  { CMD_OR_OP ("./", EDIV, true); }
 ".\\" { CMD_OR_OP (".\\", ELEFTDIV, true); }
 ".^"  { CMD_OR_OP (".^", EPOW, true); }
-".**" { CMD_OR_DEPRECATED_OP (".**", ".^", 7, EPOW); }
 "<="  { CMD_OR_OP ("<=", EXPR_LE, true); }
 "=="  { CMD_OR_OP ("==", EXPR_EQ, true); }
 "!="  { CMD_OR_OP ("!=", EXPR_NE, false); }
@@ -1680,7 +1646,6 @@ ANY_INCLUDING_NL (.|{NL})
   }
 
 "^"   { CMD_OR_OP ("^", POW, true); }
-"**"  { CMD_OR_DEPRECATED_OP ("**", "^", 7, POW); }
 "&&"  { CMD_OR_OP ("&&", EXPR_AND_AND, true); }
 "||"  { CMD_OR_OP ("||", EXPR_OR_OR, true); }
 
@@ -1697,8 +1662,8 @@ ANY_INCLUDING_NL (.|{NL})
 "+" { CMD_OR_UNARY_OP ("+", '+', true); }
 "-" { CMD_OR_UNARY_OP ("-", '-', true); }
 
-"~" { CMD_OR_UNARY_OP ("~", EXPR_NOT, true); }
-"!" { CMD_OR_UNARY_OP ("!", EXPR_NOT, false); }
+"~" { CMD_OR_UNARY_OP ("~", '~', true); }
+"!" { CMD_OR_UNARY_OP ("!", '!', false); }
 
 "," {
     curr_lexer->lexer_debug (",");
@@ -1817,15 +1782,11 @@ ANY_INCLUDING_NL (.|{NL})
 "*="   { CMD_OR_OP ("*=", MUL_EQ, false); }
 "/="   { CMD_OR_OP ("/=", DIV_EQ, false); }
 "\\="  { CMD_OR_OP ("\\=", LEFTDIV_EQ, false); }
-".+="  { CMD_OR_DEPRECATED_OP (".+=", "+=", 7, ADD_EQ); }
-".-="  { CMD_OR_DEPRECATED_OP (".-=", "-=", 7, SUB_EQ); }
 ".*="  { CMD_OR_OP (".*=", EMUL_EQ, false); }
 "./="  { CMD_OR_OP ("./=", EDIV_EQ, false); }
 ".\\=" { CMD_OR_OP (".\\=", ELEFTDIV_EQ, false); }
 "^="   { CMD_OR_OP ("^=", POW_EQ, false); }
-"**="  { CMD_OR_DEPRECATED_OP ("**=", "^=", 7, POW_EQ); }
 ".^="  { CMD_OR_OP (".^=", EPOW_EQ, false); }
-".**=" { CMD_OR_DEPRECATED_OP (".**=", ".^=", 7, EPOW_EQ); }
 "&="   { CMD_OR_OP ("&=", AND_EQ, false); }
 "|="   { CMD_OR_OP ("|=", OR_EQ, false); }
 
@@ -2111,7 +2072,7 @@ display_character (char c)
       }
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (iskeyword, args, ,
        doc: /* -*- texinfo -*-
@@ -2177,14 +2138,14 @@ If @var{name} is omitted, return a list of keywords.
 */
 
   void
-  lexical_feedback::symbol_table_context::clear (void)
+  lexical_feedback::symbol_table_context::clear ()
   {
     while (! m_frame_stack.empty ())
       m_frame_stack.pop_front ();
   }
 
   void
-  lexical_feedback::symbol_table_context::pop (void)
+  lexical_feedback::symbol_table_context::pop ()
   {
     if (empty ())
       panic_impossible ();
@@ -2193,7 +2154,7 @@ If @var{name} is omitted, return a list of keywords.
   }
 
   symbol_scope
-  lexical_feedback::symbol_table_context::curr_scope (void) const
+  lexical_feedback::symbol_table_context::curr_scope () const
   {
     if (empty ())
       return m_interpreter.get_current_scope ();
@@ -2202,22 +2163,22 @@ If @var{name} is omitted, return a list of keywords.
   }
 
   symbol_scope
-  lexical_feedback::symbol_table_context::parent_scope (void) const
+  lexical_feedback::symbol_table_context::parent_scope () const
   {
     std::size_t sz = size ();
 
     return (sz > 1
             ? m_frame_stack[1]
-            : (sz == 1 ? m_frame_stack[0] : symbol_scope ()));
+            : (sz == 1 ? m_frame_stack[0] : symbol_scope::invalid ()));
   }
 
-  lexical_feedback::~lexical_feedback (void)
+  lexical_feedback::~lexical_feedback ()
   {
     m_tokens.clear ();
   }
 
   void
-  lexical_feedback::init (void)
+  lexical_feedback::init ()
   {
     // The closest paren, brace, or bracket nesting is not an object
     // index.
@@ -2225,7 +2186,7 @@ If @var{name} is omitted, return a list of keywords.
   }
 
   void
-  lexical_feedback::reset (void)
+  lexical_feedback::reset ()
   {
     m_end_of_input = false;
     m_allow_command_syntax = true;
@@ -2253,10 +2214,11 @@ If @var{name} is omitted, return a list of keywords.
     m_reading_script_file = false;
     m_reading_classdef_file = false;
     m_buffer_function_text = false;
+    m_comment_uses_hash_char = false;
     m_bracketflag = 0;
     m_braceflag = 0;
     m_looping = 0;
-    m_defining_func = 0;
+    m_defining_fcn = 0;
     m_looking_at_function_handle = 0;
     m_block_comment_nesting_level = 0;
     m_command_arg_paren_count = 0;
@@ -2267,7 +2229,6 @@ If @var{name} is omitted, return a list of keywords.
     m_string_text = "";
     m_current_input_line = "";
     m_comment_text = "";
-    m_help_text = "";
     m_function_text = "";
     m_fcn_file_name = "";
     m_fcn_file_full_name = "";
@@ -2285,7 +2246,7 @@ If @var{name} is omitted, return a list of keywords.
   }
 
   int
-  lexical_feedback::previous_token_value (void) const
+  lexical_feedback::previous_token_value () const
   {
     const token *tok = m_tokens.front ();
     return tok ? tok->token_value () : 0;
@@ -2299,7 +2260,7 @@ If @var{name} is omitted, return a list of keywords.
   }
 
   void
-  lexical_feedback::mark_previous_token_trailing_space (void)
+  lexical_feedback::mark_previous_token_trailing_space ()
   {
     token *tok = m_tokens.front ();
     if (tok && ! previous_token_value_is ('\n'))
@@ -2307,18 +2268,18 @@ If @var{name} is omitted, return a list of keywords.
   }
 
   bool
-  lexical_feedback::space_follows_previous_token (void) const
+  lexical_feedback::space_follows_previous_token () const
   {
     const token *tok = m_tokens.front ();
     return tok ? tok->space_follows_token () : false;
   }
 
   bool
-  lexical_feedback::previous_token_is_binop (void) const
+  lexical_feedback::previous_token_is_binop () const
   {
     int tok = previous_token_value ();
 
-    return (tok == '+' || tok == '-' || tok == '@'
+    return (tok == '+' || tok == '-' || tok == '@' || tok == '~' || tok == '!'
             || tok == ',' || tok == ';' || tok == '*' || tok == '/'
             || tok == ':' || tok == '=' || tok == ADD_EQ
             || tok == AND_EQ || tok == DIV_EQ || tok == EDIV
@@ -2327,14 +2288,14 @@ If @var{name} is omitted, return a list of keywords.
             || tok == EPOW || tok == EPOW_EQ || tok == EXPR_AND
             || tok == EXPR_AND_AND || tok == EXPR_EQ || tok == EXPR_GE
             || tok == EXPR_GT || tok == EXPR_LE || tok == EXPR_LT
-            || tok == EXPR_NE || tok == EXPR_NOT || tok == EXPR_OR
+            || tok == EXPR_NE || tok == EXPR_OR
             || tok == EXPR_OR_OR || tok == LEFTDIV || tok == LEFTDIV_EQ
             || tok == MUL_EQ || tok == OR_EQ || tok == POW
             || tok == POW_EQ || tok == SUB_EQ);
   }
 
   bool
-  lexical_feedback::previous_token_is_keyword (void) const
+  lexical_feedback::previous_token_is_keyword () const
   {
     const token *tok = m_tokens.front ();
     return tok ? tok->iskeyword () : false;
@@ -2359,7 +2320,7 @@ If @var{name} is omitted, return a list of keywords.
   }
 
   bool
-  lexical_feedback::previous_token_may_be_command (void) const
+  lexical_feedback::previous_token_may_be_command () const
   {
     if (! m_allow_command_syntax)
       return false;
@@ -2455,13 +2416,13 @@ looks_like_shebang (const std::string& s)
     return len;
   }
 
-  base_lexer::~base_lexer (void)
+  base_lexer::~base_lexer ()
   {
     yylex_destroy (m_scanner);
   }
 
   void
-  base_lexer::init (void)
+  base_lexer::init ()
   {
     yylex_init (&m_scanner);
 
@@ -2482,7 +2443,7 @@ looks_like_shebang (const std::string& s)
   struct yyguts_t *yyg = static_cast<struct yyguts_t*> (m_scanner)
 
   void
-  base_lexer::reset (void)
+  base_lexer::reset ()
   {
     // Start off on the right foot.
     clear_start_state ();
@@ -2505,7 +2466,7 @@ looks_like_shebang (const std::string& s)
   }
 
   void
-  base_lexer::prep_for_file (void)
+  base_lexer::prep_for_file ()
   {
     m_reading_script_file = true;
 
@@ -2521,7 +2482,7 @@ looks_like_shebang (const std::string& s)
   }
 
   int
-  base_lexer::handle_end_of_input (void)
+  base_lexer::handle_end_of_input ()
   {
     lexer_debug ("<<EOF>>");
 
@@ -2546,19 +2507,19 @@ looks_like_shebang (const std::string& s)
   }
 
   char *
-  base_lexer::flex_yytext (void)
+  base_lexer::flex_yytext ()
   {
     return yyget_text (m_scanner);
   }
 
   int
-  base_lexer::flex_yyleng (void)
+  base_lexer::flex_yyleng ()
   {
     return yyget_leng (m_scanner);
   }
 
   int
-  base_lexer::text_yyinput (void)
+  base_lexer::text_yyinput ()
   {
     int c = yyinput (m_scanner);
 
@@ -2629,7 +2590,7 @@ looks_like_shebang (const std::string& s)
   }
 
   bool
-  base_lexer::looking_at_space (void)
+  base_lexer::looking_at_space ()
   {
     int c = text_yyinput ();
     xunput (c);
@@ -2637,7 +2598,7 @@ looks_like_shebang (const std::string& s)
   }
 
   bool
-  base_lexer::inside_any_object_index (void)
+  base_lexer::inside_any_object_index ()
   {
     bool retval = false;
 
@@ -2697,7 +2658,7 @@ looks_like_shebang (const std::string& s)
 
       case end_kw:
         if (inside_any_object_index ()
-            || (m_defining_func
+            || (m_defining_fcn
                 && ! (m_looking_at_return_list
                       || m_parsed_function_name.top ())))
           {
@@ -2705,53 +2666,50 @@ looks_like_shebang (const std::string& s)
             return 0;
           }
 
-        tok_val = new token (end_kw, token::simple_end, m_tok_beg, m_tok_end);
+        tok_val = new token (kw->tok, token::simple_end, m_tok_beg, m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case end_try_catch_kw:
-        tok_val = new token (end_try_catch_kw, token::try_catch_end, m_tok_beg,
+        tok_val = new token (kw->tok, token::try_catch_end, m_tok_beg,
                              m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case end_unwind_protect_kw:
-        tok_val = new token (end_unwind_protect_kw,
-                             token::unwind_protect_end, m_tok_beg, m_tok_end);
+        tok_val = new token (kw->tok, token::unwind_protect_end, m_tok_beg,
+                             m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endfor_kw:
-        tok_val = new token (endfor_kw, token::for_end, m_tok_beg, m_tok_end);
+        tok_val = new token (kw->tok, token::for_end, m_tok_beg, m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endfunction_kw:
-        tok_val = new token (endfunction_kw, token::function_end, m_tok_beg,
+        tok_val = new token (kw->tok, token::function_end, m_tok_beg,
                              m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endif_kw:
-        tok_val = new token (endif_kw, token::if_end, m_tok_beg, m_tok_end);
+        tok_val = new token (kw->tok, token::if_end, m_tok_beg, m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endparfor_kw:
-        tok_val = new token (endparfor_kw, token::parfor_end, m_tok_beg,
-                             m_tok_end);
+        tok_val = new token (kw->tok, token::parfor_end, m_tok_beg, m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endswitch_kw:
-        tok_val = new token (endswitch_kw, token::switch_end, m_tok_beg,
-                             m_tok_end);
+        tok_val = new token (kw->tok, token::switch_end, m_tok_beg, m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endwhile_kw:
-        tok_val = new token (endwhile_kw, token::while_end, m_tok_beg,
-                             m_tok_end);
+        tok_val = new token (kw->tok, token::while_end, m_tok_beg, m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
@@ -2759,38 +2717,38 @@ looks_like_shebang (const std::string& s)
 #if defined (DISABLE_ARGUMENTS_VALIDATION_BLOCK)
         return 0;
 #else
-        tok_val = new token (endarguments_kw, token::arguments_end, m_tok_beg,
+        tok_val = new token (kw->tok, token::arguments_end, m_tok_beg,
                              m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 #endif
 
       case endclassdef_kw:
-        tok_val = new token (endclassdef_kw, token::classdef_end, m_tok_beg,
+        tok_val = new token (kw->tok, token::classdef_end, m_tok_beg,
                              m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endenumeration_kw:
-        tok_val = new token (endenumeration_kw, token::enumeration_end,
-                             m_tok_beg, m_tok_end);
+        tok_val = new token (kw->tok, token::enumeration_end, m_tok_beg,
+                             m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endevents_kw:
-        tok_val = new token (endevents_kw, token::events_end, m_tok_beg,
+        tok_val = new token (kw->tok, token::events_end, m_tok_beg,
                              m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endmethods_kw:
-        tok_val = new token (endmethods_kw, token::methods_end, m_tok_beg,
+        tok_val = new token (kw->tok, token::methods_end, m_tok_beg,
                              m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
       case endproperties_kw:
-        tok_val = new token (endproperties_kw, token::properties_end, m_tok_beg,
+        tok_val = new token (kw->tok, token::properties_end, m_tok_beg,
                              m_tok_end);
         m_at_beginning_of_statement = true;
         break;
@@ -2849,7 +2807,7 @@ looks_like_shebang (const std::string& s)
         break;
 
       case function_kw:
-        m_defining_func++;
+        m_defining_fcn++;
         m_parsed_function_name.push (false);
 
         if (! m_force_script && m_token_count == 0 && input_from_file ())
@@ -2894,7 +2852,7 @@ looks_like_shebang (const std::string& s)
         break;
 
       case endspmd_kw:
-        tok_val = new token (endspmd_kw, token::spmd_end, m_tok_beg, m_tok_end);
+        tok_val = new token (kw->tok, token::spmd_end, m_tok_beg, m_tok_end);
         m_at_beginning_of_statement = true;
         break;
 
@@ -2903,10 +2861,10 @@ looks_like_shebang (const std::string& s)
           if ((m_reading_fcn_file || m_reading_script_file
                || m_reading_classdef_file)
               && ! m_fcn_file_full_name.empty ())
-            tok_val = new token (magic_file_kw, m_fcn_file_full_name,
+            tok_val = new token (kw->tok, m_fcn_file_full_name,
                                  m_tok_beg, m_tok_end);
           else
-            tok_val = new token (magic_file_kw, "stdin", m_tok_beg, m_tok_end);
+            tok_val = new token (kw->tok, "stdin", m_tok_beg, m_tok_end);
         }
         break;
 
@@ -2914,8 +2872,7 @@ looks_like_shebang (const std::string& s)
         {
           int l = m_tok_beg.line ();
           octave_value ov_value (static_cast<double> (l));
-          tok_val = new token (magic_line_kw, ov_value, "",
-                               m_tok_beg, m_tok_end);
+          tok_val = new token (kw->tok, ov_value, "", m_tok_beg, m_tok_end);
         }
         break;
 
@@ -2930,6 +2887,14 @@ looks_like_shebang (const std::string& s)
 
     return kw->tok;
   }
+
+/*
+
+## check if magic file and line keywords are working
+%!assert <*62587> (ischar (__FILE__))
+%!assert <*62587> (isnumeric (__LINE__))
+
+*/
 
   bool
   base_lexer::fq_identifier_contains_keyword (const std::string& s)
@@ -2960,7 +2925,7 @@ looks_like_shebang (const std::string& s)
   }
 
   bool
-  base_lexer::whitespace_is_significant (void)
+  base_lexer::whitespace_is_significant ()
   {
     return (m_nesting_level.is_bracket ()
             || (m_nesting_level.is_brace ()
@@ -3031,7 +2996,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
 
   template <>
   int
-  base_lexer::handle_number<2> (void)
+  base_lexer::handle_number<2> ()
   {
     // Skip 0[bB] prefix.
     std::string yytxt (flex_yytext () + 2);
@@ -3117,14 +3082,14 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   static uint64_t
-  flintmax (void)
+  flintmax ()
   {
     return (static_cast<uint64_t> (1) << std::numeric_limits<double>::digits);
   }
 
   template <>
   int
-  base_lexer::handle_number<10> (void)
+  base_lexer::handle_number<10> ()
   {
     bool imag = false;
     bool digits_only = true;
@@ -3239,7 +3204,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
 
   template <>
   int
-  base_lexer::handle_number<16> (void)
+  base_lexer::handle_number<16> ()
   {
     // Skip 0[xX] prefix.
     std::string yytxt (flex_yytext () + 2);
@@ -3315,7 +3280,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   void
-  base_lexer::handle_continuation (void)
+  base_lexer::handle_continuation ()
   {
     char *yytxt = flex_yytext ();
     int yylng = flex_yyleng ();
@@ -3343,11 +3308,19 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
       mark_previous_token_trailing_space ();
 
     bool have_comment = false;
+    bool first = true;
     while (offset < yylng)
       {
         char c = yytxt[offset];
+
         if (c == '#' || c == '%')
           {
+            if (first && c == '#')
+              {
+                m_comment_uses_hash_char = true;
+                first = false;
+              }
+
             have_comment = true;
             offset++;
           }
@@ -3376,19 +3349,13 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   void
   base_lexer::finish_comment (comment_elt::comment_type typ)
   {
-    bool copyright = looks_like_copyright (m_comment_text);
-
-    if (m_nesting_level.none () && m_help_text.empty () && ! m_comment_text.empty ()
-        && ! copyright && ! looks_like_shebang (m_comment_text))
-      m_help_text = m_comment_text;
-
-    if (copyright)
+    if (looks_like_copyright (m_comment_text))
       typ = comment_elt::copyright;
 
-    m_comment_buf.append (m_comment_text, typ);
+    m_comment_buf.append (m_comment_text, typ, m_comment_uses_hash_char);
 
     m_comment_text = "";
-
+    m_comment_uses_hash_char = false;
     m_at_beginning_of_statement = true;
   }
 
@@ -3418,7 +3385,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   bool
-  base_lexer::looks_like_command_arg (void)
+  base_lexer::looks_like_command_arg ()
   {
     if (! m_allow_command_syntax)
       return false;
@@ -3431,7 +3398,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   int
-  base_lexer::handle_superclass_identifier (void)
+  base_lexer::handle_superclass_identifier ()
   {
     update_token_positions (flex_yyleng ());
 
@@ -3465,7 +3432,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   int
-  base_lexer::handle_meta_identifier (void)
+  base_lexer::handle_meta_identifier ()
   {
     std::string txt = flex_yytext ();
 
@@ -3496,7 +3463,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   int
-  base_lexer::handle_fq_identifier (void)
+  base_lexer::handle_fq_identifier ()
   {
     std::string txt = flex_yytext ();
 
@@ -3530,7 +3497,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   // should be ignored.
 
   int
-  base_lexer::handle_identifier (void)
+  base_lexer::handle_identifier ()
   {
     update_token_positions (flex_yyleng ());
 
@@ -3575,9 +3542,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
     //   pi +1
     //
     // are parsed as an addition expression instead of as a command-style
-    // function call with the argument "+1".  Also for compatibility with
-    // Matlab, if we are at the top level workspace, do not consider IDENT
-    // as a possible command if it is already known to be a variable.
+    // function call with the argument "+1".
 
     if (m_at_beginning_of_statement
         && ! (m_parsing_anon_fcn_body
@@ -3601,6 +3566,19 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   void
+  base_lexer::check_comment_for_hash_char (const char *txt, std::size_t len)
+  {
+    if (m_comment_uses_hash_char)
+      return;
+
+    std::size_t i = 0;
+    while (i < len && is_space_or_tab (txt[i]))
+      i++;
+
+    m_comment_uses_hash_char = txt[i] == '#';
+  }
+
+  void
   base_lexer::maybe_warn_separator_insert (char sep)
   {
     std::string nm = m_fcn_file_full_name;
@@ -3613,21 +3591,6 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
       warning_with_id ("Octave:separator-insert",
                        "potential auto-insertion of '%c' near line %d of file %s",
                        sep, m_filepos.line (), nm.c_str ());
-  }
-
-  void
-  base_lexer::warn_single_quote_string (void)
-  {
-    std::string nm = m_fcn_file_full_name;
-
-    if (nm.empty ())
-      warning_with_id ("Octave:single-quote-string",
-                       "single quote delimited string near line %d",
-                       m_filepos.line ());
-    else
-      warning_with_id ("Octave:single-quote-string",
-                       "single quote delimited string near line %d of file %s",
-                       m_filepos.line (), nm.c_str ());
   }
 
   void
@@ -3653,7 +3616,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   void
-  base_lexer::warn_language_extension_continuation (void)
+  base_lexer::warn_language_extension_continuation ()
   {
     warn_language_extension ("\\ used as line continuation marker");
   }
@@ -3680,16 +3643,6 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   void
-  base_lexer::warn_deprecated_operator (const std::string& deprecated_op,
-                                        const std::string& recommended_op,
-                                        const std::string& version)
-  {
-    std::string msg = "the '" + deprecated_op + "' operator was deprecated in version " + version + " and will not be allowed in a future version of Octave; please use '" + recommended_op + "' instead";
-
-    warn_deprecated_syntax (msg);
-  }
-
-  void
   base_lexer::push_token (token *tok)
   {
     YYSTYPE *lval = yyget_lval (m_scanner);
@@ -3698,14 +3651,14 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   token *
-  base_lexer::current_token (void)
+  base_lexer::current_token ()
   {
     YYSTYPE *lval = yyget_lval (m_scanner);
     return lval->tok_val;
   }
 
   std::size_t
-  base_lexer::pending_token_count (void) const
+  base_lexer::pending_token_count () const
   {
     return m_tokens.size ();
   }
@@ -3721,6 +3674,8 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
       case '+': std::cerr << "'+'\n"; break;
       case '*': std::cerr << "'*'\n"; break;
       case '/': std::cerr << "'/'\n"; break;
+      case '~': std::cerr << "'~'\n"; break;
+      case '!': std::cerr << "'!'\n"; break;
       case ADD_EQ: std::cerr << "ADD_EQ\n"; break;
       case SUB_EQ: std::cerr << "SUB_EQ\n"; break;
       case MUL_EQ: std::cerr << "MUL_EQ\n"; break;
@@ -3737,7 +3692,6 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
       case EXPR_OR_OR: std::cerr << "EXPR_OR_OR\n"; break;
       case EXPR_AND: std::cerr << "EXPR_AND\n"; break;
       case EXPR_OR: std::cerr << "EXPR_OR\n"; break;
-      case EXPR_NOT: std::cerr << "EXPR_NOT\n"; break;
       case EXPR_LT: std::cerr << "EXPR_LT\n"; break;
       case EXPR_LE: std::cerr << "EXPR_LE\n"; break;
       case EXPR_EQ: std::cerr << "EXPR_EQ\n"; break;
@@ -3844,21 +3798,21 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   bool
-  base_lexer::debug_flag (void) const
+  base_lexer::debug_flag () const
   {
     settings& stgs = m_interpreter.get_settings ();
     return stgs.lexer_debug_flag ();
   }
 
   bool
-  base_lexer::display_tokens (void) const
+  base_lexer::display_tokens () const
   {
     settings& stgs = m_interpreter.get_settings ();
     return stgs.display_tokens ();
   }
 
   void
-  base_lexer::increment_token_count (void)
+  base_lexer::increment_token_count ()
   {
     settings& stgs = m_interpreter.get_settings ();
     stgs.increment_token_count ();
@@ -3881,7 +3835,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   bool
-  base_lexer::input_from_tmp_history_file (void)
+  base_lexer::input_from_tmp_history_file ()
   {
     history_system& history_sys = m_interpreter.get_history_system ();
 
@@ -3899,7 +3853,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   void
-  base_lexer::pop_start_state (void)
+  base_lexer::pop_start_state ()
   {
     OCTAVE_YYG;
 
@@ -3909,7 +3863,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   void
-  base_lexer::clear_start_state (void)
+  base_lexer::clear_start_state ()
   {
     while (! start_state_stack.empty ())
       start_state_stack.pop ();
@@ -3918,7 +3872,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   }
 
   void
-  base_lexer::display_start_state (void) const
+  base_lexer::display_start_state () const
   {
     std::cerr << "S: ";
 
@@ -4029,7 +3983,7 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
   // function call.
 
   int
-  base_lexer::finish_command_arg (void)
+  base_lexer::finish_command_arg ()
   {
     int tok = SQ_STRING;
 
@@ -4095,10 +4049,8 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
 
     if (m_input_buf.empty ())
       {
-        input_system& input_sys = m_interpreter.get_input_system ();
-
         std::string ps
-          = m_initial_input ? input_sys.PS1 () : input_sys.PS2 ();
+          = m_initial_input ? m_interpreter.PS1 () : m_interpreter.PS2 ();
 
         std::string prompt = command_editor::decode_prompt_string (ps);
 
@@ -4191,4 +4143,4 @@ make_integer_value (uintmax_t long_int_val, bool unsigned_val, int bytes)
     return status;
   }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2004-2022 The Octave Project Developers
+// Copyright (C) 2004-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -56,8 +56,8 @@
 #include "ls-utils.h"
 #include "ls-hdf5.h"
 
-octave_hdf5_id octave_int32_matrix::hdf5_save_type = HDF5_SAVE_TYPE;
-octave_hdf5_id octave_int32_scalar::hdf5_save_type = HDF5_SAVE_TYPE;
+octave_hdf5_id octave_int32_matrix::s_hdf5_save_type = HDF5_SAVE_TYPE;
+octave_hdf5_id octave_int32_scalar::s_hdf5_save_type = HDF5_SAVE_TYPE;
 
 // Prevent implicit instantiations on some systems (Windows, others?)
 // that can lead to duplicate definitions of static data members.

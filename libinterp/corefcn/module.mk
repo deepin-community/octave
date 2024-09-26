@@ -38,6 +38,7 @@ COREFCN_INC = \
   %reldir%/fcn-info.h \
   %reldir%/file-io.h \
   %reldir%/ft-text-renderer.h \
+  %reldir%/gh-manager.h \
   %reldir%/gl-render.h \
   %reldir%/gl2ps-print.h \
   %reldir%/graphics-handle.h \
@@ -102,7 +103,9 @@ COREFCN_INC = \
   %reldir%/gzfstream.h
 
 NOINSTALL_COREFCN_INC = \
+  %reldir%/graphics-utils.h \
   %reldir%/interpreter-private.h \
+  %reldir%/mex-private.h \
   %reldir%/oct-hdf5.h \
   %reldir%/oct-opengl.h
 
@@ -175,10 +178,12 @@ COREFCN_SRC = \
   %reldir%/getgrent.cc \
   %reldir%/getpwent.cc \
   %reldir%/getrusage.cc \
+  %reldir%/gh-manager.cc \
   %reldir%/givens.cc \
   %reldir%/gl-render.cc \
   %reldir%/gl2ps-print.cc \
   %reldir%/graphics-toolkit.cc \
+  %reldir%/graphics-utils.cc \
   %reldir%/graphics.cc \
   %reldir%/gsvd.cc \
   %reldir%/gtk-manager.cc \
@@ -230,7 +235,9 @@ COREFCN_SRC = \
   %reldir%/ordqz.cc \
   %reldir%/ordschur.cc \
   %reldir%/pager.cc \
+  %reldir%/perms.cc \
   %reldir%/pinv.cc \
+  %reldir%/pow2.cc \
   %reldir%/pr-flt-fmt.cc \
   %reldir%/pr-output.cc \
   %reldir%/procstream.cc \

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __opengl_print__ (@var{@dots{}})
+## @deftypefn {} {@var{opts} =} __opengl_print__ (@var{@dots{}})
 ## Undocumented internal function.
 ## @end deftypefn
 
@@ -71,9 +71,8 @@ function opts = __opengl_print__ (opts)
       gl2ps_device = {sprintf("%snotxt", lower (suffix))};
       gl2ps_device{2} = "tex";
       if (dos_shell)
-        ## FIXME: this will only work on MinGW with the MSYS shell
-        pipeline = {sprintf('cat > "%s-inc.%s"', name, suffix)};
-        pipeline{2} = sprintf ('cat > "%s.tex"', name);
+        pipeline = {sprintf('findstr . > "%s-inc.%s"', name, suffix)};
+        pipeline{2} = sprintf ('findstr . > "%s.tex"', name);
       else
         pipeline = {sprintf('cat > "%s-inc.%s"', name, suffix)};
         pipeline{2} = sprintf ('cat > "%s.tex"', name);

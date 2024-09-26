@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -67,14 +67,13 @@ shorter equivalent).
 Here is a complete list of the command line options that Octave
 accepts.
 
-
 @table @code
 
 @item --built-in-docstrings-file @var{filename}
 @cindex @sortas{options, Octave command --built-in-docstrings-file} @ @ @code{--built-in-docstrings-file @var{filename}}
 Specify the name of the file containing documentation strings for the
 built-in functions of Octave.  This value is normally correct and should
-only need to specified in extraordinary situations.
+only need to be specified in extraordinary situations.
 
 @item  --debug
 @itemx -d
@@ -86,9 +85,9 @@ probably only useful if you are actually trying to debug the parser.
 
 @item --doc-cache-file @var{filename}
 @cindex @sortas{options, Octave command --doc-cache-file} @ @ @code{--doc-cache-file @var{filename}}
-Specify the name of the doc cache file to use.  The value of @var{filename}
-specified on the command line will override any value of
-@w{@env{OCTAVE_DOC_CACHE_FILE}} found in the environment, but not any commands
+Specify the name of the documentation cache file to use.  The value of
+@var{filename} specified on the command line will override any value of
+@w{@env{OCTAVE_DOC_CACHE_FILE}}@ found in the environment, but not any commands
 in the system or user startup files that use the @code{doc_cache_file}
 function.
 
@@ -107,9 +106,9 @@ specified.
 @cindex @sortas{options, Octave command --exec-path} @ @ @code{--exec-path @var{path}}
 Specify the path to search for programs to run.  The value of @var{path}
 specified on the command line will override any value of
-@w{@env{OCTAVE_EXEC_PATH}} found in the environment, but not any commands
+@w{@env{OCTAVE_EXEC_PATH}}@ found in the environment, but not any commands
 in the system or user startup files that call the
-@w{@env{EXEC_PATH}} function.
+@w{@env{EXEC_PATH}}@ function.
 
 @item --gui
 @cindex @sortas{options, Octave command --gui} @ @ @code{--gui}
@@ -125,15 +124,15 @@ Print short help message and exit.
 @cindex @sortas{options, Octave command --image-path} @ @ @code{--image-path @var{path}}
 Add path to the head of the search path for images.  The value of
 @var{path} specified on the command line will override any value of
-@w{@env{OCTAVE_IMAGE_PATH}} found in the environment, but not any commands
-in the system or user startup files that call the @w{@env{IMAGE_PATH}}
+@w{@env{OCTAVE_IMAGE_PATH}}@ found in the environment, but not any commands
+in the system or user startup files that call the @w{@env{IMAGE_PATH}}@
 function.
 
 @item --info-file @var{filename}
 @cindex @sortas{options, Octave command --info-file} @ @ @code{--info-file @var{filename}}
 Specify the name of the info file to use.  The value of @var{filename}
 specified on the command line will override any value of
-@w{@env{OCTAVE_INFO_FILE}} found in the environment, but not any commands
+@w{@env{OCTAVE_INFO_FILE}}@ found in the environment, but not any commands
 in the system or user startup files that use the @code{info_file}
 function.
 
@@ -141,7 +140,7 @@ function.
 @cindex @sortas{options, Octave command --info-program} @ @ @code{--info-program @var{program}}
 Specify the name of the info program to use.  The value of @var{program}
 specified on the command line will override any value of
-@w{@env{OCTAVE_INFO_PROGRAM}} found in the environment, but not any
+@w{@env{OCTAVE_INFO_PROGRAM}}@ found in the environment, but not any
 commands in the system or user startup files that use the
 @code{info_program} function.
 
@@ -209,7 +208,7 @@ and @option{--no-site-file}.
 @cindex @sortas{options, Octave command -p} @ @ @code{-p @var{path}}
 Add path to the head of the search path for function files.  The
 value of @var{path} specified on the command line will override any value
-of @w{@env{OCTAVE_PATH}} found in the environment, but not any commands in the
+of @w{@env{OCTAVE_PATH}}@ found in the environment, but not any commands in the
 system or user startup files that set the internal load path through one
 of the path functions.
 
@@ -289,17 +288,21 @@ Turn on verbose output.
 Print the program version number and exit.
 
 @item @var{file}
-Execute commands from @var{file}.  Exit when done unless
-@option{--persist} is also specified.
+Execute commands from @var{file}.  Exit when done unless @option{--persist} is
+also specified.
 @end table
 
-Octave also includes several functions which return information
-about the command line, including the number of arguments and all of the
-options.
+Octave also includes several functions which return information about the
+command line, including the number of arguments and all of the options.
 
 @c argv libinterp/octave.cc
 @anchor{XREFargv}
-@deftypefn {} {} argv ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{args} =} argv ()
 Return the command line arguments passed to Octave.
 
 For example, if you invoked Octave using the command
@@ -315,28 +318,60 @@ octave --no-line-editing --silent
 If you write an executable Octave script, @code{argv} will return the list
 of arguments passed to the script.  @xref{Executable Octave Programs}, for
 an example of how to create an executable Octave script.
+@xseealso{@ref{XREFprogram_name,,program_name}, @ref{XREFcmdline_options,,cmdline_options}}
+@end deftypefn
+
+
+@c cmdline_options libinterp/octave.cc
+@anchor{XREFcmdline_options}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{opt_struct} =} cmdline_options ()
+Return a structure containing detailed information about the command line
+arguments passed to Octave.
+
+Programming Note: This function provides copious amounts of information about
+Octave's parsing of command line options and may be more useful for debugging
+Octave rather than for general use.
+@xseealso{@ref{XREFargv,,argv}, @ref{XREFprogram_name,,program_name}}
 @end deftypefn
 
 
 @c program_name libinterp/octave.cc
 @anchor{XREFprogram_name}
-@deftypefn {} {} program_name ()
-Return the last component of the value returned by
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{name} =} program_name ()
+Return the filename component of the value returned by
 @code{program_invocation_name}.
-@xseealso{@ref{XREFprogram_invocation_name,,program_invocation_name}}
+
+@xseealso{@ref{XREFprogram_invocation_name,,program_invocation_name}, @ref{XREFargv,,argv}}
 @end deftypefn
 
 
 @c program_invocation_name libinterp/octave.cc
 @anchor{XREFprogram_invocation_name}
-@deftypefn {} {} program_invocation_name ()
-Return the name that was typed at the shell prompt to run Octave.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-If executing a script from the command line (e.g., @code{octave foo.m})
-or using an executable Octave script, the program name is set to the
-name of the script.  @xref{Executable Octave Programs}, for an example of
-how to create an executable Octave script.
-@xseealso{@ref{XREFprogram_name,,program_name}}
+
+@deftypefn {} {@var{name} =} program_invocation_name ()
+Return the string that was typed at the shell prompt to run Octave.
+
+The string may include path components as well as the program filename.
+
+If executing a script from the command line (e.g., @code{octave foo.m}) or
+using an executable Octave script, the program name is set to the name of the
+script.  @xref{Executable Octave Programs}, for an example of how to create an
+executable Octave script.
+@xseealso{@ref{XREFprogram_name,,program_name}, @ref{XREFargv,,argv}}
 @end deftypefn
 
 
@@ -430,11 +465,11 @@ The startup files are always processed in the system's locale charset
 properties).  In other words, the system's locale charset is in effect until a
 user manually sets the m-file encoding (e.g., in one of the startup files) and
 triggers re-parsing of any relevant m-files.  Octave can be forced to use a
-new encoding with the undocumented function @code{__mfile_encoding__}:
+new encoding with the function @code{mfile_encoding}:
 
 @example
 @group
-__mfile_encoding__ ("utf-8");  # set new encoding
+mfile_encoding ("utf-8");  # set new encoding
 clear ("functions");  # re-parse all .m files in the new encoding
 @end group
 @end example
@@ -458,6 +493,11 @@ functions to execute on shutdown may be registered with @code{atexit}.
 
 @c quit libinterp/corefcn/interpreter.cc
 @anchor{XREFquit}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} quit
 @deftypefnx {} {} quit cancel
 @deftypefnx {} {} quit force
@@ -465,9 +505,8 @@ functions to execute on shutdown may be registered with @code{atexit}.
 @deftypefnx {} {} quit ("force")
 @deftypefnx {} {} quit (@var{status})
 @deftypefnx {} {} quit (@var{status}, "force")
+@deftypefnx {} {} exit (@dots{})
 Quit the current Octave session.
-
-The @code{exit} function is an alias for @code{quit}.
 
 If the optional integer value @var{status} is supplied, pass that value to
 the operating system as Octave's exit status.  The default value is zero.
@@ -489,14 +528,24 @@ process.
 
 If the optional argument @qcode{"force"} is provided, no confirmation is
 requested, and the execution of the @file{finish.m} file is skipped.
+
+Programming Note: @code{exit} is an alias for @code{quit} and can be used
+interchangeably.
 @xseealso{@ref{XREFatexit,,atexit}}
 @end deftypefn
 
 
 @c atexit libinterp/corefcn/interpreter.cc
 @anchor{XREFatexit}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} atexit (@var{fcn})
-@deftypefnx {} {} atexit (@var{fcn}, @var{flag})
+@deftypefnx {} {} atexit (@var{fcn}, true)
+@deftypefnx {} {} atexit (@var{fcn}, false)
+@deftypefnx {} {@var{status} =} atexit (@var{fcn}, false)
 Register a function to be called when Octave exits.
 
 For example,
@@ -527,8 +576,12 @@ atexit ("last_words", false);
 will remove the function from the list and Octave will not call
 @code{last_words} when it exits.
 
-Note that @code{atexit} only removes the first occurrence of a function
-from the list, so if a function was placed in the list multiple times with
+The optional output @var{status} is only available when unregistering a
+function.  The value is true if the unregistering was successful and false
+otherwise.
+
+Programming Note: @code{atexit} only removes the first occurrence of a function
+from the list; if a function was placed in the list multiple times with
 @code{atexit}, it must also be removed from the list multiple times.
 @xseealso{@ref{XREFquit,,quit}}
 @end deftypefn
@@ -549,10 +602,16 @@ about how to document the functions you write.
 
 @c help scripts/help/help.m
 @anchor{XREFhelp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} help @var{name}
 @deftypefnx {} {} help --list
 @deftypefnx {} {} help .
 @deftypefnx {} {} help
+@deftypefnx {} {@var{help_text} =} help (@dots{})
 Display the help text for @var{name}.
 
 For example, the command @kbd{help help} prints a short message describing
@@ -578,6 +637,11 @@ the Octave interpreter from acting on @var{name}.  For example,
 
 @c doc scripts/help/doc.m
 @anchor{XREFdoc}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} doc @var{function_name}
 @deftypefnx {} {} doc
 Display documentation for the function @var{function_name} directly from an
@@ -596,6 +660,11 @@ the command @kbd{C-h}.
 
 @c lookfor scripts/help/lookfor.m
 @anchor{XREFlookfor}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} lookfor @var{str}
 @deftypefnx {} {} lookfor -all @var{str}
 @deftypefnx {} {[@var{fcn}, @var{help1str}] =} lookfor (@var{str})
@@ -632,6 +701,11 @@ function.
 
 @c news scripts/miscellaneous/news.m
 @anchor{XREFnews}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} news
 @deftypefnx {} {} news @var{package}
 Display the current NEWS file for Octave or an installed package.
@@ -646,6 +720,11 @@ that package.
 
 @c info scripts/miscellaneous/info.m
 @anchor{XREFinfo}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} info ()
 Display contact information for the GNU Octave community.
 @end deftypefn
@@ -653,6 +732,11 @@ Display contact information for the GNU Octave community.
 
 @c warranty libinterp/corefcn/toplev.cc
 @anchor{XREFwarranty}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} warranty ()
 Describe the conditions for copying and distributing Octave.
 @end deftypefn
@@ -664,9 +748,14 @@ found.
 
 @c info_file libinterp/corefcn/help.cc
 @anchor{XREFinfo_file}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} info_file ()
 @deftypefnx {} {@var{old_val} =} info_file (@var{new_val})
-@deftypefnx {} {} info_file (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} info_file (@var{new_val}, "local")
 Query or set the internal variable that specifies the name of the
 Octave info file.
 
@@ -686,9 +775,14 @@ The original variable value is restored when exiting the function.
 
 @c info_program libinterp/corefcn/help.cc
 @anchor{XREFinfo_program}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} info_program ()
 @deftypefnx {} {@var{old_val} =} info_program (@var{new_val})
-@deftypefnx {} {} info_program (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} info_program (@var{new_val}, "local")
 Query or set the internal variable that specifies the name of the
 info program to run.
 
@@ -705,9 +799,14 @@ The original variable value is restored when exiting the function.
 
 @c makeinfo_program libinterp/corefcn/help.cc
 @anchor{XREFmakeinfo_program}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} makeinfo_program ()
 @deftypefnx {} {@var{old_val} =} makeinfo_program (@var{new_val})
-@deftypefnx {} {} makeinfo_program (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} makeinfo_program (@var{new_val}, "local")
 Query or set the internal variable that specifies the name of the
 program that Octave runs to format help text containing
 Texinfo markup commands.
@@ -723,9 +822,14 @@ The original variable value is restored when exiting the function.
 
 @c texi_macros_file libinterp/corefcn/help.cc
 @anchor{XREFtexi_macros_file}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} texi_macros_file ()
 @deftypefnx {} {@var{old_val} =} texi_macros_file (@var{new_val})
-@deftypefnx {} {} texi_macros_file (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} texi_macros_file (@var{new_val}, "local")
 Query or set the internal variable that specifies the name of the
 file containing Texinfo macros that are prepended to documentation strings
 before they are passed to makeinfo.
@@ -747,9 +851,14 @@ The original variable value is restored when exiting the function.
 
 @c doc_cache_file libinterp/corefcn/help.cc
 @anchor{XREFdoc_cache_file}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} doc_cache_file ()
 @deftypefnx {} {@var{old_val} =} doc_cache_file (@var{new_val})
-@deftypefnx {} {} doc_cache_file (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} doc_cache_file (@var{new_val}, "local")
 Query or set the internal variable that specifies the name of the
 Octave documentation cache file.
 
@@ -772,9 +881,14 @@ The original variable value is restored when exiting the function.
 
 @c built_in_docstrings_file libinterp/corefcn/help.cc
 @anchor{XREFbuilt_in_docstrings_file}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} built_in_docstrings_file ()
 @deftypefnx {} {@var{old_val} =} built_in_docstrings_file (@var{new_val})
-@deftypefnx {} {} built_in_docstrings_file (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} built_in_docstrings_file (@var{new_val}, "local")
 Query or set the internal variable that specifies the name of the
 file containing docstrings for built-in Octave functions.
 
@@ -793,9 +907,14 @@ Modifying it during a running session of Octave will have no effect.
 
 @c suppress_verbose_help_message libinterp/corefcn/help.cc
 @anchor{XREFsuppress_verbose_help_message}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} suppress_verbose_help_message ()
 @deftypefnx {} {@var{old_val} =} suppress_verbose_help_message (@var{new_val})
-@deftypefnx {} {} suppress_verbose_help_message (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} suppress_verbose_help_message (@var{new_val}, "local")
 Query or set the internal variable that controls whether Octave
 will add additional help information to the end of the output from
 the @code{help} command and usage messages for built-in commands.
@@ -812,6 +931,11 @@ and because they may occasionally be useful for users.
 
 @c doc_cache_create scripts/help/doc_cache_create.m
 @anchor{XREFdoc_cache_create}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} doc_cache_create (@var{out_file}, @var{directory})
 @deftypefnx {} {} doc_cache_create (@var{out_file})
 @deftypefnx {} {} doc_cache_create ()
@@ -833,6 +957,11 @@ functions, operators, and keywords is generated.
 
 @c get_help_text libinterp/corefcn/help.cc
 @anchor{XREFget_help_text}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{text}, @var{format}] =} get_help_text (@var{name})
 Return the raw help text of function @var{name}.
 
@@ -845,6 +974,11 @@ The format is a string which is one of @qcode{"texinfo"}, @qcode{"html"}, or
 
 @c get_help_text_from_file libinterp/corefcn/help.cc
 @anchor{XREFget_help_text_from_file}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{text}, @var{format}] =} get_help_text_from_file (@var{fname})
 Return the raw help text from the file @var{fname}.
 
@@ -857,6 +991,11 @@ The format is a string which is one of @qcode{"texinfo"}, @qcode{"html"}, or
 
 @c get_first_help_sentence scripts/help/get_first_help_sentence.m
 @anchor{XREFget_first_help_sentence}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{text} =} get_first_help_sentence (@var{name})
 @deftypefnx {} {@var{text} =} get_first_help_sentence (@var{name}, @var{max_len})
 @deftypefnx {} {[@var{text}, @var{status}] =} get_first_help_sentence (@dots{})
@@ -990,9 +1129,17 @@ Octave programs.
 
 @c clc libinterp/corefcn/sysdep.cc
 @anchor{XREFclc}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} clc ()
 @deftypefnx {} {} home ()
 Clear the terminal screen and move the cursor to the upper left corner.
+
+Programming Note: @code{home} is an alias for @code{clc} and can be used
+interchangeably.
 @end deftypefn
 
 
@@ -1100,9 +1247,14 @@ List the possible completions of the text before the cursor.
 
 @c completion_append_char libinterp/corefcn/input.cc
 @anchor{XREFcompletion_append_char}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} completion_append_char ()
 @deftypefnx {} {@var{old_val} =} completion_append_char (@var{new_val})
-@deftypefnx {} {} completion_append_char (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} completion_append_char (@var{new_val}, "local")
 Query or set the internal character variable that is appended to
 successful command-line completion attempts.
 
@@ -1116,13 +1268,29 @@ The original variable value is restored when exiting the function.
 
 @c completion_matches libinterp/corefcn/input.cc
 @anchor{XREFcompletion_matches}
-@deftypefn {} {} completion_matches (@var{hint})
-Generate possible completions given @var{hint}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-This function is provided for the benefit of programs like Emacs which
-might be controlling Octave and handling user input.  The current
-command number is not incremented when this function is called.  This is
-a feature, not a bug.
+
+@deftypefn {} {@var{completion_list} =} completion_matches ("@var{hint}")
+Generate possible word completions for Octave given the character sequence
+@var{hint}.
+
+This function is provided for the benefit of programs like Emacs which might be
+controlling Octave and handling user input.  For example:
+
+@example
+@group
+completion_matches ("sine")
+@result{}
+sinetone
+sinewave
+@end group
+@end example
+
+Programming Note: The current command number in Octave is not incremented when
+this function is called.  This is a feature, not a bug.
 @end deftypefn
 
 
@@ -1179,10 +1347,15 @@ re-running chunks of commands from the history list.
 
 @c history libinterp/corefcn/oct-hist.cc
 @anchor{XREFhistory}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} history
 @deftypefnx {} {} history @var{opt1} @dots{}
-@deftypefnx {} {@var{h} =} history ()
-@deftypefnx {} {@var{h} =} history (@var{opt1}, @dots{})
+@deftypefnx {} {@var{H} =} history ()
+@deftypefnx {} {@var{H} =} history (@var{opt1}, @dots{})
 If invoked with no arguments, @code{history} displays a list of commands
 that you have executed.
 
@@ -1222,6 +1395,11 @@ argument as a cell string and will not be output to screen.
 
 @c edit_history libinterp/corefcn/oct-hist.cc
 @anchor{XREFedit_history}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} edit_history
 @deftypefnx {} {} edit_history @var{cmd_number}
 @deftypefnx {} {} edit_history @var{first} @var{last}
@@ -1258,6 +1436,11 @@ buffer to be edited.
 
 @c run_history libinterp/corefcn/oct-hist.cc
 @anchor{XREFrun_history}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} run_history
 @deftypefnx {} {} run_history @var{cmd_number}
 @deftypefnx {} {} run_history @var{first} @var{last}
@@ -1315,9 +1498,14 @@ is saved.
 
 @c history_save libinterp/corefcn/oct-hist.cc
 @anchor{XREFhistory_save}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} history_save ()
 @deftypefnx {} {@var{old_val} =} history_save (@var{new_val})
-@deftypefnx {} {} history_save (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} history_save (@var{new_val}, "local")
 Query or set the internal variable that controls whether commands entered
 on the command line are saved in the history file.
 
@@ -1330,6 +1518,11 @@ The original variable value is restored when exiting the function.
 
 @c history_control libinterp/corefcn/oct-hist.cc
 @anchor{XREFhistory_control}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} history_control ()
 @deftypefnx {} {@var{old_val} =} history_control (@var{new_val})
 Query or set the internal variable that specifies how commands are saved
@@ -1355,6 +1548,11 @@ the history list, subject to the value of @code{history_save}.
 
 @c history_file libinterp/corefcn/oct-hist.cc
 @anchor{XREFhistory_file}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} history_file ()
 @deftypefnx {} {@var{old_val} =} history_file (@var{new_val})
 Query or set the internal variable that specifies the name of the file used to
@@ -1365,8 +1563,8 @@ this new file (if the current setting of @code{history_save} allows for this).
 
 The default value is @file{@w{@env{$DATA}}/octave/history}, where
 @w{@env{$DATA}} is the platform-specific location for (roaming) user data files
-(e.g., @w{@env{$XDG_DATA_HOME}} or, if that is not set, @file{~/.local/share} on
-Unix-like operating systems or @w{@env{%APPDATA%}} on Windows).  The default
+(e.g., @w{@env{$XDG_DATA_HOME}} or, if that is not set, @file{~/.local/share}
+on Unix-like operating systems or @w{@env{%APPDATA%}} on Windows).  The default
 value may be overridden by the environment variable @w{@env{OCTAVE_HISTFILE}}.
 
 Programming Notes:
@@ -1395,6 +1593,11 @@ endif
 
 @c history_size libinterp/corefcn/oct-hist.cc
 @anchor{XREFhistory_size}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} history_size ()
 @deftypefnx {} {@var{old_val} =} history_size (@var{new_val})
 Query or set the internal variable that specifies how many entries
@@ -1408,9 +1611,14 @@ variable @w{@env{OCTAVE_HISTSIZE}}.
 
 @c history_timestamp_format_string libinterp/corefcn/oct-hist.cc
 @anchor{XREFhistory_timestamp_format_string}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} history_timestamp_format_string ()
 @deftypefnx {} {@var{old_val} =} history_timestamp_format_string (@var{new_val})
-@deftypefnx {} {} history_timestamp_format_string (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} history_timestamp_format_string (@var{new_val}, "local")
 Query or set the internal variable that specifies the format string
 for the comment line that is written to the history file when Octave
 exits.
@@ -1430,14 +1638,19 @@ The original variable value is restored when exiting the function.
 
 @c EDITOR libinterp/corefcn/environment.cc
 @anchor{XREFEDITOR}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} EDITOR ()
 @deftypefnx {} {@var{old_val} =} EDITOR (@var{new_val})
-@deftypefnx {} {} EDITOR (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} EDITOR (@var{new_val}, "local")
 Query or set the internal variable that specifies the default text editor.
 
-The default value is taken from the environment variable @w{@env{EDITOR}}
+The default value is taken from the environment variable @w{@env{EDITOR}}@
 when Octave starts.  If the environment variable is not initialized,
-@w{@env{EDITOR}} will be set to @qcode{"emacs"}.
+@w{@env{EDITOR}}@ will be set to @qcode{"emacs"}.
 
 When called from inside a function with the @qcode{"local"} option, the
 variable is changed locally for the function and any subroutines it calls.
@@ -1464,7 +1677,13 @@ the command line behavior.
 
 @c readline_read_init_file libinterp/corefcn/input.cc
 @anchor{XREFreadline_read_init_file}
-@deftypefn {} {} readline_read_init_file (@var{file})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {} readline_read_init_file ()
+@deftypefnx {} {} readline_read_init_file (@var{file})
 Read the readline library initialization file @var{file}.
 
 If @var{file} is omitted, read the default initialization file
@@ -1478,6 +1697,11 @@ for details.
 
 @c readline_re_read_init_file libinterp/corefcn/input.cc
 @anchor{XREFreadline_re_read_init_file}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} readline_re_read_init_file ()
 Re-read the last readline library initialization file that was read.
 
@@ -1545,9 +1769,14 @@ A backslash.
 
 @c PS1 libinterp/corefcn/input.cc
 @anchor{XREFPS1}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} PS1 ()
 @deftypefnx {} {@var{old_val} =} PS1 (@var{new_val})
-@deftypefnx {} {} PS1 (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} PS1 (@var{new_val}, "local")
 Query or set the primary prompt string.
 
 When executing interactively, Octave displays the primary prompt when it is
@@ -1585,9 +1814,14 @@ The original variable value is restored when exiting the function.
 
 @c PS2 libinterp/corefcn/input.cc
 @anchor{XREFPS2}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} PS2 ()
 @deftypefnx {} {@var{old_val} =} PS2 (@var{new_val})
-@deftypefnx {} {} PS2 (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} PS2 (@var{new_val}, "local")
 Query or set the secondary prompt string.
 
 The secondary prompt is printed when Octave is expecting additional input to
@@ -1605,9 +1839,14 @@ The original variable value is restored when exiting the function.
 
 @c PS4 libinterp/parse-tree/pt-eval.cc
 @anchor{XREFPS4}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} PS4 ()
 @deftypefnx {} {@var{old_val} =} PS4 (@var{new_val})
-@deftypefnx {} {} PS4 (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} PS4 (@var{new_val}, "local")
 Query or set the character string used to prefix output produced
 when echoing commands is enabled.
 
@@ -1635,6 +1874,11 @@ Octave produces in a separate file.
 
 @c diary libinterp/corefcn/pager.cc
 @anchor{XREFdiary}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} diary
 @deftypefnx {} {} diary on
 @deftypefnx {} {} diary off
@@ -1674,6 +1918,11 @@ some kinds of problems.
 
 @c echo libinterp/parse-tree/pt-eval.cc
 @anchor{XREFecho}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} echo
 @deftypefnx {} {} echo on
 @deftypefnx {} {} echo off

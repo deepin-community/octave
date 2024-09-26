@@ -1,5 +1,5 @@
 /* ANSI-C code produced by gperf version 3.1 */
-/* Command-line: gperf -m 10 /home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf  */
+/* Command-line: gperf -m 10 ../../libgnu/iconv_open-hpux.gperf  */
 /* Computed positions: -k'4,$' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -29,7 +29,7 @@
 #error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gperf@gnu.org>."
 #endif
 
-#line 17 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 17 "../../libgnu/iconv_open-hpux.gperf"
 struct mapping { int standard_name; const char vendor_name[9 + 1]; };
 
 #define TOTAL_KEYWORDS 44
@@ -180,93 +180,93 @@ static const struct stringpool_t stringpool_contents =
 static const struct mapping mappings[] =
   {
     {-1}, {-1}, {-1}, {-1}, {-1}, {-1},
-#line 56 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 56 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str6, "cp1256"},
-#line 50 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 50 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str7, "cp1250"},
-#line 51 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 51 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str8, "cp1251"},
-#line 39 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 39 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str9, "cp850"},
-#line 65 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 65 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str10, "tis620"},
-#line 54 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 54 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str11, "cp1254"},
-#line 32 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 32 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str12, "iso88596"},
-#line 69 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 69 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str13, "eucTW"},
-#line 29 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 29 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str14, "iso88591"},
-#line 35 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 35 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str15, "iso88599"},
-#line 55 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 55 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str16, "cp1255"},
-#line 70 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 70 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str17, "big5"},
-#line 41 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 41 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str18, "cp855"},
-#line 57 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 57 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str19, "cp1257"},
-#line 68 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 68 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str20, "eucKR"},
-#line 42 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 42 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str21, "cp857"},
-#line 31 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 31 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str22, "iso88595"},
-#line 36 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 36 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str23, "iso885915"},
-#line 47 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 47 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str24, "cp866"},
-#line 33 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 33 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str25, "iso88597"},
-#line 43 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 43 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str26, "cp861"},
-#line 48 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 48 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str27, "cp869"},
-#line 49 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 49 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str28, "cp874"},
-#line 45 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 45 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str29, "cp864"},
-#line 52 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 52 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str30, "cp1252"},
-#line 37 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 37 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str31, "cp437"},
-#line 40 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 40 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str32, "cp852"},
-#line 38 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 38 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str33, "cp775"},
-#line 46 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 46 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str34, "cp865"},
-#line 67 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 67 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str35, "eucJP"},
-#line 30 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 30 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str36, "iso88592"},
-#line 71 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 71 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str37, "sjis"},
-#line 58 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 58 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str38, "cp1258"},
-#line 72 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 72 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str39, "utf8"},
-#line 64 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 64 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str40, "kana8"},
-#line 59 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 59 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str41, "roman8"},
-#line 62 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 62 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str42, "hebrew8"},
-#line 66 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 66 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str43, "hp15CN"},
-#line 34 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 34 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str44, "iso88598"},
-#line 63 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 63 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str45, "turkish8"},
-#line 61 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 61 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str46, "greek8"},
-#line 60 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 60 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str47, "arabic8"},
-#line 44 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 44 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str48, "cp862"},
-#line 53 "/home/jwe/src/octave-stable/libgnu/iconv_open-hpux.gperf"
+#line 53 "../../libgnu/iconv_open-hpux.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str49, "cp1253"}
   };
 

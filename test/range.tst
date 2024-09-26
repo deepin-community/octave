@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2007-2022 The Octave Project Developers
+## Copyright (C) 2007-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -31,7 +31,9 @@
 %!assert (full (9:-1:1), [ 9 8 7 6 5 4 3 2 1 ])
 %!assert (full (1:-1:9), zeros (1,0))
 %!assert (full (1:1:1), 1)
-%!assert (full (i:2i:10i), zeros (1,0))
+%!test
+%! warning ('off', 'Octave:colon-complex-argument', 'local');
+%! assert (full (i:2i:10i), zeros (1,0));
 
 ## Test mixing integer range with other types
 
@@ -78,9 +80,6 @@
 %!assert ([ r ; uint16(z)          ], uint16 (expect))
 %!assert ([ r ; uint32(z)          ], uint32 (expect))
 %!assert ([ r ; uint64(z)          ], uint64 (expect))
-
-
-
 
 ## Test corner cases of ranges (base and limit)
 

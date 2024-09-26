@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,42 +31,43 @@
 #include "pt-select.h"
 #include "pt-stmt.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// If clauses.
+
+tree_if_clause::~tree_if_clause ()
 {
-  // If clauses.
-
-  tree_if_clause::~tree_if_clause (void)
-  {
-    delete m_expr;
-    delete m_list;
-    delete m_lead_comm;
-  }
-
-  // If.
-
-  tree_if_command::~tree_if_command (void)
-  {
-    delete m_list;
-    delete m_lead_comm;
-    delete m_trail_comm;
-  }
-
-  // Switch cases.
-
-  tree_switch_case::~tree_switch_case (void)
-  {
-    delete m_label;
-    delete m_list;
-    delete m_lead_comm;
-  }
-
-  // Switch.
-
-  tree_switch_command::~tree_switch_command (void)
-  {
-    delete m_expr;
-    delete m_list;
-    delete m_lead_comm;
-    delete m_trail_comm;
-  }
+  delete m_expr;
+  delete m_list;
+  delete m_lead_comm;
 }
+
+// If.
+
+tree_if_command::~tree_if_command ()
+{
+  delete m_list;
+  delete m_lead_comm;
+  delete m_trail_comm;
+}
+
+// Switch cases.
+
+tree_switch_case::~tree_switch_case ()
+{
+  delete m_label;
+  delete m_list;
+  delete m_lead_comm;
+}
+
+// Switch.
+
+tree_switch_command::~tree_switch_command ()
+{
+  delete m_expr;
+  delete m_list;
+  delete m_lead_comm;
+  delete m_trail_comm;
+}
+
+OCTAVE_END_NAMESPACE(octave)

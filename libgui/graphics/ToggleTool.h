@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,36 +28,31 @@
 
 #include "ToolBarButton.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class ToggleTool : public ToolBarButton<uitoggletool>
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  ToggleTool (octave::interpreter& interp,
+              const graphics_object& go,
+              QAction *action);
+  ~ToggleTool ();
 
-  class ToggleTool : public ToolBarButton<uitoggletool>
-  {
-    Q_OBJECT
+  static ToggleTool *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  public:
-    ToggleTool (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-                const graphics_object& go,
-                QAction *action);
-    ~ToggleTool (void);
+protected:
+  void update (int pId);
 
-    static ToggleTool *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+private slots:
+  void triggered (bool checked);
+};
 
-  protected:
-    void update (int pId);
-
-  private slots:
-    void triggered (bool checked);
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

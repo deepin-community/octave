@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,7 +37,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // complex scalar by scalar ops.
 
@@ -47,8 +47,8 @@ DEFBINOP_OP (mul, complex, scalar, *)
 
 DEFBINOP (div, complex, scalar)
 {
-  const octave_complex& v1 = dynamic_cast<const octave_complex&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v1.complex_value () / v2.double_value ());
 }
@@ -57,8 +57,8 @@ DEFBINOP_FN (pow, complex, scalar, xpow)
 
 DEFBINOP (ldiv, complex, scalar)
 {
-  const octave_complex& v1 = dynamic_cast<const octave_complex&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v2.double_value () / v1.complex_value ());
 }
@@ -74,8 +74,8 @@ DEFBINOP_OP (el_mul, complex, scalar, *)
 
 DEFBINOP (el_div, complex, scalar)
 {
-  const octave_complex& v1 = dynamic_cast<const octave_complex&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v1.complex_value () / v2.double_value ());
 }
@@ -84,24 +84,24 @@ DEFBINOP_FN (el_pow, complex, scalar, xpow)
 
 DEFBINOP (el_ldiv, complex, scalar)
 {
-  const octave_complex& v1 = dynamic_cast<const octave_complex&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v2.double_value () / v1.complex_value ());
 }
 
 DEFBINOP (el_and, complex, scalar)
 {
-  const octave_complex& v1 = dynamic_cast<const octave_complex&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return v1.complex_value () != 0.0 && v2.double_value ();
 }
 
 DEFBINOP (el_or, complex, scalar)
 {
-  const octave_complex& v1 = dynamic_cast<const octave_complex&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return v1.complex_value () != 0.0 || v2.double_value ();
 }
@@ -136,4 +136,4 @@ install_cs_s_ops (octave::type_info& ti)
                          octave_complex_matrix);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -42,7 +42,7 @@
 #  define LDMATRIX LMATRIX
 #endif
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 #define OCTAVE_LMATRIX CONCAT2(octave_, LMATRIX)
 #define OCTAVE_LDMATRIX CONCAT2(octave_, LDMATRIX)
@@ -57,8 +57,8 @@ OCTAVE_NAMESPACE_BEGIN
 
 DEFBINOP (mul, LMATRIX, RMATRIX)
 {
-  const OCTAVE_LMATRIX& v1 = dynamic_cast<const OCTAVE_LMATRIX&> (a1);
-  const OCTAVE_RMATRIX& v2 = dynamic_cast<const OCTAVE_RMATRIX&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_LMATRIX&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_RMATRIX&, v2, a2);
 
   return v1.LMATRIX_VALUE () * v2.RMATRIX_VALUE ();
 }
@@ -66,16 +66,16 @@ DEFBINOP (mul, LMATRIX, RMATRIX)
 #if defined (LEFT)
 DEFBINOP (ldiv, LMATRIX, RMATRIX)
 {
-  const OCTAVE_LMATRIX& v1 = dynamic_cast<const OCTAVE_LMATRIX&> (a1);
-  const OCTAVE_RMATRIX& v2 = dynamic_cast<const OCTAVE_RMATRIX&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_LMATRIX&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_RMATRIX&, v2, a2);
 
   return v1.perm_matrix_value ().inverse () * v2.RMATRIX_VALUE ();
 }
 #else
 DEFBINOP (div, LMATRIX, RMATRIX)
 {
-  const OCTAVE_LMATRIX& v1 = dynamic_cast<const OCTAVE_LMATRIX&> (a1);
-  const OCTAVE_RMATRIX& v2 = dynamic_cast<const OCTAVE_RMATRIX&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_LMATRIX&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_RMATRIX&, v2, a2);
 
   return v1.LMATRIX_VALUE () * v2.perm_matrix_value ().inverse ();
 }
@@ -100,4 +100,4 @@ INST_NAME (octave::type_info& ti)
 #endif
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

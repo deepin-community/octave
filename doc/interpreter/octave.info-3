@@ -1,11 +1,11 @@
-This is octave.info, produced by makeinfo version 6.8 from octave.texi.
+This is octave.info, produced by makeinfo version 7.1 from octave.texi.
 
 INFO-DIR-SECTION Math
 START-INFO-DIR-ENTRY
 * Octave: (octave).             Interactive language for numerical computations.
 END-INFO-DIR-ENTRY
 
-Copyright © 1996-2022 The Octave Project Developers
+Copyright © 1996-2024 The Octave Project Developers
 
    Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
@@ -19,6 +19,118 @@ permission notice identical to this one.
    Permission is granted to copy and distribute translations of this
 manual into another language, under the above conditions for modified
 versions.
+
+
+File: octave.info,  Node: Enabling and Disabling Warnings,  Prev: Issuing Warnings,  Up: Handling Warnings
+
+12.2.2 Enabling and Disabling Warnings
+--------------------------------------
+
+The ‘warning’ function also allows you to control which warnings are
+actually printed to the screen.  If the ‘warning’ function is called
+with a string argument that is either "on" or "off" all warnings will be
+enabled or disabled.
+
+   It is also possible to enable and disable individual warnings through
+their string identifications.  The following code will issue a warning
+
+     warning ("example:non-negative-variable",
+              "'a' must be non-negative.  Setting 'a' to zero.");
+
+while the following won't issue a warning
+
+     warning ("off", "example:non-negative-variable");
+     warning ("example:non-negative-variable",
+              "'a' must be non-negative.  Setting 'a' to zero.");
+
+
+File: octave.info,  Node: Debugging,  Next: Input and Output,  Prev: Errors and Warnings,  Up: Top
+
+13 Debugging
+************
+
+Octave includes a built-in debugger to aid in the development of
+scripts.  This can be used to interrupt the execution of an Octave
+script at a certain point, or when certain conditions are met.  Once
+execution has stopped, and debug mode is entered, the symbol table at
+the point where execution has stopped can be examined and modified to
+check for errors.
+
+   The normal command-line editing and history functions are available
+in debug mode.
+
+* Menu:
+
+* Entering Debug Mode::
+* Leaving Debug Mode::
+* Breakpoints::
+* Debug Mode::
+* Call Stack::
+* Profiling::
+* Profiler Example::
+
+
+File: octave.info,  Node: Entering Debug Mode,  Next: Leaving Debug Mode,  Up: Debugging
+
+13.1 Entering Debug Mode
+========================
+
+There are two basic means of interrupting the execution of an Octave
+script.  These are breakpoints (*note Breakpoints::), discussed in the
+next section, and interruption based on some condition.
+
+   Octave supports three means to stop execution based on the values set
+in the functions ‘debug_on_interrupt’, ‘debug_on_warning’, and
+‘debug_on_error’.
+
+ -- : VAL = debug_on_interrupt ()
+ -- : OLD_VAL = debug_on_interrupt (NEW_VAL)
+ -- : OLD_VAL = debug_on_interrupt (NEW_VAL, "local")
+     Query or set the internal variable that controls whether Octave
+     will try to enter debugging mode when it receives an interrupt
+     signal (typically generated with ‘C-c’).
+
+     If a second interrupt signal is received before reaching the
+     debugging mode, a normal interrupt will occur.
+
+     When called from inside a function with the "local" option, the
+     variable is changed locally for the function and any subroutines it
+     calls.  The original variable value is restored when exiting the
+     function.
+
+     See also: *note debug_on_error: XREFdebug_on_error, *note
+     debug_on_warning: XREFdebug_on_warning.
+
+ -- : VAL = debug_on_warning ()
+ -- : OLD_VAL = debug_on_warning (NEW_VAL)
+ -- : OLD_VAL = debug_on_warning (NEW_VAL, "local")
+     Query or set the internal variable that controls whether Octave
+     will try to enter the debugger when a warning is encountered.
+
+     When called from inside a function with the "local" option, the
+     variable is changed locally for the function and any subroutines it
+     calls.  The original variable value is restored when exiting the
+     function.
+
+     See also: *note debug_on_error: XREFdebug_on_error, *note
+     debug_on_interrupt: XREFdebug_on_interrupt.
+
+ -- : VAL = debug_on_error ()
+ -- : OLD_VAL = debug_on_error (NEW_VAL)
+ -- : OLD_VAL = debug_on_error (NEW_VAL, "local")
+     Query or set the internal variable that controls whether Octave
+     will try to enter the debugger when an error is encountered.
+
+     This will also inhibit printing of the normal traceback message
+     (you will only see the top-level error message).
+
+     When called from inside a function with the "local" option, the
+     variable is changed locally for the function and any subroutines it
+     calls.  The original variable value is restored when exiting the
+     function.
+
+     See also: *note debug_on_warning: XREFdebug_on_warning, *note
+     debug_on_interrupt: XREFdebug_on_interrupt.
 
 
 File: octave.info,  Node: Leaving Debug Mode,  Next: Breakpoints,  Prev: Entering Debug Mode,  Up: Debugging
@@ -41,6 +153,7 @@ executing any additional code use ‘dbquit’.
  -- : dbquit
  -- : dbquit all
      Quit debugging mode immediately without further code execution.
+
      With no arguments, exit the current debugging level.  With argument
      ‘all’, exit all debugging levels and return to the Octave prompt.
 
@@ -58,13 +171,13 @@ File: octave.info,  Node: Breakpoints,  Next: Debug Mode,  Prev: Leaving Debug M
 Breakpoints can be set in any m-file function by using the ‘dbstop’
 function.
 
- -- : dbstop FUNC
- -- : dbstop FUNC LINE
- -- : dbstop FUNC LINE1 LINE2 ...
+ -- : dbstop FCN
+ -- : dbstop FCN LINE
+ -- : dbstop FCN LINE1 LINE2 ...
  -- : dbstop LINE1 ...
- -- : dbstop in FUNC
- -- : dbstop in FUNC at LINE
- -- : dbstop in FUNC at LINE if "CONDITION"
+ -- : dbstop in FCN
+ -- : dbstop in FCN at LINE
+ -- : dbstop in FCN at LINE if "CONDITION"
  -- : dbstop in CLASS at METHOD
  -- : dbstop if EVENT
  -- : dbstop if EVENT ID
@@ -73,18 +186,18 @@ function.
 
      Set breakpoints for the built-in debugger.
 
-     FUNC is the name of a function on the current ‘path’.  When already
-     in debug mode the FUNC argument can be omitted and the current
+     FCN is the name of a function on the current ‘path’.  When already
+     in debug mode the FCN argument can be omitted and the current
      function will be used.  Breakpoints at subfunctions are set with
      the scope operator ‘>’.  For example, If ‘file.m’ has a subfunction
-     ‘func2’, then a breakpoint in ‘func2’ can be specified by
-     ‘file>func2’.
+     ‘fcn2’, then a breakpoint in ‘fcn2’ can be specified by
+     ‘file>fcn2’.
 
      LINE is the line number at which to break.  If LINE is not
      specified, it defaults to the first executable line in the file
-     ‘func.m’.  Multiple lines can be specified in a single command;
-     when function syntax is used, the lines may also be passed as a
-     single vector argument (‘[LINE1, LINE2, ...]’).
+     ‘fcn.m’.  Multiple lines can be specified in a single command; when
+     function syntax is used, the lines may also be passed as a single
+     vector argument (‘[LINE1, LINE2, ...]’).
 
      CONDITION is any Octave expression that can be evaluated in the
      code context that exists at the breakpoint.  When the breakpoint is
@@ -95,7 +208,7 @@ function.
      alter variables, and should generally be avoided.  Conditions
      containing quotes (‘"’, ‘'’) or comment characters (‘#’, ‘%’) must
      be enclosed in quotes.  (This does not apply to conditions entered
-     from the editor’s context menu.)  For example:
+     from the editor's context menu.)  For example:
 
           dbstop in axis at 246 if 'any (opt == "x")'
 
@@ -169,7 +282,7 @@ effectively set to line 29.  The status of breakpoints in a function can
 be queried with ‘dbstatus’.
 
  -- : dbstatus
- -- : dbstatus FUNC
+ -- : dbstatus FCN
  -- : BP_LIST = dbstatus ...
      Report the location of active breakpoints.
 
@@ -177,16 +290,16 @@ be queried with ‘dbstatus’.
      all functions with breakpoints and the line numbers where those
      breakpoints are set.
 
-     If a function name FUNC is specified then only report breakpoints
+     If a function name FCN is specified then only report breakpoints
      for the named function and its subfunctions.
 
      The optional return argument BP_LIST is a struct array with the
-     following fields.
+     following fields:
 
      name
           The name of the function with a breakpoint.  A subfunction,
-          say ‘func2’ within an m-file, say ‘file.m’, is specified as
-          ‘file>func2’.
+          say ‘fcn2’ within an m-file, say ‘file.m’, is specified as
+          ‘file>fcn2’.
 
      file
           The name of the m-file where the function code is located.
@@ -211,25 +324,25 @@ be queried with ‘dbstatus’.
 Reusing the previous example, ‘dbstatus ("asind")’ will return 29.  The
 breakpoints listed can then be cleared with the ‘dbclear’ function.
 
- -- : dbclear FUNC
- -- : dbclear FUNC LINE
- -- : dbclear FUNC LINE1 LINE2 ...
+ -- : dbclear FCN
+ -- : dbclear FCN LINE
+ -- : dbclear FCN LINE1 LINE2 ...
  -- : dbclear LINE ...
  -- : dbclear all
- -- : dbclear in FUNC
- -- : dbclear in FUNC at LINE
+ -- : dbclear in FCN
+ -- : dbclear in FCN at LINE
  -- : dbclear if EVENT
- -- : dbclear ("FUNC")
- -- : dbclear ("FUNC", LINE)
- -- : dbclear ("FUNC", LINE1, LINE2, ...)
- -- : dbclear ("FUNC", LINE1, ...)
+ -- : dbclear ("FCN")
+ -- : dbclear ("FCN", LINE)
+ -- : dbclear ("FCN", LINE1, LINE2, ...)
+ -- : dbclear ("FCN", LINE1, ...)
  -- : dbclear (LINE, ...)
  -- : dbclear ("all")
-     Delete a breakpoint at line number LINE in the function FUNC.
+     Delete a breakpoint at line number LINE in the function FCN.
 
      Arguments are
 
-     FUNC
+     FCN
           Function name as a string variable.  When already in debug
           mode this argument can be omitted and the current function
           will be used.
@@ -252,7 +365,6 @@ breakpoints listed can then be cleared with the ‘dbclear’ function.
 
      See also: *note dbstop: XREFdbstop, *note dbstatus: XREFdbstatus,
      *note dbwhere: XREFdbwhere.
-
 
    A breakpoint may also be set in a subfunction.  For example, if a
 file contains the functions
@@ -320,11 +432,11 @@ entered debug mode.
  -- : dbtype
  -- : dbtype LINENO
  -- : dbtype STARTL:ENDL
- -- : dbtype STARTL:END
- -- : dbtype FUNC
- -- : dbtype FUNC LINENO
- -- : dbtype FUNC STARTL:ENDL
- -- : dbtype FUNC STARTL:END
+ -- : dbtype STARTL:end
+ -- : dbtype FCN
+ -- : dbtype FCN LINENO
+ -- : dbtype FCN STARTL:ENDL
+ -- : dbtype FCN STARTL:end
      Display a script file with line numbers.
 
      When called with no arguments in debugging mode, display the script
@@ -353,7 +465,7 @@ entered debug mode.
    You may also use ‘isdebugmode’ to determine whether the debugger is
 currently active.
 
- -- : isdebugmode ()
+ -- : TF = isdebugmode ()
      Return true if in debugging mode, otherwise false.
 
      See also: *note dbwhere: XREFdbwhere, *note dbstack: XREFdbstack,
@@ -379,7 +491,8 @@ the command ‘dbstep’.
      Using ‘dbstep out’ will cause execution to continue until the
      current function returns.
 
-     ‘dbnext’ is an alias for ‘dbstep’.
+     Programming Note: ‘dbnext’ is an alias for ‘dbstep’ and can be used
+     interchangeably.
 
      See also: *note dbcont: XREFdbcont, *note dbquit: XREFdbquit.
 
@@ -391,7 +504,7 @@ disabled using the ‘auto_repeat_debug_command’ function.
 
  -- : VAL = auto_repeat_debug_command ()
  -- : OLD_VAL = auto_repeat_debug_command (NEW_VAL)
- -- : auto_repeat_debug_command (NEW_VAL, "local")
+ -- : OLD_VAL = auto_repeat_debug_command (NEW_VAL, "local")
      Query or set the internal variable that controls whether debugging
      commands are automatically repeated when the input line is empty
      (typing just <RET>).
@@ -478,7 +591,7 @@ profiling is enabled, each call to a function (supporting built-ins,
 operators, functions in oct- and mex-files, user-defined functions in
 Octave code and anonymous functions) is recorded while running Octave
 code.  After that, this data can aid in analyzing the code behavior, and
-is in particular helpful for finding “hot spots” in the code which use
+is in particular helpful for finding "hot spots" in the code which use
 up a lot of computation time and are the best targets to spend
 optimization efforts on.
 
@@ -496,8 +609,7 @@ examined or further processed by other routines or tools.
      Control the built-in profiler.
 
      ‘profile on’
-          Start the profiler, clearing all previously collected data if
-          there is any.
+          Start the profiler.  Any previously collected data is cleared.
 
      ‘profile off’
           Stop profiling.  The collected data can later be retrieved and
@@ -526,8 +638,8 @@ examined or further processed by other routines or tools.
           well as data fields for number of calls and time spent at this
           level in the call tree.
 
-          See also: *note profshow: XREFprofshow, *note profexplore:
-          XREFprofexplore.
+     See also: *note profshow: XREFprofshow, *note profexplore:
+     XREFprofexplore.
 
    An easy way to get an overview over the collected data is ‘profshow’.
 This function takes the profiler data returned by ‘profile’ as input and
@@ -575,7 +687,7 @@ and the profiler also records that it is recursive.
      Export the profiling data in DATA into a series of HTML files in
      the folder DIR.  The initial file will be ‘DATA/index.html’.
 
-     If NAME is specified, it must be a string that contains a “name”
+     If NAME is specified, it must be a string that contains a "name"
      for the profile being exported.  This name is included in the HTML.
 
      The input DATA is the structure returned by ‘profile ("info")’.  If
@@ -690,7 +802,7 @@ expensive operation is the matrix-vector product in the routine
    Timing, however, is not the only information available from the
 profile.  The attribute column shows us that ‘timesteps’ calls itself
 recursively.  This may not be that remarkable in this example (since
-it’s clear anyway), but could be helpful in a more complex setting.  As
+it's clear anyway), but could be helpful in a more complex setting.  As
 to the question of why is there a ‘binary \’ in the output, we can
 easily shed some light on that too.  Note that ‘data’ is a structure
 array (*note Structure Arrays::) which contains the field
@@ -715,7 +827,7 @@ question (which is entry 7, ‘expm’, in this case) or been called by it
 (no functions).  Hence, the backslash operator has been used internally
 by ‘expm’.
 
-   Now let’s take a look at ‘bar’.  For this, we start a fresh profiling
+   Now let's take a look at ‘bar’.  For this, we start a fresh profiling
 session (‘profile on’ does this; the old data is removed before the
 profiler is restarted):
 
@@ -743,7 +855,7 @@ profiler is restarted):
 times in the course of recursively calculating the Fibonacci number in a
 suboptimal way, and most of the time was spent in ‘bar’ itself.
 
-   Finally, let’s say we want to profile the execution of both ‘foo’ and
+   Finally, let's say we want to profile the execution of both ‘foo’ and
 ‘bar’ together.  Since we already have the run-time data collected for
 ‘bar’, we can restart the profiler without clearing the existing data
 and collect the missing statistics about ‘foo’.  This is done by:
@@ -846,7 +958,7 @@ values with ‘disp’ and through the normal echoing mechanism.
 
      See also: *note fdisp: XREFfdisp.
 
- -- : list_in_columns (ARG, WIDTH, PREFIX)
+ -- : STR = list_in_columns (ARG, WIDTH, PREFIX)
      Return a string containing the elements of ARG listed in columns
      with an overall maximum width of WIDTH and optional prefix PREFIX.
 
@@ -875,7 +987,8 @@ values with ‘disp’ and through the normal echoing mechanism.
 
      See also: *note terminal_size: XREFterminal_size.
 
- -- : terminal_size ()
+ -- : [ROWS, COLS] = terminal_size ()
+ -- : terminal_size ([ROWS, COLS])
      Query or set the size of the terminal window.  If called with no
      arguments, return a two-element row vector containing the current
      size of the terminal window in characters (rows and columns).  If
@@ -888,22 +1001,29 @@ values with ‘disp’ and through the normal echoing mechanism.
 
  -- : format
  -- : format options
+ -- : format (OPTIONS)
  -- : [FORMAT, FORMATSPACING, UPPERCASE] = format
      Reset or specify the format of the output produced by ‘disp’ and
-     Octave’s normal echoing mechanism.
+     Octave's normal echoing mechanism.
 
-     This command only affects the display of numbers, but not how they
-     are stored or computed.  To change the internal representation from
-     the default double use one of the conversion functions such as
-     ‘single’, ‘uint8’, ‘int64’, etc.
+     This command only affects the display of numbers, not how they are
+     stored or computed.  To change the internal representation from the
+     default double use one of the conversion functions such as
+     ‘single’, ‘uint8’, ‘int64’, etc.  Any ‘format’ options that change
+     the number of displayed significant digits will also be reflected
+     by the ‘output_precision’ function.
 
      By default, Octave displays 5 significant digits in a human
      readable form (option ‘short’, option ‘lowercase’, and option
      ‘loose’ format for matrices).  If ‘format’ is invoked without any
-     options, this default format is restored.
+     options, or the option ‘default’ is specified, then this default
+     format is restored.
 
      Valid format options for floating point numbers are listed in the
      following table.
+
+     ‘default’
+          Restore the default format state described above.
 
      ‘short’
           Fixed point format with 5 significant figures (default).
@@ -915,20 +1035,22 @@ values with ‘disp’ and through the normal echoing mechanism.
           exponential ‘e’ format if it is unable to format a matrix
           properly using the current format.
 
-     ‘short e’
-     ‘long e’
+     ‘shorte’
+     ‘longe’
           Exponential format.  The number to be represented is split
           between a mantissa and an exponent (power of 10).  The
           mantissa has 5 significant digits in the short format.  In the
           long format, double values are displayed with 16 significant
           digits and single values are displayed with 8.  For example,
-          with the ‘short e’ format, ‘pi’ is displayed as ‘3.1416e+00’.
+          with the ‘shorte’ format, ‘pi’ is displayed as ‘3.1416e+00’.
+          Optionally, the trailing ‘e’ can be split into a second
+          argument.
 
-     ‘short g’
-     ‘long g’
+     ‘shortg’
+     ‘longg’
           Optimally choose between fixed point and exponential format
           based on the magnitude of the number.  For example, with the
-          ‘short g’ format, ‘pi .^ [2; 4; 8; 16; 32]’ is displayed as
+          ‘shortg’ format, ‘pi .^ [2; 4; 8; 16; 32]’ is displayed as
 
                ans =
 
@@ -938,12 +1060,16 @@ values with ‘disp’ and through the normal echoing mechanism.
                  9.0032e+07
                  8.1058e+15
 
-     ‘short eng’
-     ‘long eng’
-          Identical to ‘short e’ or ‘long e’ but displays the value
-          using an engineering format, where the exponent is divisible
-          by 3.  For example, with the ‘short eng’ format, ‘10 * pi’ is
-          displayed as ‘31.416e+00’.
+          Optionally, the trailing ‘g’ can be split into a second
+          argument.
+
+     ‘shorteng’
+     ‘longeng’
+          Identical to ‘shorte’ or ‘longe’ but displays the value using
+          an engineering format, where the exponent is divisible by 3.
+          For example, with the ‘shorteng’ format, ‘10 * pi’ is
+          displayed as ‘31.416e+00’.  Optionally, the trailing ‘eng’ can
+          be split into a second argument.
 
      ‘free’
      ‘none’
@@ -986,32 +1112,48 @@ values with ‘disp’ and through the normal echoing mechanism.
           Only the real part of a variable is displayed, as the
           imaginary part makes no sense for a currency.
 
-     native-hex
-          Print the hexadecimal representation of numbers as they are
-          stored in memory.  For example, on a workstation which stores
-          8 byte real values in IEEE format with the least significant
-          byte first, the value of ‘pi’ when printed in ‘native-hex’
-          format is ‘400921fb54442d18’.
+     bit
+          Print the bit representation of numbers in memory, always with
+          the most significant bit first.  For example, ‘pi’ is printed
+          like this:
 
-     hex
-          The same as ‘native-hex’, but always print the most
-          significant byte first.
+               0 10000000000 1001001000011111101101010100010001000010110100011000
+
+          where spaces have been added for clarity to show the sign bit,
+          the 11-bit exponent, and the 52-bit mantissa, in that order.
+          Together they represent ‘pi’ as an IEEE 754 double precision
+          floating point number in the normal form.  Single precision
+          floating point numbers are analogous.
 
      native-bit
           Print the bit representation of numbers as stored in memory.
-          For example, the value of ‘pi’ is
+          For big-endian machines, this is identical to the ‘format bit’
+          layout seen above.  For little-endian machines, it will print
+          the bytes in the opposite order, though bits within a byte
+          will still be presented with the most significant bit on the
+          left.
 
-               01000000000010010010000111111011
-               01010100010001000010110100011000
+          For example, the value of ‘pi’ in this format on x86-64 is:
 
-          (shown here in two 32 bit sections for typesetting purposes)
-          when printed in native-bit format on a workstation which
-          stores 8 byte real values in IEEE format with the least
-          significant byte first.
+               00011000 00101101 01000100 01010100 11111011 00100001 00001001 01000000
 
-     bit
-          The same as ‘native-bit’, but always print the most
-          significant bits first.
+          shown here with spaces added for clarity.  Compare with the
+          previous bit string from ‘format bit’ to see the grouping into
+          bytes and their ordering.
+
+     hex
+          The same as ‘format bit’ above, except that bits are grouped
+          four at a time into hexadecimal digits for brevity.  Thus ‘pi’
+          is represented as:
+
+               400921fb54442d18
+
+     native-hex
+          The same as ‘format native-bit’ above, except that bits are
+          grouped four at a time into hexadecimal digits for brevity.
+          Thus ‘pi’ is represented on an x86-64 as:
+
+               182d4454fb210940
 
      rat
           Print a rational approximation, i.e., values are approximated
@@ -1044,11 +1186,12 @@ values with ‘disp’ and through the normal echoing mechanism.
           data per page.
 
      If ‘format’ is called with multiple competing options, the
-     rightmost one is used.  In case of an error the format remains
-     unchanged.
+     rightmost one is used, except for ‘default’ which will override all
+     other options.  In case of an error the format remains unchanged.
 
      If called with one to three output arguments, and no inputs, return
      the current format, format spacing, and uppercase preference.
+     Specifying both outputs and inputs will produce an error.
 
      See also: *note fixed_point_format: XREFfixed_point_format, *note
      output_precision: XREFoutput_precision, *note split_long_rows:
@@ -1101,7 +1244,7 @@ function.
 
  -- : VAL = PAGER ()
  -- : OLD_VAL = PAGER (NEW_VAL)
- -- : PAGER (NEW_VAL, "local")
+ -- : OLD_VAL = PAGER (NEW_VAL, "local")
      Query or set the internal variable that specifies the program to
      use to display terminal output on your system.
 
@@ -1119,7 +1262,7 @@ function.
 
  -- : VAL = PAGER_FLAGS ()
  -- : OLD_VAL = PAGER_FLAGS (NEW_VAL)
- -- : PAGER_FLAGS (NEW_VAL, "local")
+ -- : OLD_VAL = PAGER_FLAGS (NEW_VAL, "local")
      Query or set the internal variable that specifies the options to
      pass to the pager.
 
@@ -1134,14 +1277,14 @@ function.
 
  -- : VAL = page_screen_output ()
  -- : OLD_VAL = page_screen_output (NEW_VAL)
- -- : page_screen_output (NEW_VAL, "local")
+ -- : OLD_VAL = page_screen_output (NEW_VAL, "local")
      Query or set the internal variable that controls whether output
      intended for the terminal window that is longer than one page is
      sent through a pager.
 
      This allows you to view one screenful at a time.  Some pagers (such
-     as ‘less’—*note Installation::) are also capable of moving backward
-     on the output.
+     as ‘less’--*note Installation::) are also capable of moving
+     backward on the output.
 
      When called from inside a function with the "local" option, the
      variable is changed locally for the function and any subroutines it
@@ -1154,7 +1297,7 @@ function.
 
  -- : VAL = page_output_immediately ()
  -- : OLD_VAL = page_output_immediately (NEW_VAL)
- -- : page_output_immediately (NEW_VAL, "local")
+ -- : OLD_VAL = page_output_immediately (NEW_VAL, "local")
      Query or set the internal variable that controls whether Octave
      sends output to the pager as soon as it is available.
 
@@ -1173,7 +1316,7 @@ function.
      more: XREFmore, *note PAGER: XREFPAGER, *note PAGER_FLAGS:
      XREFPAGER_FLAGS.
 
- -- : fflush (FID)
+ -- : STATUS = fflush (FID)
      Flush output to file descriptor FID.
 
      ‘fflush’ returns 0 on success and an OS dependent error value (−1
@@ -1272,22 +1415,24 @@ are available at the prompt.
 character from the keyboard without requiring the user to type a
 carriage return.
 
- -- : kbhit ()
- -- : kbhit (1)
+ -- : C = kbhit ()
+ -- : C = kbhit (1)
      Read a single keystroke from the keyboard.
 
-     If called with an argument, don’t wait for a keypress.
+     If called with an argument (typically 1), don't wait for a keypress
+     and immediately return the next keystroke in the keyboard input
+     buffer or an empty string ("") if no keystroke is available.
 
      For example,
 
-          x = kbhit ();
+          c = kbhit ();
 
-     will set X to the next character typed at the keyboard as soon as
+     will set C to the next character typed at the keyboard as soon as
      it is typed.
 
-          x = kbhit (1);
+          c = kbhit (1);
 
-     is identical to the above example, but doesn’t wait for a keypress,
+     is identical to the above example, but doesn't wait for a keypress,
      returning the empty string if no key is available.
 
      See also: *note input: XREFinput, *note pause: XREFpause.
@@ -1370,10 +1515,10 @@ read into memory using the ‘load’ command.
                Separate numbers with tabs.
 
      ‘-binary’
-          Save the data in Octave’s binary data format.
+          Save the data in Octave's binary data format.
 
      ‘-float-binary’
-          Save the data in Octave’s binary data format but using only
+          Save the data in Octave's binary data format but using only
           single precision.  Use this format *only* if you know that all
           the values to be saved can be represented in single precision.
 
@@ -1390,32 +1535,32 @@ read into memory using the ‘load’ command.
           saved can be represented in single precision.
 
      ‘-text’
-          Save the data in Octave’s text data format.  (default)
+          Save the data in Octave's text data format.  (default)
 
      ‘-v7.3’
      ‘-V7.3’
      ‘-7.3’
-          Octave does *not* yet implement MATLAB’s v7.3 binary data
-          format.
+          Octave does *not* yet implement saving in MATLAB's v7.3 binary
+          data format.
 
      ‘-v7’
      ‘-V7’
      ‘-7’
      ‘-mat7-binary’
-          Save the data in MATLAB’s v7 binary data format.
+          Save the data in MATLAB's v7 binary data format.
 
      ‘-v6’
      ‘-V6’
      ‘-6’
      ‘-mat’
      ‘-mat-binary’
-          Save the data in MATLAB’s v6 binary data format.
+          Save the data in MATLAB's v6 binary data format.
 
      ‘-v4’
      ‘-V4’
      ‘-4’
      ‘-mat4-binary’
-          Save the data in MATLAB’s v4 binary data format.
+          Save the data in MATLAB's v4 binary data format.
 
      ‘-zip’
      ‘-z’
@@ -1456,7 +1601,7 @@ read into memory using the ‘load’ command.
           save -binary data a b*
 
      saves the variable ‘a’ and all variables beginning with ‘b’ to the
-     file ‘data’ in Octave’s binary format.
+     file ‘data’ in Octave's binary format.
 
      See also: *note load: XREFload, *note save_default_options:
      XREFsave_default_options, *note save_header_format_string:
@@ -1468,11 +1613,11 @@ read into memory using the ‘load’ command.
 
  -- : VAL = save_default_options ()
  -- : OLD_VAL = save_default_options (NEW_VAL)
- -- : save_default_options (NEW_VAL, "local")
+ -- : OLD_VAL = save_default_options (NEW_VAL, "local")
      Query or set the internal variable that specifies the default
      options for the ‘save’ command, and defines the default format.
 
-     The default value is "-text" (Octave’s own text-based file format).
+     The default value is "-text" (Octave's own text-based file format).
      See the documentation of the ‘save’ command for other choices.
 
      When called from inside a function with the "local" option, the
@@ -1486,7 +1631,7 @@ read into memory using the ‘load’ command.
 
  -- : VAL = save_precision ()
  -- : OLD_VAL = save_precision (NEW_VAL)
- -- : save_precision (NEW_VAL, "local")
+ -- : OLD_VAL = save_precision (NEW_VAL, "local")
      Query or set the internal variable that specifies the number of
      digits to keep when saving data in text format.
 
@@ -1505,7 +1650,7 @@ read into memory using the ‘load’ command.
 
  -- : VAL = save_header_format_string ()
  -- : OLD_VAL = save_header_format_string (NEW_VAL)
- -- : save_header_format_string (NEW_VAL, "local")
+ -- : OLD_VAL = save_header_format_string (NEW_VAL, "local")
      Query or set the internal variable that specifies the format string
      used for the comment line written at the beginning of text-format
      data files saved by Octave.
@@ -1560,8 +1705,8 @@ read into memory using the ‘load’ command.
      structure with members corresponding to the names of the variables
      in the file.
 
-     The ‘load’ command can read data stored in Octave’s text and binary
-     formats, and MATLAB’s binary format.  If compiled with zlib
+     The ‘load’ command can read data stored in Octave's text and binary
+     formats, and MATLAB's binary format.  If compiled with zlib
      support, it can also load gzip-compressed files.  It will
      automatically detect the type of file and do conversion from
      different floating point formats (currently only IEEE big and
@@ -1581,14 +1726,15 @@ read into memory using the ‘load’ command.
           name of the variable derived from the name of the file.
 
      ‘-binary’
-          Force Octave to assume the file is in Octave’s binary format.
+          Force Octave to assume the file is in Octave's binary format.
 
      ‘-hdf5’
           Force Octave to assume the file is in HDF5 format.  (HDF5 is a
           free, portable binary format developed by the National Center
           for Supercomputing Applications at the University of
           Illinois.)  Note that Octave can only read HDF5 files that
-          were created by itself with ‘save’.  This format is only
+          were created by itself with ‘save’ or with MATLAB's ‘-v7.3’
+          option (which saves in HDF5 format).  This format is only
           available if Octave was built with a link to the HDF5
           libraries.
 
@@ -1599,19 +1745,21 @@ read into memory using the ‘load’ command.
           Octave identifiers.
 
      ‘-text’
-          Force Octave to assume the file is in Octave’s text format.
+          Force Octave to assume the file is in Octave's text format.
 
      ‘-v7.3’
      ‘-V7.3’
      ‘-7.3’
-          Octave does *not* yet implement MATLAB’s v7.3 binary data
-          format.
+          Force Octave to assume the file is in MATLAB's v7.3 binary
+          data format.  As the v7.3 format is an HDF5 based format,
+          those files often can also be opened with the "-hdf5" option.
+          Note that Octave *can not* currently save in this format.
 
      ‘-v7’
      ‘-V7’
      ‘-7’
      ‘-mat7-binary’
-          Force Octave to assume the file is in MATLAB’s version 7
+          Force Octave to assume the file is in MATLAB's version 7
           binary format.
 
      ‘-v6’
@@ -1619,27 +1767,36 @@ read into memory using the ‘load’ command.
      ‘-6’
      ‘-mat’
      ‘-mat-binary’
-          Force Octave to assume the file is in MATLAB’s version 6
+          Force Octave to assume the file is in MATLAB's version 6
           binary format.
 
      ‘-v4’
      ‘-V4’
      ‘-4’
      ‘-mat4-binary’
-          Force Octave to assume the file is in MATLAB’s version 4
+          Force Octave to assume the file is in MATLAB's version 4
           binary format.
 
      See also: *note save: XREFsave, *note dlmwrite: XREFdlmwrite, *note
      csvwrite: XREFcsvwrite, *note fwrite: XREFfwrite.
 
  -- : STR = fileread (FILENAME)
+ -- : STR = fileread (FILENAME, PARAM, VALUE, ...)
      Read the contents of FILENAME and return it as a string.
 
-     See also: *note fread: XREFfread, *note fscanf: XREFfscanf, *note
-     importdata: XREFimportdata, *note textscan: XREFtextscan, *note
-     type: XREFtype.
+     PARAM, VALUE are optional pairs of parameters and values.  Valid
+     options are:
 
- -- : native_float_format ()
+     "Encoding"
+          Specify encoding used when reading from the file.  This is a
+          character string of a valid encoding identifier.  The default
+          is "utf-8".
+
+     See also: *note fopen: XREFfopen, *note fread: XREFfread, *note
+     fscanf: XREFfscanf, *note importdata: XREFimportdata, *note
+     textscan: XREFtextscan, *note type: XREFtype.
+
+ -- : FMTSTR = native_float_format ()
      Return the native floating point format as a string.
 
    It is possible to write data to a file in a similar way to the ‘disp’
@@ -1744,10 +1901,10 @@ separated lists.
      The RANGE parameter specifies exactly which data elements are read.
      The first form of the parameter is a 4-element vector containing
      the upper left and lower right corners ‘[R0,C0,R1,C1]’ where the
-     indices are zero-based.  To specify the last column—the equivalent
-     of ‘end’ when indexing—use the specifier ‘Inf’.  Alternatively, a
+     indices are zero-based.  To specify the last column--the equivalent
+     of ‘end’ when indexing--use the specifier ‘Inf’.  Alternatively, a
      spreadsheet style form such as "A2..Q15" or "T1:AA5" can be used.
-     The lowest alphabetical index ’A’ refers to the first column.  The
+     The lowest alphabetical index 'A' refers to the first column.  The
      lowest row index is 1.
 
      FILE should be a filename or a file id given by ‘fopen’.  In the
@@ -1945,12 +2102,12 @@ well.
      ‘%q’
           The word is parsed as a "quoted string".  If the first
           character of the string is a double quote (") then the string
-          includes everything until a matching double quote—including
+          includes everything until a matching double quote--including
           whitespace, delimiters, and end-of-line characters.  If a pair
           of consecutive double quotes appears in the input, it is
           replaced in the output by a single double quote.  For
           examples, the input "He said ""Hello""" would return the value
-          ’He said "Hello"’.
+          'He said "Hello"'.
 
      ‘%c’
           The next character of the input is read.  This includes
@@ -1964,9 +2121,9 @@ well.
           %[0-9a-zA-Z] matches all alphanumeric characters (if the
           underlying character set is ASCII). Since MATLAB treats
           hyphens literally, this expansion only applies to alphanumeric
-          characters.  To include ’-’ in the set, it should appear first
-          or last in the brackets; to include ’]’, it should be the
-          first character.  If the first character is ’^’ then the word
+          characters.  To include '-' in the set, it should appear first
+          or last in the brackets; to include ']', it should be the
+          first character.  If the first character is '^' then the word
           consists of characters *not* listed.
 
      ‘%N...’
@@ -2099,9 +2256,9 @@ well.
           least one "%s" format conversion specifier is supplied, a
           space is always part of whitespace.
 
-     When the number of words in STR or FID doesn’t match an exact
+     When the number of words in STR or FID doesn't match an exact
      multiple of the number of format conversion specifiers,
-     ‘textscan’’s behavior depends on whether the last character of the
+     ‘textscan’'s behavior depends on whether the last character of the
      string or file is an end-of-line as specified by the ‘EndOfLine’
      option:
 
@@ -2210,7 +2367,7 @@ is reasonable it can be changed through the following functions.
 
  -- : VAL = crash_dumps_octave_core ()
  -- : OLD_VAL = crash_dumps_octave_core (NEW_VAL)
- -- : crash_dumps_octave_core (NEW_VAL, "local")
+ -- : OLD_VAL = crash_dumps_octave_core (NEW_VAL, "local")
      Query or set the internal variable that controls whether Octave
      tries to save all current variables to the file ‘octave-workspace’
      if it crashes or receives a hangup, terminate or similar signal.
@@ -2226,7 +2383,7 @@ is reasonable it can be changed through the following functions.
 
  -- : VAL = sighup_dumps_octave_core ()
  -- : OLD_VAL = sighup_dumps_octave_core (NEW_VAL)
- -- : sighup_dumps_octave_core (NEW_VAL, "local")
+ -- : OLD_VAL = sighup_dumps_octave_core (NEW_VAL, "local")
      Query or set the internal variable that controls whether Octave
      tries to save all current variables to the file ‘octave-workspace’
      if it receives a hangup signal.
@@ -2238,7 +2395,7 @@ is reasonable it can be changed through the following functions.
 
  -- : VAL = sigquit_dumps_octave_core ()
  -- : OLD_VAL = sigquit_dumps_octave_core (NEW_VAL)
- -- : sigquit_dumps_octave_core (NEW_VAL, "local")
+ -- : OLD_VAL = sigquit_dumps_octave_core (NEW_VAL, "local")
      Query or set the internal variable that controls whether Octave
      tries to save all current variables to the file ‘octave-workspace’
      if it receives a quit signal.
@@ -2250,7 +2407,7 @@ is reasonable it can be changed through the following functions.
 
  -- : VAL = sigterm_dumps_octave_core ()
  -- : OLD_VAL = sigterm_dumps_octave_core (NEW_VAL)
- -- : sigterm_dumps_octave_core (NEW_VAL, "local")
+ -- : OLD_VAL = sigterm_dumps_octave_core (NEW_VAL, "local")
      Query or set the internal variable that controls whether Octave
      tries to save all current variables to the file ‘octave-workspace’
      if it receives a terminate signal.
@@ -2262,13 +2419,13 @@ is reasonable it can be changed through the following functions.
 
  -- : VAL = octave_core_file_options ()
  -- : OLD_VAL = octave_core_file_options (NEW_VAL)
- -- : octave_core_file_options (NEW_VAL, "local")
+ -- : OLD_VAL = octave_core_file_options (NEW_VAL, "local")
      Query or set the internal variable that specifies the options used
      for saving the workspace data if Octave aborts.
 
      The value of ‘octave_core_file_options’ should follow the same
      format as the options for the ‘save’ function.  The default value
-     is Octave’s binary format.
+     is Octave's binary format.
 
      When called from inside a function with the "local" option, the
      variable is changed locally for the function and any subroutines it
@@ -2282,7 +2439,7 @@ is reasonable it can be changed through the following functions.
 
  -- : VAL = octave_core_file_limit ()
  -- : OLD_VAL = octave_core_file_limit (NEW_VAL)
- -- : octave_core_file_limit (NEW_VAL, "local")
+ -- : OLD_VAL = octave_core_file_limit (NEW_VAL, "local")
      Query or set the internal variable that specifies the maximum
      amount of memory that Octave will save when writing a crash dump
      file.
@@ -2308,7 +2465,7 @@ is reasonable it can be changed through the following functions.
 
  -- : VAL = octave_core_file_name ()
  -- : OLD_VAL = octave_core_file_name (NEW_VAL)
- -- : octave_core_file_name (NEW_VAL, "local")
+ -- : OLD_VAL = octave_core_file_name (NEW_VAL, "local")
      Query or set the internal variable that specifies the name of the
      file used for saving data from the top-level workspace if Octave
      aborts.
@@ -2331,8 +2488,8 @@ File: octave.info,  Node: C-Style I/O Functions,  Prev: Basic Input and Output, 
 14.2 C-Style I/O Functions
 ==========================
 
-Octave’s C-style input and output functions provide most of the
-functionality of the C programming language’s standard I/O library.  The
+Octave's C-style input and output functions provide most of the
+functionality of the C programming language's standard I/O library.  The
 argument lists for some of the input functions are slightly different,
 however, because Octave has no way of passing arguments by reference.
 
@@ -2344,7 +2501,7 @@ files can be accessed using their corresponding numeric file ids, you
 should always use the symbolic names given in the table below, since it
 will make your programs easier to understand.
 
- -- : stdin ()
+ -- : FID = stdin ()
      Return the numeric value corresponding to the standard input
      stream.
 
@@ -2353,7 +2510,7 @@ will make your programs easier to understand.
 
      See also: *note stdout: XREFstdout, *note stderr: XREFstderr.
 
- -- : stdout ()
+ -- : FID = stdout ()
      Return the numeric value corresponding to the standard output
      stream.
 
@@ -2363,7 +2520,7 @@ will make your programs easier to understand.
      See also: *note stdin: XREFstdin, *note stderr: XREFstderr, *note
      page_screen_output: XREFpage_screen_output.
 
- -- : stderr ()
+ -- : FID = stderr ()
      Return the numeric value corresponding to the standard error
      stream.
 
@@ -2432,9 +2589,8 @@ reading a file.
      or two character string that specifies whether the file is to be
      opened for reading, writing, or both.  The ENCODING is a character
      string with a valid encoding identifier.  This encoding is used
-     when strings are read from or written to the file.  By default, the
-     same encoding specified for reading ‘.m’ files is used for
-     interpreting user files.
+     when strings are read from or written to the file.  By default,
+     that is UTF-8.
 
      The second form of the ‘fopen’ function returns a vector of file
      ids corresponding to all the currently open files, excluding the
@@ -2522,8 +2678,7 @@ reading a file.
      fclear: XREFfclear, *note fflush: XREFfflush, *note freport:
      XREFfreport, *note umask: XREFumask.
 
- -- : fclose (FID)
- -- : fclose ("all")
+ -- : STATUS = fclose (FID)
  -- : STATUS = fclose ("all")
      Close the file specified by the file descriptor FID.
 
@@ -2534,7 +2689,7 @@ reading a file.
      See also: *note fopen: XREFfopen, *note fflush: XREFfflush, *note
      freport: XREFfreport.
 
- -- : is_valid_file_id (FID)
+ -- : TF = is_valid_file_id (FID)
      Return true if FID refers to an open file.
 
      See also: *note freport: XREFfreport, *note fopen: XREFfopen.
@@ -2555,7 +2710,6 @@ write the string ‘Free Software is needed for Free Science’ to the file
      fputs (fid, "Free Software is needed for Free Science");
      fclose (fid);
 
- -- : fputs (FID, STRING)
  -- : STATUS = fputs (FID, STRING)
      Write the string STRING to the file with file descriptor FID.
 
@@ -2563,16 +2717,16 @@ write the string ‘Free Software is needed for Free Science’ to the file
      Use ‘fdisp’ instead to automatically append a newline character
      appropriate for the local machine.
 
-     Return a non-negative number on success or EOF on error.
+     The optional output STATUS is 0 for success, or -1 if an error was
+     encountered.
 
      See also: *note fdisp: XREFfdisp, *note fprintf: XREFfprintf, *note
      fwrite: XREFfwrite, *note fopen: XREFfopen.
 
    A function much similar to ‘fputs’ is available for writing data to
 the screen.  The ‘puts’ function works just like ‘fputs’ except it
-doesn’t take a file pointer as its input.
+doesn't take a file pointer as its input.
 
- -- : puts (STRING)
  -- : STATUS = puts (STRING)
      Write a string to the standard output with no formatting.
 
@@ -2580,7 +2734,8 @@ doesn’t take a file pointer as its input.
      to automatically append a newline character appropriate for the
      local machine.
 
-     Return a non-negative number on success and EOF on error.
+     The optional output STATUS is 0 for success, or -1 if an error was
+     encountered.
 
      See also: *note fputs: XREFfputs, *note disp: XREFdisp.
 
@@ -2675,12 +2830,15 @@ in the template string (e.g., "\n" => newline) are expanded even when
 the template string is defined with single quotes.
 
  -- : printf (TEMPLATE, ...)
+ -- : NUMBYTES = printf (...)
      Print optional arguments under the control of the template string
      TEMPLATE to the stream ‘stdout’ and return the number of characters
      printed.
 
      See the Formatted Output section of the GNU Octave manual for a
      complete description of the syntax of the template string.
+
+     The optional output NUMBYTES returns the number of bytes printed.
 
      Implementation Note: For compatibility with MATLAB, escape
      sequences in the template string (e.g., "\n" => newline) are
@@ -2699,8 +2857,8 @@ the template string is defined with single quotes.
      If FID is omitted, the output is written to ‘stdout’ making the
      function exactly equivalent to ‘printf’.
 
-     The optional output returns the number of bytes written to the
-     file.
+     The optional output NUMBYTES returns the number of bytes written to
+     the file.
 
      Implementation Note: For compatibility with MATLAB, escape
      sequences in the template string (e.g., "\n" => newline) are
@@ -2711,12 +2869,12 @@ the template string is defined with single quotes.
      fwrite: XREFfwrite, *note fscanf: XREFfscanf, *note printf:
      XREFprintf, *note sprintf: XREFsprintf, *note fopen: XREFfopen.
 
- -- : sprintf (TEMPLATE, ...)
+ -- : STR = sprintf (TEMPLATE, ...)
      This is like ‘printf’, except that the output is returned as a
      string.
 
      Unlike the C library function, which requires you to provide a
-     suitably sized string as an argument, Octave’s ‘sprintf’ function
+     suitably sized string as an argument, Octave's ‘sprintf’ function
      returns the string, automatically sized to hold all of the items
      converted.
 
@@ -2771,7 +2929,7 @@ minimum field width and a flag indicating whether you want the result
 left- or right-justified within the field.
 
    The specific flags and modifiers that are permitted and their
-interpretation vary depending on the particular conversion.  They’re all
+interpretation vary depending on the particular conversion.  They're all
 described in more detail in the following sections.
 
 
@@ -2780,7 +2938,7 @@ File: octave.info,  Node: Output Conversion for Matrices,  Next: Output Conversi
 14.2.5 Output Conversion for Matrices
 -------------------------------------
 
-When given a matrix value, Octave’s formatted output functions cycle
+When given a matrix value, Octave's formatted output functions cycle
 through the format template until all the values in the matrix have been
 printed.  For example:
 
@@ -2859,7 +3017,7 @@ initial ‘%’ character followed in sequence by:
      and is ignored if it is negative.
 
    • An optional “type modifier character”.  This character is ignored
-     by Octave’s ‘printf’ function, but is recognized to provide
+     by Octave's ‘printf’ function, but is recognized to provide
      compatibility with the C language ‘printf’.
 
    • A character that specifies the conversion to be applied.
@@ -2921,7 +3079,7 @@ Here is a table summarizing what all the different conversions do:
      Print a literal ‘%’ character.  *Note Other Output Conversions::.
 
    If the syntax of a conversion specification is invalid, unpredictable
-things will happen, so don’t do this.  In particular, MATLAB allows a
+things will happen, so don't do this.  In particular, MATLAB allows a
 bare percentage sign ‘%’ with no subsequent conversion character.
 Octave will emit an error and stop if it sees such code.  When the
 string variable to be processed cannot be guaranteed to be free of
@@ -2934,7 +3092,7 @@ with MATLAB the Octave function ‘puts’ or ‘disp’ can be used.
      printf ("%s", strvar);  # Safe
      puts (strvar);          # Safe
 
-   If there aren’t enough function arguments provided to supply values
+   If there aren't enough function arguments provided to supply values
 for all the conversion specifications in the template string, or if the
 arguments are not of the correct types, the results are unpredictable.
 If you supply more arguments than conversion specifications, the extra
@@ -2968,7 +3126,7 @@ except that it uses the characters ‘ABCDEF’ as digits instead of
      value is positive.
 
 ‘ ’
-     For the signed ‘%d’ and ‘%i’ conversions, if the result doesn’t
+     For the signed ‘%d’ and ‘%i’ conversions, if the result doesn't
      start with a plus or minus sign, prefix it with a space character
      instead.  Since the ‘+’ flag ensures that the result includes a
      sign, this flag is ignored if you supply both of them.
@@ -2976,7 +3134,7 @@ except that it uses the characters ‘ABCDEF’ as digits instead of
 ‘#’
      For the ‘%o’ conversion, this forces the leading digit to be ‘0’,
      as if by increasing the precision.  For ‘%x’ or ‘%X’, this prefixes
-     a leading ‘0x’ or ‘0X’ (respectively) to the result.  This doesn’t
+     a leading ‘0x’ or ‘0X’ (respectively) to the result.  This doesn't
      do anything useful for the ‘%d’, ‘%i’, or ‘%u’ conversions.
 
 ‘0’
@@ -2985,7 +3143,7 @@ except that it uses the characters ‘ABCDEF’ as digits instead of
      ‘-’ flag is also specified, or if a precision is specified.
 
    If a precision is supplied, it specifies the minimum number of digits
-to appear; leading zeros are produced if necessary.  If you don’t
+to appear; leading zeros are produced if necessary.  If you don't
 specify a precision, the number is printed with as many digits as it
 needs.  If you convert a value of zero with an explicit precision of
 zero, then no characters at all are produced.
@@ -3026,7 +3184,7 @@ a decimal-point character appears only if it is followed by a digit.
      Always include a plus or minus sign in the result.
 
 ‘ ’
-     If the result doesn’t start with a plus or minus sign, prefix it
+     If the result doesn't start with a plus or minus sign, prefix it
      with a space instead.  Since the ‘+’ flag ensures that the result
      includes a sign, this flag is ignored if you supply both of them.
 
@@ -3090,7 +3248,7 @@ File: octave.info,  Node: Formatted Input,  Next: Input Conversion Syntax,  Prev
 Octave provides the ‘scanf’, ‘fscanf’, and ‘sscanf’ functions to read
 formatted input.  There are two forms of each of these functions.  One
 can be used to extract vectors of data from a file, and the other is
-more ‘C-like’.
+more 'C-like'.
 
  -- : [VAL, COUNT, ERRMSG] = fscanf (FID, TEMPLATE, SIZE)
  -- : [V1, V2, ..., COUNT, ERRMSG] = fscanf (FID, TEMPLATE, "C")
@@ -3128,7 +3286,7 @@ more ‘C-like’.
 
      In the second form, read from FID according to TEMPLATE, with each
      conversion specifier in TEMPLATE corresponding to a single scalar
-     return value.  This form is more “C-like”, and also compatible with
+     return value.  This form is more "C-like", and also compatible with
      previous versions of Octave.  The number of successful conversions
      is returned in COUNT
 
@@ -3166,7 +3324,7 @@ string.  While the syntax of the conversion specifications in the
 template is very similar to that for ‘printf’, the interpretation of the
 template is oriented more towards free-format input and simple pattern
 matching, rather than fixed-field formatting.  For example, most ‘scanf’
-conversions skip over any amount of “white space” (including spaces,
+conversions skip over any amount of "white space" (including spaces,
 tabs, and newlines) in the input file, and there is no concept of
 precision for the numeric input conversions as there is for the
 corresponding output conversions.  Ordinarily, non-whitespace characters
@@ -3247,12 +3405,12 @@ initial ‘%’ character followed in sequence by:
      width”.  Reading of characters from the input stream stops either
      when this maximum is reached or when a non-matching character is
      found, whichever happens first.  Most conversions discard initial
-     whitespace characters, and these discarded characters don’t count
+     whitespace characters, and these discarded characters don't count
      towards the maximum field width.  Conversions that do not discard
      initial whitespace are explicitly documented.
 
    • An optional type modifier character.  This character is ignored by
-     Octave’s ‘scanf’ function, but is recognized to provide
+     Octave's ‘scanf’ function, but is recognized to provide
      compatibility with the C language ‘scanf’.
 
    • A character that specifies the conversion to be applied.
@@ -3309,7 +3467,7 @@ Here is a table that summarizes the various conversion specifications:
      corresponding argument is used.
 
    If the syntax of a conversion specification is invalid, the behavior
-is undefined.  If there aren’t enough function arguments provided to
+is undefined.  If there aren't enough function arguments provided to
 supply addresses for all the conversion specifications in the template
 strings that perform assignments, or if the arguments are not of the
 correct types, the behavior is also undefined.  On the other hand, extra
@@ -3361,7 +3519,7 @@ and character values: ‘%s’ and ‘%c’.
 
    The ‘%c’ conversion is the simplest: it matches a fixed number of
 characters, always.  The maximum field with says how many characters to
-read; if you don’t specify the maximum, the default is 1.  This
+read; if you don't specify the maximum, the default is 1.  This
 conversion does not skip over initial whitespace characters.  It reads
 precisely the next N characters, and fails if it cannot get that many.
 
@@ -3535,14 +3693,12 @@ the data are read.
      See also: *note fwrite: XREFfwrite, *note fgets: XREFfgets, *note
      fgetl: XREFfgetl, *note fscanf: XREFfscanf, *note fopen: XREFfopen.
 
- -- : fwrite (FID, DATA)
- -- : fwrite (FID, DATA, PRECISION)
- -- : fwrite (FID, DATA, PRECISION, SKIP)
- -- : fwrite (FID, DATA, PRECISION, SKIP, ARCH)
- -- : COUNT = fwrite (...)
+ -- : COUNT = fwrite (FID, DATA)
+ -- : COUNT = fwrite (FID, DATA, PRECISION)
+ -- : COUNT = fwrite (FID, DATA, PRECISION, SKIP)
+ -- : COUNT = fwrite (FID, DATA, PRECISION, SKIP, ARCH)
      Write data in binary form to the file specified by the file
-     descriptor FID, returning the number of values COUNT successfully
-     written to the file.
+     descriptor FID.
 
      The argument DATA is a matrix of values that are to be written to
      the file.  The values are extracted in column-major order.
@@ -3550,8 +3706,10 @@ the data are read.
      The remaining arguments PRECISION, SKIP, and ARCH are optional, and
      are interpreted as described for ‘fread’.
 
-     The behavior of ‘fwrite’ is undefined if the values in DATA are too
-     large to fit in the specified precision.
+     The output COUNT is the number of data items successfully written.
+
+     Programming Note: The behavior of ‘fwrite’ is undefined if the
+     values in DATA are too large to fit in the specified precision.
 
      See also: *note fread: XREFfread, *note fputs: XREFfputs, *note
      fprintf: XREFfprintf, *note fopen: XREFfopen.
@@ -3624,18 +3782,20 @@ be deleted, so this step need not be executed manually.
      *note P_tmpdir: XREFP_tmpdir, *note tmpfile: XREFtmpfile.
 
  -- : DIR = tempdir ()
-     Return the name of the host system’s directory for temporary files.
+     Return the name of the host system's directory for temporary files.
 
      The directory name is taken first from the environment variable
-     ‘TMPDIR’.  If that does not exist the system default returned by
-     ‘P_tmpdir’ is used.
+     ‘TMPDIR’.  If that does not exist, the environment variable ‘TMP’
+     (and on Windows platforms also with higher priority the environment
+     variable ‘TEMP’) is checked.  If none of those are set, the system
+     default returned by ‘P_tmpdir’ is used.
 
      See also: *note P_tmpdir: XREFP_tmpdir, *note tempname:
      XREFtempname, *note mkstemp: XREFmkstemp, *note tmpfile:
      XREFtmpfile.
 
- -- : P_tmpdir ()
-     Return the name of the host system’s *default* directory for
+ -- : SYS_TMPDIR = P_tmpdir ()
+     Return the name of the host system's *default* directory for
      temporary files.
 
      Programming Note: The value returned by ‘P_tmpdir’ is always the
@@ -3742,9 +3902,8 @@ of the file pointer for a given file.
      See also: *note fseek: XREFfseek, *note frewind: XREFfrewind, *note
      feof: XREFfeof, *note fopen: XREFfopen.
 
- -- : fseek (FID, OFFSET)
- -- : fseek (FID, OFFSET, ORIGIN)
- -- : STATUS = fseek (...)
+ -- : STATUS = fseek (FID, OFFSET)
+ -- : STATUS = fseek (FID, OFFSET, ORIGIN)
      Set the file pointer to the location OFFSET within the file FID.
 
      The pointer is positioned OFFSET characters from the ORIGIN, which
@@ -3761,21 +3920,21 @@ of the file pointer for a given file.
      XREFSEEK_SET, *note SEEK_CUR: XREFSEEK_CUR, *note SEEK_END:
      XREFSEEK_END.
 
- -- : SEEK_SET ()
+ -- : FSEEK_ORIGIN = SEEK_SET ()
      Return the numerical value to pass to ‘fseek’ to position the file
      pointer relative to the beginning of the file.
 
      See also: *note SEEK_CUR: XREFSEEK_CUR, *note SEEK_END:
      XREFSEEK_END, *note fseek: XREFfseek.
 
- -- : SEEK_CUR ()
+ -- : FSEEK_ORIGIN = SEEK_CUR ()
      Return the numerical value to pass to ‘fseek’ to position the file
      pointer relative to the current position.
 
      See also: *note SEEK_SET: XREFSEEK_SET, *note SEEK_END:
      XREFSEEK_END, *note fseek: XREFfseek.
 
- -- : SEEK_END ()
+ -- : FSEEK_ORIGIN = SEEK_END ()
      Return the numerical value to pass to ‘fseek’ to position the file
      pointer relative to the end of the file.
 
@@ -3787,8 +3946,11 @@ of the file pointer for a given file.
      Move the file pointer to the beginning of the file specified by
      file descriptor FID.
 
-     ‘frewind’ returns 0 for success, and -1 if an error is encountered.
-     It is equivalent to ‘fseek (FID, 0, SEEK_SET)’.
+     If an output STATUS is requested then ‘frewind’ returns 0 for
+     success, and -1 if an error is encountered.
+
+     Programming Note: ‘frewind’ is equivalent to ‘fseek (FID, 0,
+     SEEK_SET)’.
 
      See also: *note fseek: XREFfseek, *note ftell: XREFftell, *note
      fopen: XREFfopen.
@@ -3875,7 +4037,7 @@ Structures:: and *note Advanced Plotting::.
 * Multiple Plot Windows::
 * Manipulation of Plot Objects::
 * Manipulation of Plot Windows::
-* Use of the interpreter Property::
+* Use of the "interpreter" Property::
 * Printing and Saving Plots::
 * Interacting with Plots::
 * Test Plotting Functions::
@@ -3909,7 +4071,6 @@ graph.
 +---------------------------------+
 | Image unavailable in text mode. |
 +---------------------------------+" ]
-
 
 Figure 15.1: Simple Two-Dimensional Plot.
 
@@ -3953,6 +4114,10 @@ Figure 15.1: Simple Two-Dimensional Plot.
 
         • ‘squeeze()’ is applied to arguments with more than two
           dimensions, but no more than two singleton dimensions.
+
+        • If either X or Y is a scalar and the other is a vector, a
+          series of points are plotted at the coordinates defined by the
+          scalar and each element of the vector.
 
         • If both arguments are vectors, the elements of Y are plotted
           versus the elements of X.
@@ -4079,7 +4244,7 @@ Figure 15.1: Simple Two-Dimensional Plot.
 independent y axes.
 
  -- : plotyy (X1, Y1, X2, Y2)
- -- : plotyy (..., FUN)
+ -- : plotyy (..., FCN)
  -- : plotyy (..., FUN1, FUN2)
  -- : plotyy (HAX, ...)
  -- : [AX, H1, H2] = plotyy (...)
@@ -4089,8 +4254,8 @@ independent y axes.
      X1 and Y2 for the second.
 
      By default the arguments are evaluated with ‘feval (@plot, X, Y)’.
-     However the type of plot can be modified with the FUN argument, in
-     which case the plots are generated by ‘feval (FUN, X, Y)’.  FUN can
+     However the type of plot can be modified with the FCN argument, in
+     which case the plots are generated by ‘feval (FCN, X, Y)’.  FCN can
      be a function handle, an inline function, or a string of a function
      name.
 
@@ -4205,7 +4370,6 @@ figure produced is identical to the one in this manual.
 | Image unavailable in text mode. |
 +---------------------------------+" ]
 
-
 Figure 15.2: Histogram.
 
  -- : bar (Y)
@@ -4268,7 +4432,7 @@ Figure 15.2: Histogram.
 
           bar (randn (1, 100), "facecolor", "r", "edgecolor", "b");
 
-     The default color for bars is taken from the axes’ "ColorOrder"
+     The default color for bars is taken from the axes' "ColorOrder"
      property.  The default color for bars when a histogram option
      ("hist", "histc" is used is the "Colormap" property of either the
      axes or figure.  The color of bars can also be set manually using
@@ -4368,7 +4532,7 @@ Figure 15.2: Histogram.
           ⇒ ans =
                 1   2   3
 
-     The histogram’s appearance may be modified by specifying
+     The histogram's appearance may be modified by specifying
      property/value pairs to the underlying patch object.  For example,
      the face and edge color may be modified:
 
@@ -4384,7 +4548,10 @@ Figure 15.2: Histogram.
 
      If an output is requested then no plot is made.  Instead, return
      the values NN (numbers of elements) and XX (bin centers) such that
-     ‘bar (XX, NN)’ will plot the histogram.
+     ‘bar (XX, NN)’ will plot the histogram.  If Y is a vector, NN and
+     XX will be row vectors.  If Y is an array, NN will be an array with
+     one column of element counts for each column in Y, and XX will be a
+     column vector of bin centers.
 
      See also: *note histc: XREFhistc, *note bar: XREFbar, *note pie:
      XREFpie, *note rose: XREFrose.
@@ -4408,7 +4575,7 @@ Figure 15.2: Histogram.
      is 10.
 
      The output of ‘stemleaf’ is composed of two parts: a "Fenced Letter
-     Display," followed by the stem-and-leaf plot itself.  The Fenced
+     Display", followed by the stem-and-leaf plot itself.  The Fenced
      Letter Display is described in ‘Exploratory Data Analysis’.
      Briefly, the entries are as shown:
 
@@ -4449,8 +4616,8 @@ Figure 15.2: Histogram.
      Convert any object acceptable to ‘disp’ into the format selected by
      the suffix of FILENAME.
 
-     If the return argument OUT_FILE is given, the name of the created
-     file is returned.
+     If the optional output OUT_FILE is requested, the name of the
+     created file is returned.
 
      This function is intended to facilitate manipulation of the output
      of functions such as ‘stemleaf’.
@@ -4759,12 +4926,12 @@ Figure 15.2: Histogram.
      See also: *note bar: XREFbar, *note barh: XREFbarh, *note hist:
      XREFhist, *note pie: XREFpie, *note plot: XREFplot.
 
- -- : rose (TH)
- -- : rose (TH, NBINS)
- -- : rose (TH, BINS)
+ -- : rose (THETA)
+ -- : rose (THETA, NBINS)
+ -- : rose (THETA, BINS)
  -- : rose (HAX, ...)
  -- : H = rose (...)
- -- : [THOUT ROUT] = rose (...)
+ -- : [TH R] = rose (...)
      Plot an angular histogram.
 
      With one vector argument, TH, plot the histogram with 20 angular
@@ -4789,14 +4956,6 @@ Figure 15.2: Histogram.
 
           [th, r] = rose ([2*randn(1e5,1), pi + 2*randn(1e5,1)]);
           polar (th, r);
-
-     Programming Note: When specifying bin centers with the BINS input,
-     the edges for bins 2 to N-1 are spaced so that ‘BINS(i)’ is
-     centered between the edges.  The final edge is drawn halfway
-     between bin N and bin 1.  This guarantees that all input TH will be
-     placed into one of the bins, but also means that for some
-     combinations bin 1 and bin N may not be centered on the user’s
-     given values.
 
      See also: *note hist: XREFhist, *note polar: XREFpolar.
 
@@ -4989,7 +5148,6 @@ produces the figure shown in *note Figure 15.3: fig:errorbar.
 +---------------------------------+
 | Image unavailable in text mode. |
 +---------------------------------+" ]
-
 
 Figure 15.3: Errorbar plot.
 
@@ -5216,7 +5374,6 @@ produces the spiral plot shown in *note Figure 15.4: fig:polar.
 | Image unavailable in text mode. |
 +---------------------------------+" ]
 
-
 Figure 15.4: Polar plot.
 
  -- : polar (THETA, RHO)
@@ -5248,11 +5405,11 @@ Figure 15.4: Polar plot.
      objects encapsulated in an hggroup.  The hggroup properties are
      linked to the original axes object such that altering an appearance
      property, for example ‘fontname’, will update the polar axis.  Two
-     new properties are added to the original axes–‘rtick’,
-     ‘ttick’–which replace ‘xtick’, ‘ytick’.  The first is a list of
+     new properties are added to the original axes-‘rtick’,
+     ‘ttick’-which replace ‘xtick’, ‘ytick’.  The first is a list of
      tick locations in the radial (rho) direction; The second is a list
      of tick locations in the angular (theta) direction specified in
-     degrees, i.e., in the range 0–359.
+     degrees, i.e., in the range 0-359.
 
      See also: *note rose: XREFrose, *note compass: XREFcompass, *note
      plot: XREFplot, *note cart2pol: XREFcart2pol.
@@ -5335,7 +5492,8 @@ Figure 15.4: Polar plot.
 
      Plot the (U, V) components of a vector field at the grid points
      defined by (X, Y).  If the grid is uniform then X and Y can be
-     specified as vectors and ‘meshgrid’ is used to create the 2-D grid.
+     specified as grid vectors and ‘meshgrid’ is used to create the 2-D
+     grid.
 
      If X and Y are not given they are assumed to be ‘(1:M, 1:N)’ where
      ‘[M, N] = size (U)’.
@@ -5343,15 +5501,17 @@ Figure 15.4: Polar plot.
      The optional input S is a scalar defining a scaling factor to use
      for the arrows of the field relative to the mesh spacing.  A value
      of 1.0 will result in the longest vector exactly filling one grid
-     square.  A value of 0 disables all scaling.  The default value is
-     0.9.
+     square.  A value of 0 or "off" disables all scaling.  The default
+     value is 0.9.
 
-     The style to use for the plot can be defined with a line style
-     STYLE of the same format as the ‘plot’ command.  If a marker is
+     The style to use for the plot can be defined with a line style,
+     STYLE, of the same format as the ‘plot’ command.  If a marker is
      specified then the markers are drawn at the origin of the vectors
      (which are the grid points defined by X and Y).  When a marker is
      specified, the arrowhead is not drawn.  If the argument "filled" is
-     given then the markers are filled.
+     given then the markers are filled.  If name-value plot style
+     properties are used, they must appear in pairs and follow any other
+     plot style arguments.
 
      If the first argument HAX is an axes handle, then plot into this
      axes, rather than the current axes returned by ‘gca’.
@@ -5381,8 +5541,8 @@ Figure 15.4: Polar plot.
 
      Plot the (U, V, W) components of a vector field at the grid points
      defined by (X, Y, Z).  If the grid is uniform then X, Y, and Z can
-     be specified as vectors and ‘meshgrid’ is used to create the 3-D
-     grid.
+     be specified as grid vectors and ‘meshgrid’ is used to create the
+     3-D grid.
 
      If X and Y are not given they are assumed to be ‘(1:M, 1:N)’ where
      ‘[M, N] = size (U)’.
@@ -5390,15 +5550,17 @@ Figure 15.4: Polar plot.
      The optional input S is a scalar defining a scaling factor to use
      for the arrows of the field relative to the mesh spacing.  A value
      of 1.0 will result in the longest vector exactly filling one grid
-     cube.  A value of 0 disables all scaling.  The default value is
-     0.9.
+     cube.  A value of 0 or "off" disables all scaling.  The default
+     value is 0.9.
 
      The style to use for the plot can be defined with a line style
      STYLE of the same format as the ‘plot’ command.  If a marker is
      specified then the markers are drawn at the origin of the vectors
      (which are the grid points defined by X, Y, Z).  When a marker is
      specified, the arrowhead is not drawn.  If the argument "filled" is
-     given then the markers are filled.
+     given then the markers are filled.  If name-value plot style
+     properties are used, they must appear in pairs and follow any other
+     plot style arguments.
 
      If the first argument HAX is an axes handle, then plot into this
      axes, rather than the current axes returned by ‘gca’.
@@ -5728,7 +5890,7 @@ Figure 15.4: Polar plot.
 
      A ‘pcolor’ plot draws rectangles with colors from the matrix C over
      the two-dimensional region represented by the matrices X and Y.  X
-     and Y are the coordinates of the mesh’s vertices and are typically
+     and Y are the coordinates of the mesh's vertices and are typically
      the output of ‘meshgrid’.  If X and Y are vectors, then a typical
      vertex is (X(j), Y(i), C(i,j)).  Thus, columns of C correspond to
      different X values and rows of C correspond to different Y values.
@@ -5738,14 +5900,14 @@ Figure 15.4: Polar plot.
      ‘caxis’, or by setting the ‘clim’ property of the parent axis.
 
      The face color of each cell of the mesh is determined by
-     interpolating the values of C for each of the cell’s vertices;
+     interpolating the values of C for each of the cell's vertices;
      Contrast this with ‘imagesc’ which renders one cell for each
      element of C.
 
      ‘shading’ modifies an attribute determining the manner by which the
      face color of each cell is interpolated from the values of C, and
-     the visibility of the cells’ edges.  By default the attribute is
-     "faceted", which renders a single color for each cell’s face with
+     the visibility of the cells' edges.  By default the attribute is
+     "faceted", which renders a single color for each cell's face with
      the edge visible.
 
      If the first argument HAX is an axes handle, then plot into this
@@ -5993,8 +6155,15 @@ done or, alternatively, after calling the *note hold function: XREFhold.
      "manual"
           Fix the current axes limits.
 
+     "tickaligned"
+          Fix axes to the limits of the closest ticks.
+
      "tight"
           Fix axes to the limits of the data.
+
+     "padded"
+          Fix axes to the limits of the data plus margins of about 7% of
+          the data extent.
 
      "image"
           Equivalent to "tight" and "equal".
@@ -6092,9 +6261,10 @@ individual axis limits.  Each has the same form.
 
  -- : XLIMITS = xlim ()
  -- : XMODE = xlim ("mode")
+ -- : XMETHOD = xlim ("method")
  -- : xlim ([X_LO X_HI])
- -- : xlim ("auto")
- -- : xlim ("manual")
+ -- : xlim ("mode")
+ -- : xlim ("method")
  -- : xlim (HAX, ...)
      Query or set the limits of the x-axis for the current plot.
 
@@ -6104,23 +6274,165 @@ individual axis limits.  Each has the same form.
      With the input query "mode", return the current x-limit calculation
      mode which is either "auto" or "manual".
 
+     With the input query "method", return the current x-limit
+     calculation method which is either "tickaligned", "tight", or
+     "padded".
+
      If passed a 2-element vector [X_LO X_HI], the limits of the x-axis
      are set to these values and the mode is set to "manual".  The
      special values -Inf and Inf can be used to indicate that either the
      lower axis limit or upper axis limit should be automatically
      calculated.
 
-     The current plotting mode can be changed by using either "auto" or
-     "manual" as the argument.
+     The current limit calculation "mode" may be one of
+
+     "auto" (default)
+          Automatically calculate limits based on the plot data and the
+          currently specified limit calculation method.
+
+     "manual"
+          Fix axis limits at current values.
+
+     The current limit calculation method may be one of
+
+     "tickaligned" (default)
+          Calculate limits that encompass all of the data and extend
+          outwards to the nearest tick mark.
+
+     "tight"
+          Calculate limits that exactly fit the data range.
+
+     "padded"
+          Calculate limits that leave a margin around the data of
+          approximately 7% of the data range.
 
      If the first argument HAX is an axes handle, then operate on this
      axes rather than the current axes returned by ‘gca’.
 
      Programming Note: The ‘xlim’ function operates by modifying the
-     "xlim" and "xlimmode" properties of an axes object.  These
-     properties can be directly inspected and altered with ‘get’/‘set’.
+     "xlim", "xlimmode", and "xlimitmethod" properties of an axes
+     object.  These properties can be directly inspected and altered
+     with ‘get’/‘set’.
 
      See also: *note ylim: XREFylim, *note zlim: XREFzlim, *note axis:
+     XREFaxis, *note set: XREFset, *note get: XREFget, *note gca:
+     XREFgca.
+
+ -- : YLIMITS = ylim ()
+ -- : YMODE = ylim ("mode")
+ -- : YMETHOD = ylim ("method")
+ -- : ylim ([Y_LO Y_HI])
+ -- : ylim ("mode")
+ -- : ylim ("method")
+ -- : ylim (HAX, ...)
+     Query or set the limits of the y-axis for the current plot.
+
+     Called without arguments ‘ylim’ returns the y-axis limits of the
+     current plot.
+
+     With the input query "mode", return the current y-limit calculation
+     mode which is either "auto" or "manual".
+
+     With the input query "method", return the current y-limit
+     calculation method which is either "tickaligned", "tight", or
+     "padded".
+
+     If passed a 2-element vector [Y_LO Y_HI], the limits of the y-axis
+     are set to these values and the mode is set to "manual".  The
+     special values -Inf and Inf can be used to indicate that either the
+     lower axis limit or upper axis limit should be automatically
+     calculated.
+
+     The current limit calculation "mode" may be one of
+
+     "auto" (default)
+          Automatically calculate limits based on the plot data and the
+          currently specified limit calculation method.
+
+     "manual"
+          Fix axis limits at current values.
+
+     The current limit calculation method may be one of
+
+     "tickaligned" (default)
+          Calculate limits that encompass all of the data and extend
+          outwards to the nearest tick mark.
+
+     "tight"
+          Calculate limits that exactly fit the data range.
+
+     "padded"
+          Calculate limits that leave a margin around the data of
+          approximately 7% of the data range.
+
+     If the first argument HAX is an axes handle, then operate on this
+     axes rather than the current axes returned by ‘gca’.
+
+     Programming Note: The ‘ylim’ function operates by modifying the
+     "ylim", "ylimmode", and "ylimitmethod" properties of an axes
+     object.  These properties can be directly inspected and altered
+     with ‘get’/‘set’.
+
+     See also: *note xlim: XREFxlim, *note zlim: XREFzlim, *note axis:
+     XREFaxis, *note set: XREFset, *note get: XREFget, *note gca:
+     XREFgca.
+
+ -- : ZLIMITS = zlim ()
+ -- : ZMODE = zlim ("mode")
+ -- : ZMETHOD = zlim ("method")
+ -- : zlim ([Z_LO Z_HI])
+ -- : zlim ("mode")
+ -- : zlim ("method")
+ -- : zlim (HAX, ...)
+     Query or set the limits of the z-axis for the current plot.
+
+     Called without arguments ‘zlim’ returns the z-axis limits of the
+     current plot.
+
+     With the input query "mode", return the current z-limit calculation
+     mode which is either "auto" or "manual".
+
+     With the input query "method", return the current z-limit
+     calculation method which is either "tickaligned", "tight", or
+     "padded".
+
+     If passed a 2-element vector [Z_LO Z_HI], the limits of the z-axis
+     are set to these values and the mode is set to "manual".  The
+     special values -Inf and Inf can be used to indicate that either the
+     lower axis limit or upper axis limit should be automatically
+     calculated.
+
+     The current limit calculation "mode" may be one of
+
+     "auto" (default)
+          Automatically calculate limits based on the plot data and the
+          currently specified limit calculation method.
+
+     "manual"
+          Fix axis limits at current values.
+
+     The current limit calculation method may be one of
+
+     "tickaligned" (default)
+          Calculate limits that encompass all of the data and extend
+          outwards to the nearest tick mark.
+
+     "tight"
+          Calculate limits that exactly fit the data range.
+
+     "padded"
+          Calculate limits that leave a margin around the data of
+          approximately 7% of the data range.
+
+     If the first argument HAX is an axes handle, then operate on this
+     axes rather than the current axes returned by ‘gca’.
+
+     Programming Note: The ‘zlim’ function operates by modifying the
+     "zlim", "zlimmode", and "zlimitmethod" properties of an axes
+     object.  These properties can be directly inspected and altered
+     with ‘get’/‘set’.
+
+     See also: *note xlim: XREFxlim, *note ylim: XREFylim, *note axis:
      XREFaxis, *note set: XREFset, *note get: XREFget, *note gca:
      XREFgca.
 
@@ -6160,11 +6472,123 @@ not currently available for ‘rticks’, and ‘thetaticks’.
      *note thetaticks: XREFthetaticks, *note get: XREFget, *note set:
      XREFset.
 
+ -- : TICKVAL = yticks
+ -- : MODE = yticks ("mode")
+ -- : yticks (TICKVAL)
+ -- : yticks ("auto")
+ -- : yticks ("manual")
+ -- : ... = yticks (HAX, ...)
+     Query or set the tick values on the y-axis of the current axis.
+
+     When called without an argument, return the current tick locations
+     as specified in the "ytick" axes property.  These locations can be
+     changed by calling ‘yticks’ with a vector of tick values.  Note:
+     ascending order is not required.
+
+     When called with argument "mode", ‘yticks’ returns the current
+     value of the axes property "ytickmode".  This property can be
+     changed by calling ‘yticks’ with either "auto" (algorithm
+     determines tick positions) or "manual" (tick values remain fixed
+     regardless of axes resizing or rotation).  Note: Specifying ytick
+     values will also set the property "ytickmode" to "manual".
+
+     If the first argument HAX is an axes handle, then operate on this
+     axis rather than the current axes returned by ‘gca’.
+
+     Requesting a return value when calling ‘yticks’ to set a property
+     value will result in an error.
+
+     See also: *note yticklabels: XREFyticklabels, *note xticks:
+     XREFxticks, *note zticks: XREFzticks, *note rticks: XREFrticks,
+     *note thetaticks: XREFthetaticks, *note get: XREFget, *note set:
+     XREFset.
+
+ -- : TICKVAL = zticks
+ -- : MODE = zticks ("mode")
+ -- : zticks (TICKVAL)
+ -- : zticks ("auto")
+ -- : zticks ("manual")
+ -- : ... = zticks (HAX, ...)
+     Query or set the tick values on the z-axis of the current axis.
+
+     When called without an argument, return the current tick locations
+     as specified in the "ztick" axes property.  These locations can be
+     changed by calling ‘zticks’ with a vector of tick values.  Note:
+     ascending order is not required.
+
+     When called with argument "mode", ‘zticks’ returns the current
+     value of the axes property "ztickmode".  This property can be
+     changed by calling ‘zticks’ with either "auto" (algorithm
+     determines tick positions) or "manual" (tick values remain fixed
+     regardless of axes resizing or rotation).  Note: Specifying ztick
+     values will also set the property "ztickmode" to "manual".
+
+     If the first argument HAX is an axes handle, then operate on this
+     axis rather than the current axes returned by ‘gca’.
+
+     Requesting a return value when calling ‘zticks’ to set a property
+     value will result in an error.
+
+     See also: *note zticklabels: XREFzticklabels, *note xticks:
+     XREFxticks, *note yticks: XREFyticks, *note rticks: XREFrticks,
+     *note thetaticks: XREFthetaticks, *note get: XREFget, *note set:
+     XREFset.
+
+ -- : TICKVAL = rticks
+ -- : rticks (TICKVAL)
+ -- : ... = rticks (HAX, ...)
+     Query or set the tick values on the r-axis of the current axis.
+
+     When called without argument, return the current tick locations as
+     specified in the "rtick" axes property.  These locations can be
+     changed by calling ‘rticks’ with a vector of tick values.  Note:
+     ascending order is not required.
+
+     If the first argument HAX is an axes handle, then operate on this
+     axis rather than the current axes returned by ‘gca’.
+
+     Requesting a return value when calling ‘rticks’ to set a property
+     value will result in an error.
+
+     NOTE: Octave does not currently implement polaraxes objects.  It is
+     therefore not possible to query or set a "mode" for the "rtick"
+     property as can be done with the equivalent functions for X, Y, and
+     Z axes.
+
+     See also: *note thetaticks: XREFthetaticks, *note xticks:
+     XREFxticks, *note yticks: XREFyticks, *note zticks: XREFzticks,
+     *note polar: XREFpolar, *note get: XREFget, *note set: XREFset.
+
+ -- : TICKVAL = thetaticks
+ -- : thetaticks (TICKVAL)
+ -- : ... = thetaticks (HAX, ...)
+     Query or set the tick values on the theta-axis of the current axis.
+
+     When called without argument, return the current tick locations as
+     specified in the "ttick" axes property.  These locations can be
+     changed by calling ‘thetaticks’ with a vector of tick values.
+     Note: ascending order is not required.
+
+     If the first argument HAX is an axes handle, then operate on this
+     axis rather than the current axes returned by ‘gca’.
+
+     Requesting a return value when calling ‘thetaticks’ to set a
+     property value will result in an error.
+
+     NOTE: Octave does not currently implement polaraxes objects.  It is
+     therefore not possible to query or set a "mode" for the "thetatick"
+     property as can be done with the equivalent functions for X, Y, and
+     Z axes.
+
+     See also: *note rticks: XREFrticks, *note xticks: XREFxticks, *note
+     yticks: XREFyticks, *note zticks: XREFzticks, *note polar:
+     XREFpolar, *note get: XREFget, *note set: XREFset.
+
    The ‘xticklabels’, ‘yticklabels’, and ‘zticklabels’ functions may be
 used to get or set the label assigned to each tick location and the
 labeling mode on the respective axis.  Each has the same form.
 
- -- : TICKVAL = xticklabels
+ -- : LABELS = xticklabels
  -- : MODE = xticklabels ("mode")
  -- : xticklabels (TICKVAL)
  -- : xticklabels ("auto")
@@ -6197,6 +6621,72 @@ labeling mode on the respective axis.  Each has the same form.
      XREFyticklabels, *note zticklabels: XREFzticklabels, *note get:
      XREFget, *note set: XREFset.
 
+ -- : LABELS = yticklabels
+ -- : MODE = yticklabels ("mode")
+ -- : yticklabels (TICKVAL)
+ -- : yticklabels ("auto")
+ -- : yticklabels ("manual")
+ -- : ... = yticklabels (HAX, ...)
+     Query or set the tick labels on the x-axis of the current axis.
+
+     When called without an argument, return a cell array of strings of
+     the current tick labels as specified in the "yticklabel" axes
+     property.  These labels can be changed by calling ‘yticklabels’
+     with a cell array of strings.  Note: a vector of numbers will be
+     mapped to a cell array of strings.  If fewer labels are specified
+     than the current number of ticks, blank labels will be appended to
+     the array.
+
+     When called with argument "mode", ‘yticklabels’ returns the current
+     value of the axes property "yticklabelmode".  This property can be
+     changed by calling ‘yticklabels’ with either "auto" (algorithm
+     determines tick labels) or "manual" (tick labels remain fixed).
+     Note: Specifying yticklabel values will also set the
+     "yticklabelmode" and "yticks" properties to "manual".
+
+     If the first argument HAX is an axes handle, then operate on this
+     axis rather than the current axes returned by ‘gca’.
+
+     Requesting a return value when calling ‘xticklabels’ to set a
+     property value will result in an error.
+
+     See also: *note yticks: XREFyticks, *note xticklabels:
+     XREFxticklabels, *note zticklabels: XREFzticklabels, *note get:
+     XREFget, *note set: XREFset.
+
+ -- : LABELS = zticklabels
+ -- : MODE = zticklabels ("mode")
+ -- : zticklabels (TICKVAL)
+ -- : zticklabels ("auto")
+ -- : zticklabels ("manual")
+ -- : ... = zticklabels (HAX, ...)
+     Query or set the tick labels on the x-axis of the current axis.
+
+     When called without an argument, return a cell array of strings of
+     the current tick labels as specified in the "zticklabel" axes
+     property.  These labels can be changed by calling ‘zticklabels’
+     with a cell array of strings.  Note: a vector of numbers will be
+     mapped to a cell array of strings.  If fewer labels are specified
+     than the current number of ticks, blank labels will be appended to
+     the array.
+
+     When called with argument "mode", ‘zticklabels’ returns the current
+     value of the axes property "zticklabelmode".  This property can be
+     changed by calling ‘zticklabels’ with either "auto" (algorithm
+     determines tick labels) or "manual" (tick labels remain fixed).
+     Note: Specifying zticklabel values will also set the
+     "zticklabelmode" and "zticks" properties to "manual".
+
+     If the first argument HAX is an axes handle, then operate on this
+     axis rather than the current axes returned by ‘gca’.
+
+     Requesting a return value when calling ‘xticklabels’ to set a
+     property value will result in an error.
+
+     See also: *note zticks: XREFzticks, *note xticklabels:
+     XREFxticklabels, *note zticklabels: XREFzticklabels, *note get:
+     XREFget, *note set: XREFset.
+
    The ‘xtickangle’, ‘ytickangle’, and ‘ztickangle’ functions may be
 used to get or set the rotation angle of labels for the respective axis.
 Each has the same form.
@@ -6216,11 +6706,65 @@ Each has the same form.
      If the first argument HAX is an axes handle, then operate on this
      axes rather than the current axes returned by ‘gca’.
 
-     Programming Note: Requesting a return value while also setting a
-     specified rotation will result in an error.
+     Programming Notes:
+       1. The "XTickLabelRotation" property is currently unimplemented
+          in Octave.  The property can be set and queried, but has no
+          effect on the plot.
+       2. Requesting a return value while also setting a specified
+          rotation will result in an error.
 
      See also: *note ytickangle: XREFytickangle, *note ztickangle:
      XREFztickangle, *note get: XREFget, *note set: XREFset.
+
+ -- : ANGLE = ytickangle ()
+ -- : ANGLE = ytickangle (HAX)
+ -- : ytickangle (ANGLE)
+ -- : ytickangle (HAX, ANGLE)
+     Query or set the rotation angle of the tick labels on the y-axis of
+     the current axes.
+
+     When called without an argument, return the rotation angle in
+     degrees of the tick labels as specified in the axes property
+     "YTickLabelRotation".  When called with a numeric scalar ANGLE,
+     rotate the tick labels counterclockwise to ANGLE degrees.
+
+     If the first argument HAX is an axes handle, then operate on this
+     axes rather than the current axes returned by ‘gca’.
+
+     Programming Notes:
+       1. The "YTickLabelRotation" property is currently unimplemented
+          in Octave.  The property can be set and queried, but has no
+          effect on the plot.
+       2. Requesting a return value while also setting a specified
+          rotation will result in an error.
+
+     See also: *note xtickangle: XREFxtickangle, *note ztickangle:
+     XREFztickangle, *note get: XREFget, *note set: XREFset.
+
+ -- : ANGLE = ztickangle ()
+ -- : ANGLE = ztickangle (HAX)
+ -- : ztickangle (ANGLE)
+ -- : ztickangle (HAX, ANGLE)
+     Query or set the rotation angle of the tick labels on the z-axis of
+     the current axes.
+
+     When called without an argument, return the rotation angle in
+     degrees of the tick labels as specified in the axes property
+     "ZTickLabelRotation".  When called with a numeric scalar ANGLE,
+     rotate the tick labels counterclockwise to ANGLE degrees.
+
+     If the first argument HAX is an axes handle, then operate on this
+     axes rather than the current axes returned by ‘gca’.
+
+     Programming Notes:
+       1. The "ZTickLabelRotation" property is currently unimplemented
+          in Octave.  The property can be set and queried, but has no
+          effect on the plot.
+       2. Requesting a return value while also setting a specified
+          rotation will result in an error.
+
+     See also: *note xtickangle: XREFxtickangle, *note ytickangle:
+     XREFytickangle, *note get: XREFget, *note set: XREFset.
 
 
 File: octave.info,  Node: Two-dimensional Function Plotting,  Next: Two-dimensional Geometric Shapes,  Prev: Axis Configuration,  Up: Two-Dimensional Plots
@@ -6239,17 +6783,17 @@ x-coordinate instead of the x and y data.  For example,
 produces a plot that is equivalent to the one above, but also includes a
 legend displaying the name of the plotted function.
 
- -- : fplot (FN)
- -- : fplot (FN, LIMITS)
+ -- : fplot (FCN)
+ -- : fplot (FCN, LIMITS)
  -- : fplot (..., TOL)
  -- : fplot (..., N)
  -- : fplot (..., FMT)
  -- : fplot (..., PROPERTY, VALUE, ...)
  -- : fplot (HAX, ...)
  -- : [X, Y] = fplot (...)
-     Plot a function FN within the range defined by LIMITS.
+     Plot a function FCN within the range defined by LIMITS.
 
-     FN is a function handle, inline function, or string containing the
+     FCN is a function handle, inline function, or string containing the
      name of the function to evaluate.
 
      The limits of the plot are of the form ‘[XLO, XHI]’ or
@@ -6520,7 +7064,7 @@ The function ‘mesh’ produces mesh surface plots.  For example,
      zlabel ("tz");
      title ("3-D Sombrero plot");
 
-produces the familiar “sombrero” plot shown in *note Figure 15.5:
+produces the familiar "sombrero" plot shown in *note Figure 15.5:
 fig:mesh.  Note the use of the function ‘meshgrid’ to create matrices of
 X and Y coordinates to use for plotting the Z data.  The ‘ndgrid’
 function is similar to ‘meshgrid’, but works for N-dimensional matrices.
@@ -6529,7 +7073,6 @@ function is similar to ‘meshgrid’, but works for N-dimensional matrices.
 +---------------------------------+
 | Image unavailable in text mode. |
 +---------------------------------+" ]
-
 
 Figure 15.5: Mesh plot.
 
@@ -6555,7 +7098,6 @@ fig:plot3.
 +---------------------------------+
 | Image unavailable in text mode. |
 +---------------------------------+" ]
-
 
 Figure 15.6: Three-dimensional spiral.
 
@@ -7139,8 +7681,8 @@ three-dimensional plots.
  -- : CDAT = isocolors (X, Y, Z, C, V)
  -- : CDAT = isocolors (X, Y, Z, R, G, B, V)
  -- : CDAT = isocolors (R, G, B, V)
- -- : CDAT = isocolors (..., P)
- -- : isocolors (...)
+ -- : CDAT = isocolors (..., HP)
+ -- : isocolors (..., HP)
 
      Compute isosurface colors.
 
@@ -7160,11 +7702,11 @@ three-dimensional plots.
      with RGB values R, G, B.  If input arguments X, Y, Z are not given
      then ‘meshgrid’ computed values are used.
 
-     Optionally, a patch handle P can be given as the last input
+     Optionally, a patch handle HP can be given as the last input
      argument to all function call variations and the vertex data will
      be extracted from the isosurface patch object.  Finally, if no
      output argument is given then the colors of the patch given by the
-     patch handle P are changed.
+     patch handle HP are changed.
 
      See also: *note isosurface: XREFisosurface, *note isonormals:
      XREFisonormals.
@@ -7354,7 +7896,7 @@ three-dimensional plots.
 
      See also: *note patch: XREFpatch.
 
- -- : diffuse (SX, SY, SZ, LV)
+ -- : D = diffuse (SX, SY, SZ, LV)
      Calculate the diffuse reflection strength of a surface defined by
      the normal vector elements SX, SY, SZ.
 
@@ -7364,10 +7906,10 @@ three-dimensional plots.
 
      See also: *note specular: XREFspecular, *note surfl: XREFsurfl.
 
- -- : specular (SX, SY, SZ, LV, VV)
- -- : specular (SX, SY, SZ, LV, VV, SE)
+ -- : REFL = specular (SX, SY, SZ, LV, VV)
+ -- : REFL = specular (SX, SY, SZ, LV, VV, SE)
      Calculate the specular reflection strength of a surface defined by
-     the normal vector elements SX, SY, SZ using Phong’s approximation.
+     the normal vector elements SX, SY, SZ using Phong's approximation.
 
      The light source location and viewer location vectors are specified
      using parameters LV and VV respectively.  The location vectors can
@@ -7473,7 +8015,7 @@ three-dimensional plots.
 
      When called with no arguments, a light object is added to the
      current plot and is placed slightly above and to the right of the
-     camera’s current position: this is equivalent to ‘camlight right’.
+     camera's current position: this is equivalent to ‘camlight right’.
      The commands ‘camlight left’ and ‘camlight headlight’ behave
      similarly with the placement being either left of the camera
      position or centered on the camera position.
@@ -7570,7 +8112,7 @@ three-dimensional plots.
 
      ‘meshgrid’ is most frequently used to produce input for a 2-D or
      3-D function that will be plotted.  The following example creates a
-     surface plot of the “sombrero” function.
+     surface plot of the "sombrero" function.
 
           f = @(x,y) sin (sqrt (x.^2 + y.^2)) ./ sqrt (x.^2 + y.^2);
           range = linspace (-8, 8, 41);
@@ -7708,10 +8250,10 @@ three-dimensional plots.
      Move the camera and adjust its properties to look at objects.
 
      When the input is a handle H, the camera is set to point toward the
-     center of the bounding box of H.  The camera’s position is adjusted
+     center of the bounding box of H.  The camera's position is adjusted
      so the bounding box approximately fills the field of view.
 
-     This command fixes the camera’s viewing direction (‘camtarget() -
+     This command fixes the camera's viewing direction (‘camtarget() -
      campos()’), camera up vector (*note ‘camup’: XREFcamup.) and
      viewing angle (*note ‘camva’: XREFcamva.).  The camera target
      (*note ‘camtarget’: XREFcamtarget.) and camera position (*note
@@ -7732,8 +8274,8 @@ three-dimensional plots.
  -- : campos ([X Y Z])
  -- : MODE = campos ("mode")
  -- : campos (MODE)
- -- : campos (AX, ...)
-     Set or get the camera position.
+ -- : campos (HAX, ...)
+     Get or set the camera position.
 
      The default camera position is determined automatically based on
      the scene.  For example, to get the camera position:
@@ -7765,7 +8307,7 @@ three-dimensional plots.
           close (hf)
 
      By default, these commands affect the current axis; alternatively,
-     an axis can be specified by the optional argument AX.
+     an axis can be specified by the optional argument HAX.
 
      See also: *note camup: XREFcamup, *note camtarget: XREFcamtarget,
      *note camva: XREFcamva.
@@ -7792,7 +8334,7 @@ three-dimensional plots.
      ‘camtarget’: XREFcamtarget.).  First the camera position is pitched
      up or down by rotating it PHI degrees around an axis orthogonal to
      both the viewing direction (specifically ‘camtarget() - campos()’)
-     and the camera “up vector” (*note ‘camup’: XREFcamup.).  Example:
+     and the camera "up vector" (*note ‘camup’: XREFcamup.).  Example:
 
           camorbit (0, 20)
 
@@ -7823,7 +8365,7 @@ three-dimensional plots.
      *note camlookat: XREFcamlookat.
 
  -- : camroll (THETA)
- -- : camroll (AX, THETA)
+ -- : camroll (HAX, THETA)
      Roll the camera.
 
      Roll the camera clockwise by THETA degrees.  For example, the
@@ -7843,7 +8385,7 @@ three-dimensional plots.
           camup ("auto")
 
      By default, these commands affect the current axis; alternatively,
-     an axis can be specified by the optional argument AX.
+     an axis can be specified by the optional argument HAX.
 
      See also: *note camzoom: XREFcamzoom, *note camorbit: XREFcamorbit,
      *note camlookat: XREFcamlookat, *note camup: XREFcamup.
@@ -7852,8 +8394,8 @@ three-dimensional plots.
  -- : camtarget ([X Y Z])
  -- : MODE = camtarget ("mode")
  -- : camtarget (MODE)
- -- : camtarget (AX, ...)
-     Set or get where the camera is pointed.
+ -- : camtarget (HAX, ...)
+     Get or set where the camera is pointed.
 
      The camera target is a point in space where the camera is pointing.
      Usually, it is determined automatically based on the scene:
@@ -7891,7 +8433,7 @@ three-dimensional plots.
           close (hf)
 
      By default, these commands affect the current axis; alternatively,
-     an axis can be specified by the optional argument AX.
+     an axis can be specified by the optional argument HAX.
 
      See also: *note campos: XREFcampos, *note camup: XREFcamup, *note
      camva: XREFcamva.
@@ -7900,10 +8442,10 @@ three-dimensional plots.
  -- : camup ([X Y Z])
  -- : MODE = camup ("mode")
  -- : camup (MODE)
- -- : camup (AX, ...)
-     Set or get the camera up vector.
+ -- : camup (HAX, ...)
+     Get or set the camera up vector.
 
-     By default, the camera is oriented so that “up” corresponds to the
+     By default, the camera is oriented so that "up" corresponds to the
      positive z-axis:
 
           hf = figure ();
@@ -7912,7 +8454,7 @@ three-dimensional plots.
             ⇒ v =
                 0   0   1
 
-     Specifying a new “up vector” rolls the camera and sets the mode to
+     Specifying a new "up vector" rolls the camera and sets the mode to
      manual:
 
           camup ([1 1 0])
@@ -7923,13 +8465,13 @@ three-dimensional plots.
 
      Modifying the up vector does not modify the camera target (*note
      ‘camtarget’: XREFcamtarget.).  Thus, the camera up vector might not
-     be orthogonal to the direction of the camera’s view:
+     be orthogonal to the direction of the camera's view:
 
           camup ([1 2 3])
           dot (camup (), camtarget () - campos ())
             ⇒ 6...
 
-     A consequence is that “pulling back” on the up vector does not
+     A consequence is that "pulling back" on the up vector does not
      pitch the camera view (as that would require changing the target).
      Setting the up vector is thus typically used only to roll the
      camera.  A more intuitive command for this purpose is *note
@@ -7943,7 +8485,7 @@ three-dimensional plots.
           close (hf)
 
      By default, these commands affect the current axis; alternatively,
-     an axis can be specified by the optional argument AX.
+     an axis can be specified by the optional argument HAX.
 
      See also: *note campos: XREFcampos, *note camtarget: XREFcamtarget,
      *note camva: XREFcamva.
@@ -7952,8 +8494,8 @@ three-dimensional plots.
  -- : camva (A)
  -- : MODE = camva ("mode")
  -- : camva (MODE)
- -- : camva (AX, ...)
-     Set or get the camera viewing angle.
+ -- : camva (HAX, ...)
+     Get or set the camera viewing angle.
 
      The camera has a viewing angle which determines how much can be
      seen.  By default this is:
@@ -7980,35 +8522,35 @@ three-dimensional plots.
           close (hf)
 
      By default, these commands affect the current axis; alternatively,
-     an axis can be specified by the optional argument AX.
+     an axis can be specified by the optional argument HAX.
 
      See also: *note campos: XREFcampos, *note camtarget: XREFcamtarget,
      *note camup: XREFcamup.
 
  -- : camzoom (ZF)
- -- : camzoom (AX, ZF)
+ -- : camzoom (HAX, ZF)
      Zoom the camera in or out.
 
-     A value of ZF larger than 1 “zooms in” such that the scene appears
+     A value of ZF larger than 1 "zooms in" such that the scene appears
      magnified:
 
           hf = figure ();
           sphere (36)
           camzoom (1.2)
 
-     A value smaller than 1 “zooms out” so the camera can see more of
+     A value smaller than 1 "zooms out" so the camera can see more of
      the scene:
 
           camzoom (0.5)
 
-     Technically speaking, zooming affects the “viewing angle”.  The
+     Technically speaking, zooming affects the "viewing angle".  The
      following command resets to the default zoom:
 
           camva ("auto")
           close (hf)
 
      By default, these commands affect the current axis; alternatively,
-     an axis can be specified by the optional argument AX.
+     an axis can be specified by the optional argument HAX.
 
      See also: *note camroll: XREFcamroll, *note camorbit: XREFcamorbit,
      *note camlookat: XREFcamlookat, *note camva: XREFcamva.
@@ -8024,7 +8566,7 @@ three-dimensional plots.
 
      Each element of the 3-dimensional array V represents a scalar value
      at a location given by the parameters X, Y, and Z.  The parameters
-     X, X, and Z are either 3-dimensional arrays of the same size as the
+     X, Y, and Z are either 3-dimensional arrays of the same size as the
      array V in the "meshgrid" format or vectors.  The parameters XI,
      etc. respect a similar format to X, etc., and they represent the
      points at which the array VI is interpolated using interp3.  The
@@ -8047,8 +8589,8 @@ three-dimensional plots.
           implemented yet).
 
      "spline"
-          Cubic spline interpolation—smooth first and second derivatives
-          throughout the curve.
+          Cubic spline interpolation--smooth first and second
+          derivatives throughout the curve.
 
      The default method is "linear".
 

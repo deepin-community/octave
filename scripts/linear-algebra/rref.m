@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} rref (@var{A})
-## @deftypefnx {} {} rref (@var{A}, @var{tol})
+## @deftypefn  {} {@var{r} =} rref (@var{A})
+## @deftypefnx {} {@var{r} =} rref (@var{A}, @var{tol})
 ## @deftypefnx {} {[@var{r}, @var{k}] =} rref (@dots{})
 ## Return the reduced row echelon form of @var{A}.
 ##
@@ -89,7 +89,9 @@ function [A, k] = rref (A, tol)
       endif
     endif
   endfor
-  k = find (used);
+  if (nargout > 1)
+    k = find (used);
+  endif
 
 endfunction
 

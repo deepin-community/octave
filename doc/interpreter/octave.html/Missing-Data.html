@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Missing Data (GNU Octave (version 7.1.0))</title>
+<title>Missing Data (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Missing Data (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Missing Data (GNU Octave (version 7.1.0))">
+<meta name="description" content="Missing Data (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Missing Data (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Numeric-Objects.html" rel="prev" title="Numeric Objects">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,35 +32,38 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Missing-Data">
-<div class="header">
+<div class="subsection-level-extent" id="Missing-Data">
+<div class="nav-panel">
 <p>
 Next: <a href="String-Objects.html" accesskey="n" rel="next">String Objects</a>, Previous: <a href="Numeric-Objects.html" accesskey="p" rel="prev">Numeric Objects</a>, Up: <a href="Built_002din-Data-Types.html" accesskey="u" rel="up">Built-in Data Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Missing-Data-1"></span><h4 class="subsection">3.1.2 Missing Data</h4>
-<span id="index-missing-data"></span>
+<h4 class="subsection" id="Missing-Data-1"><span>3.1.2 Missing Data<a class="copiable-link" href="#Missing-Data-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-missing-data"></a>
 
 <p>It is possible to represent missing data explicitly in Octave using
-<code>NA</code> (short for &ldquo;Not Available&rdquo;).  Missing data can only be
+<code class="code">NA</code> (short for &ldquo;Not Available&rdquo;).  Missing data can only be
 represented when data is represented as floating point numbers.  In this
 case missing data is represented as a special case of the representation
-of <code>NaN</code>.
+of <code class="code">NaN</code>.
 </p>
-<span id="XREFNA"></span><dl class="def">
-<dt id="index-NA"><span class="category">: </span><span><em><var>val</var> =</em> <strong>NA</strong><a href='#index-NA' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-NA-1"><span class="category">: </span><span><em><var>val</var> =</em> <strong>NA</strong> <em>(<var>n</var>)</em><a href='#index-NA-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-NA-2"><span class="category">: </span><span><em><var>val</var> =</em> <strong>NA</strong> <em>(<var>n</var>, <var>m</var>)</em><a href='#index-NA-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-NA-3"><span class="category">: </span><span><em><var>val</var> =</em> <strong>NA</strong> <em>(<var>n</var>, <var>m</var>, <var>k</var>, &hellip;)</em><a href='#index-NA-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-NA-4"><span class="category">: </span><span><em><var>val</var> =</em> <strong>NA</strong> <em>(&hellip;, &quot;<var>like</var>&quot;, <var>var</var>))</em><a href='#index-NA-4' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-NA-5"><span class="category">: </span><span><em><var>val</var> =</em> <strong>NA</strong> <em>(&hellip;, <var>class</var>)</em><a href='#index-NA-5' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFNA"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-NA"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">NA</strong><a class="copiable-link" href="#index-NA"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-NA-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">NA</strong> <code class="def-code-arguments">(<var class="var">n</var>)</code><a class="copiable-link" href="#index-NA-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-NA-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">NA</strong> <code class="def-code-arguments">(<var class="var">n</var>, <var class="var">m</var>)</code><a class="copiable-link" href="#index-NA-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-NA-3"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">NA</strong> <code class="def-code-arguments">(<var class="var">n</var>, <var class="var">m</var>, <var class="var">k</var>, &hellip;)</code><a class="copiable-link" href="#index-NA-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-NA-4"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">NA</strong> <code class="def-code-arguments">(&hellip;, &quot;like&quot;, <var class="var">var</var>)</code><a class="copiable-link" href="#index-NA-4"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-NA-5"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">NA</strong> <code class="def-code-arguments">(&hellip;, <var class="var">class</var>)</code><a class="copiable-link" href="#index-NA-5"> &para;</a></span></dt>
 <dd><p>Return a scalar, matrix, or N-dimensional array whose elements are all equal
 to the special constant used to designate missing values.
 </p>
 <p>Note that NA always compares not equal to NA (NA != NA).
-To find NA values, use the <code>isna</code> function.
+To find NA values, use the <code class="code">isna</code> function.
 </p>
-<p>When called with no arguments, return a scalar with the value &lsquo;<samp>NA</samp>&rsquo;.
+<p>When called with no arguments, return a scalar with the value &lsquo;<samp class="samp">NA</samp>&rsquo;.
 </p>
 <p>When called with a single argument, return a square matrix with the
 dimension specified.
@@ -80,35 +72,38 @@ dimension specified.
 taken as the number of rows and columns and any further arguments specify
 additional matrix dimensions.
 </p>
-<p>If a variable <var>var</var> is specified after <code>&quot;like&quot;</code>, the output <var>val</var>
-will have the same data type, complexity, and sparsity as <var>var</var>.
+<p>If a variable <var class="var">var</var> is specified after <code class="code">&quot;like&quot;</code>, the output <var class="var">val</var>
+will have the same data type, complexity, and sparsity as <var class="var">var</var>.
 </p>
-<p>The optional argument <var>class</var> specifies the return type and may be
-either <code>&quot;double&quot;</code> or <code>&quot;single&quot;</code>.
+<p>The optional argument <var class="var">class</var> specifies the return type and may be
+either <code class="code">&quot;double&quot;</code> or <code class="code">&quot;single&quot;</code>.
 </p>
-<p><strong>See also:</strong> <a href="#XREFisna">isna</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFisna">isna</a>.
 </p></dd></dl>
 
 
-<span id="XREFisna"></span><dl class="def">
-<dt id="index-isna"><span class="category">: </span><span><em></em> <strong>isna</strong> <em>(<var>x</var>)</em><a href='#index-isna' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return a logical array which is true where the elements of <var>x</var> are
+<a class="anchor" id="XREFisna"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-isna"><span class="category-def">: </span><span><code class="def-type"><var class="var">tf</var> =</code> <strong class="def-name">isna</strong> <code class="def-code-arguments">(<var class="var">x</var>)</code><a class="copiable-link" href="#index-isna"> &para;</a></span></dt>
+<dd><p>Return a logical array which is true where the elements of <var class="var">x</var> are
 NA (missing) values and false where they are not.
 </p>
 <p>For example:
 </p>
 <div class="example">
-<pre class="example">isna ([13, Inf, NA, NaN])
+<div class="group"><pre class="example-preformatted">isna ([13, Inf, NA, NaN])
      &rArr; [ 0, 0, 1, 0 ]
-</pre></div>
+</pre></div></div>
 
-<p><strong>See also:</strong> <a href="Finding-Elements-and-Checking-Conditions.html#XREFisnan">isnan</a>, <a href="Finding-Elements-and-Checking-Conditions.html#XREFisinf">isinf</a>, <a href="Finding-Elements-and-Checking-Conditions.html#XREFisfinite">isfinite</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Finding-Elements-and-Checking-Conditions.html#XREFisnan">isnan</a>, <a class="ref" href="Finding-Elements-and-Checking-Conditions.html#XREFisinf">isinf</a>, <a class="ref" href="Finding-Elements-and-Checking-Conditions.html#XREFisfinite">isfinite</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="String-Objects.html">String Objects</a>, Previous: <a href="Numeric-Objects.html">Numeric Objects</a>, Up: <a href="Built_002din-Data-Types.html">Built-in Data Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

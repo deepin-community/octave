@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,13 +24,13 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} dec2hex (@var{d})
-## @deftypefnx {} {} dec2hex (@var{d}, @var{len})
+## @deftypefn  {} {@var{hstr} =} dec2hex (@var{d})
+## @deftypefnx {} {@var{hstr} =} dec2hex (@var{d}, @var{len})
 ## Return a string representing the conversion of the integer @var{d} to a
 ## hexadecimal (base16) number.
 ##
-## If @var{d} is negative, return the hexadecimal equivalent of the two's
-## complement binary value of @var{d}.
+## If @var{d} is negative, return the hexadecimal complement of @var{d}.
+##
 ## If @var{d} is a matrix or cell array, return a string matrix with one row
 ## for each element in @var{d}, padded with leading zeros to the width of the
 ## largest value.
@@ -50,10 +50,15 @@
 ## @end group
 ## @end example
 ##
+## Programming tip: @code{dec2hex} discards any fractional part of the input.
+## If you need the fractional part to be converted too, call @code{dec2base}
+## with a nonzero number of decimal places.  You can also use @code{fix} or
+## @code{round} on fractional inputs to ensure predictable rounding behavior.
+##
 ## @seealso{hex2dec, dec2base, dec2bin}
 ## @end deftypefn
 
-function h = dec2hex (d, len)
+function hstr = dec2hex (d, len)
 
   if (nargin == 0)
     print_usage ();
@@ -62,29 +67,34 @@ function h = dec2hex (d, len)
   if (iscell (d))
     d = cell2mat (d);
   endif
-  ## Create column vector for algorithm (output is always col. vector anyways)
   d = d(:);
 
-  lt_zero_idx = (d < 0);
-  if (any (lt_zero_idx))
-    ## FIXME: Need an algorithm that works with larger values such as int64.
-    if (any (d(lt_zero_idx) < -2^52))
-      error ("dec2hex: negative inputs cannot be less than -flintmax () / 2");
-    elseif (any (d(lt_zero_idx) < intmin ("int32")))
-      d(lt_zero_idx) += flintmax ();
-    elseif (any (d < intmin ("int16")))
-      d(lt_zero_idx) += double (intmax ("uint32")) + 1;
-    elseif (any (d < intmin ("int8")))
-      d(lt_zero_idx) += double (intmax ("uint16"))+ 1;
-    else
-      d(lt_zero_idx) += double (intmax ("uint8")) + 1;
-    endif
+  neg = (d < 0);
+
+  if (nargin == 2)
+    d = dec2bin (d, len*4);
+  else
+    d = dec2bin (d);
   endif
 
-  if (nargin == 1)
-    h = dec2base (d, 16);
-  else
-    h = dec2base (d, 16, len);
+  ## Left-pad to a multiple of 4 columns.
+  n = mod (columns (d), 4);
+  if (n > 0)
+    tmp = "01"(neg + 1);  # leftpad with "0" for positive, "1" for negative
+    d = [repmat(tmp(:), 1, 4 - n), d];
+  endif
+
+  d -= '0';  # convert to numeric
+  d = d(:, 1:4:end) * 8 + d(:, 2:4:end) * 4 + d(:, 3:4:end) * 2 + d(:, 4:4:end);
+  ## Elements of d are now in the range 0 to 15.
+
+  hstr = "0123456789ABCDEF"(d+1);
+  if (rows (hstr) < rows (d))  # this edge case happens when
+    hstr = hstr(:);            # passing multiple inputs in the range 0 to 15.
+    ## If we don't manually convert it to column, we'd get all those
+    ## hex digits on the same line as one big string instead of one per line.
+    ## Good test for this:    dec2hex (0:15)
+    ## compared with:         dec2hex (uint64 (81985529216486895), 16)
   endif
 
 endfunction
@@ -99,29 +109,24 @@ endfunction
 ## Test negative inputs
 %!assert (dec2hex (-3), "FD")
 %!assert (dec2hex (-3, 1), "FD")
-%!assert (dec2hex (-3, 3), "0FD")
-%!assert (dec2hex (-2^7 -1), "FF7F")
-%!assert (dec2hex (-2^15 -1), "FFFF7FFF")
-## FIXME: Matlab returns longer string that begins with 'F'
-%!assert (dec2hex (-2^31 -1), "1FFFFF7FFFFFFF")
-## FIXME: Matlab returns longer string that begins with 'FFF'
-%!assert (dec2hex (-2^52), "10000000000000")
-## FIXME: Uncomment when support for int64 is added
-%!#assert (dec2hex (-2^63),
-%!        "1000000000000000000000000000000000000000000000000000000000000000")
-%!#test
-%! assert (dec2hex (int64 (-2^63)),
-%!        "1000000000000000000000000000000000000000000000000000000000000000");
-%!#test
-%! assert (dec2hex (int64 (-2^63) -1),
-%!        "1000000000000000000000000000000000000000000000000000000000000000");
-%!#test
-%! assert (dec2hex (int64 (-2^63) +1),
-%!        "1000000000000000000000000000000000000000000000000000000000000001");
+%!assert (dec2hex (-3, 3), "FFD")
+%!assert (dec2hex (-2^7 - 1), "FF7F")
+%!assert (dec2hex (-2^15 - 1), "FFFF7FFF")
+%!assert (dec2hex (-2^31 - 1), "FFFFFFFF7FFFFFFF")
+%!assert (dec2hex (-2^52), "FFF0000000000000")
+%!assert (dec2hex (-2^63), "8000000000000000")
+%!assert (dec2hex (int64 (-2) ^ 63), "8000000000000000")
+%!assert (dec2hex (int64 (-2) ^ 63 - 1), "8000000000000000")
+%!assert (dec2hex (int64 (-2) ^ 63 + 1), "8000000000000001")
 %!assert (dec2hex ([-1, -2; -3, -4]), ["FF"; "FD"; "FE"; "FC"])
 %!assert (dec2hex ([1, 2; 3, -4]), ["01"; "03"; "02"; "FC"])
 %!assert (dec2hex ({1, 2; 3, -4}), ["01"; "03"; "02"; "FC"])
 
+## Test that the output is of the correct shape.
+## Next line should return a column vector:
+%!assert (dec2hex (0:15), "0123456789ABCDEF"(:))
+## Next line should return a row vector:
+%!assert (dec2hex (uint64 (18364758544493064720)), "FEDCBA9876543210")
+
 ## Test input validation
 %!error <Invalid call> dec2hex ()
-%!error <negative inputs cannot be less than> dec2hex (- flintmax ())

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // complex scalar by complex matrix ops.
 
@@ -51,10 +51,8 @@ DEFNDBINOP_OP (mul, float_complex, float_complex_matrix, float_complex,
 
 DEFBINOP (div, float_complex, float_complex_matrix)
 {
-  const octave_float_complex& v1
-    = dynamic_cast<const octave_float_complex&> (a1);
-  const octave_float_complex_matrix& v2
-    = dynamic_cast<const octave_float_complex_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_complex&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_complex_matrix&, v2, a2);
 
   FloatComplexMatrix m1 = v1.float_complex_matrix_value ();
   FloatComplexMatrix m2 = v2.float_complex_matrix_value ();
@@ -70,10 +68,8 @@ DEFBINOP_FN (pow, float_complex, float_complex_matrix, xpow)
 
 DEFBINOP (ldiv, float_complex, float_complex_matrix)
 {
-  const octave_float_complex& v1
-    = dynamic_cast<const octave_float_complex&> (a1);
-  const octave_float_complex_matrix& v2
-    = dynamic_cast<const octave_float_complex_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_complex&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_complex_matrix&, v2, a2);
 
   return octave_value (v2.float_complex_array_value () / v1.float_complex_value ());
 }
@@ -100,10 +96,8 @@ DEFNDBINOP_FN (el_pow, float_complex, float_complex_matrix, float_complex,
 
 DEFBINOP (el_ldiv, float_complex, float_complex_matrix)
 {
-  const octave_float_complex& v1
-    = dynamic_cast<const octave_float_complex&> (a1);
-  const octave_float_complex_matrix& v2
-    = dynamic_cast<const octave_float_complex_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_complex&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_complex_matrix&, v2, a2);
 
   return octave_value (v2.float_complex_array_value () / v1.float_complex_value ());
 }
@@ -124,8 +118,7 @@ DEFNDCATOP_FN (fcs_cm, float_complex, complex_matrix, float_complex_array,
 
 DEFCONV (float_complex_matrix_conv, float_complex, float_complex_matrix)
 {
-  const octave_float_complex& v
-    = dynamic_cast<const octave_float_complex&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_float_complex&, v, a);
 
   return new octave_float_complex_matrix (v.float_complex_matrix_value ());
 }
@@ -192,4 +185,4 @@ install_fcs_fcm_ops (octave::type_info& ti)
                       float_complex_matrix_conv);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

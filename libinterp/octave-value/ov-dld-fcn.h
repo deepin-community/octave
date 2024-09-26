@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -47,7 +47,7 @@ octave_dld_function : public octave_builtin
 {
 public:
 
-  octave_dld_function (void)
+  octave_dld_function ()
     : m_sh_lib (), m_time_checked (), m_system_fcn_file ()
   { }
 
@@ -61,39 +61,36 @@ public:
                        const std::string& nm = "",
                        const std::string& ds = "");
 
-  // No copying!
+  OCTAVE_DISABLE_COPY_MOVE (octave_dld_function)
 
-  octave_dld_function (const octave_dld_function& fn) = delete;
+  ~octave_dld_function ();
 
-  octave_dld_function& operator = (const octave_dld_function& fn) = delete;
+  void mark_fcn_file_up_to_date (const octave::sys::time& t)
+  { m_time_checked = t; }
 
-  ~octave_dld_function (void);
+  std::string fcn_file_name () const;
 
-  void mark_fcn_file_up_to_date (const octave::sys::time& t) { m_time_checked = t; }
+  octave::sys::time time_parsed () const;
 
-  std::string fcn_file_name (void) const;
+  octave::sys::time time_checked () const { return m_time_checked; }
 
-  octave::sys::time time_parsed (void) const;
+  bool is_system_fcn_file () const { return m_system_fcn_file; }
 
-  octave::sys::time time_checked (void) const { return m_time_checked; }
+  bool is_builtin_function () const { return false; }
 
-  bool is_system_fcn_file (void) const { return m_system_fcn_file; }
-
-  bool is_builtin_function (void) const { return false; }
-
-  bool is_dld_function (void) const { return true; }
+  bool is_dld_function () const { return true; }
 
   static octave_dld_function * create (octave_builtin::fcn ff,
-                                       const octave::dynamic_library& shl,
-                                       const std::string& nm = "",
-                                       const std::string& ds = "");
+                                      const octave::dynamic_library& shl,
+                                      const std::string& nm = "",
+                                      const std::string& ds = "");
 
   static octave_dld_function * create (octave_builtin::meth mm,
-                                       const octave::dynamic_library& shl,
-                                       const std::string& nm = "",
-                                       const std::string& ds = "");
+                                      const octave::dynamic_library& shl,
+                                      const std::string& nm = "",
+                                      const std::string& ds = "");
 
-  octave::dynamic_library get_shlib (void) const
+  octave::dynamic_library get_shlib () const
   { return m_sh_lib; }
 
 private:

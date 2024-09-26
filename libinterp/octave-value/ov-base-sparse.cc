@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -242,7 +242,7 @@ octave_base_sparse<T>::resize (const dim_vector& dv, bool) const
 
 template <typename T>
 bool
-octave_base_sparse<T>::is_true (void) const
+octave_base_sparse<T>::is_true () const
 {
   bool retval = false;
   dim_vector dv = matrix.dims ();
@@ -272,7 +272,7 @@ octave_base_sparse<T>::is_true (void) const
 
 template <typename T>
 bool
-octave_base_sparse<T>::print_as_scalar (void) const
+octave_base_sparse<T>::print_as_scalar () const
 {
   dim_vector dv = dims ();
 
@@ -379,7 +379,7 @@ octave_base_sparse<T>::print_raw (std::ostream& os,
 
 template <typename MT>
 float_display_format
-octave_base_sparse<MT>::get_edit_display_format (void) const
+octave_base_sparse<MT>::get_edit_display_format () const
 {
   return float_display_format ();
   //  return make_format (this->matrix);
@@ -429,15 +429,34 @@ octave_base_sparse<T>::load_ascii (std::istream& is)
 
   T tmp (nr, nc, nz);
 
-  is >> tmp;
+  if (nz > 0)
+    {
+      is >> tmp;
 
-  if (! is)
-    error ("load: failed to load matrix constant");
+      if (! is)
+        error ("load: failed to load matrix constant");
+    }
 
   matrix = tmp;
 
   return true;
 }
+
+/*
+%!test <64696>
+%! A = B = sparse (1, 2);
+%! assert (nnz (A), 0);
+%! assert (nnz (B), 0);
+%! txt_file = [tempname(), ".dat"];
+%! unwind_protect
+%!   save ("-text", txt_file, "A", "B");
+%!   s = load (txt_file);
+%! unwind_protect_cleanup
+%!   unlink (txt_file);
+%! end_unwind_protect
+%! assert (s.A, A);
+%! assert (s.B, B);
+*/
 
 template <typename T>
 octave_value

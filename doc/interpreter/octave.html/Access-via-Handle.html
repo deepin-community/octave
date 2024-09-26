@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Access via Handle (GNU Octave (version 7.1.0))</title>
+<title>Access via Handle (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Access via Handle (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Access via Handle (GNU Octave (version 7.1.0))">
+<meta name="description" content="Access via Handle (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Access via Handle (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,9 @@
 <link href="Recursion.html" rel="prev" title="Recursion">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,52 +30,52 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Access-via-Handle">
-<div class="header">
+<div class="subsection-level-extent" id="Access-via-Handle">
+<div class="nav-panel">
 <p>
 Previous: <a href="Recursion.html" accesskey="p" rel="prev">Recursion</a>, Up: <a href="Calling-Functions.html" accesskey="u" rel="up">Calling Functions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Access-via-Handle-1"></span><h4 class="subsection">8.2.3 Access via Handle</h4>
-<span id="index-function-handle"></span>
-<span id="index-indirect-function-call"></span>
+<h4 class="subsection" id="Access-via-Handle-1"><span>8.2.3 Access via Handle<a class="copiable-link" href="#Access-via-Handle-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-function-handle"></a>
+<a class="index-entry-id" id="index-indirect-function-call"></a>
 
-<span id="index-_0040-function-handle"></span>
+<a class="index-entry-id" id="index-_0040-function-handle"></a>
 <p>A function may be abstracted and referenced via a function handle acquired
-using the special operator &lsquo;<samp>@</samp>&rsquo;.  For example,
+using the special operator &lsquo;<samp class="samp">@</samp>&rsquo;.  For example,
 </p>
 <div class="example">
-<pre class="example">f = @plus;
+<div class="group"><pre class="example-preformatted">f = @plus;
 f (2, 2)
 &rArr;  4
-</pre></div>
+</pre></div></div>
 
-<p>is equivalent to calling <code>plus (2, 2)</code> directly.  Beyond abstraction for
+<p>is equivalent to calling <code class="code">plus (2, 2)</code> directly.  Beyond abstraction for
 general programming, function handles find use in callback methods for figures
 and graphics by adding listeners to properties or assigning pre-existing
 actions, such as in the following example:
 </p>
-<span id="index-figure-deletefcn"></span>
+<a class="index-entry-id" id="index-figure-deletefcn"></a>
 
 <div class="example">
-<pre class="example">function mydeletefcn (h, ~, msg)
+<div class="group"><pre class="example-preformatted">function mydeletefcn (h, ~, msg)
   printf (msg);
 endfunction
 sombrero;
 set (gcf, &quot;deletefcn&quot;, {@mydeletefcn, &quot;Bye!\n&quot;});
 close;
-</pre></div>
+</pre></div></div>
 
-<p>The above will print <code>&quot;Bye!&quot;</code> to the terminal upon the closing
+<p>The above will print <code class="code">&quot;Bye!&quot;</code> to the terminal upon the closing
 (deleting) of the figure.  There are many graphics property actions for which
-a callback function may be assigned, including, <code>buttondownfcn</code>,
-<code>windowscrollwheelfcn</code>, <code>createfcn</code>, <code>deletefcn</code>,
-<code>keypressfcn</code>, etc.
+a callback function may be assigned, including, <code class="code">buttondownfcn</code>,
+<code class="code">windowscrollwheelfcn</code>, <code class="code">createfcn</code>, <code class="code">deletefcn</code>,
+<code class="code">keypressfcn</code>, etc.
 </p>
-<p>Note that the &lsquo;<samp>@</samp>&rsquo; character also plays a role in defining class
+<p>Note that the &lsquo;<samp class="samp">@</samp>&rsquo; character also plays a role in defining class
 functions, i.e., methods, but not as a syntactical element.  Rather it begins a
 directory name containing methods for a class that shares the directory name
-sans the &lsquo;<samp>@</samp>&rsquo; character.  See <a href="Object-Oriented-Programming.html">Object Oriented Programming</a>.
+sans the &lsquo;<samp class="samp">@</samp>&rsquo; character.  See <a class="ref" href="Object-Oriented-Programming.html">Object Oriented Programming</a>.
 </p>
 </div>
 

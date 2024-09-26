@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2019-2022 The Octave Project Developers
+// Copyright (C) 2019-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -29,9 +29,23 @@
 
 #include "oct-atomic.h"
 
+#if defined (__GNUC__)
+
+octave_idx_type
+octave_atomic_increment (octave_idx_type *x)
+{
+  return __sync_add_and_fetch (x,  1);
+}
+
+octave_idx_type
+octave_atomic_decrement (octave_idx_type *x)
+{
+  return __sync_sub_and_fetch (x, 1);
+}
+
 /* Some versions of GCC can't compile stdatomic.h with -fopenmp.  */
 
-#if defined (OCTAVE_STDATOMIC_H_OK)
+#elif defined (OCTAVE_STDATOMIC_H_OK)
 #  include <stdatomic.h>
 
 octave_idx_type
@@ -50,20 +64,6 @@ octave_atomic_decrement (octave_idx_type *x)
   atomic_fetch_sub ((_Atomic octave_idx_type *) x, 1);
 
   return *x;
-}
-
-#elif defined (__GNUC__)
-
-octave_idx_type
-octave_atomic_increment (octave_idx_type *x)
-{
-  return __sync_add_and_fetch (x,  1);
-}
-
-octave_idx_type
-octave_atomic_decrement (octave_idx_type *x)
-{
-  return __sync_sub_and_fetch (x, 1);
 }
 
 #elif defined (_MSC_VER)

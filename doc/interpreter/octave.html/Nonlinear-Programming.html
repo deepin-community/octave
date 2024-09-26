@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Nonlinear Programming (GNU Octave (version 7.1.0))</title>
+<title>Nonlinear Programming (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Nonlinear Programming (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Nonlinear Programming (GNU Octave (version 7.1.0))">
+<meta name="description" content="Nonlinear Programming (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Nonlinear Programming (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Quadratic-Programming.html" rel="prev" title="Quadratic Programming">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,47 +32,50 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Nonlinear-Programming">
-<div class="header">
+<div class="section-level-extent" id="Nonlinear-Programming">
+<div class="nav-panel">
 <p>
 Next: <a href="Linear-Least-Squares.html" accesskey="n" rel="next">Linear Least Squares</a>, Previous: <a href="Quadratic-Programming.html" accesskey="p" rel="prev">Quadratic Programming</a>, Up: <a href="Optimization.html" accesskey="u" rel="up">Optimization</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Nonlinear-Programming-1"></span><h3 class="section">25.3 Nonlinear Programming</h3>
+<h3 class="section" id="Nonlinear-Programming-1"><span>25.3 Nonlinear Programming<a class="copiable-link" href="#Nonlinear-Programming-1"> &para;</a></span></h3>
 
 <p>Octave can also perform general nonlinear minimization using a
 successive quadratic programming solver.
 </p>
-<span id="XREFsqp"></span><dl class="def">
-<dt id="index-sqp"><span class="category">: </span><span><em>[<var>x</var>, <var>obj</var>, <var>info</var>, <var>iter</var>, <var>nf</var>, <var>lambda</var>] =</em> <strong>sqp</strong> <em>(<var>x0</var>, <var>phi</var>)</em><a href='#index-sqp' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-sqp-1"><span class="category">: </span><span><em>[&hellip;] =</em> <strong>sqp</strong> <em>(<var>x0</var>, <var>phi</var>, <var>g</var>)</em><a href='#index-sqp-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-sqp-2"><span class="category">: </span><span><em>[&hellip;] =</em> <strong>sqp</strong> <em>(<var>x0</var>, <var>phi</var>, <var>g</var>, <var>h</var>)</em><a href='#index-sqp-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-sqp-3"><span class="category">: </span><span><em>[&hellip;] =</em> <strong>sqp</strong> <em>(<var>x0</var>, <var>phi</var>, <var>g</var>, <var>h</var>, <var>lb</var>, <var>ub</var>)</em><a href='#index-sqp-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-sqp-4"><span class="category">: </span><span><em>[&hellip;] =</em> <strong>sqp</strong> <em>(<var>x0</var>, <var>phi</var>, <var>g</var>, <var>h</var>, <var>lb</var>, <var>ub</var>, <var>maxiter</var>)</em><a href='#index-sqp-4' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-sqp-5"><span class="category">: </span><span><em>[&hellip;] =</em> <strong>sqp</strong> <em>(<var>x0</var>, <var>phi</var>, <var>g</var>, <var>h</var>, <var>lb</var>, <var>ub</var>, <var>maxiter</var>, <var>tolerance</var>)</em><a href='#index-sqp-5' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFsqp"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-sqp"><span class="category-def">: </span><span><code class="def-type">[<var class="var">x</var>, <var class="var">obj</var>, <var class="var">info</var>, <var class="var">iter</var>, <var class="var">nf</var>, <var class="var">lambda</var>] =</code> <strong class="def-name">sqp</strong> <code class="def-code-arguments">(<var class="var">x0</var>, <var class="var">phi</var>)</code><a class="copiable-link" href="#index-sqp"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-sqp-1"><span class="category-def">: </span><span><code class="def-type">[&hellip;] =</code> <strong class="def-name">sqp</strong> <code class="def-code-arguments">(<var class="var">x0</var>, <var class="var">phi</var>, <var class="var">g</var>)</code><a class="copiable-link" href="#index-sqp-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-sqp-2"><span class="category-def">: </span><span><code class="def-type">[&hellip;] =</code> <strong class="def-name">sqp</strong> <code class="def-code-arguments">(<var class="var">x0</var>, <var class="var">phi</var>, <var class="var">g</var>, <var class="var">h</var>)</code><a class="copiable-link" href="#index-sqp-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-sqp-3"><span class="category-def">: </span><span><code class="def-type">[&hellip;] =</code> <strong class="def-name">sqp</strong> <code class="def-code-arguments">(<var class="var">x0</var>, <var class="var">phi</var>, <var class="var">g</var>, <var class="var">h</var>, <var class="var">lb</var>, <var class="var">ub</var>)</code><a class="copiable-link" href="#index-sqp-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-sqp-4"><span class="category-def">: </span><span><code class="def-type">[&hellip;] =</code> <strong class="def-name">sqp</strong> <code class="def-code-arguments">(<var class="var">x0</var>, <var class="var">phi</var>, <var class="var">g</var>, <var class="var">h</var>, <var class="var">lb</var>, <var class="var">ub</var>, <var class="var">maxiter</var>)</code><a class="copiable-link" href="#index-sqp-4"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-sqp-5"><span class="category-def">: </span><span><code class="def-type">[&hellip;] =</code> <strong class="def-name">sqp</strong> <code class="def-code-arguments">(<var class="var">x0</var>, <var class="var">phi</var>, <var class="var">g</var>, <var class="var">h</var>, <var class="var">lb</var>, <var class="var">ub</var>, <var class="var">maxiter</var>, <var class="var">tolerance</var>)</code><a class="copiable-link" href="#index-sqp-5"> &para;</a></span></dt>
 <dd><p>Minimize an objective function using sequential quadratic programming (SQP).
 </p>
 <p>Solve the nonlinear program
 </p>
 <div class="example">
-<pre class="example">min phi (x)
+<div class="group"><pre class="example-preformatted">min phi (x)
  x
-</pre></div>
+</pre></div></div>
 
 <p>subject to
 </p>
 <div class="example">
-<pre class="example">g(x)  = 0
+<div class="group"><pre class="example-preformatted">g(x)  = 0
 h(x) &gt;= 0
 lb &lt;= x &lt;= ub
-</pre></div>
+</pre></div></div>
 
 <p>using a sequential quadratic programming method.
 </p>
-<p>The first argument is the initial guess for the vector <var>x0</var>.
+<p>The first argument is the initial guess for the vector <var class="var">x0</var>.
 </p>
 <p>The second argument is a function handle pointing to the objective function
-<var>phi</var>.  The objective function must accept one vector argument and
+<var class="var">phi</var>.  The objective function must accept one vector argument and
 return a scalar.
 </p>
 <p>The second argument may also be a 2- or 3-element cell array of function
@@ -95,15 +87,15 @@ supplied, the gradient is computed by finite differences.  If the Hessian
 function is not supplied, a BFGS update formula is used to approximate the
 Hessian.
 </p>
-<p>When supplied, the gradient function <code><var>phi</var>{2}</code> must accept one
+<p>When supplied, the gradient function <code class="code"><var class="var">phi</var>{2}</code> must accept one
 vector argument and return a vector.  When supplied, the Hessian function
-<code><var>phi</var>{3}</code> must accept one vector argument and return a matrix.
+<code class="code"><var class="var">phi</var>{3}</code> must accept one vector argument and return a matrix.
 </p>
-<p>The third and fourth arguments <var>g</var> and <var>h</var> are function handles
+<p>The third and fourth arguments <var class="var">g</var> and <var class="var">h</var> are function handles
 pointing to functions that compute the equality constraints and the
 inequality constraints, respectively.  If the problem does not have
 equality (or inequality) constraints, then use an empty matrix ([]) for
-<var>g</var> (or <var>h</var>).  When supplied, these equality and inequality
+<var class="var">g</var> (or <var class="var">h</var>).  When supplied, these equality and inequality
 constraint functions must accept one vector argument and return a vector.
 </p>
 <p>The third and fourth arguments may also be 2-element cell arrays of
@@ -112,52 +104,51 @@ function and the second should point to a function that computes the
 gradient of the constraint function:
 </p>
 <div class="example">
-<pre class="example">            [ d f(x)   d f(x)        d f(x) ]
+<div class="group"><pre class="example-preformatted">            [ d f(x)   d f(x)        d f(x) ]
 transpose ( [ ------   -----   ...   ------ ] )
             [  dx_1     dx_2          dx_N  ]
-</pre></div>
+</pre></div></div>
 
-<p>The fifth and sixth arguments, <var>lb</var> and <var>ub</var>, contain lower and
-upper bounds on <var>x</var>.  These must be consistent with the equality and
-inequality constraints <var>g</var> and <var>h</var>.  If the arguments are vectors
-then <var>x</var>(i) is bound by <var>lb</var>(i) and <var>ub</var>(i).  A bound can also
-be a scalar in which case all elements of <var>x</var> will share the same
-bound.  If only one bound (lb, ub) is specified then the other will
-default to (-<var>realmax</var>, +<var>realmax</var>).
+<p>The fifth and sixth arguments, <var class="var">lb</var> and <var class="var">ub</var>, contain lower and
+upper bounds on <var class="var">x</var>.  These must be consistent with the equality and
+inequality constraints <var class="var">g</var> and <var class="var">h</var>.  If the arguments are vectors
+then <var class="var">x</var>(i) is bound by <var class="var">lb</var>(i) and <var class="var">ub</var>(i).  A bound can also
+be a scalar in which case all elements of <var class="var">x</var> will share the same
+bound.
 </p>
-<p>The seventh argument <var>maxiter</var> specifies the maximum number of
+<p>The seventh argument <var class="var">maxiter</var> specifies the maximum number of
 iterations.  The default value is 100.
 </p>
-<p>The eighth argument <var>tolerance</var> specifies the tolerance for the stopping
-criteria.  The default value is <code>sqrt (eps)</code>.
+<p>The eighth argument <var class="var">tolerance</var> specifies the tolerance for the stopping
+criteria.  The default value is <code class="code">sqrt (eps)</code>.
 </p>
-<p>The value returned in <var>info</var> may be one of the following:
+<p>The value returned in <var class="var">info</var> may be one of the following:
 </p>
-<dl compact="compact">
-<dt><span>101</span></dt>
+<dl class="table">
+<dt>101</dt>
 <dd><p>The algorithm terminated normally.
 All constraints meet the specified tolerance.
 </p>
 </dd>
-<dt><span>102</span></dt>
+<dt>102</dt>
 <dd><p>The BFGS update failed.
 </p>
 </dd>
-<dt><span>103</span></dt>
+<dt>103</dt>
 <dd><p>The maximum number of iterations was reached.
 </p>
 </dd>
-<dt><span>104</span></dt>
+<dt>104</dt>
 <dd><p>The stepsize has become too small, i.e.,
-delta <var>x</var>,
-is less than <code><var>tol</var> * norm (x)</code>.
+delta <var class="var">x</var>,
+is less than <code class="code"><var class="var">tol</var> * norm (x)</code>.
 </p></dd>
 </dl>
 
-<p>An example of calling <code>sqp</code>:
+<p>An example of calling <code class="code">sqp</code>:
 </p>
 <div class="example">
-<pre class="example">function r = g (x)
+<pre class="example-preformatted">function r = g (x)
   r = [ sumsq(x)-10;
         x(2)*x(3)-5*x(4)*x(5);
         x(1)^3+x(2)^3+1 ];
@@ -191,13 +182,13 @@ lambda =
 </pre></div>
 
 
-<p><strong>See also:</strong> <a href="Quadratic-Programming.html#XREFqp">qp</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Quadratic-Programming.html#XREFqp">qp</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Linear-Least-Squares.html">Linear Least Squares</a>, Previous: <a href="Quadratic-Programming.html">Quadratic Programming</a>, Up: <a href="Optimization.html">Optimization</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

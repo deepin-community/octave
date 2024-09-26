@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -143,7 +143,7 @@ endfunction
 ######      (SIAM, 2008.).
 #######################################################################
 
-##LOGM_PADE_PF   Evaluate Pade approximant to matrix log by partial fractions.
+## LOGM_PADE_PF   Evaluate Pade approximant to matrix log by partial fractions.
 ##   Y = LOGM_PADE_PF(A,M) evaluates the [M/M] Pade approximation to
 ##   LOG(EYE(SIZE(A))+A) using a partial fraction expansion.
 
@@ -195,16 +195,16 @@ endfunction
 %! A = [0.2510, 1.2808, -1.2252; ...
 %!      0.2015, 1.0766, 0.5630; ...
 %!      -1.9769, -1.0922, -0.5831];
-%! if (ismac ())
-%!   ## The math libraries on macOS seem to require larger tolerances
-%!   tol = 60*eps;
+%! if (__have_feature__ ("LLVM_LIBCXX"))
+%!   ## The math libraries in libc++ seem to require larger tolerances
+%!   tol = 65*eps;
 %! else
 %!   tol = 40*eps;
 %! endif
 %! warning ("off", "Octave:logm:non-principal", "local");
 %! assert (expm (logm (A)), A, tol);
-%!assert (expm (logm (eye (3))), eye (3));
-%!assert (expm (logm (zeros (3))), zeros (3));
+%!assert (expm (logm (eye (3))), eye (3))
+%!assert (expm (logm (zeros (3))), zeros (3))
 
 ## Test input validation
 %!error <Invalid call> logm ()

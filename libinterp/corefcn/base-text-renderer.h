@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,74 +38,71 @@
 #include "text-engine.h"
 #include "text-renderer.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class
+base_text_renderer : public text_processor
 {
-  class
-  base_text_renderer : public text_processor
+public:
+
+  enum
   {
-  public:
-
-    enum
-    {
-      ROTATION_0   = 0,
-      ROTATION_90  = 1,
-      ROTATION_180 = 2,
-      ROTATION_270 = 3
-    };
-
-    base_text_renderer (void) : text_processor () { }
-
-    // No copying!
-
-    base_text_renderer (const base_text_renderer&) = delete;
-
-    base_text_renderer& operator = (const base_text_renderer&) = delete;
-
-    virtual ~base_text_renderer (void) = default;
-
-    virtual void
-    set_anti_aliasing (bool val) = 0;
-
-    virtual Matrix
-    get_extent (text_element *elt, double rotation) = 0;
-
-    virtual Matrix
-    get_extent (const std::string& txt, double rotation,
-                const caseless_str& interpreter) = 0;
-
-    virtual void
-    set_font (const std::string& name, const std::string& weight,
-              const std::string& angle, double size) = 0;
-
-    virtual bool
-    ok (void) { return true; };
-
-    virtual octave_map
-    get_system_fonts (void) = 0;
-
-    virtual void set_color (const Matrix& c) = 0;
-
-    virtual void
-    text_to_pixels (const std::string& txt, uint8NDArray& pxls,
-                    Matrix& bbox, int halign, int valign, double rotation,
-                    const caseless_str& interpreter,
-                    bool handle_rotation) = 0;
-
-    virtual void
-    text_to_strlist (const std::string& txt,
-                     std::list<text_renderer::string>& lst,
-                     Matrix& box, int halign, int valign, double rotation,
-                     const caseless_str& interpreter = "tex") = 0;
-
-    void rotate_pixels (uint8NDArray& pixels, int rot_mode) const;
-
-    int rotation_to_mode (double rotation) const;
-
-    void fix_bbox_anchor (Matrix& bbox, int halign,
-                          int valign, int rot_mode,
-                          bool handle_rotation) const;
-
+    ROTATION_0   = 0,
+    ROTATION_90  = 1,
+    ROTATION_180 = 2,
+    ROTATION_270 = 3
   };
-}
+
+  base_text_renderer () : text_processor () { }
+
+  OCTAVE_DISABLE_COPY_MOVE (base_text_renderer)
+
+  virtual ~base_text_renderer () = default;
+
+  virtual void
+  set_anti_aliasing (bool val) = 0;
+
+  virtual Matrix
+  get_extent (text_element *elt, double rotation) = 0;
+
+  virtual Matrix
+  get_extent (const std::string& txt, double rotation,
+              const caseless_str& interpreter) = 0;
+
+  virtual void
+  set_font (const std::string& name, const std::string& weight,
+            const std::string& angle, double size) = 0;
+
+  virtual bool
+  ok () { return true; };
+
+  virtual octave_map
+  get_system_fonts () = 0;
+
+  virtual void set_color (const Matrix& c) = 0;
+
+  virtual void
+  text_to_pixels (const std::string& txt, uint8NDArray& pxls,
+                  Matrix& bbox, int halign, int valign, double rotation,
+                  const caseless_str& interpreter,
+                  bool handle_rotation) = 0;
+
+  virtual void
+  text_to_strlist (const std::string& txt,
+                   std::list<text_renderer::string>& lst,
+                   Matrix& box, int halign, int valign, double rotation,
+                   const caseless_str& interpreter = "tex") = 0;
+
+  void rotate_pixels (uint8NDArray& pixels, int rot_mode) const;
+
+  int rotation_to_mode (double rotation) const;
+
+  void fix_bbox_anchor (Matrix& bbox, int halign,
+                        int valign, int rot_mode,
+                        bool handle_rotation) const;
+
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

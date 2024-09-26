@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2020-2022 The Octave Project Developers
+// Copyright (C) 2020-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -218,7 +218,7 @@ encode_struct (T& writer, const octave_value& obj, const bool& ConvertInfAndNaN)
 {
   octave_map struct_array = obj.map_value ();
   octave_idx_type numel = struct_array.numel ();
-  bool is_array = (numel > 1);
+  bool is_array = (numel != 1);
   string_vector keys = struct_array.keys ();
 
   if (is_array)
@@ -418,10 +418,10 @@ encode (T& writer, const octave_value& obj, const bool& ConvertInfAndNaN)
     // "Octave:classdef-to-struct" warning and re-enable it.
     {
       octave::unwind_action restore_warning_state
-        ([] (const octave_value_list& old_warning_state)
-         {
-           octave::set_warning_state (old_warning_state);
-         }, octave::set_warning_state ("Octave:classdef-to-struct", "off"));
+      ([] (const octave_value_list& old_warning_state)
+      {
+        octave::set_warning_state (old_warning_state);
+      }, octave::set_warning_state ("Octave:classdef-to-struct", "off"));
 
       encode_struct (writer, obj.scalar_map_value ().getfield ("map"),
                      ConvertInfAndNaN);
@@ -429,10 +429,10 @@ encode (T& writer, const octave_value& obj, const bool& ConvertInfAndNaN)
   else if (obj.isobject ())
     {
       octave::unwind_action restore_warning_state
-        ([] (const octave_value_list& old_warning_state)
-         {
-           octave::set_warning_state (old_warning_state);
-         }, octave::set_warning_state ("Octave:classdef-to-struct", "off"));
+      ([] (const octave_value_list& old_warning_state)
+      {
+        octave::set_warning_state (old_warning_state);
+      }, octave::set_warning_state ("Octave:classdef-to-struct", "off"));
 
       encode_struct (writer, obj.scalar_map_value (), ConvertInfAndNaN);
     }
@@ -442,7 +442,7 @@ encode (T& writer, const octave_value& obj, const bool& ConvertInfAndNaN)
 
 #endif
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (jsonencode, args, ,
        doc: /* -*- texinfo -*-
@@ -625,8 +625,8 @@ jsonencode (containers.Map(@{'foo'; 'bar'; 'baz'@}, [1, 2, 3]))
     {
 # if defined (HAVE_RAPIDJSON_PRETTYWRITER)
       rapidjson::PrettyWriter<rapidjson::StringBuffer, rapidjson::UTF8<>,
-                              rapidjson::UTF8<>, rapidjson::CrtAllocator,
-                              rapidjson::kWriteNanAndInfFlag> writer (json);
+                rapidjson::UTF8<>, rapidjson::CrtAllocator,
+                rapidjson::kWriteNanAndInfFlag> writer (json);
       writer.SetIndent (' ', 2);
       encode (writer, args(0), ConvertInfAndNaN);
 # endif
@@ -634,8 +634,8 @@ jsonencode (containers.Map(@{'foo'; 'bar'; 'baz'@}, [1, 2, 3]))
   else
     {
       rapidjson::Writer<rapidjson::StringBuffer, rapidjson::UTF8<>,
-                        rapidjson::UTF8<>, rapidjson::CrtAllocator,
-                        rapidjson::kWriteNanAndInfFlag> writer (json);
+                rapidjson::UTF8<>, rapidjson::CrtAllocator,
+                rapidjson::kWriteNanAndInfFlag> writer (json);
       encode (writer, args(0), ConvertInfAndNaN);
     }
 
@@ -671,4 +671,4 @@ Functional BIST tests are located in test/json/jsonencode_BIST.tst
 
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -49,7 +49,7 @@
 #include "error.h"
 #include "xdiv.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 static void
 solve_singularity_warning (double rcond)
@@ -67,7 +67,7 @@ mx_leftdiv_conform (const T1& a, const T2& b, blas_trans_type blas_trans)
   if (a_nr != b_nr)
     {
       octave_idx_type a_nc = (blas_trans == blas_no_trans ? a.cols ()
-                                                          : a.rows ());
+                              : a.rows ());
       octave_idx_type b_nc = b.cols ();
 
       octave::err_nonconformant (R"(operator \)", a_nr, a_nc, b_nr, b_nc);
@@ -1011,4 +1011,4 @@ FloatComplexDiagMatrix
 xleftdiv (const FloatComplexDiagMatrix& a, const FloatComplexDiagMatrix& b)
 { return dmdm_leftdiv_impl (a, b); }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

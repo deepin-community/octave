@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2018-2022 The Octave Project Developers
+// Copyright (C) 2018-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -41,4 +41,30 @@ int
 octave_iconv_close_wrapper (void *cd)
 {
   return iconv_close ((iconv_t) cd);
+}
+
+void
+octave_iconvlist_wrapper (int (*do_one) (unsigned int namescount,
+                                         const char * const *names,
+                                         void *data),
+                          void *data)
+{
+#if defined (HAVE_ICONVLIST)
+  iconvlist (do_one, data);
+#else
+  octave_unused_parameter (do_one);
+  octave_unused_parameter (data);
+#endif
+
+  return;
+}
+
+const char *
+octave_iconv_canonicalize_wrapper (const char *name)
+{
+#if defined (HAVE_ICONV_CANONICALIZE)
+  return iconv_canonicalize (name);
+#else
+  return name;
+#endif
 }

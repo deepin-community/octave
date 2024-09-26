@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2010-2022 The Octave Project Developers
+// Copyright (C) 2010-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -54,11 +54,11 @@
 #include "errwarn.h"
 #include "ov.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN_DLD (__fltk_uigetfile__, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} __fltk_uigetfile__ (@dots{})
+@deftypefn {} {[@var{fname}, @var{fpath}, @var{fltidx}] =} __fltk_uigetfile__ (@dots{})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -161,4 +161,4 @@ Undocumented internal function.
 %!assert (1)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

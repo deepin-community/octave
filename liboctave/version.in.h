@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1992-2022 The Octave Project Developers
+// Copyright (C) 1992-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -62,7 +62,7 @@ extern OCTAVE_API std::string octave_contrib_statement (bool html = false);
 
 extern OCTAVE_API std::string octave_bugs_statement (bool html = false);
 
-extern OCTAVE_API std::string octave_name_version_and_copyright (void);
+extern OCTAVE_API std::string octave_name_version_and_copyright (bool html = false);
 
 extern OCTAVE_API std::string
 octave_name_version_copyright_copying_and_warranty

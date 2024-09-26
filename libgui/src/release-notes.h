@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,31 +31,28 @@
 
 class QTextBrowser;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class release_notes : public QWidget
 {
-  class base_qobject;
+  Q_OBJECT
 
-  class release_notes : public QWidget
-  {
-    Q_OBJECT
+public:
 
-  public:
+  release_notes ();
 
-    release_notes (void);
+  ~release_notes () = default;
 
-    ~release_notes (void) = default;
+public slots:
 
-  public slots:
+  void display ();
 
-    void display (void);
+private:
 
-  private:
+  QTextBrowser *m_browser;
+  QString m_release_notes_icon;
+};
 
-    void get_screen_geometry (int& width, int& height);
-
-    QTextBrowser *m_browser;
-    QString m_release_notes_icon;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

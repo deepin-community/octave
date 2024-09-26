@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,11 +37,11 @@
 #include "error.h"
 #include "errwarn.h"
 #include "interpreter-private.h"
+#include "interpreter.h"
 #include "ovl.h"
 #include "ov-fcn.h"
 #include "ov-cell.h"
 #include "pager.h"
-#include "parse.h"
 #include "pr-output.h"
 #include "unwind-prot.h"
 #include "utils.h"
@@ -49,7 +49,7 @@
 
 #include "LSODE-opts.cc"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Global pointer for user defined function required by lsode.
 static octave_value lsode_fcn;
@@ -79,7 +79,9 @@ lsode_user_function (const ColumnVector& x, double t)
 
       try
         {
-          tmp = octave::feval (lsode_fcn, args, 1);
+          interpreter& interp = __get_interpreter__ ();
+
+          tmp = interp.feval (lsode_fcn, args, 1);
         }
       catch (octave::execution_exception& ee)
         {
@@ -119,7 +121,9 @@ lsode_user_jacobian (const ColumnVector& x, double t)
 
       try
         {
-          tmp = octave::feval (lsode_jac, args, 1);
+          interpreter& interp = __get_interpreter__ ();
+
+          tmp = interp.feval (lsode_jac, args, 1);
         }
       catch (octave::execution_exception& ee)
         {
@@ -214,10 +218,10 @@ $$ J = {\partial f_i \over \partial x_j} = \left[\matrix{
   & \cdots
   & {\partial f_2 \over \partial x_N} \cr
  \vdots & \vdots & \ddots & \vdots \cr
-{\partial f_3 \over \partial x_1}
-  & {\partial f_3 \over \partial x_2}
+{\partial f_M \over \partial x_1}
+  & {\partial f_M \over \partial x_2}
   & \cdots
-  & {\partial f_3 \over \partial x_N} \cr}\right]$$
+  & {\partial f_M \over \partial x_N} \cr}\right]$$
 @end tex
 @ifnottex
 
@@ -235,7 +239,7 @@ jac = ---- = |                       |
              |  .    .      .   .    |
              |  .    .       .  .    |
              |                       |
-             | df_N  df_N       df_N |
+             | df_M  df_M       df_M |
              | ----  ----  ...  ---- |
              | dx_1  dx_2       dx_N |
 @end group
@@ -379,12 +383,12 @@ fvdp = @@(@var{y},@var{t}) [@var{y}(2); (1 - @var{y}(1)^2) * @var{y}(2) - @var{y
 
   double tzero = out_times (0);
 
-  ODEFunc func (lsode_user_function);
+  ODEFunc fcn (lsode_user_function);
 
   if (lsode_jac.is_defined ())
-    func.set_jacobian_function (lsode_user_jacobian);
+    fcn.set_jacobian_function (lsode_user_jacobian);
 
-  LSODE ode (state, tzero, func);
+  LSODE ode (state, tzero, fcn);
 
   ode.set_options (lsode_opts);
 
@@ -490,4 +494,4 @@ fvdp = @@(@var{y},@var{t}) [@var{y}(2); (1 - @var{y}(1)^2) * @var{y}(2) - @var{y
 %!error lsode_options ("foo", 1, 2)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

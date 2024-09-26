@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>The try Statement (GNU Octave (version 7.1.0))</title>
+<title>The try Statement (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="The try Statement (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="The try Statement (GNU Octave (version 7.1.0))">
+<meta name="description" content="The try Statement (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="The try Statement (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="The-unwind_005fprotect-Statement.html" rel="prev" title="The unwind_protect Statement">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,48 +31,48 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="The-try-Statement">
-<div class="header">
+<div class="section-level-extent" id="The-try-Statement">
+<div class="nav-panel">
 <p>
 Next: <a href="Continuation-Lines.html" accesskey="n" rel="next">Continuation Lines</a>, Previous: <a href="The-unwind_005fprotect-Statement.html" accesskey="p" rel="prev">The unwind_protect Statement</a>, Up: <a href="Statements.html" accesskey="u" rel="up">Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="The-try-Statement-1"></span><h3 class="section">10.9 The try Statement</h3>
-<span id="index-try-statement"></span>
-<span id="index-catch"></span>
-<span id="index-end_005ftry_005fcatch"></span>
+<h3 class="section" id="The-try-Statement-1"><span>10.9 The try Statement<a class="copiable-link" href="#The-try-Statement-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-try-statement"></a>
+<a class="index-entry-id" id="index-catch"></a>
+<a class="index-entry-id" id="index-end_005ftry_005fcatch"></a>
 
-<p>The original form of a <code>try</code> block looks like this:
+<p>The original form of a <code class="code">try</code> block looks like this:
 </p>
 <div class="example">
-<pre class="example">try
-  <var>body</var>
+<div class="group"><pre class="example-preformatted">try
+  <var class="var">body</var>
 catch
-  <var>cleanup</var>
+  <var class="var">cleanup</var>
 end_try_catch
-</pre></div>
+</pre></div></div>
 
-<p>where <var>body</var> and <var>cleanup</var> are both optional and may contain any
-Octave expressions or commands.  The statements in <var>cleanup</var> are
-only executed if an error occurs in <var>body</var>.
+<p>where <var class="var">body</var> and <var class="var">cleanup</var> are both optional and may contain any
+Octave expressions or commands.  The statements in <var class="var">cleanup</var> are
+only executed if an error occurs in <var class="var">body</var>.
 </p>
-<p>No warnings or error messages are printed while <var>body</var> is executing.
-If an error does occur during the execution of <var>body</var>, <var>cleanup</var>
-can use the functions <code>lasterr</code> or <code>lasterror</code> to access the
+<p>No warnings or error messages are printed while <var class="var">body</var> is executing.
+If an error does occur during the execution of <var class="var">body</var>, <var class="var">cleanup</var>
+can use the functions <code class="code">lasterr</code> or <code class="code">lasterror</code> to access the
 text of the message that would have been printed, as well as its
 identifier.  The alternative form,
 </p>
 <div class="example">
-<pre class="example">try
-  <var>body</var>
-catch <var>err</var>
-  <var>cleanup</var>
+<div class="group"><pre class="example-preformatted">try
+  <var class="var">body</var>
+catch <var class="var">err</var>
+  <var class="var">cleanup</var>
 end_try_catch
-</pre></div>
+</pre></div></div>
 
-<p>will automatically store the output of <code>lasterror</code> in the structure
-<var>err</var>.  See <a href="Errors-and-Warnings.html">Errors and Warnings</a>, for more information about the
-<code>lasterr</code> and <code>lasterror</code> functions.
+<p>will automatically store the output of <code class="code">lasterror</code> in the structure
+<var class="var">err</var>.  See <a class="xref" href="Errors-and-Warnings.html">Errors and Warnings</a>, for more information about the
+<code class="code">lasterr</code> and <code class="code">lasterror</code> functions.
 </p>
 
 </div>

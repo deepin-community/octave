@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2001-2022 The Octave Project Developers
+// Copyright (C) 2001-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "utils.h"
 #include "xnorm.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 template <typename Matrix>
 static void
@@ -242,10 +242,10 @@ Mathematics, Manchester, England, January 1999.
     retval(0) = arg.sqrt ();
   else if (arg.is_single_type ())
     retval(0) = do_sqrtm<FloatMatrix, FloatComplexMatrix,
-                         math::schur<FloatComplexMatrix>> (arg);
+    math::schur<FloatComplexMatrix>> (arg);
   else if (arg.isnumeric ())
     retval(0) = do_sqrtm<Matrix, ComplexMatrix,
-                         math::schur<ComplexMatrix>> (arg);
+    math::schur<ComplexMatrix>> (arg);
 
   if (nargout > 1)
     {
@@ -261,7 +261,7 @@ Mathematics, Manchester, England, January 1999.
 }
 
 /*
-%!assert (sqrtm (2*ones (2)), ones (2), 3*eps)
+%!assert (sqrtm (2* ones (2)), ones (2), 3*eps)
 %!assert <*60797> (sqrtm (ones (4))^2, ones (4), 5*eps)
 
 ## The following two tests are from the reference in the docstring above.
@@ -278,4 +278,4 @@ Mathematics, Manchester, England, January 1999.
 %! assert (err, 0);   # Yes, this one has to hold exactly
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

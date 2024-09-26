@@ -2,9 +2,25 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="hu_HU">
 <context>
+    <name>ListDialog</name>
+    <message>
+        <location filename="../src/dialog.cc" line="+442"/>
+        <source>Select All</source>
+        <translation>Összes kijelölése</translation>
+    </message>
+</context>
+<context>
+    <name>QFileSystemModel</name>
+    <message>
+        <location filename="../src/files-dock-widget.cc" line="+136"/>
+        <source>Invalid filename</source>
+        <translation>Érvénytelen fáljnév</translation>
+    </message>
+</context>
+<context>
     <name>QHelpSearchQueryWidget</name>
     <message>
-        <location filename="../../../octave-qt/qhelpsearchquerywidget.cpp" line="+124"/>
+        <location filename="build_ts/octave-qt/qhelpsearchquerywidget.cpp" line="+124"/>
         <source>Search for:</source>
         <translation>Keresés:</translation>
     </message>
@@ -57,13 +73,13 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/settings-dialog.cc" line="+845"/>
+        <location filename="../src/settings-dialog.cc" line="+1016"/>
         <source>Difference to the default size</source>
         <translation>Különbség az alapértelmezett mérethez képest</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Background color, pink (255, 0, 255) means default</source>
+        <source>Background color, magenta (255, 0, 255) means default</source>
         <translation>A háttérszín, rózsaszín (255, 0, 255) az alapértelmezett</translation>
     </message>
     <message>
@@ -88,7 +104,7 @@
 <context>
     <name>QTerminal</name>
     <message>
-        <location filename="../qterminal/libqterminal/QTerminal.cc" line="+120"/>
+        <location filename="../qterminal/libqterminal/QTerminal.cc" line="+118"/>
         <source>Edit %1</source>
         <translation>%1 szerkesztése</translation>
     </message>
@@ -103,7 +119,7 @@
         <translation>%1 dokumentáció</translation>
     </message>
     <message>
-        <location line="+159"/>
+        <location line="+165"/>
         <source>Copy</source>
         <translation>Másolás</translation>
     </message>
@@ -130,12 +146,12 @@
     <message>
         <location line="+3"/>
         <source>Help on selection</source>
-        <translation>Kijelölési súgó</translation>
+        <translation>Kijelölés a súgóban</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Documentation on selection</source>
-        <translation>Kijelölési dokumentáció</translation>
+        <translation>Kijelölés a dokumentációban</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -143,7 +159,7 @@
         <translation>Ablak tartalom kiürítése</translation>
     </message>
     <message>
-        <location line="-218"/>
+        <location line="-223"/>
         <source>Edit %1 at line %2</source>
         <translation>%1 szerkesztése a(z) %2 sorban</translation>
     </message>
@@ -151,7 +167,7 @@
 <context>
     <name>QWinTerminalImpl</name>
     <message>
-        <location filename="../qterminal/libqterminal/win32/QWinTerminalImpl.cpp" line="+1786"/>
+        <location filename="../qterminal/libqterminal/win32/QWinTerminalImpl.cpp" line="+1859"/>
         <source>copied selection to clipboard</source>
         <translation>Kijelölés vágólapra másolva</translation>
     </message>
@@ -159,7 +175,7 @@
 <context>
     <name>QsciLexerBash</name>
     <message>
-        <location filename="../../../qsci/qscilexerbash.cpp" line="+203"/>
+        <location filename="build_ts/octave-qsci/qscilexerbash.cpp" line="+203"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
@@ -232,7 +248,7 @@
 <context>
     <name>QsciLexerBatch</name>
     <message>
-        <location filename="../../../qsci/qscilexerbatch.cpp" line="+174"/>
+        <location filename="build_ts/octave-qsci/qscilexerbatch.cpp" line="+174"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
@@ -275,7 +291,7 @@
 <context>
     <name>QsciLexerCPP</name>
     <message>
-        <location filename="../../../qsci/qscilexercpp.cpp" line="+364"/>
+        <location filename="build_ts/octave-qsci/qscilexercpp.cpp" line="+364"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
@@ -558,7 +574,7 @@
 <context>
     <name>QsciLexerDiff</name>
     <message>
-        <location filename="../../../qsci/qscilexerdiff.cpp" line="+106"/>
+        <location filename="build_ts/octave-qsci/qscilexerdiff.cpp" line="+106"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
@@ -621,7 +637,7 @@
 <context>
     <name>QsciLexerMatlab</name>
     <message>
-        <location filename="../../../qsci/qscilexermatlab.cpp" line="+133"/>
+        <location filename="build_ts/octave-qsci/qscilexermatlab.cpp" line="+133"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
@@ -669,7 +685,7 @@
 <context>
     <name>QsciLexerPerl</name>
     <message>
-        <location filename="../../../qsci/qscilexerperl.cpp" line="+328"/>
+        <location filename="build_ts/octave-qsci/qscilexerperl.cpp" line="+328"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
@@ -877,7 +893,7 @@
 <context>
     <name>QsciScintilla</name>
     <message>
-        <location filename="../../../qsci/qsciscintilla.cpp" line="+4475"/>
+        <location filename="build_ts/octave-qsci/qsciscintilla.cpp" line="+4475"/>
         <source>&amp;Undo</source>
         <translation>&amp;Visszavonás</translation>
     </message>
@@ -915,7 +931,7 @@
 <context>
     <name>UrlFilter</name>
     <message>
-        <location filename="../qterminal/libqterminal/unix/Filter.cpp" line="+625"/>
+        <location filename="../qterminal/libqterminal/unix/Filter.cpp" line="+630"/>
         <source>Open Link</source>
         <translation>Hivatkozás megnyitása</translation>
     </message>
@@ -945,168 +961,191 @@
     <name>annotation_dialog</name>
     <message>
         <location filename="../graphics/annotation-dialog.ui" line="+17"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+472"/>
         <source>Annotation</source>
         <translation>Megjegyzés</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Text</source>
         <translation>Szöveg</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>String</source>
         <translation>Karakterlánc</translation>
     </message>
     <message>
         <location line="+13"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Font</source>
         <translation>Betűkészlet</translation>
     </message>
     <message>
         <location line="+42"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>bold</source>
         <translation>Félkövér</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>b</source>
         <translation>F</translation>
     </message>
     <message>
         <location line="+13"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>italic</source>
         <translation>Dőlt</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>i</source>
         <translation>D</translation>
     </message>
     <message>
         <location line="+428"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>color</source>
         <translation>Szín</translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>Horz alignment</source>
-        <translation>Vízszintes igazítás</translation>
-    </message>
-    <message>
-        <location line="+11"/>
+        <location line="+33"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+4"/>
         <source>left</source>
         <translation>Balra zárt</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+29"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
+        <location line="+5"/>
         <source>middle</source>
         <translation>Középre igazítás</translation>
     </message>
     <message>
         <location line="-24"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="-4"/>
         <source>right</source>
         <translation>Jobbra zárt</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Vert alignment</source>
+        <location line="-21"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="-3"/>
+        <source>Horizontal alignment</source>
+        <translation>Vízszintes igazítás</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+5"/>
+        <source>Vertical alignment</source>
         <translation>Függőleges igazítás</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>top</source>
         <translation>Fel</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>bottom</source>
         <translation>Le</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Position</source>
         <translation>Szövegbeosztás</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
         <location line="+20"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
         <location line="+20"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Width</source>
         <translation>Szélesség</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+20"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Height</source>
         <translation>Magasság</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+20"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>units</source>
         <translation>Egység</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>normalized</source>
         <translation>Normalizált</translation>
     </message>
     <message>
         <location line="+8"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Fit to box</source>
         <translation>Mezőhöz igazítás</translation>
     </message>
     <message>
         <location line="+13"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Box</source>
         <translation>Mező</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Background</source>
         <translation>Háttér</translation>
     </message>
     <message>
         <location line="+444"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Edge</source>
         <translation>Él</translation>
     </message>
     <message>
         <location line="+133"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Line style</source>
         <translation>Vonalstílus</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>none</source>
         <translation>Nincs</translation>
     </message>
     <message>
         <location line="+8"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Line width</source>
         <translation>Vonalvastagság</translation>
     </message>
 </context>
 <context>
-    <name>octave::ListDialog</name>
+    <name>command_widget</name>
     <message>
-        <location filename="../src/dialog.cc" line="+453"/>
-        <source>Select All</source>
-        <translation>Összes kijelölése</translation>
-    </message>
-</context>
-<context>
-    <name>octave::command_widget</name>
-    <message>
-        <location filename="../src/command-widget.cc" line="+57"/>
+        <location filename="../src/command-widget.cc" line="+59"/>
         <source>Pause</source>
         <translation>Szüneteltetés</translation>
     </message>
@@ -1120,52 +1159,47 @@
         <source>Continue</source>
         <translation>Folytatás</translation>
     </message>
-    <message>
-        <location line="+2"/>
-        <source>Command Input</source>
-        <translation>Parancsbevitel</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Command Output</source>
-        <translation>Parancskimenet</translation>
-    </message>
 </context>
 <context>
-    <name>octave::community_news</name>
+    <name>community_news</name>
     <message>
-        <location filename="../src/community-news.cc" line="+70"/>
+        <location filename="../src/community-news.cc" line="+69"/>
         <source>Octave Community News</source>
         <translation>Oktáv közösségi hírek</translation>
     </message>
 </context>
 <context>
-    <name>octave::documentation</name>
+    <name>documentation</name>
     <message>
-        <location filename="../src/documentation.cc" line="+112"/>
+        <location filename="../src/documentation.cc" line="+136"/>
         <location line="+14"/>
-        <location line="+735"/>
+        <location line="+748"/>
         <source>Octave Documentation</source>
-        <translation>Oktáv dokumentáció</translation>
+        <translation>Oktáv-dokumentáció</translation>
     </message>
     <message>
-        <location line="-748"/>
+        <location line="-761"/>
         <source>Could not copy help collection to temporary
 file. Search capabilities may be affected.
 %1</source>
-        <translation>Nem sikerült a súgógyűjteményt átmásolni ideiglenes fájlba. Ez befolyásolhatja a keresési képességeket.
+        <translation>Nem sikerült átmásolni a súgógyűjteményt az ideiglenes
+fájlba. Ez hatással lehet a keresési képességekre.
 %1</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Could not setup the data required for the
-documentation viewer. Only help texts in
-the Command Window will be available.</source>
-        <translation>Nem sikerült beállítani a szükséges adatokat a dokumentáció -megjelenítőhöz.
-Csak a parancsablakban található súgószövegek lesznek elérhetők.</translation>
+documentation viewer. Maybe the Qt SQlite
+module is missing?
+Only help text in the Command Window will
+be available.</source>
+        <translation>Nem sikerült beállítani a dokumentációnézőhöz
+szükséges adatokat. Lehet, hogy a Qt SQLite
+modul hiányzik?
+Csak a parancsablak súgószövege lesz elérhető.</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+33"/>
         <source>Find:</source>
         <translation>Keresés:</translation>
     </message>
@@ -1173,100 +1207,100 @@ Csak a parancsablakban található súgószövegek lesznek elérhetők.</transla
         <location line="+7"/>
         <location line="+1"/>
         <source>Search forward</source>
-        <translation>Keresés lefelé</translation>
+        <translation>Keresés előre</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <location line="+1"/>
         <source>Search backward</source>
-        <translation>Keresés felfelé</translation>
+        <translation>Keresés visszafelé</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+44"/>
+        <source>Contents</source>
+        <translation>Tartalom</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Enter text to search function index</source>
+        <translation>Szöveg megadása a függvénytárgymutatóban való kereséshez</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location line="+52"/>
+        <source>Search</source>
+        <translation>Keresés</translation>
+    </message>
+    <message>
+        <location line="-36"/>
         <source>Function Index</source>
         <translation>Függvénytárgymutató</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>Bookmarks</source>
         <translation>Könyvjelzők</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+87"/>
         <source>Go home</source>
         <translation>Kezdőoldal</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Go back</source>
-        <translation>Visszalépés</translation>
+        <translation>Vissza</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+6"/>
+        <source>Previous pages</source>
+        <translation>Előző oldalak</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Go forward</source>
-        <translation>Előrelépés</translation>
+        <translation>Előre</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+6"/>
+        <source>Next pages</source>
+        <translation>Következő oldalak</translation>
+    </message>
+    <message>
+        <location line="+37"/>
         <source>Find</source>
         <translation>Keresés</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Zoom in</source>
+        <source>Zoom In</source>
         <translation>Nagyítás</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Zoom out</source>
+        <source>Zoom Out</source>
         <translation>Kicsinyítés</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Zoom original</source>
+        <source>Zoom Original</source>
         <translation>Valóságos méret</translation>
     </message>
     <message>
-        <location line="-218"/>
-        <source>Contents</source>
-        <translation>Tartalom</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Enter text to search the indices</source>
-        <translation>Adja meg a szöveget a tárgymutató kereséséhez</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <location line="+53"/>
-        <source>Search</source>
-        <translation>Keresés</translation>
-    </message>
-    <message>
-        <location line="+81"/>
-        <source>Previous pages</source>
-        <translation>Korábbi lapok</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Next pages</source>
-        <translation>Következő lapok</translation>
-    </message>
-    <message>
-        <location line="+55"/>
+        <location line="+7"/>
         <source>Bookmark current page</source>
         <translation>A jelenlegi oldal megjelölése könyvjelzővel</translation>
     </message>
     <message>
-        <location line="+430"/>
+        <location line="+429"/>
         <source>Unable to register help file %1.</source>
         <translation>Nem sikerült regisztrálni a(z) %1 súgófájlt.</translation>
     </message>
 </context>
 <context>
-    <name>octave::documentation_bookmarks</name>
+    <name>documentation_bookmarks</name>
     <message>
-        <location filename="../src/documentation-bookmarks.cc" line="+102"/>
+        <location filename="../src/documentation-bookmarks.cc" line="+101"/>
         <source>
 No documentation bookmarks loaded!</source>
         <translation>
@@ -1280,7 +1314,7 @@ Nincsenek betöltve dokumentációs könyvjelzők!</translation>
     <message>
         <location line="+10"/>
         <source>Enter text to search the bookmarks</source>
-        <translation>Írjon be szöveget a könyvjelzők közötti kereséshez</translation>
+        <translation>Szöveg megadása a könyvjelzőkben való kereséshez</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1323,7 +1357,7 @@ Nincsenek betöltve dokumentációs könyvjelzők!</translation>
         <translation>Szűrő &amp;megjelenítése</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+60"/>
         <source>Octave: Saving Documentation Bookmarks</source>
         <translation>Oktáv: Dokumentációs könyvjelzők mentése</translation>
     </message>
@@ -1358,9 +1392,10 @@ Invalid bookmark file?</source>
         <location line="+9"/>
         <source>The file
 %1
-is not a valid XBEL file verison 1.0.</source>
-        <translation>A(z) %1 fájl
-nem érvényes 1.0-s verziójú XBEL-fájl.</translation>
+is not a valid XBEL file version 1.0.</source>
+        <translation>A fájl
+%1
+nem érvényes XBEL-fájl 1.0-s verziója.</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -1369,22 +1404,22 @@ nem érvényes 1.0-s verziójú XBEL-fájl.</translation>
     </message>
 </context>
 <context>
-    <name>octave::documentation_dock_widget</name>
+    <name>documentation_dock_widget</name>
     <message>
-        <location filename="../src/documentation-dock-widget.cc" line="+42"/>
+        <location filename="../src/documentation-dock-widget.cc" line="+40"/>
         <source>Documentation</source>
         <translation>Dokumentáció</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>See the documentation for help.</source>
-        <translation>Segítségért nézze meg a dokumentációt.</translation>
+        <translation>Segítségért tekintse meg a dokumentációt.</translation>
     </message>
 </context>
 <context>
-    <name>octave::dw_main_window</name>
+    <name>dw_main_window</name>
     <message>
-        <location filename="../src/dw-main-window.cc" line="+54"/>
+        <location filename="../src/dw-main-window.cc" line="+53"/>
         <source>&amp;Close</source>
         <translation>&amp;Bezárás</translation>
     </message>
@@ -1396,7 +1431,7 @@ nem érvényes 1.0-s verziójú XBEL-fájl.</translation>
     <message>
         <location line="+4"/>
         <source>Close &amp;Other</source>
-        <translation>&amp;Másik ablak bezárása</translation>
+        <translation>&amp;Másik bezárása</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1410,46 +1445,57 @@ nem érvényes 1.0-s verziójú XBEL-fájl.</translation>
     </message>
 </context>
 <context>
-    <name>octave::external_editor_interface</name>
+    <name>external_editor_interface</name>
     <message>
-        <location filename="../src/external-editor-interface.cc" line="+69"/>
-        <location line="+47"/>
+        <location filename="../src/external-editor-interface.cc" line="+68"/>
+        <location line="+46"/>
         <source>Octave Editor</source>
         <translation>Oktáv-szerkesztő</translation>
     </message>
     <message>
-        <location line="-46"/>
+        <location line="-45"/>
         <source>Could not start custom file editor
 %1</source>
         <translation>Nem sikerült elindítani az egyéni fájlszerkesztőt
 %1</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+46"/>
         <source>There is no custom editor configured yet.
 Do you want to open the preferences?</source>
-        <translation>Egyéni szerkesztő még nincs konfigurálva.
+        <translation>Egyéni szerkesztő még nincs beállítva.
 Szeretné megnyitni a beállításokat?</translation>
     </message>
 </context>
 <context>
-    <name>octave::file_editor</name>
+    <name>file_editor</name>
     <message>
-        <location filename="../src/m-editor/file-editor.cc" line="+1081"/>
+        <location filename="../src/m-editor/file-editor.cc" line="+190"/>
+        <source>Continue</source>
+        <translation>Folytatás</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Save File and Run</source>
+        <translation>Fájl mentése és futtatása</translation>
+    </message>
+    <message>
+        <location line="+912"/>
         <location line="+28"/>
-        <location line="+549"/>
+        <location line="+540"/>
         <location line="+18"/>
         <location line="+25"/>
         <source>Octave Editor</source>
         <translation>Oktáv-szerkesztő</translation>
     </message>
     <message>
-        <location line="-619"/>
+        <location line="-610"/>
         <source>File not saved! A file with the selected name
 %1
-is already open in the editor</source>
-        <translation>A fájl mentése nem sikerült!
-A(z) „%1” nevű fájl már megnyitva a szerkesztőben</translation>
+is already open in the editor.</source>
+        <translation>A fájl nincs mentve! Egy fájl a kijelölt névvel
+%1
+már meg van nyitva a szerkesztőben.</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -1457,18 +1503,22 @@ A(z) „%1” nevű fájl már megnyitva a szerkesztőben</translation>
         <translation>A hozzátartozó fájlszerkesztő lap eltűnt.</translation>
     </message>
     <message>
-        <location line="+549"/>
+        <location line="+540"/>
         <source>Could not open file
 %1
-for read: %2.</source>
-        <translation>Nem sikerült megnyitni a(z) „%1” fájlt az olvasásához: %2.</translation>
+for reading: %2.</source>
+        <translation>Nem sikerült megnyitni a fájlt
+%1
+olvasáshoz: %2.</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>File
 %1
 does not exist. Do you want to create it?</source>
-        <translation>A(z) %1 fájl nem létezik. Kívánja létrehozni?</translation>
+        <translation>Fájl
+%1
+nem létezik. Szeretné létrehozni?</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1484,11 +1534,13 @@ does not exist. Do you want to create it?</source>
         <location line="+20"/>
         <source>Could not open file
 %1
-for write: %2.</source>
-        <translation>Nem sikerült megnyitni a(z) %1 fájlt írásához: %2.</translation>
+for writing: %2.</source>
+        <translation>Nem sikerült megnyitni a fájlt
+%1
+íráshoz: %2.</translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+250"/>
         <source>&amp;File</source>
         <translation>&amp;Fájl</translation>
     </message>
@@ -1554,13 +1606,13 @@ for write: %2.</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Find &amp;Next...</source>
-        <translation>&amp;Következő keresése…</translation>
+        <source>Find &amp;Next</source>
+        <translation>Kö&amp;vetkező találat</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Find &amp;Previous...</source>
-        <translation>&amp;Előző keresése…</translation>
+        <source>Find &amp;Previous</source>
+        <translation>Elő&amp;ző találat</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1605,17 +1657,17 @@ for write: %2.</source>
     <message>
         <location line="+6"/>
         <source>Duplicate Selection/Line</source>
-        <translation>Ismétlődő kijelölés/sor</translation>
+        <translation>Kijelölés/sor megkettőzése</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Transpose Line</source>
-        <translation>Sorcsere</translation>
+        <translation>Sor transzponálása</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>&amp;Show Completion List</source>
-        <translation>&amp;Befejezési lista mutatása</translation>
+        <translation>&amp;Befejezési lista megjelenítése</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1660,7 +1712,7 @@ for write: %2.</source>
     <message>
         <location line="+4"/>
         <source>Indent Code</source>
-        <translation>Behúzás kódja</translation>
+        <translation>Kód behúzása</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1705,12 +1757,12 @@ for write: %2.</source>
     <message>
         <location line="+4"/>
         <source>Pre&amp;vious Bookmark</source>
-        <translation>&amp;Előző könyvjelző</translation>
+        <translation>Elő&amp;ző könyvjelző</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Toggle &amp;Bookmark</source>
-        <translation>&amp;Könyvjelző – váltás</translation>
+        <translation>&amp;Könyvjelző kapcsolása</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1735,7 +1787,7 @@ for write: %2.</source>
     <message>
         <location line="+2"/>
         <source>&amp;Editor</source>
-        <translation>&amp;Szerkesztő</translation>
+        <translation>S&amp;zerkesztő</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1783,7 +1835,7 @@ for write: %2.</source>
         <translation>&amp;Nagyítás</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Zoom &amp;Out</source>
         <translation>&amp;Kicsinyítés</translation>
     </message>
@@ -1805,17 +1857,17 @@ for write: %2.</source>
     <message>
         <location line="+4"/>
         <source>Toggle &amp;Breakpoint</source>
-        <translation>&amp;Töréspont hozzáadása/törlése</translation>
+        <translation>&amp;Töréspont kapcsolása</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>&amp;Next Breakpoint</source>
-        <translation>&amp;Következő töréspont</translation>
+        <translation>Kö&amp;vetkező töréspont</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Pre&amp;vious Breakpoint</source>
-        <translation>&amp;Előző töréspont</translation>
+        <translation>Elő&amp;ző töréspont</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1828,19 +1880,9 @@ for write: %2.</source>
         <translation>&amp;Futtatás</translation>
     </message>
     <message>
-        <location line="-2066"/>
-        <source>Save File and Run</source>
-        <translation>Fájl mentése és futtatása</translation>
-    </message>
-    <message>
-        <location line="-9"/>
-        <source>Continue</source>
-        <translation>Folytatás</translation>
-    </message>
-    <message>
-        <location line="+2080"/>
-        <source>Save File and Run / Continue</source>
-        <translation>Fájl mentése és futtatása/folytatás</translation>
+        <location line="+5"/>
+        <source>Save File and Run/Continue</source>
+        <translation>Fájl mentése és futtatása/folytatása</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1855,12 +1897,12 @@ for write: %2.</source>
     <message>
         <location line="+4"/>
         <source>&amp;Help on Keyword</source>
-        <translation>&amp;Keresés súgóban</translation>
+        <translation>Kulcsszó &amp;súgóban</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>&amp;Documentation on Keyword</source>
-        <translation>Keresés &amp;dokumentációban</translation>
+        <translation>Kulcsszó a &amp;dokumentációban</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1873,15 +1915,15 @@ for write: %2.</source>
         <translation>Teljes fájl &amp;elérési út másolása</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+16"/>
         <source>Editor</source>
         <translation>Szerkesztő</translation>
     </message>
 </context>
 <context>
-    <name>octave::file_editor_tab</name>
+    <name>file_editor_tab</name>
     <message>
-        <location filename="../src/m-editor/file-editor-tab.cc" line="+159"/>
+        <location filename="../src/m-editor/file-editor-tab.cc" line="+160"/>
         <source>line:</source>
         <translation>sor:</translation>
     </message>
@@ -1901,38 +1943,39 @@ for write: %2.</source>
         <translation>sorvég:</translation>
     </message>
     <message>
-        <location line="+250"/>
+        <location line="+253"/>
         <source>Breakpoint condition</source>
         <translation>Töréspontfeltétel</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+70"/>
         <source>ERROR: </source>
         <translation>HIBA: </translation>
     </message>
     <message>
-        <location line="+62"/>
-        <location line="+1152"/>
-        <location line="+132"/>
-        <location line="+376"/>
-        <location line="+188"/>
-        <location line="+26"/>
-        <location line="+38"/>
-        <location line="+38"/>
+        <location line="+73"/>
+        <location line="+1204"/>
+        <location line="+148"/>
+        <location line="+20"/>
+        <location line="+437"/>
+        <location line="+111"/>
+        <location line="+128"/>
+        <location line="+59"/>
+        <location line="+36"/>
         <location line="+85"/>
         <location line="+36"/>
         <source>Octave Editor</source>
         <translation>Oktáv-szerkesztő</translation>
     </message>
     <message>
-        <location line="-2070"/>
+        <location line="-2263"/>
         <source>Cannot add breakpoint to modified or unnamed file.
 Save and add breakpoint, or cancel?</source>
         <translation>Nem lehet töréspontot hozzáadni a módosított vagy névtelen fájlhoz.
-Mentés és töréspont hozzáadása vagy törlés?</translation>
+Menteni és hozzáadni a töréspontot, vagy megszakítani?</translation>
     </message>
     <message>
-        <location line="+828"/>
+        <location line="+878"/>
         <source>Goto line</source>
         <translation>Ugrás sorra</translation>
     </message>
@@ -1942,7 +1985,7 @@ Mentés és töréspont hozzáadása vagy törlés?</translation>
         <translation>Sorszám</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+128"/>
         <source>Comment selected text</source>
         <translation>Megjegyzés hozzáfűzése a kijelölt szöveghez</translation>
     </message>
@@ -1954,15 +1997,15 @@ Mentés és töréspont hozzáadása vagy törlés?</translation>
 </translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+139"/>
         <location line="+53"/>
         <source>&lt;unnamed&gt;</source>
         <translation>&lt;névtelen&gt;</translation>
     </message>
     <message>
         <location line="-6"/>
-        <source>Do you want to cancel closing, save or discard the changes?</source>
-        <translation>Visszavonja a bezárást, elmenti vagy elveti a módosításokat?</translation>
+        <source>Do you want to cancel closing, save, or discard the changes?</source>
+        <translation>Szeretné visszavonni a bezárást, menteni vagy elvetni a módosításokat?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1971,33 +2014,46 @@ Mentés és töréspont hozzáadása vagy törlés?</translation>
   %1
 
 is about to be closed but has been modified.  %2</source>
-        <translation>A(z) %1 fájl bezárásra készül, de mentés nélkül módosult. %2</translation>
+        <translation>A fájl
+
+  %1
+
+bezárás előtt áll, de módosították.  %2</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+148"/>
+        <source>Unable to read file &apos;%1&apos;
+with selected encoding &apos;%2&apos;: %3</source>
+        <translation>Nem sikerült beolvasni a(z) „%1” fájlt
+„%2” kijelölt kódolással: %3</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>There were problems reading the file
 %1
 with the selected encoding %2.
 
 Modifying and saving the file might cause data loss!</source>
-        <translation>Problémák merültek fel a(z) %1 fájl megnyitásakor a(z) %2 kódolással.
+        <translation>Problémák adódtak a fájl olvasásával
+%1
+a kijelölt %2 kódolással.
 
 A fájl módosítása és mentése adatvesztést okozhat!</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Edit anyway</source>
-        <translation>&amp;Szerkesztés mégis</translation>
+        <translation>S&amp;zerkesztés mégis</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+39"/>
+        <location line="+44"/>
         <source>Chan&amp;ge encoding</source>
         <translation>Kódolás &amp;módosítása</translation>
     </message>
     <message>
-        <location line="-38"/>
-        <location line="+31"/>
+        <location line="-42"/>
+        <location line="+35"/>
         <source>&amp;Close</source>
         <translation>&amp;Bezárás</translation>
     </message>
@@ -2013,13 +2069,14 @@ for reloading the current file.
 
 This does not change the default encoding.
 </source>
-        <translation>Kérjük, jelöljön ki egy új kódolást a jelenlegi fájl újratöltéséhez.
+        <translation>Kérjük, adjon meg új kódolást
+a jelenlegi fájl újratöltéséhez.
 
 Ez nem változtatja meg az alapértelmezett kódolást.
 </translation>
     </message>
     <message>
-        <location line="+161"/>
+        <location line="+172"/>
         <source>Debug or Save</source>
         <translation>Hibakeresés vagy mentés</translation>
     </message>
@@ -2027,40 +2084,25 @@ Ez nem változtatja meg az alapértelmezett kódolást.
         <location line="+1"/>
         <source>This file is currently being executed.
 Quit debugging and save?</source>
-        <translation>Ez a fájl jelenleg fut.
-Kilép a hibakeresésből és elmenti?</translation>
+        <translation>Ez a fájl jelenleg végrehajtás alatt áll.
+Kilép a hibakeresésből és menti?</translation>
     </message>
     <message>
-        <location line="+167"/>
-        <source>Could not open file %1 for write:
+        <location line="+212"/>
+        <source>Could not open file %1 for writing:
 %2.</source>
-        <translation>Nem sikerült megnyitni a(z) %1 fájlt mentéshez:
+        <translation>Nem sikerült megnyitni a(z) %1 fájlt írásra:
 %2.</translation>
     </message>
     <message>
-        <location line="+214"/>
-        <source>The current encoding %1
-can not be applied.
-
-Please select another one!</source>
-        <translation>A jelenlegi %1 kódolás nem alkalmazható.
-
-Kérjük, jelöljön ki egy másikat!</translation>
+        <location line="+111"/>
+        <source>The changes could not be saved to the file
+%1</source>
+        <translation>A módosításokat nem sikerült elmenteni a fájlba
+%1</translation>
     </message>
     <message>
-        <location line="+38"/>
-        <source>The current editor contents can not be encoded
-with the selected encoding %1.
-Using it would result in data loss!
-
-Please select another one!</source>
-        <translation>A jelenlegi szerkesztő tartalmát nem lehet kódolni a(z) %1 kijelölt kódolással.
-Használata adatvesztést okozhat!
-
-Kérjük, jelöljön ki egy másikat!</translation>
-    </message>
-    <message>
-        <location line="-160"/>
+        <location line="+30"/>
         <source>Octave Files (*.m)</source>
         <translation>Oktáv-fájlok (*.m)</translation>
     </message>
@@ -2070,7 +2112,7 @@ Kérjük, jelöljön ki egy másikat!</translation>
         <translation>Minden fájl (*)</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+97"/>
         <source>&quot;%1&quot;
 is not a valid identifier.
 
@@ -2078,24 +2120,39 @@ If you keep this filename, you will not be able to
 call your script using its name as an Octave command.
 
 Do you want to choose another name?</source>
-        <translation>„%1” nem érvényes azonosító.
+        <translation>„%1”
+nem érvényes azonosító.
 
-Ha ezt a fájlnevet megtartja, a parancsfájl nem lesz hívható a nevét oktáv parancsként használva.
+Ha ezt a fájlnevet megtartja, a parancsfájl nem lesz
+hívható a nevét oktáv-parancsként használva.
 
 Más nevet szeretne választani?</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+59"/>
+        <source>The current editor contents can not be encoded
+with the selected encoding %1.
+Using it would result in data loss!
+
+Please select another one!</source>
+        <translation>A jelenlegi szerkesztő tartalma nem kódolható a
+%1 kijelölt kódolással.
+Használata adatvesztéshez vezet!
+
+Kérjük, válasszon másikat!</translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>%1
  already exists
 Do you want to overwrite it?</source>
         <translation>A(z) %1 fájl már létezik.
-Szeretné felülírni? </translation>
+Szeretné felülírni?</translation>
     </message>
     <message>
         <location line="+85"/>
         <source>It seems that &apos;%1&apos; has been modified by another application. Do you want to reload it?</source>
-        <translation>Úgy tűnik, hogy a(z) „%1” programot egy másik alkalmazás módosította. Szeretné újratölteni?</translation>
+        <translation>Úgy tűnik, hogy a(z) „%1” fájlt egy másik alkalmazás módosította. Szeretné újratölteni?</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -2111,13 +2168,20 @@ Figyelmeztetés: A szerkesztő tartalma módosult!</translation>
         <source>It seems that the file
 %1
 has been deleted or renamed. Do you want to save it now?%2</source>
-        <translation>Úgy tűnik, hogy a(z) %1 fájlt törölték vagy átnevezték. Szeretné most menteni? %2</translation>
+        <translation>Úgy tűnik, hogy a fájl
+%1
+törölve vagy átnevezve. Szeretné most menteni? %2</translation>
     </message>
 </context>
 <context>
-    <name>octave::files_dock_widget</name>
+    <name>files_dock_widget</name>
     <message>
-        <location filename="../src/files-dock-widget.cc" line="+77"/>
+        <location filename="../src/files-dock-widget.cc" line="-4"/>
+        <source>Could not rename file &quot;%1&quot; to &quot;%2&quot;.</source>
+        <translation>Nem sikerült átnevezni a(z) „%1” fájlt a következőre: „%2”.</translation>
+    </message>
+    <message>
+        <location line="+51"/>
         <source>File Browser</source>
         <translation>Fájltallózó</translation>
     </message>
@@ -2154,10 +2218,10 @@ has been deleted or renamed. Do you want to save it now?%2</source>
     <message>
         <location line="+26"/>
         <source>Enter the path or filename</source>
-        <translation>Adja meg az elérési utat vagy a fájlnevet</translation>
+        <translation>Elérési ut vagy fájlneve megadása</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>One directory up</source>
         <translation>Egy könyvtárral feljebb</translation>
     </message>
@@ -2169,7 +2233,7 @@ has been deleted or renamed. Do you want to save it now?%2</source>
     <message>
         <location line="+2"/>
         <source>Go to current Octave directory</source>
-        <translation>Ugrás a jelenlegi Oktáv könyvtárba</translation>
+        <translation>Ugrás a jelenlegi Oktáv-könyvtárba</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -2192,7 +2256,7 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <translation>Kezdőkönyvtár megjelenítése</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Set Browser Directory...</source>
         <translation>Könyvtártallózó beállítása…</translation>
     </message>
@@ -2204,35 +2268,40 @@ has been deleted or renamed. Do you want to save it now?%2</source>
     </message>
     <message>
         <location line="-418"/>
-        <location line="+431"/>
+        <location line="+430"/>
         <source>New File...</source>
         <translation>Új fájl…</translation>
     </message>
     <message>
-        <location line="-428"/>
-        <location line="+430"/>
+        <location line="-427"/>
+        <location line="+429"/>
         <source>New Directory...</source>
         <translation>Új könyvtár…</translation>
     </message>
     <message>
-        <location line="-375"/>
+        <location line="-377"/>
         <source>Double-click to open file/folder, right click for alternatives</source>
-        <translation>Kattintson duplán a fájl/mappa megnyitásához, jobb gombbal kattintson az alternatívákra</translation>
+        <translation>Kattintson duplán a fájl/mappa megnyitásához, jobb gombbal kattintson az egyéb lehetőségekért</translation>
     </message>
     <message>
-        <location line="+314"/>
+        <location line="+13"/>
+        <source>Rename...</source>
+        <translation>Átnevezés…</translation>
+    </message>
+    <message>
+        <location line="+304"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Open in System File Explorer</source>
-        <translation>Nyissa meg a rendszerfájlkezelőben</translation>
+        <translation>Megnyitás a rendszerfájlkezelőben</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Open in Text Editor</source>
-        <translation>Megnyitás szövegszerkesztőben</translation>
+        <translation>Megnyitás a szövegszerkesztőben</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2274,49 +2343,15 @@ has been deleted or renamed. Do you want to save it now?%2</source>
     <message>
         <location line="-4"/>
         <source>Remove from Path</source>
-        <translation>Elérési útról eltávolítása</translation>
+        <translation>Eltávolítás az elérési útról</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Rename...</source>
-        <translation>Átnevezés…</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+15"/>
         <source>Delete...</source>
         <translation>Törlés…</translation>
     </message>
     <message>
-        <location line="+117"/>
-        <source>Rename file/directory</source>
-        <translation>Fájl/könyvtár átnevezése</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Rename file/directory:
-</source>
-        <translation>Fájl/könyvtár átnevezése:
-</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>
- to: </source>
-        <translation>
- ehez: </translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Rename error</source>
-        <translation>Átnevezési hiba</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Could not rename file &quot;%1&quot; to &quot;%2&quot;.</source>
-        <translation>Nem sikerült átnevezni a(z) „%1” fájlt a következőre: „%2”.</translation>
-    </message>
-    <message>
-        <location line="+30"/>
+        <location line="+132"/>
         <location line="+11"/>
         <location line="+17"/>
         <source>Delete file/directory</source>
@@ -2352,9 +2387,9 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <translation>Nem sikerült törölni a(z) „%1” fájlt.</translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+186"/>
         <source>Set directory of file browser</source>
-        <translation>Állítsa be a fájltallózó könyvtárát</translation>
+        <translation>Fájlböngésző könyvtárbeállítása</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -2371,16 +2406,7 @@ has been deleted or renamed. Do you want to save it now?%2</source>
 </translation>
     </message>
     <message>
-        <location line="+18"/>
-        <source>Create folder in
-</source>
-        <comment>String ends with 
-!</comment>
-        <translation>Mappa létrehozása a következő helyen:
-</translation>
-    </message>
-    <message>
-        <location line="-16"/>
+        <location line="+2"/>
         <source>New File.txt</source>
         <translation>Új Fájl.txt</translation>
     </message>
@@ -2390,17 +2416,26 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <translation>Könyvtár létrehozása</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
+        <source>Create folder in
+</source>
+        <comment>String ends with 
+!</comment>
+        <translation>Mappa létrehozása a következő helyen:
+</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>New Directory</source>
         <translation>Új könyvtár</translation>
     </message>
 </context>
 <context>
-    <name>octave::final_page</name>
+    <name>final_page</name>
     <message>
-        <location filename="../src/welcome-wizard.cc" line="+316"/>
+        <location filename="../src/welcome-wizard.cc" line="+307"/>
         <source>Enjoy!</source>
-        <translation>Sok sikert!</translation>
+        <translation>Készen áll a használatra!</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -2421,13 +2456,13 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <location line="+7"/>
         <source>&lt;html&gt;&lt;body&gt;
 &lt;p&gt;We hope you find Octave to be a useful tool.&lt;/p&gt;
-&lt;p&gt;If you encounter problems, there are a number of ways to get help, including commercial support options, a mailing list, a wiki, and other community-based support channels.
+&lt;p&gt;If you encounter problems, there are a number of ways to get help, including commercial support options, a discussion board, a wiki, and other community-based support channels.
 You can find more information about each of these by visiting &lt;a href=&quot;https://octave.org/support.html&quot;&gt;https://octave.org/support.html&lt;/a&gt; (opens in external browser).&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;
-&lt;p&gt;Reméljük, hogy az Oktávot hasznos eszköznek találja.&lt;/p&gt;
-&lt;p&gt;Ha problémákat tapasztal, számos módon kérhet segítséget, beleértve a kereskedelmi támogatási lehetőségeket, a levelezőlistát, a wikit és más közösségi alapú támogatási csatornákat.
-Mindegyikről további információt a &lt;a href=&quot;https://octave.org/support.html&quot;&gt;https://octave.org/support.html&lt;/a&gt; címen talál (külső böngészőben nyílik meg).&lt;/p&gt;
+&lt;p&gt;Reméljük, hogy hasznos eszköznek találja az Oktávot.&lt;/p&gt;
+&lt;p&gt;Ha hibákat tapasztal, számos módon kaphat segítséget, beleértve a kereskedelmi támogatási lehetőségeket, egy vitafórumot, egy wikit és más közösségi alapú támogatási csatornákat.
+Ezekről további információkat találhat a &lt;a href=&quot;https://octave.org/support.html&quot;&gt;https://octave.org/support.html&lt;/a&gt; oldalon (külső böngészőben nyílik meg).&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -2437,7 +2472,7 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
 &lt;p&gt;For more information about Octave:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Visit &lt;a href=&quot;https://octave.org&quot;&gt;https://octave.org&lt;/a&gt; (opens in external browser)&lt;/li&gt;
-&lt;li&gt;Get the documentation online as &lt;a href=&quot;https://www.gnu.org/software/octave/doc/interpreter/index.html&quot;&gt;html&lt;/a&gt;- or &lt;a href=&quot;https://www.gnu.org/software/octave/octave.pdf&quot;&gt;pdf&lt;/a&gt;-document (opens in external browser)&lt;/li&gt;
+&lt;li&gt;Get the documentation online in &lt;a href=&quot;https://www.gnu.org/software/octave/doc/interpreter/index.html&quot;&gt;HTML&lt;/a&gt; or &lt;a href=&quot;https://www.gnu.org/software/octave/octave.pdf&quot;&gt;PDF&lt;/a&gt; format (links open in external browser)&lt;/li&gt;
 &lt;li&gt;Open the documentation browser of the Octave GUI with the help menu&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
@@ -2445,170 +2480,147 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
 &lt;/head&gt;&lt;body&gt;
 &lt;p&gt;További információ az Oktávról:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Látogassa meg a &lt;a href=&quot;https://octave.org&quot;&gt;https://octave.org&lt;/a&gt; oldalt (külső böngészőben nyílik meg)&lt;/li&gt;
-&lt;li&gt;Szerezze be a dokumentációt online &lt;a href=&quot;https://www.gnu.org/software/octave/doc/interpreter/index.html&quot;&gt;html&lt;/a&gt;- vagy &lt;a href=&quot;https://www.gnu.org/software/octave/octave.pdf&quot;&gt;pdf&lt;/a&gt;-dokumentumként (külső böngészőben nyílik meg)&lt;/li&gt;
-&lt;li&gt;Nyissa meg az Octave GUI dokumentációs böngészőjét a súgó menüvel&lt;/li&gt;
+&lt;li&gt;Látogassa meg a &lt;a href=&quot;https://octave.org&quot;&gt;https://octave.org&lt;/a&gt; webhelyet (külső böngészőben nyílik meg)&lt;/li&gt;
+&lt;li&gt;Szerezze be online a dokumentációt &lt;a href=&quot;https://www.gnu.org/software/octave/doc/interpreter/index.html&quot;&gt;HTML&lt;/a&gt; vagy &lt;a href=&quot;https://www. gnu.org/software/octave/octave.pdf&quot;&gt;PDF&lt;/a&gt; formátum (a hivatkozások külső böngészőben nyílnak meg)&lt;/li&gt;
+&lt;li&gt;Nyissa meg az Oktáv grafikus felhasználói felület dokumentációs böngészőjét a súgó menüvel&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
-    <name>octave::find_dialog</name>
+    <name>find_dialog</name>
     <message>
-        <location filename="../src/m-editor/find-dialog-d.cc" line="+96"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+96"/>
+        <location filename="../src/m-editor/find-dialog.cc" line="+93"/>
         <source>Editor: Find and Replace</source>
         <translation>Szerkesztő: Keresés és csere</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+3"/>
-        <source>Find &amp;what:</source>
-        <translation>Ke&amp;resett szöveg:</translation>
+        <location line="+2"/>
+        <source>&amp;Find:</source>
+        <translation>&amp;Keresés:</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
-        <source>Enter text to search for</source>
-        <translation>Írja be a keresett szöveget</translation>
+        <source>Enter search text</source>
+        <translation>Keresési szöveg megadása</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+6"/>
-        <source>Re&amp;place with:</source>
-        <translation>Cs&amp;ere erre:</translation>
+        <source>Re&amp;place:</source>
+        <translation>&amp;Csere:</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
-        <source>Enter new text replacing search hits</source>
-        <translation>Írjon be új szöveget, amely helyettesíti a talált kereséseket</translation>
+        <source>Enter replacement text</source>
+        <translation>Csereszöveg megadása</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+10"/>
         <source>Match &amp;case</source>
         <translation>Kis&amp;betűk és nagybetűk megkülönböztetése</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>Search from &amp;start</source>
         <translation>Keresés az &amp;elejétől</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>&amp;Wrap while searching</source>
         <translation>Keresés &amp;tördelése</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
-        <source>&amp;Find Next</source>
-        <translation>&amp;Következő keresése</translation>
+        <source>Find &amp;Next</source>
+        <translation>Kö&amp;vetkező találat</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
-        <source>Find &amp;Previous</source>
-        <translation>&amp;Előző keresése</translation>
+        <source>Find Pre&amp;vious</source>
+        <translation>Elő&amp;ző találat</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>&amp;Replace</source>
         <translation>&amp;Csere</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>Replace &amp;All</source>
         <translation>&amp;Az összes cseréje</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
         <source>&amp;More...</source>
         <translation>&amp;További lehetőségek…</translation>
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+13"/>
         <source>&amp;Whole words</source>
-        <translation>&amp;Teljes szavak</translation>
+        <translation>Csak &amp;teljes szavak</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
-        <source>Regular E&amp;xpressions</source>
-        <translation>Reguláris ki&amp;fejezések</translation>
+        <source>Regular &amp;expressions</source>
+        <translation>Szabványos ki&amp;fejezések</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>Search &amp;backward</source>
-        <translation>Keresés &amp;felfelé</translation>
+        <translation>Keresés &amp;visszafelé</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>Search se&amp;lection</source>
-        <translation>Keresés &amp;kijelölése</translation>
+        <translation>&amp;Kijelölés keresése</translation>
     </message>
     <message>
-        <location line="+179"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+179"/>
+        <location line="+171"/>
         <source>Search from end</source>
         <translation>Keresés a végétől</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
         <source>Search from start</source>
         <translation>Keresés az elejétől</translation>
     </message>
     <message>
         <location line="+306"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+306"/>
         <source>Replace Result</source>
-        <translation>Cserélje ki az eredményt</translation>
+        <translation>Eredmény csere</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>%1 items replaced</source>
         <translation>%1 elem cserélve</translation>
     </message>
     <message>
         <location line="+14"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+14"/>
         <source>Find Result</source>
         <translation>Keresés eredménye</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>No more matches found</source>
         <translation>Nincs több találat</translation>
     </message>
 </context>
 <context>
-    <name>octave::find_files_dialog</name>
+    <name>find_files_dialog</name>
     <message>
         <location filename="../src/find-files-dialog.cc" line="+61"/>
         <source>Find Files</source>
         <translation>Fájlok keresése</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+9"/>
         <source>Named:</source>
         <translation>Elnevezett:</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enter the filename search expression</source>
-        <translation>Adja meg a fájlnév keresési kifejezést</translation>
+        <translation>Fájlnév keresési kifejezésének megadása</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -2618,7 +2630,7 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
     <message>
         <location line="+5"/>
         <source>Enter the start directory</source>
-        <translation>Adja meg a kezdőkönyvtárat</translation>
+        <translation>Kezdőkönyvtár megadása</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2628,7 +2640,7 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
     <message>
         <location line="+1"/>
         <source>Browse for start directory</source>
-        <translation>Tallózás a kezdőkönyvtár beállításához</translation>
+        <translation>Tallózás a kezdőkönyvtárért</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -2636,39 +2648,41 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
         <translation>Alkönyvtárak keresése</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Search recursively through directories for matching files</source>
         <translation>Rekurzív keresése a fájlok egyeztetéséhez a könyvtárakban</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Include directory names</source>
-        <translation>Tartalmazza a könyvtárneveket</translation>
+        <translation>Könyvtárnevek tartalmazása</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Include matching directories in search results</source>
         <translation>Tartalmazza könyvtárak egyeztetése a keresési eredményekbe</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Name case insensitive</source>
-        <translation>Kis- és nagybetűk használatától független név</translation>
+        <location line="+3"/>
+        <location line="+12"/>
+        <source>Ignore case</source>
+        <translation>Kis- és nagybetűk figyelmen kívül hagyása</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Set matching name is case insensitive</source>
-        <translation>Név egyeztetése beállítása kis- és nagybetűk használatától független</translation>
+        <location line="-11"/>
+        <location line="+12"/>
+        <source>Perform case insensitive match</source>
+        <translation>Kis- és nagybetűk közötti egyezés végrehajtása</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-9"/>
         <source>Contains text:</source>
-        <translation>Szöveget tartalmaz:</translation>
+        <translation>Szövegrészlet:</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Enter the file content search expression</source>
-        <translation>Adja meg a fájltartalom keresési kifejezést</translation>
+        <source>Include only files containing specified text in search results</source>
+        <translation>Csak a megadott szöveget tartalmazó fájlokat jelenítse meg a keresési eredmények között</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -2676,17 +2690,7 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
         <translation>Egyező szöveg</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Text case insensitive</source>
-        <translation>Kis- és nagybetűk használatától független szöveg</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Set text content is case insensitive</source>
-        <translation>A szöveges tartalom kis- és nagybetűk használatától független</translation>
-    </message>
-    <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Search results</source>
         <translation>Keresés eredménye</translation>
     </message>
@@ -2712,21 +2716,21 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
     </message>
     <message>
         <location line="+1"/>
-        <source>Stop searching</source>
+        <source>Stop search</source>
         <translation>Keresés leállítása</translation>
     </message>
     <message>
         <location line="+16"/>
-        <source>Filename/location</source>
+        <source>Filename/Location</source>
         <translation>Fájlnév/hely</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>File contents</source>
-        <translation>Fájlok tartalma</translation>
+        <translation>Fájl tartalma</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+98"/>
         <source>Searching...</source>
         <translation>Keresés folyamatban van…</translation>
     </message>
@@ -2736,13 +2740,13 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
         <translation>%1 találat</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+17"/>
         <source>Set search directory</source>
         <translation>Keresési könyvtár beállítása</translation>
     </message>
 </context>
 <context>
-    <name>octave::find_files_model</name>
+    <name>find_files_model</name>
     <message>
         <location filename="../src/find-files-model.cc" line="+93"/>
         <source>Filename</source>
@@ -2755,14 +2759,37 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
     </message>
 </context>
 <context>
-    <name>octave::history_dock_widget</name>
+    <name>gui_settings</name>
+    <message>
+        <location filename="../src/gui-settings.cc" line="+775"/>
+        <source>Error %1 creating the settings file
+%2
+Make sure you have read and write permissions to
+%3
+
+Octave GUI must be closed now.</source>
+        <translation>Hiba %1 a beállítási fájl létrehozásakor
+%2
+Győződjön meg arról, hogy rendelkezik olvasási és írási jogosultsággal
+%3
+
+Az Oktáv grafikus felhasználói felületét most be kell zárni.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Octave Critical Error</source>
+        <translation>Kritikus Oktáv-hiba</translation>
+    </message>
+</context>
+<context>
+    <name>history_dock_widget</name>
     <message>
         <location filename="../src/history-dock-widget.cc" line="+53"/>
         <source>Browse and search the command history.</source>
         <translation>Parancselőzmények tallózása és keresése.</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+101"/>
         <source>Copy</source>
         <translation>Másolás</translation>
     </message>
@@ -2777,7 +2804,7 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
         <translation>Parancsfájl létrehozása</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Hide filter</source>
         <translation>Szűrő elrejtése</translation>
     </message>
@@ -2787,14 +2814,14 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
         <translation>Szűrő megjelenítése</translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+121"/>
         <source>Double-click a command to transfer it to the Command Window.</source>
         <translation>Kattintson duplán egy parancsra a parancsablakba való átvitelhez.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Enter text to filter the command history</source>
-        <translation>Írjon be szöveget a parancselőzmények szűréséhez</translation>
+        <translation>Szöveg megadása a parancselőzmények szűréséhez</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -2802,15 +2829,15 @@ Mindegyikről további információt a &lt;a href=&quot;https://octave.org/suppo
         <translation>Szűrő</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Command History</source>
         <translation>Parancselőzmények</translation>
     </message>
 </context>
 <context>
-    <name>octave::initial_page</name>
+    <name>initial_page</name>
     <message>
-        <location filename="../src/welcome-wizard.cc" line="-186"/>
+        <location filename="../src/welcome-wizard.cc" line="-185"/>
         <source>Welcome to Octave!</source>
         <translation>Isten hozott az Oktávnál!</translation>
     </message>
@@ -2833,70 +2860,70 @@ Click &apos;Next&apos; to create a configuration file and launch Octave.&lt;/p&g
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;
 &lt;p&gt;Úgy tűnik, először használja az Oktáv grafikus felhasználói felületét ezen az eszközén.
-Kattintson a „Tovább” gombra a konfigurációs fájl létrehozásához és az Oktáv elindításához.&lt;/p&gt;
+Kattintson a „Tovább” gombra a beállítási fájl létrehozásához és az Oktáv elindításához.&lt;/p&gt;
 &lt;p&gt;A beállítási fájl a található a következő címen:&lt;br&gt;%1&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
-    <name>octave::label_dock_widget</name>
+    <name>label_dock_widget</name>
     <message>
-        <location filename="../src/octave-dock-widget.cc" line="+79"/>
-        <source>Undock widget</source>
+        <location filename="../src/octave-dock-widget.cc" line="+82"/>
+        <source>Undock Widget</source>
         <translation>Vezérlő rögzítésének feloldása</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Close widget</source>
+        <source>Close Widget</source>
         <translation>Vezérlő bezárása</translation>
     </message>
 </context>
 <context>
-    <name>octave::main_window</name>
+    <name>main_window</name>
     <message>
-        <location filename="../src/main-window.cc" line="+658"/>
-        <source>Save Workspace As</source>
-        <translation>Munkaterület mentése másként</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Load Workspace</source>
-        <translation>Munkaterület megnyitása</translation>
-    </message>
-    <message>
-        <location line="+204"/>
-        <location line="+1606"/>
-        <source>About Octave</source>
-        <translation>Az Oktáv névjegye</translation>
-    </message>
-    <message>
-        <location line="-1993"/>
-        <source>Octave</source>
-        <translation>Oktáv</translation>
-    </message>
-    <message>
-        <location line="-344"/>
+        <location filename="../src/main-window.cc" line="+155"/>
         <source>Profiler</source>
         <translation>Profilkészítő</translation>
     </message>
     <message>
-        <location line="+345"/>
-        <source>Are you sure you want to exit Octave?</source>
-        <translation>Biztosan kilép az oktávból?</translation>
+        <location line="+347"/>
+        <source>Octave</source>
+        <translation>Oktáv</translation>
     </message>
     <message>
-        <location line="+553"/>
-        <location line="+1513"/>
+        <location line="+1"/>
+        <source>Are you sure you want to exit Octave?</source>
+        <translation>Biztosan kilép az Oktávból?</translation>
+    </message>
+    <message>
+        <location line="+152"/>
+        <source>Save Workspace As</source>
+        <translation>Munkaterület mentése másként</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Load Workspace</source>
+        <translation>Munkaterület megnyitása</translation>
+    </message>
+    <message>
+        <location line="+199"/>
+        <location line="+1667"/>
+        <source>About Octave</source>
+        <translation>Az Oktáv névjegye</translation>
+    </message>
+    <message>
+        <location line="-1479"/>
+        <location line="+1555"/>
         <source>Browse directories</source>
         <translation>Könyvtárak tallózása</translation>
     </message>
     <message>
-        <location line="-1260"/>
+        <location line="-1295"/>
         <source>Octave Files (*.m);;All Files (*)</source>
         <translation>Oktáv-fájlok (*.m);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+39"/>
         <source>New Function</source>
         <translation>Új függvény</translation>
     </message>
@@ -2908,11 +2935,11 @@ Kattintson a „Tovább” gombra a konfigurációs fájl létrehozásához és 
 </translation>
     </message>
     <message>
-        <location line="+50"/>
-        <source>%1 is a built-in, compiled or inline
+        <location line="+62"/>
+        <source>%1 is a built-in, compiled, or inline
 function and can not be edited.</source>
-        <translation>A(z) „%1” egy beépített, összeállított vagy
-beágyazott függvény és nem szerkeszthető.</translation>
+        <translation>A(z) %1 egy beépített, lefordított vagy soron belüli
+függvény, és nem szerkeszthető.</translation>
     </message>
     <message>
         <location line="+41"/>
@@ -2920,12 +2947,12 @@ beágyazott függvény és nem szerkeszthető.</translation>
         <translation>Nem található a(z) %1 függvény</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>Octave Editor</source>
         <translation>Oktáv-szerkesztő</translation>
     </message>
     <message>
-        <location line="+689"/>
+        <location line="+709"/>
         <source>&amp;File</source>
         <translation>&amp;Fájl</translation>
     </message>
@@ -2937,7 +2964,6 @@ beágyazott függvény és nem szerkeszthető.</translation>
     <message>
         <location line="+2"/>
         <source>Open an existing file in editor</source>
-        <translatorcomment>Is `existing` redundant as if the file didn&apos;t exist, you couldn&apos;t open it? Thank you</translatorcomment>
         <translation>Meglévő fájl megnyitása a szerkesztőben</translation>
     </message>
     <message>
@@ -2981,7 +3007,7 @@ beágyazott függvény és nem szerkeszthető.</translation>
         <translation>S&amp;zerkesztés</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Undo</source>
         <translation>Visszavonás</translation>
     </message>
@@ -3006,7 +3032,7 @@ beágyazott függvény és nem szerkeszthető.</translation>
         <translation>Vágólap kiürítése</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Find Files...</source>
         <translation>Fájlok keresése…</translation>
     </message>
@@ -3027,8 +3053,8 @@ beágyazott függvény és nem szerkeszthető.</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Set Path</source>
-        <translation>Elérési útvonal beállítása</translation>
+        <source>Set Path...</source>
+        <translation>Elérési útvonal beállítása…</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -3036,7 +3062,7 @@ beágyazott függvény és nem szerkeszthető.</translation>
         <translation>Beállítások…</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+54"/>
         <source>De&amp;bug</source>
         <translation>&amp;Hibakeresés</translation>
     </message>
@@ -3087,7 +3113,7 @@ beágyazott függvény és nem szerkeszthető.</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>&amp;Show Profile Data</source>
+        <source>&amp;Show Profiler Data</source>
         <translation>Profiladatok &amp;megjelenítése</translation>
     </message>
     <message>
@@ -3193,8 +3219,8 @@ beágyazott függvény és nem szerkeszthető.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Contribute</source>
-        <translation>Hozzájárulás</translation>
+        <source>Get Involved</source>
+        <translation>Részt venni</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3234,7 +3260,7 @@ beágyazott függvény és nem szerkeszthető.</translation>
     <message>
         <location line="+21"/>
         <source>Enter directory name</source>
-        <translation>Adja meg a könyvtár nevét</translation>
+        <translation>Könyvtárnév megadása</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -3242,15 +3268,15 @@ beágyazott függvény és nem szerkeszthető.</translation>
         <translation>Jelenlegi könyvtár: </translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>One directory up</source>
         <translation>Egy könyvtárral feljebb</translation>
     </message>
 </context>
 <context>
-    <name>octave::news_reader</name>
+    <name>news_reader</name>
     <message>
-        <location filename="../src/news-reader.cc" line="+115"/>
+        <location filename="../src/news-reader.cc" line="+106"/>
         <source>&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;
@@ -3271,7 +3297,7 @@ when you have a connection to the web (link opens in an external browser).
 &lt;p&gt;
 A legfrissebb hírekért ellenőrizze
 &lt;a href=&quot;https://octave.org/community-news.html&quot;&gt;https://octave.org/community-news.html&lt;/a&gt;
-amikor csatlakozik az internethez (a link külső böngészőben nyílik meg).
+amikor csatlakozik az internethez (a hivatkozás külső böngészőben nyílik meg).
 &lt;/p&gt;
 &lt;p&gt;
 &lt;small&gt;&lt;em&gt;&amp;mdash; Az Oktáv fejlesztők, </translation>
@@ -3287,47 +3313,188 @@ Connecting to the web to display the latest Octave Community news has been disab
 For the latest news, please check
 &lt;a href=&quot;https://octave.org/community-news.html&quot;&gt;https://octave.org/community-news.html&lt;/a&gt;
 when you have a connection to the web (link opens in an external browser)
-or enable web connections for news in Octave&apos;s network settings dialog.
+or enable web connections for news in Octave&apos;s network settings tab.
 &lt;/p&gt;
 &lt;p&gt;
 &lt;small&gt;&lt;em&gt;&amp;mdash; The Octave Developers, </source>
         <translation>&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;
-Az internethez való csatlakozás a legfrissebb Oktáv közösségi hírek megjelenítéséhez le van tiltva.
+A legfrissebb Oktáv-közösségi hírek megjelenítéséhez való internetkapcsolat letiltásra került.
 &lt;/p&gt;
 &lt;p&gt;
-A legfrissebb hírekért ellenőrizze
+A legfrissebb hírekért kérjük, látogasson el a
 &lt;a href=&quot;https://octave.org/community-news.html&quot;&gt;https://octave.org/community-news.html&lt;/a&gt;
-ha van internetkapcsolata (a link külső böngészőben nyílik meg)
-vagy engedélyezze a webes kapcsolatokat a hírekhez az Oktáv hálózati beállításai párbeszédpanelen.
+oldalra, ha van kapcsolata a weben (a hivatkozás külső böngészőben nyílik meg),
+vagy engedélyezze a webkapcsolatokat a hírekhez az Oktáv hálózati beállítások lapján.
 &lt;/p&gt;
 &lt;p&gt;
-&lt;small&gt;&lt;em&gt;&amp;mdash; Az Oktáv fejlesztők, </translation>
+&lt;small&gt;&lt;em&gt;&amp;mdash; Az Oktáv fejlesztői, </translation>
     </message>
 </context>
 <context>
-    <name>octave::octave_dock_widget</name>
+    <name>octave::settings_dialog</name>
     <message>
-        <location filename="../src/octave-dock-widget.cc" line="+145"/>
-        <source>Hide widget</source>
+        <location filename="../src/gui-preferences-ed.h" line="+163"/>
+        <source>Top</source>
+        <translation>Fel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Bottom</source>
+        <translation>Le</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Left</source>
+        <translation>Balra</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Right</source>
+        <translation>Jobbra</translation>
+    </message>
+    <message>
+        <location filename="../src/gui-preferences-cs.h" line="+60"/>
+        <location filename="../src/gui-preferences-ve.h" line="+55"/>
+        <source>Foreground</source>
+        <translation>Előtér</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../src/gui-preferences-ve.h" line="+1"/>
+        <source>Background</source>
+        <translation>Háttér</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selection</source>
+        <translation>Kijelölés</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cursor</source>
+        <translation>Jelölő</translation>
+    </message>
+    <message>
+        <location filename="../src/gui-preferences-ve.h" line="+1"/>
+        <source>Selected Foreground</source>
+        <translation>Kijelölt előtér</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selected Background</source>
+        <translation>Kijelölt háttér</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Alternating Background</source>
+        <translation>Változó háttér</translation>
+    </message>
+    <message>
+        <location filename="../src/gui-preferences-ws.h" line="+75"/>
+        <source>argument</source>
+        <translation>Argumentum</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>global</source>
+        <translation>Globális</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>persistent</source>
+        <translation>tartós</translation>
+    </message>
+    <message>
+        <location filename="../src/gui-preferences-global.h" line="+179"/>
+        <source>Environment Variables</source>
+        <translation>Környezeti változók</translation>
+    </message>
+    <message>
+        <location filename="../src/gui-preferences-sd.h" line="+41"/>
+        <source>Second color mode (light/dark)</source>
+        <translation>Második színmód (világos/sötét)</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Switch to a second set of colors.
+Useful for defining light/dark modes.
+Discards non-applied current changes!</source>
+        <translation>Váltson egy második színkészletre.
+Hasznos a világos/sötét módok meghatározásához.
+Elveti a nem alkalmazott jelenlegi változtatásokat!</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Reload the default colors,
+depends on currently selected mode.</source>
+        <translation>Alapértelmezett színek újratöltése,
+a jelenleg kijelölt módtól függ.</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Reload the default style values,
+depends on currently selected mode.</source>
+        <translation>Alapértelmezett stílusértékek újratöltése,
+a jelenleg kijelölt módtól függ.</translation>
+    </message>
+    <message>
+        <location line="-13"/>
+        <source>&amp;Reload default colors</source>
+        <translation>Alapértelmezett színek új&amp;ratöltése</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>&amp;Reload default styles</source>
+        <translation>Alapértelmezett stílusok új&amp;ratöltése</translation>
+    </message>
+</context>
+<context>
+    <name>octave::workspace_view</name>
+    <message>
+        <location filename="../src/gui-preferences-ws.h" line="-27"/>
+        <source>Class</source>
+        <translation>Osztály</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dimension</source>
+        <translation>Méret</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Value</source>
+        <translation>Érték</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Attribute</source>
+        <translation>Tulajdonság</translation>
+    </message>
+</context>
+<context>
+    <name>octave_dock_widget</name>
+    <message>
+        <location filename="../src/octave-dock-widget.cc" line="+144"/>
+        <source>Hide Widget</source>
         <translation>Vezérlő elrejtése</translation>
     </message>
     <message>
-        <location line="+82"/>
-        <source>Dock widget</source>
+        <location line="+81"/>
+        <source>Dock Widget</source>
         <translation>Vezérlő rögzítése</translation>
     </message>
     <message>
-        <location line="+59"/>
-        <source>Undock widget</source>
+        <location line="+58"/>
+        <source>Undock Widget</source>
         <translation>Vezérlő rögzítésének feloldása</translation>
     </message>
 </context>
 <context>
-    <name>octave::octave_qscintilla</name>
+    <name>octave_qscintilla</name>
     <message>
-        <location filename="../src/m-editor/octave-qscintilla.cc" line="+298"/>
+        <location filename="../src/m-editor/octave-qscintilla.cc" line="+299"/>
         <source>Help on</source>
         <translation>Segítség kérése ehhez:</translation>
     </message>
@@ -3347,7 +3514,7 @@ vagy engedélyezze a webes kapcsolatokat a hírekhez az Oktáv hálózati beáll
         <translation>dbstop ha…</translation>
     </message>
     <message>
-        <location line="+503"/>
+        <location line="+524"/>
         <source>Octave Editor</source>
         <translation>Oktáv-szerkesztő</translation>
     </message>
@@ -3358,19 +3525,19 @@ Make sure you have write access to temp. directory
 %1
 
 &quot;Run Selection&quot; requires temporary files.</source>
-        <translation>Az ideiglenes fájlok létrehozása nem sikerült.
+        <translation>Nem sikerült az ideiglenes fájlok létrehozása.
 Győződjön meg arról, hogy rendelkezik írási jogosultsággal a(z) %1 ideiglenes könyvtárhoz.
 
 A „Kijelölés futtatása” ideiglenes fájlokat igényel.</translation>
     </message>
     <message>
-        <location line="+286"/>
+        <location line="+306"/>
         <source>Press &apos;%1&apos; to replace all occurrences of &apos;%2&apos; with &apos;%3&apos;.</source>
         <translation>Cserélése a(z) „%2” elem minden olyan előfordulását a(z) „%3” elemmel, a(z) „%1” gomb megnyomással.</translation>
     </message>
 </context>
 <context>
-    <name>octave::octave_txt_lexer</name>
+    <name>octave_txt_lexer</name>
     <message>
         <location filename="../src/m-editor/octave-txt-lexer.cc" line="+41"/>
         <source>Default</source>
@@ -3378,9 +3545,9 @@ A „Kijelölés futtatása” ideiglenes fájlokat igényel.</translation>
     </message>
 </context>
 <context>
-    <name>octave::qt_interpreter_events</name>
+    <name>qt_interpreter_events</name>
     <message>
-        <location filename="../src/qt-interpreter-events.cc" line="+337"/>
+        <location filename="../src/qt-interpreter-events.cc" line="+338"/>
         <location line="+5"/>
         <location line="+2"/>
         <source>Create</source>
@@ -3397,7 +3564,9 @@ A „Kijelölés futtatása” ideiglenes fájlokat igényel.</translation>
         <source>File
 %1
 does not exist. Do you want to create it?</source>
-        <translation>A(z) %1 fájl nem létezik. Kívánja létrehozni?</translation>
+        <translation>Fájl
+%1
+nem létezik. Szeretné létrehozni?</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -3407,7 +3576,7 @@ does not exist. Do you want to create it?</source>
     <message>
         <location line="+19"/>
         <source>The file %1 does not exist in the load path.  To run or debug the function you are editing, you must either change to the directory %2 or add that directory to the load path.</source>
-        <translation>A(z) %1 fájl nem létezik a betöltési útvonalon. A szerkesztett függvény futtatásához vagy hibakereséséhez vagy át kell váltania a(z) %2 könyvtárba, vagy hozzá kell adnia a könyvtárat a betöltési útvonalhoz.</translation>
+        <translation>A(z) %1 fájl nem létezik a betöltési elérési úton. A szerkesztett függvény futtatásához vagy hibakereséséhez vagy át kell váltania a(z) %2 könyvtárba, vagy hozzá kell adnia a könyvtárat a betöltési útvonalhoz.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3431,9 +3600,9 @@ does not exist. Do you want to create it?</source>
     </message>
 </context>
 <context>
-    <name>octave::release_notes</name>
+    <name>release_notes</name>
     <message>
-        <location filename="../src/release-notes.cc" line="+80"/>
+        <location filename="../src/release-notes.cc" line="+84"/>
         <source>The release notes file &apos;%1&apos; is empty.</source>
         <translation>A kiadási megjegyzések fájlja „%1” üres.</translation>
     </message>
@@ -3443,37 +3612,15 @@ does not exist. Do you want to create it?</source>
         <translation>A kiadási megjegyzések fájlja „%1” nem olvasható.</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Octave Release Notes</source>
         <translation>Oktáv kiadási megjegyzések</translation>
     </message>
 </context>
 <context>
-    <name>octave::resource_manager</name>
+    <name>set_path_dialog</name>
     <message>
-        <location filename="../src/resource-manager.cc" line="+442"/>
-        <source>The settings file
-%1
-does not exist and can not be created.
-Make sure you have read and write permissions to
-%2
-
-Octave GUI must be closed now.</source>
-        <translation>A(z) %1 beállításfájl nem létezik, és nem hozható létre.
-Győződjön meg arról, hogy olvasási és írási jogosultsággal rendelkezik a %2 számára
-
-Az oktáv grafikus felhasználói felületét most be kell zárni.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Octave Critical Error</source>
-        <translation>Kritikus Oktáv-hiba</translation>
-    </message>
-</context>
-<context>
-    <name>octave::set_path_dialog</name>
-    <message>
-        <location filename="../src/set-path-dialog.cc" line="+65"/>
+        <location filename="../src/set-path-dialog.cc" line="+64"/>
         <source>Set Path</source>
         <translation>Elérési útvonal beállítása</translation>
     </message>
@@ -3484,28 +3631,28 @@ Az oktáv grafikus felhasználói felületét most be kell zárni.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Add Folder...</source>
-        <translation>Mappa hozzáadása…</translation>
+        <source>Add Directory...</source>
+        <translation>Könyvtár hozzáadása…</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Single Folder</source>
-        <translation>Egyetlen mappa</translation>
+        <source>Single Directory</source>
+        <translation>Egyetlen könyvtár</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Folder With Subfolders</source>
-        <translation>Mappa almappákkal</translation>
+        <source>Directory With Subdirectories</source>
+        <translation>Könyvtár alkönyvtárakkal</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Move to Top</source>
-        <translation>Elejére</translation>
+        <translation>Áthelyezés felülre</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Move to Bottom</source>
-        <translation>Végére</translation>
+        <translation>Áthelyezés alulra</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3548,32 +3695,947 @@ Az oktáv grafikus felhasználói felületét most be kell zárni.</translation>
         <translation>Minden módosítás visszaállítása</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
         <source>Open Directory</source>
         <translation>Könyvtár megnyitása</translation>
     </message>
 </context>
 <context>
-    <name>octave::settings_dialog</name>
+    <name>settings_dialog</name>
     <message>
-        <location filename="../src/settings-dialog.cc" line="-767"/>
-        <source>Octave Preferences</source>
-        <translation>Oktáv beállításai</translation>
+        <location filename="../src/settings-dialog.ui" line="+45"/>
+        <location line="+834"/>
+        <location line="+1909"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2204"/>
+        <location line="+11"/>
+        <location line="+137"/>
+        <source>General</source>
+        <translation>Általános</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Unable to save preferences.  Missing preferences file or unknown directory.</source>
-        <translation>Nem sikerült menteni a beállításokat. Hiányzó beállításfájl vagy ismeretlen könyvtár.</translation>
+        <location line="-2390"/>
+        <location filename="../src/ui-settings-dialog.h" line="-164"/>
+        <source>Octave logo only</source>
+        <translation>Kizárólag oktáv embléma</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Letter icons</source>
+        <translation>Betű ikonok</translation>
+    </message>
+    <message>
+        <location line="-334"/>
+        <location filename="../src/ui-settings-dialog.h" line="-17"/>
+        <source>Dock widget title bar</source>
+        <translation>Vezérlő rögzítőcímsora</translation>
+    </message>
+    <message>
+        <location line="+72"/>
+        <location filename="../src/ui-settings-dialog.h" line="+5"/>
+        <source>Small</source>
+        <translation>Kicsi</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Large</source>
+        <translation>Nagy</translation>
+    </message>
+    <message>
+        <location line="+105"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Custom style</source>
+        <translation>Egyéni stílus</translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>3D</source>
+        <translation>3D</translation>
+    </message>
+    <message>
+        <location line="+558"/>
+        <location filename="../src/ui-settings-dialog.h" line="+118"/>
+        <source>Editor</source>
+        <translation>Szerkesztő</translation>
+    </message>
+    <message>
+        <location line="+488"/>
+        <location line="+140"/>
+        <location filename="../src/ui-settings-dialog.h" line="-58"/>
+        <location line="+9"/>
+        <source>This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in the default font. It may not work very well if styles use proportional fonts or if varied font sizes or bold, italic and normal texts are used.</source>
+        <translation>Ez jól működik rögzített szélességű betűkészleteknél. A vonalat az alapértelmezett betűkészlet szóköz karaktereinek szélessége alapján kell megrajzolni. Előfordulhat, hogy nem működik jól, ha a stílusok arányos betűkészleteket használnak, vagy ha különböző betűméreteket vagy vastag, dőlt és normál szövegeket használnak.</translation>
+    </message>
+    <message>
+        <location line="-535"/>
+        <location filename="../src/ui-settings-dialog.h" line="-34"/>
+        <source>Enable Code Folding</source>
+        <translation>Kódrészletek bezárásai engedélyezése</translation>
+    </message>
+    <message>
+        <location line="+1059"/>
+        <location filename="../src/ui-settings-dialog.h" line="+73"/>
+        <source>Windows (CRLF)</source>
+        <translation>Windows (CR LF karakterpár)</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Legacy Mac (CR)</source>
+        <translation>Örökölt Mac (CR karakter)</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Unix (LF)</source>
+        <translation>Unix (LF karakter)</translation>
+    </message>
+    <message>
+        <location line="-1034"/>
+        <location filename="../src/ui-settings-dialog.h" line="-73"/>
+        <source>Show horizontal scroll bar</source>
+        <translation>Vízszintes görgetősáv megjelenítése</translation>
+    </message>
+    <message>
+        <location line="-509"/>
+        <location filename="../src/ui-settings-dialog.h" line="-27"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If set, the focus of the widgets that are docked to the main window follows the mouse cursor. This is intended for having the same behavior within the main window when &amp;quot;focus follows mouse&amp;quot; is used for the desktop environment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ha be van állítva, a főablakhoz rögzített vezérlők fókusza az egérkurzort követi. Ennek célja ugyanaz a viselkedés a főablakon belül, amikor az asztali környezetben a „Fókusz követi az egeret” funkciót használjuk.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Focus follows mouse for widgets docked to the main window</source>
+        <translation>Fókusz követi az egeret a vezérlők rögzítve a főablakba</translation>
+    </message>
+    <message>
+        <location line="+487"/>
+        <location filename="../src/ui-settings-dialog.h" line="+24"/>
+        <source>Show tool bar</source>
+        <translation>Eszköztár megjelenítése</translation>
+    </message>
+    <message>
+        <location line="+221"/>
+        <location filename="../src/ui-settings-dialog.h" line="+13"/>
+        <source>Rotated tabs</source>
+        <translation>Elforgatott lapok</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Position</source>
+        <translation>Szövegbeosztás</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Max. tab width in chars (0: no limit)</source>
+        <translation>A tabulátor legfeljebb szélessége karakterekben (0: korlátlan)</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Max. width of a tab in characters (average char. width). Especially useful for rotated tabs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A tabulátor legfeljebb szélessége karakterekben (átlagos karakterszélesség). Különösen hasznos elforgatott lapok esetén.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+260"/>
+        <location filename="../src/ui-settings-dialog.h" line="+18"/>
+        <source>Wrap long lines at current window border</source>
+        <translation>Tekerjen hosszú sorokat a jelenlegi ablak határán</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Indentation</source>
+        <translation>Behúzás</translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Indent width</source>
+        <translation>Behúzás szélessége</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Tab indents line</source>
+        <translation>Tabulátor behúzási segédvonala</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Auto indentation</source>
+        <translation>Automatikus behúzás</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Tab width</source>
+        <translation>Tabulátor szélessége</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Show indentation guides</source>
+        <translation>Behúzási segédvonalainak megjelenítése</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Backspace unindents line</source>
+        <translation>Visszatörlés (backspace) eltávolítja a sor behúzását</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Indentation uses tabs</source>
+        <translation>Behúzás tabulátorokat használ</translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <location filename="../src/ui-settings-dialog.h" line="+6"/>
+        <source>Auto completion</source>
+        <translation>Automatikus kiegészítés</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Match keywords</source>
+        <translation>Kulcsszavak egyeztetése</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Case sensitive</source>
+        <translation>Kis- és nagybetűk megkülönböztetése</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Replace word by suggested one</source>
+        <translation>Helyettesítse a szót a javasolt szöveggel</translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <location filename="../src/ui-settings-dialog.h" line="-1"/>
+        <source>Match words in document</source>
+        <translation>Párosítsa a szavakat a dokumentumban</translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>With Octave builtins</source>
+        <translation>Oktáv beépített elemekkel</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>With Octave functions</source>
+        <translation>Oktáv függvényekkel</translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <location filename="../src/ui-settings-dialog.h" line="+9"/>
+        <source>Show completion list automatically</source>
+        <translation>Befejezési lista automatikus megjelenítése</translation>
+    </message>
+    <message>
+        <location line="+76"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Reload externally changed files without prompt</source>
+        <translation>A külsőleg módosított fájlok újratöltése felszólítás nélkül</translation>
+    </message>
+    <message>
+        <location line="-841"/>
+        <location filename="../src/ui-settings-dialog.h" line="-62"/>
+        <source>Use custom file editor</source>
+        <translation>Egyéni fájlszerkesztő használata</translation>
+    </message>
+    <message>
+        <location line="+934"/>
+        <location filename="../src/ui-settings-dialog.h" line="+70"/>
+        <source>Text encoding used for loading and saving</source>
+        <translation>Betöltéshez és mentéshez használt szövegkódolás</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Editor Styles</source>
+        <translation>Szerkesztő stílusai</translation>
+    </message>
+    <message>
+        <location line="-1383"/>
+        <location filename="../src/ui-settings-dialog.h" line="-92"/>
+        <source>(Changing buffer size clears history)</source>
+        <translation>(A puffer méretének megváltoztatása törli az előzményeket)</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>History buffer Size</source>
+        <translation>Előzménypuffer mérete</translation>
+    </message>
+    <message>
+        <location line="-123"/>
+        <location line="+1863"/>
+        <location filename="../src/ui-settings-dialog.h" line="-3"/>
+        <location line="+111"/>
+        <source>Font</source>
+        <translation>Betűkészlet</translation>
+    </message>
+    <message>
+        <location line="-1573"/>
+        <location filename="../src/ui-settings-dialog.h" line="-100"/>
+        <source>Show line numbers</source>
+        <translation>Sorok számának megjelenítése</translation>
+    </message>
+    <message>
+        <location line="-859"/>
+        <location filename="../src/ui-settings-dialog.h" line="-47"/>
+        <source>Interface</source>
+        <translation>Felület</translation>
+    </message>
+    <message>
+        <location line="+421"/>
+        <location filename="../src/ui-settings-dialog.h" line="+27"/>
+        <source>Confirm before exiting</source>
+        <translation>Megerősít kilépés előtt</translation>
+    </message>
+    <message>
+        <location line="-72"/>
+        <location filename="../src/ui-settings-dialog.h" line="-8"/>
+        <source>Graphic icons</source>
+        <translation>Képikonok</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <location line="+439"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <location line="+24"/>
+        <source>Show status bar</source>
+        <translation>Állapotsor megjelenítése</translation>
+    </message>
+    <message>
+        <location line="-677"/>
+        <location filename="../src/ui-settings-dialog.h" line="-36"/>
+        <source>Text inactive</source>
+        <translation>Tétlen szöveg</translation>
+    </message>
+    <message>
+        <location line="-32"/>
+        <location line="+45"/>
+        <location filename="../src/ui-settings-dialog.h" line="-1"/>
+        <location line="+2"/>
+        <source>Active</source>
+        <translation>Működő</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Background inactive</source>
+        <translation>Tétlen háttér</translation>
+    </message>
+    <message>
+        <location line="+218"/>
+        <location filename="../src/ui-settings-dialog.h" line="+15"/>
+        <source>Octave Startup</source>
+        <translation>Oktáv indítás</translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <location line="+1691"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <location line="+104"/>
+        <source>Browse</source>
+        <translation>Tallózás</translation>
+    </message>
+    <message>
+        <location line="-1298"/>
+        <location filename="../src/ui-settings-dialog.h" line="-88"/>
+        <source>Show whitespace</source>
+        <translation>Elválasztó karakterek megjelenítése</translation>
+    </message>
+    <message>
+        <location line="-45"/>
+        <location filename="../src/ui-settings-dialog.h" line="-3"/>
+        <source>Do not show whitespace used for indentation</source>
+        <translation>Ne jelenjen meg elválasztó karakterek használt behúzáshoz</translation>
+    </message>
+    <message>
+        <location line="+1085"/>
+        <location filename="../src/ui-settings-dialog.h" line="+75"/>
+        <source>Create nonexistent files without prompting</source>
+        <translation>Hozzon létre nem létező fájlokat kérés nélkül</translation>
+    </message>
+    <message>
+        <location line="-857"/>
+        <location filename="../src/ui-settings-dialog.h" line="-63"/>
+        <source>command line (%f=file, %l=line):</source>
+        <translation>Parancssor (%f=fájl, %l=sor):</translation>
+    </message>
+    <message>
+        <location line="-500"/>
+        <location filename="../src/ui-settings-dialog.h" line="-22"/>
+        <source>Cursor type:</source>
+        <translation>Jelölőtípus:</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location filename="../src/ui-settings-dialog.h" line="-1"/>
+        <source>Use foreground color</source>
+        <translation>Előtér színe használata</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <location line="+1753"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <location line="+106"/>
+        <source>Font size</source>
+        <translation>Betűméret</translation>
+    </message>
+    <message>
+        <location line="-245"/>
+        <location filename="../src/ui-settings-dialog.h" line="-3"/>
+        <source>File Browser</source>
+        <translation>Fájltallózó</translation>
+    </message>
+    <message>
+        <location line="-2017"/>
+        <location filename="../src/ui-settings-dialog.h" line="-133"/>
+        <source>Normal</source>
+        <translation>Normál</translation>
+    </message>
+    <message>
+        <location line="+352"/>
+        <location filename="../src/ui-settings-dialog.h" line="+22"/>
+        <source>These preferences are applied after any .octaverc startup files.</source>
+        <translation>Ezeket a beállításokat minden .octaverc indítási fájl után alkalmazza.</translation>
+    </message>
+    <message>
+        <location line="+540"/>
+        <location filename="../src/ui-settings-dialog.h" line="+24"/>
+        <source>Show EOL characters</source>
+        <translation>Sorvég (EOL) karakterek megjelenítése</translation>
+    </message>
+    <message>
+        <location line="+945"/>
+        <location filename="../src/ui-settings-dialog.h" line="+68"/>
+        <source>Default EOL mode</source>
+        <translation>Alapértelmezett sorvég (EOL) üzemmód</translation>
+    </message>
+    <message>
+        <location line="-162"/>
+        <location filename="../src/ui-settings-dialog.h" line="-15"/>
+        <source>Number of characters before list is shown: </source>
+        <translation>Karakterek száma a lista megjelenítése előtt: </translation>
+    </message>
+    <message>
+        <location line="-1805"/>
+        <location filename="../src/ui-settings-dialog.h" line="-110"/>
+        <source>Preferences</source>
+        <translation>Beállítások</translation>
+    </message>
+    <message>
+        <location line="+351"/>
+        <location filename="../src/ui-settings-dialog.h" line="+20"/>
+        <source>(requires restart)</source>
+        <translation>(újraindítás szükséges)</translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Use native file dialogs</source>
+        <translation>Rendszer fájl párbeszédpanelek használata</translation>
+    </message>
+    <message>
+        <location line="-98"/>
+        <location filename="../src/ui-settings-dialog.h" line="-5"/>
+        <source>Toolbar Icons</source>
+        <translation>Eszköztár ikonok</translation>
+    </message>
+    <message>
+        <location line="-224"/>
+        <location filename="../src/ui-settings-dialog.h" line="-11"/>
+        <source>Language</source>
+        <translation>Nyelv</translation>
+    </message>
+    <message>
+        <location line="-41"/>
+        <location filename="../src/ui-settings-dialog.h" line="-2"/>
+        <source>Dock widgets window icons</source>
+        <translation>Vezérlő rögzítésének ablakikonok</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Style</source>
+        <translation>Stílus</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Icon theme (requires restart)</source>
+        <translation>Ikon téma (újraindítás szükséges)</translation>
+    </message>
+    <message>
+        <location line="+323"/>
+        <location filename="../src/ui-settings-dialog.h" line="+16"/>
+        <source>Blinking cursor</source>
+        <translation>Villogó jelölő</translation>
+    </message>
+    <message>
+        <location line="+57"/>
+        <location filename="../src/ui-settings-dialog.h" line="+9"/>
+        <source>Initial working directory of Octave interpreter</source>
+        <translation>Oktáv-tolmács kezdeti munkakönyvtára</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Restore last working directory of previous session</source>
+        <translation>Előző munkamenet utolsó munkakönyvtárának visszaállítása</translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <location filename="../src/ui-settings-dialog.h" line="+12"/>
+        <source>Command</source>
+        <translation>Parancs</translation>
+    </message>
+    <message>
+        <location line="+208"/>
+        <location filename="../src/ui-settings-dialog.h" line="-3"/>
+        <source>Set focus to Command Window when running a command from within another widget</source>
+        <translation>Fókusz beállítása a parancsablakhoz, amikor parancs futtatása egy másik vezérlőből</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Print debug location in Command Window in addition to the marker in the editor</source>
+        <translation>Hibakeresési hely kinyomtatása a parancsablakban a szerkesztőben lévő jelölő mellett</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location line="+5"/>
-        <location line="+892"/>
-        <source>System setting</source>
-        <translation>Rendszer beállítása</translation>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Command Window Colors</source>
+        <translation>Parancsablakok színei</translation>
     </message>
     <message>
-        <location line="-651"/>
+        <location line="+190"/>
+        <location filename="../src/ui-settings-dialog.h" line="+10"/>
+        <source>Number size as difference to editor font</source>
+        <translation>A szám mérete a szerkesztő betűtípusától való eltérés</translation>
+    </message>
+    <message>
+        <location line="+79"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Highlight current line (color adjustable below with editor styles)</source>
+        <translation>Jelenlegi sor kiemelése (a szín alul állítható szerkesztőstílusokkal)</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Highlight all occurrences of a word selected by a double click</source>
+        <translation>Dupla kattintással jelölje ki a szó összes előfordulását</translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Tabs</source>
+        <translation>Lapok</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate tabs: Vertical when at top or bottom and horizontal when left or right. The close button is not shown in rotated tabs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lapok elforgatása: Függőleges, ha felül vagy alul van, és vízszintes, ha balra vagy jobbra van. A bezárás gomb nem jelenik meg az elforgatott lapokon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+74"/>
+        <location filename="../src/ui-settings-dialog.h" line="+8"/>
+        <source>Comments (Octave)</source>
+        <translation>Megjegyzések (Oktáv)</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Strings considered for uncommenting text</source>
+        <translation>A megjegyzés nélküli szöveg karakterláncai</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>String used for commenting selected text</source>
+        <translation>A kiválasztott szöveg megjegyzéséhez használt karakterlánc</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Long lines</source>
+        <translation>Sorhosszúság</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Break long lines at line length</source>
+        <translation>Sor hasítása sorhosszon</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Break lines only in comments</source>
+        <translation>Sor hasítása csak megjegyzésekben</translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Line length</source>
+        <translation>Sorhossz</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Long line marker</source>
+        <translation>Hosszú vonal jelölő</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Line</source>
+        <translation>Sor</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Background</source>
+        <translation>Háttér</translation>
+    </message>
+    <message>
+        <location line="+191"/>
+        <location filename="../src/ui-settings-dialog.h" line="+13"/>
+        <source>Auto insert after &quot;if&quot; etc.</source>
+        <translation>Automatikus beszúrás az „if” (ha) után stb.</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Nothing</source>
+        <translation>Semmi</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>&quot;endif&quot; etc.</source>
+        <translation>„endif” (végeha) stb.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>&quot;end&quot;</source>
+        <translation>„end” (vége)</translation>
+    </message>
+    <message>
+        <location line="+238"/>
+        <location filename="../src/ui-settings-dialog.h" line="+18"/>
+        <source>Debugging</source>
+        <translation>Hibakeresés</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Always show debug breakpoints and pointers (opens related file if closed)</source>
+        <translation>Mindig jelenítse meg a hibakeresési töréspontokat és mutatókat (bezárva megnyitja a kapcsolódó fájlt)</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>File handling</source>
+        <translation>Fájlkezelés</translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Restore editor tabs from previous session on startup or when editor is shown again after closing</source>
+        <translation>A szerkesztő lapok visszaállítása az előző munkamenetből indításkor, vagy amikor a szerkesztő újra megjelenik a bezárás után</translation>
+    </message>
+    <message>
+        <location line="+105"/>
+        <location filename="../src/ui-settings-dialog.h" line="+8"/>
+        <source>Close all files when the editor widget is closed/hidden</source>
+        <translation>Minden fájl bezárása, amikor a szerkesztővezérlő bezárásakor/elrejtésekor</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Force newline at end when saving file</source>
+        <translation>Újsor kényszerítése a végére a fájl mentésekor</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Remove trailing spaces when saving file</source>
+        <translation>A fájl mentésekor távolítsa el a záró szóközöket</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select font, font size (as a difference from the default size), font style (&lt;b&gt;b&lt;/b&gt;old, &lt;b&gt;i&lt;/b&gt;talic, &lt;b&gt;u&lt;/b&gt;nderline), text color, and background color (for the latter, the color magenta (255,0,255) is a placeholder for the default background color).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Betűkészlet, betűméret (eltérés az alapértelmezett mérettől), betűstílus kijelölése (&lt;b&gt;f&lt;/b&gt;élkövér, &lt;b&gt;d&lt;/b&gt;őlt, &lt;b&gt;a&lt;/b&gt;láhúzott), szövegszín, and háttérszín (utóbbi esetében a bíbor szín (255,0,255) az alapértelmezett háttérszín helyőrzője).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Behavior</source>
+        <translation>Viselkedés</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Restore last directory of previous session</source>
+        <translation>Előző munkamenet utolsó könyvtárának visszaállítása</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Extensions of files to be opened in the default text editor (separated by &quot;;&quot;):</source>
+        <translation>Alapértelmezett szövegszerkesztőben megnyitandó fájlkiterjesztések („;” elválasztva):</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Workspace</source>
+        <translation>Munkaterület</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <location filename="../src/ui-settings-dialog.h" line="-1"/>
+        <source>Colors for variable attributes</source>
+        <translation>Változóattribútumok színei</translation>
+    </message>
+    <message>
+        <location line="+133"/>
+        <location filename="../src/ui-settings-dialog.h" line="+5"/>
+        <source>Use Command Window font</source>
+        <translation>Parancsablak betűkészlet használata</translation>
+    </message>
+    <message>
+        <location line="+154"/>
+        <location filename="../src/ui-settings-dialog.h" line="+18"/>
+        <source>Import shortcut set</source>
+        <translation>Gyorsítóparancskészlet importálása</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Export current shortcut set</source>
+        <translation>Jelenlegi gyorsítóparancskészlet exportálása</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Reset shortcuts to their defaults</source>
+        <translation>Gyorsítóparancsok visszaállása az alapértelmezett értékekre</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+80"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <location line="+4"/>
+        <source>Default</source>
+        <translation>Alapértelmezett</translation>
+    </message>
+    <message>
+        <location line="+232"/>
+        <location filename="../src/ui-settings-dialog.h" line="+17"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ok&lt;/span&gt; - close dialog and apply settings&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Apply - &lt;/span&gt;apply settings but leave dialog open&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel - &lt;/span&gt;close dialog and discard changes not yet applied&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Reset -&lt;/span&gt; reload settings discarding changes not yet applied&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Rendben&lt;/span&gt; - párbeszédpanel bezárása és a beállítások alkalmazása&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Alkalmazás - &lt;/span&gt;beállítások alkalmazása és a párbeszédpanel nyitva hagyása&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Mégse&lt;/span&gt; - párbeszédpanel bezárása és a még nem alkalmazott módosítások elvetése&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Visszaállítás&lt;/span&gt; - beállítások újratöltése a még nem alkalmazott módosítások elvetése&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="-227"/>
+        <location filename="../src/ui-settings-dialog.h" line="-18"/>
+        <source>Actual</source>
+        <translation>Tényleges</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location filename="../src/ui-settings-dialog.h" line="+16"/>
+        <source>Network</source>
+        <translation>Hálózat</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location filename="../src/ui-settings-dialog.h" line="-11"/>
+        <source>Allow Octave to connect to the Octave web site to display current news and information</source>
+        <translation>Engedélyezze az Oktávnak, hogy csatlakozzon az Oktáv honlaphoz, hogy megjelenítse a jelenlegi híreket és információkat</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Proxy Server</source>
+        <translation>Proxykiszolgáló</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select &lt;span style=&quot; font-style:italic;&quot;&gt;HttpProxy&lt;/span&gt;, &lt;span style=&quot; font-style:italic;&quot;&gt;Sock5Proxy&lt;/span&gt; or &lt;span style=&quot; font-style:italic;&quot;&gt;Environment Variables&lt;/span&gt;. With the last selection, the proxy is taken from the first non-empty environment variable ALL_PROXY, HTTP_PROXY or HTTPS_PROXY .&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Válassza ki &lt;span style=&quot; font-style:italic;&quot;&gt;HTTP-proxy&lt;/span&gt;, &lt;span style=&quot; font-style:italic;&quot;&gt;Sock5Proxy&lt;/span&gt; vagy &lt;span style=&quot; font-style:italic;&quot;&gt;Környezeti változók&lt;/span&gt;. Az utolsó kiválasztással a proxy az első nem üres környezeti változóból (ALL_PROXY, HTTP_PROXY vagy HTTPS_PROXY) kerül átvételre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+78"/>
+        <location filename="../src/ui-settings-dialog.h" line="+6"/>
+        <source>Use proxy server</source>
+        <translation>Proxykiszolgáló használata</translation>
+    </message>
+    <message>
+        <location line="-523"/>
+        <location filename="../src/ui-settings-dialog.h" line="-42"/>
+        <source>Variable Editor</source>
+        <translation>Változószerkesztő</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location filename="../src/ui-settings-dialog.h" line="-6"/>
+        <source>Default row height</source>
+        <translation>Alapértelmezett sormagasság</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Default column width</source>
+        <translation>Alapértelmezett oszlopszélesség</translation>
+    </message>
+    <message>
+        <location line="+78"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Variable Editor Colors</source>
+        <translation>Változószerkesztő színek</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Use alternating row colors</source>
+        <translation>Változó sorszínek használata</translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Disable global shortcuts in order to prevent
+interference with readline key strokes.
+Exceptions: Ctrl-C for interrupting the interpreter
+and the shortcuts for switching to other widgets.</source>
+        <translation>Globális billentyűparancsok letiltása a
+ReadLine billentyűleütésekkel való zavar elkerülése érdekében.
+Kivételek: Ctrl-C az értelmező megszakítására és a
+billentyűparancsok más vezérlőkre való váltásra.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../src/ui-settings-dialog.h" line="+5"/>
+        <source>Disable global shortcuts when Command Window has focus</source>
+        <translation>Globális gyorsítóparancsok letiltása, ha a Parancsablak fókuszba kerül</translation>
+    </message>
+    <message>
+        <location line="-392"/>
+        <location filename="../src/ui-settings-dialog.h" line="-23"/>
+        <source>Synchronize Octave working directory with file browser</source>
+        <translation>Oktáv munkakönyvtár összehangolása a fájltallózóval</translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Initial file browser directory (only if not synchronized with initial working directory of Octave)</source>
+        <translation>Kezdeti fájltallózókönyvtár (csak ha nincs összehangolva az Oktáv kezdeti munkakönyvtárával)</translation>
+    </message>
+    <message>
+        <location line="+302"/>
+        <location filename="../src/ui-settings-dialog.h" line="+43"/>
+        <source>Shortcuts</source>
+        <translation>Gyorsítóparancs</translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <location filename="../src/ui-settings-dialog.h" line="-21"/>
+        <source>Disable menu accelerators in order to prevent
+interference with readline key strokes.</source>
+        <translation>Globális billentyűparancsok letiltása a
+ReadLine billentyűleütésekkel való zavar elkerülése érdekében.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Disable menu accelerators of main window menus when Command Window has focus</source>
+        <translation>A főablak menüinek menügyorsítóinak letiltása, ha a parancsablak fókuszban van</translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <location filename="../src/ui-settings-dialog.h" line="+8"/>
+        <source>Export</source>
+        <translation>Exportálás</translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <location filename="../src/ui-settings-dialog.h" line="-4"/>
+        <source>Import</source>
+        <translation>Importálás</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../src/ui-settings-dialog.h" line="+9"/>
+        <source>Edit a shortcut by double-clicking in Actual column</source>
+        <translation>Parancsikon szerkesztése dupla kattintással a Tényleges oszlopban</translation>
+    </message>
+    <message>
+        <location line="+61"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Action</source>
+        <translation>Művelet</translation>
+    </message>
+    <message>
+        <location line="+82"/>
+        <location filename="../src/ui-settings-dialog.h" line="+5"/>
+        <source>Hostname:</source>
+        <translation>Állomásnév:</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <location filename="../src/ui-settings-dialog.h" line="+5"/>
+        <source>Proxy type:</source>
+        <translation>Proxy típusa:</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Port:</source>
+        <translation>Kikötő:</translation>
+    </message>
+    <message>
+        <location line="-20"/>
+        <location filename="../src/ui-settings-dialog.h" line="-2"/>
+        <source>Username:</source>
+        <translation>Felhasználónév:</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Password:</source>
+        <translation>Jelszó:</translation>
+    </message>
+    <message>
+        <location filename="../src/settings-dialog.cc" line="-945"/>
+        <source>Loading current preferences ... </source>
+        <translation>Jelenlegi beállítások betöltése … </translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location line="+6"/>
+        <location line="+1049"/>
+        <source>System setting</source>
+        <translation>Rendszerbeállítás</translation>
+    </message>
+    <message>
+        <location line="-795"/>
         <source>IBeam Cursor</source>
         <translation>IBeam-jelölő</translation>
     </message>
@@ -3588,7 +4650,12 @@ Az oktáv grafikus felhasználói felületét most be kell zárni.</translation>
         <translation>Aláhúzott jelölő</translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location line="+176"/>
+        <source>Color of highlighted current line (magenta (255,0,255) for automatic color)</source>
+        <translation>A kiemelt jelenlegi vonal színe (bíbor (255,0,255) az automatikus színhez)</translation>
+    </message>
+    <message>
+        <location line="+63"/>
         <source>Set Octave Startup Directory</source>
         <translation>Oktáv indítási könyvtár beállítása</translation>
     </message>
@@ -3598,144 +4665,70 @@ Az oktáv grafikus felhasználói felületét most be kell zárni.</translation>
         <translation>Fájltallózó indítási könyvtár beállítása</translation>
     </message>
     <message>
-        <location line="+707"/>
+        <location line="+30"/>
+        <source>Applying preferences ... </source>
+        <translation>Beállítások alkalmazása … </translation>
+    </message>
+    <message>
+        <location line="+86"/>
+        <location line="+21"/>
+        <location line="+1069"/>
+        <source>Failed to open %1 as Octave shortcut file</source>
+        <translation>Nem sikerült megnyitni a(z) „%1” fájlt Oktáv gyorsítóparancsfájlként</translation>
+    </message>
+    <message>
+        <location line="-428"/>
         <source>Enable attribute colors</source>
         <translation>Attribútum színeinek engedélyezése</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Hide tools tips</source>
-        <translatorcomment>Should the en source string be `Hide tool tips`? i.e. no `s` at the end of `tool`? Thank you</translatorcomment>
-        <translation>Eszközleírások elrejtése</translation>
+        <source>Hide tool tips</source>
+        <translation>Eszköztippek elrejtése</translation>
     </message>
     <message>
-        <location filename="../src/gui-preferences-cs.h" line="+76"/>
-        <source>foreground</source>
-        <translation>Előtér</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>background</source>
-        <translation>Háttér</translation>
+        <location line="+360"/>
+        <source>Import shortcuts from file...</source>
+        <translation>Gyorsítóparancsok importálása fájlból…</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>selection</source>
-        <translation>Kijelölés</translation>
+        <location line="+6"/>
+        <source>Octave Shortcut Files (*.osc);;All Files (*)</source>
+        <translation>Oktáv-gyorsítóparancsfájlok (*.osc);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>cursor</source>
-        <translation>Jelölő</translation>
+        <location line="-1"/>
+        <source>Export shortcuts to file...</source>
+        <translation>Gyorsítóparancsok exportálása fájlba…</translation>
     </message>
     <message>
-        <location filename="../src/gui-preferences-ed.h" line="+205"/>
-        <source>Top</source>
-        <translation>Fel</translation>
+        <location line="+31"/>
+        <source>Overwriting Shortcuts</source>
+        <translation>Gyorsítóparancsok felülírása</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Bottom</source>
-        <translation>Le</translation>
+        <location line="+2"/>
+        <source>You are about to overwrite all shortcuts.
+Would you like to save the current shortcut set or cancel the action?</source>
+        <translation>Az összes gyorsítóparancsok felülírása kerül.
+Menteni szeretné a jelenlegi gyorsítóparancs-készletet, vagy törölni szeretné a műveletet?</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Left</source>
-        <translation>Balra</translation>
+        <location line="+5"/>
+        <source>Don&apos;t save</source>
+        <translation>Ne mentse</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Right</source>
-        <translation>Jobbra</translation>
-    </message>
-    <message>
-        <location filename="../src/gui-preferences-ve.h" line="+74"/>
-        <source>Foreground</source>
-        <translation>Előtér</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Background</source>
-        <translation>Háttér</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Selected Foreground</source>
-        <translation>Kijelölt előtér</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Selected Background</source>
-        <translation>Kijelölt háttér</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Alternate Background</source>
-        <translation>Másodlagos háttér</translation>
-    </message>
-    <message>
-        <location filename="../src/gui-preferences-ws.h" line="+91"/>
-        <source>argument</source>
-        <translation>Argumentum</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>global</source>
-        <translation>Globális</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>persistent</source>
-        <translation>tartós</translation>
-    </message>
-    <message>
-        <location filename="../src/gui-preferences-global.h" line="+149"/>
-        <source>Environment Variables</source>
-        <translation>Környezeti változók</translation>
-    </message>
-    <message>
-        <location filename="../src/gui-settings.h" line="+132"/>
-        <source>Second color mode (light/dark)</source>
-        <translation>Második színmód (világos/sötét)</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Switches to another set of colors.
-Useful for defining a dark/light mode.
-Discards non-applied current changes!</source>
-        <translation>Színkészlet váltása.
-Hasznos a sötét/világos mód meghatározásához.
-Elveti a nem alkalmazott jelenlegi változtatásokat!</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>&amp;Reload default colors</source>
-        <translation>Alapértelmezett színek új&amp;ratöltése</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Reloads the default colors,
-depending on currently selected mode.</source>
-        <translation>Újratölti az alapértelmezett színeket,
-a jelenlegi kiválasztott módtól függően.</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>&amp;Reload default styles</source>
-        <translation>Alapértelmezett stílusok új&amp;ratöltése</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Reloads the default values of the styles,
-depending on currently selected mode.</source>
-        <translation>Újratölti a stílusok alapértelmezett értékeit,
-a jelenlegi kiválasztott módtól függően.</translation>
+        <location line="+33"/>
+        <source>Octave GUI preferences</source>
+        <translation>Az Oktáv grafikus felhasználói felület beállításai</translation>
     </message>
 </context>
 <context>
-    <name>octave::setup_community_news</name>
+    <name>setup_community_news</name>
     <message>
-        <location filename="../src/welcome-wizard.cc" line="+46"/>
+        <location filename="../src/welcome-wizard.cc" line="+45"/>
         <source>Community News</source>
         <translation>Közösségi hírek</translation>
     </message>
@@ -3747,7 +4740,7 @@ a jelenlegi kiválasztott módtól függően.</translation>
     <message>
         <location line="+1"/>
         <source>Next</source>
-        <translation>Következő</translation>
+        <translation>Tovább</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3773,20 +4766,59 @@ Naponta legfeljebb egyszer jelentkezik be, és a hírek csak akkor jelennek meg,
         <location line="+30"/>
         <source>&lt;html&gt;&lt;head&gt;
 &lt;/head&gt;&lt;body&gt;
-&lt;p&gt;Allow Octave to connect to the Octave web site when it starts to display current news and information about the Octave community.&lt;/p&gt;
+&lt;p&gt;Allow Octave to connect to the Octave web site when it starts in order to display current news and information about the Octave community.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head&gt;
 &lt;/head&gt;&lt;body&gt;
-&lt;p&gt;Engedélyezze az Oktávnak, hogy csatlakozzon az Oktáv webhelyéhez, amikor az elkezdi megjeleníteni az Oktáv közösséggel kapcsolatos jelenlegi híreket és információkat.&lt;/p&gt;
+&lt;p&gt;Lehetővé teszi, hogy az Oktív az induláskor csatlakozzon az Oktív-weboldalhoz, hogy megjelenjen az Oktív-közösséggel kapcsolatos jelenlegi hírek és információk.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
-    <name>octave::shortcut_manager</name>
+    <name>shortcut_edit_dialog</name>
     <message>
-        <location filename="../src/shortcut-manager.cc" line="+592"/>
+        <location filename="../src/shortcuts-tree-widget.cc" line="+162"/>
+        <source>Enter New Shortcut</source>
+        <translation>Új gyorsítóparancs megadása</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Enter custom shortcut
+Action: %1</source>
+        <translation>Egyéni gyorsítóparancs megadása
+Művelet: %1</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Enter shortcut by typing it</source>
+        <translation>Billentyűparancs megadása</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Add Shift modifier
+(allows one to enter number keys)</source>
+        <translation>Shift módosító hozzáadása
+(lehetővé teszi a számbillentyűk beírását)</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Actual Shortcut</source>
+        <translation>Jelenlegi gyorsítóparancs</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Default Shortcut</source>
+        <translation>Alapértelmezett gyorsítóparancs</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Set to default</source>
+        <translation>Alapértelmezettre beállítása</translation>
+    </message>
+    <message>
+        <location line="+104"/>
         <source>Double Shortcut</source>
-        <translation>Ismétlődő gyorsítóparancs</translation>
+        <translation>Kettős gyorsítóparancs</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3794,17 +4826,18 @@ Naponta legfeljebb egyszer jelentkezik be, és a hírek csak akkor jelennek meg,
   &quot;%1&quot;
 is already used for the action
   &quot;%2&quot;.
-Do you want to use the shortcut anyhow removing it from the previous action?</source>
-        <translation>A kijelölt „%1” gyorsítóparancs már használatban van a(z) „%2” művelethez.
-Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből?</translation>
+Do you want to use the shortcut and remove it from the previous action?</source>
+        <translation>A kijelölt gyorsítóparancs
+   „%1”
+már használatban van a művelethez
+   „%2”.
+Szeretné használni a gyorsítóparancsot, és eltávolítani az előző műveletből?</translation>
     </message>
+</context>
+<context>
+    <name>shortcuts</name>
     <message>
-        <location line="-454"/>
-        <source>New File</source>
-        <translation>Új fájl</translation>
-    </message>
-    <message>
-        <location line="-6"/>
+        <location filename="../src/gui-preferences-sc.cc" line="+42"/>
         <source>Undock/Dock Widget</source>
         <translation>Vezérlő rögzítése/rögzítésének feloldása</translation>
     </message>
@@ -3814,14 +4847,19 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
         <translation>Vezérlő bezárása</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
+        <source>New File</source>
+        <translation>Új fájl</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>New Function</source>
         <translation>Új függvény</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>New Figure</source>
-        <translation></translation>
+        <translation>Új ábra</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3895,18 +4933,18 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
     </message>
     <message>
         <location line="+1"/>
-        <location line="+117"/>
+        <location line="+118"/>
         <source>Preferences</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location line="-114"/>
+        <location line="-115"/>
         <source>Step</source>
         <translation>Lépés</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Step Into</source>
+        <source>Step In</source>
         <translation>Előrelépés</translation>
     </message>
     <message>
@@ -3940,7 +4978,7 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
         <translation>Profiladatok megjelenítése</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Show Command Window</source>
         <translation>Parancsablak megjelenítése</translation>
     </message>
@@ -3996,12 +5034,11 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
     </message>
     <message>
         <location line="+1"/>
-        <location line="+244"/>
         <source>Editor</source>
         <translation>Szerkesztő</translation>
     </message>
     <message>
-        <location line="-243"/>
+        <location line="+1"/>
         <source>Documentation</source>
         <translation>Dokumentáció</translation>
     </message>
@@ -4021,9 +5058,14 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
         <translation>Alapértelmezett ablakelrendezés visszaállítása</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
+        <source>Show On-disk Documentation</source>
+        <translation>Lemezen lévő dokumentáció megjelenítése</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Show Online Documentation</source>
-        <translation>Csatlakozva dokumentáció megjelenítése</translation>
+        <translation>Online dokumentáció megjelenítése</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4096,7 +5138,23 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
         <translation>Lap mozgassa jobbra</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+3"/>
+        <source>Zoom In</source>
+        <translation>Nagyítás</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zoom Out</source>
+        <translation>Kicsinyítés</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+2"/>
+        <source>Zoom Normal</source>
+        <translation>Tényleges méret</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Edit Function</source>
         <translation>Függvény szerkesztése</translation>
     </message>
@@ -4133,12 +5191,12 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
     <message>
         <location line="+1"/>
         <source>Find Next</source>
-        <translation>Következő keresése</translation>
+        <translation>Következő találat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Find Previous</source>
-        <translation>Előző keresése</translation>
+        <translation>Előző találat</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4178,17 +5236,17 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
     <message>
         <location line="+1"/>
         <source>Duplicate Selection/Line</source>
-        <translation>Ismétlődő kijelölés/sor</translation>
+        <translation>Kijelölés/sor megkettőzése</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Transpose Line</source>
-        <translation>Sorcsere</translation>
+        <translation>Sor transzponálása</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show Completion List</source>
-        <translation>Befejezési lista mutatása</translation>
+        <translation>Befejezési lista megjelenítése</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -4230,7 +5288,7 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
     <message>
         <location line="+2"/>
         <source>Indent Code</source>
-        <translation>Behúzás kódja</translation>
+        <translation>Kód behúzása</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -4265,7 +5323,7 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
     <message>
         <location line="+1"/>
         <source>Toggle Bookmark</source>
-        <translation>Könyvjelző – váltás</translation>
+        <translation>Könyvjelző kapcsolása</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4333,70 +5391,9 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
         <translation>Lapok rendezése betűrendben</translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Bookmark this Page</source>
-        <translation>Oldal megjelölése könyvjelzővel</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>Tools Menu</source>
-        <translation>Eszközök menü</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Handling of Dock Widgets</source>
-        <translation>Vezérlők rögzítésének kezelése</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Documentation Viewer</source>
-        <translation>Dokumentációmegjelenítő</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Browser</source>
-        <translation>Tallózó</translation>
-    </message>
-    <message>
-        <location line="+79"/>
-        <source>Import shortcuts from file...</source>
-        <translation>Gyorsítóparancsok importálása fájlból…</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Export shortcuts to file...</source>
-        <translation>Gyorsítóparancsok exportálása fájlba…</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Failed to open %1 as Octave shortcut file</source>
-        <translation>Nem sikerült megnyitni a(z) „%1” fájlt Oktáv gyorsítóparancsfájlként</translation>
-    </message>
-    <message>
-        <location line="-335"/>
-        <source>Zoom In</source>
-        <translation>Nagyítás</translation>
-    </message>
-    <message>
-        <location line="-24"/>
-        <source>Show On-disk Documentation</source>
-        <translation>Lemezen lévő dokumentáció megjelenítése</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Zoom Out</source>
-        <translation>Kicsinyítés</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+2"/>
-        <source>Zoom Normal</source>
-        <translation>Valóságos méret</translation>
-    </message>
-    <message>
-        <location line="+70"/>
+        <location line="+3"/>
         <source>Toggle Breakpoint</source>
-        <translation>Töréspont hozzáadása/törlése</translation>
+        <translation>Töréspont kapcsolása</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4426,12 +5423,12 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
     <message>
         <location line="+3"/>
         <source>Help on Keyword</source>
-        <translation>Keresés súgóban</translation>
+        <translation>Kulcsszó súgóban</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Document on Keyword</source>
-        <translation>Keresés dokumentációban</translation>
+        <translation>Kulcsszó a dokumentációban</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -4449,143 +5446,121 @@ Mindenképpen szeretné használni a gyorsítóparancsot az előző műveletből
         <translation>Előre egy lappal</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+1"/>
+        <source>Bookmark this Page</source>
+        <translation>Oldal megjelölése könyvjelzővel</translation>
+    </message>
+</context>
+<context>
+    <name>shortcuts_tree_widget</name>
+    <message>
+        <location filename="../src/shortcuts-tree-widget.cc" line="+33"/>
         <source>Global</source>
         <translation>Globális</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location line="+38"/>
+        <location line="+4"/>
+        <location line="+49"/>
         <source>File Menu</source>
         <translation>Fájl menü</translation>
     </message>
     <message>
-        <location line="-36"/>
-        <location line="+38"/>
+        <location line="-46"/>
+        <location line="+49"/>
         <source>Edit Menu</source>
         <translation>Szerkesztés menü</translation>
     </message>
     <message>
-        <location line="-36"/>
-        <location line="+40"/>
+        <location line="-46"/>
+        <location line="+52"/>
         <source>Debug Menu</source>
         <translation>Hibakeresés menü</translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-49"/>
+        <source>Tools Menu</source>
+        <translation>Eszközök menü</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Window Menu</source>
         <translation>Ablak menü</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <location line="+38"/>
+        <location line="+3"/>
+        <location line="+49"/>
         <source>Help Menu</source>
         <translation>Súgó menü</translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-46"/>
         <source>News Menu</source>
         <translation>Hírek menü</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
+        <source>Handling of Dock Widgets</source>
+        <translation>Vezérlők rögzítésének kezelése</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Tab Handling in Dock Widgets</source>
         <translation>Vezérlők rögzítésének lapkezelése</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Find &amp; Replace in Dock Widgets</source>
         <translation>Keresés és csere a vezérlők rögzítésieben</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Zooming in Editor and Documentation</source>
         <translation>Szerkesztő és dokumentáció nagyítása</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+15"/>
+        <source>Editor</source>
+        <translation>Szerkesztő</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>View Menu</source>
         <translation>Nézet menü</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Run Menu</source>
         <translation>Futtatás menü</translation>
     </message>
     <message>
-        <location line="+96"/>
-        <location line="+5"/>
-        <source>Octave Shortcut Files (*.osc);;All Files (*)</source>
-        <translation>Oktáv-gyorsítóparancsfájlok (*.osc);;Minden fájl (*)</translation>
+        <location line="+13"/>
+        <source>Documentation Viewer</source>
+        <translation>Dokumentációmegjelenítő</translation>
     </message>
     <message>
-        <location line="+123"/>
-        <source>Enter new Shortcut</source>
-        <translation>Adjon meg új gyorsítóparancsot</translation>
+        <location line="+4"/>
+        <source>Browser</source>
+        <translation>Tallózó</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Apply the desired shortcut or click on the right button to reset the shortcut to its default.</source>
-        <translation>Kívánt gyorsítóparancs alkalmazása vagy kattintás a jobb gombbal, hogy visszaállítsa a gyorsítóparancs alapértelmezett értékétre.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Enter shortcut directly by performing it</source>
-        <translation>Adja meg a gyorsítóparancsot közvetlenül annak végrehajtásával</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Add Shift modifier
-(allows to enter number keys)</source>
-        <translation>Shift módosító hozzáadása
-(lehetővé teszi számgombok bevitelét)</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Actual shortcut</source>
-        <translation>Tényleges gyorsítóparancs</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Default shortcut</source>
-        <translation>Alapértelmezett gyorsítóparancs</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Set to default</source>
-        <translation>Alapértelmezettre beállítása</translation>
-    </message>
-    <message>
-        <location line="+69"/>
-        <source>Overwriting Shortcuts</source>
-        <translation>Gyorsítóparancsok felülírása</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>You are about to overwrite all shortcuts.
-Would you like to save the current shortcut set or cancel the action?</source>
-        <translation>Az összes gyorsítóparancsok felülírása kerül.
-Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szeretné a műveletet?</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Don&apos;t save</source>
-        <translation>Nincs mentés</translation>
+        <location line="+109"/>
+        <source>item %1 not found in shortcut settings dialog</source>
+        <translation>%1 elem nem található a parancsbeállítások párbeszédpanelen</translation>
     </message>
 </context>
 <context>
-    <name>octave::terminal_dock_widget</name>
+    <name>terminal_dock_widget</name>
     <message>
-        <location filename="../src/terminal-dock-widget.cc" line="+87"/>
+        <location filename="../src/terminal-dock-widget.cc" line="+107"/>
         <source>Command Window</source>
         <translation>Parancsablak</translation>
     </message>
 </context>
 <context>
-    <name>octave::variable_dock_widget</name>
+    <name>variable_dock_widget</name>
     <message>
-        <location filename="../src/variable-editor.cc" line="+175"/>
-        <source>Dock widget</source>
+        <location filename="../src/variable-editor.cc" line="+177"/>
+        <source>Dock Widget</source>
         <translation>Vezérlő rögzítése</translation>
     </message>
     <message>
@@ -4594,8 +5569,8 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
         <translation>Változószerkesztő: </translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Undock widget</source>
+        <location line="+15"/>
+        <source>Undock Widget</source>
         <translation>Vezérlő rögzítésének feloldása</translation>
     </message>
     <message>
@@ -4610,9 +5585,9 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
     </message>
 </context>
 <context>
-    <name>octave::variable_editor</name>
+    <name>variable_editor</name>
     <message>
-        <location line="+897"/>
+        <location line="+918"/>
         <source>Variable Editor</source>
         <translation>Változószerkesztő</translation>
     </message>
@@ -4622,22 +5597,22 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
         <translation>Változók szerkesztése.</translation>
     </message>
     <message>
-        <location line="+548"/>
+        <location line="+553"/>
         <source>Variable Editor Toolbar</source>
         <translation>Változószerkesztő eszköztár</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Save</source>
         <translation>Mentés</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Save variable to a file</source>
         <translation>Változó mentése fájlba</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <location line="+5"/>
         <location line="+6"/>
         <source>Save in format ...</source>
@@ -4680,20 +5655,20 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
     </message>
     <message>
         <location line="+8"/>
-        <location line="+5"/>
+        <location line="+6"/>
         <location line="+7"/>
         <source>Plot</source>
-        <translation>Rajz</translation>
+        <translation>Ábrázolás</translation>
     </message>
     <message>
         <location line="-11"/>
         <source>Plot Selected Data</source>
-        <translation>Kijelölt adatok rajzolása</translation>
+        <translation>Kijelölt adatok ábrázolása</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Plot selected data</source>
-        <translation>Kijelölt adatok rajzolása</translation>
+        <translation>Kijelölt adatok ábrázolása</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -4703,21 +5678,21 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
     <message>
         <location line="+2"/>
         <source>Go one level up in variable hierarchy</source>
-        <translation>Lépjen egy szinttel feljebb a változó hierarchiában</translation>
+        <translation>Egy szinttel feljebb lépése a változó hierarchiában</translation>
     </message>
 </context>
 <context>
-    <name>octave::variable_editor_stack</name>
+    <name>variable_editor_stack</name>
     <message>
-        <location line="-1241"/>
+        <location line="-1260"/>
         <source>Save Variable %1 As</source>
         <translation>„%1” változó mentése másként</translation>
     </message>
 </context>
 <context>
-    <name>octave::variable_editor_view</name>
+    <name>variable_editor_view</name>
     <message>
-        <location line="+144"/>
+        <location line="+142"/>
         <source>Cut</source>
         <translation>Kivágás</translation>
     </message>
@@ -4749,10 +5724,10 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
     <message>
         <location line="+18"/>
         <source>Transpose</source>
-        <translation>Áthelyezés</translation>
+        <translation>Transzponálás</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+56"/>
         <source> columns</source>
         <translation> oszlop</translation>
     </message>
@@ -4762,7 +5737,7 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
         <translation> oszlop</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+52"/>
         <source> rows</source>
         <translation> sor</translation>
     </message>
@@ -4773,17 +5748,17 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
     </message>
 </context>
 <context>
-    <name>octave::welcome_wizard</name>
+    <name>welcome_wizard</name>
     <message>
-        <location filename="../src/welcome-wizard.cc" line="-198"/>
+        <location filename="../src/welcome-wizard.cc" line="-190"/>
         <source>Welcome to GNU Octave</source>
         <translation>Isten hozott a GNU Oktávnál</translation>
     </message>
 </context>
 <context>
-    <name>octave::workspace_model</name>
+    <name>workspace_model</name>
     <message>
-        <location filename="../src/workspace-model.cc" line="+47"/>
+        <location filename="../src/workspace-model.cc" line="+49"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
@@ -4795,7 +5770,7 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
     <message>
         <location line="+1"/>
         <source>Dimension</source>
-        <translation>Dimenzió</translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4820,9 +5795,9 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
     </message>
 </context>
 <context>
-    <name>octave::workspace_view</name>
+    <name>workspace_view</name>
     <message>
-        <location filename="../src/workspace-view.cc" line="+59"/>
+        <location filename="../src/workspace-view.cc" line="+57"/>
         <source>Workspace</source>
         <translation>Munkaterület</translation>
     </message>
@@ -4834,7 +5809,7 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
     <message>
         <location line="+2"/>
         <source>Enter text to filter the workspace</source>
-        <translation>Adja meg a szöveget a munkaterület szűréséhez</translation>
+        <translation>Szöveg megadása a munkaterület szűréséhez</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -4842,7 +5817,7 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
         <translation>Szűrő</translation>
     </message>
     <message>
-        <location line="+124"/>
+        <location line="+122"/>
         <source>View the variables in the active workspace.&lt;br&gt;</source>
         <translation>Változók megtekintése a jelenlegi munkaterületen.&lt;br&gt;</translation>
     </message>
@@ -4852,7 +5827,7 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
         <translation>Változóattribútumok színei:</translation>
     </message>
     <message>
-        <location line="+162"/>
+        <location line="+156"/>
         <source>Open in Variable Editor</source>
         <translation>Változószerkesztő megnyitása</translation>
     </message>
@@ -4874,7 +5849,7 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
     <message>
         <location line="+8"/>
         <source>Only top-level symbols may be renamed</source>
-        <translation>Csak a legfelső szintű szimbólumokat lehet átnevezni</translation>
+        <translation>Csak a legfelső szintű szimbólumok átnevezhető</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -4885,786 +5860,6 @@ Menteni szeretné az aktuális gyorsítóparancs-készletet, vagy törölni szer
         <location line="+3"/>
         <source>Show filter</source>
         <translation>Szűrő megjelenítése</translation>
-    </message>
-    <message>
-        <location filename="../src/gui-preferences-ws.h" line="-34"/>
-        <source>Class</source>
-        <translation>Osztály</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Dimension</source>
-        <translation>Dimenzió</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Value</source>
-        <translation>Érték</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Attribute</source>
-        <translation>Tulajdonság</translation>
-    </message>
-</context>
-<context>
-    <name>settings_dialog</name>
-    <message>
-        <location filename="../src/settings-dialog.ui" line="+45"/>
-        <location line="+831"/>
-        <location line="+1905"/>
-        <source>General</source>
-        <translation>Általános</translation>
-    </message>
-    <message>
-        <location line="-2606"/>
-        <source>Octave logo only</source>
-        <translation>Kizárólag oktáv embléma</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Letter icons</source>
-        <translation>Betű ikonok</translation>
-    </message>
-    <message>
-        <location line="-74"/>
-        <source>Dock widget title bar</source>
-        <translation>Vezérlő rögzítőcímsora</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Small</source>
-        <translation>Kicsi</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Large</source>
-        <translation>Nagy</translation>
-    </message>
-    <message>
-        <location line="+170"/>
-        <source>Custom style</source>
-        <translation>Egyéni stílus</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>3D</source>
-        <translation>3D</translation>
-    </message>
-    <message>
-        <location line="+511"/>
-        <source>Editor</source>
-        <translation>Szerkesztő</translation>
-    </message>
-    <message>
-        <location line="+488"/>
-        <location line="+140"/>
-        <source>This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in the default font. It may not work very well if styles use proportional fonts or if varied font sizes or bold, italic and normal texts are used.</source>
-        <translation>Ez jól működik rögzített szélességű betűkészleteknél. A vonalat az alapértelmezett betűkészlet szóköz karaktereinek szélessége alapján kell megrajzolni. Előfordulhat, hogy nem működik jól, ha a stílusok arányos betűkészleteket használnak, vagy ha különböző betűméreteket vagy vastag, dőlt és normál szövegeket használnak.</translation>
-    </message>
-    <message>
-        <location line="-535"/>
-        <source>Enable Code Folding</source>
-        <translation>Kódrészletek bezárásai engedélyezése</translation>
-    </message>
-    <message>
-        <location line="+1059"/>
-        <source>Windows (CRLF)</source>
-        <translation>Windows (CR LF karakterpár)</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Legacy Mac (CR)</source>
-        <translation>Örökölt Mac (CR karakter)</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Unix (LF)</source>
-        <translation>Unix (LF karakter)</translation>
-    </message>
-    <message>
-        <location line="-1034"/>
-        <source>Show horizontal scroll bar</source>
-        <translation>Vízszintes görgetősáv megjelenítése</translation>
-    </message>
-    <message>
-        <location line="-509"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If set, the focus of the widgets that are docked to the main window follows the mouse cursor. This is intended for having the same behavior within the main window when &amp;quot;focus follows mouse&amp;quot; is used for the desktop environment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ha be van állítva, a főablakhoz rögzített vezérlők fókusza az egérkurzort követi. Ennek célja ugyanaz a viselkedés a főablakon belül, amikor az asztali környezetben a „Fókusz követi az egeret” funkciót használjuk.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Focus follows mouse for widgets docked to the main window</source>
-        <translation>Fókusz követi az egeret a vezérlők rögzítve a főablakba</translation>
-    </message>
-    <message>
-        <location line="+487"/>
-        <source>Show tool bar</source>
-        <translation>Eszköztár megjelenítése</translation>
-    </message>
-    <message>
-        <location line="+221"/>
-        <source>Rotated tabs</source>
-        <translation>Elforgatott lapok</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Position</source>
-        <translation>Szövegbeosztás</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Max. tab width in chars (0: no limit)</source>
-        <translation>A tabulátor legfeljebb szélessége karakterekben (0: korlátlan)</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Max. width of a tab in characters (average char. width). Especially useful for rotated tabs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A tabulátor legfeljebb szélessége karakterekben (átlagos karakterszélesség). Különösen hasznos elforgatott lapok esetén.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+260"/>
-        <source>Wrap long lines at current window border</source>
-        <translation>Tekerjen hosszú sorokat a jelenlegi ablak határán</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Indentation</source>
-        <translation>Behúzás</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>Indent width</source>
-        <translation>Behúzás szélessége</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Tab indents line</source>
-        <translation>Tabulátor behúzási segédvonala</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Auto indentation</source>
-        <translation>Automatikus behúzás</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Tab width</source>
-        <translation>Tabulátor szélessége</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Show indentation guides</source>
-        <translation>Behúzási segédvonalainak megjelenítése</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Backspace unindents line</source>
-        <translation>Visszatörlés (backspace) eltávolítja a sor behúzását</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Indentation uses tabs</source>
-        <translation>Behúzás tabulátorokat használ</translation>
-    </message>
-    <message>
-        <location line="+70"/>
-        <source>Auto completion</source>
-        <translation>Automatikus kiegészítés</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Match keywords</source>
-        <translation>Kulcsszavak egyeztetése</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Case sensitive</source>
-        <translation>Kis- és nagybetűk megkülönböztetése</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Replace word by suggested one</source>
-        <translation>Helyettesítse a szót a javasolt szöveggel</translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <source>Match words in document</source>
-        <translation>Párosítsa a szavakat a dokumentumban</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>With Octave builtins</source>
-        <translation>Oktáv beépített elemekkel</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>With Octave functions</source>
-        <translation>Oktáv függvényekkel</translation>
-    </message>
-    <message>
-        <location line="+64"/>
-        <source>Show completion list automatically</source>
-        <translation>Befejezési lista automatikus mutatása</translation>
-    </message>
-    <message>
-        <location line="+76"/>
-        <source>Reload externally changed files without prompt</source>
-        <translation>A külsőleg módosított fájlok újratöltése felszólítás nélkül</translation>
-    </message>
-    <message>
-        <location line="-841"/>
-        <source>Use custom file editor</source>
-        <translation>Egyéni fájlszerkesztő használata</translation>
-    </message>
-    <message>
-        <location line="+934"/>
-        <source>Text encoding used for loading and saving</source>
-        <translation>Betöltéshez és mentéshez használt szövegkódolás</translation>
-    </message>
-    <message>
-        <location line="+68"/>
-        <source>Editor Styles</source>
-        <translation>Szerkesztő stílusai</translation>
-    </message>
-    <message>
-        <location line="-1383"/>
-        <source>(Changing buffer size clears history)</source>
-        <translation>(A puffer méretének megváltoztatása törli az előzményeket)</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>History buffer Size</source>
-        <translation>Előzménypuffer mérete</translation>
-    </message>
-    <message>
-        <location line="-123"/>
-        <location line="+1859"/>
-        <source>Font</source>
-        <translation>Betűkészlet</translation>
-    </message>
-    <message>
-        <location line="-1569"/>
-        <source>Show line numbers</source>
-        <translation>Sorok számának megjelenítése</translation>
-    </message>
-    <message>
-        <location line="+152"/>
-        <source>Highlight current line</source>
-        <translation>Jelenlegi sor kiemelése</translation>
-    </message>
-    <message>
-        <location line="-1008"/>
-        <source>Interface</source>
-        <translation>Felület</translation>
-    </message>
-    <message>
-        <location line="+418"/>
-        <source>Confirm before exiting</source>
-        <translation>Megerősít kilépés előtt</translation>
-    </message>
-    <message>
-        <location line="-292"/>
-        <source>Graphic icons</source>
-        <translation>Képikonok</translation>
-    </message>
-    <message>
-        <location line="+272"/>
-        <location line="+439"/>
-        <source>Show status bar</source>
-        <translation>Állapotsor megjelenítése</translation>
-    </message>
-    <message>
-        <location line="-630"/>
-        <source>Text inactive</source>
-        <translation>Tétlen szöveg</translation>
-    </message>
-    <message>
-        <location line="-32"/>
-        <location line="+45"/>
-        <source>Active</source>
-        <translation>Működő</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Background inactive</source>
-        <translation>Tétlen háttér</translation>
-    </message>
-    <message>
-        <location line="+171"/>
-        <source>Octave Startup</source>
-        <translation>Oktáv indítás</translation>
-    </message>
-    <message>
-        <location line="+46"/>
-        <location line="+1687"/>
-        <source>Browse</source>
-        <translation>Tallózás</translation>
-    </message>
-    <message>
-        <location line="-1294"/>
-        <source>Show whitespace</source>
-        <translation>Elválasztó karakterek megjelenítése</translation>
-    </message>
-    <message>
-        <location line="-45"/>
-        <source>Do not show whitespace used for indentation</source>
-        <translation>Ne jelenjen meg elválasztó karakterek használt behúzáshoz</translation>
-    </message>
-    <message>
-        <location line="+1085"/>
-        <source>Create nonexistent files without prompting</source>
-        <translation>Hozzon létre nem létező fájlokat kérés nélkül</translation>
-    </message>
-    <message>
-        <location line="-857"/>
-        <source>command line (%f=file, %l=line):</source>
-        <translation>Parancssor (%f=fájl, %l=sor):</translation>
-    </message>
-    <message>
-        <location line="-500"/>
-        <source>Cursor type:</source>
-        <translation>Jelölőtípus:</translation>
-    </message>
-    <message>
-        <location line="-164"/>
-        <source>Cursor blinking</source>
-        <translation>Villogó jelölő</translation>
-    </message>
-    <message>
-        <location line="+153"/>
-        <source>Use foreground color</source>
-        <translation>Előtér színe használata</translation>
-    </message>
-    <message>
-        <location line="+52"/>
-        <location line="+1749"/>
-        <source>Font size</source>
-        <translation>Betűméret</translation>
-    </message>
-    <message>
-        <location line="-245"/>
-        <source>File Browser</source>
-        <translation>Fájltallózó</translation>
-    </message>
-    <message>
-        <location line="-2031"/>
-        <source>Normal</source>
-        <translation>Normál</translation>
-    </message>
-    <message>
-        <location line="+370"/>
-        <source>These preferences are applied after any .octaverc startup files.</source>
-        <translation>Ezeket a beállításokat minden .octaverc indítási fájl után alkalmazza.</translation>
-    </message>
-    <message>
-        <location line="+540"/>
-        <source>Show EOL characters</source>
-        <translation>Sorvég (EOL) karakterek megjelenítése</translation>
-    </message>
-    <message>
-        <location line="+945"/>
-        <source>Default EOL mode</source>
-        <translation>Alapértelmezett sorvég (EOL) üzemmód</translation>
-    </message>
-    <message>
-        <location line="-162"/>
-        <source>Number of characters before list is shown: </source>
-        <translation>Karakterek száma a lista megjelenítése előtt: </translation>
-    </message>
-    <message>
-        <location line="-1802"/>
-        <source>Preferences</source>
-        <translation>Beállítások</translation>
-    </message>
-    <message>
-        <location line="+66"/>
-        <source>(requires restart)</source>
-        <translation>(újraindítás szükséges)</translation>
-    </message>
-    <message>
-        <location line="+355"/>
-        <source>Use native file dialogs</source>
-        <translation>Rendszer fájl párbeszédpanelek használata</translation>
-    </message>
-    <message>
-        <location line="-280"/>
-        <source>Use system icon theme if available (requires restart)</source>
-        <translation>Rendszerikon-téma használata, ha rendelkezésre áll (újraindítást igényel)</translation>
-    </message>
-    <message>
-        <location line="+50"/>
-        <source>Toolbar Icons</source>
-        <translation>Eszköztár ikonok</translation>
-    </message>
-    <message>
-        <location line="+179"/>
-        <source>Language</source>
-        <translation>Nyelv</translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>Style</source>
-        <translation>Stílus</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>Initial working directory of Octave interpreter</source>
-        <translation>Oktáv-tolmács kezdeti munkakönyvtára</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Restore last working directory of previous session</source>
-        <translation>Előző munkamenet utolsó munkakönyvtárának visszaállítása</translation>
-    </message>
-    <message>
-        <location line="+45"/>
-        <source>Command</source>
-        <translation>Parancs</translation>
-    </message>
-    <message>
-        <location line="+208"/>
-        <source>Set focus to Command Window when running a command from within another widget</source>
-        <translation>Fókusz beállítása a parancsablakhoz, amikor parancs futtatása egy másik vezérlőből</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Print debug location in Command Window in addition to the marker in the editor</source>
-        <translation>Hibakeresési hely kinyomtatása a parancsablakban a szerkesztőben lévő jelölő mellett</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Command Window Colors</source>
-        <translation>Parancsablakok színei</translation>
-    </message>
-    <message>
-        <location line="+190"/>
-        <source>Number size as difference to editor font</source>
-        <translation>A szám mérete a szerkesztő betűtípusától való eltérés</translation>
-    </message>
-    <message>
-        <location line="+93"/>
-        <source>Highlight all occurrences of a word selected by a double click</source>
-        <translation>Dupla kattintással jelölje ki a szó összes előfordulását</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <source>Tabs</source>
-        <translation>Lapok</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate tabs: Vertical when at top or bottom and horizontal when left or right. The close button is not shown in rotated tabs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lapok elforgatása: Függőleges, ha felül vagy alul van, és vízszintes, ha balra vagy jobbra van. A bezárás gomb nem jelenik meg az elforgatott lapokon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+74"/>
-        <source>Comments (Octave)</source>
-        <translation>Megjegyzések (Oktáv)</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Strings considered for uncommenting text</source>
-        <translation>A megjegyzés nélküli szöveg karakterláncai</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>String used for commenting selected text</source>
-        <translation>A kiválasztott szöveg megjegyzéséhez használt karakterlánc</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Long lines</source>
-        <translation>Sorhosszúság</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Break long lines at line length</source>
-        <translation>Sor hasítása sorhosszon</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Break lines only in comments</source>
-        <translation>Sor hasítása csak megjegyzésekben</translation>
-    </message>
-    <message>
-        <location line="+60"/>
-        <source>Line length</source>
-        <translation>Sorhossz</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Long line marker</source>
-        <translation>Hosszú vonal jelölő</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Line</source>
-        <translation>Sor</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Background</source>
-        <translation>Háttér</translation>
-    </message>
-    <message>
-        <location line="+191"/>
-        <source>Auto insert after &quot;if&quot; etc.</source>
-        <translation>Automatikus beszúrás az „if” (ha) után stb.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Nothing</source>
-        <translation>Semmi</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>&quot;endif&quot; etc.</source>
-        <translation>„endif” (végeha) stb.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>&quot;end&quot;</source>
-        <translation>„end” (vége)</translation>
-    </message>
-    <message>
-        <location line="+238"/>
-        <source>Debugging</source>
-        <translation>Hibakeresés</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Always show debug breakpoints and pointers (opens related file if closed)</source>
-        <translation>Mindig jelenítse meg a hibakeresési töréspontokat és mutatókat (bezárva megnyitja a kapcsolódó fájlt)</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>File handling</source>
-        <translation>Fájlkezelés</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Restore editor tabs from previous session on startup or when editor is shown again after closing</source>
-        <translation>A szerkesztő lapok visszaállítása az előző munkamenetből indításkor, vagy amikor a szerkesztő újra megjelenik a bezárás után</translation>
-    </message>
-    <message>
-        <location line="+105"/>
-        <source>Close all files when the editor widget is closed/hidden</source>
-        <translation>Minden fájl bezárása, amikor a szerkesztővezérlő bezárásakor/elrejtésekor</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Force newline at end when saving file</source>
-        <translation>Újsor kényszerítése a végére a fájl mentésekor</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Remove trailing spaces when saving file</source>
-        <translation>A fájl mentésekor távolítsa el a záró szóközöket</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select font, font size (as a difference from the default size), font style (&lt;b&gt;b&lt;/b&gt;old, &lt;b&gt;i&lt;/b&gt;talic, &lt;b&gt;u&lt;/b&gt;nderline), text color, and background color (for the latter, the color magenta (255,0,255) is a placeholder for the default background color).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Betűkészlet, betűméret (eltérés az alapértelmezett mérettől), betűstílus kijelölése (&lt;b&gt;f&lt;/b&gt;élkövér, &lt;b&gt;d&lt;/b&gt;őlt, &lt;b&gt;a&lt;/b&gt;láhúzott), szövegszín, and háttérszín (utóbbi esetében a bíbor szín (255,0,255) az alapértelmezett háttérszín helyőrzője).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <source>Behavior</source>
-        <translation>Viselkedés</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>Restore last directory of previous session</source>
-        <translation>Előző munkamenet utolsó könyvtárának visszaállítása</translation>
-    </message>
-    <message>
-        <location line="+68"/>
-        <source>Extensions of files to be opened in the default text editor (separated by &quot;;&quot;):</source>
-        <translation>Alapértelmezett szövegszerkesztőben megnyitandó fájlkiterjesztések („;” elválasztva):</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Workspace</source>
-        <translation>Munkaterület</translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>Colors for variable attributes</source>
-        <translation>Változóattribútumok színei</translation>
-    </message>
-    <message>
-        <location line="+133"/>
-        <source>Use Command Window font</source>
-        <translation>Parancsablak betűkészlet használata</translation>
-    </message>
-    <message>
-        <location line="+117"/>
-        <source>Disable menu accelerators of main window menus when Commmand Window has focus</source>
-        <translation>A főablak menüinek menügyorsítóinak letiltása, ha a Parancsablak fókuszban van</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>Import shortcut set</source>
-        <translation>Gyorsítóparancskészlet importálása</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Export current shortcut set</source>
-        <translation>Jelenlegi gyorsítóparancskészlet exportálása</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Reset shortcuts to their defaults</source>
-        <translation>Gyorsítóparancsok visszaállása az alapértelmezett értékekre</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+80"/>
-        <source>Default</source>
-        <translation>Alapértelmezett</translation>
-    </message>
-    <message>
-        <location line="-71"/>
-        <source>Edit a shortcut by double-clicking in a cell</source>
-        <translation>Szerkeszt meg a gyorsítóparancsot a cellára duplán kattintva</translation>
-    </message>
-    <message>
-        <location line="+76"/>
-        <source>Actual</source>
-        <translation>Tényleges</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Network</source>
-        <translation>Hálózat</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Allow Octave to connect to the Octave web site to display current news and information</source>
-        <translation>Engedélyezze az Oktávnak, hogy csatlakozzon az Oktáv honlaphoz, hogy megjelenítse a jelenlegi híreket és információkat</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Proxy Server</source>
-        <translation>Proxykiszolgáló</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select &lt;span style=&quot; font-style:italic;&quot;&gt;HttpProxy&lt;/span&gt;, &lt;span style=&quot; font-style:italic;&quot;&gt;Sock5Proxy&lt;/span&gt; or &lt;span style=&quot; font-style:italic;&quot;&gt;Environment Variables&lt;/span&gt;. With the last selection, the proxy is taken from the first non-empty environment variable ALL_PROXY, HTTP_PROXY or HTTPS_PROXY .&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Válassza ki &lt;span style=&quot; font-style:italic;&quot;&gt;HTTP-proxy&lt;/span&gt;, &lt;span style=&quot; font-style:italic;&quot;&gt;Sock5Proxy&lt;/span&gt; vagy &lt;span style=&quot; font-style:italic;&quot;&gt;Környezeti változók&lt;/span&gt;. Az utolsó kiválasztással a proxy az első nem üres környezeti változóból (ALL_PROXY, HTTP_PROXY vagy HTTPS_PROXY) kerül átvételre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+78"/>
-        <source>Use proxy server</source>
-        <translation>Proxykiszolgáló használata</translation>
-    </message>
-    <message>
-        <location line="-523"/>
-        <source>Variable Editor</source>
-        <translation>Változószerkesztő</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Default row height</source>
-        <translation>Alapértelmezett sormagasság</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Default column width</source>
-        <translation>Alapértelmezett oszlopszélesség</translation>
-    </message>
-    <message>
-        <location line="+78"/>
-        <source>Variable Editor Colors</source>
-        <translation>Változószerkesztő színek</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Use alternating row colors</source>
-        <translation>Változó sorszínek használata</translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>Disable global shortcuts in order to prevent
-interference with readline key strokes.
-Exceptions: Ctrl-C for interrupting the interpreter
-and the shortcuts for switching to other widgets.</source>
-        <translation>Globális billentyűparancsok letiltása a
-ReadLine billentyűleütésekkel való zavar elkerülése érdekében.
-Kivételek: Ctrl-C az értelmező megszakítására és a
-billentyűparancsok más vezérlőkre való váltásra.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Disable global shortcuts when Command Window has focus</source>
-        <translation>Globális gyorsítóparancsok letiltása, ha a Parancsablak fókuszba kerül</translation>
-    </message>
-    <message>
-        <location line="-2360"/>
-        <source>Icon set for dock widgets</source>
-        <translation>Vezérlők rögzítésének ikonkészlete</translation>
-    </message>
-    <message>
-        <location line="+1968"/>
-        <source>Synchronize Octave working directory with file browser</source>
-        <translation>Oktáv munkakönyvtár összehangolása a fájltallózóval</translation>
-    </message>
-    <message>
-        <location line="+46"/>
-        <source>Initial file browser directory (only if not synchronized with initial working directory of Octave)</source>
-        <translation>Kezdeti fájltallózókönyvtár (csak ha nincs összehangolva az Oktáv kezdeti munkakönyvtárával)</translation>
-    </message>
-    <message>
-        <location line="+302"/>
-        <source>Shortcuts</source>
-        <translation>Gyorsítóparancs</translation>
-    </message>
-    <message>
-        <location line="+54"/>
-        <source>Disable menu accelerators in order to prevent
-interference with readline key strokes.</source>
-        <translation>Globális billentyűparancsok letiltása a
-ReadLine billentyűleütésekkel való zavar elkerülése érdekében.</translation>
-    </message>
-    <message>
-        <location line="+54"/>
-        <source>Export</source>
-        <translation>Exportálás</translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <source>Import</source>
-        <translation>Importálás</translation>
-    </message>
-    <message>
-        <location line="+90"/>
-        <source>Action</source>
-        <translation>Művelet</translation>
-    </message>
-    <message>
-        <location line="+82"/>
-        <source>Hostname:</source>
-        <translation>Állomásnév:</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Proxy type:</source>
-        <translation>Proxy típusa:</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Port:</source>
-        <translation>Kikötő:</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>Username:</source>
-        <translation>Felhasználónév:</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Password:</source>
-        <translation>Jelszó:</translation>
     </message>
 </context>
 </TS>

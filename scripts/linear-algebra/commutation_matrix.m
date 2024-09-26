@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} commutation_matrix (@var{m}, @var{n})
+## @deftypefn {} {@var{k} =} commutation_matrix (@var{m}, @var{n})
 ## Return the commutation matrix
 ## @tex
 ##  $K_{m,n}$

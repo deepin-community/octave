@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -133,7 +133,7 @@ function yi = interp1 (x, y, varargin)
     for i_arg = 1:length (varargin)
       arg = varargin{i_arg};
       if (ischar (arg))
-        arg = tolower (arg);
+        arg = lower (arg);
         switch (arg)
           case "extrap"
             extrap = "extrap";
@@ -479,7 +479,7 @@ endfunction
 %! %--------------------------------------------------------
 %! % red curve is left-continuous and blue is right-continuous at x = 2
 
-##FIXME: add test for N-d arguments here
+## FIXME: add test for N-d arguments here
 
 ## For each type of interpolated test, confirm that the interpolated
 ## value at the knots match the values at the knots.  Points away
@@ -559,8 +559,8 @@ endfunction
 %!   interp1 (xp,yp,xi,style) + 1i * interp1 (xp,yp.^2,xi,style))
 ## This test is expected to fail, so commented out.
 ## "previous" and "next" options are not symmetric w.r.t to flipping xp,yp
-#%!assert (interp1 (xp,yp,xi,style),...
-#%!        interp1 (fliplr (xp),fliplr (yp),xi,style),100*eps)
+%!#assert (interp1 (xp,yp,xi,style),...
+%!#        interp1 (fliplr (xp),fliplr (yp),xi,style),100*eps)
 %!assert (ppval (interp1 (xp,yp,style,"pp"),xi),
 %!        interp1 (xp,yp,xi,style,"extrap"),10*eps)
 %!error interp1 (1,1,1, style)
@@ -579,8 +579,8 @@ endfunction
 %!assert <*61903> ...
 %!  (interp1 (xp, yp + 1i * yp.^2, xi, style),...
 %!   interp1 (xp,yp,xi,style) + 1i * interp1 (xp,yp.^2,xi,style))
-#%!assert (interp1 (xp,yp,xi,style),...
-#%!        interp1 (fliplr (xp),fliplr (yp),xi,style),100*eps)
+%!#assert (interp1 (xp,yp,xi,style),...
+%!#        interp1 (fliplr (xp),fliplr (yp),xi,style),100*eps)
 %!assert (ppval (interp1 (xp,yp,style,"pp"),xi),
 %!        interp1 (xp,yp,xi,style,"extrap"),10*eps)
 %!assert (interp1 (yp, xi, style, 0), ...
@@ -602,8 +602,8 @@ endfunction
 %!assert <*61903> ...
 %!  (interp1 (xp, yp + 1i * yp.^2, xi, style),...
 %!   interp1 (xp,yp,xi,style) + 1i * interp1 (xp,yp.^2,xi,style))
-#%!assert (interp1 (xp,yp,xi,style),...
-#%!        interp1 (fliplr (xp),fliplr (yp),xi,style),100*eps)
+%!#assert (interp1 (xp,yp,xi,style),...
+%!#        interp1 (fliplr (xp),fliplr (yp),xi,style),100*eps)
 %!assert (ppval (interp1 (xp,yp,style,"pp"),xi),
 %!        interp1 (xp,yp,xi,style,"extrap"),10*eps)
 %!error interp1 (1,1,1, style)
@@ -622,8 +622,8 @@ endfunction
 %!assert <*61903> ...
 %!  (interp1 (xp, yp + 1i * yp.^2, xi, style),...
 %!   interp1 (xp,yp,xi,style) + 1i * interp1 (xp,yp.^2,xi,style))
-#%!assert (interp1 (xp,yp,xi,style),...
-#%!        interp1 (fliplr (xp),fliplr (yp),xi,style),100*eps)
+%!#assert (interp1 (xp,yp,xi,style),...
+%!#        interp1 (fliplr (xp),fliplr (yp),xi,style),100*eps)
 %!assert (ppval (interp1 (xp,yp,style,"pp"),xi),
 %!        interp1 (xp,yp,xi,style,"extrap"),10*eps)
 %!assert (interp1 (yp, xi, style, 0), ...

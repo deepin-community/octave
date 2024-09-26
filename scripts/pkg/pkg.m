@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -168,21 +168,24 @@
 ##
 ## Options for the install command and the names of individual packages to be
 ## checked for updates may be specified as a list following the update
-## command. If the @option{-local} or @option{-global} option is specified,
+## command.  If the @option{-local} or @option{-global} option is specified,
 ## @code{pkg update} limits the update check to the local or global installed
 ## packages, and installs updates in that same context.  For example,
 ##
 ## Update all packages:
+##
 ## @example
 ## pkg update
 ## @end example
 ##
 ## Update all local packages:
+##
 ## @example
 ## pkg update -local
 ## @end example
 ##
 ## Update certain packages, ignore dependencies, max verbosity:
+##
 ## @example
 ## pkg update -verbose -nodeps image signal geometry
 ## @end example
@@ -534,6 +537,10 @@ function [local_packages, global_packages] = pkg (varargin)
         if (octave_forge)
           [urls, local_files] = cellfun ("get_forge_download", files,
                                          "uniformoutput", false);
+          if (verbose)
+            fprintf ("downloading tarball(s) from:%s\n", ...
+                     sprintf ("\n- %s", urls{:}));
+          endif
           [files, succ] = cellfun ("urlwrite", urls, local_files,
                                    "uniformoutput", false);
           succ = [succ{:}];
@@ -600,6 +607,15 @@ function [local_packages, global_packages] = pkg (varargin)
             endfor
           endif
         endif
+
+        ## make sure the PREFIX and the ARCHPREFIX directories are created
+        if (! isfolder (prefix))
+          mkdir (prefix);
+        endif
+        if (! isfolder (archprefix))
+          mkdir (archprefix);
+        endif
+
         install (files, deps, prefix, archprefix, verbose, local_list,
                  global_list, global_install);
 
@@ -696,6 +712,10 @@ function [local_packages, global_packages] = pkg (varargin)
           global_packages = standardize_paths (global_packages);
         endif
         global_packages = make_rel_paths (global_packages);
+        global_list_dir = fileparts (global_list);
+        if (! isempty (global_list_dir) && ! exist (global_list_dir, "dir"))
+          mkdir (global_list_dir);
+        endif
         save (global_list, "global_packages");
         if (nargout)
           local_packages = global_packages;
@@ -706,6 +726,10 @@ function [local_packages, global_packages] = pkg (varargin)
         local_packages = save_order (local_packages);
         if (ispc)
           local_packages = standardize_paths (local_packages);
+        endif
+        local_list_dir = fileparts (local_list);
+        if (! isempty (local_list_dir) && ! exist (local_list_dir, "dir"))
+          mkdir (local_list_dir);
         endif
         save (local_list, "local_packages");
         if (! nargout)
@@ -736,7 +760,7 @@ function [local_packages, global_packages] = pkg (varargin)
       localflag = any (strcmp (varargin, "-local"));
       if (globalflag || localflag)
         if (globalflag && localflag)
-          error ("pkg: cannot specify both global and local options.")
+          error ("pkg: cannot specify both global and local options.");
         elseif (globalflag)
           [~, installed_pkgs_lst] = installed_packages (local_list, global_list);
         else

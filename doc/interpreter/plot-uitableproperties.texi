@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,19 +23,40 @@
 
 Properties of @code{uitable} objects (@pxref{XREFuitable,,uitable}):
 
+@subsubheading Categories:
+
+@ref{XREFuitablecategoryAppearance, , @w{Appearance}}@: | @ref{XREFuitablecategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFuitablecategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFuitablecategoryDisplay, , @w{Display}}@: | @ref{XREFuitablecategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFuitablecategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFuitablecategoryObjectPosition, , @w{Object Position}}@: | @ref{XREFuitablecategoryParent/Children, , @w{Parent/Children}}@: | @ref{XREFuitablecategoryTableData, , @w{Table Data}}@: | @ref{XREFuitablecategoryTableOperation, , @w{Table Operation}}@: | @ref{XREFuitablecategoryTextAppearance, , @w{Text Appearance}}@: 
+
+@anchor{XREFuitablecategoryAppearance}
+@subsubheading Appearance
+@prindex uitable Appearance
+
 @table @asis
 
 @anchor{XREFuitablebackgroundcolor}
 @prindex uitable backgroundcolor
-@item @code{backgroundcolor}: def. 2-by-3 double
+@item @code{backgroundcolor}: colorspec, def. 2-by-3 double
+Color of the background of the table specified as a 3-element RBG vector.  If @code{backgroundcolor} has multiple rows, the colors cycle repeatedly if the @ref{XREFuitablerowstriping, , @qcode{"rowstriping"} property} is on.
 
 
+@anchor{XREFuitableforegroundcolor}
+@prindex uitable foregroundcolor
+@item @code{foregroundcolor}: colorspec, def. @code{[0   0   0]}
+Color of the data text in this table.  @xref{Colors, , colorspec}.
 
-@anchor{XREFuitablebeingdeleted}
-@prindex uitable beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
 
+@anchor{XREFuitablerowstriping}
+@prindex uitable rowstriping
+@item @code{rowstriping}: @qcode{"off"} | @{@qcode{"on"}@}
+Setting to indicate whether the table background color will use different colors for each row.  Colors are drawn from the @ref{XREFuitablebackgroundcolor, , @qcode{"backgroundcolor"} property} in a repeating pattern.
 
+@end table
+
+@anchor{XREFuitablecategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex uitable CallbackExecution
+
+@table @asis
 
 @anchor{XREFuitablebusyaction}
 @prindex uitable busyaction
@@ -41,64 +65,48 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFuitablebuttondownfcn}
-@prindex uitable buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
-For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
-
-
 @anchor{XREFuitablecelleditcallback}
 @prindex uitable celleditcallback
-@item @code{celleditcallback}: def. @code{[](0x0)}
-
+@item @code{celleditcallback}: string, def. @code{[](0x0)}
+A string consisting of a valid Octave expression that will be executed whenever a table cell is edited.
 
 
 @anchor{XREFuitablecellselectioncallback}
 @prindex uitable cellselectioncallback
-@item @code{cellselectioncallback}: def. @code{[](0x0)}
+@item @code{cellselectioncallback}: string, def. @code{[](0x0)}
+A string consisting of a valid Octave expression that will be executed whenever a table cell is selected.
 
 
-
-@anchor{XREFuitablechildren}
-@prindex uitable children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-Graphics handles of the uitable's children.
-
-
-@anchor{XREFuitableclipping}
-@prindex uitable clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the uitable is clipped in its parent axes limits.
+@anchor{XREFuitableinterruptible}
+@prindex uitable interruptible
+@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
+@xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFuitablecolumneditable}
-@prindex uitable columneditable
-@item @code{columneditable}: def. @code{[](0x0)}
+@anchor{XREFuitablekeypressfcn}
+@prindex uitable keypressfcn
+@item @code{keypressfcn}: string, def. @code{[](0x0)}
+A string consisting of a valid Octave expression that will be executed whenever a key is pressed in this table object.
 
 
+@anchor{XREFuitablekeyreleasefcn}
+@prindex uitable keyreleasefcn
+@item @code{keyreleasefcn}: def. @code{[](0x0)}
+A string consisting of a valid Octave expression that will be executed whenever a key is released in this table object.
 
-@anchor{XREFuitablecolumnformat}
-@prindex uitable columnformat
-@item @code{columnformat}: def. @code{@{@}(0x0)}
+@end table
 
+@anchor{XREFuitablecategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex uitable Creation/Deletion
 
+@table @asis
 
-@anchor{XREFuitablecolumnname}
-@prindex uitable columnname
-@item @code{columnname}: def. @qcode{"numbered"}
-
-
-
-@anchor{XREFuitablecolumnwidth}
-@prindex uitable columnwidth
-@item @code{columnwidth}: def. @qcode{"auto"}
-
-
-
-@anchor{XREFuitablecontextmenu}
-@prindex uitable contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this uitable object.
+@anchor{XREFuitablebeingdeleted}
+@prindex uitable beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
 
 
 @anchor{XREFuitablecreatefcn}
@@ -109,12 +117,6 @@ Callback function executed immediately after uitable has been created.  Function
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFuitabledata}
-@prindex uitable data
-@item @code{data}: def. @code{[](0x0)}
-
-
-
 @anchor{XREFuitabledeletefcn}
 @prindex uitable deletefcn
 @item @code{deletefcn}: string | function handle, def. @code{[](0x0)}
@@ -122,18 +124,218 @@ Callback function executed immediately before uitable is deleted.
 
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFuitableenable}
-@prindex uitable enable
-@item @code{enable}: @qcode{"off"} | @{@qcode{"on"}@}
+@anchor{XREFuitablecategoryDisplay}
+@subsubheading Display
+@prindex uitable Display
+
+@table @asis
+
+@anchor{XREFuitableclipping}
+@prindex uitable clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the uitable is clipped in its parent axes limits.
 
 
+@anchor{XREFuitablevisible}
+@prindex uitable visible
+@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{visible} is @qcode{"off"}, the uitable is not rendered on screen.
+
+@end table
+
+@anchor{XREFuitablecategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex uitable MouseInteraction
+
+@table @asis
+
+@anchor{XREFuitablebuttondownfcn}
+@prindex uitable buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+
+
+@anchor{XREFuitablecontextmenu}
+@prindex uitable contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this uitable object.
+
+
+@anchor{XREFuitablehittest}
+@prindex uitable hittest
+@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether uitable processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFuitablepickableparts, , @w{pickableparts property}}.
+
+
+@anchor{XREFuitablepickableparts}
+@prindex uitable pickableparts
+@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
+Specify whether uitable will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the uitable or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFuitablehittest, , @w{hittest property}}.
+
+
+@anchor{XREFuitableselected}
+@prindex uitable selected
+@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicates whether this uitable is selected.
+
+
+@anchor{XREFuitableselectionhighlight}
+@prindex uitable selectionhighlight
+@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the uitable's selection state is visually highlighted.
+
+
+@anchor{XREFuitabletooltipstring}
+@prindex uitable tooltipstring
+@item @code{tooltipstring}: string, def. @qcode{""}
+A text string that appears in a tooltip when the mouse pointer hovers over the table object.
+
+@end table
+
+@anchor{XREFuitablecategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex uitable ObjectIdentification
+
+@table @asis
+
+@anchor{XREFuitabletag}
+@prindex uitable tag
+@item @code{tag}: string, def. @qcode{""}
+A user-defined string to label the graphics object.
+
+
+@anchor{XREFuitabletype}
+@prindex uitable type
+@item @code{type} (read-only): string
+Class name of the graphics object.  @code{type} is always @qcode{"uitable"}.
+
+
+@anchor{XREFuitableuserdata}
+@prindex uitable userdata
+@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
+User-defined data to associate with the graphics object.
+
+@end table
+
+@anchor{XREFuitablecategoryObjectPosition}
+@subsubheading Object Position
+@prindex uitable ObjectPosition
+
+@table @asis
 
 @anchor{XREFuitableextent}
 @prindex uitable extent
 @item @code{extent} (read-only): four-element vector
+A for element vector indicating the size of the table.  The first two elements of the array are always zero, while the third and fourth elements contain the height and width of the table.
 
 
+@anchor{XREFuitableposition}
+@prindex uitable position
+@item @code{position}: four-element vector, def. @code{[20    20   300   300]}
+The position and size of the table.  The four elements of the vector are the coordinates of the lower left corner and width and height of the figure.  @xref{XREFuitableunits, , @w{units property}}.
+
+
+@anchor{XREFuitableunits}
+@prindex uitable units
+@item @code{units}: @qcode{"centimeters"} | @qcode{"characters"} | @qcode{"inches"} | @qcode{"normalized"} | @{@qcode{"pixels"}@} | @qcode{"points"}
+Unit of measurement used to interpret the @qcode{"position"} property.
+
+@end table
+
+@anchor{XREFuitablecategoryParent/Children}
+@subsubheading Parent/Children
+@prindex uitable Parent/Children
+
+@table @asis
+
+@anchor{XREFuitablechildren}
+@prindex uitable children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Graphics handles of the uitable's children.
+
+
+@anchor{XREFuitablehandlevisibility}
+@prindex uitable handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the uitable's handle is not visible in its parent's @qcode{"children"} property.
+
+
+@anchor{XREFuitableparent}
+@prindex uitable parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
+
+@end table
+
+@anchor{XREFuitablecategoryTableData}
+@subsubheading Table Data
+@prindex uitable TableData
+
+@table @asis
+
+@anchor{XREFuitablecolumnformat}
+@prindex uitable columnformat
+@item @code{columnformat}: def. @code{@{@}(0x0)}
+The display format for numeric data in each column.  Valid formats include @qcode{"char"}, @qcode{"logical"}, @qcode{"numeric"}, or a valid format setting from the @ref{XREFformat, , format function}
+
+
+@anchor{XREFuitablecolumnname}
+@prindex uitable columnname
+@item @code{columnname}: def. @qcode{"numbered"}
+Column names specified as either @qcode{"numbered"} or a 1 x N cell string vector containing the names to be used for each column heading.
+
+
+@anchor{XREFuitablecolumnwidth}
+@prindex uitable columnwidth
+@item @code{columnwidth}: def. @qcode{"auto"}
+Setting for determining width of each column, valid options include:  @qcode{"auto"}, @qcode{"fit"}, evenly divided multiples specified as @qcode{"1x"}, @qcode{"2x"}, etc., or a 1 x N cell vector where each element corresponds to one of N table columns, and containing any of the above options or a fixed width specified in pixels.
+
+
+@anchor{XREFuitabledata}
+@prindex uitable data
+@item @code{data}: matrix, def. @code{[](0x0)}
+The data contained in the table specified as either a 2-D numeric, logical, or cell array.
+
+
+@anchor{XREFuitablerowname}
+@prindex uitable rowname
+@item @code{rowname}: def. @qcode{"numbered"}
+Row names specified as either @qcode{"numbered"} or a N x 1 cell string vector containing the names to be used for each row heading.
+
+@end table
+
+@anchor{XREFuitablecategoryTableOperation}
+@subsubheading Table Operation
+@prindex uitable TableOperation
+
+@table @asis
+
+@anchor{XREFuitablecolumneditable}
+@prindex uitable columneditable
+@item @code{columneditable}: logical row vector, def. @code{[](0x0)}
+A logical indicator of whether the columns are editable.  It consists of either a 1 x N vector of logical values where true or false indicate the corresponding column is or is not editable, respectively, or an empty logical array indicating that no column is editable.
+
+
+@anchor{XREFuitableenable}
+@prindex uitable enable
+@item @code{enable}: @qcode{"off"} | @{@qcode{"on"}@}
+Sets whether this table object is active or is grayed out.
+
+
+@anchor{XREFuitablerearrangeablecolumns}
+@prindex uitable rearrangeablecolumns
+@item @code{rearrangeablecolumns}: @{@qcode{"off"}@} | @qcode{"on"}
+Indicates whether or not the ability to move columns by clicking and dragging the column headers.
+
+@end table
+
+@anchor{XREFuitablecategoryTextAppearance}
+@subsubheading Text Appearance
+@prindex uitable TextAppearance
+
+@table @asis
 
 @anchor{XREFuitablefontangle}
 @prindex uitable fontangle
@@ -165,126 +367,5 @@ Units used to interpret the @qcode{"fontsize"} property.
 @prindex uitable fontweight
 @item @code{fontweight}: @qcode{"bold"} | @{@qcode{"normal"}@}
 Control the variant of the base font used for text rendering.
-
-
-@anchor{XREFuitableforegroundcolor}
-@prindex uitable foregroundcolor
-@item @code{foregroundcolor}: def. @code{[0   0   0]}
-
-
-
-@anchor{XREFuitablehandlevisibility}
-@prindex uitable handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the uitable's handle is not visible in its parent's "children" property.
-
-
-@anchor{XREFuitablehittest}
-@prindex uitable hittest
-@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether uitable processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFuitablepickableparts, , @w{pickableparts property}}.
-
-
-@anchor{XREFuitableinterruptible}
-@prindex uitable interruptible
-@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
-@xref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFuitablekeypressfcn}
-@prindex uitable keypressfcn
-@item @code{keypressfcn}: def. @code{[](0x0)}
-
-
-
-@anchor{XREFuitablekeyreleasefcn}
-@prindex uitable keyreleasefcn
-@item @code{keyreleasefcn}: def. @code{[](0x0)}
-
-
-
-@anchor{XREFuitableparent}
-@prindex uitable parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
-
-
-@anchor{XREFuitablepickableparts}
-@prindex uitable pickableparts
-@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
-Specify whether uitable will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the uitable or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFuitablehittest, , @w{hittest property}}.
-
-
-@anchor{XREFuitableposition}
-@prindex uitable position
-@item @code{position}: def. @code{[20    20   300   300]}
-
-
-
-@anchor{XREFuitablerearrangeablecolumns}
-@prindex uitable rearrangeablecolumns
-@item @code{rearrangeablecolumns}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
-
-@anchor{XREFuitablerowname}
-@prindex uitable rowname
-@item @code{rowname}: def. @qcode{"numbered"}
-
-
-
-@anchor{XREFuitablerowstriping}
-@prindex uitable rowstriping
-@item @code{rowstriping}: @qcode{"off"} | @{@qcode{"on"}@}
-
-
-
-@anchor{XREFuitableselected}
-@prindex uitable selected
-@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
-
-@anchor{XREFuitableselectionhighlight}
-@prindex uitable selectionhighlight
-@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
-
-
-
-@anchor{XREFuitabletag}
-@prindex uitable tag
-@item @code{tag}: string, def. @qcode{""}
-A user-defined string to label the graphics object.
-
-
-@anchor{XREFuitabletooltipstring}
-@prindex uitable tooltipstring
-@item @code{tooltipstring}: def. @qcode{""}
-
-
-
-@anchor{XREFuitabletype}
-@prindex uitable type
-@item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"uitable"}
-
-
-@anchor{XREFuitableunits}
-@prindex uitable units
-@item @code{units}: @qcode{"centimeters"} | @qcode{"characters"} | @qcode{"inches"} | @qcode{"normalized"} | @{@qcode{"pixels"}@} | @qcode{"points"}
-
-
-
-@anchor{XREFuitableuserdata}
-@prindex uitable userdata
-@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
-User-defined data to associate with the graphics object.
-
-
-@anchor{XREFuitablevisible}
-@prindex uitable visible
-@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{visible} is @qcode{"off"}, the uitable is not rendered on screen.
 
 @end table

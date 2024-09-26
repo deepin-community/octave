@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -57,17 +57,10 @@ public:
     m_e2 += f;
   }
 
-  base_det (const base_det& a) : m_c2 (a.m_c2), m_e2 (a.m_e2) { }
+  OCTAVE_DEFAULT_COPY_MOVE_DELETE (base_det)
 
-  base_det& operator = (const base_det& a)
-  {
-    m_c2 = a.m_c2;
-    m_e2 = a.m_e2;
-    return *this;
-  }
-
-  T coef (void) const { return m_c2; }
-  int exp (void) const { return m_e2; }
+  T coef () const { return m_c2; }
+  int exp () const { return m_e2; }
 
   T value () const { return m_c2 * static_cast<T> (std::ldexp (1.0, m_e2)); }
   operator T () const { return value (); }

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -23,7 +23,12 @@
 ##
 ########################################################################
 
-## Validate arguments for binary set operation.
+## -*- texinfo -*-
+## @deftypefn {} {[x, y] =} validsetargs (@var{caller}, @var{x}, @var{y}, @var{varargin})
+## Internal function to validate arguments passed to functions operating on
+## sets.
+## @seealso{intersect, ismember, setdiff, setxor, union}
+## @end deftypefn
 
 function [x, y] = validsetargs (caller, x, y, varargin)
 

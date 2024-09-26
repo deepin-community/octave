@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 2002-2022 The Octave Project Developers
+@c Copyright (C) 2002-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -35,6 +35,11 @@ and demonstration code in the source code of the functions themselves.
 
 @c test scripts/testfun/test.m
 @anchor{XREFtest}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} test @var{name}
 @deftypefnx {} {} test @var{name} quiet|normal|verbose
 @deftypefnx {} {} test ("@var{name}", "quiet|normal|verbose", @var{fid})
@@ -289,6 +294,12 @@ You can share several variables at the same time:
 %!shared @var{a}, @var{b}
 @end example
 
+Modifications to shared variables persist from one test to the next
+@strong{only} if the test succeeds.  Thus, if one test modifies a shared
+variable, later tests cannot know which value of the shared variable to expect
+because the pass/fail status of earlier tests is unknown.  For this reason, it
+is not recommended to modify shared variables in tests.
+
 You can also share test functions:
 
 @example
@@ -443,9 +454,9 @@ test block is interpreted as for @code{xtest}.
 @itemx %!testif HAVE_XXX, HAVE_YYY @dots{}; RUNTIME_COND
 @itemx %!testif @dots{} <MESSAGE>
 Check block only if Octave was compiled with feature @w{@code{HAVE_XXX}}.
-@w{@code{RUNTIME_COND}} is an optional expression to evaluate to check
+@w{@code{RUNTIME_COND}}@ is an optional expression to evaluate to check
 whether some condition is met when the test is executed.  If
-@w{@code{RUNTIME_COND}} is false, the test is skipped.  If @code{<MESSAGE>}
+@w{@code{RUNTIME_COND}}@ is false, the test is skipped.  If @code{<MESSAGE>}
 is present, the test block is interpreted as for @code{xtest}.
 
 @item  %!xtest
@@ -575,6 +586,11 @@ path and the user will have to remember to type
 
 @c assert scripts/testfun/assert.m
 @anchor{XREFassert}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} assert (@var{cond})
 @deftypefnx {} {} assert (@var{cond}, @var{errmsg})
 @deftypefnx {} {} assert (@var{cond}, @var{errmsg}, @dots{})
@@ -627,10 +643,15 @@ element-by-element basis.
 
 @c fail scripts/testfun/fail.m
 @anchor{XREFfail}
-@deftypefn  {} {} fail (@var{code})
-@deftypefnx {} {} fail (@var{code}, @var{pattern})
-@deftypefnx {} {} fail (@var{code}, "warning")
-@deftypefnx {} {} fail (@var{code}, "warning", @var{pattern})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{status} =} fail (@var{code})
+@deftypefnx {} {@var{status} =} fail (@var{code}, @var{pattern})
+@deftypefnx {} {@var{status} =} fail (@var{code}, "warning")
+@deftypefnx {} {@var{status} =} fail (@var{code}, "warning", @var{pattern})
 
 Return true if @var{code} fails with an error message matching
 @var{pattern}, otherwise produce an error.
@@ -671,6 +692,11 @@ error if executing the code produces no warning.
 
 @c demo scripts/testfun/demo.m
 @anchor{XREFdemo}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} demo @var{name}
 @deftypefnx {} {} demo @var{name} @var{n}
 @deftypefnx {} {} demo ("@var{name}")
@@ -747,11 +773,16 @@ declaration must be wrapped with @qcode{"if 1 <demo stuff> endif"} where
 
 @c example scripts/testfun/example.m
 @anchor{XREFexample}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} example @var{name}
 @deftypefnx {} {} example @var{name} @var{n}
 @deftypefnx {} {} example ("@var{name}")
 @deftypefnx {} {} example ("@var{name}", @var{n})
-@deftypefnx {} {[@var{s}, @var{idx}] =} example (@dots{})
+@deftypefnx {} {[@var{codestr}, @var{codeidx}] =} example (@dots{})
 
 Display the code for example @var{n} associated with the function
 @var{name}, but do not run it.
@@ -759,8 +790,8 @@ Display the code for example @var{n} associated with the function
 If @var{n} is not specified, all examples are displayed.
 
 When called with output arguments, the examples are returned in the form of
-a string @var{s}, with @var{idx} indicating the ending position of the
-various examples.
+a string @var{codestr}, with @var{codeidx} indicating the ending position of
+the various examples.
 
 For a complete explanation @pxref{XREFdemo,,@code{demo}}.
 @xseealso{@ref{XREFdemo,,demo}, @ref{XREFtest,,test}}
@@ -769,6 +800,11 @@ For a complete explanation @pxref{XREFdemo,,@code{demo}}.
 
 @c oruntests scripts/testfun/oruntests.m
 @anchor{XREForuntests}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} oruntests ()
 @deftypefnx {} {} oruntests (@var{directory})
 Execute built-in tests for all m-files in the specified @var{directory}.
@@ -784,6 +820,11 @@ path for functions.
 
 @c rundemos scripts/testfun/rundemos.m
 @anchor{XREFrundemos}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} rundemos ()
 @deftypefnx {} {} rundemos (@var{directory})
 Execute built-in demos for all m-files in the specified @var{directory}.
@@ -799,6 +840,11 @@ path for functions.
 
 @c speed scripts/testfun/speed.m
 @anchor{XREFspeed}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} speed (@var{f}, @var{init}, @var{max_n}, @var{f2}, @var{tol})
 @deftypefnx {} {[@var{order}, @var{n}, @var{T_f}, @var{T_f2}] =} speed (@dots{})
 

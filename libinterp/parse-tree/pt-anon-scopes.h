@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,53 +31,50 @@
 
 #include "pt-walk.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// In possibly nested definitions of anonymous functions, collect
+// their scopes and the symbol records therein.
+
+class
+tree_anon_scopes : public tree_walker
 {
-  // In possibly nested definitions of anonymous functions, collect
-  // their scopes and the symbol records therein.
+public:
 
-  class
-  tree_anon_scopes : public tree_walker
-  {
-  public:
+  tree_anon_scopes () = delete;
 
-    tree_anon_scopes (void) = delete;
+  tree_anon_scopes (tree_anon_fcn_handle& anon_fh);
 
-    tree_anon_scopes (tree_anon_fcn_handle& anon_fh);
+  OCTAVE_DISABLE_COPY_MOVE (tree_anon_scopes)
 
-    // No copying!
+  ~tree_anon_scopes () = default;
 
-    tree_anon_scopes (const tree_anon_scopes&) = delete;
+  std::set<std::string> fcn_parameters () const { return m_params; }
 
-    tree_anon_scopes& operator = (const tree_anon_scopes&) = delete;
+  std::set<std::string> free_variables () const { return m_vars; }
 
-    ~tree_anon_scopes (void) = default;
+  // The following methods, though public, don't belong to the
+  // intended user interface of this class.
 
-    std::set<std::string> fcn_parameters (void) const { return m_params; }
+  void visit_anon_fcn_handle (tree_anon_fcn_handle&);
 
-    std::set<std::string> free_variables (void) const { return m_vars; }
+  void visit_identifier (tree_identifier&);
 
-    // The following methods, though public, don't belong to the
-    // intended user interface of this class.
+  void visit_parameter_list (tree_parameter_list&);
 
-    void visit_anon_fcn_handle (tree_anon_fcn_handle&);
+  void visit_statement (tree_statement&);
 
-    void visit_identifier (tree_identifier&);
+  void visit_statement_list (tree_statement_list&);
 
-    void visit_parameter_list (tree_parameter_list&);
+private:
 
-    void visit_statement (tree_statement&);
+  // Variable names that are function parameters.
+  std::set<std::string> m_params;
 
-    void visit_statement_list (tree_statement_list&);
+  // Other variable names.
+  std::set<std::string> m_vars;
+};
 
-  private:
-
-    // Variable names that are function parameters.
-    std::set<std::string> m_params;
-
-    // Other variable names.
-    std::set<std::string> m_vars;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

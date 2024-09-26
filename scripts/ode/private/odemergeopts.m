@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -23,12 +23,16 @@
 ##
 ########################################################################
 
+## -*- texinfo -*-
+## @deftypefn {} {@var{options} =} odemergeopts (@var{caller}, @var{useroptions}, @var{options}, @var{classes}, @var{attributes}, @var{solver})
+## Undocumented internal function.
+## @end deftypefn
+
 ## FIXME: there are some calls to odemergeopts with a "solver" argument
 ## but we don't use that here.  Should the calls be fixed or should we
 ## do something with the solver argument here?
 
-function options = odemergeopts (caller, useroptions, options, classes,
-                                 attributes, solver);
+function options = odemergeopts (caller, useroptions, options, classes, attributes, solver)
 
   for [value, key] = options
 

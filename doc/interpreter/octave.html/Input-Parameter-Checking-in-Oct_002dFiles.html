@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Input Parameter Checking in Oct-Files (GNU Octave (version 7.1.0))</title>
+<title>Input Parameter Checking in Oct-Files (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Input Parameter Checking in Oct-Files (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Input Parameter Checking in Oct-Files (GNU Octave (version 7.1.0))">
+<meta name="description" content="Input Parameter Checking in Oct-Files (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Input Parameter Checking in Oct-Files (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Allocating-Local-Memory-in-Oct_002dFiles.html" rel="prev" title="Allocating Local Memory in Oct-Files">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,13 +31,13 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Input-Parameter-Checking-in-Oct_002dFiles">
-<div class="header">
+<div class="subsection-level-extent" id="Input-Parameter-Checking-in-Oct_002dFiles">
+<div class="nav-panel">
 <p>
 Next: <a href="Exception-and-Error-Handling-in-Oct_002dFiles.html" accesskey="n" rel="next">Exception and Error Handling in Oct-Files</a>, Previous: <a href="Allocating-Local-Memory-in-Oct_002dFiles.html" accesskey="p" rel="prev">Allocating Local Memory in Oct-Files</a>, Up: <a href="Oct_002dFiles.html" accesskey="u" rel="up">Oct-Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Input-Parameter-Checking-in-Oct_002dFiles-1"></span><h4 class="subsection">A.1.11 Input Parameter Checking in Oct-Files</h4>
+<h4 class="subsection" id="Input-Parameter-Checking-in-Oct_002dFiles-1"><span>A.1.11 Input Parameter Checking in Oct-Files<a class="copiable-link" href="#Input-Parameter-Checking-in-Oct_002dFiles-1"> &para;</a></span></h4>
 
 <p>Because oct-files are compiled functions they open up the possibility of
 crashing Octave through careless function calls or memory faults.  It is quite
@@ -65,9 +53,9 @@ is zero, or if the input is complex and a real value was expected.  Therefore,
 oct-files often need additional input parameter checking.
 </p>
 <p>There are several functions within Octave that can be useful for the purposes
-of parameter checking.  These include the methods of the <code>octave_value</code>
-class like <code>is_real_matrix</code>, <code>is_numeric_type</code>, etc. (see
-<samp>ov.h</samp>).  Often, with a knowledge of the Octave m-file language, you can
+of parameter checking.  These include the methods of the <code class="code">octave_value</code>
+class like <code class="code">is_real_matrix</code>, <code class="code">is_numeric_type</code>, etc. (see
+<samp class="file">ov.h</samp>).  Often, with a knowledge of the Octave m-file language, you can
 guess at what the corresponding C++ routine will.  In addition there are some
 more specialized input validation functions of which a few are demonstrated
 below.
@@ -109,16 +97,16 @@ DEFUN_DLD (paramdemo, args, nargout, &quot;Parameter Check Demo&quot;)
 <p>An example of its use is:
 </p>
 <div class="example">
-<pre class="example">paramdemo ([1, 2, NaN, Inf])
+<div class="group"><pre class="example-preformatted">paramdemo ([1, 2, NaN, Inf])
 &rArr; Properties of input array:
      includes Inf or NaN values
      includes other values than 1 and 0
      includes only int, Inf or NaN values
-</pre></div>
+</pre></div></div>
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Exception-and-Error-Handling-in-Oct_002dFiles.html">Exception and Error Handling in Oct-Files</a>, Previous: <a href="Allocating-Local-Memory-in-Oct_002dFiles.html">Allocating Local Memory in Oct-Files</a>, Up: <a href="Oct_002dFiles.html">Oct-Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

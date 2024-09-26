@@ -1,4 +1,4 @@
-This is liboctave.info, produced by makeinfo version 6.8 from
+This is liboctave.info, produced by makeinfo version 7.1 from
 liboctave.texi.
 
 INFO-DIR-SECTION Math
@@ -6,7 +6,7 @@ START-INFO-DIR-ENTRY
 * liboctave: (liboctave).       Octave C++ Classes
 END-INFO-DIR-ENTRY
 
-Copyright (C) 1996-2022 The Octave Project Developers
+Copyright (C) 1996-2024 The Octave Project Developers
 
    Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
@@ -29,7 +29,7 @@ Octave C++ Classes
 
 This manual documents how to use, install and port Octave's C++ class
 library, and how to report bugs.  It corresponds to Octave version
-7.1.0.
+9.2.0.
 
 * Menu:
 
@@ -103,7 +103,7 @@ GNU GENERAL PUBLIC LICENSE
 
                         Version 3, 29 June 2007
 
-     Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+     Copyright © 2007 Free Software Foundation, Inc. <https://fsf.org/>
 
      Everyone is permitted to copy and distribute verbatim copies of this
      license document, but changing it is not allowed.
@@ -790,11 +790,11 @@ mail.
 notice like this when it starts in an interactive mode:
 
      PROGRAM Copyright (C) YEAR NAME OF AUTHOR
-     This program comes with ABSOLUTELY NO WARRANTY; for details type 'show w'.
+     This program comes with ABSOLUTELY NO WARRANTY; for details type ‘show w’.
      This is free software, and you are welcome to redistribute it
-     under certain conditions; type 'show c' for details.
+     under certain conditions; type ‘show c’ for details.
 
-   The hypothetical commands 'show w' and 'show c' should show the
+   The hypothetical commands ‘show w’ and ‘show c’ should show the
 appropriate parts of the General Public License.  Of course, your
 program's commands might be different; for a GUI interface, you would
 use an "about box".
@@ -957,11 +957,11 @@ File: liboctave.info,  Node: Constructors and Assignment,  Prev: Arrays,  Up: Ar
  -- Method on DiagArray<T>: void resize (int N, int M)
  -- Method on DiagArray<T>: void resize (int N, int M, const T &VAL)
 
-   The real and complex 'ColumnVector' and 'RowVector' classes all have
+   The real and complex ‘ColumnVector’ and ‘RowVector’ classes all have
 the following functions.  These will eventually be part of an
-'MArray<T>' class, derived from the 'Array<T>' class.  Then the
-'ColumnVector' and 'RowVector' classes will be derived from the
-'MArray<T>' class.
+‘MArray<T>’ class, derived from the ‘Array<T>’ class.  Then the
+‘ColumnVector’ and ‘RowVector’ classes will be derived from the
+‘MArray<T>’ class.
 
    Element by element vector by scalar ops.
 
@@ -989,10 +989,10 @@ the following functions.  These will eventually be part of an
 
  -- : RowVector operator - (const RowVector &A)
 
-   The 'Matrix' classes share the following functions.  These will
-eventually be part of an 'MArray2<T>' class, derived from the
-'Array2<T>' class.  Then the 'Matrix' class will be derived from the
-'MArray<T>' class.
+   The ‘Matrix’ classes share the following functions.  These will
+eventually be part of an ‘MArray2<T>’ class, derived from the
+‘Array2<T>’ class.  Then the ‘Matrix’ class will be derived from the
+‘MArray<T>’ class.
 
    Element by element matrix by scalar ops.
 
@@ -1020,10 +1020,10 @@ eventually be part of an 'MArray2<T>' class, derived from the
 
  -- : Matrix operator - (const Matrix &A)
 
-   The 'DiagMatrix' classes share the following functions.  These will
-eventually be part of an 'MDiagArray<T>' class, derived from the
-'DiagArray<T>' class.  Then the 'DiagMatrix' class will be derived from
-the 'MDiagArray<T>' class.
+   The ‘DiagMatrix’ classes share the following functions.  These will
+eventually be part of an ‘MDiagArray<T>’ class, derived from the
+‘DiagArray<T>’ class.  Then the ‘DiagMatrix’ class will be derived from
+the ‘MDiagArray<T>’ class.
 
    Element by element MDiagArray by scalar ops.
 
@@ -2120,30 +2120,7 @@ File: liboctave.info,  Node: Ranges,  Next: Nonlinear Functions,  Prev: Matrix F
 6 Ranges
 ********
 
- -- : Range (void)
- -- : Range (const Range &R)
- -- : Range (double B, double L)
- -- : Range (double B, double L, double I)
-
- -- : double base (void) const
- -- : double limit (void) const
- -- : double inc (void) const
-
- -- : void set_base (double B)
- -- : void set_limit (double L)
- -- : void set_inc (double I)
-
- -- : int nelem (void) const
-
- -- : double min (void) const
- -- : double max (void) const
-
- -- : void sort (void)
-
- -- : ostream& operator << (ostream &OS, const Range &R)
- -- : istream& operator >> (istream &IS, Range &R)
-
- -- : void print_range (void)
+FIXME: The ‘Range’ class is obsolete.
 
 
 File: liboctave.info,  Node: Nonlinear Functions,  Next: Nonlinear Equations,  Prev: Ranges,  Up: Top
@@ -2723,6 +2700,12 @@ Function Index
                                                               (line 675)
 * append <14>:                           Matrix and Vector Operations.
                                                               (line 676)
+* Array<T>:                              Constructors and Assignment.
+                                                              (line   6)
+* Array<T> <1>:                          Constructors and Assignment.
+                                                              (line   9)
+* Array<T> <2>:                          Constructors and Assignment.
+                                                              (line  15)
 * Array2<T>:                             Constructors and Assignment.
                                                               (line  60)
 * Array2<T> <1>:                         Constructors and Assignment.
@@ -2741,12 +2724,6 @@ Function Index
                                                               (line  85)
 * Array3<T> <3>:                         Constructors and Assignment.
                                                               (line  86)
-* Array<T>:                              Constructors and Assignment.
-                                                              (line   6)
-* Array<T> <1>:                          Constructors and Assignment.
-                                                              (line   9)
-* Array<T> <2>:                          Constructors and Assignment.
-                                                              (line  15)
 * balanced_a_matrix:                     Matrix Factorizations.
                                                               (line  64)
 * balanced_b_matrix:                     Matrix Factorizations.
@@ -2759,7 +2736,6 @@ Function Index
                                                               (line  13)
 * balancing_matrix <1>:                  Matrix Factorizations.
                                                               (line  25)
-* base:                                  Ranges.              (line  11)
 * beta:                                  Collocation Weights. (line  39)
 * Bounds:                                Bounds.              (line   6)
 * Bounds <1>:                            Bounds.              (line   7)
@@ -2767,14 +2743,14 @@ Function Index
 * Bounds <3>:                            Bounds.              (line   9)
 * capacity on Array<T>:                  Constructors and Assignment.
                                                               (line  25)
-* checkelem on Array2<T>:                Constructors and Assignment.
-                                                              (line  76)
-* checkelem on Array3<T>:                Constructors and Assignment.
-                                                              (line  95)
 * checkelem on Array<T>:                 Constructors and Assignment.
                                                               (line  30)
 * checkelem on Array<T> <1>:             Constructors and Assignment.
                                                               (line  38)
+* checkelem on Array2<T>:                Constructors and Assignment.
+                                                              (line  76)
+* checkelem on Array3<T>:                Constructors and Assignment.
+                                                              (line  95)
 * checkelem on DiagArray<T>:             Constructors and Assignment.
                                                               (line 120)
 * CHOL:                                  Matrix Factorizations.
@@ -2821,20 +2797,6 @@ Function Index
                                                               (line 772)
 * column <7>:                            Matrix and Vector Operations.
                                                               (line 773)
-* columns on Array2<T>:                  Constructors and Assignment.
-                                                              (line  73)
-* columns on DiagArray<T>:               Constructors and Assignment.
-                                                              (line 117)
-* ColumnVector:                          Matrix and Vector Operations.
-                                                              (line 170)
-* ColumnVector <1>:                      Matrix and Vector Operations.
-                                                              (line 171)
-* ColumnVector <2>:                      Matrix and Vector Operations.
-                                                              (line 172)
-* ColumnVector <3>:                      Matrix and Vector Operations.
-                                                              (line 173)
-* ColumnVector <4>:                      Matrix and Vector Operations.
-                                                              (line 174)
 * column_max:                            Matrix and Vector Operations.
                                                               (line 164)
 * column_max <1>:                        Matrix and Vector Operations.
@@ -2851,6 +2813,20 @@ Function Index
                                                               (line 162)
 * column_min_loc <1>:                    Matrix and Vector Operations.
                                                               (line 569)
+* columns on Array2<T>:                  Constructors and Assignment.
+                                                              (line  73)
+* columns on DiagArray<T>:               Constructors and Assignment.
+                                                              (line 117)
+* ColumnVector:                          Matrix and Vector Operations.
+                                                              (line 170)
+* ColumnVector <1>:                      Matrix and Vector Operations.
+                                                              (line 171)
+* ColumnVector <2>:                      Matrix and Vector Operations.
+                                                              (line 172)
+* ColumnVector <3>:                      Matrix and Vector Operations.
+                                                              (line 173)
+* ColumnVector <4>:                      Matrix and Vector Operations.
+                                                              (line 174)
 * ComplexAEPBALANCE:                     Matrix Factorizations.
                                                               (line  17)
 * ComplexAEPBALANCE <1>:                 Matrix Factorizations.
@@ -3107,14 +3083,14 @@ Function Index
                                                               (line 176)
 * eigenvectors:                          Matrix Factorizations.
                                                               (line 178)
-* elem on Array2<T>:                     Constructors and Assignment.
-                                                              (line  75)
-* elem on Array3<T>:                     Constructors and Assignment.
-                                                              (line  94)
 * elem on Array<T>:                      Constructors and Assignment.
                                                               (line  29)
 * elem on Array<T> <1>:                  Constructors and Assignment.
                                                               (line  37)
+* elem on Array2<T>:                     Constructors and Assignment.
+                                                              (line  75)
+* elem on Array3<T>:                     Constructors and Assignment.
+                                                              (line  94)
 * elem on DiagArray<T>:                  Constructors and Assignment.
                                                               (line 119)
 * eq_constraint_matrix:                  Linear Constraints.  (line  23)
@@ -3250,7 +3226,6 @@ Function Index
                                                               (line 681)
 * imag <3>:                              Matrix and Vector Operations.
                                                               (line 764)
-* inc:                                   Ranges.              (line  13)
 * IndefQuad:                             Quadrature.          (line  45)
 * IndefQuad <1>:                         Quadrature.          (line  46)
 * IndefQuad <2>:                         Quadrature.          (line  47)
@@ -3261,14 +3236,14 @@ Function Index
 * init <1>:                              Quadrature.          (line  20)
 * init <2>:                              Ordinary Differential Equations.
                                                               (line  11)
+* initial_step_size:                     Ordinary Differential Equations.
+                                                              (line  28)
 * initialize:                            Ordinary Differential Equations.
                                                               (line  45)
 * initialize <1>:                        Differential Algebraic Equations.
                                                               (line  14)
 * initialize <2>:                        Differential Algebraic Equations.
                                                               (line  15)
-* initial_step_size:                     Ordinary Differential Equations.
-                                                              (line  28)
 * insert:                                Matrix and Vector Operations.
                                                               (line  19)
 * insert <1>:                            Matrix and Vector Operations.
@@ -3358,7 +3333,6 @@ Function Index
                                                               (line 162)
 * length on Array<T>:                    Constructors and Assignment.
                                                               (line  26)
-* limit:                                 Ranges.              (line  12)
 * LinConst:                              Linear Constraints.  (line   6)
 * LinConst <1>:                          Linear Constraints.  (line   7)
 * LinConst <2>:                          Linear Constraints.  (line   8)
@@ -3461,7 +3435,6 @@ Function Index
                                                               (line 651)
 * max <3>:                               Matrix and Vector Operations.
                                                               (line 726)
-* max <4>:                               Ranges.              (line  22)
 * maximum_step_size:                     Ordinary Differential Equations.
                                                               (line  29)
 * min:                                   Matrix and Vector Operations.
@@ -3472,7 +3445,6 @@ Function Index
                                                               (line 650)
 * min <3>:                               Matrix and Vector Operations.
                                                               (line 725)
-* min <4>:                               Ranges.              (line  21)
 * minimize:                              Quadratic Programming.
                                                               (line  20)
 * minimize <1>:                          Quadratic Programming.
@@ -3510,7 +3482,6 @@ Function Index
 * minimum_step_size:                     Ordinary Differential Equations.
                                                               (line  30)
 * ncol:                                  Collocation Weights. (line  29)
-* nelem:                                 Ranges.              (line  19)
 * NLConst:                               Nonlinear Constraints.
                                                               (line   6)
 * NLConst <1>:                           Nonlinear Constraints.
@@ -3561,256 +3532,6 @@ Function Index
                                                               (line   6)
 * ODE_options <1>:                       Ordinary Differential Equations.
                                                               (line   7)
-* operator !:                            Matrix and Vector Operations.
-                                                              (line 104)
-* operator ! <1>:                        Matrix and Vector Operations.
-                                                              (line 504)
-* operator !=:                           Matrix and Vector Operations.
-                                                              (line  17)
-* operator != <1>:                       Matrix and Vector Operations.
-                                                              (line 179)
-* operator != <2>:                       Matrix and Vector Operations.
-                                                              (line 247)
-* operator != <3>:                       Matrix and Vector Operations.
-                                                              (line 314)
-* operator != <4>:                       Matrix and Vector Operations.
-                                                              (line 402)
-* operator != <5>:                       Matrix and Vector Operations.
-                                                              (line 587)
-* operator != <6>:                       Matrix and Vector Operations.
-                                                              (line 665)
-* operator != <7>:                       Matrix and Vector Operations.
-                                                              (line 746)
-* operator () on Array2<T>:              Constructors and Assignment.
-                                                              (line  78)
-* operator () on Array3<T>:              Constructors and Assignment.
-                                                              (line  97)
-* operator () on Array<T>:               Constructors and Assignment.
-                                                              (line  35)
-* operator () on Array<T> <1>:           Constructors and Assignment.
-                                                              (line  43)
-* operator () on DiagArray<T>:           Constructors and Assignment.
-                                                              (line 122)
-* operator *:                            Constructors and Assignment.
-                                                              (line 137)
-* operator * <1>:                        Constructors and Assignment.
-                                                              (line 144)
-* operator * <2>:                        Constructors and Assignment.
-                                                              (line 168)
-* operator * <3>:                        Constructors and Assignment.
-                                                              (line 175)
-* operator * <4>:                        Constructors and Assignment.
-                                                              (line 197)
-* operator * <5>:                        Constructors and Assignment.
-                                                              (line 202)
-* operator * <6>:                        Matrix and Vector Operations.
-                                                              (line 108)
-* operator * <7>:                        Matrix and Vector Operations.
-                                                              (line 113)
-* operator * <8>:                        Matrix and Vector Operations.
-                                                              (line 116)
-* operator * <9>:                        Matrix and Vector Operations.
-                                                              (line 117)
-* operator * <10>:                       Matrix and Vector Operations.
-                                                              (line 122)
-* operator * <11>:                       Matrix and Vector Operations.
-                                                              (line 128)
-* operator * <12>:                       Matrix and Vector Operations.
-                                                              (line 131)
-* operator * <13>:                       Matrix and Vector Operations.
-                                                              (line 132)
-* operator * <14>:                       Matrix and Vector Operations.
-                                                              (line 199)
-* operator * <15>:                       Matrix and Vector Operations.
-                                                              (line 208)
-* operator * <16>:                       Matrix and Vector Operations.
-                                                              (line 213)
-* operator * <17>:                       Matrix and Vector Operations.
-                                                              (line 215)
-* operator * <18>:                       Matrix and Vector Operations.
-                                                              (line 265)
-* operator * <19>:                       Matrix and Vector Operations.
-                                                              (line 270)
-* operator * <20>:                       Matrix and Vector Operations.
-                                                              (line 273)
-* operator * <21>:                       Matrix and Vector Operations.
-                                                              (line 275)
-* operator * <22>:                       Matrix and Vector Operations.
-                                                              (line 278)
-* operator * <23>:                       Matrix and Vector Operations.
-                                                              (line 280)
-* operator * <24>:                       Matrix and Vector Operations.
-                                                              (line 345)
-* operator * <25>:                       Matrix and Vector Operations.
-                                                              (line 356)
-* operator * <26>:                       Matrix and Vector Operations.
-                                                              (line 359)
-* operator * <27>:                       Matrix and Vector Operations.
-                                                              (line 362)
-* operator * <28>:                       Matrix and Vector Operations.
-                                                              (line 375)
-* operator * <29>:                       Matrix and Vector Operations.
-                                                              (line 381)
-* operator * <30>:                       Matrix and Vector Operations.
-                                                              (line 508)
-* operator * <31>:                       Matrix and Vector Operations.
-                                                              (line 513)
-* operator * <32>:                       Matrix and Vector Operations.
-                                                              (line 516)
-* operator * <33>:                       Matrix and Vector Operations.
-                                                              (line 519)
-* operator * <34>:                       Matrix and Vector Operations.
-                                                              (line 526)
-* operator * <35>:                       Matrix and Vector Operations.
-                                                              (line 533)
-* operator * <36>:                       Matrix and Vector Operations.
-                                                              (line 539)
-* operator * <37>:                       Matrix and Vector Operations.
-                                                              (line 540)
-* operator * <38>:                       Matrix and Vector Operations.
-                                                              (line 618)
-* operator * <39>:                       Matrix and Vector Operations.
-                                                              (line 627)
-* operator * <40>:                       Matrix and Vector Operations.
-                                                              (line 632)
-* operator * <41>:                       Matrix and Vector Operations.
-                                                              (line 694)
-* operator * <42>:                       Matrix and Vector Operations.
-                                                              (line 699)
-* operator * <43>:                       Matrix and Vector Operations.
-                                                              (line 702)
-* operator * <44>:                       Matrix and Vector Operations.
-                                                              (line 705)
-* operator * <45>:                       Matrix and Vector Operations.
-                                                              (line 708)
-* operator * <46>:                       Matrix and Vector Operations.
-                                                              (line 792)
-* operator * <47>:                       Matrix and Vector Operations.
-                                                              (line 805)
-* operator * <48>:                       Matrix and Vector Operations.
-                                                              (line 808)
-* operator * <49>:                       Matrix and Vector Operations.
-                                                              (line 811)
-* operator * <50>:                       Matrix and Vector Operations.
-                                                              (line 826)
-* operator * <51>:                       Matrix and Vector Operations.
-                                                              (line 833)
-* operator +:                            Constructors and Assignment.
-                                                              (line 135)
-* operator + <1>:                        Constructors and Assignment.
-                                                              (line 142)
-* operator + <2>:                        Constructors and Assignment.
-                                                              (line 149)
-* operator + <3>:                        Constructors and Assignment.
-                                                              (line 166)
-* operator + <4>:                        Constructors and Assignment.
-                                                              (line 173)
-* operator + <5>:                        Constructors and Assignment.
-                                                              (line 180)
-* operator + <6>:                        Constructors and Assignment.
-                                                              (line 206)
-* operator + <7>:                        Matrix and Vector Operations.
-                                                              (line 106)
-* operator + <8>:                        Matrix and Vector Operations.
-                                                              (line 111)
-* operator + <9>:                        Matrix and Vector Operations.
-                                                              (line 120)
-* operator + <10>:                       Matrix and Vector Operations.
-                                                              (line 124)
-* operator + <11>:                       Matrix and Vector Operations.
-                                                              (line 134)
-* operator + <12>:                       Matrix and Vector Operations.
-                                                              (line 195)
-* operator + <13>:                       Matrix and Vector Operations.
-                                                              (line 204)
-* operator + <14>:                       Matrix and Vector Operations.
-                                                              (line 218)
-* operator + <15>:                       Matrix and Vector Operations.
-                                                              (line 263)
-* operator + <16>:                       Matrix and Vector Operations.
-                                                              (line 268)
-* operator + <17>:                       Matrix and Vector Operations.
-                                                              (line 283)
-* operator + <18>:                       Matrix and Vector Operations.
-                                                              (line 339)
-* operator + <19>:                       Matrix and Vector Operations.
-                                                              (line 342)
-* operator + <20>:                       Matrix and Vector Operations.
-                                                              (line 350)
-* operator + <21>:                       Matrix and Vector Operations.
-                                                              (line 353)
-* operator + <22>:                       Matrix and Vector Operations.
-                                                              (line 365)
-* operator + <23>:                       Matrix and Vector Operations.
-                                                              (line 373)
-* operator + <24>:                       Matrix and Vector Operations.
-                                                              (line 377)
-* operator + <25>:                       Matrix and Vector Operations.
-                                                              (line 506)
-* operator + <26>:                       Matrix and Vector Operations.
-                                                              (line 511)
-* operator + <27>:                       Matrix and Vector Operations.
-                                                              (line 522)
-* operator + <28>:                       Matrix and Vector Operations.
-                                                              (line 529)
-* operator + <29>:                       Matrix and Vector Operations.
-                                                              (line 536)
-* operator + <30>:                       Matrix and Vector Operations.
-                                                              (line 614)
-* operator + <31>:                       Matrix and Vector Operations.
-                                                              (line 623)
-* operator + <32>:                       Matrix and Vector Operations.
-                                                              (line 635)
-* operator + <33>:                       Matrix and Vector Operations.
-                                                              (line 692)
-* operator + <34>:                       Matrix and Vector Operations.
-                                                              (line 697)
-* operator + <35>:                       Matrix and Vector Operations.
-                                                              (line 711)
-* operator + <36>:                       Matrix and Vector Operations.
-                                                              (line 784)
-* operator + <37>:                       Matrix and Vector Operations.
-                                                              (line 787)
-* operator + <38>:                       Matrix and Vector Operations.
-                                                              (line 797)
-* operator + <39>:                       Matrix and Vector Operations.
-                                                              (line 800)
-* operator + <40>:                       Matrix and Vector Operations.
-                                                              (line 814)
-* operator + <41>:                       Matrix and Vector Operations.
-                                                              (line 822)
-* operator + <42>:                       Matrix and Vector Operations.
-                                                              (line 829)
-* operator +=:                           Matrix and Vector Operations.
-                                                              (line  98)
-* operator += <1>:                       Matrix and Vector Operations.
-                                                              (line 101)
-* operator += <2>:                       Matrix and Vector Operations.
-                                                              (line 192)
-* operator += <3>:                       Matrix and Vector Operations.
-                                                              (line 260)
-* operator += <4>:                       Matrix and Vector Operations.
-                                                              (line 336)
-* operator += <5>:                       Matrix and Vector Operations.
-                                                              (line 492)
-* operator += <6>:                       Matrix and Vector Operations.
-                                                              (line 495)
-* operator += <7>:                       Matrix and Vector Operations.
-                                                              (line 498)
-* operator += <8>:                       Matrix and Vector Operations.
-                                                              (line 501)
-* operator += <9>:                       Matrix and Vector Operations.
-                                                              (line 608)
-* operator += <10>:                      Matrix and Vector Operations.
-                                                              (line 611)
-* operator += <11>:                      Matrix and Vector Operations.
-                                                              (line 686)
-* operator += <12>:                      Matrix and Vector Operations.
-                                                              (line 689)
-* operator += <13>:                      Matrix and Vector Operations.
-                                                              (line 778)
-* operator += <14>:                      Matrix and Vector Operations.
-                                                              (line 781)
 * operator -:                            Constructors and Assignment.
                                                               (line 136)
 * operator - <1>:                        Constructors and Assignment.
@@ -3933,6 +3654,140 @@ Function Index
                                                               (line 779)
 * operator -= <14>:                      Matrix and Vector Operations.
                                                               (line 782)
+* operator !:                            Matrix and Vector Operations.
+                                                              (line 104)
+* operator ! <1>:                        Matrix and Vector Operations.
+                                                              (line 504)
+* operator !=:                           Matrix and Vector Operations.
+                                                              (line  17)
+* operator != <1>:                       Matrix and Vector Operations.
+                                                              (line 179)
+* operator != <2>:                       Matrix and Vector Operations.
+                                                              (line 247)
+* operator != <3>:                       Matrix and Vector Operations.
+                                                              (line 314)
+* operator != <4>:                       Matrix and Vector Operations.
+                                                              (line 402)
+* operator != <5>:                       Matrix and Vector Operations.
+                                                              (line 587)
+* operator != <6>:                       Matrix and Vector Operations.
+                                                              (line 665)
+* operator != <7>:                       Matrix and Vector Operations.
+                                                              (line 746)
+* operator () on Array<T>:               Constructors and Assignment.
+                                                              (line  35)
+* operator () on Array<T> <1>:           Constructors and Assignment.
+                                                              (line  43)
+* operator () on Array2<T>:              Constructors and Assignment.
+                                                              (line  78)
+* operator () on Array3<T>:              Constructors and Assignment.
+                                                              (line  97)
+* operator () on DiagArray<T>:           Constructors and Assignment.
+                                                              (line 122)
+* operator *:                            Constructors and Assignment.
+                                                              (line 137)
+* operator * <1>:                        Constructors and Assignment.
+                                                              (line 144)
+* operator * <2>:                        Constructors and Assignment.
+                                                              (line 168)
+* operator * <3>:                        Constructors and Assignment.
+                                                              (line 175)
+* operator * <4>:                        Constructors and Assignment.
+                                                              (line 197)
+* operator * <5>:                        Constructors and Assignment.
+                                                              (line 202)
+* operator * <6>:                        Matrix and Vector Operations.
+                                                              (line 108)
+* operator * <7>:                        Matrix and Vector Operations.
+                                                              (line 113)
+* operator * <8>:                        Matrix and Vector Operations.
+                                                              (line 116)
+* operator * <9>:                        Matrix and Vector Operations.
+                                                              (line 117)
+* operator * <10>:                       Matrix and Vector Operations.
+                                                              (line 122)
+* operator * <11>:                       Matrix and Vector Operations.
+                                                              (line 128)
+* operator * <12>:                       Matrix and Vector Operations.
+                                                              (line 131)
+* operator * <13>:                       Matrix and Vector Operations.
+                                                              (line 132)
+* operator * <14>:                       Matrix and Vector Operations.
+                                                              (line 199)
+* operator * <15>:                       Matrix and Vector Operations.
+                                                              (line 208)
+* operator * <16>:                       Matrix and Vector Operations.
+                                                              (line 213)
+* operator * <17>:                       Matrix and Vector Operations.
+                                                              (line 215)
+* operator * <18>:                       Matrix and Vector Operations.
+                                                              (line 265)
+* operator * <19>:                       Matrix and Vector Operations.
+                                                              (line 270)
+* operator * <20>:                       Matrix and Vector Operations.
+                                                              (line 273)
+* operator * <21>:                       Matrix and Vector Operations.
+                                                              (line 275)
+* operator * <22>:                       Matrix and Vector Operations.
+                                                              (line 278)
+* operator * <23>:                       Matrix and Vector Operations.
+                                                              (line 280)
+* operator * <24>:                       Matrix and Vector Operations.
+                                                              (line 345)
+* operator * <25>:                       Matrix and Vector Operations.
+                                                              (line 356)
+* operator * <26>:                       Matrix and Vector Operations.
+                                                              (line 359)
+* operator * <27>:                       Matrix and Vector Operations.
+                                                              (line 362)
+* operator * <28>:                       Matrix and Vector Operations.
+                                                              (line 375)
+* operator * <29>:                       Matrix and Vector Operations.
+                                                              (line 381)
+* operator * <30>:                       Matrix and Vector Operations.
+                                                              (line 508)
+* operator * <31>:                       Matrix and Vector Operations.
+                                                              (line 513)
+* operator * <32>:                       Matrix and Vector Operations.
+                                                              (line 516)
+* operator * <33>:                       Matrix and Vector Operations.
+                                                              (line 519)
+* operator * <34>:                       Matrix and Vector Operations.
+                                                              (line 526)
+* operator * <35>:                       Matrix and Vector Operations.
+                                                              (line 533)
+* operator * <36>:                       Matrix and Vector Operations.
+                                                              (line 539)
+* operator * <37>:                       Matrix and Vector Operations.
+                                                              (line 540)
+* operator * <38>:                       Matrix and Vector Operations.
+                                                              (line 618)
+* operator * <39>:                       Matrix and Vector Operations.
+                                                              (line 627)
+* operator * <40>:                       Matrix and Vector Operations.
+                                                              (line 632)
+* operator * <41>:                       Matrix and Vector Operations.
+                                                              (line 694)
+* operator * <42>:                       Matrix and Vector Operations.
+                                                              (line 699)
+* operator * <43>:                       Matrix and Vector Operations.
+                                                              (line 702)
+* operator * <44>:                       Matrix and Vector Operations.
+                                                              (line 705)
+* operator * <45>:                       Matrix and Vector Operations.
+                                                              (line 708)
+* operator * <46>:                       Matrix and Vector Operations.
+                                                              (line 792)
+* operator * <47>:                       Matrix and Vector Operations.
+                                                              (line 805)
+* operator * <48>:                       Matrix and Vector Operations.
+                                                              (line 808)
+* operator * <49>:                       Matrix and Vector Operations.
+                                                              (line 811)
+* operator * <50>:                       Matrix and Vector Operations.
+                                                              (line 826)
+* operator * <51>:                       Matrix and Vector Operations.
+                                                              (line 833)
 * operator /:                            Constructors and Assignment.
                                                               (line 138)
 * operator / <1>:                        Constructors and Assignment.
@@ -3971,6 +3826,122 @@ Function Index
                                                               (line 700)
 * operator / <18>:                       Matrix and Vector Operations.
                                                               (line 794)
+* operator +:                            Constructors and Assignment.
+                                                              (line 135)
+* operator + <1>:                        Constructors and Assignment.
+                                                              (line 142)
+* operator + <2>:                        Constructors and Assignment.
+                                                              (line 149)
+* operator + <3>:                        Constructors and Assignment.
+                                                              (line 166)
+* operator + <4>:                        Constructors and Assignment.
+                                                              (line 173)
+* operator + <5>:                        Constructors and Assignment.
+                                                              (line 180)
+* operator + <6>:                        Constructors and Assignment.
+                                                              (line 206)
+* operator + <7>:                        Matrix and Vector Operations.
+                                                              (line 106)
+* operator + <8>:                        Matrix and Vector Operations.
+                                                              (line 111)
+* operator + <9>:                        Matrix and Vector Operations.
+                                                              (line 120)
+* operator + <10>:                       Matrix and Vector Operations.
+                                                              (line 124)
+* operator + <11>:                       Matrix and Vector Operations.
+                                                              (line 134)
+* operator + <12>:                       Matrix and Vector Operations.
+                                                              (line 195)
+* operator + <13>:                       Matrix and Vector Operations.
+                                                              (line 204)
+* operator + <14>:                       Matrix and Vector Operations.
+                                                              (line 218)
+* operator + <15>:                       Matrix and Vector Operations.
+                                                              (line 263)
+* operator + <16>:                       Matrix and Vector Operations.
+                                                              (line 268)
+* operator + <17>:                       Matrix and Vector Operations.
+                                                              (line 283)
+* operator + <18>:                       Matrix and Vector Operations.
+                                                              (line 339)
+* operator + <19>:                       Matrix and Vector Operations.
+                                                              (line 342)
+* operator + <20>:                       Matrix and Vector Operations.
+                                                              (line 350)
+* operator + <21>:                       Matrix and Vector Operations.
+                                                              (line 353)
+* operator + <22>:                       Matrix and Vector Operations.
+                                                              (line 365)
+* operator + <23>:                       Matrix and Vector Operations.
+                                                              (line 373)
+* operator + <24>:                       Matrix and Vector Operations.
+                                                              (line 377)
+* operator + <25>:                       Matrix and Vector Operations.
+                                                              (line 506)
+* operator + <26>:                       Matrix and Vector Operations.
+                                                              (line 511)
+* operator + <27>:                       Matrix and Vector Operations.
+                                                              (line 522)
+* operator + <28>:                       Matrix and Vector Operations.
+                                                              (line 529)
+* operator + <29>:                       Matrix and Vector Operations.
+                                                              (line 536)
+* operator + <30>:                       Matrix and Vector Operations.
+                                                              (line 614)
+* operator + <31>:                       Matrix and Vector Operations.
+                                                              (line 623)
+* operator + <32>:                       Matrix and Vector Operations.
+                                                              (line 635)
+* operator + <33>:                       Matrix and Vector Operations.
+                                                              (line 692)
+* operator + <34>:                       Matrix and Vector Operations.
+                                                              (line 697)
+* operator + <35>:                       Matrix and Vector Operations.
+                                                              (line 711)
+* operator + <36>:                       Matrix and Vector Operations.
+                                                              (line 784)
+* operator + <37>:                       Matrix and Vector Operations.
+                                                              (line 787)
+* operator + <38>:                       Matrix and Vector Operations.
+                                                              (line 797)
+* operator + <39>:                       Matrix and Vector Operations.
+                                                              (line 800)
+* operator + <40>:                       Matrix and Vector Operations.
+                                                              (line 814)
+* operator + <41>:                       Matrix and Vector Operations.
+                                                              (line 822)
+* operator + <42>:                       Matrix and Vector Operations.
+                                                              (line 829)
+* operator +=:                           Matrix and Vector Operations.
+                                                              (line  98)
+* operator += <1>:                       Matrix and Vector Operations.
+                                                              (line 101)
+* operator += <2>:                       Matrix and Vector Operations.
+                                                              (line 192)
+* operator += <3>:                       Matrix and Vector Operations.
+                                                              (line 260)
+* operator += <4>:                       Matrix and Vector Operations.
+                                                              (line 336)
+* operator += <5>:                       Matrix and Vector Operations.
+                                                              (line 492)
+* operator += <6>:                       Matrix and Vector Operations.
+                                                              (line 495)
+* operator += <7>:                       Matrix and Vector Operations.
+                                                              (line 498)
+* operator += <8>:                       Matrix and Vector Operations.
+                                                              (line 501)
+* operator += <9>:                       Matrix and Vector Operations.
+                                                              (line 608)
+* operator += <10>:                      Matrix and Vector Operations.
+                                                              (line 611)
+* operator += <11>:                      Matrix and Vector Operations.
+                                                              (line 686)
+* operator += <12>:                      Matrix and Vector Operations.
+                                                              (line 689)
+* operator += <13>:                      Matrix and Vector Operations.
+                                                              (line 778)
+* operator += <14>:                      Matrix and Vector Operations.
+                                                              (line 781)
 * operator <<:                           Matrix and Vector Operations.
                                                               (line 167)
 * operator << <1>:                       Matrix and Vector Operations.
@@ -4023,10 +3994,9 @@ Function Index
                                                               (line 215)
 * operator << <25>:                      Matrix Factorizations.
                                                               (line 226)
-* operator << <26>:                      Ranges.              (line  26)
-* operator << <27>:                      Bounds.              (line  37)
-* operator << <28>:                      Linear Constraints.  (line  29)
-* operator << <29>:                      Collocation Weights. (line  48)
+* operator << <26>:                      Bounds.              (line  37)
+* operator << <27>:                      Linear Constraints.  (line  29)
+* operator << <28>:                      Collocation Weights. (line  48)
 * operator =:                            Matrix and Vector Operations.
                                                               (line  14)
 * operator = <1>:                        Matrix and Vector Operations.
@@ -4093,12 +4063,12 @@ Function Index
 * operator = <35>:                       Collocation Weights. (line  13)
 * operator = <36>:                       Ordinary Differential Equations.
                                                               (line   9)
+* operator = on Array<T>:                Constructors and Assignment.
+                                                              (line  20)
 * operator = on Array2<T>:               Constructors and Assignment.
                                                               (line  66)
 * operator = on Array3<T>:               Constructors and Assignment.
                                                               (line  88)
-* operator = on Array<T>:                Constructors and Assignment.
-                                                              (line  20)
 * operator = on DiagArray<T>&:           Constructors and Assignment.
                                                               (line 110)
 * operator ==:                           Matrix and Vector Operations.
@@ -4121,12 +4091,10 @@ Function Index
                                                               (line 168)
 * operator >> <1>:                       Matrix and Vector Operations.
                                                               (line 575)
-* operator >> <2>:                       Ranges.              (line  27)
 * P:                                     Matrix Factorizations.
                                                               (line 190)
 * P <1>:                                 Matrix Factorizations.
                                                               (line 202)
-* print_range:                           Ranges.              (line  29)
 * prod:                                  Matrix and Vector Operations.
                                                               (line 148)
 * prod <1>:                              Matrix and Vector Operations.
@@ -4207,10 +4175,6 @@ Function Index
                                                               (line 213)
 * R <1>:                                 Matrix Factorizations.
                                                               (line 224)
-* Range:                                 Ranges.              (line   6)
-* Range <1>:                             Ranges.              (line   7)
-* Range <2>:                             Ranges.              (line   8)
-* Range <3>:                             Ranges.              (line   9)
 * real:                                  Matrix and Vector Operations.
                                                               (line 442)
 * real <1>:                              Matrix and Vector Operations.
@@ -4226,6 +4190,8 @@ Function Index
 * resize <1>:                            Bounds.              (line  13)
 * resize <2>:                            Linear Constraints.  (line  17)
 * resize <3>:                            Collocation Weights. (line  15)
+* resize on Array<T>:                    Constructors and Assignment.
+                                                              (line  50)
 * resize on Array2<T>:                   Constructors and Assignment.
                                                               (line  80)
 * resize on Array2<T> <1>:               Constructors and Assignment.
@@ -4234,8 +4200,6 @@ Function Index
                                                               (line  99)
 * resize on Array3<T> <1>:               Constructors and Assignment.
                                                               (line 100)
-* resize on Array<T>:                    Constructors and Assignment.
-                                                              (line  50)
 * resize on DiagArray<T>:                Constructors and Assignment.
                                                               (line 124)
 * resize on DiagArray<T> <1>:            Constructors and Assignment.
@@ -4265,20 +4229,6 @@ Function Index
                                                               (line 769)
 * row <7>:                               Matrix and Vector Operations.
                                                               (line 770)
-* rows on Array2<T>:                     Constructors and Assignment.
-                                                              (line  69)
-* rows on DiagArray<T>:                  Constructors and Assignment.
-                                                              (line 113)
-* RowVector:                             Matrix and Vector Operations.
-                                                              (line 238)
-* RowVector <1>:                         Matrix and Vector Operations.
-                                                              (line 239)
-* RowVector <2>:                         Matrix and Vector Operations.
-                                                              (line 240)
-* RowVector <3>:                         Matrix and Vector Operations.
-                                                              (line 241)
-* RowVector <4>:                         Matrix and Vector Operations.
-                                                              (line 242)
 * row_max:                               Matrix and Vector Operations.
                                                               (line 158)
 * row_max <1>:                           Matrix and Vector Operations.
@@ -4295,6 +4245,20 @@ Function Index
                                                               (line 156)
 * row_min_loc <1>:                       Matrix and Vector Operations.
                                                               (line 563)
+* rows on Array2<T>:                     Constructors and Assignment.
+                                                              (line  69)
+* rows on DiagArray<T>:                  Constructors and Assignment.
+                                                              (line 113)
+* RowVector:                             Matrix and Vector Operations.
+                                                              (line 238)
+* RowVector <1>:                         Matrix and Vector Operations.
+                                                              (line 239)
+* RowVector <2>:                         Matrix and Vector Operations.
+                                                              (line 240)
+* RowVector <3>:                         Matrix and Vector Operations.
+                                                              (line 241)
+* RowVector <4>:                         Matrix and Vector Operations.
+                                                              (line 242)
 * SCHUR:                                 Matrix Factorizations.
                                                               (line 117)
 * SCHUR <1>:                             Matrix Factorizations.
@@ -4312,7 +4276,6 @@ Function Index
 * set_absolute_tolerance <1>:            Ordinary Differential Equations.
                                                               (line  17)
 * set_alpha:                             Collocation Weights. (line  26)
-* set_base:                              Ranges.              (line  15)
 * set_beta:                              Collocation Weights. (line  27)
 * set_bound:                             Bounds.              (line  23)
 * set_bounds:                            Bounds.              (line  25)
@@ -4324,12 +4287,10 @@ Function Index
                                                               (line  15)
 * set_function:                          Nonlinear Functions. (line  15)
 * set_gradient_function:                 Objective Functions. (line  19)
-* set_inc:                               Ranges.              (line  17)
 * set_initial_step_size:                 Ordinary Differential Equations.
                                                               (line  19)
 * set_jacobian_function:                 Nonlinear Functions. (line  19)
 * set_left:                              Collocation Weights. (line  23)
-* set_limit:                             Ranges.              (line  16)
 * set_lower_bound:                       Bounds.              (line  28)
 * set_lower_bounds:                      Bounds.              (line  31)
 * set_lower_bounds <1>:                  Bounds.              (line  34)
@@ -4405,7 +4366,6 @@ Function Index
 * solve <22>:                            Nonlinear Equations. (line  36)
 * solve <23>:                            Nonlinear Equations. (line  38)
 * solve <24>:                            Nonlinear Equations. (line  39)
-* sort:                                  Ranges.              (line  24)
 * stack:                                 Matrix and Vector Operations.
                                                               (line  32)
 * stack <1>:                             Matrix and Vector Operations.
@@ -4513,30 +4473,30 @@ Node: Top814
 Node: Acknowledgements1823
 Node: Contributors2039
 Node: Copying2339
-Node: Introduction39877
-Node: Arrays40128
-Node: Constructors and Assignment40296
-Node: Matrix and Vector Operations48641
-Node: Matrix Factorizations80128
-Node: Ranges86434
-Node: Nonlinear Functions87128
-Node: Nonlinear Equations87672
-Node: Optimization88602
-Node: Objective Functions88881
-Node: Bounds89474
-Node: Linear Constraints90585
-Node: Nonlinear Constraints91572
-Node: Quadratic Programming91965
-Node: Nonlinear Programming93558
-Node: Quadrature95077
-Node: Collocation Weights96769
-Node: Ordinary Differential Equations98062
-Node: Differential Algebraic Equations99598
-Node: Error Handling100400
-Node: Installation100556
-Node: Bugs100680
-Node: Concept Index100787
-Node: Function Index104151
+Node: Introduction39892
+Node: Arrays40143
+Node: Constructors and Assignment40311
+Node: Matrix and Vector Operations48724
+Node: Matrix Factorizations80211
+Node: Ranges86517
+Node: Nonlinear Functions86686
+Node: Nonlinear Equations87230
+Node: Optimization88160
+Node: Objective Functions88439
+Node: Bounds89032
+Node: Linear Constraints90143
+Node: Nonlinear Constraints91130
+Node: Quadratic Programming91523
+Node: Nonlinear Programming93116
+Node: Quadrature94635
+Node: Collocation Weights96327
+Node: Ordinary Differential Equations97620
+Node: Differential Algebraic Equations99156
+Node: Error Handling99958
+Node: Installation100114
+Node: Bugs100238
+Node: Concept Index100345
+Node: Function Index103709
 
 End Tag Table
 

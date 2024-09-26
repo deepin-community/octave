@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} polyder (@var{p})
-## @deftypefnx {} {[@var{k}] =} polyder (@var{a}, @var{b})
+## @deftypefn  {} {@var{k} =} polyder (@var{p})
+## @deftypefnx {} {@var{k} =} polyder (@var{a}, @var{b})
 ## @deftypefnx {} {[@var{q}, @var{d}] =} polyder (@var{b}, @var{a})
 ## Return the coefficients of the derivative of the polynomial whose
 ## coefficients are given by the vector @var{p}.

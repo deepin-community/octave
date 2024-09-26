@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -75,6 +75,11 @@ provides such an algorithm.
 
 @c polyval scripts/polynomial/polyval.m
 @anchor{XREFpolyval}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{y} =} polyval (@var{p}, @var{x})
 @deftypefnx {} {@var{y} =} polyval (@var{p}, @var{x}, [], @var{mu})
 @deftypefnx {} {[@var{y}, @var{dy}] =} polyval (@var{p}, @var{x}, @var{s})
@@ -100,7 +105,12 @@ supplied.
 
 @c polyvalm scripts/polynomial/polyvalm.m
 @anchor{XREFpolyvalm}
-@deftypefn {} {} polyvalm (@var{c}, @var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} polyvalm (@var{c}, @var{x})
 Evaluate a polynomial in the matrix sense.
 
 @code{polyvalm (@var{c}, @var{x})} will evaluate the polynomial in the
@@ -121,7 +131,12 @@ for a definition), and then finding its eigenvalues.
 
 @c roots scripts/polynomial/roots.m
 @anchor{XREFroots}
-@deftypefn {} {} roots (@var{c})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{r} =} roots (@var{c})
 
 Compute the roots of the polynomial @var{c}.
 
@@ -182,6 +197,11 @@ $\pm 2.2361$.
 
 @c polyeig scripts/polynomial/polyeig.m
 @anchor{XREFpolyeig}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{z} =} polyeig (@var{C0}, @var{C1}, @dots{}, @var{Cl})
 @deftypefnx {} {[@var{v}, @var{z}] =} polyeig (@var{C0}, @var{C1}, @dots{}, @var{Cl})
 
@@ -208,7 +228,12 @@ eigenvectors.
 
 @c compan scripts/polynomial/compan.m
 @anchor{XREFcompan}
-@deftypefn {} {} compan (@var{c})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{A} =} compan (@var{c})
 Compute the companion matrix corresponding to polynomial coefficient vector
 @var{c}.
 
@@ -248,18 +273,31 @@ polynomial.
 
 @c mpoles scripts/polynomial/mpoles.m
 @anchor{XREFmpoles}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{multp}, @var{idxp}] =} mpoles (@var{p})
 @deftypefnx {} {[@var{multp}, @var{idxp}] =} mpoles (@var{p}, @var{tol})
 @deftypefnx {} {[@var{multp}, @var{idxp}] =} mpoles (@var{p}, @var{tol}, @var{reorder})
 Identify unique poles in @var{p} and their associated multiplicity.
 
-The output is ordered from pole with largest magnitude to smallest
-magnitude.
+By default, the output is ordered from the pole with the largest magnitude
+to the smallest magnitude.
 
-If the relative difference of two poles is less than @var{tol} then they are
-considered to be multiples.  The default value for @var{tol} is 0.001.
+Two poles are considered to be multiples if the difference between them
+is less than the relative tolerance @var{tol}.
 
-If the optional parameter @var{reorder} is zero, poles are not sorted.
+@example
+abs (@var{p1} - @var{p0}) / abs (@var{p0}) < @var{tol}
+@end example
+
+If the pole is 0 then no scaling is done and @var{tol} is interpreted as an
+absolute tolerance.  The default value for @var{tol} is 0.001.
+
+If the optional parameter @var{reorder} is false/zero, poles are not
+sorted.
 
 The output @var{multp} is a vector specifying the multiplicity of the poles.
 @code{@var{multp}(n)} refers to the multiplicity of the Nth pole
@@ -286,8 +324,13 @@ p = [2 3 1 1 2];
 
 @c conv scripts/polynomial/conv.m
 @anchor{XREFconv}
-@deftypefn  {} {} conv (@var{a}, @var{b})
-@deftypefnx {} {} conv (@var{a}, @var{b}, @var{shape})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} conv (@var{a}, @var{b})
+@deftypefnx {} {@var{y} =} conv (@var{a}, @var{b}, @var{shape})
 Convolve two vectors @var{a} and @var{b}.
 
 When @var{a} and @var{b} are the coefficient vectors of two polynomials, the
@@ -317,6 +360,11 @@ The size of the result is
 
 @c convn libinterp/corefcn/conv2.cc
 @anchor{XREFconvn}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{C} =} convn (@var{A}, @var{B})
 @deftypefnx {} {@var{C} =} convn (@var{A}, @var{B}, @var{shape})
 Return the n-D convolution of @var{A} and @var{B}.
@@ -344,6 +392,11 @@ The size of the result is @code{max (size (A) - size (B) + 1, 0)}.
 
 @c deconv scripts/polynomial/deconv.m
 @anchor{XREFdeconv}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{b} =} deconv (@var{y}, @var{a})
 @deftypefnx {} {[@var{b}, @var{r}] =} deconv (@var{y}, @var{a})
 Deconvolve two vectors (polynomial division).
@@ -360,9 +413,14 @@ a remainder polynomial of lowest order.
 
 @c conv2 libinterp/corefcn/conv2.cc
 @anchor{XREFconv2}
-@deftypefn  {} {} conv2 (@var{A}, @var{B})
-@deftypefnx {} {} conv2 (@var{v1}, @var{v2}, @var{m})
-@deftypefnx {} {} conv2 (@dots{}, @var{shape})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{C} =} conv2 (@var{A}, @var{B})
+@deftypefnx {} {@var{C} =} conv2 (@var{v1}, @var{v2}, @var{m})
+@deftypefnx {} {@var{C} =} conv2 (@dots{}, @var{shape})
 Return the 2-D convolution of @var{A} and @var{B}.
 
 The size of the result is determined by the optional @var{shape} argument
@@ -391,6 +449,11 @@ When the third argument is a matrix, return the convolution of the matrix
 
 @c polygcd scripts/polynomial/polygcd.m
 @anchor{XREFpolygcd}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{q} =} polygcd (@var{b}, @var{a})
 @deftypefnx {} {@var{q} =} polygcd (@var{b}, @var{a}, @var{tol})
 
@@ -421,6 +484,11 @@ deconv (poly (1:8), polygcd (poly (1:8), poly (3:12))) - poly (1:2)
 
 @c residue scripts/polynomial/residue.m
 @anchor{XREFresidue}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{r}, @var{p}, @var{k}, @var{e}] =} residue (@var{b}, @var{a})
 @deftypefnx {} {[@var{b}, @var{a}] =} residue (@var{r}, @var{p}, @var{k})
 @deftypefnx {} {[@var{b}, @var{a}] =} residue (@var{r}, @var{p}, @var{k}, @var{e})
@@ -563,8 +631,13 @@ area = polyval (integral, 3) - polyval (integral, 0)
 
 @c polyder scripts/polynomial/polyder.m
 @anchor{XREFpolyder}
-@deftypefn  {} {} polyder (@var{p})
-@deftypefnx {} {[@var{k}] =} polyder (@var{a}, @var{b})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{k} =} polyder (@var{p})
+@deftypefnx {} {@var{k} =} polyder (@var{a}, @var{b})
 @deftypefnx {} {[@var{q}, @var{d}] =} polyder (@var{b}, @var{a})
 Return the coefficients of the derivative of the polynomial whose
 coefficients are given by the vector @var{p}.
@@ -581,8 +654,13 @@ in @var{q} and the denominator in @var{d}.
 
 @c polyint scripts/polynomial/polyint.m
 @anchor{XREFpolyint}
-@deftypefn  {} {} polyint (@var{p})
-@deftypefnx {} {} polyint (@var{p}, @var{k})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{q} =} polyint (@var{p})
+@deftypefnx {} {@var{q} =} polyint (@var{p}, @var{k})
 Return the coefficients of the integral of the polynomial whose
 coefficients are represented by the vector @var{p}.
 
@@ -594,7 +672,12 @@ set to zero.
 
 @c polyaffine scripts/polynomial/polyaffine.m
 @anchor{XREFpolyaffine}
-@deftypefn {} {} polyaffine (@var{f}, @var{mu})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{g} =} polyaffine (@var{f}, @var{mu})
 Return the coefficients of the polynomial vector @var{f} after an affine
 transformation.
 
@@ -623,6 +706,11 @@ is what the @code{polyfit} function does.
 
 @c polyfit scripts/polynomial/polyfit.m
 @anchor{XREFpolyfit}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{p} =} polyfit (@var{x}, @var{y}, @var{n})
 @deftypefnx {} {[@var{p}, @var{s}] =} polyfit (@var{x}, @var{y}, @var{n})
 @deftypefnx {} {[@var{p}, @var{s}, @var{mu}] =} polyfit (@var{x}, @var{y}, @var{n})
@@ -705,6 +793,11 @@ data.
 
 @c splinefit scripts/polynomial/splinefit.m
 @anchor{XREFsplinefit}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{pp} =} splinefit (@var{x}, @var{y}, @var{breaks})
 @deftypefnx {} {@var{pp} =} splinefit (@var{x}, @var{y}, @var{p})
 @deftypefnx {} {@var{pp} =} splinefit (@dots{}, "periodic", @var{periodic})
@@ -988,6 +1081,11 @@ the approximant.
 
 @c padecoef scripts/polynomial/padecoef.m
 @anchor{XREFpadecoef}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{num}, @var{den}] =} padecoef (@var{T})
 @deftypefnx {} {[@var{num}, @var{den}] =} padecoef (@var{T}, @var{N})
 Compute the @var{N}th-order Pad@'e approximant of the continuous-time
@@ -1077,6 +1175,11 @@ plot (xi, yi);
 
 @c mkpp scripts/polynomial/mkpp.m
 @anchor{XREFmkpp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{pp} =} mkpp (@var{breaks}, @var{coefs})
 @deftypefnx {} {@var{pp} =} mkpp (@var{breaks}, @var{coefs}, @var{d})
 
@@ -1112,6 +1215,11 @@ creating piecewise polynomials objects with @code{mkpp}.
 
 @c unmkpp scripts/polynomial/unmkpp.m
 @anchor{XREFunmkpp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{x}, @var{p}, @var{n}, @var{k}, @var{d}] =} unmkpp (@var{pp})
 
 Extract the components of a piecewise polynomial structure @var{pp}.
@@ -1163,6 +1271,11 @@ Number of polynomials defined for each interval.
 
 @c ppval scripts/polynomial/ppval.m
 @anchor{XREFppval}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{yi} =} ppval (@var{pp}, @var{xi})
 Evaluate the piecewise polynomial structure @var{pp} at the points @var{xi}.
 
@@ -1176,6 +1289,11 @@ of the same shape as @var{xi}.  Otherwise, the size of the result is
 
 @c ppder scripts/polynomial/ppder.m
 @anchor{XREFppder}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {ppd =} ppder (pp)
 @deftypefnx {} {ppd =} ppder (pp, m)
 Compute the piecewise @var{m}-th derivative of a piecewise polynomial
@@ -1188,6 +1306,11 @@ If @var{m} is omitted the first derivative is calculated.
 
 @c ppint scripts/polynomial/ppint.m
 @anchor{XREFppint}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{ppi} =} ppint (@var{pp})
 @deftypefnx {} {@var{ppi} =} ppint (@var{pp}, @var{c})
 Compute the integral of the piecewise polynomial struct @var{pp}.
@@ -1199,6 +1322,11 @@ Compute the integral of the piecewise polynomial struct @var{pp}.
 
 @c ppjumps scripts/polynomial/ppjumps.m
 @anchor{XREFppjumps}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{jumps} =} ppjumps (@var{pp})
 Evaluate the boundary jumps of a piecewise polynomial.
 
@@ -1213,8 +1341,13 @@ If there are @math{n} intervals, and the dimensionality of @var{pp} is
 
 @c poly scripts/polynomial/poly.m
 @anchor{XREFpoly}
-@deftypefn  {} {} poly (@var{A})
-@deftypefnx {} {} poly (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} poly (@var{A})
+@deftypefnx {} {@var{y} =} poly (@var{x})
 If @var{A} is a square @math{N}-by-@math{N} matrix, @code{poly (@var{A})}
 is the row vector of the coefficients of @code{det (z * eye (N) - A)},
 the characteristic polynomial of @var{A}.
@@ -1247,6 +1380,11 @@ numerical errors.
 
 @c polyout scripts/polynomial/polyout.m
 @anchor{XREFpolyout}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} polyout (@var{c})
 @deftypefnx {} {} polyout (@var{c}, @var{x})
 @deftypefnx {} {@var{str} =} polyout (@dots{})
@@ -1273,7 +1411,12 @@ and defaults to the string @qcode{"s"}.
 
 @c polyreduce scripts/polynomial/polyreduce.m
 @anchor{XREFpolyreduce}
-@deftypefn {} {} polyreduce (@var{c})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{p} =} polyreduce (@var{c})
 Reduce a polynomial coefficient vector to a minimum number of terms by
 stripping off any leading zeros.
 @xseealso{@ref{XREFpolyout,,polyout}}

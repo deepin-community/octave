@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {@var{tickval} =} zticklabels
+## @deftypefn  {} {@var{labels} =} zticklabels
 ## @deftypefnx {} {@var{mode} =} zticklabels ("mode")
 ## @deftypefnx {} {} zticklabels (@var{tickval})
 ## @deftypefnx {} {} zticklabels ("auto")
@@ -56,17 +56,17 @@
 ## @seealso{zticks, xticklabels, zticklabels, get, set}
 ## @end deftypefn
 
-function retval = zticklabels (varargin)
+function labels = zticklabels (varargin)
 
   hax = [];
   switch (nargin)
     case 0
-      retval = get (gca , "zticklabel"); # will error if no zticklabel exists.
+      labels = get (gca , "zticklabel"); # will error if no zticklabel exists.
       return;
 
     case 1
       if (isaxes (varargin{1}))
-        retval = get (varargin{1}, "zticklabel");
+        labels = get (varargin{1}, "zticklabel");
         return;
       else
         arg = varargin{1};
@@ -88,6 +88,14 @@ function retval = zticklabels (varargin)
     hax = gca ();
   endif
 
+  if (! (iscell (arg) || isnumeric (arg) || ischar (arg)))
+    print_usage ();
+  endif
+
+  if (isempty (arg))
+    arg = {};  # Either '' or [] are converted empty cell array
+  endif
+
   if (iscell (arg) || isnumeric (arg))
     if (nargout > 0)
       error ("zticklabels: too many output arguments requested");
@@ -99,10 +107,9 @@ function retval = zticklabels (varargin)
       ## This implementation allows for a numeric array, which is handled in
       ## the same order as Matlab handles a cell array
       arg = num2cell (arg(:));
-
     endif
 
-    ## Convert any numeric elements to characters, make it a 1D cell array.
+    ## Convert any numeric elements to characters, make it a 1-D cell array.
     arg = cellfun (@num2str, arg, "UniformOutput", false)(:);
 
     ## Pad with blank cell entries if needed.
@@ -114,10 +121,9 @@ function retval = zticklabels (varargin)
               "ztickmode", "manual");
 
   elseif (ischar (arg))
-    arg = tolower (arg);
-    switch (arg)
+    switch (lower (arg))
       case "mode"
-        retval = get (hax, "zticklabelmode");
+        labels = get (hax, "zticklabelmode");
 
       case {"auto", "manual"}
         if (nargout > 0)
@@ -131,8 +137,6 @@ function retval = zticklabels (varargin)
 
     endswitch
 
-  else
-    print_usage ();
   endif
 
 endfunction

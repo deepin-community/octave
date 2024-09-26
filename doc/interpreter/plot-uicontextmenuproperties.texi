@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,13 +23,15 @@
 
 Properties of @code{uicontextmenu} objects (@pxref{XREFuicontextmenu,,uicontextmenu}):
 
+@subsubheading Categories:
+
+@ref{XREFuicontextmenucategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFuicontextmenucategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFuicontextmenucategoryDisplay, , @w{Display}}@: | @ref{XREFuicontextmenucategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFuicontextmenucategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFuicontextmenucategoryObjectPosition, , @w{Object Position}}@: | @ref{XREFuicontextmenucategoryParent/Children, , @w{Parent/Children}}@: 
+
+@anchor{XREFuicontextmenucategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex uicontextmenu CallbackExecution
+
 @table @asis
-
-@anchor{XREFuicontextmenubeingdeleted}
-@prindex uicontextmenu beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
 
 @anchor{XREFuicontextmenubusyaction}
 @prindex uicontextmenu busyaction
@@ -35,34 +40,30 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFuicontextmenubuttondownfcn}
-@prindex uicontextmenu buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
-@code{buttondownfcn} is unused.
-
-
 @anchor{XREFuicontextmenucallback}
 @prindex uicontextmenu callback
-@item @code{callback}: def. @code{[](0x0)}
+@item @code{callback}: string, def. @code{[](0x0)}
+A string consisting of a valid Octave expression that will be executed whenever this item is selected.
 
 
+@anchor{XREFuicontextmenuinterruptible}
+@prindex uicontextmenu interruptible
+@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
+@xref{Callbacks, , @w{Callbacks section}}.
 
-@anchor{XREFuicontextmenuchildren}
-@prindex uicontextmenu children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-Graphics handles of the uicontextmenu's children.
+@end table
 
+@anchor{XREFuicontextmenucategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex uicontextmenu Creation/Deletion
 
-@anchor{XREFuicontextmenuclipping}
-@prindex uicontextmenu clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the uicontextmenu is clipped in its parent axes limits.
+@table @asis
 
-
-@anchor{XREFuicontextmenucontextmenu}
-@prindex uicontextmenu contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this uicontextmenu object.
+@anchor{XREFuicontextmenubeingdeleted}
+@prindex uicontextmenu beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
 
 
 @anchor{XREFuicontextmenucreatefcn}
@@ -80,11 +81,43 @@ Callback function executed immediately before uicontextmenu is deleted.
 
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFuicontextmenuhandlevisibility}
-@prindex uicontextmenu handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the uicontextmenu's handle is not visible in its parent's "children" property.
+@anchor{XREFuicontextmenucategoryDisplay}
+@subsubheading Display
+@prindex uicontextmenu Display
+
+@table @asis
+
+@anchor{XREFuicontextmenuclipping}
+@prindex uicontextmenu clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the uicontextmenu is clipped in its parent axes limits.
+
+
+@anchor{XREFuicontextmenuvisible}
+@prindex uicontextmenu visible
+@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{visible} is @qcode{"off"}, the uicontextmenu is not rendered on screen.
+
+@end table
+
+@anchor{XREFuicontextmenucategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex uicontextmenu MouseInteraction
+
+@table @asis
+
+@anchor{XREFuicontextmenubuttondownfcn}
+@prindex uicontextmenu buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+@code{buttondownfcn} is unused.
+
+
+@anchor{XREFuicontextmenucontextmenu}
+@prindex uicontextmenu contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this uicontextmenu object.
 
 
 @anchor{XREFuicontextmenuhittest}
@@ -93,42 +126,30 @@ If @code{handlevisibility} is @qcode{"off"}, the uicontextmenu's handle is not v
 Specify whether uicontextmenu processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFuicontextmenupickableparts, , @w{pickableparts property}}.
 
 
-@anchor{XREFuicontextmenuinterruptible}
-@prindex uicontextmenu interruptible
-@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
-@xref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFuicontextmenuparent}
-@prindex uicontextmenu parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
-
-
 @anchor{XREFuicontextmenupickableparts}
 @prindex uicontextmenu pickableparts
 @item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
 Specify whether uicontextmenu will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the uicontextmenu or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFuicontextmenuhittest, , @w{hittest property}}.
 
 
-@anchor{XREFuicontextmenuposition}
-@prindex uicontextmenu position
-@item @code{position}: def. @code{[0   0]}
-
-
-
 @anchor{XREFuicontextmenuselected}
 @prindex uicontextmenu selected
 @item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
+Property indicates whether this uicontextmenu is selected.
 
 
 @anchor{XREFuicontextmenuselectionhighlight}
 @prindex uicontextmenu selectionhighlight
 @item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the uicontextmenu's selection state is visually highlighted.
 
+@end table
 
+@anchor{XREFuicontextmenucategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex uicontextmenu ObjectIdentification
+
+@table @asis
 
 @anchor{XREFuicontextmenutag}
 @prindex uicontextmenu tag
@@ -139,7 +160,7 @@ A user-defined string to label the graphics object.
 @anchor{XREFuicontextmenutype}
 @prindex uicontextmenu type
 @item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"uicontextmenu"}
+Class name of the graphics object.  @code{type} is always @qcode{"uicontextmenu"}.
 
 
 @anchor{XREFuicontextmenuuserdata}
@@ -147,10 +168,42 @@ Class name of the graphics object.  @code{type} is always @qcode{"uicontextmenu"
 @item @code{userdata}: Any Octave data, def. @code{[](0x0)}
 User-defined data to associate with the graphics object.
 
+@end table
 
-@anchor{XREFuicontextmenuvisible}
-@prindex uicontextmenu visible
-@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{visible} is @qcode{"off"}, the uicontextmenu is not rendered on screen.
+@anchor{XREFuicontextmenucategoryObjectPosition}
+@subsubheading Object Position
+@prindex uicontextmenu ObjectPosition
+
+@table @asis
+
+@anchor{XREFuicontextmenuposition}
+@prindex uicontextmenu position
+@item @code{position}: def. @code{[0   0]}
+Manually setting location for uicontextmenu to appear is not yet implemented for uicontextmenu objects.  @code{position} is unused.
+
+@end table
+
+@anchor{XREFuicontextmenucategoryParent/Children}
+@subsubheading Parent/Children
+@prindex uicontextmenu Parent/Children
+
+@table @asis
+
+@anchor{XREFuicontextmenuchildren}
+@prindex uicontextmenu children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Graphics handles of the uicontextmenu's children.
+
+
+@anchor{XREFuicontextmenuhandlevisibility}
+@prindex uicontextmenu handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the uicontextmenu's handle is not visible in its parent's @qcode{"children"} property.
+
+
+@anchor{XREFuicontextmenuparent}
+@prindex uicontextmenu parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
 
 @end table

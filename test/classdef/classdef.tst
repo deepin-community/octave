@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -210,3 +210,6 @@
 %! x = bug_60763 ();
 %! assert (x.foobar (), {"some_property"});
 %! assert (x.methods (), 42);
+
+## test class with methods in @folder and in classdef definition
+%!assert <*62802> (numel (methods ("class_bug62802")), 4)

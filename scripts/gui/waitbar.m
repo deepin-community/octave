@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -139,7 +139,7 @@ function h = waitbar (varargin)
     ## Add createcancelbtn property
     addproperty ("createcancelbtn", hf, "figurebuttondownfcn");
     ## FIXME: Can't add listener because of bug #55963.
-    #addlistener (hf, "createcancelbtn", {@updatecancelbutton, ax});
+    ## addlistener (hf, "createcancelbtn", {@updatecancelbutton, ax});
 
     if (! isempty (varargin))
       set (hf, varargin{:});

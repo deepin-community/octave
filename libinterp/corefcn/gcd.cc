@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2004-2022 The Octave Project Developers
+// Copyright (C) 2004-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "error.h"
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 static double
 simple_gcd (double a, double b)
@@ -59,9 +59,6 @@ simple_gcd (double a, double b)
   return aa;
 }
 
-// Don't use the Complex and FloatComplex typedefs because we need to
-// refer to the actual float precision FP in the body (and when gcc
-// implements template aliases from C++0x, can do a small fix here).
 template <typename FP>
 static void
 divide (const std::complex<FP>& a, const std::complex<FP>& b,
@@ -267,7 +264,7 @@ do_simple_gcd (const octave_value& a, const octave_value& b)
 {
   octave_value retval;
   builtin_type_t btyp = btyp_mixed_numeric (a.builtin_type (),
-                                            b.builtin_type ());
+                        b.builtin_type ());
   switch (btyp)
     {
     case btyp_double:
@@ -287,14 +284,14 @@ do_simple_gcd (const octave_value& a, const octave_value& b)
       retval = do_simple_gcd<X ## NDArray> (a, b);    \
       break
 
-    MAKE_INT_BRANCH (int8);
-    MAKE_INT_BRANCH (int16);
-    MAKE_INT_BRANCH (int32);
-    MAKE_INT_BRANCH (int64);
-    MAKE_INT_BRANCH (uint8);
-    MAKE_INT_BRANCH (uint16);
-    MAKE_INT_BRANCH (uint32);
-    MAKE_INT_BRANCH (uint64);
+      MAKE_INT_BRANCH (int8);
+      MAKE_INT_BRANCH (int16);
+      MAKE_INT_BRANCH (int32);
+      MAKE_INT_BRANCH (int64);
+      MAKE_INT_BRANCH (uint8);
+      MAKE_INT_BRANCH (uint16);
+      MAKE_INT_BRANCH (uint32);
+      MAKE_INT_BRANCH (uint64);
 
 #undef MAKE_INT_BRANCH
 
@@ -386,7 +383,7 @@ do_extended_gcd (const octave_value& a, const octave_value& b,
   octave_value retval;
 
   builtin_type_t btyp = btyp_mixed_numeric (a.builtin_type (),
-                                            b.builtin_type ());
+                        b.builtin_type ());
   switch (btyp)
     {
     case btyp_double:
@@ -399,14 +396,14 @@ do_extended_gcd (const octave_value& a, const octave_value& b,
       retval = do_extended_gcd<X ## NDArray> (a, b, x, y);    \
       break
 
-    MAKE_INT_BRANCH (int8);
-    MAKE_INT_BRANCH (int16);
-    MAKE_INT_BRANCH (int32);
-    MAKE_INT_BRANCH (int64);
-    MAKE_INT_BRANCH (uint8);
-    MAKE_INT_BRANCH (uint16);
-    MAKE_INT_BRANCH (uint32);
-    MAKE_INT_BRANCH (uint64);
+      MAKE_INT_BRANCH (int8);
+      MAKE_INT_BRANCH (int16);
+      MAKE_INT_BRANCH (int32);
+      MAKE_INT_BRANCH (int64);
+      MAKE_INT_BRANCH (uint8);
+      MAKE_INT_BRANCH (uint16);
+      MAKE_INT_BRANCH (uint32);
+      MAKE_INT_BRANCH (uint64);
 
 #undef MAKE_INT_BRANCH
 
@@ -476,6 +473,17 @@ gcd ([15, 9], [20, 18])
 @end group
 @end example
 
+Programming tip: To find the GCD of all the elements of a single array, use
+@code{num2cell} instead of nested calls or a loop:
+
+@example
+@group
+x = [30 42 70 105];    # vector or array of inputs
+gcd (num2cell (x) @{:@})
+   @result{}     1
+@end group
+@end example
+
 @seealso{lcm, factor, isprime}
 @end deftypefn */)
 {
@@ -514,7 +522,8 @@ gcd ([15, 9], [20, 18])
 /*
 %!assert (gcd (200, 300, 50, 35), 5)
 %!assert (gcd (int16 (200), int16 (300), int16 (50), int16 (35)), int16 (5))
-%!assert (gcd (uint64 (200), uint64 (300), uint64 (50), uint64 (35)), uint64 (5))
+%!assert (gcd (uint64 (200), uint64 (300), uint64 (50), uint64 (35)),
+%!        uint64 (5))
 %!assert (gcd (18-i, -29+3i), -3-4i)
 
 %!test
@@ -537,4 +546,4 @@ gcd ([15, 9], [20, 18])
 %! fail ("gcd (s)");
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

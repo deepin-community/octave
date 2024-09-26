@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} fileattrib ()
+## @deftypefn  {} {} fileattrib
+## @deftypefnx {} {} fileattrib @var{file}
 ## @deftypefnx {} {} fileattrib (@var{file})
 ## @deftypefnx {} {[@var{status}, @var{attrib}] =} fileattrib (@dots{})
 ## @deftypefnx {} {[@var{status}, @var{msg}, @var{msgid}] =} fileattrib (@dots{})

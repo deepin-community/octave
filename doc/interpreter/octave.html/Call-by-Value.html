@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Call by Value (GNU Octave (version 7.1.0))</title>
+<title>Call by Value (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Call by Value (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Call by Value (GNU Octave (version 7.1.0))">
+<meta name="description" content="Call by Value (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Call by Value (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,9 @@
 <link href="Recursion.html" rel="next" title="Recursion">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,13 +30,13 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Call-by-Value">
-<div class="header">
+<div class="subsection-level-extent" id="Call-by-Value">
+<div class="nav-panel">
 <p>
 Next: <a href="Recursion.html" accesskey="n" rel="next">Recursion</a>, Up: <a href="Calling-Functions.html" accesskey="u" rel="up">Calling Functions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Call-by-Value-1"></span><h4 class="subsection">8.2.1 Call by Value</h4>
+<h4 class="subsection" id="Call-by-Value-1"><span>8.2.1 Call by Value<a class="copiable-link" href="#Call-by-Value-1"> &para;</a></span></h4>
 
 <p>In Octave, unlike Fortran, function arguments are passed by value, which
 means that each argument in a function call is evaluated and assigned to
@@ -60,15 +48,15 @@ calling function.  It can only change the local copy within the function
 body.  For example, the function
 </p>
 <div class="example">
-<pre class="example">function f (x, n)
+<div class="group"><pre class="example-preformatted">function f (x, n)
   while (n-- &gt; 0)
     disp (x);
   endwhile
 endfunction
-</pre></div>
+</pre></div></div>
 
-<p>displays the value of the first argument <var>n</var> times.  In this
-function, the variable <var>n</var> is used as a temporary variable without
+<p>displays the value of the first argument <var class="var">n</var> times.  In this
+function, the variable <var class="var">n</var> is used as a temporary variable without
 having to worry that its value might also change in the calling
 function.  Call by value is also useful because it is always possible to
 pass constants for any function parameter without first having to
@@ -79,32 +67,32 @@ the called function does not know this: it only knows what value the
 argument had.  For example, given a function called as
 </p>
 <div class="example">
-<pre class="example">foo = &quot;bar&quot;;
+<div class="group"><pre class="example-preformatted">foo = &quot;bar&quot;;
 fcn (foo)
-</pre></div>
+</pre></div></div>
 
 <p>you should not think of the argument as being &ldquo;the variable
-<code>foo</code>.&rdquo;  Instead, think of the argument as the string value,
-<code>&quot;bar&quot;</code>.
+<code class="code">foo</code>.&rdquo;  Instead, think of the argument as the string value,
+<code class="code">&quot;bar&quot;</code>.
 </p>
 <p>Even though Octave uses pass-by-value semantics for function arguments,
 values are not copied unnecessarily.  For example,
 </p>
 <div class="example">
-<pre class="example">x = rand (1000);
+<div class="group"><pre class="example-preformatted">x = rand (1000);
 f (x);
-</pre></div>
+</pre></div></div>
 
 <p>does not actually force two 1000 by 1000 element matrices to exist
-<em>unless</em> the function <code>f</code> modifies the value of its
+<em class="emph">unless</em> the function <code class="code">f</code> modifies the value of its
 argument.  Then Octave must create a copy to avoid changing the
-value outside the scope of the function <code>f</code>, or attempting (and
+value outside the scope of the function <code class="code">f</code>, or attempting (and
 probably failing!) to modify the value of a constant or the value of a
 temporary result.
 </p>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Recursion.html">Recursion</a>, Up: <a href="Calling-Functions.html">Calling Functions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

@@ -1,4 +1,4 @@
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -102,7 +102,7 @@ same value:
 * Integer Data Types::
 * Bit Manipulations::
 * Logical Values::
-* Promotion and Demotion of Data Types::
+* Automatic Conversion of Data Types::
 * Predicates for Numeric Objects::
 @end menu
 
@@ -403,7 +403,7 @@ defines the set of values @code{[ 1, 4 ]}.
 Although a range constant specifies a row vector, Octave does @emph{not}
 normally convert range constants to vectors unless it is necessary to do so.
 This allows you to write a constant like @code{1 : 10000} without using
-80,000 bytes of storage on a typical 32-bit workstation.
+80,000 bytes of storage on a typical workstation.
 
 A common example of when it does become necessary to convert ranges into
 vectors occurs when they appear within a vector (i.e., inside square
@@ -431,12 +431,81 @@ This space saving optimization may be disabled using the function
 @DOCSTRING(optimize_range)
 
 Note that the upper (or lower, if the increment is negative) bound on
-the range is not always included in the set of values, and that ranges
-defined by floating point values can produce surprising results because
+the range is not always included in the set of values.  This can be useful
+in some contexts.  For example:
+
+@example
+@group
+## x is some predefined range or vector or matrix or array
+x(1:2:end) += 1;   # increment all  odd-numbered elements
+x(2:2:end) -= 1;   # decrement all even-numbered elements
+@end group
+@end example
+
+The above code works correctly whether @var{x} has an odd number of elements
+or not, so no need to treat the two cases differently.
+
 Octave uses floating point arithmetic to compute the values in the
-range.  If it is important to include the endpoints of a range and the
-number of elements is known, you should use the @code{linspace} function
-instead (@pxref{Special Utility Matrices}).
+range.  As a result, defining ranges with floating-point values can result
+in pitfalls like these:
+
+@example
+@group
+a = -2
+b = (0.3 - 0.2 - 0.1)
+x = a : b
+@end group
+@end example
+
+Due to floating point rounding, @var{b} may or may not equal zero exactly,
+and if it does not, it may be above zero or below zero, hence the final range
+@var{x} may or may not include zero as its final value.  Similarly:
+
+@example
+@group
+x = 1.80 : 0.05 : 1.90
+y = 1.85 : 0.05 : 1.90
+@end group
+@end example
+
+@noindent
+is not as predictable as it looks.  As of Octave 8.3, the results obtained are
+that @var{x} has three elements (1.80, 1.85, and 1.90), and @var{y} has only
+one element (1.85 but not 1.90).  Thus, when using floating points in ranges,
+changing the start of the range can easily affect the end of the range even
+though the ending value was not touched in the above example.
+
+To avoid such pitfalls with floating-points in ranges, you should use one of
+the following patterns.  This change to the previous code:
+
+@example
+@group
+x = (0:2) * 0.05 + 1.80
+y = (0:1) * 0.05 + 1.85
+@end group
+@end example
+
+@noindent
+makes it much safer and much more repeatable across platforms, compilers,
+and compiler settings.  If you know the number of elements, you can also use
+the @code{linspace} function (@pxref{Special Utility Matrices}), which will
+include the endpoints of a range.  You can also make judicious use of
+@code{round}, @code{floor}, @code{ceil}, @code{fix}, etc.@: to set the
+limits and the increment without getting interference from floating-point
+rounding.  For example, the earlier example can be made safer and much more
+repeatable with one of the following:
+
+@example
+@group
+a = -2
+b = round ((0.3 - 0.2 - 0.1) * 1e12) / 1e12   # rounds to 12 digits
+c = floor (0.3 - 0.2 - 0.1)                   # floors as integer
+d = floor ((0.3 - 0.2 - 0.1) * 1e12) / 1e12   # floors at 12 digits
+x = a : b
+y = a : c
+z = a : d
+@end group
+@end example
 
 When adding a scalar to a range, subtracting a scalar from it (or subtracting a
 range from a scalar) and multiplying by scalar, Octave will attempt to avoid
@@ -683,21 +752,8 @@ point numbers.  So, the result of @code{true*22 - false/6} is @code{22}.
 
 Logical values can also be used to index matrices and cell arrays.
 When indexing with a logical array the result will be a vector containing
-the values corresponding to @code{true} parts of the logical array.
-The following example illustrates this.
-
-@example
-@group
-data = [ 1, 2; 3, 4 ];
-idx = (data <= 2);
-data(idx)
-     @result{} ans = [ 1; 2 ]
-@end group
-@end example
-
-@noindent
-Instead of creating the @code{idx} array it is possible to replace
-@code{data(idx)} with @w{@code{data( data <= 2 )}} in the above code.
+the values corresponding to @code{true} parts of the logical array. 
+@xref{XREFLogicalIndexing, , Logical Indexing}.
 
 Logical values can also be constructed by
 casting numeric objects to logical values, or by using the @code{true}
@@ -709,8 +765,8 @@ or @code{false} functions.
 
 @DOCSTRING(false)
 
-@node Promotion and Demotion of Data Types
-@section Promotion and Demotion of Data Types
+@node Automatic Conversion of Data Types
+@section Automatic Conversion of Data Types
 
 Many operators and functions can work with mixed data types.  For example,
 
@@ -719,38 +775,22 @@ Many operators and functions can work with mixed data types.  For example,
 uint8 (1) + 1
     @result{} 2
 @end group
-@end example
 
-@noindent
-where the above operator works with an 8-bit integer and a double precision
-value and returns an 8-bit integer value.  Note that the type is demoted
-to an 8-bit integer, rather than promoted to a double precision value as
-might be expected.  The reason is that if Octave promoted values in
-expressions like the above with all numerical constants would need to be
-explicitly cast to the appropriate data type like
-
-@example
-@group
-uint8 (1) + uint8 (1)
-    @result{} 2
-@end group
-@end example
-
-@noindent
-which becomes difficult for the user to apply uniformly and might allow
-hard to find bugs to be introduced.  The same applies to single precision
-values where a mixed operation such as
-
-@example
 @group
 single (1) + 1
     @result{} 2
 @end group
+
+@group
+min (single (1), 0)
+   @result{} 0
+@end group
 @end example
 
 @noindent
-returns a single precision value.  The mixed operations that are valid
-and their returned data types are
+where the results are respectively of types uint8, single, and single
+respectively.  This is done for @sc{matlab} compatibility.  Valid mixed
+operations are defined as follows:
 
 @multitable @columnfractions .2 .3 .3 .2
 @headitem @tab Mixed Operation @tab Result @tab
@@ -763,17 +803,51 @@ and their returned data types are
 @item @tab single OP logical @tab single @tab
 @end multitable
 
-The same logic applies to functions with mixed arguments such as
+When functions expect a double but are passed other types, automatic
+conversion is function-dependent:
 
 @example
 @group
-min (single (1), 0)
-   @result{} 0
+a = det (int8 ([1 2; 3 4]))
+    @result{} a = -2
+class (a)
+    @result{} double
+@end group
+
+@group
+a = eig (int8 ([1 2; 3 4]))
+    @result{} error: eig: wrong type argument 'int8 matrix'
 @end group
 @end example
 
-@noindent
-where the returned value is single precision.
+When two operands are both integers but of different widths, then some cases
+convert them to the wider bitwidth, and other cases throw an error:
+
+@example
+@group
+a = min (int8 (100), int16 (200))
+    @result{} 100
+class (a)
+    @result{} int16
+@end group
+
+@group
+int8 (100) + int16 (200)
+   @result{} error: binary operator '+' not implemented
+   for 'int8 scalar' by 'int16 scalar' operations
+@end group
+@end example
+
+For two integer operands, they typically need to both be signed or both be
+unsigned.  Mixing signed and unsigned usually causes an error, even if they
+are of the same bitwidth.
+
+@example
+@group
+min (int16 (100), uint16 (200))
+   @result{} error: min: cannot compute min (int16 scalar, uint16 scalar)
+@end group
+@end example
 
 In the case of mixed type indexed assignments, the type is not
 changed.  For example,
@@ -852,6 +926,8 @@ variable.
 @DOCSTRING(istriu)
 
 @DOCSTRING(isprime)
+
+@DOCSTRING(isuniform)
 
 If instead of knowing properties of variables, you wish to know which
 variables are defined and to gather other information about the

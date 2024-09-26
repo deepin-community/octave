@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -239,7 +239,7 @@ endfunction
 @end group
 @end example
 
-There is still one additional problem with this function.  What if it is
+There is still one remaining problem with this function.  What if it is
 called without an argument?  Without additional error checking, Octave
 will probably print an error message that won't really help you track
 down the source of the error.  To allow you to catch errors like this,
@@ -265,18 +265,23 @@ endfunction
 @end group
 @end example
 
-Although Octave does not automatically report an error if you call a
-function with more arguments than expected, doing so probably indicates
-that something is wrong.  Octave also does not automatically report an
-error if a function is called with too few arguments, but any attempt to
-use a variable that has not been given a value will result in an error.
-To avoid such problems and to provide useful messages, we check for both
-possibilities and issue our own error message.
+Octave automatically reports an error for functions written in .m file code
+if they are called with more arguments than expected.  Octave does not
+automatically report an error if a function is called with too few arguments,
+since functions in general may have default arguments, but any attempt to use
+a variable that has not been given a value will result in an error.
+Functions can check the arguments they are called with to avoid such problems
+and to provide more context-specific error messages.
 
 @c nargin libinterp/octave-value/ov-usr-fcn.cc
 @anchor{XREFnargin}
-@deftypefn  {} {} nargin ()
-@deftypefnx {} {} nargin (@var{fcn})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{n} =} nargin ()
+@deftypefnx {} {@var{n} =} nargin (@var{fcn})
 Report the number of input arguments to a function.
 
 Called from within a function, return the number of arguments passed to the
@@ -309,8 +314,13 @@ Programming Note: @code{nargin} does not work on compiled functions
 
 @c inputname scripts/miscellaneous/inputname.m
 @anchor{XREFinputname}
-@deftypefn  {} {} inputname (@var{n})
-@deftypefnx {} {} inputname (@var{n}, @var{ids_only})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{namestr} =} inputname (@var{n})
+@deftypefnx {} {@var{namestr} =} inputname (@var{n}, @var{ids_only})
 Return the name of the @var{n}-th argument to the calling function.
 
 If the argument is not a simple variable name, return an empty string.
@@ -332,9 +342,14 @@ was invoked even when the inputs are complex expressions.
 
 @c silent_functions libinterp/parse-tree/pt-eval.cc
 @anchor{XREFsilent_functions}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} silent_functions ()
 @deftypefnx {} {@var{old_val} =} silent_functions (@var{new_val})
-@deftypefnx {} {} silent_functions (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} silent_functions (@var{new_val}, "local")
 Query or set the internal variable that controls whether internal
 output from a function is suppressed.
 
@@ -449,20 +464,25 @@ of the return values or several at once in a cell array.
 
 @c nthargout scripts/miscellaneous/nthargout.m
 @anchor{XREFnthargout}
-@deftypefn  {} {} nthargout (@var{n}, @var{func}, @dots{})
-@deftypefnx {} {} nthargout (@var{n}, @var{ntot}, @var{func}, @dots{})
-Return the @var{n}th output argument of the function specified by the
-function handle or string @var{func}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-Any additional arguments are passed directly to @var{func}.  The total
-number of arguments to call @var{func} with can be passed in @var{ntot}; by
+
+@deftypefn  {} {@var{arg} =} nthargout (@var{n}, @var{fcn}, @dots{})
+@deftypefnx {} {@var{arg} =} nthargout (@var{n}, @var{ntot}, @var{fcn}, @dots{})
+Return the @var{n}th output argument of the function specified by the
+function handle or string @var{fcn}.
+
+Any additional arguments are passed directly to @var{fcn}.  The total
+number of arguments to call @var{fcn} with can be passed in @var{ntot}; by
 default @var{ntot} is @var{n}.  The input @var{n} can also be a vector of
 indices of the output, in which case the output will be a cell array of the
 requested output arguments.
 
-The intended use @code{nthargout} is to avoid intermediate variables.  For
-example, when finding the indices of the maximum entry of a matrix, the
-following two compositions of nthargout
+The intended use of @code{nthargout} is to avoid intermediate variables.
+For example, when finding the indices of the maximum entry of a matrix, the
+following two compositions of @code{nthargout}
 
 @example
 @group
@@ -486,8 +506,8 @@ are completely equivalent to the following lines:
 @end group
 @end example
 
-It can also be helpful to have all output arguments in a single cell in the
-following manner:
+It can also be helpful to have all output arguments collected in a single
+cell array as the following code demonstrates:
 
 @example
 @var{USV} = nthargout ([1:3], @@svd, hilb (5));
@@ -505,9 +525,11 @@ the user of the function has requested.  The implicit assignment to the
 built-in variable @code{ans} does not figure in the count of output
 arguments, so the value of @code{nargout} may be zero.
 
-The @code{svd} and @code{lu} functions are examples of built-in
+The @code{svd} and @code{hist} functions are examples of built-in
 functions that behave differently depending on the value of
-@code{nargout}.
+@code{nargout}.  For example, @code{hist} will draw a histogram when called
+with no output variables, but if called with outputs it will return the
+frequency counts and/or bin centers without creating a plot.
 
 It is possible to write functions that only set some return values.  For
 example, calling the function
@@ -546,8 +568,13 @@ along with a warning.
 
 @c nargout libinterp/octave-value/ov-usr-fcn.cc
 @anchor{XREFnargout}
-@deftypefn  {} {} nargout ()
-@deftypefnx {} {} nargout (@var{fcn})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{n} =} nargout ()
+@deftypefnx {} {@var{n} =} nargout (@var{fcn})
 Report the number of output arguments from a function.
 
 Called from within a function, return the number of values the caller
@@ -604,7 +631,6 @@ returns -1 for all anonymous functions.
 @section Variable-length Return Lists
 @cindex variable-length return lists
 @cindex @code{varargout}
-
 @anchor{XREFvarargout}
 
 It is possible to return a variable number of output arguments from a
@@ -645,6 +671,11 @@ and is handled the same as any other parameter name.
 
 @c deal scripts/general/deal.m
 @anchor{XREFdeal}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{r1}, @var{r2}, @dots{}, @var{rn}] =} deal (@var{a})
 @deftypefnx {} {[@var{r1}, @var{r2}, @dots{}, @var{rn}] =} deal (@var{a1}, @var{a2}, @dots{}, @var{an})
 
@@ -684,7 +715,7 @@ is equivalent to
 a = b = c = x;
 @end example
 
-Programming Note: @code{deal} is often used with comma separated lists
+Programming Note: @code{deal} is often used with comma-separated lists
 derived from cell arrays or structures.  This is unnecessary as the
 interpreter can perform the same action without the overhead of a function
 call.  For example:
@@ -710,7 +741,6 @@ c = @{[1 2], "Three", 4@};
 @section Variable-length Argument Lists
 @cindex variable-length argument lists
 @cindex @code{varargin}
-
 @anchor{XREFvarargin}
 
 Sometimes the number of input arguments is not known when the function
@@ -802,6 +832,11 @@ print_arguments (1, "two", 3);
 
 @c parseparams scripts/miscellaneous/parseparams.m
 @anchor{XREFparseparams}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{reg}, @var{prop}] =} parseparams (@var{params})
 @deftypefnx {} {[@var{reg}, @var{var1}, @dots{}] =} parseparams (@var{params}, @var{name1}, @var{default1}, @dots{})
 Return in @var{reg} the cell elements of @var{param} up to the first
@@ -921,7 +956,12 @@ endfunction
 
 @c isargout libinterp/octave-value/ov-usr-fcn.cc
 @anchor{XREFisargout}
-@deftypefn {} {} isargout (@var{k})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isargout (@var{k})
 Within a function, return a logical value indicating whether the argument
 @var{k} will be assigned to a variable on output.
 
@@ -1042,6 +1082,11 @@ Similar error checking is provided by @code{narginchk} and
 
 @c narginchk scripts/miscellaneous/narginchk.m
 @anchor{XREFnarginchk}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} narginchk (@var{minargs}, @var{maxargs})
 Check for correct number of input arguments.
 
@@ -1061,6 +1106,11 @@ Note that this function evaluates @code{nargin} on the caller.
 
 @c nargoutchk scripts/miscellaneous/nargoutchk.m
 @anchor{XREFnargoutchk}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} nargoutchk (@var{minargs}, @var{maxargs})
 @deftypefnx {} {@var{msgstr} =} nargoutchk (@var{minargs}, @var{maxargs}, @var{nargs})
 @deftypefnx {} {@var{msgstr} =} nargoutchk (@var{minargs}, @var{maxargs}, @var{nargs}, "string")
@@ -1094,6 +1144,11 @@ properties.  @code{validatestring} is used for string arguments and
 
 @c validatestring scripts/strings/validatestring.m
 @anchor{XREFvalidatestring}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{validstr} =} validatestring (@var{str}, @var{strarray})
 @deftypefnx {} {@var{validstr} =} validatestring (@var{str}, @var{strarray}, @var{funcname})
 @deftypefnx {} {@var{validstr} =} validatestring (@var{str}, @var{strarray}, @var{funcname}, @var{varname})
@@ -1136,6 +1191,11 @@ validatestring ("b", @{"red", "green", "blue", "black"@})
 
 @c validateattributes scripts/miscellaneous/validateattributes.m
 @anchor{XREFvalidateattributes}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} validateattributes (@var{A}, @var{classes}, @var{attributes})
 @deftypefnx {} {} validateattributes (@var{A}, @var{classes}, @var{attributes}, @var{arg_idx})
 @deftypefnx {} {} validateattributes (@var{A}, @var{classes}, @var{attributes}, @var{func_name})
@@ -1293,6 +1353,11 @@ convenience functions to check for individual properties.
 
 @c mustBeFinite scripts/miscellaneous/mustBeFinite.m
 @anchor{XREFmustBeFinite}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeFinite (@var{x})
 
 Require that input @var{x} is finite.
@@ -1306,6 +1371,11 @@ determined by @code{isfinite (x)}.
 
 @c mustBeGreaterThan scripts/miscellaneous/mustBeGreaterThan.m
 @anchor{XREFmustBeGreaterThan}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeGreaterThan (@var{x}, @var{c})
 
 Require that input @var{x} is greater than @var{c}.
@@ -1319,6 +1389,11 @@ Raise an error if any element of the input @var{x} is not greater than
 
 @c mustBeGreaterThanOrEqual scripts/miscellaneous/mustBeGreaterThanOrEqual.m
 @anchor{XREFmustBeGreaterThanOrEqual}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeGreaterThanOrEqual (@var{x}, @var{c})
 
 Require that input @var{x} is greater than or equal to @var{c}.
@@ -1332,6 +1407,11 @@ or equal to @var{c}, as determined by @code{@var{x} >= @var{c}}.
 
 @c mustBeInteger scripts/miscellaneous/mustBeInteger.m
 @anchor{XREFmustBeInteger}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeInteger (@var{x})
 
 Require that input @var{x} is integer-valued (but not necessarily
@@ -1346,6 +1426,11 @@ real, integer-valued numeric value, as determined by various checks.
 
 @c mustBeLessThan scripts/miscellaneous/mustBeLessThan.m
 @anchor{XREFmustBeLessThan}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeLessThan (@var{x}, @var{c})
 
 Require that input @var{x} is less than @var{c}.
@@ -1359,6 +1444,11 @@ Raise an error if any element of the input @var{x} is not less than
 
 @c mustBeLessThanOrEqual scripts/miscellaneous/mustBeLessThanOrEqual.m
 @anchor{XREFmustBeLessThanOrEqual}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeLessThanOrEqual (@var{x}, @var{c})
 
 Require that input is less than or equal to a given value.
@@ -1372,6 +1462,11 @@ or equal to @var{c}, as determined by @code{@var{x} <= @var{c}}.
 
 @c mustBeMember scripts/miscellaneous/mustBeMember.m
 @anchor{XREFmustBeMember}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeMember (@var{x}, @var{valid})
 
 Require that input @var{x} is a member of a set of given valid values.
@@ -1391,6 +1486,11 @@ To guarantee operation, convert all char arrays to cellstrings with
 
 @c mustBeNegative scripts/miscellaneous/mustBeNegative.m
 @anchor{XREFmustBeNegative}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeNegative (@var{x})
 
 Require that input @var{x} is negative.
@@ -1404,6 +1504,11 @@ determined by @code{@var{x} < 0}.
 
 @c mustBeNonempty scripts/miscellaneous/mustBeNonempty.m
 @anchor{XREFmustBeNonempty}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeNonempty (@var{x})
 
 Require that input @var{x} is nonempty.
@@ -1417,6 +1522,11 @@ Raise an error if the input @var{x} is empty, as determined by
 
 @c mustBeNonNan scripts/miscellaneous/mustBeNonNan.m
 @anchor{XREFmustBeNonNan}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeNonNan (@var{x})
 
 Require that input @var{x} is non-@code{NaN}.
@@ -1430,6 +1540,11 @@ determined by @code{isnan (@var{x})}.
 
 @c mustBeNonnegative scripts/miscellaneous/mustBeNonnegative.m
 @anchor{XREFmustBeNonnegative}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeNonnegative (@var{x})
 
 Require that input @var{x} is not negative.
@@ -1443,6 +1558,11 @@ determined by @code{@var{x} >= 0}.
 
 @c mustBeNonpositive scripts/miscellaneous/mustBeNonpositive.m
 @anchor{XREFmustBeNonpositive}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeNonpositive (@var{x})
 
 Require that input @var{x} is not positive.
@@ -1456,6 +1576,11 @@ determined by @code{@var{x} <= 0}.
 
 @c mustBeNonsparse scripts/miscellaneous/mustBeNonsparse.m
 @anchor{XREFmustBeNonsparse}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeNonsparse (@var{x})
 
 Require that input @var{x} is not sparse.
@@ -1469,6 +1594,11 @@ Raise an error if the input @var{x} is sparse, as determined by
 
 @c mustBeNonzero scripts/miscellaneous/mustBeNonzero.m
 @anchor{XREFmustBeNonzero}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeNonzero (@var{x})
 
 Require that input @var{x} is not zero.
@@ -1482,6 +1612,11 @@ by @code{@var{x} == 0}.
 
 @c mustBeNumeric scripts/miscellaneous/mustBeNumeric.m
 @anchor{XREFmustBeNumeric}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeNumeric (@var{x})
 
 Require that input @var{x} is numeric.
@@ -1495,6 +1630,11 @@ Raise an error if the input @var{x} is not numeric, as determined by
 
 @c mustBeNumericOrLogical scripts/miscellaneous/mustBeNumericOrLogical.m
 @anchor{XREFmustBeNumericOrLogical}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeNumericOrLogical (@var{x})
 
 Require that input @var{x} is numeric or logical.
@@ -1508,6 +1648,11 @@ determined by @code{isnumeric (@var{x}) || islogical (@var{x})}.
 
 @c mustBePositive scripts/miscellaneous/mustBePositive.m
 @anchor{XREFmustBePositive}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBePositive (@var{x})
 
 Require that input @var{x} is positive.
@@ -1521,6 +1666,11 @@ determined by @code{@var{x} > 0}.
 
 @c mustBeReal scripts/miscellaneous/mustBeReal.m
 @anchor{XREFmustBeReal}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mustBeReal (@var{x})
 
 Require that input @var{x} is real.
@@ -1541,6 +1691,11 @@ checking for functions.
 
 @c inputParser scripts/miscellaneous/inputParser.m
 @anchor{XREFinputParser}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{p} =} inputParser ()
 Create object @var{p} of the inputParser class.
 
@@ -1558,51 +1713,60 @@ class supports four types of arguments:
 @end enumerate
 
 After defining the function API with these methods, the supplied arguments
-can be parsed with the @code{parse} method and the parsing results
-accessed with the @code{Results} accessor.
+can be parsed with the @code{parse} method and the results accessed with
+the @code{Results} accessor.
 @end deftypefn
 
 @deftypefn {} {} inputParser.Parameters
-Return list of parameter names already defined.
+Return the list of parameter names already defined.  (read-only)
 @end deftypefn
 
 @deftypefn {} {} inputParser.Results
-Return structure with argument names as fieldnames and corresponding
-values.
+Return a structure with argument names as fieldnames and corresponding
+values.  (read-only)
 @end deftypefn
 
 @deftypefn {} {} inputParser.Unmatched
-Return structure similar to @code{Results}, but for unmatched parameters.
+Return a structure similar to @code{Results}, but for unmatched
+parameters.  (read-only)
 See the @code{KeepUnmatched} property.
 @end deftypefn
 
 @deftypefn {} {} inputParser.UsingDefaults
 Return cell array with the names of arguments that are using default
-values.
-@end deftypefn
-
-@deftypefn {} {} inputParser.CaseSensitive = @var{boolean}
-Set whether matching of argument names should be case sensitive.  Defaults
-to false.
+values.  (read-only)
 @end deftypefn
 
 @deftypefn {} {} inputParser.FunctionName = @var{name}
 Set function name to be used in error messages; Defaults to empty string.
 @end deftypefn
 
+@deftypefn {} {} inputParser.CaseSensitive = @var{boolean}
+Set whether matching of argument names should be case sensitive; Defaults
+to false.
+@end deftypefn
+
 @deftypefn {} {} inputParser.KeepUnmatched = @var{boolean}
-Set whether an error should be given for non-defined arguments.  Defaults
-to false.  If set to true, the extra arguments can be accessed through
-@code{Unmatched} after the @code{parse} method.  Note that since
-@code{Switch} and @code{Parameter} arguments can be mixed, it is
-not possible to know the unmatched type.  If argument is found unmatched
-it is assumed to be of the @code{Parameter} type and it is expected to
-be followed by a value.
+Set whether string arguments which do not match any Parameter are parsed
+and stored in the @code{Unmatched} property; Defaults to false.  If false,
+an error will be emitted at the first unrecognized argument and parsing
+will stop.  Note that since @code{Switch} and @code{Parameter} arguments
+can be mixed, it is not possible to know the type of the unmatched
+argument.  Octave assumes that all unmatched arguments are of the
+@code{Parameter} type and therefore must be followed by a value.
+@end deftypefn
+
+@deftypefn {} {} inputParser.PartialMatching = @var{boolean}
+Set whether argument names for @code{Parameter} and @code{Switch} options
+may be given in shortened form as long as the name uniquely identifies
+an option; Defaults to true.  For example, the argument @qcode{'opt'} will
+match a parameter @qcode{'opt_color'}, but will fail if there is also a
+parameter @qcode{'opt_case'}.
 @end deftypefn
 
 @deftypefn {} {} inputParser.StructExpand = @var{boolean}
-Set whether a structure can be passed to the function instead of
-parameter/value pairs.  Defaults to true.
+Set whether a structure passed to the function is expanded into
+parameter/value pairs (parameter = fieldname); Defaults to true.
 
 The following example shows how to use this class:
 
@@ -1614,23 +1778,23 @@ function check (varargin)
   p.addRequired ("pack", @@ischar);         # mandatory argument
   p.addOptional ("path", pwd(), @@ischar);  # optional argument
 
-  ## create a function handle to anonymous functions for validators
-  val_mat = @@(x) isvector (x) && all (x <= 1) && all (x >= 0);
-  p.addOptional ("mat", [0 0], val_mat);
+  ## Create anonymous function handle for validators
+  valid_vec = @@(x) isvector (x) && all (x >= 0) && all (x <= 1);
+  p.addOptional ("vec", [0 0], valid_vec);
 
-  ## create two arguments of type "Parameter"
-  val_type = @@(x) any (strcmp (x, @{"linear", "quadratic"@}));
-  p.addParameter ("type", "linear", val_type);
-  val_verb = @@(x) any (strcmp (x, @{"low", "medium", "high"@}));
-  p.addParameter ("tolerance", "low", val_verb);
+  ## Create two arguments of type "Parameter"
+  vld_type = @@(x) any (strcmp (x, @{"linear", "quadratic"@}));
+  p.addParameter ("type", "linear", vld_type);
+  vld_tol = @@(x) any (strcmp (x, @{"low", "medium", "high"@}));
+  p.addParameter ("tolerance", "low", vld_tol);
 
-  ## create a switch type of argument
+  ## Create a switch type of argument
   p.addSwitch ("verbose");
 
   p.parse (varargin@{:@});  # Run created parser on inputs
 
-  ## the rest of the function can access inputs by using p.Results.
-  ## for example, get the tolerance input with p.Results.tolerance
+  ## The rest of the function can access inputs by using p.Results.
+  ## For example, get the tolerance input with p.Results.tolerance
 endfunction
 @end example
 
@@ -1644,13 +1808,13 @@ check ("mech", "~/dev");  # valid, use defaults for other arguments
 check ("mech", "~/dev", [0 1 0 0], "type", "linear");  # valid
 
 ## following is also valid.  Note how the Switch argument type can
-## be mixed into or before the Parameter argument type (but it
-## must still appear after any Optional argument).
+## be mixed in with or before the Parameter argument type (but it
+## must still appear after any Optional arguments).
 check ("mech", "~/dev", [0 1 0 0], "verbose", "tolerance", "high");
 
-## following returns an error since not all optional arguments,
-## 'path' and 'mat', were given before the named argument 'type'.
-check ("mech", "~/dev", "type", "linear");
+## following returns an error since an Optional argument, 'path',
+## was given after the Parameter argument 'type'.
+check ("mech", "type", "linear", "~/dev");
 @end group
 @end example
 
@@ -1658,7 +1822,7 @@ check ("mech", "~/dev", "type", "linear");
 they must appear in a specific order.  @code{Required} arguments must be
 first and can be followed by any @code{Optional} arguments.  Only
 the @code{Parameter} and @code{Switch} arguments may be mixed
-together and they must appear at the end.
+together and they must appear following the first two types.
 
 @emph{Note 2}: If both @code{Optional} and @code{Parameter} arguments
 are mixed in a function API then once a string Optional argument fails to
@@ -1725,6 +1889,11 @@ ignore the time stamps for all function files.  Passing
 
 @c edit scripts/miscellaneous/edit.m
 @anchor{XREFedit}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} edit @var{name}
 @deftypefnx {} {} edit @var{field} @var{value}
 @deftypefnx {} {@var{value} =} edit ("get", @var{field})
@@ -1833,6 +2002,11 @@ means it is not used.  The default in previous versions of Octave was
 
 @c mfilename libinterp/parse-tree/oct-parse.yy
 @anchor{XREFmfilename}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} mfilename ()
 @deftypefnx {} {} mfilename ("fullpath")
 @deftypefnx {} {} mfilename ("fullpathext")
@@ -1853,6 +2027,11 @@ the filename and the extension.
 
 @c ignore_function_time_stamp libinterp/corefcn/fcn-info.cc
 @anchor{XREFignore_function_time_stamp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} ignore_function_time_stamp ()
 @deftypefnx {} {@var{old_val} =} ignore_function_time_stamp (@var{new_val})
 Query or set the internal variable that controls whether Octave checks
@@ -1907,8 +2086,14 @@ After this the directory @samp{~/Octave} will be searched for functions.
 
 @c addpath libinterp/corefcn/load-path.cc
 @anchor{XREFaddpath}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} addpath (@var{dir1}, @dots{})
 @deftypefnx {} {} addpath (@var{dir1}, @dots{}, @var{option})
+@deftypefnx {} {@var{oldpath} =} addpath (@dots{})
 Add named directories to the function search path.
 
 If @var{option} is @qcode{"-begin"} or 0 (the default), prepend the directory
@@ -1939,8 +2124,13 @@ For each directory that is added, and that was not already in the path,
 
 @c genpath libinterp/corefcn/load-path.cc
 @anchor{XREFgenpath}
-@deftypefn  {} {} genpath (@var{dir})
-@deftypefnx {} {} genpath (@var{dir}, @var{skip}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{pathstr} =} genpath (@var{dir})
+@deftypefnx {} {@var{pathstr} =} genpath (@var{dir}, @var{skipdir1}, @dots{})
 Return a path constructed from @var{dir} and all its subdirectories.
 
 The path does not include package directories (beginning with @samp{+}),
@@ -1955,7 +2145,13 @@ directories with those names.
 
 @c rmpath libinterp/corefcn/load-path.cc
 @anchor{XREFrmpath}
-@deftypefn {} {} rmpath (@var{dir1}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {} rmpath (@var{dir1}, @dots{})
+@deftypefnx {} {@var{oldpath} =} rmpath (@var{dir1}, @dots{})
 Remove @var{dir1}, @dots{} from the current function search path.
 
 In addition to accepting individual directory arguments, lists of
@@ -1975,11 +2171,20 @@ and runs it if it exists.
 
 @c savepath scripts/path/savepath.m
 @anchor{XREFsavepath}
-@deftypefn  {} {} savepath ()
-@deftypefnx {} {} savepath (@var{file})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {} savepath
+@deftypefnx {} {} savepath @var{file}
 @deftypefnx {} {@var{status} =} savepath (@dots{})
-Save the unique portion of the current function search path that is
-not set during Octave's initialization process to @var{file}.
+Save the unique portion of the current function search path to @var{file}.
+
+The list of folders that are saved in @var{file} does @emph{not} include
+the folders that are added for Octave's own functions, those that belong to
+Octave packages (see @ref{XREFpkg,,pkg load}), and those added via command
+line switches.
 
 If @var{file} is omitted, Octave looks in the current directory for a
 project-specific @file{.octaverc} file in which to save the path
@@ -2000,6 +2205,11 @@ then the paths may be restored manually by calling @code{source @var{file}}.
 
 @c path libinterp/corefcn/load-path.cc
 @anchor{XREFpath}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} path ()
 @deftypefnx {} {@var{str} =} path ()
 @deftypefnx {} {@var{str} =} path (@var{path1}, @dots{})
@@ -2022,6 +2232,11 @@ No checks are made for duplicate elements.
 
 @c pathdef scripts/path/pathdef.m
 @anchor{XREFpathdef}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{val} =} pathdef ()
 Return the default path for Octave.
 
@@ -2043,6 +2258,11 @@ The possible sources, in order of preference, are:
 
 @c pathsep libinterp/corefcn/dirfns.cc
 @anchor{XREFpathsep}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{val} =} pathsep ()
 Query the character used to separate directories in a path.
 @xseealso{@ref{XREFfilesep,,filesep}}
@@ -2051,6 +2271,11 @@ Query the character used to separate directories in a path.
 
 @c rehash libinterp/corefcn/load-path.cc
 @anchor{XREFrehash}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} rehash ()
 Reinitialize Octave's load path directory cache.
 @end deftypefn
@@ -2058,6 +2283,11 @@ Reinitialize Octave's load path directory cache.
 
 @c file_in_loadpath libinterp/corefcn/utils.cc
 @anchor{XREFfile_in_loadpath}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{fname} =} file_in_loadpath (@var{file})
 @deftypefnx {} {@var{fname} =} file_in_loadpath (@var{file}, "all")
 Return the absolute name of @var{file} if it can be found in the list of
@@ -2082,17 +2312,29 @@ If no files are found, return an empty cell array.
 
 @c restoredefaultpath libinterp/corefcn/load-path.cc
 @anchor{XREFrestoredefaultpath}
-@deftypefn {} {} restoredefaultpath ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{pathstr} =} restoredefaultpath ()
 Restore Octave's path to its initial state at startup.
 
+The re-initialized path is returned as an output.
 @xseealso{@ref{XREFpath,,path}, @ref{XREFaddpath,,addpath}, @ref{XREFrmpath,,rmpath}, @ref{XREFgenpath,,genpath}, @ref{XREFpathdef,,pathdef}, @ref{XREFsavepath,,savepath}, @ref{XREFpathsep,,pathsep}}
 @end deftypefn
 
 
 @c command_line_path libinterp/corefcn/load-path.cc
 @anchor{XREFcommand_line_path}
-@deftypefn {} {} command_line_path ()
-Return the command line path variable.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{pathstr} =} command_line_path ()
+Return the path argument given to Octave at the command line when the
+interpreter was started (@w{@env{--path @var{arg}}}).
 
 @xseealso{@ref{XREFpath,,path}, @ref{XREFaddpath,,addpath}, @ref{XREFrmpath,,rmpath}, @ref{XREFgenpath,,genpath}, @ref{XREFpathdef,,pathdef}, @ref{XREFsavepath,,savepath}, @ref{XREFpathsep,,pathsep}}
 @end deftypefn
@@ -2100,6 +2342,11 @@ Return the command line path variable.
 
 @c dir_in_loadpath libinterp/corefcn/utils.cc
 @anchor{XREFdir_in_loadpath}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{dirname} =} dir_in_loadpath (@var{dir})
 @deftypefnx {} {@var{dirname} =} dir_in_loadpath (@var{dir}, "all")
 Return the absolute name of the loadpath element matching @var{dir} if it can
@@ -2122,25 +2369,65 @@ all name matches rather than just the first.
 @end deftypefn
 
 
+@c mfile_encoding libinterp/corefcn/input.cc
+@anchor{XREFmfile_encoding}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{current_encoding} =} mfile_encoding ()
+@deftypefnx {} {} mfile_encoding (@var{new_encoding})
+@deftypefnx {} {@var{old_encoding} =} mfile_encoding (@var{new_encoding})
+Query or set the encoding that is used for reading m-files.
+
+The input and output are strings naming an encoding, e.g.,
+@nospell{@qcode{"utf-8"}}.
+
+This encoding is used by Octave's parser when reading m-files unless a
+different encoding was set for a specific directory containing m-files using
+the function @code{dir_encoding} or in a file @file{.oct-config} in that
+directory.
+
+The special value @qcode{"system"} selects the encoding that matches the system
+locale.
+
+If the m-file encoding is changed after the m-files have already been parsed,
+the files have to be parsed again for that change to take effect.  That can be
+triggered with the command @code{clear all}.
+
+Additionally, this encoding is used to load and save files with the built-in
+editor in Octave's GUI.
+
+@xseealso{@ref{XREFdir_encoding,,dir_encoding}}
+@end deftypefn
+
+
 @c dir_encoding libinterp/corefcn/input.cc
 @anchor{XREFdir_encoding}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{current_encoding} =} dir_encoding (@var{dir})
-@deftypefnx {} {@var{prev_encoding} =} dir_encoding (@var{dir}, @var{encoding})
-@deftypefnx {} {} dir_encoding (@dots{})
-Set and query the @var{encoding} that is used for reading m-files in @var{dir}.
+@deftypefnx {} {} dir_encoding (@var{dir}, @var{new_encoding})
+@deftypefnx {} {} dir_encoding (@var{dir}, "delete")
+@deftypefnx {} {@var{old_encoding} =} dir_encoding (@var{dir}, @var{new_encoding})
+Query or set the @var{encoding} that is used for reading m-files in @var{dir}.
 
-That encoding overrides the (globally set) m-file encoding.
+The per-directory encoding overrides the (globally set) m-file encoding,
+@pxref{XREFmfile_encoding,,@code{mfile_encoding}}.
 
-The string @var{DIR} must match the form how the directory would appear in the
-load path.
+The string @var{DIR} must match how the directory would appear in the load
+path.
 
-The @var{encoding} must be a valid encoding identifier or @qcode{"delete"}.  In
-the latter case, the (globally set) m-file encoding will be used for the given
-@var{dir}.
+The @var{new_encoding} input must be a valid encoding identifier or
+@qcode{"delete"}.  In the latter case, any per-directory encoding is removed
+and the (globally set) m-file encoding will be used for the given @var{dir}.
 
-The currently or previously used encoding is returned in @var{current_encoding}
-or @var{prev_encoding}, respectively.  The output argument must be explicitly
-requested.
+The currently or previously used encoding is returned only if an output
+argument is requested.
 
 The directory encoding is automatically read from the file @file{.oct-config}
 when a new path is added to the load path (for example with @code{addpath}).
@@ -2159,7 +2446,7 @@ If the file encoding is changed after the files have already been parsed, the
 files have to be parsed again for that change to take effect.  That can be done
 with the command @code{clear all}.
 
-@xseealso{@ref{XREFaddpath,,addpath}, @ref{XREFpath,,path}}
+@xseealso{@ref{XREFaddpath,,addpath}, @ref{XREFpath,,path}, @ref{XREFmfile_encoding,,mfile_encoding}}
 @end deftypefn
 
 
@@ -2195,7 +2482,12 @@ the file @file{f.m}.
 
 @c localfunctions libinterp/corefcn/help.cc
 @anchor{XREFlocalfunctions}
-@deftypefn {} {} localfunctions ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{subfcn_list} =} localfunctions ()
 Return a list of all local functions, i.e., subfunctions, within the current
 file.
 
@@ -2402,6 +2694,11 @@ type.  The @code{builtin} function exists for this purpose.
 
 @c builtin libinterp/parse-tree/oct-parse.yy
 @anchor{XREFbuiltin}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@dots{}] =} builtin (@var{f}, @dots{})
 Call the base function @var{f} even if @var{f} is overloaded to another
 function for the given type signature.
@@ -2443,6 +2740,11 @@ file a certain function will be found.
 
 @c autoload libinterp/parse-tree/oct-parse.yy
 @anchor{XREFautoload}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{autoload_map} =} autoload ()
 @deftypefnx {} {} autoload (@var{function}, @var{file})
 @deftypefnx {} {} autoload (@dots{}, "remove")
@@ -2544,6 +2846,11 @@ similar effect can be had with the @code{ignore_function_time_stamp} function.
 
 @c mlock libinterp/corefcn/variables.cc
 @anchor{XREFmlock}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} mlock ()
 Lock the current function into memory so that it can't be removed with
 @code{clear}.
@@ -2553,6 +2860,11 @@ Lock the current function into memory so that it can't be removed with
 
 @c munlock libinterp/corefcn/variables.cc
 @anchor{XREFmunlock}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} munlock ()
 @deftypefnx {} {} munlock (@var{fcn})
 Unlock the named function @var{fcn} so that it may be removed from memory with
@@ -2565,8 +2877,13 @@ If no function is named then unlock the current function.
 
 @c mislocked libinterp/corefcn/variables.cc
 @anchor{XREFmislocked}
-@deftypefn  {} {} mislocked ()
-@deftypefnx {} {} mislocked (@var{fcn})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{tf} =} mislocked ()
+@deftypefnx {} {@var{tf} =} mislocked (@var{fcn})
 Return true if the named function @var{fcn} is locked in memory.
 
 If no function is named then return true if the current function is locked.
@@ -2718,6 +3035,11 @@ execute commands from any file.
 
 @c source libinterp/parse-tree/oct-parse.yy
 @anchor{XREFsource}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} source (@var{file})
 @deftypefnx {} {} source (@var{file}, @var{context})
 Parse and execute the contents of @var{file}.
@@ -2751,6 +3073,11 @@ customize the output.
 
 @c publish scripts/miscellaneous/publish.m
 @anchor{XREFpublish}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} publish (@var{file})
 @deftypefnx {} {} publish (@var{file}, @var{output_format})
 @deftypefnx {} {} publish (@var{file}, @var{option1}, @var{value1}, @dots{})
@@ -2929,8 +3256,13 @@ The counterpart to @code{publish} is @code{grabcode}:
 
 @c grabcode scripts/miscellaneous/grabcode.m
 @anchor{XREFgrabcode}
-@deftypefn  {} {} grabcode (@var{url})
-@deftypefnx {} {} grabcode (@var{filename})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {} grabcode @var{filename}
+@deftypefnx {} {} grabcode @var{url}
 @deftypefnx {} {@var{code_str} =} grabcode (@dots{})
 
 Grab the code from a report created by the @code{publish} function.
@@ -2940,8 +3272,8 @@ strings @samp{##### SOURCE BEGIN #####} and @samp{##### SOURCE END #####}.
 The @code{publish} function creates this format automatically.
 
 If no return value is requested the code is saved to a temporary file and
-opened in the default editor.  NOTE: The temporary file must be saved under
-a new or the code will be lost.
+opened in the default editor.  NOTE: The temporary file must be saved to a
+new filename or the code will be lost.
 
 If an output is requested the grabbed code will be returned as string
 @var{code_str}.
@@ -3311,6 +3643,11 @@ results to a Jupyter notebook with the function @code{jupyter_notebook}.
 
 @c jupyter_notebook scripts/miscellaneous/jupyter_notebook.m
 @anchor{XREFjupyter_notebook}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{notebook} =} jupyter_notebook (@var{notebook_filename})
 @deftypefnx {} {@var{notebook} =} jupyter_notebook (@var{notebook_filename}, @var{options})
 
@@ -3337,8 +3674,8 @@ The optional second argument @var{options} is a struct with fields:
 
 @itemize @bullet
 @item
-"%plot -f <format>" or "%plot --format <format>": specifies the
-image storage format.  Supported formats are:
+"@code{%plot -f <format>}" or "@code{%plot --format <format>}": specifies
+the image storage format.  Supported formats are:
 
 @itemize @minus
 @item
@@ -3354,16 +3691,16 @@ JPG
 @end itemize
 
 @item
-"%plot -r <number>" or "%plot --resolution <number>": specifies the
-image resolution.
+"@code{%plot -r <number>}" or "@code{%plot --resolution <number>}":
+specifies the image resolution.
 
 @item
-"%plot -w <number>" or "%plot --width <number>": specifies the
-image width.
+"@code{%plot -w <number>}" or "@code{%plot --width <number>}": specifies
+the image width.
 
 @item
-"%plot -h <number>" or "%plot --height <number>": specifies the
-image height.
+"@code{%plot -h <number>}" or "@code{%plot --height <number>}": specifies
+the image height.
 @end itemize
 
 Examples:
@@ -3470,7 +3807,12 @@ f (pi/4)
 
 @c is_function_handle libinterp/octave-value/ov-fcn-handle.cc
 @anchor{XREFis_function_handle}
-@deftypefn {} {} is_function_handle (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} is_function_handle (@var{x})
 Return true if @var{x} is a function handle.
 @xseealso{@ref{XREFisa,,isa}, @ref{XREFtypeinfo,,typeinfo}, @ref{XREFclass,,class}, @ref{XREFfunctions,,functions}}
 @end deftypefn
@@ -3478,6 +3820,11 @@ Return true if @var{x} is a function handle.
 
 @c functions libinterp/octave-value/ov-fcn-handle.cc
 @anchor{XREFfunctions}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{s} =} functions (@var{fcn_handle})
 Return a structure containing information about the function handle
 @var{fcn_handle}.
@@ -3530,27 +3877,53 @@ particular output format.
 
 @c func2str libinterp/octave-value/ov-fcn-handle.cc
 @anchor{XREFfunc2str}
-@deftypefn {} {} func2str (@var{fcn_handle})
-Return a string containing the name of the function referenced by the
-function handle @var{fcn_handle}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{str} =} func2str (@var{fcn_handle})
+Return a string containing the name of the function referenced by the function
+handle @var{fcn_handle}.
 @xseealso{@ref{XREFstr2func,,str2func}, @ref{XREFfunctions,,functions}}
 @end deftypefn
 
 
 @c str2func libinterp/octave-value/ov-fcn-handle.cc
 @anchor{XREFstr2func}
-@deftypefn {} {} str2func (@var{fcn_name})
-Return a function handle constructed from the string @var{fcn_name}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-Previous versions of Octave accepted an optional second argument,
-@qcode{"global"}, that caused str2func to ignore locally visible
-functions.  This option is no longer supported.
+
+@deftypefn {} {@var{hfcn} =} str2func (@var{str})
+Return a function handle constructed from the string @var{str}.
+
+The input may be the name of a function such as @qcode{"sin"} or a string
+defining a function such as @qcode{"@@(x) sin (x + pi)"}.
+
+Programming Note: In most cases it will be better to use anonymous function
+syntax and let the Octave parser create the function handle rather than use
+@code{str2func}.  For example:
+
+@example
+@group
+hfcn = @@sin ;
+hfcn = @@(x) sin (x + pi) ;
+@end group
+@end example
+
 @xseealso{@ref{XREFfunc2str,,func2str}, @ref{XREFfunctions,,functions}}
 @end deftypefn
 
 
 @c symvar scripts/miscellaneous/symvar.m
 @anchor{XREFsymvar}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{vars} =} symvar (@var{str})
 Identify the symbolic variable names in the string @var{str}.
 
@@ -3659,7 +4032,7 @@ functional form.
 @section Command Syntax and Function Syntax
 @cindex commands functions
 
-Additionally to the function syntax described above (i.e., calling a function
+In addition to the function syntax described above (i.e., calling a function
 like @code{fun (arg1, arg2, @dots{})}), a function can be called using command
 syntax (for example, calling a function like @code{fun arg1 arg2 @dots{}}).  In
 that case, all arguments are passed to the function as strings.  For example,
@@ -3708,7 +4081,7 @@ For example:
 
 @example
 @group
-toupper lower_case_arg
+upper lower_case_arg
    @result{} ans = LOWER_CASE_ARG
 @end group
 @end example
@@ -3720,9 +4093,9 @@ case, a command must be called using the function syntax.  For example:
 @example
 @group
 strvar = "hello world";
-toupper strvar
+upper strvar
    @result{} ans = STRVAR
-toupper (strvar)
+upper (strvar)
    @result{} ans = HELLO WORLD
 @end group
 @end example
@@ -3732,6 +4105,87 @@ using the command syntax.  Only the first return argument is assigned to the
 built-in variable @code{ans}.  If the output argument of a command should be
 assigned to a variable, or multiple output arguments of a function should be
 returned, the function syntax must be used.
+
+It should be noted that mixing command syntax and binary operators can
+create apparent ambiguities with mathematical and logical expressions that
+use function syntax.  For example, all three of the statements
+
+@example
+@group
+arg1 - arg2
+arg1 -arg2
+arg1-arg2
+@end group
+@end example
+
+@noindent
+could be intended by a user to be subtraction operations between
+@code{arg1} and @code{arg2}.  The first two, however, could also have been
+meant as a command syntax call to function @code{arg1}, in the first case
+with options @code{-} and @code{arg2}, and in the second case with option
+@option{-arg2}.
+
+Octave uses whitespace to interpret such expressions according to the
+following rules:
+
+@itemize @bullet
+@item
+Statements consisting of plain symbols without any operators that are
+separated only by whitespace are always treated as command syntax:
+
+@example
+arg1 arg2 arg3 ... argn
+@end example
+
+@item
+Statements without any whitespace are always treated as function syntax:
+
+@example
+@group
+arg1+arg2
+arg1&&arg2||arg3
+arg1+=arg2*arg3
+@end group
+@end example
+
+@item
+If the first symbol is a constant (or special-valued named constant pi, i,
+I, j, J, e, NaN, or Inf) followed by a binary operator, the statement is
+treated as function syntax regardless of any whitespace or what follows the
+second symbol:
+
+@example
+@group
+7 -arg2
+pi+ arg2
+j * arg2 -arg3
+@end group
+@end example
+
+@item
+If the first symbol is a function or variable and there is no whitespace
+separating the operator and the second symbol, the statement is treated
+as command syntax:
+
+@example
+@group
+arg1 -arg2
+arg1 &&arg2 ||arg3
+arg1 +=arg2*arg3
+@end group
+@end example
+
+@item
+Any other whitespace combination will result in the statement being treated
+as function syntax.
+@end itemize
+
+Note 1: If a special-valued named constant has been redefined as a
+variable, the interpreter will still process the statement with function
+syntax.
+
+Note 2: Attempting to use a variable as @code{arg1} in a command being
+processed as command syntax will result in an error.
 
 
 @node Organization of Functions

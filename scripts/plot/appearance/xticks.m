@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -53,17 +53,17 @@
 ## @seealso{xticklabels, yticks, zticks, rticks, thetaticks, get, set}
 ## @end deftypefn
 
-function retval = xticks (varargin)
+function tickval = xticks (varargin)
 
   hax = [];
   switch (nargin)
     case 0
-      retval = get (gca, "xtick");  # will error if no xtick exists.
+      tickval = get (gca, "xtick");  # will error if no xtick exists.
       return;
 
     case 1
       if (isaxes (varargin{1}))
-        retval = get (varargin{1}, "xtick");
+        tickval = get (varargin{1}, "xtick");
         return;
       else
         arg = varargin{1};
@@ -94,10 +94,10 @@ function retval = xticks (varargin)
     set (hax, "xtick", arg);
 
   elseif (ischar (arg))
-    arg = tolower (arg);
+    arg = lower (arg);
     switch (arg)
       case "mode"
-        retval = get (hax, "xtickmode");
+        tickval = get (hax, "xtickmode");
 
       case {"auto", "manual"}
         if (nargout > 0)

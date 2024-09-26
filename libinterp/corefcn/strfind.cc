@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -43,11 +43,11 @@
 #include "unwind-prot.h"
 #include "utils.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // This allows safe indexing with char.
 // In C++, char may be (and often is) signed!
-#define ORD(ch) static_cast<unsigned char>(ch)
+#define ORD(ch) static_cast<unsigned char> (ch)
 #define TABSIZE (std::numeric_limits<unsigned char>::max () + 1)
 
 // This is the quick search algorithm, as described at
@@ -299,8 +299,10 @@ strfind ("abababa", "aba", "forcecelloutput", true)
 %!assert (strfind ("abababa", "aba", "forcecelloutput", false), [1, 3, 5])
 %!assert (strfind ("abababa", "aba", "forcecelloutput", true), {[1, 3, 5]})
 %!assert (strfind ({"abababa", "bla", "bla"}, "a"), {[1, 3, 5, 7], 3, 3})
-%!assert (strfind ({"abababa", "bla", "bla"}, "a", "forcecelloutput", false), {[1, 3, 5, 7], 3, 3})
-%!assert (strfind ({"abababa", "bla", "bla"}, "a", "forcecelloutput", true), {[1, 3, 5, 7], 3, 3})
+%!assert (strfind ({"abababa", "bla", "bla"}, "a", "forcecelloutput", false),
+%!        {[1, 3, 5, 7], 3, 3})
+%!assert (strfind ({"abababa", "bla", "bla"}, "a", "forcecelloutput", true),
+%!        {[1, 3, 5, 7], 3, 3})
 %!assert (strfind ("Linux _is_ user-friendly. It just isn't ignorant-friendly or idiot-friendly.", "friendly"), [17, 50, 68])
 %!assert (strfind ("abc", ""), [])
 %!assert (strfind ("abc", {"", "b", ""}), {[], 2, []})
@@ -519,4 +521,4 @@ strrep ("This is a test string", "is", "&%$")
 %!error <PTN and REP arguments must be strings> strrep ("A", "B", 1.0)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

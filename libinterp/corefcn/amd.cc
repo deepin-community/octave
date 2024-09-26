@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -46,7 +46,7 @@
 #include "ovl.h"
 #include "parse.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (amd, args, nargout,
        doc: /* -*- texinfo -*-
@@ -158,7 +158,7 @@ The author of the code itself is Timothy A. Davis
   SUITESPARSE_ASSIGN_FPTR (printf_func, amd_printf, printf);
 
   octave_idx_type result = AMD_NAME (_order) (n_col, cidx, ridx, P, Control,
-                                              Info);
+                           Info);
 
   if (result == AMD_OUT_OF_MEMORY)
     error ("amd: out of memory");
@@ -203,4 +203,4 @@ The author of the code itself is Timothy A. Davis
 %!error amd (A2, 2)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

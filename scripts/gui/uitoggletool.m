@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,9 +24,10 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} uitoggletool (@var{property}, @var{value}, @dots{})
-## @deftypefnx {} {} uitoggletool (@var{parent}, @var{property}, @var{value}, @dots{})
-## @deftypefnx {} {@var{hui} =} uitoggletool (@dots{})
+## @deftypefn  {} {@var{hui} =} uitoggletool ()
+## @deftypefnx {} {@var{hui} =} uitoggletool (@var{property}, @var{value}, @dots{})
+## @deftypefnx {} {@var{hui} =} uitoggletool (@var{parent})
+## @deftypefnx {} {@var{hui} =} uitoggletool (@var{parent}, @var{property}, @var{value}, @dots{})
 ##
 ## Create a uitoggletool object.
 ##

@@ -2,68 +2,23 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
-    <name>QHelpSearchQueryWidget</name>
+    <name>QFileSystemModel</name>
     <message>
-        <location filename="../../../octave-qt/qhelpsearchquerywidget.cpp" line="+124"/>
-        <source>Search for:</source>
-        <translation>搜索：</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Previous search</source>
-        <translation>向前搜索</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Next search</source>
-        <translation>向后搜索</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Search</source>
-        <translation>搜索</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Advanced search</source>
-        <translation>高级搜索</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>words &lt;B&gt;similar&lt;/B&gt; to:</source>
-        <translation>&lt;B&gt;相似的&lt;/B&gt;单词：</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&lt;B&gt;without&lt;/B&gt; the words:</source>
-        <translation>&lt;B&gt;不包含&lt;/B&gt;单词：</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>with &lt;B&gt;exact phrase&lt;/B&gt;:</source>
-        <translation>包含&lt;B&gt;精确&lt;/B&gt;的单词：</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>with &lt;B&gt;all&lt;/B&gt; of the words:</source>
-        <translation>包含&lt;B&gt;所有&lt;/B&gt;单词：</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>with &lt;B&gt;at least one&lt;/B&gt; of the words:</source>
-        <translation>包含&lt;B&gt;至少一个&lt;/B&gt;单词：</translation>
+        <location filename="../src/files-dock-widget.cc" line="+136"/>
+        <source>Invalid filename</source>
+        <translation>无效的文件名</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/settings-dialog.cc" line="+845"/>
+        <location filename="../src/settings-dialog.cc" line="+1016"/>
         <source>Difference to the default size</source>
         <translation>和默认大小的差值</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Background color, pink (255, 0, 255) means default</source>
+        <source>Background color, magenta (255, 0, 255) means default</source>
         <translation>背景颜色，粉红色 (255,0,255) 代表默认值</translation>
     </message>
     <message>
@@ -88,7 +43,7 @@
 <context>
     <name>QTerminal</name>
     <message>
-        <location filename="../qterminal/libqterminal/QTerminal.cc" line="+120"/>
+        <location filename="../qterminal/libqterminal/QTerminal.cc" line="+118"/>
         <source>Edit %1</source>
         <translation>编辑 %1</translation>
     </message>
@@ -103,7 +58,7 @@
         <translation>%1 的文档</translation>
     </message>
     <message>
-        <location line="+159"/>
+        <location line="+165"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
@@ -143,7 +98,7 @@
         <translation>清空窗口</translation>
     </message>
     <message>
-        <location line="-218"/>
+        <location line="-223"/>
         <source>Edit %1 at line %2</source>
         <translation>在 %2 行编辑 %1</translation>
     </message>
@@ -151,7 +106,7 @@
 <context>
     <name>QWinTerminalImpl</name>
     <message>
-        <location filename="../qterminal/libqterminal/win32/QWinTerminalImpl.cpp" line="+1786"/>
+        <location filename="../qterminal/libqterminal/win32/QWinTerminalImpl.cpp" line="+1859"/>
         <source>copied selection to clipboard</source>
         <translation>复制选定区域到剪贴板</translation>
     </message>
@@ -159,7 +114,7 @@
 <context>
     <name>QsciLexerBash</name>
     <message>
-        <location filename="../../../qsci/qscilexerbash.cpp" line="+203"/>
+        <location filename="build_ts/octave-qsci/qscilexerbash.cpp" line="+203"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -232,7 +187,7 @@
 <context>
     <name>QsciLexerBatch</name>
     <message>
-        <location filename="../../../qsci/qscilexerbatch.cpp" line="+174"/>
+        <location filename="build_ts/octave-qsci/qscilexerbatch.cpp" line="+174"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -275,7 +230,7 @@
 <context>
     <name>QsciLexerCPP</name>
     <message>
-        <location filename="../../../qsci/qscilexercpp.cpp" line="+364"/>
+        <location filename="build_ts/octave-qsci/qscilexercpp.cpp" line="+364"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -558,7 +513,7 @@
 <context>
     <name>QsciLexerDiff</name>
     <message>
-        <location filename="../../../qsci/qscilexerdiff.cpp" line="+106"/>
+        <location filename="build_ts/octave-qsci/qscilexerdiff.cpp" line="+106"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -621,7 +576,7 @@
 <context>
     <name>QsciLexerMatlab</name>
     <message>
-        <location filename="../../../qsci/qscilexermatlab.cpp" line="+133"/>
+        <location filename="build_ts/octave-qsci/qscilexermatlab.cpp" line="+133"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -669,7 +624,7 @@
 <context>
     <name>QsciLexerPerl</name>
     <message>
-        <location filename="../../../qsci/qscilexerperl.cpp" line="+328"/>
+        <location filename="build_ts/octave-qsci/qscilexerperl.cpp" line="+328"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -877,7 +832,7 @@
 <context>
     <name>QsciScintilla</name>
     <message>
-        <location filename="../../../qsci/qsciscintilla.cpp" line="+4475"/>
+        <location filename="build_ts/octave-qsci/qsciscintilla.cpp" line="+4478"/>
         <source>&amp;Undo</source>
         <translation>撤销 (&amp;U)</translation>
     </message>
@@ -915,7 +870,7 @@
 <context>
     <name>UrlFilter</name>
     <message>
-        <location filename="../qterminal/libqterminal/unix/Filter.cpp" line="+625"/>
+        <location filename="../qterminal/libqterminal/unix/Filter.cpp" line="+630"/>
         <source>Open Link</source>
         <translation>打开链接</translation>
     </message>
@@ -945,152 +900,183 @@
     <name>annotation_dialog</name>
     <message>
         <location filename="../graphics/annotation-dialog.ui" line="+17"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+472"/>
         <source>Annotation</source>
         <translation>注释</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Text</source>
         <translation>文本</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>String</source>
         <translation>字符串</translation>
     </message>
     <message>
         <location line="+13"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Font</source>
         <translation>字体</translation>
     </message>
     <message>
         <location line="+42"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>bold</source>
         <translation>粗体</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>b</source>
         <translation>b</translation>
     </message>
     <message>
         <location line="+13"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>italic</source>
         <translation>斜体</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>i</source>
         <translation>i</translation>
     </message>
     <message>
         <location line="+428"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>color</source>
         <translation>颜色</translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>Horz alignment</source>
-        <translation>水平对齐</translation>
-    </message>
-    <message>
-        <location line="+11"/>
+        <location line="+33"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+4"/>
         <source>left</source>
         <translation>左</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+29"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
+        <location line="+5"/>
         <source>middle</source>
         <translation>中</translation>
     </message>
     <message>
         <location line="-24"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="-4"/>
         <source>right</source>
         <translation>右</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Vert alignment</source>
+        <location line="-21"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="-3"/>
+        <source>Horizontal alignment</source>
+        <translation>水平对齐</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+5"/>
+        <source>Vertical alignment</source>
         <translation>垂直对齐</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>top</source>
         <translation>上</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>bottom</source>
         <translation>下</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Position</source>
         <translation>位置</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
         <location line="+20"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
         <location line="+20"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Width</source>
         <translation>宽</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+20"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Height</source>
         <translation>高</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+20"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>units</source>
         <translation>单位</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>normalized</source>
         <translation>归一化</translation>
     </message>
     <message>
         <location line="+8"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Fit to box</source>
         <translation>适应方框大小</translation>
     </message>
     <message>
         <location line="+13"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Box</source>
         <translation>方框</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>Background</source>
         <translation>背景</translation>
     </message>
     <message>
         <location line="+444"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Edge</source>
         <translation>边</translation>
     </message>
     <message>
         <location line="+133"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Line style</source>
         <translation>线条样式</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+1"/>
         <source>none</source>
         <translation>无</translation>
     </message>
     <message>
         <location line="+8"/>
+        <location filename="../graphics/ui-annotation-dialog.h" line="+2"/>
         <source>Line width</source>
         <translation>线条宽度</translation>
     </message>
@@ -1098,7 +1084,7 @@
 <context>
     <name>octave::ListDialog</name>
     <message>
-        <location filename="../src/dialog.cc" line="+453"/>
+        <location filename="../src/dialog.cc" line="+442"/>
         <source>Select All</source>
         <translation>全选</translation>
     </message>
@@ -1106,7 +1092,7 @@
 <context>
     <name>octave::command_widget</name>
     <message>
-        <location filename="../src/command-widget.cc" line="+57"/>
+        <location filename="../src/command-widget.cc" line="+59"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
@@ -1120,21 +1106,11 @@
         <source>Continue</source>
         <translation>继续</translation>
     </message>
-    <message>
-        <location line="+2"/>
-        <source>Command Input</source>
-        <translation>命令输入</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Command Output</source>
-        <translation>命令输出</translation>
-    </message>
 </context>
 <context>
     <name>octave::community_news</name>
     <message>
-        <location filename="../src/community-news.cc" line="+70"/>
+        <location filename="../src/community-news.cc" line="+69"/>
         <source>Octave Community News</source>
         <translation>Octave 社区新闻</translation>
     </message>
@@ -1142,14 +1118,14 @@
 <context>
     <name>octave::documentation</name>
     <message>
-        <location filename="../src/documentation.cc" line="+112"/>
+        <location filename="../src/documentation.cc" line="+136"/>
         <location line="+14"/>
-        <location line="+735"/>
+        <location line="+748"/>
         <source>Octave Documentation</source>
         <translation>Octave文档</translation>
     </message>
     <message>
-        <location line="-748"/>
+        <location line="-761"/>
         <source>Could not copy help collection to temporary
 file. Search capabilities may be affected.
 %1</source>
@@ -1160,14 +1136,16 @@ file. Search capabilities may be affected.
     <message>
         <location line="+14"/>
         <source>Could not setup the data required for the
-documentation viewer. Only help texts in
-the Command Window will be available.</source>
-        <translation>无法设置文档查看器
-所需的数据。仅命令窗口
-中的帮助文本可用。</translation>
+documentation viewer. Maybe the Qt SQlite
+module is missing?
+Only help text in the Command Window will
+be available.</source>
+        <translation>无法设置文档查看器所需的数据。
+可能是缺少 Qt SQlite模块？
+只有命令窗口中的帮助文本可用。</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+33"/>
         <source>Find:</source>
         <translation>查找:</translation>
     </message>
@@ -1175,26 +1153,42 @@ the Command Window will be available.</source>
         <location line="+7"/>
         <location line="+1"/>
         <source>Search forward</source>
-        <translation>向前搜索</translation>
+        <translation>下一条搜索结果</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <location line="+1"/>
         <source>Search backward</source>
-        <translation>向后搜索</translation>
+        <translation>上一条搜索结果</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+44"/>
+        <source>Contents</source>
+        <translation>内容</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Enter text to search function index</source>
+        <translation>输入文本搜索函数目录</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location line="+52"/>
+        <source>Search</source>
+        <translation>搜索</translation>
+    </message>
+    <message>
+        <location line="-36"/>
         <source>Function Index</source>
         <translation>函数目录</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>Bookmarks</source>
         <translation>书签</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+87"/>
         <source>Go home</source>
         <translation>回主界面</translation>
     </message>
@@ -1204,63 +1198,47 @@ the Command Window will be available.</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+6"/>
+        <source>Previous pages</source>
+        <translation>之前页面</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Go forward</source>
         <translation>前进</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+6"/>
+        <source>Next pages</source>
+        <translation>之后页面</translation>
+    </message>
+    <message>
+        <location line="+37"/>
         <source>Find</source>
         <translation>查找</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Zoom in</source>
+        <source>Zoom In</source>
         <translation>放大</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Zoom out</source>
+        <source>Zoom Out</source>
         <translation>缩小</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Zoom original</source>
+        <source>Zoom Original</source>
         <translation>恢复原比例</translation>
     </message>
     <message>
-        <location line="-218"/>
-        <source>Contents</source>
-        <translation>内容</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Enter text to search the indices</source>
-        <translation>输入文本搜索目录</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <location line="+53"/>
-        <source>Search</source>
-        <translation>搜索</translation>
-    </message>
-    <message>
-        <location line="+81"/>
-        <source>Previous pages</source>
-        <translation>之前页面</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Next pages</source>
-        <translation>之后页面</translation>
-    </message>
-    <message>
-        <location line="+55"/>
+        <location line="+7"/>
         <source>Bookmark current page</source>
         <translation>为此页面添加书签</translation>
     </message>
     <message>
-        <location line="+430"/>
+        <location line="+429"/>
         <source>Unable to register help file %1.</source>
         <translation>无法注册帮助文件 %1.</translation>
     </message>
@@ -1268,7 +1246,7 @@ the Command Window will be available.</source>
 <context>
     <name>octave::documentation_bookmarks</name>
     <message>
-        <location filename="../src/documentation-bookmarks.cc" line="+102"/>
+        <location filename="../src/documentation-bookmarks.cc" line="+101"/>
         <source>
 No documentation bookmarks loaded!</source>
         <translation>
@@ -1325,7 +1303,7 @@ No documentation bookmarks loaded!</source>
         <translation>显示过滤器 (&amp;F)</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+60"/>
         <source>Octave: Saving Documentation Bookmarks</source>
         <translation>Octave: 保存文档书签</translation>
     </message>
@@ -1360,10 +1338,10 @@ Invalid bookmark file?</source>
         <location line="+9"/>
         <source>The file
 %1
-is not a valid XBEL file verison 1.0.</source>
+is not a valid XBEL file version 1.0.</source>
         <translation>文件
 %1
-不是一个有效的 XBEL 文件版本 1.0。</translation>
+不是合法的XBEL 1.0版本文件。</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -1374,7 +1352,7 @@ is not a valid XBEL file verison 1.0.</source>
 <context>
     <name>octave::documentation_dock_widget</name>
     <message>
-        <location filename="../src/documentation-dock-widget.cc" line="+42"/>
+        <location filename="../src/documentation-dock-widget.cc" line="+40"/>
         <source>Documentation</source>
         <translation>文档</translation>
     </message>
@@ -1387,7 +1365,7 @@ is not a valid XBEL file verison 1.0.</source>
 <context>
     <name>octave::dw_main_window</name>
     <message>
-        <location filename="../src/dw-main-window.cc" line="+54"/>
+        <location filename="../src/dw-main-window.cc" line="+53"/>
         <source>&amp;Close</source>
         <translation>关闭 (&amp;C)</translation>
     </message>
@@ -1415,20 +1393,20 @@ is not a valid XBEL file verison 1.0.</source>
 <context>
     <name>octave::external_editor_interface</name>
     <message>
-        <location filename="../src/external-editor-interface.cc" line="+69"/>
-        <location line="+47"/>
+        <location filename="../src/external-editor-interface.cc" line="+68"/>
+        <location line="+46"/>
         <source>Octave Editor</source>
         <translation>Octave 编辑器</translation>
     </message>
     <message>
-        <location line="-46"/>
+        <location line="-45"/>
         <source>Could not start custom file editor
 %1</source>
         <translation>无法启动自定义文件编辑器
 %1</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+46"/>
         <source>There is no custom editor configured yet.
 Do you want to open the preferences?</source>
         <translation>自定义文本编辑器尚未配置。是否打开首选项？</translation>
@@ -1437,22 +1415,32 @@ Do you want to open the preferences?</source>
 <context>
     <name>octave::file_editor</name>
     <message>
-        <location filename="../src/m-editor/file-editor.cc" line="+1081"/>
+        <location filename="../src/m-editor/file-editor.cc" line="+190"/>
+        <source>Continue</source>
+        <translation>继续</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Save File and Run</source>
+        <translation>保存文件并运行</translation>
+    </message>
+    <message>
+        <location line="+912"/>
         <location line="+28"/>
-        <location line="+549"/>
+        <location line="+540"/>
         <location line="+18"/>
         <location line="+25"/>
         <source>Octave Editor</source>
         <translation>Octave 编辑器</translation>
     </message>
     <message>
-        <location line="-619"/>
+        <location line="-610"/>
         <source>File not saved! A file with the selected name
 %1
-is already open in the editor</source>
-        <translation>文件未保存！一个带有相同名称
+is already open in the editor.</source>
+        <translation>文件未保存！所选名称为
 %1
-的文件在编辑器中被打开</translation>
+的文件已在编辑器中打开。</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -1460,13 +1448,13 @@ is already open in the editor</source>
         <translation>关联文件的编辑标签消失了。</translation>
     </message>
     <message>
-        <location line="+549"/>
+        <location line="+540"/>
         <source>Could not open file
 %1
-for read: %2.</source>
-        <translation>数据文件
+for reading: %2.</source>
+        <translation>无法打开文件
 %1
-无法打开/读取: %2.</translation>
+以读取： %2。</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -1475,7 +1463,7 @@ for read: %2.</source>
 does not exist. Do you want to create it?</source>
         <translation>文件
 %1
-不存在。您希望创建它吗？</translation>
+不存在。您想创建它吗？</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1491,13 +1479,13 @@ does not exist. Do you want to create it?</source>
         <location line="+20"/>
         <source>Could not open file
 %1
-for write: %2.</source>
-        <translation>数据文件
+for writing: %2.</source>
+        <translation>无法打开文件
 %1
-无法打开/写入: %2.</translation>
+以写入： %2。</translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+250"/>
         <source>&amp;File</source>
         <translation>文件 (&amp;F)</translation>
     </message>
@@ -1563,13 +1551,13 @@ for write: %2.</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Find &amp;Next...</source>
-        <translation>下一个匹配 (&amp;N)...</translation>
+        <source>Find &amp;Next</source>
+        <translation>查找下一处 (&amp;N)</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Find &amp;Previous...</source>
-        <translation>上一个匹配 (&amp;P)...</translation>
+        <source>Find &amp;Previous</source>
+        <translation>查找上一处 (&amp;P)</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1594,27 +1582,27 @@ for write: %2.</source>
     <message>
         <location line="+6"/>
         <source>Delete to Start of Word</source>
-        <translation>删除到单词起始处</translation>
+        <translation>删除到单词开始</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Delete to End of Word</source>
-        <translation>删除到单词结尾处</translation>
+        <translation>删除到单词结尾</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Delete to Start of Line</source>
-        <translation>删除到一行开头</translation>
+        <translation>删除到行的开始</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Delete to End of Line</source>
-        <translation>删除到一行结尾</translation>
+        <translation>删除到行的结尾</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Duplicate Selection/Line</source>
-        <translation>重复选择/行</translation>
+        <translation>重复所选文本/行</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1624,12 +1612,12 @@ for write: %2.</source>
     <message>
         <location line="+6"/>
         <source>&amp;Show Completion List</source>
-        <translation>显示完成列表(&amp;S)</translation>
+        <translation>显示补全列表(&amp;S)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Format</source>
-        <translation>格式(&amp;F)</translation>
+        <translation>格式化(&amp;F)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1704,7 +1692,7 @@ for write: %2.</source>
     <message>
         <location line="+4"/>
         <source>Select to Matching Brace</source>
-        <translation>选择匹配的括号间的内容</translation>
+        <translation>选择匹配的括号间的文本</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1769,7 +1757,7 @@ for write: %2.</source>
     <message>
         <location line="+5"/>
         <source>Show Long Line &amp;Marker</source>
-        <translation>显示长线标记 (&amp;M)</translation>
+        <translation>显示长文本行标记 (&amp;M)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1792,7 +1780,7 @@ for write: %2.</source>
         <translation>放大 (&amp;I)</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Zoom &amp;Out</source>
         <translation>缩小 (&amp;O)</translation>
     </message>
@@ -1814,7 +1802,7 @@ for write: %2.</source>
     <message>
         <location line="+4"/>
         <source>Toggle &amp;Breakpoint</source>
-        <translation>切换断点 (&amp;B)</translation>
+        <translation>开关断点 (&amp;B)</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1837,18 +1825,8 @@ for write: %2.</source>
         <translation>运行 (&amp;R)</translation>
     </message>
     <message>
-        <location line="-2066"/>
-        <source>Save File and Run</source>
-        <translation>保存文件并运行</translation>
-    </message>
-    <message>
-        <location line="-9"/>
-        <source>Continue</source>
-        <translation>继续</translation>
-    </message>
-    <message>
-        <location line="+2080"/>
-        <source>Save File and Run / Continue</source>
+        <location line="+5"/>
+        <source>Save File and Run/Continue</source>
         <translation>保存文件并运行/继续</translation>
     </message>
     <message>
@@ -1882,7 +1860,7 @@ for write: %2.</source>
         <translation>复制完整的文件路径 (&amp;P)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+16"/>
         <source>Editor</source>
         <translation>编辑器</translation>
     </message>
@@ -1890,7 +1868,7 @@ for write: %2.</source>
 <context>
     <name>octave::file_editor_tab</name>
     <message>
-        <location filename="../src/m-editor/file-editor-tab.cc" line="+159"/>
+        <location filename="../src/m-editor/file-editor-tab.cc" line="+160"/>
         <source>line:</source>
         <translation>行数:</translation>
     </message>
@@ -1910,38 +1888,39 @@ for write: %2.</source>
         <translation>行尾:</translation>
     </message>
     <message>
-        <location line="+250"/>
+        <location line="+253"/>
         <source>Breakpoint condition</source>
         <translation>条件断点</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+70"/>
         <source>ERROR: </source>
         <translation>错误： </translation>
     </message>
     <message>
-        <location line="+62"/>
-        <location line="+1152"/>
-        <location line="+132"/>
-        <location line="+376"/>
-        <location line="+188"/>
-        <location line="+26"/>
-        <location line="+38"/>
-        <location line="+38"/>
+        <location line="+73"/>
+        <location line="+1204"/>
+        <location line="+148"/>
+        <location line="+20"/>
+        <location line="+437"/>
+        <location line="+111"/>
+        <location line="+128"/>
+        <location line="+59"/>
+        <location line="+36"/>
         <location line="+85"/>
         <location line="+36"/>
         <source>Octave Editor</source>
         <translation>Octave 编辑器</translation>
     </message>
     <message>
-        <location line="-2070"/>
+        <location line="-2263"/>
         <source>Cannot add breakpoint to modified or unnamed file.
 Save and add breakpoint, or cancel?</source>
         <translation>无法将断点添加到已修改或未命名的文件。
 保存并添加断点，还是取消？</translation>
     </message>
     <message>
-        <location line="+828"/>
+        <location line="+878"/>
         <source>Goto line</source>
         <translation>前往行</translation>
     </message>
@@ -1951,7 +1930,7 @@ Save and add breakpoint, or cancel?</source>
         <translation>行数</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+128"/>
         <source>Comment selected text</source>
         <translation>注释所选文本</translation>
     </message>
@@ -1963,15 +1942,15 @@ Save and add breakpoint, or cancel?</source>
 </translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+139"/>
         <location line="+53"/>
         <source>&lt;unnamed&gt;</source>
         <translation>&lt;未命名&gt;</translation>
     </message>
     <message>
         <location line="-6"/>
-        <source>Do you want to cancel closing, save or discard the changes?</source>
-        <translation>你希望关闭，保存还是丢弃更改？</translation>
+        <source>Do you want to cancel closing, save, or discard the changes?</source>
+        <translation>您想取消关闭、保存还是放弃更改？</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1987,7 +1966,14 @@ is about to be closed but has been modified.  %2</source>
 发生改动且将被关闭.  %2</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+148"/>
+        <source>Unable to read file &apos;%1&apos;
+with selected encoding &apos;%2&apos;: %3</source>
+        <translation>无法读取文件 &apos;%1&apos;
+所选编码为&apos;%2&apos;：%3</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>There were problems reading the file
 %1
 with the selected encoding %2.
@@ -2006,13 +1992,13 @@ Modifying and saving the file might cause data loss!</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+39"/>
+        <location line="+44"/>
         <source>Chan&amp;ge encoding</source>
         <translation>切换编码 (&amp;G)</translation>
     </message>
     <message>
-        <location line="-38"/>
-        <location line="+31"/>
+        <location line="-42"/>
+        <location line="+35"/>
         <source>&amp;Close</source>
         <translation>关闭 (&amp;C)</translation>
     </message>
@@ -2035,7 +2021,7 @@ This does not change the default encoding.
 </translation>
     </message>
     <message>
-        <location line="+161"/>
+        <location line="+172"/>
         <source>Debug or Save</source>
         <translation>调试或保存</translation>
     </message>
@@ -2043,42 +2029,25 @@ This does not change the default encoding.
         <location line="+1"/>
         <source>This file is currently being executed.
 Quit debugging and save?</source>
-        <translation>此文件正在运行，
+        <translation>此文件正在运行。
 是否退出调试并保存?</translation>
     </message>
     <message>
-        <location line="+167"/>
-        <source>Could not open file %1 for write:
+        <location line="+212"/>
+        <source>Could not open file %1 for writing:
 %2.</source>
-        <translation>无法打开文件 %1 以写入:
-%2.</translation>
+        <translation>无法打开文件 %1 以进行写入：
+%2。</translation>
     </message>
     <message>
-        <location line="+214"/>
-        <source>The current encoding %1
-can not be applied.
-
-Please select another one!</source>
-        <translation>当前编码 %1
-无法应用。
-
-请选择其他编码！</translation>
+        <location line="+111"/>
+        <source>The changes could not be saved to the file
+%1</source>
+        <translation>改动无法保存到文件
+%1</translation>
     </message>
     <message>
-        <location line="+38"/>
-        <source>The current editor contents can not be encoded
-with the selected encoding %1.
-Using it would result in data loss!
-
-Please select another one!</source>
-        <translation>当前编辑器内容无法
-使用所选编码 %1。
-使用它会导致数据丢失！
-
-请选择其他编码！</translation>
-    </message>
-    <message>
-        <location line="-160"/>
+        <location line="+30"/>
         <source>Octave Files (*.m)</source>
         <translation>Octave 文件 (*.m)</translation>
     </message>
@@ -2088,7 +2057,7 @@ Please select another one!</source>
         <translation>所有文件 (*)</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+97"/>
         <source>&quot;%1&quot;
 is not a valid identifier.
 
@@ -2104,7 +2073,20 @@ Do you want to choose another name?</source>
 是否选择其他文件名?</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+59"/>
+        <source>The current editor contents can not be encoded
+with the selected encoding %1.
+Using it would result in data loss!
+
+Please select another one!</source>
+        <translation>当前编辑器内容无法
+使用所选编码 %1。
+使用它会导致数据丢失！
+
+请选择其他编码！</translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>%1
  already exists
 Do you want to overwrite it?</source>
@@ -2115,7 +2097,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+85"/>
         <source>It seems that &apos;%1&apos; has been modified by another application. Do you want to reload it?</source>
-        <translation>看起来 &apos;%1&apos; 已经被其他应用修改。你希望重新载入这个文件吗？</translation>
+        <translation>看起来 &apos;%1&apos; 已经被其他应用修改。您希望重新载入这个文件吗？</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -2133,13 +2115,18 @@ Warning: The contents in the editor is modified!</source>
 has been deleted or renamed. Do you want to save it now?%2</source>
         <translation>数据文件
 %1
-已经被修改或重命名。你希望现在保存这个文件吗？%2</translation>
+已经被修改或重命名。您希望现在保存这个文件吗？%2</translation>
     </message>
 </context>
 <context>
     <name>octave::files_dock_widget</name>
     <message>
-        <location filename="../src/files-dock-widget.cc" line="+77"/>
+        <location filename="../src/files-dock-widget.cc" line="-4"/>
+        <source>Could not rename file &quot;%1&quot; to &quot;%2&quot;.</source>
+        <translation>无法将文件 &quot;%1&quot; 重命名为 &quot;%2&quot;。</translation>
+    </message>
+    <message>
+        <location line="+51"/>
         <source>File Browser</source>
         <translation>文件浏览器</translation>
     </message>
@@ -2179,7 +2166,7 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <translation>输入路径或文件名</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>One directory up</source>
         <translation>向上一级</translation>
     </message>
@@ -2214,7 +2201,7 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <translation>显示主目录</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Set Browser Directory...</source>
         <translation>设置浏览器目录...</translation>
     </message>
@@ -2226,23 +2213,28 @@ has been deleted or renamed. Do you want to save it now?%2</source>
     </message>
     <message>
         <location line="-418"/>
-        <location line="+431"/>
+        <location line="+430"/>
         <source>New File...</source>
         <translation>新建文件...</translation>
     </message>
     <message>
-        <location line="-428"/>
-        <location line="+430"/>
+        <location line="-427"/>
+        <location line="+429"/>
         <source>New Directory...</source>
         <translation>新建目录...</translation>
     </message>
     <message>
-        <location line="-375"/>
+        <location line="-377"/>
         <source>Double-click to open file/folder, right click for alternatives</source>
         <translation>双击打开文件/文件夹，右键单击以找到候选项</translation>
     </message>
     <message>
-        <location line="+314"/>
+        <location line="+13"/>
+        <source>Rename...</source>
+        <translation>重命名...</translation>
+    </message>
+    <message>
+        <location line="+304"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
@@ -2299,46 +2291,12 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <translation>从路径中移除</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Rename...</source>
-        <translation>重命名...</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+15"/>
         <source>Delete...</source>
         <translation>删除...</translation>
     </message>
     <message>
-        <location line="+117"/>
-        <source>Rename file/directory</source>
-        <translation>重命名文件/目录</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Rename file/directory:
-</source>
-        <translation>重命名文件/目录:
-</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>
- to: </source>
-        <translation>
- 到: </translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Rename error</source>
-        <translation>重命名错误</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Could not rename file &quot;%1&quot; to &quot;%2&quot;.</source>
-        <translation>无法将文件 &quot;%1&quot; 重命名为 &quot;%2&quot;。</translation>
-    </message>
-    <message>
-        <location line="+30"/>
+        <location line="+132"/>
         <location line="+11"/>
         <location line="+17"/>
         <source>Delete file/directory</source>
@@ -2374,7 +2332,7 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <translation>无法删除文件 &quot;%1&quot;。</translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+186"/>
         <source>Set directory of file browser</source>
         <translation>设置目录到文件浏览器</translation>
     </message>
@@ -2393,16 +2351,7 @@ has been deleted or renamed. Do you want to save it now?%2</source>
 </translation>
     </message>
     <message>
-        <location line="+18"/>
-        <source>Create folder in
-</source>
-        <comment>String ends with 
-!</comment>
-        <translation>创建目录于
-</translation>
-    </message>
-    <message>
-        <location line="-16"/>
+        <location line="+2"/>
         <source>New File.txt</source>
         <translation>新建文件.txt</translation>
     </message>
@@ -2412,7 +2361,16 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <translation>创建目录</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
+        <source>Create folder in
+</source>
+        <comment>String ends with 
+!</comment>
+        <translation>创建文件夹于
+</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>New Directory</source>
         <translation>新建目录</translation>
     </message>
@@ -2420,7 +2378,7 @@ has been deleted or renamed. Do you want to save it now?%2</source>
 <context>
     <name>octave::final_page</name>
     <message>
-        <location filename="../src/welcome-wizard.cc" line="+316"/>
+        <location filename="../src/welcome-wizard.cc" line="+307"/>
         <source>Enjoy!</source>
         <translation>尽情享受吧！</translation>
     </message>
@@ -2443,13 +2401,13 @@ has been deleted or renamed. Do you want to save it now?%2</source>
         <location line="+7"/>
         <source>&lt;html&gt;&lt;body&gt;
 &lt;p&gt;We hope you find Octave to be a useful tool.&lt;/p&gt;
-&lt;p&gt;If you encounter problems, there are a number of ways to get help, including commercial support options, a mailing list, a wiki, and other community-based support channels.
+&lt;p&gt;If you encounter problems, there are a number of ways to get help, including commercial support options, a discussion board, a wiki, and other community-based support channels.
 You can find more information about each of these by visiting &lt;a href=&quot;https://octave.org/support.html&quot;&gt;https://octave.org/support.html&lt;/a&gt; (opens in external browser).&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;
-&lt;p&gt;我们希望Octave是一个能够帮助到你的有用工具。&lt;/p&gt;
-&lt;p&gt;如果遇到问题，可以通过多种方式获得帮助，包括商业支持选项，邮件列表，wiki以及其他社区支持渠道。
-你可以通过访问 &lt;a href=&quot;http://octave.org/support.html&quot;&gt;http://octave.org/support.html&lt;/a&gt; 找到更多信息(在外部浏览器中打开).&lt;/p&gt;
+&lt;p&gt;希望 Octave 作为一款工具能对您有所帮助。&lt;/p&gt;
+&lt;p&gt;如果遇到问题，可以通过多种方式获得帮助，包括商业支持选项、讨论板、维基和其他基于社区的支持渠道。
+您可以访问 &lt;a href=&quot;https://octave.org/support.html&quot;&gt;https://octave.org/support.html&lt;/a&gt; 了解更多相关信息（在外部浏览器中打开）。&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -2459,17 +2417,17 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
 &lt;p&gt;For more information about Octave:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Visit &lt;a href=&quot;https://octave.org&quot;&gt;https://octave.org&lt;/a&gt; (opens in external browser)&lt;/li&gt;
-&lt;li&gt;Get the documentation online as &lt;a href=&quot;https://www.gnu.org/software/octave/doc/interpreter/index.html&quot;&gt;html&lt;/a&gt;- or &lt;a href=&quot;https://www.gnu.org/software/octave/octave.pdf&quot;&gt;pdf&lt;/a&gt;-document (opens in external browser)&lt;/li&gt;
+&lt;li&gt;Get the documentation online in &lt;a href=&quot;https://www.gnu.org/software/octave/doc/interpreter/index.html&quot;&gt;HTML&lt;/a&gt; or &lt;a href=&quot;https://www.gnu.org/software/octave/octave.pdf&quot;&gt;PDF&lt;/a&gt; format (links open in external browser)&lt;/li&gt;
 &lt;li&gt;Open the documentation browser of the Octave GUI with the help menu&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head&gt;
 &lt;/head&gt;&lt;body&gt;
-&lt;p&gt;更多信息关于 Octave:&lt;/p&gt;
+&lt;p&gt;有关 Octave 的更多信息&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;访问 &lt;a href=&quot;https://octave.org&quot;&gt;https://octave.org&lt;/a&gt; (在外部浏览器中打开)&lt;/li&gt;
-&lt;li&gt;获取在线文档 &lt;a href=&quot;https://www.gnu.org/software/octave/doc/interpreter/index.html&quot;&gt;html&lt;/a&gt;- 或者 &lt;a href=&quot;https://www.gnu.org/software/octave/octave.pdf&quot;&gt;pdf&lt;/a&gt;- (在外部浏览器中打开)&lt;/li&gt;
-&lt;li&gt;使用帮助菜单打开Octave GUI的文档浏览器&lt;/li&gt;
+&lt;li&gt;访问 &lt;a href=&quot;https://octave.org&quot;&gt;https://octave.org&lt;/a&gt; （在外部浏览器中打开）&lt;/li&gt;
+&lt;li&gt;获取在线文档 &lt;a href=&quot;https://www.gnu.org/software/octave/doc/interpreter/index.html&quot;&gt;HTML&lt;/a&gt; 或者 &lt;a href=&quot;https://www.gnu.org/software/octave/octave.pdf&quot;&gt;PDF&lt;/a&gt; 格式 （在外部浏览器中打开链接）&lt;/li&gt;
+&lt;li&gt;在帮助菜单中打开 Octave 图形用户界面的文档浏览器&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -2477,140 +2435,117 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
 <context>
     <name>octave::find_dialog</name>
     <message>
-        <location filename="../src/m-editor/find-dialog-d.cc" line="+96"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+96"/>
+        <location filename="../src/m-editor/find-dialog.cc" line="+93"/>
         <source>Editor: Find and Replace</source>
         <translation>编辑器：查找和替换</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+3"/>
-        <source>Find &amp;what:</source>
-        <translation>搜索 (&amp;W):</translation>
+        <location line="+2"/>
+        <source>&amp;Find:</source>
+        <translation>查找 (&amp;F):</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
-        <source>Enter text to search for</source>
-        <translation>输入文本搜索</translation>
+        <source>Enter search text</source>
+        <translation>输入搜索文本</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+6"/>
-        <source>Re&amp;place with:</source>
-        <translation>替换为 (&amp;P):</translation>
+        <source>Re&amp;place:</source>
+        <translation>替换 (&amp;P):</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
-        <source>Enter new text replacing search hits</source>
-        <translation>输入文本替换搜索结果</translation>
+        <source>Enter replacement text</source>
+        <translation>输入替换文本</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+10"/>
         <source>Match &amp;case</source>
         <translation>匹配大小写 (&amp;C)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>Search from &amp;start</source>
         <translation>从开头搜索 (&amp;S)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>&amp;Wrap while searching</source>
         <translation>搜索时循环 (&amp;W)</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
-        <source>&amp;Find Next</source>
-        <translation>查找下一个 (&amp;F)</translation>
+        <source>Find &amp;Next</source>
+        <translation>查找下一处 (&amp;N)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
-        <source>Find &amp;Previous</source>
-        <translation>查找上一个 (&amp;P)</translation>
+        <source>Find Pre&amp;vious</source>
+        <translation>查找上一处 (&amp;V)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>&amp;Replace</source>
         <translation>替换 (&amp;R)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>Replace &amp;All</source>
         <translation>替换全部 (&amp;A)</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
         <source>&amp;More...</source>
         <translation>更多 (&amp;M) ...</translation>
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+13"/>
         <source>&amp;Whole words</source>
         <translation>整个单词 (&amp;W)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
-        <source>Regular E&amp;xpressions</source>
-        <translation>正则表达式 (&amp;X)</translation>
+        <source>Regular &amp;expressions</source>
+        <translation>正则表达式 (&amp;E)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>Search &amp;backward</source>
         <translation>反向搜索 (&amp;B)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>Search se&amp;lection</source>
         <translation>搜索选中 (&amp;L)</translation>
     </message>
     <message>
-        <location line="+179"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+179"/>
+        <location line="+171"/>
         <source>Search from end</source>
         <translation>从后向前搜索</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+2"/>
         <source>Search from start</source>
         <translation>从前往后搜索</translation>
     </message>
     <message>
         <location line="+306"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+306"/>
         <source>Replace Result</source>
         <translation>替换结果</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>%1 items replaced</source>
         <translation>%1 项已替换</translation>
     </message>
     <message>
         <location line="+14"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+14"/>
         <source>Find Result</source>
         <translation>查找结果</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../src/m-editor/find-dialog.cc" line="+1"/>
         <source>No more matches found</source>
         <translation>没有更多匹配项</translation>
     </message>
@@ -2623,7 +2558,7 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
         <translation>查找文件</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+9"/>
         <source>Named:</source>
         <translation>名称:</translation>
     </message>
@@ -2658,39 +2593,41 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
         <translation>搜索子目录</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Search recursively through directories for matching files</source>
         <translation>递归搜索目录以查找匹配文件</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Include directory names</source>
         <translation>包含的目录名</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Include matching directories in search results</source>
         <translation>在搜索结果中包含匹配目录</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Name case insensitive</source>
-        <translation>名称大小写敏感</translation>
+        <location line="+3"/>
+        <location line="+12"/>
+        <source>Ignore case</source>
+        <translation>忽略大小写</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Set matching name is case insensitive</source>
-        <translation>设置匹配名称大小写敏感</translation>
+        <location line="-11"/>
+        <location line="+12"/>
+        <source>Perform case insensitive match</source>
+        <translation>执行大小写不敏感匹配</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-9"/>
         <source>Contains text:</source>
         <translation>包含文本:</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Enter the file content search expression</source>
-        <translation>输入文件内容搜索表达式</translation>
+        <source>Include only files containing specified text in search results</source>
+        <translation>在搜索结果中只显示包含指定文本的文件</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -2698,17 +2635,7 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
         <translation>要匹配的文字</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Text case insensitive</source>
-        <translation>文字大小写敏感</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Set text content is case insensitive</source>
-        <translation>设置文字内容大小写敏感</translation>
-    </message>
-    <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Search results</source>
         <translation>搜索结果</translation>
     </message>
@@ -2734,12 +2661,12 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
     </message>
     <message>
         <location line="+1"/>
-        <source>Stop searching</source>
+        <source>Stop search</source>
         <translation>停止搜索</translation>
     </message>
     <message>
         <location line="+16"/>
-        <source>Filename/location</source>
+        <source>Filename/Location</source>
         <translation>文件名/位置</translation>
     </message>
     <message>
@@ -2748,7 +2675,7 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
         <translation>文件内容</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+98"/>
         <source>Searching...</source>
         <translation>正在搜索...</translation>
     </message>
@@ -2758,7 +2685,7 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
         <translation>%1 个匹配</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+17"/>
         <source>Set search directory</source>
         <translation>设置搜索目录</translation>
     </message>
@@ -2777,6 +2704,29 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
     </message>
 </context>
 <context>
+    <name>octave::gui_settings</name>
+    <message>
+        <location filename="../src/gui-settings.cc" line="+775"/>
+        <source>Error %1 creating the settings file
+%2
+Make sure you have read and write permissions to
+%3
+
+Octave GUI must be closed now.</source>
+        <translation>错误 %1 创建设置文件
+%2
+请确保您拥有以下文件的读写权限
+%3
+
+现在必须关闭 Octave GUI。</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Octave Critical Error</source>
+        <translation>Octave 严重错误</translation>
+    </message>
+</context>
+<context>
     <name>octave::history_dock_widget</name>
     <message>
         <location filename="../src/history-dock-widget.cc" line="+53"/>
@@ -2784,7 +2734,7 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
         <translation>浏览并搜索命令历史。</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+101"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
@@ -2799,7 +2749,7 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
         <translation>创建脚本</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Hide filter</source>
         <translation>隐藏过滤器</translation>
     </message>
@@ -2809,7 +2759,7 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
         <translation>显示过滤器</translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+121"/>
         <source>Double-click a command to transfer it to the Command Window.</source>
         <translation>双击命令以将其移至命令窗口。</translation>
     </message>
@@ -2824,7 +2774,7 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
         <translation>过滤器</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Command History</source>
         <translation>命令历史</translation>
     </message>
@@ -2832,7 +2782,7 @@ You can find more information about each of these by visiting &lt;a href=&quot;h
 <context>
     <name>octave::initial_page</name>
     <message>
-        <location filename="../src/welcome-wizard.cc" line="-186"/>
+        <location filename="../src/welcome-wizard.cc" line="-185"/>
         <source>Welcome to Octave!</source>
         <translation>欢迎来到 Octave!</translation>
     </message>
@@ -2863,62 +2813,62 @@ Click &apos;Next&apos; to create a configuration file and launch Octave.&lt;/p&g
 <context>
     <name>octave::label_dock_widget</name>
     <message>
-        <location filename="../src/octave-dock-widget.cc" line="+79"/>
-        <source>Undock widget</source>
-        <translation>取消组件停靠</translation>
+        <location filename="../src/octave-dock-widget.cc" line="+82"/>
+        <source>Undock Widget</source>
+        <translation>悬浮组件</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Close widget</source>
+        <source>Close Widget</source>
         <translation>关闭组件</translation>
     </message>
 </context>
 <context>
     <name>octave::main_window</name>
     <message>
-        <location filename="../src/main-window.cc" line="+658"/>
-        <source>Save Workspace As</source>
-        <translation>工作区另存为</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Load Workspace</source>
-        <translation>导入工作区</translation>
-    </message>
-    <message>
-        <location line="+204"/>
-        <location line="+1606"/>
-        <source>About Octave</source>
-        <translation>关于 Octave</translation>
-    </message>
-    <message>
-        <location line="-1993"/>
-        <source>Octave</source>
-        <translation>Octave</translation>
-    </message>
-    <message>
-        <location line="-344"/>
+        <location filename="../src/main-window.cc" line="+155"/>
         <source>Profiler</source>
         <translation>性能探查器</translation>
     </message>
     <message>
-        <location line="+345"/>
+        <location line="+347"/>
+        <source>Octave</source>
+        <translation>Octave</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Are you sure you want to exit Octave?</source>
         <translation>确定要退出 Octave 吗？</translation>
     </message>
     <message>
-        <location line="+553"/>
-        <location line="+1513"/>
+        <location line="+152"/>
+        <source>Save Workspace As</source>
+        <translation>工作区另存为</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Load Workspace</source>
+        <translation>导入工作区</translation>
+    </message>
+    <message>
+        <location line="+199"/>
+        <location line="+1667"/>
+        <source>About Octave</source>
+        <translation>关于 Octave</translation>
+    </message>
+    <message>
+        <location line="-1479"/>
+        <location line="+1555"/>
         <source>Browse directories</source>
         <translation>浏览目录</translation>
     </message>
     <message>
-        <location line="-1260"/>
+        <location line="-1295"/>
         <source>Octave Files (*.m);;All Files (*)</source>
         <translation>Octave 文件 (*.m);;所有文件 (*)</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+39"/>
         <source>New Function</source>
         <translation>新建函数</translation>
     </message>
@@ -2930,11 +2880,11 @@ Click &apos;Next&apos; to create a configuration file and launch Octave.&lt;/p&g
 </translation>
     </message>
     <message>
-        <location line="+50"/>
-        <source>%1 is a built-in, compiled or inline
+        <location line="+62"/>
+        <source>%1 is a built-in, compiled, or inline
 function and can not be edited.</source>
-        <translation>%1 是内建的已被编译的或内联的
-函数且无法编辑。</translation>
+        <translation>%1 是内置的、编译的或
+内联的函数，因此不能编辑。</translation>
     </message>
     <message>
         <location line="+41"/>
@@ -2942,12 +2892,12 @@ function and can not be edited.</source>
         <translation>找不到函数 %1</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>Octave Editor</source>
         <translation>Octave 编辑器</translation>
     </message>
     <message>
-        <location line="+689"/>
+        <location line="+709"/>
         <source>&amp;File</source>
         <translation>文件 (&amp;F)</translation>
     </message>
@@ -3002,7 +2952,7 @@ function and can not be edited.</source>
         <translation>编辑 (&amp;E)</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Undo</source>
         <translation>撤销</translation>
     </message>
@@ -3027,7 +2977,7 @@ function and can not be edited.</source>
         <translation>清空剪贴板</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Find Files...</source>
         <translation>查找文件...</translation>
     </message>
@@ -3048,8 +2998,8 @@ function and can not be edited.</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Set Path</source>
-        <translation>设置路径</translation>
+        <source>Set Path...</source>
+        <translation>设置路径...</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -3057,7 +3007,7 @@ function and can not be edited.</source>
         <translation>首选项...</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+54"/>
         <source>De&amp;bug</source>
         <translation>调试 (&amp;B)</translation>
     </message>
@@ -3108,7 +3058,7 @@ function and can not be edited.</source>
     </message>
     <message>
         <location line="+4"/>
-        <source>&amp;Show Profile Data</source>
+        <source>&amp;Show Profiler Data</source>
         <translation>显示性能分析数据 (&amp;S)</translation>
     </message>
     <message>
@@ -3190,12 +3140,12 @@ function and can not be edited.</source>
     <message>
         <location line="+5"/>
         <source>Previous Widget</source>
-        <translation>前一个组件</translation>
+        <translation>上一个组件</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Reset Default Window Layout</source>
-        <translation>恢复默认窗口布局</translation>
+        <translation>重置为默认窗口布局</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -3205,7 +3155,7 @@ function and can not be edited.</source>
     <message>
         <location line="+7"/>
         <source>Report Bug</source>
-        <translation>缺陷反馈</translation>
+        <translation>缺陷报告</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3214,7 +3164,7 @@ function and can not be edited.</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Contribute</source>
+        <source>Get Involved</source>
         <translation>参与 Octave</translation>
     </message>
     <message>
@@ -3263,7 +3213,7 @@ function and can not be edited.</source>
         <translation>当前目录: </translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>One directory up</source>
         <translation>向上一级</translation>
     </message>
@@ -3271,7 +3221,7 @@ function and can not be edited.</source>
 <context>
     <name>octave::news_reader</name>
     <message>
-        <location filename="../src/news-reader.cc" line="+115"/>
+        <location filename="../src/news-reader.cc" line="+106"/>
         <source>&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;
@@ -3308,47 +3258,47 @@ Connecting to the web to display the latest Octave Community news has been disab
 For the latest news, please check
 &lt;a href=&quot;https://octave.org/community-news.html&quot;&gt;https://octave.org/community-news.html&lt;/a&gt;
 when you have a connection to the web (link opens in an external browser)
-or enable web connections for news in Octave&apos;s network settings dialog.
+or enable web connections for news in Octave&apos;s network settings tab.
 &lt;/p&gt;
 &lt;p&gt;
 &lt;small&gt;&lt;em&gt;&amp;mdash; The Octave Developers, </source>
         <translation>&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;
-链接互联网显示最新Octave社区新闻已经被禁用。
+连接到网络以显示最新 Octave 社区新闻的功能已被禁用。
 &lt;/p&gt;
 &lt;p&gt;
 当您连接到互联网时，请访问
 &lt;a href=&quot;https://octave.org/community-news.html&quot;&gt;https://octave.org/community-news.html&lt;/a&gt;
 获取最新新闻(在外部浏览器中打开链接)
-或者在Octave网络设置对话框中启用互联网连接。
+或在 Octave 的网络设置选项卡中启用新闻的网络连接。
 &lt;/p&gt;
 &lt;p&gt;
-&lt;small&gt;&lt;em&gt;&amp;mdash; Octave开发者, </translation>
+&lt;small&gt;&lt;em&gt;&amp;mdash; Octave 开发者, </translation>
     </message>
 </context>
 <context>
     <name>octave::octave_dock_widget</name>
     <message>
-        <location filename="../src/octave-dock-widget.cc" line="+145"/>
-        <source>Hide widget</source>
+        <location filename="../src/octave-dock-widget.cc" line="+144"/>
+        <source>Hide Widget</source>
         <translation>隐藏组件</translation>
     </message>
     <message>
-        <location line="+82"/>
-        <source>Dock widget</source>
+        <location line="+81"/>
+        <source>Dock Widget</source>
         <translation>停靠组件</translation>
     </message>
     <message>
-        <location line="+59"/>
-        <source>Undock widget</source>
-        <translation>取消组件停靠</translation>
+        <location line="+58"/>
+        <source>Undock Widget</source>
+        <translation>悬浮组件</translation>
     </message>
 </context>
 <context>
     <name>octave::octave_qscintilla</name>
     <message>
-        <location filename="../src/m-editor/octave-qscintilla.cc" line="+298"/>
+        <location filename="../src/m-editor/octave-qscintilla.cc" line="+299"/>
         <source>Help on</source>
         <translation>开启帮助</translation>
     </message>
@@ -3368,7 +3318,7 @@ or enable web connections for news in Octave&apos;s network settings dialog.
         <translation>dbstop 如果 ...</translation>
     </message>
     <message>
-        <location line="+503"/>
+        <location line="+524"/>
         <source>Octave Editor</source>
         <translation>Octave 编辑器</translation>
     </message>
@@ -3386,7 +3336,7 @@ Make sure you have write access to temp. directory
 “运行所选”需要写入临时文件。</translation>
     </message>
     <message>
-        <location line="+286"/>
+        <location line="+306"/>
         <source>Press &apos;%1&apos; to replace all occurrences of &apos;%2&apos; with &apos;%3&apos;.</source>
         <translation>按&apos;%1将所有出现的&apos;%2&apos;替换为&apos;%3&apos;。</translation>
     </message>
@@ -3402,7 +3352,7 @@ Make sure you have write access to temp. directory
 <context>
     <name>octave::qt_interpreter_events</name>
     <message>
-        <location filename="../src/qt-interpreter-events.cc" line="+337"/>
+        <location filename="../src/qt-interpreter-events.cc" line="+338"/>
         <location line="+5"/>
         <location line="+2"/>
         <source>Create</source>
@@ -3421,7 +3371,7 @@ Make sure you have write access to temp. directory
 does not exist. Do you want to create it?</source>
         <translation>文件
 %1
-不存在。你希望创建它吗？</translation>
+不存在。您想创建它吗？</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -3457,7 +3407,7 @@ does not exist. Do you want to create it?</source>
 <context>
     <name>octave::release_notes</name>
     <message>
-        <location filename="../src/release-notes.cc" line="+80"/>
+        <location filename="../src/release-notes.cc" line="+84"/>
         <source>The release notes file &apos;%1&apos; is empty.</source>
         <translation>发行注记文件 &apos;%1&apos; 是空的。</translation>
     </message>
@@ -3467,40 +3417,15 @@ does not exist. Do you want to create it?</source>
         <translation>发行注记文件 &apos;%1&apos; 无法读取。</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Octave Release Notes</source>
         <translation>Octave 发行注记</translation>
     </message>
 </context>
 <context>
-    <name>octave::resource_manager</name>
-    <message>
-        <location filename="../src/resource-manager.cc" line="+442"/>
-        <source>The settings file
-%1
-does not exist and can not be created.
-Make sure you have read and write permissions to
-%2
-
-Octave GUI must be closed now.</source>
-        <translation>配置文件
-%1
-不存在且不能被创建。
-请确定你在如下目录有写入权限。
-%2
-besitzt.
-Die Octave Benutzeroberfläche muss jetzt geschlossen werden.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Octave Critical Error</source>
-        <translation>Octave 严重错误</translation>
-    </message>
-</context>
-<context>
     <name>octave::set_path_dialog</name>
     <message>
-        <location filename="../src/set-path-dialog.cc" line="+65"/>
+        <location filename="../src/set-path-dialog.cc" line="+64"/>
         <source>Set Path</source>
         <translation>设置路径</translation>
     </message>
@@ -3511,18 +3436,18 @@ Die Octave Benutzeroberfläche muss jetzt geschlossen werden.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Add Folder...</source>
-        <translation>添加文件夹...</translation>
+        <source>Add Directory...</source>
+        <translation>添加目录...</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Single Folder</source>
-        <translation>单个文件夹</translation>
+        <source>Single Directory</source>
+        <translation>单个目录</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Folder With Subfolders</source>
-        <translation>有子目录的文件夹</translation>
+        <source>Directory With Subdirectories</source>
+        <translation>目录及其子目录</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3575,7 +3500,7 @@ Die Octave Benutzeroberfläche muss jetzt geschlossen werden.</translation>
         <translation>撤销所有改动</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
         <source>Open Directory</source>
         <translation>打开目录</translation>
     </message>
@@ -3583,79 +3508,7 @@ Die Octave Benutzeroberfläche muss jetzt geschlossen werden.</translation>
 <context>
     <name>octave::settings_dialog</name>
     <message>
-        <location filename="../src/settings-dialog.cc" line="-767"/>
-        <source>Octave Preferences</source>
-        <translation>Octave 首选项</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Unable to save preferences.  Missing preferences file or unknown directory.</source>
-        <translation>无法保存首选项。缺少首选项文件或未知目录。</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <location line="+5"/>
-        <location line="+892"/>
-        <source>System setting</source>
-        <translation>系统设置</translation>
-    </message>
-    <message>
-        <location line="-651"/>
-        <source>IBeam Cursor</source>
-        <translation>IBeam 光标</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Block Cursor</source>
-        <translation>块状光标</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Underline Cursor</source>
-        <translation>下划线光标</translation>
-    </message>
-    <message>
-        <location line="+168"/>
-        <source>Set Octave Startup Directory</source>
-        <translation>设置 Octave 启动目录</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Set File Browser Startup Directory</source>
-        <translation>设置文件浏览器启动目录</translation>
-    </message>
-    <message>
-        <location line="+707"/>
-        <source>Enable attribute colors</source>
-        <translation>启用属性颜色</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Hide tools tips</source>
-        <translation>隐藏工具提示</translation>
-    </message>
-    <message>
-        <location filename="../src/gui-preferences-cs.h" line="+76"/>
-        <source>foreground</source>
-        <translation>前景色</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>background</source>
-        <translation>背景色</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>selection</source>
-        <translation>选择</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>cursor</source>
-        <translation>光标</translation>
-    </message>
-    <message>
-        <location filename="../src/gui-preferences-ed.h" line="+205"/>
+        <location filename="../src/gui-preferences-ed.h" line="+163"/>
         <source>Top</source>
         <translation>上</translation>
     </message>
@@ -3675,17 +3528,29 @@ Die Octave Benutzeroberfläche muss jetzt geschlossen werden.</translation>
         <translation>右</translation>
     </message>
     <message>
-        <location filename="../src/gui-preferences-ve.h" line="+74"/>
+        <location filename="../src/gui-preferences-cs.h" line="+60"/>
+        <location filename="../src/gui-preferences-ve.h" line="+55"/>
         <source>Foreground</source>
         <translation>前景色</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../src/gui-preferences-ve.h" line="+1"/>
         <source>Background</source>
         <translation>背景色</translation>
     </message>
     <message>
         <location line="+1"/>
+        <source>Selection</source>
+        <translation>选择</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cursor</source>
+        <translation>光标</translation>
+    </message>
+    <message>
+        <location filename="../src/gui-preferences-ve.h" line="+1"/>
         <source>Selected Foreground</source>
         <translation>所选前景色</translation>
     </message>
@@ -3696,11 +3561,11 @@ Die Octave Benutzeroberfläche muss jetzt geschlossen werden.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Alternate Background</source>
+        <source>Alternating Background</source>
         <translation>备选背景色</translation>
     </message>
     <message>
-        <location filename="../src/gui-preferences-ws.h" line="+91"/>
+        <location filename="../src/gui-preferences-ws.h" line="+75"/>
         <source>argument</source>
         <translation>参数</translation>
     </message>
@@ -3715,53 +3580,155 @@ Die Octave Benutzeroberfläche muss jetzt geschlossen werden.</translation>
         <translation>持久变量</translation>
     </message>
     <message>
-        <location filename="../src/gui-preferences-global.h" line="+149"/>
+        <location filename="../src/gui-preferences-global.h" line="+179"/>
         <source>Environment Variables</source>
         <translation>环境变量</translation>
     </message>
     <message>
-        <location filename="../src/gui-settings.h" line="+132"/>
+        <location filename="../src/gui-preferences-sd.h" line="+41"/>
         <source>Second color mode (light/dark)</source>
         <translation>第二颜色模式（浅色/深色）</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Switches to another set of colors.
-Useful for defining a dark/light mode.
+        <location line="+4"/>
+        <source>Switch to a second set of colors.
+Useful for defining light/dark modes.
 Discards non-applied current changes!</source>
-        <translation>切换到另一组颜色。
-对定义 深色/浅色 模式有用.
-丢弃当前未应用的改动!</translation>
+        <translation>切换到第二组颜色。
+可用于定义明/暗模式。
+丢弃未应用的当前更改！</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+10"/>
+        <source>Reload the default colors,
+depends on currently selected mode.</source>
+        <translation>重新载入默认颜色，
+取决于当前选择的模式。</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Reload the default style values,
+depends on currently selected mode.</source>
+        <translation>重新载入默认样式值，
+取决于当前选择的模式。</translation>
+    </message>
+    <message>
+        <location line="-13"/>
         <source>&amp;Reload default colors</source>
         <translation>重新导入默认颜色 (&amp;R)</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Reloads the default colors,
-depending on currently selected mode.</source>
-        <translation>重新加载默认颜色，
-依赖于当前所选的模式。</translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+9"/>
         <source>&amp;Reload default styles</source>
         <translation>重新导入默认样式 (&amp;R)</translation>
     </message>
     <message>
+        <location filename="../src/settings-dialog.cc" line="-945"/>
+        <source>Loading current preferences ... </source>
+        <translation>加载当前首选项 ... </translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location line="+6"/>
+        <location line="+1049"/>
+        <source>System setting</source>
+        <translation>系统设置</translation>
+    </message>
+    <message>
+        <location line="-795"/>
+        <source>IBeam Cursor</source>
+        <translation>IBeam 光标</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Block Cursor</source>
+        <translation>块状光标</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Underline Cursor</source>
+        <translation>下划线光标</translation>
+    </message>
+    <message>
+        <location line="+176"/>
+        <source>Color of highlighted current line (magenta (255,0,255) for automatic color)</source>
+        <translation>当前行高亮显示的颜色 （品红 （255,0,255） 为自动颜色）</translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>Set Octave Startup Directory</source>
+        <translation>设置 Octave 启动目录</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Set File Browser Startup Directory</source>
+        <translation>设置文件浏览器启动目录</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Applying preferences ... </source>
+        <translation>应用首选项 ... </translation>
+    </message>
+    <message>
+        <location line="+86"/>
+        <location line="+21"/>
+        <location line="+1069"/>
+        <source>Failed to open %1 as Octave shortcut file</source>
+        <translation>无法将 %1 作为 Octave 快捷键文件打开</translation>
+    </message>
+    <message>
+        <location line="-428"/>
+        <source>Enable attribute colors</source>
+        <translation>启用属性颜色</translation>
+    </message>
+    <message>
         <location line="+3"/>
-        <source>Reloads the default values of the styles,
-depending on currently selected mode.</source>
-        <translation>重新加载样式默认值，
-依赖于当前所选模式。</translation>
+        <source>Hide tool tips</source>
+        <translation>隐藏工具提示</translation>
+    </message>
+    <message>
+        <location line="+360"/>
+        <source>Import shortcuts from file...</source>
+        <translation>从文件导入快捷键...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+6"/>
+        <source>Octave Shortcut Files (*.osc);;All Files (*)</source>
+        <translation>Octave 快捷键文件 (*.osc);;全部文件 (*)</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <source>Export shortcuts to file...</source>
+        <translation>导出快捷键到文件...</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Overwriting Shortcuts</source>
+        <translation>覆盖快捷键</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>You are about to overwrite all shortcuts.
+Would you like to save the current shortcut set or cancel the action?</source>
+        <translation>您即将覆盖所有快捷键。
+你想保存当前的快捷键设置还是取消操作？</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Don&apos;t save</source>
+        <translation>不保存 (&apos;t)</translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Octave GUI preferences</source>
+        <translation>Octave 图形用户界面首选项</translation>
     </message>
 </context>
 <context>
     <name>octave::setup_community_news</name>
     <message>
-        <location filename="../src/welcome-wizard.cc" line="+46"/>
+        <location filename="../src/welcome-wizard.cc" line="+45"/>
         <source>Community News</source>
         <translation>社区新闻</translation>
     </message>
@@ -3799,18 +3766,57 @@ The check will happen at most once each day and news will only be displayed if t
         <location line="+30"/>
         <source>&lt;html&gt;&lt;head&gt;
 &lt;/head&gt;&lt;body&gt;
-&lt;p&gt;Allow Octave to connect to the Octave web site when it starts to display current news and information about the Octave community.&lt;/p&gt;
+&lt;p&gt;Allow Octave to connect to the Octave web site when it starts in order to display current news and information about the Octave community.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head&gt;
 &lt;/head&gt;&lt;body&gt;
-&lt;p&gt;当 Octave 显示有关 Octave 社区的新闻和信息时，允许 Octave 连接到该网站。&lt;/p&gt;
+&lt;p&gt;允许 Octave 在启动时连接到 Octave 网站，以便显示有关 Octave 社区的最新新闻和信息。&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
-    <name>octave::shortcut_manager</name>
+    <name>octave::shortcut_edit_dialog</name>
     <message>
-        <location filename="../src/shortcut-manager.cc" line="+592"/>
+        <location filename="../src/shortcuts-tree-widget.cc" line="+162"/>
+        <source>Enter New Shortcut</source>
+        <translation>输入新快捷键</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Enter custom shortcut
+Action: %1</source>
+        <translation>输入自定义快捷方式
+动作：%1</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Enter shortcut by typing it</source>
+        <translation>键盘键入来输入快捷键</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Add Shift modifier
+(allows one to enter number keys)</source>
+        <translation>添加Shift修改器
+(允许输入数字键)</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Actual Shortcut</source>
+        <translation>实际快捷键</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Default Shortcut</source>
+        <translation>默认快捷键</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Set to default</source>
+        <translation>设为默认值</translation>
+    </message>
+    <message>
+        <location line="+104"/>
         <source>Double Shortcut</source>
         <translation>双快捷键</translation>
     </message>
@@ -3820,20 +3826,1372 @@ The check will happen at most once each day and news will only be displayed if t
   &quot;%1&quot;
 is already used for the action
   &quot;%2&quot;.
-Do you want to use the shortcut anyhow removing it from the previous action?</source>
-        <translation>选择的快捷键
+Do you want to use the shortcut and remove it from the previous action?</source>
+        <translation>选择的快捷方式
   &quot;%1&quot;
-已经被动作
-  &quot;%2&quot;使用。
-您是否想要使用快捷方式并将其从前一个动作中删除？</translation>
+已用于动作
+  &quot;%2&quot;.
+您想使用该快捷键并将其从之前的动作中删除吗？</translation>
+    </message>
+</context>
+<context>
+    <name>octave::shortcuts_tree_widget</name>
+    <message>
+        <location line="+33"/>
+        <source>Global</source>
+        <translation>全局</translation>
     </message>
     <message>
-        <location line="-454"/>
-        <source>New File</source>
-        <translation>新建文件</translation>
+        <location line="+4"/>
+        <location line="+49"/>
+        <source>File Menu</source>
+        <translation>文件菜单</translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-46"/>
+        <location line="+49"/>
+        <source>Edit Menu</source>
+        <translation>编辑菜单</translation>
+    </message>
+    <message>
+        <location line="-46"/>
+        <location line="+52"/>
+        <source>Debug Menu</source>
+        <translation>调试菜单</translation>
+    </message>
+    <message>
+        <location line="-49"/>
+        <source>Tools Menu</source>
+        <translation>工具菜单</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Window Menu</source>
+        <translation>窗口菜单</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+49"/>
+        <source>Help Menu</source>
+        <translation>帮助目录</translation>
+    </message>
+    <message>
+        <location line="-46"/>
+        <source>News Menu</source>
+        <translation>新闻目录</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Handling of Dock Widgets</source>
+        <translation>停靠组件相关操作</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Tab Handling in Dock Widgets</source>
+        <translation>停靠组件中标签页的相关操作</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Find &amp; Replace in Dock Widgets</source>
+        <translation>停靠组件中的查找和替换</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Zooming in Editor and Documentation</source>
+        <translation>编辑器和文档的缩放</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Editor</source>
+        <translation>编辑器</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>View Menu</source>
+        <translation>视图菜单</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Run Menu</source>
+        <translation>运行菜单</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Documentation Viewer</source>
+        <translation>文档浏览器</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Browser</source>
+        <translation>浏览</translation>
+    </message>
+    <message>
+        <location line="+109"/>
+        <source>item %1 not found in shortcut settings dialog</source>
+        <translation>在快捷键设置对话框中找不到 %1 项</translation>
+    </message>
+</context>
+<context>
+    <name>octave::terminal_dock_widget</name>
+    <message>
+        <location filename="../src/terminal-dock-widget.cc" line="+107"/>
+        <source>Command Window</source>
+        <translation>命令窗口</translation>
+    </message>
+</context>
+<context>
+    <name>octave::variable_dock_widget</name>
+    <message>
+        <location filename="../src/variable-editor.cc" line="+177"/>
+        <source>Dock Widget</source>
+        <translation>停靠组件</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Variable Editor: </source>
+        <translation>变量编辑器： </translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Undock Widget</source>
+        <translation>解除组件停靠</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Restore geometry</source>
+        <translation>恢复窗口几何形状</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Redock</source>
+        <translation>重新停靠</translation>
+    </message>
+</context>
+<context>
+    <name>octave::variable_editor</name>
+    <message>
+        <location line="+918"/>
+        <source>Variable Editor</source>
+        <translation>变量编辑器</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Edit variables.</source>
+        <translation>编辑变量。</translation>
+    </message>
+    <message>
+        <location line="+553"/>
+        <source>Variable Editor Toolbar</source>
+        <translation>变量编辑器工具栏</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Save variable to a file</source>
+        <translation>保存变量到文件</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <source>Save in format ...</source>
+        <translation>保存为格式...</translation>
+    </message>
+    <message>
+        <location line="-5"/>
+        <source>Save variable to a file in different format</source>
+        <translation>以不同的格式保存变量到文件</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Cut</source>
+        <translation>剪切</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Cut data to clipboard</source>
+        <translation>剪切到剪切板</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Copy</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Copy data to clipboard</source>
+        <translation>复制到剪切板</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Paste</source>
+        <translation>粘贴</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Paste clipboard into variable data</source>
+        <translation>粘贴剪切板到变量</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+6"/>
+        <location line="+7"/>
+        <source>Plot</source>
+        <translation>绘制</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <source>Plot Selected Data</source>
+        <translation>绘制所选数据</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Plot selected data</source>
+        <translation>绘制所选数据</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Up</source>
+        <translation>上</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Go one level up in variable hierarchy</source>
+        <translation>前往变量的上一级节点</translation>
+    </message>
+</context>
+<context>
+    <name>octave::variable_editor_stack</name>
+    <message>
+        <location line="-1260"/>
+        <source>Save Variable %1 As</source>
+        <translation>保存变量 %1 为</translation>
+    </message>
+</context>
+<context>
+    <name>octave::variable_editor_view</name>
+    <message>
+        <location line="+142"/>
+        <source>Cut</source>
+        <translation>剪切</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Copy</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Paste</source>
+        <translation>粘贴</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Clear</source>
+        <translation>清空</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Variable from Selection</source>
+        <translation>从所选区域创建变量</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Transpose</source>
+        <translation>转置</translation>
+    </message>
+    <message>
+        <location line="+56"/>
+        <source> columns</source>
+        <translation> 列</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source> column</source>
+        <translation> 列</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source> rows</source>
+        <translation> 行</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source> row</source>
+        <translation> 行</translation>
+    </message>
+</context>
+<context>
+    <name>octave::welcome_wizard</name>
+    <message>
+        <location filename="../src/welcome-wizard.cc" line="-190"/>
+        <source>Welcome to GNU Octave</source>
+        <translation>欢迎使用 GNU Octave</translation>
+    </message>
+</context>
+<context>
+    <name>octave::workspace_model</name>
+    <message>
+        <location filename="../src/workspace-model.cc" line="+49"/>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Class</source>
+        <translation>类</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dimension</source>
+        <translation>维度</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Value</source>
+        <translation>值</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Attribute</source>
+        <translation>属性</translation>
+    </message>
+    <message>
+        <location line="+83"/>
+        <source>Right click to copy, rename, or display</source>
+        <translation>右击以复制，重命名或显示</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <location line="+2"/>
+        <source>complex</source>
+        <translation>复杂度</translation>
+    </message>
+</context>
+<context>
+    <name>octave::workspace_view</name>
+    <message>
+        <location filename="../src/gui-preferences-ws.h" line="-27"/>
+        <source>Class</source>
+        <translation>类</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dimension</source>
+        <translation>维度</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Value</source>
+        <translation>值</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Attribute</source>
+        <translation>属性</translation>
+    </message>
+    <message>
+        <location filename="../src/workspace-view.cc" line="+57"/>
+        <source>Workspace</source>
+        <translation>工作区</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>View the variables in the active workspace.</source>
+        <translation>显示当前活动工作区的变量。</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Enter text to filter the workspace</source>
+        <translation>输入文本以筛选工作区</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Filter</source>
+        <translation>过滤器</translation>
+    </message>
+    <message>
+        <location line="+122"/>
+        <source>View the variables in the active workspace.&lt;br&gt;</source>
+        <translation>显示当前活动工作区的变量。&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Colors for variable attributes:</source>
+        <translation>变量属性的颜色:</translation>
+    </message>
+    <message>
+        <location line="+156"/>
+        <source>Open in Variable Editor</source>
+        <translation>在变量编辑器中打开</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Copy name</source>
+        <translation>复制变量名</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Copy value</source>
+        <translation>复制变量值</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Rename</source>
+        <translation>重命名</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Only top-level symbols may be renamed</source>
+        <translation>只有顶级符号可能会被重命名</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Hide filter</source>
+        <translation>隐藏过滤器</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Show filter</source>
+        <translation>显示过滤器</translation>
+    </message>
+</context>
+<context>
+    <name>settings_dialog</name>
+    <message>
+        <location filename="../src/settings-dialog.ui" line="+45"/>
+        <location line="+834"/>
+        <location line="+1909"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2204"/>
+        <location line="+11"/>
+        <location line="+137"/>
+        <source>General</source>
+        <translation>常规</translation>
+    </message>
+    <message>
+        <location line="-2722"/>
+        <location filename="../src/ui-settings-dialog.h" line="-181"/>
+        <source>Interface</source>
+        <translation>界面</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Dock widget title bar</source>
+        <translation>停靠组件标题栏</translation>
+    </message>
+    <message>
+        <location line="+413"/>
+        <location filename="../src/ui-settings-dialog.h" line="+26"/>
+        <source>Confirm before exiting</source>
+        <translation>退出前确认</translation>
+    </message>
+    <message>
+        <location line="-89"/>
+        <location filename="../src/ui-settings-dialog.h" line="-10"/>
+        <source>Octave logo only</source>
+        <translation>仅 Octave logo</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Letter icons</source>
+        <translation>字母图标</translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <location line="+439"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <location line="+24"/>
+        <source>Show status bar</source>
+        <translation>显示状态栏</translation>
+    </message>
+    <message>
+        <location line="-677"/>
+        <location filename="../src/ui-settings-dialog.h" line="-36"/>
+        <source>Text inactive</source>
+        <translation>不活动的文本颜色</translation>
+    </message>
+    <message>
+        <location line="-32"/>
+        <location line="+45"/>
+        <location filename="../src/ui-settings-dialog.h" line="-1"/>
+        <location line="+2"/>
+        <source>Active</source>
+        <translation>活动</translation>
+    </message>
+    <message>
+        <location line="-96"/>
+        <location filename="../src/ui-settings-dialog.h" line="-5"/>
+        <source>Small</source>
+        <translation>小</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Large</source>
+        <translation>大</translation>
+    </message>
+    <message>
+        <location line="+105"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Custom style</source>
+        <translation>自定义样式</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Background inactive</source>
+        <translation>不活动的背景颜色</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>3D</source>
+        <translation>3D</translation>
+    </message>
+    <message>
+        <location line="+199"/>
+        <location filename="../src/ui-settings-dialog.h" line="+14"/>
+        <source>Octave Startup</source>
+        <translation>Octave 启动</translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <location line="+1691"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <location line="+104"/>
+        <source>Browse</source>
+        <translation>浏览</translation>
+    </message>
+    <message>
+        <location line="-1378"/>
+        <location filename="../src/ui-settings-dialog.h" line="-4"/>
+        <source>Editor</source>
+        <translation>编辑器</translation>
+    </message>
+    <message>
+        <location line="+488"/>
+        <location line="+140"/>
+        <location filename="../src/ui-settings-dialog.h" line="-58"/>
+        <location line="+9"/>
+        <source>This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in the default font. It may not work very well if styles use proportional fonts or if varied font sizes or bold, italic and normal texts are used.</source>
+        <translation>这适用于等宽字体。 该线根据默认字体中空格字符的宽度绘制。 如果样式使用比例字体，或者使用不同的字体大小或粗体，斜体和普通文本，它可能无法很好地工作。</translation>
+    </message>
+    <message>
+        <location line="-535"/>
+        <location filename="../src/ui-settings-dialog.h" line="-34"/>
+        <source>Enable Code Folding</source>
+        <translation>启用代码折叠</translation>
+    </message>
+    <message>
+        <location line="+1059"/>
+        <location filename="../src/ui-settings-dialog.h" line="+73"/>
+        <source>Windows (CRLF)</source>
+        <translation>Windows (CRLF)</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Legacy Mac (CR)</source>
+        <translation>Legacy Mac (CR)</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Unix (LF)</source>
+        <translation>Unix (LF)</translation>
+    </message>
+    <message>
+        <location line="-1034"/>
+        <location filename="../src/ui-settings-dialog.h" line="-73"/>
+        <source>Show horizontal scroll bar</source>
+        <translation>显示水平滚动条</translation>
+    </message>
+    <message>
+        <location line="-19"/>
+        <location filename="../src/ui-settings-dialog.h" line="-1"/>
+        <source>Show tool bar</source>
+        <translation>显示工具栏</translation>
+    </message>
+    <message>
+        <location line="+537"/>
+        <location filename="../src/ui-settings-dialog.h" line="+36"/>
+        <source>Indentation</source>
+        <translation>缩进</translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Indent width</source>
+        <translation>缩进宽度</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Tab indents line</source>
+        <translation>Tab 键缩进行</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Auto indentation</source>
+        <translation>自动缩进</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Tab width</source>
+        <translation>Tab 键宽度</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Show indentation guides</source>
+        <translation>显示缩进参考线</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Backspace unindents line</source>
+        <translation>退格键删除缩进符</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Indentation uses tabs</source>
+        <translation>使用 tabs 缩进</translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <location filename="../src/ui-settings-dialog.h" line="+6"/>
+        <source>Auto completion</source>
+        <translation>自动补全</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Match keywords</source>
+        <translation>匹配关键字</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Case sensitive</source>
+        <translation>大小写敏感</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Replace word by suggested one</source>
+        <translation>使用建议的单词替换原单词</translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <location filename="../src/ui-settings-dialog.h" line="-1"/>
+        <source>Match words in document</source>
+        <translation>在文档中匹配单词</translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>With Octave builtins</source>
+        <translation>Octave 内置</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>With Octave functions</source>
+        <translation>Octave 函数</translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <location filename="../src/ui-settings-dialog.h" line="+9"/>
+        <source>Show completion list automatically</source>
+        <translation>自动显示补全列表</translation>
+    </message>
+    <message>
+        <location line="+76"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Reload externally changed files without prompt</source>
+        <translation>无需提示即可重新加载外部更改的文件</translation>
+    </message>
+    <message>
+        <location line="-841"/>
+        <location filename="../src/ui-settings-dialog.h" line="-62"/>
+        <source>Use custom file editor</source>
+        <translation>使用自定义文件编辑器</translation>
+    </message>
+    <message>
+        <location line="+934"/>
+        <location filename="../src/ui-settings-dialog.h" line="+70"/>
+        <source>Text encoding used for loading and saving</source>
+        <translation>文本编码用于加载和保存</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Editor Styles</source>
+        <translation>编辑器风格</translation>
+    </message>
+    <message>
+        <location line="-1383"/>
+        <location filename="../src/ui-settings-dialog.h" line="-92"/>
+        <source>(Changing buffer size clears history)</source>
+        <translation>(更改缓冲区大小清除历史记录)</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>History buffer Size</source>
+        <translation>历史缓冲区大小</translation>
+    </message>
+    <message>
+        <location line="-123"/>
+        <location line="+1863"/>
+        <location filename="../src/ui-settings-dialog.h" line="-3"/>
+        <location line="+111"/>
+        <source>Font</source>
+        <translation>字体</translation>
+    </message>
+    <message>
+        <location line="-1573"/>
+        <location filename="../src/ui-settings-dialog.h" line="-100"/>
+        <source>Show line numbers</source>
+        <translation>显示行数</translation>
+    </message>
+    <message>
+        <location line="-510"/>
+        <location filename="../src/ui-settings-dialog.h" line="-28"/>
+        <source>Graphic icons</source>
+        <translation>图形图标</translation>
+    </message>
+    <message>
+        <location line="+90"/>
+        <location filename="../src/ui-settings-dialog.h" line="+10"/>
+        <source>These preferences are applied after any .octaverc startup files.</source>
+        <translation>这些首选项在任何.octaverc启动文件之后应用。</translation>
+    </message>
+    <message>
+        <location line="+433"/>
+        <location filename="../src/ui-settings-dialog.h" line="+19"/>
+        <source>Show whitespace</source>
+        <translation>显示空白字符</translation>
+    </message>
+    <message>
+        <location line="-45"/>
+        <location filename="../src/ui-settings-dialog.h" line="-3"/>
+        <source>Do not show whitespace used for indentation</source>
+        <translation>不要显示缩进的空白空间</translation>
+    </message>
+    <message>
+        <location line="+152"/>
+        <location filename="../src/ui-settings-dialog.h" line="+8"/>
+        <source>Show EOL characters</source>
+        <translation>显示 EOL 字符</translation>
+    </message>
+    <message>
+        <location line="+945"/>
+        <location filename="../src/ui-settings-dialog.h" line="+68"/>
+        <source>Default EOL mode</source>
+        <translation>默认 EOL 模式</translation>
+    </message>
+    <message>
+        <location line="-162"/>
+        <location filename="../src/ui-settings-dialog.h" line="-15"/>
+        <source>Number of characters before list is shown: </source>
+        <translation>显示列表前的字符数: </translation>
+    </message>
+    <message>
+        <location line="+150"/>
+        <location filename="../src/ui-settings-dialog.h" line="+14"/>
+        <source>Create nonexistent files without prompting</source>
+        <translation>在创建不存在的文件时不提示</translation>
+    </message>
+    <message>
+        <location line="-857"/>
+        <location filename="../src/ui-settings-dialog.h" line="-63"/>
+        <source>command line (%f=file, %l=line):</source>
+        <translation>命令行 (%f=文件, %l=行数):</translation>
+    </message>
+    <message>
+        <location line="+1008"/>
+        <location filename="../src/ui-settings-dialog.h" line="+74"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select font, font size (as a difference from the default size), font style (&lt;b&gt;b&lt;/b&gt;old, &lt;b&gt;i&lt;/b&gt;talic, &lt;b&gt;u&lt;/b&gt;nderline), text color, and background color (for the latter, the color magenta (255,0,255) is a placeholder for the default background color).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;选择字体, 字体大小 (作为与默认大小的差异), 字体样式 (&lt;b&gt;b&lt;/b&gt;old, &lt;b&gt;i&lt;/b&gt;talic, &lt;b&gt;u&lt;/b&gt;nderline), 文本颜色, 和背景颜色 (对于后者，颜色洋红色(255,0,255)是默认背景颜色的占位符).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="-1508"/>
+        <location filename="../src/ui-settings-dialog.h" line="-96"/>
+        <source>Cursor type:</source>
+        <translation>光标类型:</translation>
+    </message>
+    <message>
+        <location line="-598"/>
+        <location filename="../src/ui-settings-dialog.h" line="-39"/>
+        <source>Preferences</source>
+        <translation>首选项</translation>
+    </message>
+    <message>
+        <location line="+351"/>
+        <location filename="../src/ui-settings-dialog.h" line="+20"/>
+        <source>(requires restart)</source>
+        <translation>(需要重启软件)</translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Use native file dialogs</source>
+        <translation>使用系统原生文件对话框</translation>
+    </message>
+    <message>
+        <location line="-98"/>
+        <location filename="../src/ui-settings-dialog.h" line="-5"/>
+        <source>Toolbar Icons</source>
+        <translation>工具栏图标</translation>
+    </message>
+    <message>
+        <location line="-224"/>
+        <location filename="../src/ui-settings-dialog.h" line="-11"/>
+        <source>Language</source>
+        <translation>语言</translation>
+    </message>
+    <message>
+        <location line="-41"/>
+        <location filename="../src/ui-settings-dialog.h" line="-2"/>
+        <source>Dock widgets window icons</source>
+        <translation>停靠组件窗口图标</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Style</source>
+        <translation>样式</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Icon theme (requires restart)</source>
+        <translation>图标样式（需要重启）</translation>
+    </message>
+    <message>
+        <location line="+323"/>
+        <location filename="../src/ui-settings-dialog.h" line="+16"/>
+        <source>Blinking cursor</source>
+        <translation>闪烁光标</translation>
+    </message>
+    <message>
+        <location line="+57"/>
+        <location filename="../src/ui-settings-dialog.h" line="+9"/>
+        <source>Initial working directory of Octave interpreter</source>
+        <translation>Octave 解释器的初始工作目录</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Restore last working directory of previous session</source>
+        <translation>恢复前一个会话的工作目录</translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <location filename="../src/ui-settings-dialog.h" line="+12"/>
+        <source>Command</source>
+        <translation>命令</translation>
+    </message>
+    <message>
+        <location line="+208"/>
+        <location filename="../src/ui-settings-dialog.h" line="-3"/>
+        <source>Set focus to Command Window when running a command from within another widget</source>
+        <translation>从其他组件中运行命令时，将焦点设置在“命令窗口”上</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Print debug location in Command Window in addition to the marker in the editor</source>
+        <translation>除编辑器中的标记外，在命令窗口中打印调试位置</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Command Window Colors</source>
+        <translation>命令窗口颜色</translation>
+    </message>
+    <message>
+        <location line="+190"/>
+        <location filename="../src/ui-settings-dialog.h" line="+10"/>
+        <source>Number size as difference to editor font</source>
+        <translation>行数字体大小(与编辑器字体不同)</translation>
+    </message>
+    <message>
+        <location line="+79"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Highlight current line (color adjustable below with editor styles)</source>
+        <translation>高亮当前行（颜色可用下方编辑器样式调整）</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Highlight all occurrences of a word selected by a double click</source>
+        <translation>双击高亮所选单词的所有出现处</translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Tabs</source>
+        <translation>标签页</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate tabs: Vertical when at top or bottom and horizontal when left or right. The close button is not shown in rotated tabs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;旋转标签页：在顶部或底部时为垂直，在左侧或右侧时为水平。 关闭按钮在旋转后的标签页中不显示。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+74"/>
+        <location filename="../src/ui-settings-dialog.h" line="+8"/>
+        <source>Comments (Octave)</source>
+        <translation>注释 (Octave)</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Strings considered for uncommenting text</source>
+        <translation>视为非注释的字符串</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>String used for commenting selected text</source>
+        <translation>用于注释的字符串</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Long lines</source>
+        <translation>长代码行</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Break long lines at line length</source>
+        <translation>在代码行长度处断开超长代码</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Break lines only in comments</source>
+        <translation>只在注释中断开代码行</translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Line length</source>
+        <translation>代码行长度</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Long line marker</source>
+        <translation>长代码行标记</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Line</source>
+        <translation>代码行</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Background</source>
+        <translation>背景</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Wrap long lines at current window border</source>
+        <translation>在当前的窗口边框处换行</translation>
+    </message>
+    <message>
+        <location line="+153"/>
+        <location filename="../src/ui-settings-dialog.h" line="+9"/>
+        <source>Auto insert after &quot;if&quot; etc.</source>
+        <translation>自动在&quot;if&quot;等后插入.</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Nothing</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>&quot;endif&quot; etc.</source>
+        <translation>&quot;endif&quot; 等.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>&quot;end&quot;</source>
+        <translation>&quot;end&quot;</translation>
+    </message>
+    <message>
+        <location line="+238"/>
+        <location filename="../src/ui-settings-dialog.h" line="+18"/>
+        <source>Debugging</source>
+        <translation>调试</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Always show debug breakpoints and pointers (opens related file if closed)</source>
+        <translation>始终显示调试断点和指针(如果关闭此选项则会打开相关文件)</translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Restore editor tabs from previous session on startup or when editor is shown again after closing</source>
+        <translation>在启动时或编辑器关闭后再次显示时，恢复上次会话的编辑器标签页</translation>
+    </message>
+    <message>
+        <location line="+105"/>
+        <location filename="../src/ui-settings-dialog.h" line="+8"/>
+        <source>Close all files when the editor widget is closed/hidden</source>
+        <translation>当编辑器组件关闭/隐藏时关闭所有文件</translation>
+    </message>
+    <message>
+        <location line="+907"/>
+        <location filename="../src/ui-settings-dialog.h" line="+68"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ok&lt;/span&gt; - close dialog and apply settings&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Apply - &lt;/span&gt;apply settings but leave dialog open&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel - &lt;/span&gt;close dialog and discard changes not yet applied&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Reset -&lt;/span&gt; reload settings discarding changes not yet applied&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;确定&lt;/span&gt; - 关闭对话框并应用设置&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;应用 - &lt;/span&gt;应用设置但保持对话框打开&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;取消 - &lt;/span&gt;关闭对话框并丢弃未应用的修改&lt;br&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;重置 -&lt;/span&gt; 重新加载设置并丢弃未应用的修改&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="-2367"/>
+        <location filename="../src/ui-settings-dialog.h" line="-161"/>
+        <source>Use foreground color</source>
+        <translation>使用前景色</translation>
+    </message>
+    <message>
+        <location line="-133"/>
+        <location filename="../src/ui-settings-dialog.h" line="-10"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If set, the focus of the widgets that are docked to the main window follows the mouse cursor. This is intended for having the same behavior within the main window when &amp;quot;focus follows mouse&amp;quot; is used for the desktop environment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;如果选中，则停靠到主窗口组件的焦点跟随鼠标光标。 这是为了在&amp;quot;焦点跟随鼠标&amp;quot;时在主窗口中具有相同的行为。 用于桌面环境。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>Focus follows mouse for widgets docked to the main window</source>
+        <translation>组件停靠到主窗口时焦点跟随鼠标</translation>
+    </message>
+    <message>
+        <location line="+182"/>
+        <location line="+1753"/>
+        <location filename="../src/ui-settings-dialog.h" line="+11"/>
+        <location line="+106"/>
+        <source>Font size</source>
+        <translation>字体大小</translation>
+    </message>
+    <message>
+        <location line="-1227"/>
+        <location filename="../src/ui-settings-dialog.h" line="-80"/>
+        <source>Rotated tabs</source>
+        <translation>旋转标签页</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Position</source>
+        <translation>位置</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Max. tab width in chars (0: no limit)</source>
+        <translation>以字符为单位的最大标签页宽度（0：无限制）</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Max. width of a tab in characters (average char. width). Especially useful for rotated tabs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;以字符为单位的最大制表符宽度（平均字符宽度）。 特别是对旋转标签页有用。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+851"/>
+        <location filename="../src/ui-settings-dialog.h" line="+61"/>
+        <source>Force newline at end when saving file</source>
+        <translation>保存文件时强制在文件结尾换行</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Remove trailing spaces when saving file</source>
+        <translation>保存文件时删除末尾空格</translation>
+    </message>
+    <message>
+        <location line="+80"/>
+        <location filename="../src/ui-settings-dialog.h" line="+11"/>
+        <source>File Browser</source>
+        <translation>文件浏览器</translation>
+    </message>
+    <message>
+        <location line="+75"/>
+        <location filename="../src/ui-settings-dialog.h" line="-3"/>
+        <source>Initial file browser directory (only if not synchronized with initial working directory of Octave)</source>
+        <translation>初始文件浏览器目录（仅当未与Octave的初始工作目录同步时）</translation>
+    </message>
+    <message>
+        <location line="+75"/>
+        <location filename="../src/ui-settings-dialog.h" line="+5"/>
+        <source>Workspace</source>
+        <translation>工作区</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <location filename="../src/ui-settings-dialog.h" line="-1"/>
+        <source>Colors for variable attributes</source>
+        <translation>变量属性的颜色</translation>
+    </message>
+    <message>
+        <location line="+133"/>
+        <location filename="../src/ui-settings-dialog.h" line="+5"/>
+        <source>Use Command Window font</source>
+        <translation>使用命令窗口字体</translation>
+    </message>
+    <message>
+        <location line="+154"/>
+        <location filename="../src/ui-settings-dialog.h" line="+18"/>
+        <source>Import shortcut set</source>
+        <translation>导入快捷键设置</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Export current shortcut set</source>
+        <translation>导出当前快捷键设置</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Reset shortcuts to their defaults</source>
+        <translation>将快捷方式重置为其默认值</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+80"/>
+        <location filename="../src/ui-settings-dialog.h" line="+2"/>
+        <location line="+4"/>
+        <source>Default</source>
+        <translation>默认</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../src/ui-settings-dialog.h" line="-1"/>
+        <source>Actual</source>
+        <translation>当前</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location filename="../src/ui-settings-dialog.h" line="+16"/>
+        <source>Network</source>
+        <translation>网络</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location filename="../src/ui-settings-dialog.h" line="-11"/>
+        <source>Allow Octave to connect to the Octave web site to display current news and information</source>
+        <translation>允许 Octave 连接到 Octave 站点以显示当前新闻和信息</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Proxy Server</source>
+        <translation>代理服务器</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select &lt;span style=&quot; font-style:italic;&quot;&gt;HttpProxy&lt;/span&gt;, &lt;span style=&quot; font-style:italic;&quot;&gt;Sock5Proxy&lt;/span&gt; or &lt;span style=&quot; font-style:italic;&quot;&gt;Environment Variables&lt;/span&gt;. With the last selection, the proxy is taken from the first non-empty environment variable ALL_PROXY, HTTP_PROXY or HTTPS_PROXY .&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;选择 &lt;span style=&quot; font-style:italic;&quot;&gt;HttpProxy&lt;/span&gt;, &lt;span style=&quot; font-style:italic;&quot;&gt;Sock5Proxy&lt;/span&gt; 或者 &lt;span style=&quot; font-style:italic;&quot;&gt;Environment Variables&lt;/span&gt;。 选中最后一个选项时，代理取自第一个非空的环境变量 ALL_PROXY, HTTP_PROXY 或 HTTPS_PROXY 。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+78"/>
+        <location filename="../src/ui-settings-dialog.h" line="+6"/>
+        <source>Use proxy server</source>
+        <translation>使用代理服务器</translation>
+    </message>
+    <message>
+        <location line="-523"/>
+        <location filename="../src/ui-settings-dialog.h" line="-42"/>
+        <source>Variable Editor</source>
+        <translation>变量编辑器</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location filename="../src/ui-settings-dialog.h" line="-6"/>
+        <source>Default row height</source>
+        <translation>默认行高</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Default column width</source>
+        <translation>默认列宽</translation>
+    </message>
+    <message>
+        <location line="+78"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Variable Editor Colors</source>
+        <translation>变量编辑器颜色</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Use alternating row colors</source>
+        <translation>使用颜色交替的行</translation>
+    </message>
+    <message>
+        <location line="+69"/>
+        <location filename="../src/ui-settings-dialog.h" line="+8"/>
+        <source>Disable global shortcuts when Command Window has focus</source>
+        <translation>当聚焦于命令窗口时关闭全局快捷键</translation>
+    </message>
+    <message>
+        <location line="-2438"/>
+        <location filename="../src/ui-settings-dialog.h" line="-150"/>
+        <source>Normal</source>
+        <translation>正常</translation>
+    </message>
+    <message>
+        <location line="+1780"/>
+        <location filename="../src/ui-settings-dialog.h" line="+110"/>
+        <source>File handling</source>
+        <translation>文件处理</translation>
+    </message>
+    <message>
+        <location line="+258"/>
+        <location filename="../src/ui-settings-dialog.h" line="+16"/>
+        <source>Behavior</source>
+        <translation>行为</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Synchronize Octave working directory with file browser</source>
+        <translation>使用文件浏览器同步 Octave 工作目录</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Restore last directory of previous session</source>
+        <translation>恢复前一个会话的最后一个目录</translation>
+    </message>
+    <message>
+        <location line="+334"/>
+        <location filename="../src/ui-settings-dialog.h" line="+45"/>
+        <source>Shortcuts</source>
+        <translation>快捷键</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <location filename="../src/ui-settings-dialog.h" line="-28"/>
+        <source>Disable global shortcuts in order to prevent
+interference with readline key strokes.
+Exceptions: Ctrl-C for interrupting the interpreter
+and the shortcuts for switching to other widgets.</source>
+        <translation>禁用全局快捷键以防止
+干扰 readline 快捷键。
+异常: Ctrl-C 用于中断解释器
+和切换到其他组件的快捷键。</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../src/ui-settings-dialog.h" line="+7"/>
+        <source>Disable menu accelerators in order to prevent
+interference with readline key strokes.</source>
+        <translation>禁用菜单快捷键以防止
+干扰 readline 快捷键。</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Disable menu accelerators of main window menus when Command Window has focus</source>
+        <translation>当命令窗口获得焦点时，禁用主窗口的菜单快捷键</translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <location filename="../src/ui-settings-dialog.h" line="+8"/>
+        <source>Export</source>
+        <translation>导出</translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <location filename="../src/ui-settings-dialog.h" line="-4"/>
+        <source>Import</source>
+        <translation>导入</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../src/ui-settings-dialog.h" line="+9"/>
+        <source>Edit a shortcut by double-clicking in Actual column</source>
+        <translation>双击“当前”列以编辑快捷方式</translation>
+    </message>
+    <message>
+        <location line="+61"/>
+        <location filename="../src/ui-settings-dialog.h" line="+4"/>
+        <source>Action</source>
+        <translation>动作</translation>
+    </message>
+    <message>
+        <location line="+82"/>
+        <location filename="../src/ui-settings-dialog.h" line="+5"/>
+        <source>Hostname:</source>
+        <translation>主机名:</translation>
+    </message>
+    <message>
+        <location line="-536"/>
+        <location filename="../src/ui-settings-dialog.h" line="-46"/>
+        <source>Extensions of files to be opened in the default text editor (separated by &quot;;&quot;):</source>
+        <translation>要在默认文本编辑器中打开的文件的扩展名 (以 &quot;;&quot; 分隔):</translation>
+    </message>
+    <message>
+        <location line="+566"/>
+        <location filename="../src/ui-settings-dialog.h" line="+51"/>
+        <source>Proxy type:</source>
+        <translation>代理类型:</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../src/ui-settings-dialog.h" line="+1"/>
+        <source>Port:</source>
+        <translation>端口:</translation>
+    </message>
+    <message>
+        <location line="-20"/>
+        <location filename="../src/ui-settings-dialog.h" line="-2"/>
+        <source>Username:</source>
+        <translation>用户名:</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <location filename="../src/ui-settings-dialog.h" line="+3"/>
+        <source>Password:</source>
+        <translation>密码:</translation>
+    </message>
+</context>
+<context>
+    <name>shortcuts</name>
+    <message>
+        <location filename="../src/gui-preferences-sc.cc" line="+42"/>
         <source>Undock/Dock Widget</source>
         <translation>悬浮/停靠 组件</translation>
     </message>
@@ -3843,7 +5201,12 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
         <translation>关闭组件</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
+        <source>New File</source>
+        <translation>新建文件</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>New Function</source>
         <translation>新建函数</translation>
     </message>
@@ -3924,24 +5287,24 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
     </message>
     <message>
         <location line="+1"/>
-        <location line="+117"/>
+        <location line="+118"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
     <message>
-        <location line="-114"/>
+        <location line="-115"/>
         <source>Step</source>
-        <translation>步骤</translation>
+        <translation>单步跳过</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Step Into</source>
-        <translation>步入</translation>
+        <source>Step In</source>
+        <translation>单步执行</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Step Out</source>
-        <translation>步出</translation>
+        <translation>单步停止</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3951,7 +5314,7 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
     <message>
         <location line="+1"/>
         <source>Quit Debug Mode</source>
-        <translation>退出调试</translation>
+        <translation>退出调试模式</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3969,7 +5332,7 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
         <translation>显示性能分析数据</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Show Command Window</source>
         <translation>显示命令窗口</translation>
     </message>
@@ -4025,12 +5388,11 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
     </message>
     <message>
         <location line="+1"/>
-        <location line="+244"/>
         <source>Editor</source>
         <translation>编辑器</translation>
     </message>
     <message>
-        <location line="-243"/>
+        <location line="+1"/>
         <source>Documentation</source>
         <translation>文档</translation>
     </message>
@@ -4047,17 +5409,22 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
     <message>
         <location line="+1"/>
         <source>Reset Default Window Layout</source>
-        <translation>复位为默认窗口布局</translation>
+        <translation>重置为默认窗口布局</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
+        <source>Show On-disk Documentation</source>
+        <translation>显示磁盘中的文档</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Show Online Documentation</source>
         <translation>显示在线文档</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Report Bug</source>
-        <translation>报告问题</translation>
+        <translation>缺陷报告</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4067,7 +5434,7 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
     <message>
         <location line="+1"/>
         <source>Contribute to Octave</source>
-        <translation>贡献 Octave</translation>
+        <translation>参与 Octave</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4125,7 +5492,23 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
         <translation>向右移动标签页</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+3"/>
+        <source>Zoom In</source>
+        <translation>放大</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zoom Out</source>
+        <translation>缩小</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+2"/>
+        <source>Zoom Normal</source>
+        <translation>恢复缩放比例</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Edit Function</source>
         <translation>编辑函数</translation>
     </message>
@@ -4177,7 +5560,7 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
     <message>
         <location line="+1"/>
         <source>Delete to End of Word</source>
-        <translation>删除到单词结束</translation>
+        <translation>删除到单词结尾</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4187,7 +5570,7 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
     <message>
         <location line="+1"/>
         <source>Delete to End of Line</source>
-        <translation>删除到行的结束</translation>
+        <translation>删除到行的结尾</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4248,13 +5631,13 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
         <location line="+3"/>
         <location line="+3"/>
         <source>Indent Selection Rigidly</source>
-        <translation>严格缩进所选</translation>
+        <translation>严格向右缩进所选</translation>
     </message>
     <message>
         <location line="-2"/>
         <location line="+3"/>
         <source>Unindent Selection Rigidly</source>
-        <translation>严格向左缩进</translation>
+        <translation>严格向左缩进所选</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -4279,7 +5662,7 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
     <message>
         <location line="+2"/>
         <source>Goto Line</source>
-        <translation>转到行</translation>
+        <translation>跳转到行</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4339,7 +5722,7 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
     <message>
         <location line="+1"/>
         <source>Show Long Line Marker</source>
-        <translation>显示长线标记</translation>
+        <translation>显示长文本行标记</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4362,70 +5745,9 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
         <translation>按字母顺序排序标签页</translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Bookmark this Page</source>
-        <translation>为此标签页添加标签</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>Tools Menu</source>
-        <translation>工具菜单</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Handling of Dock Widgets</source>
-        <translation>停靠组件相关操作</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Documentation Viewer</source>
-        <translation>文档浏览器</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Browser</source>
-        <translation>浏览</translation>
-    </message>
-    <message>
-        <location line="+79"/>
-        <source>Import shortcuts from file...</source>
-        <translation>从文件导入快捷键...</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Export shortcuts to file...</source>
-        <translation>导出快捷键到文件...</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Failed to open %1 as Octave shortcut file</source>
-        <translation>无法将 %1 作为 Octave 快捷键文件打开</translation>
-    </message>
-    <message>
-        <location line="-335"/>
-        <source>Zoom In</source>
-        <translation>放大</translation>
-    </message>
-    <message>
-        <location line="-24"/>
-        <source>Show On-disk Documentation</source>
-        <translation>显示磁盘中的文档</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Zoom Out</source>
-        <translation>缩小</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+2"/>
-        <source>Zoom Normal</source>
-        <translation>缩放正常</translation>
-    </message>
-    <message>
-        <location line="+70"/>
+        <location line="+3"/>
         <source>Toggle Breakpoint</source>
-        <translation>切换断点</translation>
+        <translation>开关断点</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4478,1222 +5800,9 @@ Do you want to use the shortcut anyhow removing it from the previous action?</so
         <translation>前进一页</translation>
     </message>
     <message>
-        <location line="+83"/>
-        <source>Global</source>
-        <translation>全局</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+38"/>
-        <source>File Menu</source>
-        <translation>文件菜单</translation>
-    </message>
-    <message>
-        <location line="-36"/>
-        <location line="+38"/>
-        <source>Edit Menu</source>
-        <translation>编辑菜单</translation>
-    </message>
-    <message>
-        <location line="-36"/>
-        <location line="+40"/>
-        <source>Debug Menu</source>
-        <translation>调试菜单</translation>
-    </message>
-    <message>
-        <location line="-36"/>
-        <source>Window Menu</source>
-        <translation>窗口菜单</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+38"/>
-        <source>Help Menu</source>
-        <translation>帮助目录</translation>
-    </message>
-    <message>
-        <location line="-36"/>
-        <source>News Menu</source>
-        <translation>新闻目录</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Tab Handling in Dock Widgets</source>
-        <translation>停靠组件中标签页的相关操作</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Find &amp; Replace in Dock Widgets</source>
-        <translation>停靠组件中的查找和替换</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Zooming in Editor and Documentation</source>
-        <translation>编辑器和文档的缩放</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>View Menu</source>
-        <translation>视图菜单</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Run Menu</source>
-        <translation>运行菜单</translation>
-    </message>
-    <message>
-        <location line="+96"/>
-        <location line="+5"/>
-        <source>Octave Shortcut Files (*.osc);;All Files (*)</source>
-        <translation>Octave 快捷键文件 (*.osc);;全部文件 (*)</translation>
-    </message>
-    <message>
-        <location line="+123"/>
-        <source>Enter new Shortcut</source>
-        <translation>输入一个新的快捷键</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Apply the desired shortcut or click on the right button to reset the shortcut to its default.</source>
-        <translation>应用所需的快捷方式或单击右键以将快捷方式重置为其默认值。</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Enter shortcut directly by performing it</source>
-        <translation>通过执行直接输入快捷方式</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Add Shift modifier
-(allows to enter number keys)</source>
-        <translation>添加 Shift 修改器
-（允许输入数字键）</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Actual shortcut</source>
-        <translation>当前快捷键</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Default shortcut</source>
-        <translation>默认快捷键</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Set to default</source>
-        <translation>设为默认值</translation>
-    </message>
-    <message>
-        <location line="+69"/>
-        <source>Overwriting Shortcuts</source>
-        <translation>覆盖快捷键</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>You are about to overwrite all shortcuts.
-Would you like to save the current shortcut set or cancel the action?</source>
-        <translation>您即将覆盖所有快捷键。
-你想保存当前的快捷键设置还是取消操作？</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Don&apos;t save</source>
-        <translation>不保存 (&apos;t)</translation>
-    </message>
-</context>
-<context>
-    <name>octave::terminal_dock_widget</name>
-    <message>
-        <location filename="../src/terminal-dock-widget.cc" line="+87"/>
-        <source>Command Window</source>
-        <translation>命令窗口</translation>
-    </message>
-</context>
-<context>
-    <name>octave::variable_dock_widget</name>
-    <message>
-        <location filename="../src/variable-editor.cc" line="+175"/>
-        <source>Dock widget</source>
-        <translation>停靠组件</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Variable Editor: </source>
-        <translation>变量编辑器： </translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Undock widget</source>
-        <translation>取消组件停靠</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>Restore geometry</source>
-        <translation>恢复窗口几何形状</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Redock</source>
-        <translation>重新停靠</translation>
-    </message>
-</context>
-<context>
-    <name>octave::variable_editor</name>
-    <message>
-        <location line="+897"/>
-        <source>Variable Editor</source>
-        <translation>变量编辑器</translation>
-    </message>
-    <message>
         <location line="+1"/>
-        <source>Edit variables.</source>
-        <translation>编辑变量。</translation>
-    </message>
-    <message>
-        <location line="+548"/>
-        <source>Variable Editor Toolbar</source>
-        <translation>变量编辑器工具栏</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Save</source>
-        <translation>保存</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Save variable to a file</source>
-        <translation>保存变量到文件</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <source>Save in format ...</source>
-        <translation>保存为格式...</translation>
-    </message>
-    <message>
-        <location line="-5"/>
-        <source>Save variable to a file in different format</source>
-        <translation>以不同的格式保存变量到文件</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Cut</source>
-        <translation>剪切</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Cut data to clipboard</source>
-        <translation>剪切到剪切板</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Copy</source>
-        <translation>复制</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Copy data to clipboard</source>
-        <translation>复制到剪切板</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Paste</source>
-        <translation>粘贴</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Paste clipboard into variable data</source>
-        <translation>粘贴剪切板到变量中</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <location line="+5"/>
-        <location line="+7"/>
-        <source>Plot</source>
-        <translation>绘制</translation>
-    </message>
-    <message>
-        <location line="-11"/>
-        <source>Plot Selected Data</source>
-        <translation>绘制所选数据</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Plot selected data</source>
-        <translation>绘制所选数据</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Up</source>
-        <translation>上</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Go one level up in variable hierarchy</source>
-        <translation>前往变量的上一级结点</translation>
-    </message>
-</context>
-<context>
-    <name>octave::variable_editor_stack</name>
-    <message>
-        <location line="-1241"/>
-        <source>Save Variable %1 As</source>
-        <translation>保存变量 %1 为</translation>
-    </message>
-</context>
-<context>
-    <name>octave::variable_editor_view</name>
-    <message>
-        <location line="+144"/>
-        <source>Cut</source>
-        <translation>剪切</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Copy</source>
-        <translation>复制</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Paste</source>
-        <translation>粘贴</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Clear</source>
-        <translation>清空</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Delete</source>
-        <translation>删除</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Variable from Selection</source>
-        <translation>所选变量</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Transpose</source>
-        <translation>转置</translation>
-    </message>
-    <message>
-        <location line="+51"/>
-        <source> columns</source>
-        <translation> 列</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source> column</source>
-        <translation> 列</translation>
-    </message>
-    <message>
-        <location line="+47"/>
-        <source> rows</source>
-        <translation> 行</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source> row</source>
-        <translation> 行</translation>
-    </message>
-</context>
-<context>
-    <name>octave::welcome_wizard</name>
-    <message>
-        <location filename="../src/welcome-wizard.cc" line="-198"/>
-        <source>Welcome to GNU Octave</source>
-        <translation>欢迎使用 GNU Octave</translation>
-    </message>
-</context>
-<context>
-    <name>octave::workspace_model</name>
-    <message>
-        <location filename="../src/workspace-model.cc" line="+47"/>
-        <source>Name</source>
-        <translation>名称</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Class</source>
-        <translation>类型</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Dimension</source>
-        <translation>维度</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Value</source>
-        <translation>值</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Attribute</source>
-        <translation>属性</translation>
-    </message>
-    <message>
-        <location line="+83"/>
-        <source>Right click to copy, rename, or display</source>
-        <translation>右击以复制，重命名或显示</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <location line="+2"/>
-        <source>complex</source>
-        <translation>复杂度</translation>
-    </message>
-</context>
-<context>
-    <name>octave::workspace_view</name>
-    <message>
-        <location filename="../src/workspace-view.cc" line="+59"/>
-        <source>Workspace</source>
-        <translation>工作区</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>View the variables in the active workspace.</source>
-        <translation>显示当前活动工作区的变量。</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Enter text to filter the workspace</source>
-        <translation>输入文本筛选工作区</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Filter</source>
-        <translation>过滤器</translation>
-    </message>
-    <message>
-        <location line="+124"/>
-        <source>View the variables in the active workspace.&lt;br&gt;</source>
-        <translation>显示当前活动工作区的变量。&lt;br&gt;</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Colors for variable attributes:</source>
-        <translation>变量属性的颜色:</translation>
-    </message>
-    <message>
-        <location line="+162"/>
-        <source>Open in Variable Editor</source>
-        <translation>在变量编辑器中打开</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Copy name</source>
-        <translation>复制变量名</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Copy value</source>
-        <translation>复制变量值</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Rename</source>
-        <translation>重命名</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Only top-level symbols may be renamed</source>
-        <translation>只有顶级符号可能会被重命名</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>Hide filter</source>
-        <translation>隐藏过滤器</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Show filter</source>
-        <translation>显示过滤器</translation>
-    </message>
-    <message>
-        <location filename="../src/gui-preferences-ws.h" line="-34"/>
-        <source>Class</source>
-        <translation>类</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Dimension</source>
-        <translation>维度</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Value</source>
-        <translation>值</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Attribute</source>
-        <translation>属性</translation>
-    </message>
-</context>
-<context>
-    <name>settings_dialog</name>
-    <message>
-        <location filename="../src/settings-dialog.ui" line="+45"/>
-        <location line="+831"/>
-        <location line="+1905"/>
-        <source>General</source>
-        <translation>常规</translation>
-    </message>
-    <message>
-        <location line="-2715"/>
-        <source>Interface</source>
-        <translation>界面</translation>
-    </message>
-    <message>
-        <location line="+45"/>
-        <source>Dock widget title bar</source>
-        <translation>停靠组件标题栏</translation>
-    </message>
-    <message>
-        <location line="+373"/>
-        <source>Confirm before exiting</source>
-        <translation>退出前确认</translation>
-    </message>
-    <message>
-        <location line="-309"/>
-        <source>Octave logo only</source>
-        <translation>仅 Octave logo</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Letter icons</source>
-        <translation>字母图标</translation>
-    </message>
-    <message>
-        <location line="+279"/>
-        <location line="+439"/>
-        <source>Show status bar</source>
-        <translation>显示状态栏</translation>
-    </message>
-    <message>
-        <location line="-630"/>
-        <source>Text inactive</source>
-        <translation>不活动的文本颜色</translation>
-    </message>
-    <message>
-        <location line="-32"/>
-        <location line="+45"/>
-        <source>Active</source>
-        <translation>活动</translation>
-    </message>
-    <message>
-        <location line="-161"/>
-        <source>Small</source>
-        <translation>小</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Large</source>
-        <translation>大</translation>
-    </message>
-    <message>
-        <location line="+170"/>
-        <source>Custom style</source>
-        <translation>自定义样式</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Background inactive</source>
-        <translation>不活动的背景颜色</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>3D</source>
-        <translation>3D</translation>
-    </message>
-    <message>
-        <location line="+152"/>
-        <source>Octave Startup</source>
-        <translation>Octave 启动</translation>
-    </message>
-    <message>
-        <location line="+46"/>
-        <location line="+1687"/>
-        <source>Browse</source>
-        <translation>浏览</translation>
-    </message>
-    <message>
-        <location line="-1374"/>
-        <source>Editor</source>
-        <translation>编辑器</translation>
-    </message>
-    <message>
-        <location line="+488"/>
-        <location line="+140"/>
-        <source>This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in the default font. It may not work very well if styles use proportional fonts or if varied font sizes or bold, italic and normal texts are used.</source>
-        <translation>这适用于等宽字体。 该线根据默认字体中空格字符的宽度绘制。 如果样式使用比例字体，或者使用不同的字体大小或粗体，斜体和普通文本，它可能无法很好地工作。</translation>
-    </message>
-    <message>
-        <location line="-535"/>
-        <source>Enable Code Folding</source>
-        <translation>启用代码折叠</translation>
-    </message>
-    <message>
-        <location line="+1059"/>
-        <source>Windows (CRLF)</source>
-        <translation>Windows (CRLF)</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Legacy Mac (CR)</source>
-        <translation>Legacy Mac (CR)</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Unix (LF)</source>
-        <translation>Unix (LF)</translation>
-    </message>
-    <message>
-        <location line="-1034"/>
-        <source>Show horizontal scroll bar</source>
-        <translation>显示水平滚动条</translation>
-    </message>
-    <message>
-        <location line="-19"/>
-        <source>Show tool bar</source>
-        <translation>显示工具栏</translation>
-    </message>
-    <message>
-        <location line="+537"/>
-        <source>Indentation</source>
-        <translation>缩进</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>Indent width</source>
-        <translation>缩进宽度</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Tab indents line</source>
-        <translation>Tab 键缩进行</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Auto indentation</source>
-        <translation>自动缩进</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Tab width</source>
-        <translation>Tab 键宽度</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Show indentation guides</source>
-        <translation>显示缩进参考线</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Backspace unindents line</source>
-        <translation>退格键删除缩进符</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Indentation uses tabs</source>
-        <translation>使用 tabs 缩进</translation>
-    </message>
-    <message>
-        <location line="+70"/>
-        <source>Auto completion</source>
-        <translation>自动补全</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Match keywords</source>
-        <translation>匹配关键字</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Case sensitive</source>
-        <translation>大小写敏感</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Replace word by suggested one</source>
-        <translation>使用建议的单词替换原单词</translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <source>Match words in document</source>
-        <translation>在文档中匹配单词</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>With Octave builtins</source>
-        <translation>Octave 内置</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>With Octave functions</source>
-        <translation>Octave 函数</translation>
-    </message>
-    <message>
-        <location line="+64"/>
-        <source>Show completion list automatically</source>
-        <translation>自动显示补全列表</translation>
-    </message>
-    <message>
-        <location line="+76"/>
-        <source>Reload externally changed files without prompt</source>
-        <translation>无需提示即可重新加载外部更改的文件</translation>
-    </message>
-    <message>
-        <location line="-841"/>
-        <source>Use custom file editor</source>
-        <translation>使用自定义文件编辑器</translation>
-    </message>
-    <message>
-        <location line="+934"/>
-        <source>Text encoding used for loading and saving</source>
-        <translation>文本编码用于加载和保存</translation>
-    </message>
-    <message>
-        <location line="+68"/>
-        <source>Editor Styles</source>
-        <translation>编辑器风格</translation>
-    </message>
-    <message>
-        <location line="-1383"/>
-        <source>(Changing buffer size clears history)</source>
-        <translation>(更改缓冲区大小清除历史记录)</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>History buffer Size</source>
-        <translation>历史缓冲区大小</translation>
-    </message>
-    <message>
-        <location line="-123"/>
-        <location line="+1859"/>
-        <source>Font</source>
-        <translation>字体</translation>
-    </message>
-    <message>
-        <location line="-1569"/>
-        <source>Show line numbers</source>
-        <translation>显示行数</translation>
-    </message>
-    <message>
-        <location line="+152"/>
-        <source>Highlight current line</source>
-        <translation>高亮当前行</translation>
-    </message>
-    <message>
-        <location line="-882"/>
-        <source>Graphic icons</source>
-        <translation>图形图标</translation>
-    </message>
-    <message>
-        <location line="+310"/>
-        <source>These preferences are applied after any .octaverc startup files.</source>
-        <translation>这些首选项在任何.octaverc启动文件之后应用。</translation>
-    </message>
-    <message>
-        <location line="+433"/>
-        <source>Show whitespace</source>
-        <translation>显示空白字符</translation>
-    </message>
-    <message>
-        <location line="-45"/>
-        <source>Do not show whitespace used for indentation</source>
-        <translation>不要显示缩进的空白空间</translation>
-    </message>
-    <message>
-        <location line="+152"/>
-        <source>Show EOL characters</source>
-        <translation>显示 EOL 字符</translation>
-    </message>
-    <message>
-        <location line="+945"/>
-        <source>Default EOL mode</source>
-        <translation>默认 EOL 模式</translation>
-    </message>
-    <message>
-        <location line="-162"/>
-        <source>Number of characters before list is shown: </source>
-        <translation>显示列表前的字符数: </translation>
-    </message>
-    <message>
-        <location line="+150"/>
-        <source>Create nonexistent files without prompting</source>
-        <translation>在创建不存在的文件时不提示</translation>
-    </message>
-    <message>
-        <location line="-857"/>
-        <source>command line (%f=file, %l=line):</source>
-        <translation>命令行 (%f=文件, %l=行数):</translation>
-    </message>
-    <message>
-        <location line="+1001"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select font, font size (as a difference from the default size), font style (&lt;b&gt;b&lt;/b&gt;old, &lt;b&gt;i&lt;/b&gt;talic, &lt;b&gt;u&lt;/b&gt;nderline), text color, and background color (for the latter, the color magenta (255,0,255) is a placeholder for the default background color).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;选择字体, 字体大小 (作为与默认大小的差异), 字体样式 (&lt;b&gt;b&lt;/b&gt;old, &lt;b&gt;i&lt;/b&gt;talic, &lt;b&gt;u&lt;/b&gt;nderline), 文本颜色, 和背景颜色 (对于后者，颜色洋红色(255,0,255)是默认背景颜色的占位符).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="-1501"/>
-        <source>Cursor type:</source>
-        <translation>光标类型:</translation>
-    </message>
-    <message>
-        <location line="-164"/>
-        <source>Cursor blinking</source>
-        <translation>光标闪烁</translation>
-    </message>
-    <message>
-        <location line="-431"/>
-        <source>Preferences</source>
-        <translation>首选项</translation>
-    </message>
-    <message>
-        <location line="+66"/>
-        <source>(requires restart)</source>
-        <translation>(需要重启软件)</translation>
-    </message>
-    <message>
-        <location line="+355"/>
-        <source>Use native file dialogs</source>
-        <translation>使用系统原生文件对话框</translation>
-    </message>
-    <message>
-        <location line="-280"/>
-        <source>Use system icon theme if available (requires restart)</source>
-        <translation>尽可能使用系统图标主题(需要重启)</translation>
-    </message>
-    <message>
-        <location line="+50"/>
-        <source>Toolbar Icons</source>
-        <translation>工具栏图标</translation>
-    </message>
-    <message>
-        <location line="+179"/>
-        <source>Language</source>
-        <translation>语言</translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>Style</source>
-        <translation>样式</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>Initial working directory of Octave interpreter</source>
-        <translation>Octave 解释器的初始工作目录</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Restore last working directory of previous session</source>
-        <translation>恢复前一个会话的工作目录</translation>
-    </message>
-    <message>
-        <location line="+45"/>
-        <source>Command</source>
-        <translation>命令</translation>
-    </message>
-    <message>
-        <location line="+208"/>
-        <source>Set focus to Command Window when running a command from within another widget</source>
-        <translation>从其他组件中运行命令时，将焦点设置在“命令窗口”上</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Print debug location in Command Window in addition to the marker in the editor</source>
-        <translation>除编辑器中的标记外，在命令窗口中打印调试位置</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Command Window Colors</source>
-        <translation>命令窗口颜色</translation>
-    </message>
-    <message>
-        <location line="+190"/>
-        <source>Number size as difference to editor font</source>
-        <translation>行数字体大小(与编辑器字体不同)</translation>
-    </message>
-    <message>
-        <location line="+93"/>
-        <source>Highlight all occurrences of a word selected by a double click</source>
-        <translation>双击高亮所选单词的所有出现处</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <source>Tabs</source>
-        <translation>标签页</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate tabs: Vertical when at top or bottom and horizontal when left or right. The close button is not shown in rotated tabs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;旋转标签页：在顶部或底部时为垂直，在左侧或右侧时为水平。 关闭按钮在旋转后的标签页中不显示。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+74"/>
-        <source>Comments (Octave)</source>
-        <translation>注释 (Octave)</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Strings considered for uncommenting text</source>
-        <translation>视为非注释的字符串</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>String used for commenting selected text</source>
-        <translation>用于注释的字符串</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Long lines</source>
-        <translation>长代码行</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Break long lines at line length</source>
-        <translation>在代码行长度处断开超长代码</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Break lines only in comments</source>
-        <translation>只在注释中断开代码行</translation>
-    </message>
-    <message>
-        <location line="+60"/>
-        <source>Line length</source>
-        <translation>代码行长度</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Long line marker</source>
-        <translation>长代码行标记</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Line</source>
-        <translation>代码行</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Background</source>
-        <translation>背景</translation>
-    </message>
-    <message>
-        <location line="+38"/>
-        <source>Wrap long lines at current window border</source>
-        <translation>在当前的窗口边框处换行</translation>
-    </message>
-    <message>
-        <location line="+153"/>
-        <source>Auto insert after &quot;if&quot; etc.</source>
-        <translation>自动在&quot;if&quot;等后插入.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Nothing</source>
-        <translation>无</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>&quot;endif&quot; etc.</source>
-        <translation>&quot;endif&quot; 等.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>&quot;end&quot;</source>
-        <translation>&quot;end&quot;</translation>
-    </message>
-    <message>
-        <location line="+238"/>
-        <source>Debugging</source>
-        <translation>调试</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Always show debug breakpoints and pointers (opens related file if closed)</source>
-        <translation>始终显示调试断点和指针(如果关闭此选项则会打开相关文件)</translation>
-    </message>
-    <message>
-        <location line="+47"/>
-        <source>Restore editor tabs from previous session on startup or when editor is shown again after closing</source>
-        <translation>在启动时或编辑器关闭后再次显示时，恢复上次会话的编辑器标签页</translation>
-    </message>
-    <message>
-        <location line="+105"/>
-        <source>Close all files when the editor widget is closed/hidden</source>
-        <translation>当编辑器组件关闭/隐藏时关闭所有文件</translation>
-    </message>
-    <message>
-        <location line="-1460"/>
-        <source>Use foreground color</source>
-        <translation>使用前景色</translation>
-    </message>
-    <message>
-        <location line="-133"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If set, the focus of the widgets that are docked to the main window follows the mouse cursor. This is intended for having the same behavior within the main window when &amp;quot;focus follows mouse&amp;quot; is used for the desktop environment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;如果选中，则停靠到主窗口组件的焦点跟随鼠标光标。 这是为了在&amp;quot;焦点跟随鼠标&amp;quot;时在主窗口中具有相同的行为。 用于桌面环境。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Focus follows mouse for widgets docked to the main window</source>
-        <translation>组件停靠到主窗口时焦点跟随鼠标</translation>
-    </message>
-    <message>
-        <location line="+182"/>
-        <location line="+1749"/>
-        <source>Font size</source>
-        <translation>字体大小</translation>
-    </message>
-    <message>
-        <location line="-1223"/>
-        <source>Rotated tabs</source>
-        <translation>旋转标签页</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Position</source>
-        <translation>位置</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Max. tab width in chars (0: no limit)</source>
-        <translation>以字符为单位的最大标签页宽度（0：无限制）</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Max. width of a tab in characters (average char. width). Especially useful for rotated tabs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;以字符为单位的最大制表符宽度（平均字符宽度）。 特别是对旋转标签页有用。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+851"/>
-        <source>Force newline at end when saving file</source>
-        <translation>保存文件时强制在文件结尾换行</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Remove trailing spaces when saving file</source>
-        <translation>保存文件时删除末尾空格</translation>
-    </message>
-    <message>
-        <location line="+76"/>
-        <source>File Browser</source>
-        <translation>文件浏览器</translation>
-    </message>
-    <message>
-        <location line="+75"/>
-        <source>Initial file browser directory (only if not synchronized with initial working directory of Octave)</source>
-        <translation>初始文件浏览器目录（仅当未与Octave的初始工作目录同步时）</translation>
-    </message>
-    <message>
-        <location line="+75"/>
-        <source>Workspace</source>
-        <translation>工作区</translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>Colors for variable attributes</source>
-        <translation>变量属性的颜色</translation>
-    </message>
-    <message>
-        <location line="+133"/>
-        <source>Use Command Window font</source>
-        <translation>使用命令窗口字体</translation>
-    </message>
-    <message>
-        <location line="+117"/>
-        <source>Disable menu accelerators of main window menus when Commmand Window has focus</source>
-        <translation>当命令窗口获取焦点时禁用主窗口菜单的菜单快捷键</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>Import shortcut set</source>
-        <translation>导入快捷键设置</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Export current shortcut set</source>
-        <translation>导出当前快捷键设置</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Reset shortcuts to their defaults</source>
-        <translation>将快捷方式重置为其默认值</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+80"/>
-        <source>Default</source>
-        <translation>默认</translation>
-    </message>
-    <message>
-        <location line="-71"/>
-        <source>Edit a shortcut by double-clicking in a cell</source>
-        <translation>通过双击单元格编辑快捷方式</translation>
-    </message>
-    <message>
-        <location line="+76"/>
-        <source>Actual</source>
-        <translation>当前</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Network</source>
-        <translation>网络</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Allow Octave to connect to the Octave web site to display current news and information</source>
-        <translation>允许 Octave 连接到 Octave 站点以显示当前新闻和信息</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Proxy Server</source>
-        <translation>代理服务器</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select &lt;span style=&quot; font-style:italic;&quot;&gt;HttpProxy&lt;/span&gt;, &lt;span style=&quot; font-style:italic;&quot;&gt;Sock5Proxy&lt;/span&gt; or &lt;span style=&quot; font-style:italic;&quot;&gt;Environment Variables&lt;/span&gt;. With the last selection, the proxy is taken from the first non-empty environment variable ALL_PROXY, HTTP_PROXY or HTTPS_PROXY .&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;选择 &lt;span style=&quot; font-style:italic;&quot;&gt;HttpProxy&lt;/span&gt;, &lt;span style=&quot; font-style:italic;&quot;&gt;Sock5Proxy&lt;/span&gt; 或者 &lt;span style=&quot; font-style:italic;&quot;&gt;Environment Variables&lt;/span&gt;。 选中最后一个选项时，代理取自第一个非空的环境变量 ALL_PROXY, HTTP_PROXY 或 HTTPS_PROXY 。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+78"/>
-        <source>Use proxy server</source>
-        <translation>使用代理服务器</translation>
-    </message>
-    <message>
-        <location line="-523"/>
-        <source>Variable Editor</source>
-        <translation>变量编辑器</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Default row height</source>
-        <translation>默认行高</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Default column width</source>
-        <translation>默认列宽</translation>
-    </message>
-    <message>
-        <location line="+78"/>
-        <source>Variable Editor Colors</source>
-        <translation>变量编辑器颜色</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Use alternating row colors</source>
-        <translation>使用颜色交替的行</translation>
-    </message>
-    <message>
-        <location line="+69"/>
-        <source>Disable global shortcuts when Command Window has focus</source>
-        <translation>当聚焦于命令窗口时关闭全局快捷键</translation>
-    </message>
-    <message>
-        <location line="-2360"/>
-        <source>Icon set for dock widgets</source>
-        <translation>停靠组件的图标</translation>
-    </message>
-    <message>
-        <location line="-92"/>
-        <source>Normal</source>
-        <translation>正常</translation>
-    </message>
-    <message>
-        <location line="+1798"/>
-        <source>File handling</source>
-        <translation>文件处理</translation>
-    </message>
-    <message>
-        <location line="+254"/>
-        <source>Behavior</source>
-        <translation>行为</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Synchronize Octave working directory with file browser</source>
-        <translation>使用文件浏览器同步 Octave 工作目录</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Restore last directory of previous session</source>
-        <translation>恢复前一个会话的最后一个目录</translation>
-    </message>
-    <message>
-        <location line="+334"/>
-        <source>Shortcuts</source>
-        <translation>快捷键</translation>
-    </message>
-    <message>
-        <location line="+38"/>
-        <source>Disable global shortcuts in order to prevent
-interference with readline key strokes.
-Exceptions: Ctrl-C for interrupting the interpreter
-and the shortcuts for switching to other widgets.</source>
-        <translation>禁用全局快捷键以防止
-干扰 readline 快捷键。
-异常: Ctrl-C 用于中断解释器
-和切换到其他组件的快捷键。</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Disable menu accelerators in order to prevent
-interference with readline key strokes.</source>
-        <translation>禁用菜单快捷键以防止
-干扰 readline 快捷键。</translation>
-    </message>
-    <message>
-        <location line="+54"/>
-        <source>Export</source>
-        <translation>导出</translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <source>Import</source>
-        <translation>导入</translation>
-    </message>
-    <message>
-        <location line="+90"/>
-        <source>Action</source>
-        <translation>动作</translation>
-    </message>
-    <message>
-        <location line="+82"/>
-        <source>Hostname:</source>
-        <translation>主机名:</translation>
-    </message>
-    <message>
-        <location line="-536"/>
-        <source>Extensions of files to be opened in the default text editor (separated by &quot;;&quot;):</source>
-        <translation>要在默认文本编辑器中打开的文件的扩展名 (以 &quot;;&quot; 分隔):</translation>
-    </message>
-    <message>
-        <location line="+566"/>
-        <source>Proxy type:</source>
-        <translation>代理类型:</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Port:</source>
-        <translation>端口:</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>Username:</source>
-        <translation>用户名:</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Password:</source>
-        <translation>密码:</translation>
+        <source>Bookmark this Page</source>
+        <translation>为此标签页添加标签</translation>
     </message>
 </context>
 </TS>

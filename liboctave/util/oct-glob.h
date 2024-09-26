@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2010-2022 The Octave Project Developers
+// Copyright (C) 2010-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,20 +30,21 @@
 
 #include "str-vec.h"
 
-namespace octave
-{
-  namespace sys
-  {
-    extern OCTAVE_API bool
-    fnmatch (const string_vector& pat, const std::string& str,
-             int fnmatch_flags);
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-    extern OCTAVE_API string_vector
-    glob (const string_vector&);
+OCTAVE_BEGIN_NAMESPACE(sys)
 
-    extern OCTAVE_API string_vector
-    windows_glob (const string_vector&);
-  }
-}
+extern OCTAVE_API bool
+fnmatch (const string_vector& pat, const std::string& str,
+         int fnmatch_flags);
+
+extern OCTAVE_API string_vector
+glob (const string_vector&);
+
+extern OCTAVE_API string_vector
+windows_glob (const string_vector&);
+
+OCTAVE_END_NAMESPACE(sys)
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

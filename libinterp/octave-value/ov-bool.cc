@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -69,10 +69,10 @@ default_numeric_conversion_function (const octave_base_value& a)
 }
 
 octave_base_value::type_conv_info
-octave_bool::numeric_conversion_function (void) const
+octave_bool::numeric_conversion_function () const
 {
   return octave_base_value::type_conv_info (default_numeric_conversion_function,
-                                            octave_scalar::static_type_id ());
+         octave_scalar::static_type_id ());
 
 }
 
@@ -95,61 +95,61 @@ octave_bool::do_index_op (const octave_value_list& idx, bool resize_ok)
 }
 
 octave_value
-octave_bool::as_double (void) const
+octave_bool::as_double () const
 {
   return static_cast<double> (scalar);
 }
 
 octave_value
-octave_bool::as_single (void) const
+octave_bool::as_single () const
 {
   return static_cast<float> (scalar);
 }
 
 octave_value
-octave_bool::as_int8 (void) const
+octave_bool::as_int8 () const
 {
   return octave_int8 (scalar);
 }
 
 octave_value
-octave_bool::as_int16 (void) const
+octave_bool::as_int16 () const
 {
   return octave_int16 (scalar);
 }
 
 octave_value
-octave_bool::as_int32 (void) const
+octave_bool::as_int32 () const
 {
   return octave_int32 (scalar);
 }
 
 octave_value
-octave_bool::as_int64 (void) const
+octave_bool::as_int64 () const
 {
   return octave_int64 (scalar);
 }
 
 octave_value
-octave_bool::as_uint8 (void) const
+octave_bool::as_uint8 () const
 {
   return octave_uint8 (scalar);
 }
 
 octave_value
-octave_bool::as_uint16 (void) const
+octave_bool::as_uint16 () const
 {
   return octave_uint16 (scalar);
 }
 
 octave_value
-octave_bool::as_uint32 (void) const
+octave_bool::as_uint32 () const
 {
   return octave_uint32 (scalar);
 }
 
 octave_value
-octave_bool::as_uint64 (void) const
+octave_bool::as_uint64 () const
 {
   return octave_uint64 (scalar);
 }
@@ -241,7 +241,8 @@ octave_bool::save_hdf5 (octave_hdf5_id loc_id, const char *name,
   if (space_hid < 0) return false;
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (loc_id, name, H5T_NATIVE_DOUBLE, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (loc_id, name, H5T_NATIVE_DOUBLE, space_hid,
                         octave_H5P_DEFAULT);
@@ -253,8 +254,8 @@ octave_bool::save_hdf5 (octave_hdf5_id loc_id, const char *name,
     }
 
   double tmp = double_value ();
-  retval = H5Dwrite (data_hid, H5T_NATIVE_DOUBLE, octave_H5S_ALL, octave_H5S_ALL,
-                     octave_H5P_DEFAULT, &tmp) >= 0;
+  retval = H5Dwrite (data_hid, H5T_NATIVE_DOUBLE, octave_H5S_ALL,
+                     octave_H5S_ALL, octave_H5P_DEFAULT, &tmp) >= 0;
 
   H5Dclose (data_hid);
   H5Sclose (space_hid);

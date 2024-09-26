@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,7 +37,7 @@ DAE : public base_diff_alg_eqn, public DAEFunc
 {
 public:
 
-  DAE (void)
+  DAE ()
     : base_diff_alg_eqn (), DAEFunc () { }
 
   DAE (const ColumnVector& xx, double tt, DAEFunc& f)
@@ -60,7 +60,7 @@ public:
     return *this;
   }
 
-  virtual ~DAE (void) = default;
+  virtual ~DAE () = default;
 };
 
 #endif

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2004-2022 The Octave Project Developers
+## Copyright (C) 2004-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -27,9 +27,9 @@
 ## public domain.
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} sprand (@var{m}, @var{n}, @var{d})
-## @deftypefnx {} {} sprand (@var{m}, @var{n}, @var{d}, @var{rc})
-## @deftypefnx {} {} sprand (@var{s})
+## @deftypefn  {} {@var{s} =} sprand (@var{m}, @var{n}, @var{d})
+## @deftypefnx {} {@var{s} =} sprand (@var{m}, @var{n}, @var{d}, @var{rc})
+## @deftypefnx {} {@var{s} =} sprand (@var{s})
 ## Generate a sparse matrix with uniformly distributed random values.
 ##
 ## The size of the matrix is @var{m}x@var{n} with a density of values @var{d}.

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,7 +32,7 @@
 #include <istream>
 #include <sstream>
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Helper functions when reading from ascii files.
 
@@ -180,4 +180,4 @@ read_until_newline (std::istream& is, bool keep_newline)
   return buf.str ();
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

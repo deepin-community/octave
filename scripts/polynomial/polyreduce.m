@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} polyreduce (@var{c})
+## @deftypefn {} {@var{p} =} polyreduce (@var{c})
 ## Reduce a polynomial coefficient vector to a minimum number of terms by
 ## stripping off any leading zeros.
 ## @seealso{polyout}

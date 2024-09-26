@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017-2022 The Octave Project Developers
+// Copyright (C) 2017-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,14 +32,14 @@
 
 const QString
 dc_bookmark_file ("octave-doc-bookmarks.xbel");
-const gui_pref
-dc_bookmark_filter_active ("documentation_widget/filter_active", QVariant (false));
 
-const gui_pref
-dc_bookmark_filter_shown ("documentation_widget/filter_shown", QVariant (true));
+extern gui_pref dc_bookmark_filter_active;
 
-const gui_pref
-dc_bookmark_filter_mru ("documentation_widget/bookmark_filter_mru", QVariant ());
+extern gui_pref dc_bookmark_filter_shown;
+
+extern gui_pref dc_bookmark_filter_mru;
+
+extern gui_pref dc_splitter_state;
 
 // Constants for the xbel file format
 const QLatin1String dc_xbel_doctype ("<!DOCTYPE xbel>");
@@ -55,7 +55,6 @@ const QLatin1String dc_xbel_name_bookmark ("bookmark");
 const QLatin1String dc_xbel_name_format ("xbel");
 
 // Zoom level
-const gui_pref
-dc_browser_zoom_level ("documentation_widget/browser_zoom_level", QVariant (0));
+extern gui_pref dc_browser_zoom_level;
 
 #endif

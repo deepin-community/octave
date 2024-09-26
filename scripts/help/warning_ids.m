@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -178,6 +178,13 @@
 ## different file target than the programmer intended is being used.
 ## By default, the @code{Octave:data-file-in-path} warning is enabled.
 ##
+## @item Octave:datevec:date-format-spec
+## If the @code{Octave:datevec:date-format-spec} warning is enabled, a warning
+## is printed if the date format specification contains questionable date or
+## time specifiers.  Typical bad patterns are using uppercase date specifiers
+## or lowercase time specifiers.
+## By default, the @code{Octave:datevec:date-format-spec} warning is enabled.
+##
 ## @item Octave:deprecated-function
 ## If the @code{Octave:deprecated-function} warning is enabled, a
 ## warning is issued when Octave encounters a function that is obsolete and
@@ -189,6 +196,11 @@
 ## warning is issued when Octave encounters a keyword that is obsolete and
 ## scheduled for removal from Octave.
 ## By default, the @code{Octave:deprecated-keyword} warning is enabled.
+##
+## @item Octave:deprecated-option
+## If the @code{Octave:deprecated-option} warning is enabled, a
+## warning is issued when an obsolete option or input to a function is used.
+## By default, the @code{Octave:deprecated-option} warning is enabled.
 ##
 ## @item Octave:deprecated-property
 ## If the @code{Octave:deprecated-property} warning is enabled, a
@@ -354,6 +366,11 @@
 ## By default, the @code{Octave:possible-matlab-short-circuit-operator} warning
 ## is enabled.
 ##
+## @item Octave:pow2:imaginary-ignored
+## If the @code{Octave:pow2:imaginary-ignored} warning is enabled, a warning is
+## printed if either input to @code{pow2} is complex.
+## By default, the @code{Octave:pow2:imaginary-ignored} warning is enabled.
+##
 ## @item Octave:recursive-path-search
 ## If the @code{Octave:recursive-path-search} warning is enabled, Octave
 ## will issue a warning if @code{addpath} is used with double trailing
@@ -393,6 +410,12 @@
 ## string constant.
 ## By default, the @code{Octave:single-quote-string} warning is disabled.
 ##
+## @item Octave:sparse:double-conversion
+## If the @code{Octave:sparse:double-conversion} warning is enabled, a warning
+## is printed when an implicit conversion from a full, single array occurs
+## during the creation of a sparse array.
+## By default, the @code{Octave:sparse:double-conversion} warning is enabled.
+##
 ## @item Octave:sqrtm:SingularMatrix
 ## If the @code{Octave:sqrtm:SingularMatrix} warning is enabled, a warning is
 ## printed if the matrix square root function @code{sqrtm} is called with an
@@ -417,7 +440,8 @@
 ##
 ## @item Octave:LaTeX:internal-error
 ## If the @code{Octave:LaTeX:internal-error} warning is enabled, a warning is
-## printed whenever the LaTeX renderer for text in plots encounters an issue.
+## printed whenever the @LaTeX{} renderer for text in plots encounters an
+## issue.
 ## By default, the @code{Octave:LaTeX:internal-error} warning is enabled.
 ##
 ## @item Octave:unimplemented-matlab-functionality
@@ -441,5 +465,5 @@ function warning_ids ()
 endfunction
 
 
-## Mark file as being tested.  No real test needed for a documentation .m file
+## Mark file as tested.  No tests needed for a documentation m-file.
 %!assert (1)

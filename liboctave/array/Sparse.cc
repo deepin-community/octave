@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -54,7 +54,7 @@
 
 template <typename T, typename Alloc>
 OCTAVE_API typename Sparse<T, Alloc>::SparseRep *
-Sparse<T, Alloc>::nil_rep (void)
+Sparse<T, Alloc>::nil_rep ()
 {
   static typename Sparse<T, Alloc>::SparseRep nr;
   return &nr;
@@ -176,7 +176,7 @@ Sparse<T, Alloc>::SparseRep::change_length (octave_idx_type nz)
 template <typename T, typename Alloc>
 OCTAVE_API
 bool
-Sparse<T, Alloc>::SparseRep::indices_ok (void) const
+Sparse<T, Alloc>::SparseRep::indices_ok () const
 {
   return sparse_indices_ok (m_ridx, m_cidx, m_nrows, m_ncols, nnz ());
 }
@@ -184,7 +184,7 @@ Sparse<T, Alloc>::SparseRep::indices_ok (void) const
 template <typename T, typename Alloc>
 OCTAVE_API
 bool
-Sparse<T, Alloc>::SparseRep::any_element_is_nan (void) const
+Sparse<T, Alloc>::SparseRep::any_element_is_nan () const
 {
   octave_idx_type nz = nnz ();
 
@@ -197,8 +197,7 @@ Sparse<T, Alloc>::SparseRep::any_element_is_nan (void) const
 
 template <typename T, typename Alloc>
 OCTAVE_API
-Sparse<T, Alloc>::Sparse (octave_idx_type nr, octave_idx_type nc,
-                                        T val)
+Sparse<T, Alloc>::Sparse (octave_idx_type nr, octave_idx_type nc, T val)
   : m_rep (nullptr), m_dimensions (dim_vector (nr, nc))
 {
   if (val != T ())
@@ -263,10 +262,10 @@ Sparse<T, Alloc>::Sparse (const Sparse<T, Alloc>& a, const dim_vector& dv)
 {
 
   // Work in unsigned long long to avoid overflow issues with numel
-  unsigned long long a_nel = static_cast<unsigned long long>(a.rows ()) *
-                             static_cast<unsigned long long>(a.cols ());
-  unsigned long long dv_nel = static_cast<unsigned long long>(dv(0)) *
-                              static_cast<unsigned long long>(dv(1));
+  unsigned long long a_nel = static_cast<unsigned long long> (a.rows ()) *
+                             static_cast<unsigned long long> (a.cols ());
+  unsigned long long dv_nel = static_cast<unsigned long long> (dv(0)) *
+                              static_cast<unsigned long long> (dv(1));
 
   if (a_nel != dv_nel)
     (*current_liboctave_error_handler)
@@ -705,7 +704,7 @@ Sparse<T, Alloc>::Sparse (const Array<T>& a)
 
 template <typename T, typename Alloc>
 OCTAVE_API
-Sparse<T, Alloc>::~Sparse (void)
+Sparse<T, Alloc>::~Sparse ()
 {
   if (--m_rep->m_count == 0)
     delete m_rep;
@@ -774,8 +773,8 @@ Sparse<T, Alloc>::range_error (const char *fcn, octave_idx_type n)
 template <typename T, typename Alloc>
 OCTAVE_API
 T
-Sparse<T, Alloc>::range_error (const char *fcn, octave_idx_type i,
-                                             octave_idx_type j) const
+Sparse<T, Alloc>::range_error (const char *fcn,
+                               octave_idx_type i, octave_idx_type j) const
 {
   (*current_liboctave_error_handler)
     ("%s (%" OCTAVE_IDX_TYPE_FORMAT ", %" OCTAVE_IDX_TYPE_FORMAT "): "
@@ -785,8 +784,8 @@ Sparse<T, Alloc>::range_error (const char *fcn, octave_idx_type i,
 template <typename T, typename Alloc>
 OCTAVE_API
 T&
-Sparse<T, Alloc>::range_error (const char *fcn, octave_idx_type i,
-                                             octave_idx_type j)
+Sparse<T, Alloc>::range_error (const char *fcn,
+                               octave_idx_type i, octave_idx_type j)
 {
   (*current_liboctave_error_handler)
     ("%s (%" OCTAVE_IDX_TYPE_FORMAT ", %" OCTAVE_IDX_TYPE_FORMAT "): "
@@ -797,7 +796,7 @@ template <typename T, typename Alloc>
 OCTAVE_API
 T
 Sparse<T, Alloc>::range_error (const char *fcn,
-                                             const Array<octave_idx_type>& ra_idx) const
+                               const Array<octave_idx_type>& ra_idx) const
 {
   std::ostringstream buf;
 
@@ -873,6 +872,9 @@ Sparse<T, Alloc>::reshape (const dim_vector& new_dims) const
           octave_idx_type old_nr = rows ();
           octave_idx_type old_nc = cols ();
           retval = Sparse<T, Alloc> (new_nr, new_nc, new_nnz);
+          // Special case for empty matrices (bug #64080)
+          if (new_nr == 0 || new_nc == 0)
+            return retval;
 
           octave_idx_type kk = 0;
           retval.xcidx (0) = 0;
@@ -1135,7 +1137,7 @@ Sparse<T, Alloc>::insert (const Sparse<T, Alloc>& a,
 template <typename T, typename Alloc>
 OCTAVE_API
 Sparse<T, Alloc>
-Sparse<T, Alloc>::transpose (void) const
+Sparse<T, Alloc>::transpose () const
 {
   assert (ndims () == 2);
 
@@ -2028,8 +2030,7 @@ Sparse<T, Alloc>::assign (const octave::idx_vector& idx,
 template <typename T, typename Alloc>
 OCTAVE_API
 void
-Sparse<T, Alloc>::assign (const octave::idx_vector& idx,
-                                        const T& rhs)
+Sparse<T, Alloc>::assign (const octave::idx_vector& idx, const T& rhs)
 {
   // FIXME: Converting the RHS and forwarding to the sparse matrix
   // assignment function is simpler, but it might be good to have a

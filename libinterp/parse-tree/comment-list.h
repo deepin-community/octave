@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2000-2022 The Octave Project Developers
+// Copyright (C) 2000-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,83 +32,118 @@
 
 #include "base-list.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+extern std::string get_comment_text ();
+
+extern char * get_comment_text_c_str ();
+
+extern void save_comment_text (const std::string& text);
+
+class
+comment_elt
 {
-  extern std::string get_comment_text (void);
+public:
 
-  extern char * get_comment_text_c_str (void);
-
-  extern void save_comment_text (const std::string& text);
-
-  class
-  comment_elt
+  enum comment_type
   {
-  public:
-
-    enum comment_type
-    {
-      unknown,
-      block,
-      full_line,
-      end_of_line,
-      doc_string,
-      copyright
-    };
-
-    comment_elt (const std::string& s = "", comment_type t = unknown)
-      : m_text (s), m_type (t) { }
-
-    comment_elt (const comment_elt& oc)
-      : m_text (oc.m_text), m_type (oc.m_type) { }
-
-    comment_elt& operator = (const comment_elt& oc)
-    {
-      if (this != &oc)
-        {
-          m_text = oc.m_text;
-          m_type = oc.m_type;
-        }
-
-      return *this;
-    }
-
-    std::string text (void) const { return m_text; }
-
-    comment_type type (void) const { return m_type; }
-
-    bool is_block (void) const { return m_type == block; }
-    bool is_full_line (void) const { return m_type == full_line; }
-    bool is_end_of_line (void) const { return m_type == end_of_line; }
-    bool is_doc_string (void) const { return m_type == doc_string; }
-    bool is_copyright (void) const { return m_type == copyright; }
-
-    ~comment_elt (void) = default;
-
-  private:
-
-    // The text of the comment.
-    std::string m_text;
-
-    // The type of comment.
-    comment_type m_type;
+    unknown,
+    block,
+    full_line,
+    end_of_line,
+    copyright
   };
 
-  class
-  comment_list : public base_list<comment_elt>
+  comment_elt (const std::string& s = "", comment_type t = unknown, bool uses_hash_char = false)
+    : m_text (s), m_type (t), m_uses_hash_char (uses_hash_char) { }
+
+  comment_elt (const comment_elt& oc)
+    : m_text (oc.m_text), m_type (oc.m_type), m_uses_hash_char (oc.m_uses_hash_char)
+  { }
+
+  comment_elt& operator = (const comment_elt& oc)
   {
-  public:
+    if (this != &oc)
+      {
+        m_text = oc.m_text;
+        m_type = oc.m_type;
+        m_uses_hash_char = oc.m_uses_hash_char;
+      }
 
-    comment_list (void) { }
+    return *this;
+  }
 
-    void append (const comment_elt& elt)
-    { base_list<comment_elt>::append (elt); }
+  bool empty () const { return m_text.empty (); }
 
-    void append (const std::string& s,
-                 comment_elt::comment_type t = comment_elt::unknown)
-    { append (comment_elt (s, t)); }
+  std::string text () const { return m_text; }
 
-    comment_list * dup (void) const;
-  };
-}
+  comment_type type () const { return m_type; }
+
+  bool is_block () const { return m_type == block; }
+  bool is_full_line () const { return m_type == full_line; }
+  bool is_end_of_line () const { return m_type == end_of_line; }
+  bool is_copyright () const { return m_type == copyright; }
+  bool uses_hash_char () const { return m_uses_hash_char; }
+
+  void reset ()
+  {
+    m_text = "";
+    m_type = unknown;
+    m_uses_hash_char = false;
+  }
+
+  ~comment_elt () = default;
+
+private:
+
+  // The text of the comment.
+  std::string m_text;
+
+  // The type of comment.
+  comment_type m_type;
+
+  // TRUE means a line comment uses '#' or a block comment used at least
+  // one '#' delimiter.
+  bool m_uses_hash_char;
+};
+
+class
+comment_list : public base_list<comment_elt>
+{
+public:
+
+  OCTAVE_DEFAULT_CONSTRUCT_COPY_MOVE_DELETE (comment_list)
+
+  void append (const comment_elt& elt)
+  { base_list<comment_elt>::append (elt); }
+
+  void append (const std::string& s,
+               comment_elt::comment_type t = comment_elt::unknown,
+               bool uses_hash_char = false)
+  { append (comment_elt (s, t, uses_hash_char)); }
+
+  comment_list * dup () const;
+
+  // Documentation for functions is typically the first block of
+  // comments that doesn't look like a copyright statement.
+  comment_elt find_doc_comment () const
+  {
+    for (const auto& elt : *this)
+      {
+        // FIXME: should we also omit end-of-line comments?
+        if (! elt.is_copyright ())
+          return elt;
+      }
+
+    return comment_elt ();
+  }
+
+  std::string find_doc_string () const
+  {
+    return find_doc_comment().text ();
+  }
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

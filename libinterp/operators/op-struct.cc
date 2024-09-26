@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,13 +35,13 @@
 #include "ov-typeinfo.h"
 #include "ops.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // struct ops.
 
 DEFUNOP (transpose, struct)
 {
-  const octave_struct& v = dynamic_cast<const octave_struct&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_struct&, v, a);
 
   if (v.ndims () > 2)
     error ("transpose not defined for N-D objects");
@@ -51,7 +51,7 @@ DEFUNOP (transpose, struct)
 
 DEFUNOP (scalar_transpose, scalar_struct)
 {
-  const octave_scalar_struct& v = dynamic_cast<const octave_scalar_struct&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar_struct&, v, a);
 
   return octave_value (v.scalar_map_value ());
 }
@@ -66,8 +66,8 @@ oct_catop_struct_matrix (const octave_base_value& a1,
                          const octave_base_value& a2,
                          const Array<octave_idx_type>&)
 {
-  const octave_struct& v1 = dynamic_cast<const octave_struct&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_struct&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
 
   NDArray tmp = v2.array_value ();
   dim_vector dv = tmp.dims ();
@@ -83,8 +83,8 @@ oct_catop_matrix_struct (const octave_base_value& a1,
                          const octave_base_value& a2,
                          const Array<octave_idx_type>&)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_struct& v2 = dynamic_cast<const octave_struct&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_struct&, v2, a2);
 
   NDArray tmp = v1.array_value ();
   dim_vector dv = tmp.dims ();
@@ -113,4 +113,4 @@ install_struct_ops (octave::type_info& ti)
   INSTALL_CATOP_TI (ti, octave_matrix, octave_struct, matrix_struct);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

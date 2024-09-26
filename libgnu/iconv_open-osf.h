@@ -1,5 +1,5 @@
 /* ANSI-C code produced by gperf version 3.1 */
-/* Command-line: gperf -m 10 /home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf  */
+/* Command-line: gperf -m 10 ../../libgnu/iconv_open-osf.gperf  */
 /* Computed positions: -k'4,$' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -29,7 +29,7 @@
 #error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gperf@gnu.org>."
 #endif
 
-#line 17 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 17 "../../libgnu/iconv_open-osf.gperf"
 struct mapping { int standard_name; const char vendor_name[10 + 1]; };
 
 #define TOTAL_KEYWORDS 38
@@ -168,84 +168,84 @@ static const struct stringpool_t stringpool_contents =
 static const struct mapping mappings[] =
   {
     {-1}, {-1}, {-1}, {-1}, {-1}, {-1},
-#line 57 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 57 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str6, "cp1255"},
-#line 40 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 40 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str7, "cp775"},
-#line 52 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 52 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str8, "cp1250"},
-#line 63 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 63 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str9, "eucTW"},
-#line 62 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 62 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str10, "eucKR"},
-#line 66 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 66 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str11, "TACTIS"},
-#line 33 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 33 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str12, "ISO8859-5"},
-#line 38 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 38 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str13, "ISO8859-15"},
-#line 64 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 64 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str14, "big5"},
-#line 43 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 43 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str15, "cp855"},
-#line 60 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 60 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str16, "cp1258"},
-#line 41 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 41 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str17, "cp850"},
-#line 47 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 47 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str18, "cp865"},
-#line 61 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 61 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str19, "eucJP"},
-#line 59 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 59 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str20, "cp1257"},
-#line 58 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 58 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str21, "cp1256"},
-#line 36 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 36 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str22, "ISO8859-8"},
-#line 65 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 65 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str23, "SJIS"},
     {-1},
-#line 37 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 37 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str25, "ISO8859-9"},
-#line 35 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 35 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str26, "ISO8859-7"},
-#line 34 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 34 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str27, "ISO8859-6"},
     {-1},
-#line 44 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 44 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str29, "cp857"},
-#line 54 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 54 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str30, "cp1252"},
-#line 49 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 49 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str31, "cp869"},
-#line 51 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 51 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str32, "KSC5601"},
-#line 48 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 48 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str33, "cp866"},
-#line 39 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 39 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str34, "cp437"},
-#line 53 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 53 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str35, "cp1251"},
-#line 30 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 30 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str36, "ISO8859-2"},
-#line 56 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 56 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str37, "cp1254"},
-#line 50 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 50 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str38, "cp874"},
-#line 42 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 42 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str39, "cp852"},
-#line 55 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 55 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str40, "cp1253"},
-#line 29 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 29 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str41, "ISO8859-1"},
-#line 46 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 46 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str42, "cp862"},
-#line 32 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 32 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str43, "ISO8859-4"},
     {-1}, {-1},
-#line 31 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 31 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str46, "ISO8859-3"},
-#line 45 "/home/jwe/src/octave-stable/libgnu/iconv_open-osf.gperf"
+#line 45 "../../libgnu/iconv_open-osf.gperf"
     {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str47, "cp861"}
   };
 

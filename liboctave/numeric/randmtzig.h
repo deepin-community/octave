@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2006-2022 The Octave Project Developers
+// Copyright (C) 2006-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -71,52 +71,53 @@
 
 #define MT_N 624
 
-namespace octave
-{
-  // Mersenne Twister.
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  extern OCTAVE_API void init_mersenne_twister (void);
-  extern OCTAVE_API void init_mersenne_twister (const uint32_t seed);
-  extern OCTAVE_API void init_mersenne_twister (const uint32_t *init_key,
-                                                const int key_length);
+// Mersenne Twister.
 
-  extern OCTAVE_API void set_mersenne_twister_state (const uint32_t *save);
-  extern OCTAVE_API void get_mersenne_twister_state (uint32_t *save);
+extern OCTAVE_API void init_mersenne_twister ();
+extern OCTAVE_API void init_mersenne_twister (const uint32_t seed);
+extern OCTAVE_API void init_mersenne_twister (const uint32_t *init_key,
+                                              const int key_length);
 
-  template <typename T> OCTAVE_API T rand_uniform (void);
-  template <typename T> OCTAVE_API T rand_normal (void);
-  template <typename T> OCTAVE_API T rand_exponential (void);
+extern OCTAVE_API void set_mersenne_twister_state (const uint32_t *save);
+extern OCTAVE_API void get_mersenne_twister_state (uint32_t *save);
 
-  template <typename T> OCTAVE_API void rand_uniform (octave_idx_type n, T *p);
-  template <typename T> OCTAVE_API void rand_normal (octave_idx_type n, T *p);
-  template <typename T> OCTAVE_API void
-  rand_exponential (octave_idx_type n, T *p);
+template <typename T> OCTAVE_API T rand_uniform ();
+template <typename T> OCTAVE_API T rand_normal ();
+template <typename T> OCTAVE_API T rand_exponential ();
 
-  template <> OCTAVE_API double rand_uniform<double> (void);
-  template <> OCTAVE_API double rand_normal<double> (void);
-  template <> OCTAVE_API double rand_exponential<double> (void);
+template <typename T> OCTAVE_API void rand_uniform (octave_idx_type n, T *p);
+template <typename T> OCTAVE_API void rand_normal (octave_idx_type n, T *p);
+template <typename T> OCTAVE_API void
+rand_exponential (octave_idx_type n, T *p);
 
-  template <> OCTAVE_API float rand_uniform<float> (void);
-  template <> OCTAVE_API float rand_normal<float> (void);
-  template <> OCTAVE_API float rand_exponential<float> (void);
+template <> OCTAVE_API double rand_uniform<double> ();
+template <> OCTAVE_API double rand_normal<double> ();
+template <> OCTAVE_API double rand_exponential<double> ();
 
-  template <> OCTAVE_API void
-  rand_uniform<double> (octave_idx_type n, double *p);
+template <> OCTAVE_API float rand_uniform<float> ();
+template <> OCTAVE_API float rand_normal<float> ();
+template <> OCTAVE_API float rand_exponential<float> ();
 
-  template <> OCTAVE_API void
-  rand_normal<double> (octave_idx_type n, double *p);
+template <> OCTAVE_API void
+rand_uniform<double> (octave_idx_type n, double *p);
 
-  template <> OCTAVE_API void
-  rand_exponential<double> (octave_idx_type n, double *p);
+template <> OCTAVE_API void
+rand_normal<double> (octave_idx_type n, double *p);
 
-  template <> OCTAVE_API void
-  rand_uniform<float> (octave_idx_type n, float *p);
+template <> OCTAVE_API void
+rand_exponential<double> (octave_idx_type n, double *p);
 
-  template <> OCTAVE_API void
-  rand_normal<float> (octave_idx_type n, float *p);
+template <> OCTAVE_API void
+rand_uniform<float> (octave_idx_type n, float *p);
 
-  template <> OCTAVE_API void
-  rand_exponential<float> (octave_idx_type n, float *p);
-}
+template <> OCTAVE_API void
+rand_normal<float> (octave_idx_type n, float *p);
+
+template <> OCTAVE_API void
+rand_exponential<float> (octave_idx_type n, float *p);
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

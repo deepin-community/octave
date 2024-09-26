@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -86,7 +86,8 @@ function s = hdl2struct (h)
       nsp -= 1;
     endwhile
 
-    if (strcmp (s.type, "axes") && isempty (get (h, "tag")))
+    if (strcmp (s.type, "axes") ...
+        && ! any (strcmp (get (h, "tag"), {'colorbar', 'legend'})))
       ## look for legends and colorbars among axes brothers and add them
       ## to the children list
       try
@@ -145,13 +146,13 @@ function propstruct = getprops (h)
   persistent excluded;
 
   if (isempty (excluded))
-    excluded = cell2struct (repmat ({[]}, 1, 16),
+    excluded = cell2struct (repmat ({[]}, 1, 17),
                             {"beingdeleted", "busyaction", "buttondownfcn", ...
                              "children", "clipping", "contextmenu", ...
                              "createfcn", "deletefcn", "handlevisibility", ...
                              "hittest", "interruptible", "parent", ...
-                             "selected" , "selectionhighlight", "type", ...
-                             "uicontextmenu"}, 2);
+                             "selected" , "selectionhighlight", ...
+                             "selectedobject", "type", "uicontextmenu"}, 2);
   endif
 
   obj = get (h);

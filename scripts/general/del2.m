@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -311,7 +311,7 @@ endfunction
 %! assert (b(:,6), b(:,4));
 %! assert (b(:,7:9), zeros (9,3));
 
-## 3D test
+## 3-D test
 %!test
 %! a = zeros (9,9,9);
 %! a(5,5,5) = 1.0;
@@ -339,4 +339,3 @@ endfunction
 %!error <in spacing vector 1> del2 (1, 2, [1 1])
 %!error <in spacing vector 2> del2 (1, [1 1], 2)
 %!error <must be a scalar or vector> del2 (1, ones (2,2), 2)
-

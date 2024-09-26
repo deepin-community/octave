@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2020-2022 The Octave Project Developers
+// Copyright (C) 2020-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,39 +31,40 @@
 #include <QFontMetrics>
 #include <QList>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+template <typename T>
+inline QList<T>
+std_list_to_qt_list (const std::list<T>& lst)
 {
-  template <typename T>
-  inline QList<T>
-  std_list_to_qt_list (const std::list<T>& lst)
-  {
 #if defined (HAVE_QLIST_ITERATOR_CONSTRUCTOR)
-    return QList<T> (lst.begin (), lst.end ());
+  return QList<T> (lst.begin (), lst.end ());
 #else
-    return QList<T>::fromStdList (lst);
+  return QList<T>::fromStdList (lst);
 #endif
-  }
-
-  inline int
-  qt_fontmetrics_horizontal_advance (const QFontMetrics& fm, QChar ch)
-  {
-#if defined (HAVE_QFONTMETRICS_HORIZONTAL_ADVANCE)
-    return fm.horizontalAdvance (ch);
-#else
-    return fm.width (ch);
-#endif
-  }
-
-  inline int
-  qt_fontmetrics_horizontal_advance (const QFontMetrics& fm,
-                                     const QString& text, int len = -1)
-  {
-#if defined (HAVE_QFONTMETRICS_HORIZONTAL_ADVANCE)
-    return fm.horizontalAdvance (text, len);
-#else
-    return fm.width (text, len);
-#endif
-  }
 }
+
+inline int
+qt_fontmetrics_horizontal_advance (const QFontMetrics& fm, QChar ch)
+{
+#if defined (HAVE_QFONTMETRICS_HORIZONTAL_ADVANCE)
+  return fm.horizontalAdvance (ch);
+#else
+  return fm.width (ch);
+#endif
+}
+
+inline int
+qt_fontmetrics_horizontal_advance (const QFontMetrics& fm,
+                                   const QString& text, int len = -1)
+{
+#if defined (HAVE_QFONTMETRICS_HORIZONTAL_ADVANCE)
+  return fm.horizontalAdvance (text, len);
+#else
+  return fm.width (text, len);
+#endif
+}
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

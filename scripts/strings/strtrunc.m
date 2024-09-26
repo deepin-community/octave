@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} strtrunc (@var{s}, @var{n})
+## @deftypefn {} {@var{s} =} strtrunc (@var{s}, @var{n})
 ## Truncate the character string @var{s} to length @var{n}.
 ##
 ## If @var{s} is a character matrix, then the number of columns is adjusted.

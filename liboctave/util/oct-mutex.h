@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,109 +30,104 @@
 
 #include <memory>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class mutex;
+
+class
+OCTAVE_API
+base_mutex
 {
-  class mutex;
+public:
+  friend class mutex;
 
-  class
-  base_mutex
+  OCTAVE_DEFAULT_CONSTRUCT_COPY_MOVE (base_mutex)
+
+  virtual ~base_mutex () = default;
+
+  virtual void lock ();
+
+  virtual void unlock ();
+
+  virtual bool try_lock ();
+};
+
+class
+OCTAVE_API
+mutex
+{
+public:
+  mutex ();
+
+  OCTAVE_DEFAULT_COPY_MOVE_DELETE (mutex)
+
+  void lock ()
   {
-  public:
-    friend class mutex;
+    m_rep->lock ();
+  }
 
-    base_mutex (void) = default;
-
-    virtual ~base_mutex (void) = default;
-
-    virtual void lock (void);
-
-    virtual void unlock (void);
-
-    virtual bool try_lock (void);
-  };
-
-  class
-  OCTAVE_API
-  mutex
+  void unlock ()
   {
-  public:
-    mutex (void);
+    m_rep->unlock ();
+  }
 
-    mutex (const mutex& m) = default;
-
-    ~mutex (void) = default;
-
-    mutex& operator = (const mutex& m) = default;
-
-    void lock (void)
-    {
-      m_rep->lock ();
-    }
-
-    void unlock (void)
-    {
-      m_rep->unlock ();
-    }
-
-    bool try_lock (void)
-    {
-      return m_rep->try_lock ();
-    }
-
-  protected:
-    std::shared_ptr<base_mutex> m_rep;
-  };
-
-  class
-  autolock
+  bool try_lock ()
   {
-  public:
-    autolock (const mutex& m, bool block = true)
-      : m_mutex (m), m_lock_result (false)
-    {
-      if (block)
-        {
-          m_mutex.lock ();
-          m_lock_result = true;
-        }
-      else
-        m_lock_result = m_mutex.try_lock ();
-    }
+    return m_rep->try_lock ();
+  }
 
-    // No copying.
+protected:
+  std::shared_ptr<base_mutex> m_rep;
+};
 
-    autolock (const autolock&) = delete;
-
-    autolock& operator = (const autolock&) = delete;
-
-    ~autolock (void)
-    {
-      if (m_lock_result)
-        m_mutex.unlock ();
-    }
-
-    bool ok (void) const { return m_lock_result; }
-
-    operator bool (void) const { return ok (); }
-
-  private:
-
-    mutex m_mutex;
-
-    bool m_lock_result;
-  };
-
-
-  class
-  OCTAVE_API
-  thread
+class
+OCTAVE_API
+autolock
+{
+public:
+  autolock (const mutex& m, bool block = true)
+    : m_mutex (m), m_lock_result (false)
   {
-  public:
+    if (block)
+      {
+        m_mutex.lock ();
+        m_lock_result = true;
+      }
+    else
+      m_lock_result = m_mutex.try_lock ();
+  }
 
-    static void init (void);
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (autolock)
 
-    static bool is_thread (void);
-  };
-}
+  ~autolock ()
+  {
+    if (m_lock_result)
+      m_mutex.unlock ();
+  }
+
+  bool ok () const { return m_lock_result; }
+
+  operator bool () const { return ok (); }
+
+private:
+
+  mutex m_mutex;
+
+  bool m_lock_result;
+};
+
+
+class
+OCTAVE_API
+thread
+{
+public:
+
+  static void init ();
+
+  static bool is_thread ();
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

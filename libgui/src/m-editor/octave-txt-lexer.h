@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -29,20 +29,21 @@
 #include <Qsci/qsciscintilla.h>
 #include <Qsci/qscilexer.h>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class octave_txt_lexer : public QsciLexer
 {
-  class octave_txt_lexer : public QsciLexer
-  {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
+public:
 
-    virtual const char * language (void) const;
+  virtual const char * language () const;
 
-    virtual const char * lexer (void) const;
+  virtual const char * lexer () const;
 
-    virtual QString description (int style) const;
-  };
-}
+  virtual QString description (int style) const;
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

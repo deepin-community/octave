@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,19 +23,15 @@
 
 Properties of @code{scatter} objects (@pxref{XREFscatter,,scatter}):
 
+@subsubheading Categories:
+
+@ref{XREFscattercategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFscattercategoryColorData, , @w{Color Data}}@: | @ref{XREFscattercategoryCoordinateData, , @w{Coordinate Data}}@: | @ref{XREFscattercategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFscattercategoryDisplay, , @w{Display}}@: | @ref{XREFscattercategoryLegendOptions, , @w{Legend Options}}@: | @ref{XREFscattercategoryMarkerAppearance, , @w{Marker Appearance}}@: | @ref{XREFscattercategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFscattercategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFscattercategoryParent/Children, , @w{Parent/Children}}@: 
+
+@anchor{XREFscattercategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex scatter CallbackExecution
+
 @table @asis
-
-@anchor{XREFscatterannotation}
-@prindex scatter annotation
-@item @code{annotation}: def. @code{[](0x0)}
-
-
-
-@anchor{XREFscatterbeingdeleted}
-@prindex scatter beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
 
 @anchor{XREFscatterbusyaction}
 @prindex scatter busyaction
@@ -41,11 +40,19 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFscatterbuttondownfcn}
-@prindex scatter buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
-For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+@anchor{XREFscatterinterruptible}
+@prindex scatter interruptible
+@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
+@xref{Callbacks, , @w{Callbacks section}}.
 
+@end table
+
+@anchor{XREFscattercategoryColorData}
+@subsubheading Color Data
+@prindex scatter ColorData
+
+@table @asis
 
 @anchor{XREFscattercdata}
 @prindex scatter cdata
@@ -65,26 +72,118 @@ If @code{cdatamode} is @qcode{"auto"}, @code{cdata} is set to the color from the
 
 @anchor{XREFscattercdatasource}
 @prindex scatter cdatasource
-@item @code{cdatasource}: def. @qcode{""}
-Data from workspace variables is not yet implemented for scatter objects.  @code{cdatasource} is unused.
+@item @code{cdatasource}: string, def. @qcode{""}
+The name of a workspace variable that contains data that will be used for the @ref{XREFpatchcdata, , @w{@qcode{"cdata"} property}}.  Data is transferred into @qcode{"cdata"} using the @ref{XREFrefreshdata, , @w{refreshdata function}}.
 
 
-@anchor{XREFscatterchildren}
-@prindex scatter children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-@code{children} is unused.
+@anchor{XREFscatterseriesindex}
+@prindex scatter seriesindex
+@item @code{seriesindex}: def. @code{1}
+Each scatter object in the same axes is assigned an incrementing integer.  This corresponds to the index into the @code{colororder} of the ancestor axes that is used if @code{cdatamode} is set to @qcode{"auto"}.
+
+@end table
+
+@anchor{XREFscattercategoryCoordinateData}
+@subsubheading Coordinate Data
+@prindex scatter CoordinateData
+
+@table @asis
+
+@anchor{XREFscatterlatitudedata}
+@prindex scatter latitudedata
+@item @code{latitudedata}: def. @code{[](0x0)}
+Geographic coordinate scatter plotting is not yet implemented for scatter objects.  @code{latitudedata} is unused.
 
 
-@anchor{XREFscatterclipping}
-@prindex scatter clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the scatter is clipped in its parent axes limits.
+@anchor{XREFscatterlatitudedatasource}
+@prindex scatter latitudedatasource
+@item @code{latitudedatasource}: def. @qcode{""}
+Geographic coordinate scatter plotting is not yet implemented for scatter objects.  @code{latitudedatasource} is unused.
 
 
-@anchor{XREFscattercontextmenu}
-@prindex scatter contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this scatter object.
+@anchor{XREFscatterlongitudedata}
+@prindex scatter longitudedata
+@item @code{longitudedata}: def. @code{[](0x0)}
+Geographic coordinate scatter plotting is not yet implemented for scatter objects.  @code{longitudedata} is unused.
+
+
+@anchor{XREFscatterlongitudedatasource}
+@prindex scatter longitudedatasource
+@item @code{longitudedatasource}: def. @qcode{""}
+Geographic coordinate scatter plotting is not yet implemented for scatter objects.  @code{longitudedatasource} is unused.
+
+
+@anchor{XREFscatterrdata}
+@prindex scatter rdata
+@item @code{rdata}: def. @code{[](0x0)}
+Polar coordinates for scatter plotting is not yet implemented for scatter objects.  @code{rdata} is unused.
+
+
+@anchor{XREFscatterrdatasource}
+@prindex scatter rdatasource
+@item @code{rdatasource}: def. @qcode{""}
+Polar coordinates for scatter plotting is not yet implemented for scatter objects.  @code{rdatasource} is unused.
+
+
+@anchor{XREFscatterthetadata}
+@prindex scatter thetadata
+@item @code{thetadata}: def. @code{[](0x0)}
+Polar coordinates for scatter plotting is not yet implemented for scatter objects.  @code{thetadata} is unused.
+
+
+@anchor{XREFscatterthetadatasource}
+@prindex scatter thetadatasource
+@item @code{thetadatasource}: def. @qcode{""}
+Polar coordinates for scatter plotting is not yet implemented for scatter objects.  @code{thetadatasource} is unused.
+
+
+@anchor{XREFscatterxdata}
+@prindex scatter xdata
+@item @code{xdata}: vector, def. @code{[](0x0)}
+Vector with the x coordinates of the scatter object.
+
+
+@anchor{XREFscatterxdatasource}
+@prindex scatter xdatasource
+@item @code{xdatasource}: string, def. @qcode{""}
+The name of a workspace variable that contains data that will be used for the @ref{XREFscatterxdata, , @w{@qcode{"xdata"} property}}.  Data is transferred into @qcode{"xdata"} using the @ref{XREFrefreshdata, , @w{refreshdata function}}.
+
+
+@anchor{XREFscatterydata}
+@prindex scatter ydata
+@item @code{ydata}: vector, def. @code{[](0x0)}
+Vector with the y coordinates of the scatter object.
+
+
+@anchor{XREFscatterydatasource}
+@prindex scatter ydatasource
+@item @code{ydatasource}: string, def. @qcode{""}
+The name of a workspace variable that contains data that will be used for the @ref{XREFscatterydata, , @w{@qcode{"ydata"} property}}.  Data is transferred into @qcode{"ydata"} using the @ref{XREFrefreshdata, , @w{refreshdata function}}.
+
+
+@anchor{XREFscatterzdata}
+@prindex scatter zdata
+@item @code{zdata}: [] | vector, def. @code{[](0x0)}
+For 3D data, vector with the y coordinates of the scatter object.
+
+
+@anchor{XREFscatterzdatasource}
+@prindex scatter zdatasource
+@item @code{zdatasource}: string, def. @qcode{""}
+The name of a workspace variable that contains data that will be used for the @ref{XREFscatterzdata, , @w{@qcode{"zdata"} property}}.  Data is transferred into @qcode{"zdata"} using the @ref{XREFrefreshdata, , @w{refreshdata function}}.
+
+@end table
+
+@anchor{XREFscattercategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex scatter Creation/Deletion
+
+@table @asis
+
+@anchor{XREFscatterbeingdeleted}
+@prindex scatter beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
 
 
 @anchor{XREFscattercreatefcn}
@@ -95,12 +194,6 @@ Callback function executed immediately after scatter has been created.  Function
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFscatterdatatiptemplate}
-@prindex scatter datatiptemplate
-@item @code{datatiptemplate}: def. @code{[](0x0)}
-
-
-
 @anchor{XREFscatterdeletefcn}
 @prindex scatter deletefcn
 @item @code{deletefcn}: string | function handle, def. @code{[](0x0)}
@@ -108,60 +201,56 @@ Callback function executed immediately before scatter is deleted.
 
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
+
+@anchor{XREFscattercategoryDisplay}
+@subsubheading Display
+@prindex scatter Display
+
+@table @asis
+
+@anchor{XREFscatterclipping}
+@prindex scatter clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the scatter is clipped in its parent axes limits.
+
+
+@anchor{XREFscattervisible}
+@prindex scatter visible
+@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{visible} is @qcode{"off"}, the scatter is not rendered on screen.
+
+@end table
+
+@anchor{XREFscattercategoryLegendOptions}
+@subsubheading Legend Options
+@prindex scatter LegendOptions
+
+@table @asis
+
+@anchor{XREFscatterannotation}
+@prindex scatter annotation
+@item @code{annotation}: def. @code{[](0x0)}
+Legend appearance toggling from within         the scatter object is not yet implemented for scatter objects.  @code{annotation} is unused.
+
 
 @anchor{XREFscatterdisplayname}
 @prindex scatter displayname
 @item @code{displayname}: def. @qcode{""}
 Text of the legend entry corresponding to this scatter object.
 
+@end table
 
-@anchor{XREFscatterhandlevisibility}
-@prindex scatter handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the scatter's handle is not visible in its parent's "children" property.
+@anchor{XREFscattercategoryMarkerAppearance}
+@subsubheading Marker Appearance
+@prindex scatter MarkerAppearance
 
-
-@anchor{XREFscatterhittest}
-@prindex scatter hittest
-@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether scatter processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFscatterpickableparts, , @w{pickableparts property}}.
-
-
-@anchor{XREFscatterinterruptible}
-@prindex scatter interruptible
-@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
-@xref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFscatterlatitudedata}
-@prindex scatter latitudedata
-@item @code{latitudedata}: def. @code{[](0x0)}
-
-
-
-@anchor{XREFscatterlatitudedatasource}
-@prindex scatter latitudedatasource
-@item @code{latitudedatasource}: def. @qcode{""}
-
-
+@table @asis
 
 @anchor{XREFscatterlinewidth}
 @prindex scatter linewidth
-@item @code{linewidth}: def. @code{0.5000}
+@item @code{linewidth}: scalar, def. @code{0.5000}
 Line width of the edge of the markers.
-
-
-@anchor{XREFscatterlongitudedata}
-@prindex scatter longitudedata
-@item @code{longitudedata}: def. @code{[](0x0)}
-
-
-
-@anchor{XREFscatterlongitudedatasource}
-@prindex scatter longitudedatasource
-@item @code{longitudedatasource}: def. @qcode{""}
-
 
 
 @anchor{XREFscattermarker}
@@ -191,13 +280,50 @@ Transparency level of the faces of the markers where a value of 0 means complete
 @anchor{XREFscattermarkerfacecolor}
 @prindex scatter markerfacecolor
 @item @code{markerfacecolor}: @{@{@qcode{"none"}@}@} | @qcode{"flat"} | @qcode{"auto"} | colorspec
-Color of the face of the markers.  @qcode{"none"} means that the faces are transparent, @qcode{"flat"} means that the value from @code{cdata} is used, and @qcode{"auto"} uses the @code{color} property of the ancestor axes. @xref{XREFlinemarkerfacecolor, , @w{line markerfacecolor property}}.
+Color of the face of the markers.  @qcode{"none"} means that the faces are transparent, @qcode{"flat"} means that the value from @code{cdata} is used, and @qcode{"auto"} uses the @code{color} property of the ancestor axes.  @xref{XREFlinemarkerfacecolor, , @w{line markerfacecolor property}}.
 
 
-@anchor{XREFscatterparent}
-@prindex scatter parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
+@anchor{XREFscattersizedata}
+@prindex scatter sizedata
+@item @code{sizedata}: [] | scalar | vector, def. @code{[](0x0)}
+Size of the area of the marker.  A scalar value applies to all markers.  If @code{cdata} is an N-by-1 vector, it defines the color of each one of the N scatter markers.
+
+
+@anchor{XREFscattersizedatasource}
+@prindex scatter sizedatasource
+@item @code{sizedatasource}: def. @qcode{""}
+Data from workspace variables is not yet implemented for scatter objects.  @code{sizedatasource} is unused.
+
+@end table
+
+@anchor{XREFscattercategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex scatter MouseInteraction
+
+@table @asis
+
+@anchor{XREFscatterbuttondownfcn}
+@prindex scatter buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+
+
+@anchor{XREFscattercontextmenu}
+@prindex scatter contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this scatter object.
+
+
+@anchor{XREFscatterdatatiptemplate}
+@prindex scatter datatiptemplate
+@item @code{datatiptemplate}: def. @code{[](0x0)}
+Data tip objects is not yet implemented for scatter objects.  @code{datatiptemplate} is unused.
+
+
+@anchor{XREFscatterhittest}
+@prindex scatter hittest
+@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether scatter processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFscatterpickableparts, , @w{pickableparts property}}.
 
 
 @anchor{XREFscatterpickableparts}
@@ -206,47 +332,24 @@ Handle of the parent graphics object.
 Specify whether scatter will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the scatter or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFscatterhittest, , @w{hittest property}}.
 
 
-@anchor{XREFscatterrdata}
-@prindex scatter rdata
-@item @code{rdata}: def. @code{[](0x0)}
-
-
-
-@anchor{XREFscatterrdatasource}
-@prindex scatter rdatasource
-@item @code{rdatasource}: def. @qcode{""}
-
-
-
 @anchor{XREFscatterselected}
 @prindex scatter selected
 @item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
+Property indicates whether this scatter is selected.
 
 
 @anchor{XREFscatterselectionhighlight}
 @prindex scatter selectionhighlight
 @item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the scatter's selection state is visually highlighted.
 
+@end table
 
+@anchor{XREFscattercategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex scatter ObjectIdentification
 
-@anchor{XREFscatterseriesindex}
-@prindex scatter seriesindex
-@item @code{seriesindex}: def. @code{1}
-Each scatter object in the same axes is asigned an incrementing integer.  This corresponds to the index into the @code{colororder} of the ancestor axes that is used if @code{cdatamode} is set to @qcode{"auto"}.
-
-
-@anchor{XREFscattersizedata}
-@prindex scatter sizedata
-@item @code{sizedata}: [] | scalar | vector, def. @code{[](0x0)}
-Size of the area of the marker. A scalar value applies to all markers.  If @code{cdata} is an N-by-1 vector, it defines the color of each one of the N scatter markers.
-
-
-@anchor{XREFscattersizedatasource}
-@prindex scatter sizedatasource
-@item @code{sizedatasource}: def. @qcode{""}
-Data from workspace variables is not yet implemented for scatter objects.  @code{sizedatasource} is unused.
-
+@table @asis
 
 @anchor{XREFscattertag}
 @prindex scatter tag
@@ -254,22 +357,10 @@ Data from workspace variables is not yet implemented for scatter objects.  @code
 A user-defined string to label the graphics object.
 
 
-@anchor{XREFscatterthetadata}
-@prindex scatter thetadata
-@item @code{thetadata}: def. @code{[](0x0)}
-
-
-
-@anchor{XREFscatterthetadatasource}
-@prindex scatter thetadatasource
-@item @code{thetadatasource}: def. @qcode{""}
-
-
-
 @anchor{XREFscattertype}
 @prindex scatter type
 @item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"scatter"}
+Class name of the graphics object.  @code{type} is always @qcode{"scatter"}.
 
 
 @anchor{XREFscatteruserdata}
@@ -277,46 +368,29 @@ Class name of the graphics object.  @code{type} is always @qcode{"scatter"}
 @item @code{userdata}: Any Octave data, def. @code{[](0x0)}
 User-defined data to associate with the graphics object.
 
+@end table
 
-@anchor{XREFscattervisible}
-@prindex scatter visible
-@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{visible} is @qcode{"off"}, the scatter is not rendered on screen.
+@anchor{XREFscattercategoryParent/Children}
+@subsubheading Parent/Children
+@prindex scatter Parent/Children
 
+@table @asis
 
-@anchor{XREFscatterxdata}
-@prindex scatter xdata
-@item @code{xdata}: vector, def. @code{[](0x0)}
-Vector with the x coordinates of the scatter object.
-
-
-@anchor{XREFscatterxdatasource}
-@prindex scatter xdatasource
-@item @code{xdatasource}: def. @qcode{""}
-Data from workspace variables is not yet implemented for scatter objects.  @code{xdatasource} is unused.
+@anchor{XREFscatterchildren}
+@prindex scatter children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Child objects for Scatter plots is not yet implemented for scatter objects.  @code{children} is unused.
 
 
-@anchor{XREFscatterydata}
-@prindex scatter ydata
-@item @code{ydata}: vector, def. @code{[](0x0)}
-Vector with the y coordinates of the scatter object.
+@anchor{XREFscatterhandlevisibility}
+@prindex scatter handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the scatter's handle is not visible in its parent's @qcode{"children"} property.
 
 
-@anchor{XREFscatterydatasource}
-@prindex scatter ydatasource
-@item @code{ydatasource}: def. @qcode{""}
-Data from workspace variables is not yet implemented for scatter objects.  @code{ydatasource} is unused.
-
-
-@anchor{XREFscatterzdata}
-@prindex scatter zdata
-@item @code{zdata}: [] | vector, def. @code{[](0x0)}
-For 3D data, vector with the y coordinates of the scatter object.
-
-
-@anchor{XREFscatterzdatasource}
-@prindex scatter zdatasource
-@item @code{zdatasource}: def. @qcode{""}
-Data from workspace variables is not yet implemented for scatter objects.  @code{zdatasource} is unused.
+@anchor{XREFscatterparent}
+@prindex scatter parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
 
 @end table

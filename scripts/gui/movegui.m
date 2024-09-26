@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2018-2022 The Octave Project Developers
+## Copyright (C) 2018-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -159,7 +159,7 @@ function movegui (varargin)
     fpos(1) = ifelse (pos(1) >= 0, pos(1), pos(1) + x(3));
     fpos(2) = ifelse (pos(2) >= 0, pos(2), pos(2) + y(3));
   elseif (ischar (pos))
-    switch (tolower (pos))
+    switch (lower (pos))
       case "north"
         fpos(1:2) = [x(2), y(3)];
       case "south"
@@ -199,8 +199,7 @@ function movegui (varargin)
   endif
 
   ## Move figure
-  set (h, "units", "pixels");
-  set (h, "position", fpos);
+  set (h, "units", "pixels", "position", fpos);
   set (h, "units", units_fig);
 
 endfunction

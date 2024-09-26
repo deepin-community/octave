@@ -17,9 +17,9 @@ Using ATLAS or OpenBLAS libs with GNU Octave
 ============================================
 
 In order to speed up Octave's linear algebra operations, you can install the
-ATLAS package (libatlas3-base), or the OpenBLAS package (libopenblas-base).
-Octave should automatically pick up the faster libraries. For more information
-about BLAS and LAPACK in Debian, see:
+OpenBLAS package (libopenblas0) or the BLIS package (libblis4). Octave should
+automatically pick up the faster libraries. For more information about BLAS and
+LAPACK in Debian, see:
 
  https://wiki.debian.org/DebianScience/LinearAlgebraLibraries
 
@@ -41,7 +41,8 @@ not be available at the Octave prompt at startup.  Therefore, each
 package must be individually loaded by using the `pkg load' command.
 One way to automatically load all the installed packages at startup
 time is to add the following code to the initialization file
-`~/.octaverc':
+(typically `~/.config/octave/octaverc' if you use the new XDG-compliant
+location, otherwise `~/.octaverc'):
 
   pkgs = pkg ("list");
   for i = 1 : numel (pkgs)
@@ -53,13 +54,13 @@ configured to load packages at startup. Therefore, if you write code
 for others, your scripts still need to load the packages they require.
 
 
-Why is mkoctfile not in octave, but in liboctave-dev?
+Why is mkoctfile not in octave, but in octave-dev?
 =====================================================
 
 In order to use mkoctfile, one needs the development packages (headers, .a
 libraries) of the libraries used by Octave (fftw, blas, ...). These sum up to a
-lot of space; an installation of liboctave-dev will trigger the installation of
+lot of space; an installation of octave-dev will trigger the installation of
 these packages, so one can use mkoctfile then.
 
- -- Sébastien Villemot <sebastien@debian.org>, Thu, 11 Jun 2020 11:00:24 +0200
+ -- Sébastien Villemot <sebastien@debian.org>, Wed,  8 Nov 2023 11:09:53 +0100
 

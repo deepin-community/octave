@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -32,34 +32,6 @@
 %! y = [a... # comments here ok
 %! b];
 %! assert (y, x);
-
-## FIXME: Next 3 tests use '\' continuation outside of a double-quoted string
-##        This behavior is deprecated and will be removed at some point.
-##        When it does these
-%!test
-%! x = [1;2];
-%! y = [a... # comments here ok
-%! ;\
-%!
-%! b];
-%! assert (y, x);
-
-%!assert (1 + ...
-%! 2 - \# comments here ok
-%! 3 / ... # comments here ok
-%! -1,6);
-
-%!function y = f (a,...
-%!                b,  ...
-%!                c,  ...   % comments ok
-%!                x,  # continuation characters not required in parens
-%!                y,  \# but they should work too.
-%!                z)
-%!
-%!  y = 1;
-%!endfunction
-%!
-%!assert (f (), 1)
 
 ## String continuation using '\'
 %!assert (["abc\

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -97,11 +97,11 @@ function vn = isonormals (varargin)
   endswitch
 
   if (isnumeric (vp) && columns (vp) == 3)
-    pa = [];
+    hp = [];
     v = vp;
   elseif (isgraphics (vp, "patch"))
-    pa = vp;
-    v = get (pa, "Vertices");
+    hp = vp;
+    v = get (hp, "Vertices");
   else
     error ("isonormals: input must be a list of vertices or a patch handle");
   endif
@@ -113,8 +113,8 @@ function vn = isonormals (varargin)
   endif
 
   if (nargout == 0)
-    if (! isempty (pa))
-      set (pa, "VertexNormals", normals);
+    if (! isempty (hp))
+      set (hp, "VertexNormals", normals);
     endif
   else
     vn = normals;

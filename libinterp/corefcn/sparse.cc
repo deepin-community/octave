@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -42,11 +42,11 @@
 #include "ov-cx-sparse.h"
 #include "ov-bool-sparse.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (issparse, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} issparse (@var{x})
+@deftypefn {} {@var{tf} =} issparse (@var{x})
 Return true if @var{x} is a sparse matrix.
 @seealso{ismatrix}
 @end deftypefn */)
@@ -62,7 +62,9 @@ Return true if @var{x} is a sparse matrix.
 %!assert (issparse (1), false)
 %!assert (issparse (sparse (false)), true)
 %!assert (issparse (true), false)
-%!assert (issparse (sparse (single ([1 2]))), true)
+%!test
+%! warning ("off", "Octave:sparse:double-conversion", "local");
+%! assert (issparse (sparse (single ([1 2]))), true);
 %!assert (issparse (single ([1, 2])), false)
 %!assert (issparse (sparse ([1+i, 2]')), true)
 %!assert (issparse ([1+i, 2]'), false)
@@ -80,44 +82,66 @@ Return true if @var{x} is a sparse matrix.
 
 DEFUN (sparse, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {@var{s} =} sparse (@var{a})
-@deftypefnx {} {@var{s} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n})
-@deftypefnx {} {@var{s} =} sparse (@var{i}, @var{j}, @var{sv})
-@deftypefnx {} {@var{s} =} sparse (@var{m}, @var{n})
-@deftypefnx {} {@var{s} =} sparse (@var{i}, @var{j}, @var{s}, @var{m}, @var{n}, "unique")
-@deftypefnx {} {@var{s} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n}, @var{nzmax})
-Create a sparse matrix from a full matrix, or row, column, value triplets.
+@deftypefn  {} {@var{S} =} sparse (@var{A})
+@deftypefnx {} {@var{S} =} sparse (@var{m}, @var{n})
+@deftypefnx {} {@var{S} =} sparse (@var{i}, @var{j}, @var{sv})
+@deftypefnx {} {@var{S} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n})
+@deftypefnx {} {@var{S} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n}, "unique")
+@deftypefnx {} {@var{S} =} sparse (@var{i}, @var{j}, @var{sv}, @var{m}, @var{n}, @var{nzmax})
+Create a sparse matrix from a full matrix @var{A} or row, column, value
+triplets.
 
-If @var{a} is a full matrix, convert it to a sparse matrix representation,
-removing all zero values in the process.
+If @var{A} is a full matrix, convert it to a sparse matrix representation,
+removing all zero values in the process.  The matrix @var{A} should be of type
+logical or double.
+
+If two inputs @var{m} (rows) and @var{n} (columns) are specified then create
+an empty sparse matrix with the specified dimensions.
 
 Given the integer index vectors @var{i} and @var{j}, and a 1-by-@code{nnz}
 vector of real or complex values @var{sv}, construct the sparse matrix
 @code{S(@var{i}(@var{k}),@var{j}(@var{k})) = @var{sv}(@var{k})} with overall
-dimensions @var{m} and @var{n}.  If any of @var{sv}, @var{i} or @var{j} are
+dimensions @var{m} and @var{n}.  If any of @var{i}, @var{j}, or @var{sv} are
 scalars, they are expanded to have a common size.
 
-If @var{m} or @var{n} are not specified their values are derived from the
+If @var{m} or @var{n} are not specified then their values are derived from the
 maximum index in the vectors @var{i} and @var{j} as given by
-@code{@var{m} = max (@var{i})}, @code{@var{n} = max (@var{j})}.
+@w{@code{@var{m} = max (@var{i})}}, @w{@code{@var{n} = max (@var{j})}}.
 
-@strong{Note}: if multiple values are specified with the same @var{i},
-@var{j} indices, the corresponding value in @var{s} will be the sum of the
+@strong{Note}: If multiple values are specified with the same @var{i},
+@var{j} indices, the corresponding value in @var{S} will be the sum of the
 values at the repeated location.  @xref{XREFaccumarray,,@code{accumarray}}, for
 an example of how to produce different behavior such as taking the minimum
 instead.
 
-If the option @qcode{"unique"} is given, and more than one value is
-specified at the same @var{i}, @var{j} indices, then the last specified
-value will be used.
+If the option @qcode{"unique"} is given, and more than one value is specified
+at the same @var{i}, @var{j} indices, then only the last specified value will
+be used.  For completeness, the option @qcode{"sum"} can be given and will
+be ignored as the default behavior is to sum values at repeated locations.
 
 @code{sparse (@var{m}, @var{n})} will create an empty @var{m}x@var{n} sparse
 matrix and is equivalent to @code{sparse ([], [], [], @var{m}, @var{n})}
 
-The argument @var{nzmax} is ignored but accepted for compatibility with
-@sc{matlab}.
+The optional final argument reserves space for @var{nzmax} values in the sparse
+array and is useful if the eventual number of nonzero values will be greater
+than the number of values in @var{sv} used during the initial construction of
+the array.  @xref{XREFspalloc,,@code{spalloc}}, for more information and usage
+instructions.
 
-Example 1 (sum at repeated indices):
+Example 1 (convert full matrix to sparse to save memory):
+
+@example
+@group
+x = full (diag (1:1000));
+sizeof (x)
+@result{}  8000000
+s = sparse (x);
+sizeof (xs)
+@result{}  24008
+@end group
+@end example
+
+Example 2 (sum at repeated indices):
 
 @example
 @group
@@ -131,7 +155,7 @@ sparse (@var{i}, @var{j}, @var{sv}, 3, 4)
 @end group
 @end example
 
-Example 2 ("unique" option):
+Example 3 ("unique" option):
 
 @example
 @group
@@ -155,30 +179,31 @@ sprandsym, spconvert, spfun}
 
   octave_value retval;
 
-  // Temporarily disable sparse_auto_mutate if set (it's obsolete anyway).
-  unwind_protect_var<bool> restore_var (Vsparse_auto_mutate, false);
-
   if (nargin == 1)
     {
       octave_value arg = args(0);
-      if (arg.islogical ())
+      if (arg.isfloat ())
+        {
+          if (arg.is_single_type ())
+            warning_with_id ("Octave:sparse:double-conversion",
+                             "sparse: input array cast to double");
+          if (arg.iscomplex ())
+            retval = arg.sparse_complex_matrix_value ();
+          else
+            retval = arg.sparse_matrix_value ();
+        }
+      else if (arg.islogical ())
         retval = arg.sparse_bool_matrix_value ();
-      else if (arg.iscomplex ())
-        retval = arg.sparse_complex_matrix_value ();
-      else if (arg.isnumeric ())
-        retval = arg.sparse_matrix_value ();
       else
         err_wrong_type_arg ("sparse", arg);
     }
   else if (nargin == 2)
     {
-      octave_idx_type m = 0;
-      octave_idx_type n = 0;
-
-      get_dimensions (args(0), args(1), "sparse", m, n);
+      octave_idx_type m = args(0).xidx_type_value ("sparse: M must be a non-negative integer");
+      octave_idx_type n = args(1).xidx_type_value ("sparse: N must be a non-negative integer");
 
       if (m < 0 || n < 0)
-        error ("sparse: dimensions must be non-negative");
+        error ("sparse: dimensions M and N must be non-negative");
 
       retval = SparseMatrix (m, n);
     }
@@ -208,35 +233,43 @@ sprandsym, spconvert, spfun}
 
       if (nargin == 5)
         {
-          get_dimensions (args(3), args(4), "sparse", m, n);
+          m = args(3).xidx_type_value ("sparse: M must be a non-negative integer");
+          n = args(4).xidx_type_value ("sparse: N must be a non-negative integer");
 
           if (m < 0 || n < 0)
-            error ("sparse: dimensions must be non-negative");
+            error ("sparse: dimensions M and N must be non-negative");
         }
 
-      int k = 0;    // index we're checking when index_vector throws
+      int argidx = 0;    // index being checked when index_vector throws
       try
         {
           idx_vector i = args(0).index_vector ();
-          k = 1;
+          argidx = 1;
           idx_vector j = args(1).index_vector ();
 
-          if (args(2).islogical ())
-            retval = SparseBoolMatrix (args(2).bool_array_value (), i, j,
-                                       m, n, summation, nzmax);
-          else if (args(2).iscomplex ())
-            retval = SparseComplexMatrix (args(2).complex_array_value(),
-                                          i, j, m, n, summation, nzmax);
-          else if (args(2).isnumeric ())
-            retval = SparseMatrix (args(2).array_value (), i, j,
-                                   m, n, summation, nzmax);
+          octave_value arg = args(2);  // temp var for code readability
+          if (arg.isfloat ())
+            {
+              if (arg.is_single_type ())
+                warning_with_id ("Octave:sparse:double-conversion",
+                                 "sparse: input array cast to double");
+              if (arg.iscomplex ())
+                retval = SparseComplexMatrix (arg.complex_array_value (),
+                                              i, j, m, n, summation, nzmax);
+              else
+                retval = SparseMatrix (arg.array_value (),
+                                       i, j, m, n, summation, nzmax);
+            }
+          else if (arg.islogical ())
+            retval = SparseBoolMatrix (arg.bool_array_value (),
+                                       i, j, m, n, summation, nzmax);
           else
-            err_wrong_type_arg ("sparse", args(2));
+            err_wrong_type_arg ("sparse", arg);
         }
       catch (index_exception& ie)
         {
           // Rethrow to allow more info to be reported later.
-          ie.set_pos_if_unset (2, k+1);
+          ie.set_pos_if_unset (2, argidx+1);
           throw;
         }
     }
@@ -328,4 +361,4 @@ even if @var{nz} is 0.
 %!error <M, N, and NZ must be non-negative> spalloc (1, 1, -1)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

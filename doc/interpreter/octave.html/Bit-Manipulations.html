@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Bit Manipulations (GNU Octave (version 7.1.0))</title>
+<title>Bit Manipulations (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Bit Manipulations (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Bit Manipulations (GNU Octave (version 7.1.0))">
+<meta name="description" content="Bit Manipulations (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Bit Manipulations (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Integer-Data-Types.html" rel="prev" title="Integer Data Types">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,31 +32,34 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Bit-Manipulations">
-<div class="header">
+<div class="section-level-extent" id="Bit-Manipulations">
+<div class="nav-panel">
 <p>
 Next: <a href="Logical-Values.html" accesskey="n" rel="next">Logical Values</a>, Previous: <a href="Integer-Data-Types.html" accesskey="p" rel="prev">Integer Data Types</a>, Up: <a href="Numeric-Data-Types.html" accesskey="u" rel="up">Numeric Data Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Bit-Manipulations-1"></span><h3 class="section">4.5 Bit Manipulations</h3>
+<h3 class="section" id="Bit-Manipulations-1"><span>4.5 Bit Manipulations<a class="copiable-link" href="#Bit-Manipulations-1"> &para;</a></span></h3>
 
 <p>Octave provides a number of functions for the manipulation of numeric
 values on a bit by bit basis.  The basic functions to set and obtain the
-values of individual bits are <code>bitset</code> and <code>bitget</code>.
+values of individual bits are <code class="code">bitset</code> and <code class="code">bitget</code>.
 </p>
-<span id="XREFbitset"></span><dl class="def">
-<dt id="index-bitset"><span class="category">: </span><span><em><var>C</var> =</em> <strong>bitset</strong> <em>(<var>A</var>, <var>n</var>)</em><a href='#index-bitset' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-bitset-1"><span class="category">: </span><span><em><var>C</var> =</em> <strong>bitset</strong> <em>(<var>A</var>, <var>n</var>, <var>val</var>)</em><a href='#index-bitset-1' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Set or reset bit(s) <var>n</var> of the unsigned integers in <var>A</var>.
+<a class="anchor" id="XREFbitset"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-bitset"><span class="category-def">: </span><span><code class="def-type"><var class="var">B</var> =</code> <strong class="def-name">bitset</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">n</var>)</code><a class="copiable-link" href="#index-bitset"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-bitset-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">B</var> =</code> <strong class="def-name">bitset</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">n</var>, <var class="var">val</var>)</code><a class="copiable-link" href="#index-bitset-1"> &para;</a></span></dt>
+<dd><p>Set or reset bit(s) at position <var class="var">n</var> of the unsigned integers in <var class="var">A</var>.
 </p>
-<p>The least significant bit is <var>n</var> = 1.  <var>val</var>&nbsp;=&nbsp;0<!-- /@w --> resets bits and
-<var>val</var>&nbsp;=&nbsp;1<!-- /@w --> sets bits.  If no <var>val</var> is specified it defaults to
+<p>The least significant bit is <var class="var">n</var> = 1.  <var class="var">val</var>&nbsp;=&nbsp;0<!-- /@w -->&nbsp;resets bits and
+<var class="var">val</var>&nbsp;=&nbsp;1<!-- /@w -->&nbsp;sets bits.  If no <var class="var">val</var> is specified it defaults to
 1 (set bit).  All inputs must be the same size or scalars.
 </p>
 <p>Example 1: Set multiple bits
 </p>
 <div class="example">
-<pre class="example">x = bitset (1, 3:5)
+<div class="group"><pre class="example-preformatted">x = bitset (1, 3:5)
   &rArr; x =
 
    5    9   17
@@ -77,38 +69,42 @@ dec2bin (x)
      00101
      01001
      10001
-</pre></div>
+</pre></div></div>
 
 <p>Example 2: Reset and set bits
 </p>
 <div class="example">
-<pre class="example">x = bitset ([15 14], 1, [0 1])
+<div class="group"><pre class="example-preformatted">x = bitset ([15 14], 1, [0 1])
   &rArr; x =
 
    14    15
-</pre></div>
+</pre></div></div>
 
-<p><strong>See also:</strong> <a href="#XREFbitand">bitand</a>, <a href="#XREFbitor">bitor</a>, <a href="#XREFbitxor">bitxor</a>, <a href="#XREFbitget">bitget</a>, <a href="#XREFbitcmp">bitcmp</a>, <a href="#XREFbitshift">bitshift</a>, <a href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFbitand">bitand</a>, <a class="ref" href="#XREFbitor">bitor</a>, <a class="ref" href="#XREFbitxor">bitxor</a>, <a class="ref" href="#XREFbitget">bitget</a>, <a class="ref" href="#XREFbitcmp">bitcmp</a>, <a class="ref" href="#XREFbitshift">bitshift</a>, <a class="ref" href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a class="ref" href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
 </p></dd></dl>
 
 
-<span id="XREFbitget"></span><dl class="def">
-<dt id="index-bitget"><span class="category">: </span><span><em><var>c</var> =</em> <strong>bitget</strong> <em>(<var>A</var>, <var>n</var>)</em><a href='#index-bitget' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the status of bit(s) <var>n</var> of the unsigned integers in <var>A</var>.
+<a class="anchor" id="XREFbitget"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-bitget"><span class="category-def">: </span><span><code class="def-type"><var class="var">b</var> =</code> <strong class="def-name">bitget</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">n</var>)</code><a class="copiable-link" href="#index-bitget"> &para;</a></span></dt>
+<dd><p>Return the bit value at position(s) <var class="var">n</var> of the unsigned integers in
+<var class="var">A</var>.
 </p>
-<p>The least significant bit is <var>n</var> = 1.
+<p>The least significant bit is <var class="var">n</var> = 1.
 </p>
 <div class="example">
-<pre class="example">bitget (100, 8:-1:1)
+<div class="group"><pre class="example-preformatted">bitget (100, 8:-1:1)
 &rArr; 0  1  1  0  0  1  0  0
-</pre></div>
+</pre></div></div>
 
-<p><strong>See also:</strong> <a href="#XREFbitand">bitand</a>, <a href="#XREFbitor">bitor</a>, <a href="#XREFbitxor">bitxor</a>, <a href="#XREFbitset">bitset</a>, <a href="#XREFbitcmp">bitcmp</a>, <a href="#XREFbitshift">bitshift</a>, <a href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFbitand">bitand</a>, <a class="ref" href="#XREFbitor">bitor</a>, <a class="ref" href="#XREFbitxor">bitxor</a>, <a class="ref" href="#XREFbitset">bitset</a>, <a class="ref" href="#XREFbitcmp">bitcmp</a>, <a class="ref" href="#XREFbitshift">bitshift</a>, <a class="ref" href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a class="ref" href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
 </p></dd></dl>
 
 
 <p>The arguments to all of Octave&rsquo;s bitwise operations can be scalar or
-arrays, except for <code>bitcmp</code>, whose <var>k</var> argument must a
+arrays, except for <code class="code">bitcmp</code>, whose <var class="var">k</var> argument must a
 scalar.  In the case where more than one argument is an array, then all
 arguments must have the same shape, and the bitwise operator is applied
 to each of the elements of the argument individually.  If at least one
@@ -116,107 +112,121 @@ argument is a scalar and one an array, then the scalar argument is
 duplicated.  Therefore
 </p>
 <div class="example">
-<pre class="example">bitget (100, 8:-1:1)
+<pre class="example-preformatted">bitget (100, 8:-1:1)
 </pre></div>
 
 <p>is the same as
 </p>
 <div class="example">
-<pre class="example">bitget (100 * ones (1, 8), 8:-1:1)
+<pre class="example-preformatted">bitget (100 * ones (1, 8), 8:-1:1)
 </pre></div>
 
 <p>It should be noted that all values passed to the bit manipulation
 functions of Octave are treated as integers.  Therefore, even though the
-example for <code>bitset</code> above passes the floating point value
-<code>10</code>, it is treated as the bits <code>[1, 0, 1, 0]</code> rather than the
-bits of the native floating point format representation of <code>10</code>.
+example for <code class="code">bitset</code> above passes the floating point value
+<code class="code">10</code>, it is treated as the bits <code class="code">[1, 0, 1, 0]</code> rather than the
+bits of the native floating point format representation of <code class="code">10</code>.
 </p>
 <p>As the maximum value that can be represented by a number is important
 for bit manipulation, particularly when forming masks, Octave supplies
-two utility functions: <code>flintmax</code> for floating point integers, and
-<code>intmax</code> for integer objects (<code>uint8</code>, <code>int64</code>, etc.).
+two utility functions: <code class="code">flintmax</code> for floating point integers, and
+<code class="code">intmax</code> for integer objects (<code class="code">uint8</code>, <code class="code">int64</code>, etc.).
 </p>
 <p>Octave also includes the basic bitwise &rsquo;and&rsquo;, &rsquo;or&rsquo;, and &rsquo;exclusive or&rsquo;
 operators.
 </p>
-<span id="XREFbitand"></span><dl class="def">
-<dt id="index-bitand"><span class="category">: </span><span><em></em> <strong>bitand</strong> <em>(<var>x</var>, <var>y</var>)</em><a href='#index-bitand' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFbitand"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-bitand"><span class="category-def">: </span><span><code class="def-type"><var class="var">z</var> =</code> <strong class="def-name">bitand</strong> <code class="def-code-arguments">(<var class="var">x</var>, <var class="var">y</var>)</code><a class="copiable-link" href="#index-bitand"> &para;</a></span></dt>
 <dd><p>Return the bitwise AND of non-negative integers.
 </p>
-<p><var>x</var>, <var>y</var> must be in the range [0,intmax]
+<p><var class="var">x</var>, <var class="var">y</var> must be in the range [0,intmax]
 </p>
-<p><strong>See also:</strong> <a href="#XREFbitor">bitor</a>, <a href="#XREFbitxor">bitxor</a>, <a href="#XREFbitset">bitset</a>, <a href="#XREFbitget">bitget</a>, <a href="#XREFbitcmp">bitcmp</a>, <a href="#XREFbitshift">bitshift</a>, <a href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFbitor">bitor</a>, <a class="ref" href="#XREFbitxor">bitxor</a>, <a class="ref" href="#XREFbitset">bitset</a>, <a class="ref" href="#XREFbitget">bitget</a>, <a class="ref" href="#XREFbitcmp">bitcmp</a>, <a class="ref" href="#XREFbitshift">bitshift</a>, <a class="ref" href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a class="ref" href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
 </p></dd></dl>
 
 
-<span id="XREFbitor"></span><dl class="def">
-<dt id="index-bitor"><span class="category">: </span><span><em></em> <strong>bitor</strong> <em>(<var>x</var>, <var>y</var>)</em><a href='#index-bitor' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the bitwise OR of non-negative integers <var>x</var> and <var>y</var>.
+<a class="anchor" id="XREFbitor"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-bitor"><span class="category-def">: </span><span><code class="def-type"><var class="var">z</var> =</code> <strong class="def-name">bitor</strong> <code class="def-code-arguments">(<var class="var">x</var>, <var class="var">y</var>)</code><a class="copiable-link" href="#index-bitor"> &para;</a></span></dt>
+<dd><p>Return the bitwise OR of non-negative integers <var class="var">x</var> and <var class="var">y</var>.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFbitor">bitor</a>, <a href="#XREFbitxor">bitxor</a>, <a href="#XREFbitset">bitset</a>, <a href="#XREFbitget">bitget</a>, <a href="#XREFbitcmp">bitcmp</a>, <a href="#XREFbitshift">bitshift</a>, <a href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFbitor">bitor</a>, <a class="ref" href="#XREFbitxor">bitxor</a>, <a class="ref" href="#XREFbitset">bitset</a>, <a class="ref" href="#XREFbitget">bitget</a>, <a class="ref" href="#XREFbitcmp">bitcmp</a>, <a class="ref" href="#XREFbitshift">bitshift</a>, <a class="ref" href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a class="ref" href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
 </p></dd></dl>
 
 
-<span id="XREFbitxor"></span><dl class="def">
-<dt id="index-bitxor"><span class="category">: </span><span><em></em> <strong>bitxor</strong> <em>(<var>x</var>, <var>y</var>)</em><a href='#index-bitxor' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the bitwise XOR of non-negative integers <var>x</var> and <var>y</var>.
+<a class="anchor" id="XREFbitxor"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-bitxor"><span class="category-def">: </span><span><code class="def-type"><var class="var">z</var> =</code> <strong class="def-name">bitxor</strong> <code class="def-code-arguments">(<var class="var">x</var>, <var class="var">y</var>)</code><a class="copiable-link" href="#index-bitxor"> &para;</a></span></dt>
+<dd><p>Return the bitwise XOR of non-negative integers <var class="var">x</var> and <var class="var">y</var>.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFbitand">bitand</a>, <a href="#XREFbitor">bitor</a>, <a href="#XREFbitset">bitset</a>, <a href="#XREFbitget">bitget</a>, <a href="#XREFbitcmp">bitcmp</a>, <a href="#XREFbitshift">bitshift</a>, <a href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFbitand">bitand</a>, <a class="ref" href="#XREFbitor">bitor</a>, <a class="ref" href="#XREFbitset">bitset</a>, <a class="ref" href="#XREFbitget">bitget</a>, <a class="ref" href="#XREFbitcmp">bitcmp</a>, <a class="ref" href="#XREFbitshift">bitshift</a>, <a class="ref" href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a class="ref" href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
 </p></dd></dl>
 
 
 <p>The bitwise &rsquo;not&rsquo; operator is a unary operator that performs a logical
 negation of each of the bits of the value.  For this to make sense, the
 mask against which the value is negated must be defined.  Octave&rsquo;s
-bitwise &rsquo;not&rsquo; operator is <code>bitcmp</code>.
+bitwise &rsquo;not&rsquo; operator is <code class="code">bitcmp</code>.
 </p>
-<span id="XREFbitcmp"></span><dl class="def">
-<dt id="index-bitcmp"><span class="category">: </span><span><em></em> <strong>bitcmp</strong> <em>(<var>A</var>, <var>k</var>)</em><a href='#index-bitcmp' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the <var>k</var>-bit complement of integers in <var>A</var>.
+<a class="anchor" id="XREFbitcmp"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-bitcmp"><span class="category-def">: </span><span><code class="def-type"><var class="var">C</var> =</code> <strong class="def-name">bitcmp</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">k</var>)</code><a class="copiable-link" href="#index-bitcmp"> &para;</a></span></dt>
+<dd><p>Return the <var class="var">k</var>-bit complement of integers in <var class="var">A</var>.
 </p>
-<p>If <var>k</var> is omitted <code>k = log2 (flintmax) + 1</code> is assumed.
+<p>If <var class="var">k</var> is omitted <code class="code">k = log2 (flintmax) + 1</code> is assumed.
 </p>
 <div class="example">
-<pre class="example">bitcmp (7,4)
+<div class="group"><pre class="example-preformatted">bitcmp (7,4)
   &rArr; 8
 dec2bin (11)
   &rArr; 1011
 dec2bin (bitcmp (11, 6))
   &rArr; 110100
-</pre></div>
+</pre></div></div>
 
 
-<p><strong>See also:</strong> <a href="#XREFbitand">bitand</a>, <a href="#XREFbitor">bitor</a>, <a href="#XREFbitxor">bitxor</a>, <a href="#XREFbitset">bitset</a>, <a href="#XREFbitget">bitget</a>, <a href="#XREFbitcmp">bitcmp</a>, <a href="#XREFbitshift">bitshift</a>, <a href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFbitand">bitand</a>, <a class="ref" href="#XREFbitor">bitor</a>, <a class="ref" href="#XREFbitxor">bitxor</a>, <a class="ref" href="#XREFbitset">bitset</a>, <a class="ref" href="#XREFbitget">bitget</a>, <a class="ref" href="#XREFbitcmp">bitcmp</a>, <a class="ref" href="#XREFbitshift">bitshift</a>, <a class="ref" href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
 </p></dd></dl>
 
 
 <p>Octave also includes the ability to left-shift and right-shift values bitwise.
 </p>
-<span id="XREFbitshift"></span><dl class="def">
-<dt id="index-bitshift"><span class="category">: </span><span><em></em> <strong>bitshift</strong> <em>(<var>a</var>, <var>k</var>)</em><a href='#index-bitshift' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-bitshift-1"><span class="category">: </span><span><em></em> <strong>bitshift</strong> <em>(<var>a</var>, <var>k</var>, <var>n</var>)</em><a href='#index-bitshift-1' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return a <var>k</var> bit shift of <var>n</var>-digit unsigned integers in <var>a</var>.
+<a class="anchor" id="XREFbitshift"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-bitshift"><span class="category-def">: </span><span><code class="def-type"><var class="var">B</var> =</code> <strong class="def-name">bitshift</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">k</var>)</code><a class="copiable-link" href="#index-bitshift"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-bitshift-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">B</var> =</code> <strong class="def-name">bitshift</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">k</var>, <var class="var">n</var>)</code><a class="copiable-link" href="#index-bitshift-1"> &para;</a></span></dt>
+<dd><p>Return a <var class="var">k</var> bit shift of <var class="var">n</var>-digit unsigned integers in <var class="var">A</var>.
 </p>
-<p>A positive <var>k</var> leads to a left shift; A negative value to a right shift.
+<p>A positive <var class="var">k</var> leads to a left shift; A negative value to a right shift.
 </p>
-<p>If <var>n</var> is omitted it defaults to 64.
-<var>n</var> must be in the range [1,64].
+<p>If <var class="var">n</var> is omitted it defaults to 64.  <var class="var">n</var> must be in the range [1,64].
 </p>
 <div class="example">
-<pre class="example">bitshift (eye (3), 1)
+<div class="group"><pre class="example-preformatted">bitshift (eye (3), 1)
 &rArr;
-</pre><pre class="example">2 0 0
+</pre><div class="group"><pre class="example-preformatted">2 0 0
 0 2 0
 0 0 2
-</pre><pre class="example">
+</pre></div><pre class="example-preformatted">
 
 bitshift (10, [-2, -1, 0, 1, 2])
 &rArr; 2   5  10  20  40
-</pre></div>
+</pre></div></div>
 
-<p><strong>See also:</strong> <a href="#XREFbitand">bitand</a>, <a href="#XREFbitor">bitor</a>, <a href="#XREFbitxor">bitxor</a>, <a href="#XREFbitset">bitset</a>, <a href="#XREFbitget">bitget</a>, <a href="#XREFbitcmp">bitcmp</a>, <a href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFbitand">bitand</a>, <a class="ref" href="#XREFbitor">bitor</a>, <a class="ref" href="#XREFbitxor">bitxor</a>, <a class="ref" href="#XREFbitset">bitset</a>, <a class="ref" href="#XREFbitget">bitget</a>, <a class="ref" href="#XREFbitcmp">bitcmp</a>, <a class="ref" href="Integer-Data-Types.html#XREFintmax">intmax</a>, <a class="ref" href="Integer-Data-Types.html#XREFflintmax">flintmax</a>.
 </p></dd></dl>
 
 
@@ -225,19 +235,19 @@ also uses arithmetic shifts, where the sign bit of the value is kept
 during a right shift.  For example:
 </p>
 <div class="example">
-<pre class="example">bitshift (-10, -1)
+<div class="group"><pre class="example-preformatted">bitshift (-10, -1)
 &rArr; -5
 bitshift (int8 (-1), -1)
 &rArr; -1
-</pre></div>
+</pre></div></div>
 
-<p>Note that <code>bitshift (int8 (-1), -1)</code> is <code>-1</code> since the bit
-representation of <code>-1</code> in the <code>int8</code> data type is <code>[1, 1,
+<p>Note that <code class="code">bitshift (int8 (-1), -1)</code> is <code class="code">-1</code> since the bit
+representation of <code class="code">-1</code> in the <code class="code">int8</code> data type is <code class="code">[1, 1,
 1, 1, 1, 1, 1, 1]</code>.
 </p>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Logical-Values.html">Logical Values</a>, Previous: <a href="Integer-Data-Types.html">Integer Data Types</a>, Up: <a href="Numeric-Data-Types.html">Numeric Data Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

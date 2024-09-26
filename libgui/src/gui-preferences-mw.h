@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2018-2022 The Octave Project Developers
+// Copyright (C) 2018-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,14 +31,11 @@
 // Main window preferences
 
 // Geometry wihtout default since default layout is built programmatically
-const gui_pref
-mw_geometry ("MainWindow/geometry", QVariant (QByteArray ()));
+extern gui_pref mw_geometry;
 
 // State wihtout default since default layout is built programmatically
-const gui_pref
-mw_state ("MainWindow/windowState", QVariant (QByteArray ()));
+extern gui_pref mw_state;
 
-const gui_pref
-mw_dir_list ("MainWindow/current_directory_list", QVariant (QStringList ()));
+extern gui_pref mw_dir_list;
 
 #endif

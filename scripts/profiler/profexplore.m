@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -36,13 +36,10 @@
 ## @seealso{profile, profshow}
 ## @end deftypefn
 
-## Built-in profiler.
 function profexplore (data)
 
   if (nargin == 0)
     data = profile ("info");
-  elseif (nargin < 1)
-    print_usage ();
   endif
 
   ## The actual work is done by a recursive worker function, since that

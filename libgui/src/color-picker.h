@@ -3,7 +3,7 @@
 // This class provides a simple color picker based on tQColorButton
 // by Harald Jedele, 23.03.01, GPL version 2 or any later version.
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,30 +32,31 @@
 #include <QColorDialog>
 #include <QPushButton>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class color_picker : public QPushButton
 {
-  class color_picker : public QPushButton
-  {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
+public:
 
-    color_picker (QColor color = QColor (0, 0, 0), QWidget *parent = nullptr);
+  color_picker (QColor color = QColor (0, 0, 0), QWidget *parent = nullptr);
 
-    QColor color (void) const { return m_color; }
+  QColor color () const { return m_color; }
 
-    void set_color (QColor new_color);
+  void set_color (QColor new_color);
 
-  private slots:
+private slots:
 
-    void select_color (void);
+  void select_color ();
 
-  private:
+private:
 
-    virtual void update_button (void);
+  virtual void update_button ();
 
-    QColor m_color;
-  };
-}
+  QColor m_color;
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

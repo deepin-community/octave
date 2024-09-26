@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2019-2022 The Octave Project Developers
+## Copyright (C) 2019-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -31,13 +31,12 @@
 function pkg_list = expand_rel_paths (pkg_list)
 
   ## Prepend location of OCTAVE_HOME to install directories
-  loc = OCTAVE_HOME ();
+  loc = regexptranslate ("escape", OCTAVE_HOME ());
   for i = 1:numel (pkg_list)
     ## Be sure to only prepend OCTAVE_HOME to pertinent package paths
-    if (strncmpi (pkg_list{i}.dir, "__OH__", 6))
-      pkg_list{i}.dir = [ loc pkg_list{i}.dir(7:end) ];
-      pkg_list{i}.archprefix = [ loc pkg_list{i}.archprefix(7:end) ];
-    endif
+    pkg_list{i}.dir = regexprep (pkg_list{i}.dir, "^__OH__", loc);
+    pkg_list{i}.archprefix = regexprep (pkg_list{i}.archprefix, ...
+                                        "^__OH__", loc);
   endfor
 
 endfunction

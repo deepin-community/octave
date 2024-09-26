@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2007-2022 The Octave Project Developers
+// Copyright (C) 2007-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -27,41 +27,41 @@
 #  include "config.h"
 #endif
 
+#include "gh-manager.h"
 #include "graphics.h"
 #include "gtk-manager.h"
 #include "interpreter-private.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+void
+base_graphics_toolkit::update (const graphics_handle& h, int id)
 {
-  void
-  base_graphics_toolkit::update (const graphics_handle& h, int id)
-  {
-    gh_manager& gh_mgr = __get_gh_manager__ ("base_graphics_toolkit::update");
+  gh_manager& gh_mgr = __get_gh_manager__ ();
 
-    graphics_object go = gh_mgr.get_object (h);
+  graphics_object go = gh_mgr.get_object (h);
 
-    update (go, id);
-  }
-
-  bool
-  base_graphics_toolkit::initialize (const graphics_handle& h)
-  {
-    gh_manager& gh_mgr
-      = __get_gh_manager__ ("base_graphics_toolkit::initialize");
-
-    graphics_object go = gh_mgr.get_object (h);
-
-    return initialize (go);
-  }
-
-  void
-  base_graphics_toolkit::finalize (const graphics_handle& h)
-  {
-    gh_manager& gh_mgr
-      = __get_gh_manager__ ("base_graphics_toolkit::finalize");
-
-    graphics_object go = gh_mgr.get_object (h);
-
-    finalize (go);
-  }
+  update (go, id);
 }
+
+bool
+base_graphics_toolkit::initialize (const graphics_handle& h)
+{
+  gh_manager& gh_mgr = __get_gh_manager__ ();
+
+  graphics_object go = gh_mgr.get_object (h);
+
+  return initialize (go);
+}
+
+void
+base_graphics_toolkit::finalize (const graphics_handle& h)
+{
+  gh_manager& gh_mgr = __get_gh_manager__ ();
+
+  graphics_object go = gh_mgr.get_object (h);
+
+  finalize (go);
+}
+
+OCTAVE_END_NAMESPACE(octave)

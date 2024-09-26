@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,19 +23,40 @@
 
 Properties of @code{uipushtool} objects (@pxref{XREFuipushtool,,uipushtool}):
 
+@subsubheading Categories:
+
+@ref{XREFuipushtoolcategoryAppearance, , @w{Appearance}}@: | @ref{XREFuipushtoolcategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFuipushtoolcategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFuipushtoolcategoryDisplay, , @w{Display}}@: | @ref{XREFuipushtoolcategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFuipushtoolcategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFuipushtoolcategoryParent/Children, , @w{Parent/Children}}@: | @ref{XREFuipushtoolcategoryPushtoolOperation, , @w{Pushtool Operation}}@: 
+
+@anchor{XREFuipushtoolcategoryAppearance}
+@subsubheading Appearance
+@prindex uipushtool Appearance
+
 @table @asis
 
 @anchor{XREFuipushtool__named_icon__}
 @prindex uipushtool __named_icon__
-@item @code{__named_icon__}: def. @qcode{""}
+@item @code{__named_icon__}: string, def. @qcode{""}
+The name of an bundled icon file to use as the image for the pushtool object.
 
 
+@anchor{XREFuipushtoolcdata}
+@prindex uipushtool cdata
+@item @code{cdata}: array, def. @code{[](0x0)}
+Image data used to represent the pushtool object, stored as a M x N x 3 RGB array.
 
-@anchor{XREFuipushtoolbeingdeleted}
-@prindex uipushtool beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
 
+@anchor{XREFuipushtoolseparator}
+@prindex uipushtool separator
+@item @code{separator}: @{@qcode{"off"}@} | @qcode{"on"}
+State indicating whether a separator line will be drawn next to the current pushtool position.
 
+@end table
+
+@anchor{XREFuipushtoolcategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex uipushtool CallbackExecution
+
+@table @asis
 
 @anchor{XREFuipushtoolbusyaction}
 @prindex uipushtool busyaction
@@ -41,40 +65,30 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFuipushtoolbuttondownfcn}
-@prindex uipushtool buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
-@code{buttondownfcn} is unused.
-
-
-@anchor{XREFuipushtoolcdata}
-@prindex uipushtool cdata
-@item @code{cdata}: def. @code{[](0x0)}
-
-
-
-@anchor{XREFuipushtoolchildren}
-@prindex uipushtool children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-Graphics handles of the uipushtool's children.
-
-
 @anchor{XREFuipushtoolclickedcallback}
 @prindex uipushtool clickedcallback
-@item @code{clickedcallback}: def. @code{[](0x0)}
+@item @code{clickedcallback}: string, def. @code{[](0x0)}
+A string consisting of a valid Octave expression that will be executed whenever this control object is clicked.
 
 
+@anchor{XREFuipushtoolinterruptible}
+@prindex uipushtool interruptible
+@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
+@xref{Callbacks, , @w{Callbacks section}}.
 
-@anchor{XREFuipushtoolclipping}
-@prindex uipushtool clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the uipushtool is clipped in its parent axes limits.
+@end table
 
+@anchor{XREFuipushtoolcategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex uipushtool Creation/Deletion
 
-@anchor{XREFuipushtoolcontextmenu}
-@prindex uipushtool contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this uipushtool object.
+@table @asis
+
+@anchor{XREFuipushtoolbeingdeleted}
+@prindex uipushtool beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
 
 
 @anchor{XREFuipushtoolcreatefcn}
@@ -92,36 +106,49 @@ Callback function executed immediately before uipushtool is deleted.
 
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFuipushtoolenable}
-@prindex uipushtool enable
-@item @code{enable}: @qcode{"off"} | @{@qcode{"on"}@}
+@anchor{XREFuipushtoolcategoryDisplay}
+@subsubheading Display
+@prindex uipushtool Display
+
+@table @asis
+
+@anchor{XREFuipushtoolclipping}
+@prindex uipushtool clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the uipushtool is clipped in its parent axes limits.
 
 
+@anchor{XREFuipushtoolvisible}
+@prindex uipushtool visible
+@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{visible} is @qcode{"off"}, the uipushtool is not rendered on screen.
 
-@anchor{XREFuipushtoolhandlevisibility}
-@prindex uipushtool handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the uipushtool's handle is not visible in its parent's "children" property.
+@end table
+
+@anchor{XREFuipushtoolcategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex uipushtool MouseInteraction
+
+@table @asis
+
+@anchor{XREFuipushtoolbuttondownfcn}
+@prindex uipushtool buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+@code{buttondownfcn} is unused.
+
+
+@anchor{XREFuipushtoolcontextmenu}
+@prindex uipushtool contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this uipushtool object.
 
 
 @anchor{XREFuipushtoolhittest}
 @prindex uipushtool hittest
 @item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
 Specify whether uipushtool processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFuipushtoolpickableparts, , @w{pickableparts property}}.
-
-
-@anchor{XREFuipushtoolinterruptible}
-@prindex uipushtool interruptible
-@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
-@xref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFuipushtoolparent}
-@prindex uipushtool parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
 
 
 @anchor{XREFuipushtoolpickableparts}
@@ -133,20 +160,27 @@ Specify whether uipushtool will accept mouse clicks.  By default, @code{pickable
 @anchor{XREFuipushtoolselected}
 @prindex uipushtool selected
 @item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
+Property indicates whether this uipushtool is selected.
 
 
 @anchor{XREFuipushtoolselectionhighlight}
 @prindex uipushtool selectionhighlight
 @item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the uipushtool's selection state is visually highlighted.
 
 
+@anchor{XREFuipushtooltooltipstring}
+@prindex uipushtool tooltipstring
+@item @code{tooltipstring}: string, def. @qcode{""}
+A text string that appears in a tooltip when the mouse pointer hovers over the pushtool object.
 
-@anchor{XREFuipushtoolseparator}
-@prindex uipushtool separator
-@item @code{separator}: @{@qcode{"off"}@} | @qcode{"on"}
+@end table
 
+@anchor{XREFuipushtoolcategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex uipushtool ObjectIdentification
 
+@table @asis
 
 @anchor{XREFuipushtooltag}
 @prindex uipushtool tag
@@ -154,16 +188,10 @@ Specify whether uipushtool will accept mouse clicks.  By default, @code{pickable
 A user-defined string to label the graphics object.
 
 
-@anchor{XREFuipushtooltooltipstring}
-@prindex uipushtool tooltipstring
-@item @code{tooltipstring}: def. @qcode{""}
-
-
-
 @anchor{XREFuipushtooltype}
 @prindex uipushtool type
 @item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"uipushtool"}
+Class name of the graphics object.  @code{type} is always @qcode{"uipushtool"}.
 
 
 @anchor{XREFuipushtooluserdata}
@@ -171,10 +199,42 @@ Class name of the graphics object.  @code{type} is always @qcode{"uipushtool"}
 @item @code{userdata}: Any Octave data, def. @code{[](0x0)}
 User-defined data to associate with the graphics object.
 
+@end table
 
-@anchor{XREFuipushtoolvisible}
-@prindex uipushtool visible
-@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{visible} is @qcode{"off"}, the uipushtool is not rendered on screen.
+@anchor{XREFuipushtoolcategoryParent/Children}
+@subsubheading Parent/Children
+@prindex uipushtool Parent/Children
+
+@table @asis
+
+@anchor{XREFuipushtoolchildren}
+@prindex uipushtool children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Graphics handles of the uipushtool's children.
+
+
+@anchor{XREFuipushtoolhandlevisibility}
+@prindex uipushtool handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the uipushtool's handle is not visible in its parent's @qcode{"children"} property.
+
+
+@anchor{XREFuipushtoolparent}
+@prindex uipushtool parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
+
+@end table
+
+@anchor{XREFuipushtoolcategoryPushtoolOperation}
+@subsubheading Pushtool Operation
+@prindex uipushtool PushtoolOperation
+
+@table @asis
+
+@anchor{XREFuipushtoolenable}
+@prindex uipushtool enable
+@item @code{enable}: @qcode{"off"} | @{@qcode{"on"}@}
+Sets whether this pushtool object is active or is grayed out.
 
 @end table

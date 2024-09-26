@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Process ID Information (GNU Octave (version 7.1.0))</title>
+<title>Process ID Information (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Process ID Information (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Process ID Information (GNU Octave (version 7.1.0))">
+<meta name="description" content="Process ID Information (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Process ID Information (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Controlling-Subprocesses.html" rel="prev" title="Controlling Subprocesses">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,68 +31,94 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Process-ID-Information">
-<div class="header">
+<div class="section-level-extent" id="Process-ID-Information">
+<div class="nav-panel">
 <p>
 Next: <a href="Environment-Variables.html" accesskey="n" rel="next">Environment Variables</a>, Previous: <a href="Controlling-Subprocesses.html" accesskey="p" rel="prev">Controlling Subprocesses</a>, Up: <a href="System-Utilities.html" accesskey="u" rel="up">System Utilities</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Process_002c-Group_002c-and-User-IDs"></span><h3 class="section">36.6 Process, Group, and User IDs</h3>
+<h3 class="section" id="Process_002c-Group_002c-and-User-IDs"><span>36.6 Process, Group, and User IDs<a class="copiable-link" href="#Process_002c-Group_002c-and-User-IDs"> &para;</a></span></h3>
 
-<span id="XREFgetpgrp"></span><dl class="def">
-<dt id="index-getpgrp"><span class="category">: </span><span><em>pgid =</em> <strong>getpgrp</strong> <em>()</em><a href='#index-getpgrp' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFgetpgrp"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-getpgrp"><span class="category-def">: </span><span><code class="def-type">pgid =</code> <strong class="def-name">getpgrp</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-getpgrp"> &para;</a></span></dt>
 <dd><p>Return the process group id of the current process.
 </p></dd></dl>
 
 
-<span id="XREFgetpid"></span><dl class="def">
-<dt id="index-getpid"><span class="category">: </span><span><em>pid =</em> <strong>getpid</strong> <em>()</em><a href='#index-getpid' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFgetpid"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-getpid"><span class="category-def">: </span><span><code class="def-type">pid =</code> <strong class="def-name">getpid</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-getpid"> &para;</a></span></dt>
 <dd><p>Return the process id of the current process.
 </p>
-<p><strong>See also:</strong> <a href="#XREFgetppid">getppid</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgetppid">getppid</a>.
 </p></dd></dl>
 
 
-<span id="XREFgetppid"></span><dl class="def">
-<dt id="index-getppid"><span class="category">: </span><span><em>pid =</em> <strong>getppid</strong> <em>()</em><a href='#index-getppid' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFgetppid"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-getppid"><span class="category-def">: </span><span><code class="def-type">pid =</code> <strong class="def-name">getppid</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-getppid"> &para;</a></span></dt>
 <dd><p>Return the process id of the parent process.
 </p>
-<p><strong>See also:</strong> <a href="#XREFgetpid">getpid</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgetpid">getpid</a>.
 </p></dd></dl>
 
 
-<span id="XREFgeteuid"></span><dl class="def">
-<dt id="index-geteuid"><span class="category">: </span><span><em>euid =</em> <strong>geteuid</strong> <em>()</em><a href='#index-geteuid' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFgeteuid"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-geteuid"><span class="category-def">: </span><span><code class="def-type">euid =</code> <strong class="def-name">geteuid</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-geteuid"> &para;</a></span></dt>
 <dd><p>Return the effective user id of the current process.
 </p>
-<p><strong>See also:</strong> <a href="#XREFgetuid">getuid</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgetuid">getuid</a>.
 </p></dd></dl>
 
 
-<span id="XREFgetuid"></span><dl class="def">
-<dt id="index-getuid"><span class="category">: </span><span><em>uid =</em> <strong>getuid</strong> <em>()</em><a href='#index-getuid' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFgetuid"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-getuid"><span class="category-def">: </span><span><code class="def-type">uid =</code> <strong class="def-name">getuid</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-getuid"> &para;</a></span></dt>
 <dd><p>Return the real user id of the current process.
 </p>
-<p><strong>See also:</strong> <a href="#XREFgeteuid">geteuid</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgeteuid">geteuid</a>.
 </p></dd></dl>
 
 
-<span id="XREFgetegid"></span><dl class="def">
-<dt id="index-getegid"><span class="category">: </span><span><em>egid =</em> <strong>getegid</strong> <em>()</em><a href='#index-getegid' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFgetegid"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-getegid"><span class="category-def">: </span><span><code class="def-type">egid =</code> <strong class="def-name">getegid</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-getegid"> &para;</a></span></dt>
 <dd><p>Return the effective group id of the current process.
 </p>
-<p><strong>See also:</strong> <a href="#XREFgetgid">getgid</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgetgid">getgid</a>.
 </p></dd></dl>
 
 
-<span id="XREFgetgid"></span><dl class="def">
-<dt id="index-getgid"><span class="category">: </span><span><em>gid =</em> <strong>getgid</strong> <em>()</em><a href='#index-getgid' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFgetgid"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-getgid"><span class="category-def">: </span><span><code class="def-type">gid =</code> <strong class="def-name">getgid</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-getgid"> &para;</a></span></dt>
 <dd><p>Return the real group id of the current process.
 </p>
-<p><strong>See also:</strong> <a href="#XREFgetegid">getegid</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFgetegid">getegid</a>.
 </p></dd></dl>
 
 
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Environment-Variables.html">Environment Variables</a>, Previous: <a href="Controlling-Subprocesses.html">Controlling Subprocesses</a>, Up: <a href="System-Utilities.html">System Utilities</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -57,15 +57,15 @@ in_class_method (const octave::cdef_class& cls)
   return (ctx.ok () && octave::is_superclass (ctx, cls));
 }
 
-int octave_classdef::t_id (-1);
+int octave_classdef::s_t_id (-1);
 
-const std::string octave_classdef::t_name ("object");
+const std::string octave_classdef::s_t_name ("object");
 
 void
 octave_classdef::register_type (octave::type_info& ti)
 {
-  t_id = ti.register_type (octave_classdef::t_name, "<unknown>",
-                           octave_value (new octave_classdef ()));
+  s_t_id = ti.register_type (octave_classdef::s_t_name, "<unknown>",
+                             octave_value (new octave_classdef ()));
 }
 
 octave_value_list
@@ -88,10 +88,47 @@ octave_classdef::subsref (const std::string& type,
 
           args(1) = make_idx_args (type, idx, "subsref");
 
-          count++;
+          m_count++;
           args(0) = octave_value (this);
 
+          // If the number of output arguments is unknown, attempt to set up
+          // a proper value for nargout at least in the simple case where the
+          // cs-list-type expression - i.e., {} or ().x, is the leading one.
+          if (nargout <= 0)
+            {
+              bool maybe_cs_list_query = (type[0] == '.' || type[0] == '{'
+                                          || (type.length () > 1 && type[0] == '('
+                                              && type[1] == '.'));
+
+              if (maybe_cs_list_query)
+                {
+                  // Set up a proper nargout for the subsref call by calling numel.
+                  octave_value_list tmp;
+                  int nout;
+                  if (type[0] != '.') tmp = idx.front ();
+                  nout = xnumel (tmp);
+                  if (nargout != 0 || nout > 1)
+                    nargout = nout;
+                }
+              else if (nargout < 0)
+                nargout = 1;
+            }
+
           retval = meth.execute (args, nargout, true, "subsref");
+
+          // Since we're handling subsref, if the list has more than one element
+          // and the caller to subsref accepts more that one output, return
+          // the elements as a comma-separated list so that we can pass it to the
+          // evaluator
+          if (retval.length () > 1 && (nargout < 0 || nargout > 1))
+            {
+              if (nargout <= 0 || nargout >= retval.length ())
+                // Take the whole list
+                retval = octave_value (retval);
+              else
+                // Take nargout elements of the list
+                retval = octave_value (retval.slice (0, nargout));
+            }
 
           return retval;
         }
@@ -131,7 +168,7 @@ octave_classdef::subsref (const std::string& type,
 
           args(1) = make_idx_args (type, idx, "subsref");
 
-          count++;
+          m_count++;
           args(0) = octave_value (this);
 
           retval = meth.execute (args, 1, true, "subsref");
@@ -140,7 +177,8 @@ octave_classdef::subsref (const std::string& type,
         }
     }
 
-  retval = m_object.subsref (type, idx, 1, skip, octave::cdef_class (), auto_add);
+  retval = m_object.subsref (type, idx, 1, skip,
+                             octave::cdef_class (), auto_add);
 
   if (type.length () > skip && idx.size () > skip)
     retval = retval(0).next_subsref (1, type, idx, skip);
@@ -167,7 +205,7 @@ octave_classdef::subsasgn (const std::string& type,
 
           args(1) = make_idx_args (type, idx, "subsasgn");
 
-          count++;
+          m_count++;
           args(0) = octave_value (this);
           args(2) = rhs;
 
@@ -206,7 +244,7 @@ octave_classdef::undef_subsasgn (const std::string& type,
 }
 
 Matrix
-octave_classdef::size (void)
+octave_classdef::size ()
 {
   octave::cdef_class cls = m_object.get_class ();
 
@@ -216,7 +254,7 @@ octave_classdef::size (void)
 
       if (meth.ok ())
         {
-          count++;
+          m_count++;
           octave_value_list args (1, octave_value (this));
 
           octave_value_list lv = meth.execute (args, 1, true, "size");
@@ -246,7 +284,7 @@ octave_classdef::xnumel (const octave_value_list& idx)
         {
           octave_value_list args (idx.length () + 1, octave_value ());
 
-          count++;
+          m_count++;
           args(0) = octave_value (this);
 
           for (octave_idx_type i = 0; i < idx.length (); i++)
@@ -254,13 +292,13 @@ octave_classdef::xnumel (const octave_value_list& idx)
 
           // Temporarily set lvalue list of current statement to NULL, to avoid
           // using that list for the execution of the method "numel"
-          octave::interpreter& interp = octave::__get_interpreter__ ("octave_classdef::xnumel");
+          octave::interpreter& interp = octave::__get_interpreter__ ();
           octave::tree_evaluator& tw = interp.get_evaluator();
 
           octave::unwind_action act ([&tw] (const std::list<octave::octave_lvalue> *lvl)
-                            {
-                              tw.set_lvalue_list (lvl);
-                            }, tw.lvalue_list ());
+          {
+            tw.set_lvalue_list (lvl);
+          }, tw.lvalue_list ());
           tw.set_lvalue_list (nullptr);
 
           octave_value_list lv = meth.execute (args, 1, true, "numel");
@@ -357,16 +395,17 @@ octave_classdef::print_raw (std::ostream& os, bool) const
             os << "  " << nm;
           else
             {
-              octave_value val = prop.get_value (m_object, false);
-              dim_vector dims = val.dims ();
-
               os << std::setw (max_len+2) << nm << ": ";
-              if (val.is_string ())
-                os << val.string_value ();
-              else if (val.islogical ())
-                os << val.bool_value ();
+
+              octave_value val = prop.get_value (m_object, false);
+
+              if (val.ndims () == 2 && val.rows () == 1 && (val.isnumeric () || val.islogical () || val.is_string ()))
+                val.short_disp (os);
               else
-                os << "[" << dims.str () << " " << val.class_name () << "]";
+                {
+                  dim_vector dims = val.dims ();
+                  os << "[" << dims.str () << " " << val.class_name () << "]";
+                }
             }
 
           newline (os);
@@ -401,7 +440,8 @@ octave_classdef::metaclass_query (const std::string& cls)
   return octave::to_ov (octave::lookup_class (cls));
 }
 
-bool octave_classdef_meta::is_classdef_method (const std::string& cname) const
+bool
+octave_classdef_meta::is_classdef_method (const std::string& cname) const
 {
   bool retval = false;
 
@@ -420,7 +460,8 @@ bool octave_classdef_meta::is_classdef_method (const std::string& cname) const
   return retval;
 }
 
-bool octave_classdef_meta::is_classdef_constructor (const std::string& cname) const
+bool
+octave_classdef_meta::is_classdef_constructor (const std::string& cname) const
 {
   bool retval = false;
 
@@ -436,11 +477,35 @@ bool octave_classdef_meta::is_classdef_constructor (const std::string& cname) co
             retval = true;
         }
     }
+  else if (m_object.is_method ())
+    {
+      octave::cdef_method meth (m_object);
+
+      if (meth.is_constructor ())
+        {
+          std::string meth_name = meth.get_name ();
+
+          // Only consider METH to be a constructor if the dispatch
+          // class CNAME is the same as or derived from the class of
+          // METH.
+
+          if (cname == meth_name)
+            retval = true;
+          else
+            {
+              octave::cdef_class meth_cls = octave::lookup_class (meth_name, false, false);
+              octave::cdef_class dispatch_cls = octave::lookup_class (cname, false, false);
+
+              retval = octave::is_superclass (meth_cls, dispatch_cls);
+            }
+        }
+    }
 
   return retval;
 }
 
-std::string octave_classdef_meta::doc_string (const std::string& meth_name) const
+std::string
+octave_classdef_meta::doc_string (const std::string& meth_name) const
 {
   if (m_object.is_class ())
     {
@@ -458,7 +523,8 @@ std::string octave_classdef_meta::doc_string (const std::string& meth_name) cons
   return "";
 }
 
-std::string octave_classdef_meta::file_name (void) const
+std::string
+octave_classdef_meta::file_name () const
 {
   if (m_object.is_class ())
     {
@@ -472,8 +538,8 @@ std::string octave_classdef_meta::file_name (void) const
 
 octave_value_list
 octave_classdef_superclass_ref::execute (octave::tree_evaluator& tw,
-                                         int nargout,
-                                         const octave_value_list& idx)
+    int nargout,
+    const octave_value_list& idx)
 {
   octave_value_list retval;
 
@@ -577,8 +643,9 @@ octave_classdef_superclass_ref::execute (octave::tree_evaluator& tw,
   return retval;
 }
 
-bool octave_classdef_superclass_ref::is_constructed_object (octave::tree_evaluator& tw,
-                                                            const std::string& nm)
+bool
+octave_classdef_superclass_ref::is_constructed_object (octave::tree_evaluator& tw,
+    const std::string& nm)
 {
   octave_function *of = tw.current_function ();
 
@@ -598,26 +665,26 @@ bool octave_classdef_superclass_ref::is_constructed_object (octave::tree_evaluat
   return false;
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (__meta_get_package__, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} __meta_get_package__ ()
+@deftypefn {} {@var{pkg} =} __meta_get_package__ (@var{pkg_name})
 Undocumented internal function.
 @end deftypefn */)
 {
   if (args.length () != 1)
     print_usage ();
 
-  std::string cname = args(0).xstring_value ("PACKAGE_NAME must be a string");
+  std::string cname = args(0).xstring_value ("PKG_NAME must be a string");
 
   return to_ov (lookup_package (cname));
 }
 
 DEFUN (metaclass, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} metaclass (obj)
-Returns the meta.class object corresponding to the class of @var{obj}.
+@deftypefn {} {@var{metaclass_obj} =} metaclass (obj)
+Return the meta.class object corresponding to the class of @var{obj}.
 @end deftypefn */)
 {
   if (args.length () != 1)
@@ -635,17 +702,17 @@ Returns the meta.class object corresponding to the class of @var{obj}.
 
 DEFUN (properties, args, nargout,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} properties (@var{class_name})
-@deftypefnx {} {} properties (@var{obj})
-@deftypefnx {} {@var{plist} =} properties (@dots{})
-Return or display the public properties for the named class
-@var{class_name} or classdef object @var{obj}.
+@deftypefn  {} {} properties (@var{obj})
+@deftypefnx {} {} properties (@var{class_name})
+@deftypefnx {} {@var{proplist} =} properties (@dots{})
+Display or return the public properties for the classdef object @var{obj} or
+the named class @var{class_name}.
 
-If an output value is requested, return the list of property names in a
-cell array.
+If an output value is requested, return the list of property names in a cell
+array.
 
-Programming Note: Property names are returned if the @code{GetAccess}
-attribute is public and if the @code{Hidden} attribute is false.
+Programming Note: Property names are returned if the @code{GetAccess} attribute
+is public and if the @code{Hidden} attribute is false.
 @seealso{methods}
 @end deftypefn */)
 {
@@ -679,10 +746,7 @@ attribute is public and if the @code{Hidden} attribute is false.
     {
       // FIXME: this loop duplicates a significant portion of the loops
       // in octave_classdef::print_raw.
-
       const cdef_property& prop = pname_prop.second;
-
-      std::string nm = prop.get_name ();
 
       octave_value acc = prop.get ("GetAccess");
 
@@ -694,7 +758,7 @@ attribute is public and if the @code{Hidden} attribute is false.
       if (hid.bool_value ())
         continue;
 
-      property_names.push_back (nm);
+      property_names.push_back (pname_prop.first);
     }
 
   if (nargout > 0)
@@ -721,11 +785,9 @@ attribute is public and if the @code{Hidden} attribute is false.
 
 DEFMETHOD (__methods__, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} __methods__ (@var{x})
-@deftypefnx {} {} __methods__ ("classname")
-Internal function.
-
-Implements @code{methods} for Octave class objects and classnames.
+@deftypefn  {} {[@var{mtds}, @var{found}] =} __methods__ (@var{obj})
+@deftypefnx {} {[@var{mtds}, @var{found}] =} __methods__ ("classname")
+Implement @code{methods} for Octave class objects and classnames.
 @seealso{methods}
 @end deftypefn */)
 {
@@ -742,11 +804,13 @@ Implements @code{methods} for Octave class objects and classnames.
     err_wrong_type_arg ("__methods__", arg);
 
   string_vector sv;
+  bool found = false;
 
   cdef_class cls = lookup_class (class_name, false, true);
 
   if (cls.ok ())
     {
+      // Find methods for classdef objects.
       std::map<std::string, cdef_method> method_map
         = cls.get_method_map (false, true);
 
@@ -754,27 +818,39 @@ Implements @code{methods} for Octave class objects and classnames.
 
       for (const auto& nm_mthd : method_map)
         {
-          std::string nm = nm_mthd.first;
+          const cdef_method& method = nm_mthd.second;
 
-          method_names.push_back (nm);
+          octave_value acc = method.get ("Access");
+
+          if (! acc.is_string () || acc.string_value () != "public")
+            continue;
+
+          octave_value hid = method.get ("Hidden");
+
+          if (hid.bool_value ())
+            continue;
+
+          method_names.push_back (nm_mthd.first);
         }
 
       sv = string_vector (method_names);
+      found = true;
+    }
+  else
+    {
+      // Find methods for legacy @CLASS objects.
+      load_path& lp = interp.get_load_path ();
+
+      sv = string_vector (lp.methods (class_name));
+      found = ! sv.empty ();
     }
 
-  // The following will also find methods for legacy @CLASS objects.
-
-  load_path& lp = interp.get_load_path ();
-
-  sv.append (lp.methods (class_name));
-
-  return ovl (Cell (sv));
+  return ovl (Cell (sv), found);
 }
 
-OCTAVE_NAMESPACE_END
-
 /*
-;;; Local Variables: ***
-;;; mode: C++ ***
-;;; End: ***
+// BIST tests are in file methods.m
+%!assert (1)
 */
+
+OCTAVE_END_NAMESPACE(octave)

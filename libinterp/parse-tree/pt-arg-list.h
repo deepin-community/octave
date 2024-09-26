@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,82 +38,79 @@ class octave_value_list;
 #include "base-list.h"
 #include "pt-walk.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class symbol_scope;
+class tree_evaluator;
+class tree_expression;
+
+// Argument lists.  Used to hold the list of expressions that are the
+// arguments in a function call or index expression.
+
+class tree_argument_list : public base_list<tree_expression *>
 {
-  class symbol_scope;
-  class tree_evaluator;
-  class tree_expression;
+public:
 
-  // Argument lists.  Used to hold the list of expressions that are the
-  // arguments in a function call or index expression.
+  typedef tree_expression *element_type;
 
-  class tree_argument_list : public base_list<tree_expression *>
+  tree_argument_list ()
+    : m_list_includes_magic_tilde (false), m_simple_assign_lhs (false)
+  { }
+
+  tree_argument_list (tree_expression *t)
+    : m_list_includes_magic_tilde (false), m_simple_assign_lhs (false)
+  { append (t); }
+
+  OCTAVE_DISABLE_COPY_MOVE (tree_argument_list)
+
+  ~tree_argument_list ();
+
+  bool has_magic_tilde () const
   {
-  public:
+    return m_list_includes_magic_tilde;
+  }
 
-    typedef tree_expression* element_type;
+  bool includes_magic_tilde () const
+  {
+    return m_list_includes_magic_tilde;
+  }
 
-    tree_argument_list (void)
-      : m_list_includes_magic_tilde (false), m_simple_assign_lhs (false)
-    { }
+  tree_expression * remove_front ()
+  {
+    auto p = begin ();
+    tree_expression *retval = *p;
+    erase (p);
+    return retval;
+  }
 
-    tree_argument_list (tree_expression *t)
-      : m_list_includes_magic_tilde (false), m_simple_assign_lhs (false)
-    { append (t); }
+  void append (const element_type& s);
 
-    // No copying!
+  void mark_as_simple_assign_lhs () { m_simple_assign_lhs = true; }
 
-    tree_argument_list (const tree_argument_list&) = delete;
+  bool is_simple_assign_lhs () { return m_simple_assign_lhs; }
 
-    tree_argument_list& operator = (const tree_argument_list&) = delete;
+  bool all_elements_are_constant () const;
 
-    ~tree_argument_list (void);
+  bool is_valid_lvalue_list () const;
 
-    bool has_magic_tilde (void) const
-    {
-      return m_list_includes_magic_tilde;
-    }
+  string_vector get_arg_names () const;
 
-    bool includes_magic_tilde (void) const
-    {
-      return m_list_includes_magic_tilde;
-    }
+  std::list<std::string> variable_names () const;
 
-    tree_expression * remove_front (void)
-    {
-      auto p = begin ();
-      tree_expression *retval = *p;
-      erase (p);
-      return retval;
-    }
+  tree_argument_list * dup (symbol_scope& scope) const;
 
-    void append (const element_type& s);
+  void accept (tree_walker& tw)
+  {
+    tw.visit_argument_list (*this);
+  }
 
-    void mark_as_simple_assign_lhs (void) { m_simple_assign_lhs = true; }
+private:
 
-    bool is_simple_assign_lhs (void) { return m_simple_assign_lhs; }
+  bool m_list_includes_magic_tilde;
 
-    bool all_elements_are_constant (void) const;
+  bool m_simple_assign_lhs;
+};
 
-    bool is_valid_lvalue_list (void) const;
-
-    string_vector get_arg_names (void) const;
-
-    std::list<std::string> variable_names (void) const;
-
-    tree_argument_list * dup (symbol_scope& scope) const;
-
-    void accept (tree_walker& tw)
-    {
-      tw.visit_argument_list (*this);
-    }
-
-  private:
-
-    bool m_list_includes_magic_tilde;
-
-    bool m_simple_assign_lhs;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

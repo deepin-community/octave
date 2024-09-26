@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Basic Usage (GNU Octave (version 7.1.0))</title>
+<title>Basic Usage (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Basic Usage (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Basic Usage (GNU Octave (version 7.1.0))">
+<meta name="description" content="Basic Usage (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Basic Usage (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,10 @@
 <link href="Matrix-Algebra.html" rel="next" title="Matrix Algebra">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,17 +31,17 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Basic-Usage">
-<div class="header">
+<div class="section-level-extent" id="Basic-Usage">
+<div class="nav-panel">
 <p>
 Next: <a href="Matrix-Algebra.html" accesskey="n" rel="next">Linear Algebra with Diagonal/Permutation Matrices</a>, Up: <a href="Diagonal-and-Permutation-Matrices.html" accesskey="u" rel="up">Diagonal and Permutation Matrices</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Creating-and-Manipulating-Diagonal_002fPermutation-Matrices"></span><h3 class="section">21.1 Creating and Manipulating Diagonal/Permutation Matrices</h3>
+<h3 class="section" id="Creating-and-Manipulating-Diagonal_002fPermutation-Matrices"><span>21.1 Creating and Manipulating Diagonal/Permutation Matrices<a class="copiable-link" href="#Creating-and-Manipulating-Diagonal_002fPermutation-Matrices"> &para;</a></span></h3>
 
 <p>A diagonal matrix is defined as a matrix that has zero entries outside the main
 diagonal; that is,
-<code>D(i,j) == 0</code> if <code>i != j</code>.
+<code class="code">D(i,j) == 0</code> if <code class="code">i != j</code>.
 Most often, square diagonal matrices are considered; however, the definition
 can equally be applied to non-square matrices, in which case we usually speak
 of a rectangular diagonal matrix.
@@ -60,72 +49,78 @@ of a rectangular diagonal matrix.
 <p>A permutation matrix is defined as a square matrix that has a single element
 equal to unity in each row and each column; all other elements are zero.  That
 is, there exists a permutation (vector)
-<code>p</code> such that <code>P(i,j) == 1</code> if <code>j == p(i)</code> and
-<code>P(i,j) == 0</code> otherwise.
+<code class="code">p</code> such that <code class="code">P(i,j) == 1</code> if <code class="code">j == p(i)</code> and
+<code class="code">P(i,j) == 0</code> otherwise.
 </p>
 <p>Octave provides special treatment of real and complex rectangular diagonal
 matrices, as well as permutation matrices.  They are stored as special objects,
 using efficient storage and algorithms, facilitating writing both readable and
 efficient matrix algebra expressions in the Octave language.  The special
-treatment may be disabled by using the functions <em>optimize_diagonal_matrix</em>
-and <em>optimize_permutation_matrix</em>.
+treatment may be disabled by using the functions <em class="dfn">optimize_diagonal_matrix</em>
+and <em class="dfn">optimize_permutation_matrix</em>.
 </p>
-<span id="XREFoptimize_005fdiagonal_005fmatrix"></span><dl class="def">
-<dt id="index-optimize_005fdiagonal_005fmatrix"><span class="category">: </span><span><em><var>val</var> =</em> <strong>optimize_diagonal_matrix</strong> <em>()</em><a href='#index-optimize_005fdiagonal_005fmatrix' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-optimize_005fdiagonal_005fmatrix-1"><span class="category">: </span><span><em><var>old_val</var> =</em> <strong>optimize_diagonal_matrix</strong> <em>(<var>new_val</var>)</em><a href='#index-optimize_005fdiagonal_005fmatrix-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-optimize_005fdiagonal_005fmatrix-2"><span class="category">: </span><span><em></em> <strong>optimize_diagonal_matrix</strong> <em>(<var>new_val</var>, &quot;local&quot;)</em><a href='#index-optimize_005fdiagonal_005fmatrix-2' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFoptimize_005fdiagonal_005fmatrix"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-optimize_005fdiagonal_005fmatrix"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">optimize_diagonal_matrix</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-optimize_005fdiagonal_005fmatrix"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-optimize_005fdiagonal_005fmatrix-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">optimize_diagonal_matrix</strong> <code class="def-code-arguments">(<var class="var">new_val</var>)</code><a class="copiable-link" href="#index-optimize_005fdiagonal_005fmatrix-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-optimize_005fdiagonal_005fmatrix-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">optimize_diagonal_matrix</strong> <code class="def-code-arguments">(<var class="var">new_val</var>, &quot;local&quot;)</code><a class="copiable-link" href="#index-optimize_005fdiagonal_005fmatrix-2"> &para;</a></span></dt>
 <dd><p>Query or set whether a special space-efficient format is used for storing
 diagonal matrices.
 </p>
 <p>The default value is true.  If this option is set to false, Octave will store
 diagonal matrices as full matrices.
 </p>
-<p>When called from inside a function with the <code>&quot;local&quot;</code> option, the setting
+<p>When called from inside a function with the <code class="code">&quot;local&quot;</code> option, the setting
 is changed locally for the function and any subroutines it calls.  The original
 setting is restored when exiting the function.
 </p>
-<p><strong>See also:</strong> <a href="Ranges.html#XREFoptimize_005frange">optimize_range</a>, <a href="#XREFoptimize_005fpermutation_005fmatrix">optimize_permutation_matrix</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Ranges.html#XREFoptimize_005frange">optimize_range</a>, <a class="ref" href="#XREFoptimize_005fpermutation_005fmatrix">optimize_permutation_matrix</a>.
 </p></dd></dl>
 
 
-<span id="XREFoptimize_005fpermutation_005fmatrix"></span><dl class="def">
-<dt id="index-optimize_005fpermutation_005fmatrix"><span class="category">: </span><span><em><var>val</var> =</em> <strong>optimize_permutation_matrix</strong> <em>()</em><a href='#index-optimize_005fpermutation_005fmatrix' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-optimize_005fpermutation_005fmatrix-1"><span class="category">: </span><span><em><var>old_val</var> =</em> <strong>optimize_permutation_matrix</strong> <em>(<var>new_val</var>)</em><a href='#index-optimize_005fpermutation_005fmatrix-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-optimize_005fpermutation_005fmatrix-2"><span class="category">: </span><span><em></em> <strong>optimize_permutation_matrix</strong> <em>(<var>new_val</var>, &quot;local&quot;)</em><a href='#index-optimize_005fpermutation_005fmatrix-2' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFoptimize_005fpermutation_005fmatrix"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-optimize_005fpermutation_005fmatrix"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">optimize_permutation_matrix</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-optimize_005fpermutation_005fmatrix"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-optimize_005fpermutation_005fmatrix-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">optimize_permutation_matrix</strong> <code class="def-code-arguments">(<var class="var">new_val</var>)</code><a class="copiable-link" href="#index-optimize_005fpermutation_005fmatrix-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-optimize_005fpermutation_005fmatrix-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">optimize_permutation_matrix</strong> <code class="def-code-arguments">(<var class="var">new_val</var>, &quot;local&quot;)</code><a class="copiable-link" href="#index-optimize_005fpermutation_005fmatrix-2"> &para;</a></span></dt>
 <dd><p>Query or set whether a special space-efficient format is used for storing
 permutation matrices.
 </p>
 <p>The default value is true.  If this option is set to false, Octave will store
 permutation matrices as full matrices.
 </p>
-<p>When called from inside a function with the <code>&quot;local&quot;</code> option, the setting
+<p>When called from inside a function with the <code class="code">&quot;local&quot;</code> option, the setting
 is changed locally for the function and any subroutines it calls.  The original
 setting is restored when exiting the function.
 </p>
-<p><strong>See also:</strong> <a href="Ranges.html#XREFoptimize_005frange">optimize_range</a>, <a href="#XREFoptimize_005fdiagonal_005fmatrix">optimize_diagonal_matrix</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Ranges.html#XREFoptimize_005frange">optimize_range</a>, <a class="ref" href="#XREFoptimize_005fdiagonal_005fmatrix">optimize_diagonal_matrix</a>.
 </p></dd></dl>
 
 
 <p>The space savings are significant as demonstrated by the following code.
 </p>
 <div class="example">
-<pre class="example">x = diag (rand (10, 1));
+<div class="group"><pre class="example-preformatted">x = diag (rand (10, 1));
 xf = full (x);
 sizeof (x)
 &rArr; 80
 sizeof (xf)
 &rArr; 800
-</pre></div>
+</pre></div></div>
 
 
-<ul class="section-toc">
+<ul class="mini-toc">
 <li><a href="Creating-Diagonal-Matrices.html" accesskey="1">Creating Diagonal Matrices</a></li>
 <li><a href="Creating-Permutation-Matrices.html" accesskey="2">Creating Permutation Matrices</a></li>
 <li><a href="Explicit-and-Implicit-Conversions.html" accesskey="3">Explicit and Implicit Conversions</a></li>
 </ul>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Matrix-Algebra.html">Linear Algebra with Diagonal/Permutation Matrices</a>, Up: <a href="Diagonal-and-Permutation-Matrices.html">Diagonal and Permutation Matrices</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

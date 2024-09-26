@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -36,7 +36,7 @@
 #include "ov.h"
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Date and time functions.
 
@@ -293,7 +293,7 @@ datestr, datevec, calendar, weekday}
 
 DEFUN (strftime, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} strftime (@var{fmt}, @var{tm_struct})
+@deftypefn {} {@var{str} =} strftime (@var{fmt}, @var{tm_struct})
 Format the time structure @var{tm_struct} in a flexible way using the format
 string @var{fmt} that contains @samp{%} substitutions similar to those in
 @code{printf}.
@@ -520,4 +520,4 @@ datestr, datevec, calendar, weekday}
 %!error strptime ()
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

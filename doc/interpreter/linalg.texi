@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -98,6 +98,11 @@ detect a non-Hermitian matrix.
 
 @c balance libinterp/corefcn/balance.cc
 @anchor{XREFbalance}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{AA} =} balance (@var{A})
 @deftypefnx {} {@var{AA} =} balance (@var{A}, @var{opt})
 @deftypefnx {} {[@var{DD}, @var{AA}] =} balance (@var{A}, @var{opt})
@@ -144,6 +149,11 @@ Generalized eigenvalue problem balancing uses Ward's algorithm
 
 @c bandwidth scripts/linear-algebra/bandwidth.m
 @anchor{XREFbandwidth}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{bw} =} bandwidth (@var{A}, @var{type})
 @deftypefnx {} {[@var{lower}, @var{upper}] =} bandwidth (@var{A})
 Compute the bandwidth of @var{A}.
@@ -161,8 +171,13 @@ subdiagonals/superdiagonals with nonzero entries.
 
 @c cond scripts/linear-algebra/cond.m
 @anchor{XREFcond}
-@deftypefn  {} {} cond (@var{A})
-@deftypefnx {} {} cond (@var{A}, @var{p})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{c} =} cond (@var{A})
+@deftypefnx {} {@var{c} =} cond (@var{A}, @var{p})
 Compute the @var{p}-norm condition number of a matrix with respect to
 inversion.
 
@@ -191,6 +206,11 @@ from numerical computing are not likely to be accurate.
 
 @c condeig scripts/linear-algebra/condeig.m
 @anchor{XREFcondeig}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{c} =} condeig (@var{a})
 @deftypefnx {} {[@var{v}, @var{lambda}, @var{c}] =} condeig (@var{a})
 Compute condition numbers of a matrix with respect to eigenvalues.
@@ -235,7 +255,12 @@ c = condeig (a)
 
 @c det libinterp/corefcn/det.cc
 @anchor{XREFdet}
-@deftypefn  {} {} det (@var{A})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{d} =} det (@var{A})
 @deftypefnx {} {[@var{d}, @var{rcond}] =} det (@var{A})
 Compute the determinant of @var{A}.
 
@@ -253,6 +278,11 @@ For that, use any of the condition number functions: @code{cond},
 
 @c eig libinterp/corefcn/eig.cc
 @anchor{XREFeig}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{lambda} =} eig (@var{A})
 @deftypefnx {} {@var{lambda} =} eig (@var{A}, @var{B})
 @deftypefnx {} {[@var{V}, @var{lambda}] =} eig (@var{A})
@@ -317,6 +347,11 @@ The eigenvalues returned by @code{eig} are not ordered.
 
 @c givens libinterp/corefcn/givens.cc
 @anchor{XREFgivens}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{G} =} givens (@var{x}, @var{y})
 @deftypefnx {} {[@var{c}, @var{s}] =} givens (@var{x}, @var{y})
 Compute the Givens rotation matrix @var{G}.
@@ -375,6 +410,11 @@ factorization.
 
 @c gsvd libinterp/corefcn/gsvd.cc
 @anchor{XREFgsvd}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{S} =} gsvd (@var{A}, @var{B})
 @deftypefnx {} {[@var{U}, @var{V}, @var{X}, @var{C}, @var{S}] =} gsvd (@var{A}, @var{B})
 @deftypefnx {} {[@var{U}, @var{V}, @var{X}, @var{C}, @var{S}] =} gsvd (@var{A}, @var{B}, 0)
@@ -431,6 +471,11 @@ should avoid this combination.
 
 @c planerot scripts/linear-algebra/planerot.m
 @anchor{XREFplanerot}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{G}, @var{y}] =} planerot (@var{x})
 Compute the Givens rotation matrix for the two-element column vector
 @var{x}.
@@ -473,6 +518,11 @@ factorization.
 
 @c inv libinterp/corefcn/inv.cc
 @anchor{XREFinv}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} inv (@var{A})
 @deftypefnx {} {[@var{x}, @var{rcond}] =} inv (@var{A})
 @deftypefnx {} {[@dots{}] =} inverse (@dots{})
@@ -492,13 +542,19 @@ If called with a sparse matrix, then in general @var{x} will be a full
 matrix requiring significantly more storage.  Avoid forming the inverse of a
 sparse matrix if possible.
 
-@code{inverse} is an alias and may be used identically in place of @code{inv}.
+Programming Note: @code{inverse} is an alias for @code{inv} and can be used
+interchangeably.
 @xseealso{@ref{XREFldivide,,ldivide}, @ref{XREFrdivide,,rdivide}, @ref{XREFpinv,,pinv}}
 @end deftypefn
 
 
 @c linsolve scripts/linear-algebra/linsolve.m
 @anchor{XREFlinsolve}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} linsolve (@var{A}, @var{b})
 @deftypefnx {} {@var{x} =} linsolve (@var{A}, @var{b}, @var{opts})
 @deftypefnx {} {[@var{x}, @var{R}] =} linsolve (@dots{})
@@ -553,6 +609,11 @@ The optional second output @var{R} is the inverse condition number of
 
 @c matrix_type libinterp/corefcn/matrix_type.cc
 @anchor{XREFmatrix_type}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{type} =} matrix_type (@var{A})
 @deftypefnx {} {@var{type} =} matrix_type (@var{A}, "nocompute")
 @deftypefnx {} {@var{A} =} matrix_type (@var{A}, @var{type})
@@ -637,9 +698,14 @@ LU@tie{}factorization.  Once the matrix has been factorized,
 
 @c norm libinterp/corefcn/data.cc
 @anchor{XREFnorm}
-@deftypefn  {} {} norm (@var{A})
-@deftypefnx {} {} norm (@var{A}, @var{p})
-@deftypefnx {} {} norm (@var{A}, @var{p}, @var{opt})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{n} =} norm (@var{A})
+@deftypefnx {} {@var{n} =} norm (@var{A}, @var{p})
+@deftypefnx {} {@var{n} =} norm (@var{A}, @var{p}, @var{opt})
 Compute the p-norm of the matrix @var{A}.
 
 If the second argument is not given, @w{@code{p = 2}} is used.
@@ -699,6 +765,11 @@ compute the norms of each column and return a row vector.
 
 @c null scripts/linear-algebra/null.m
 @anchor{XREFnull}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{Z} =} null (@var{A})
 @deftypefnx {} {@var{Z} =} null (@var{A}, @var{tol})
 Return an orthonormal basis @var{Z} of the null space of @var{A}.
@@ -716,8 +787,13 @@ max (size (@var{A})) * max (svd (@var{A}, 0)) * eps
 
 @c orth scripts/linear-algebra/orth.m
 @anchor{XREForth}
-@deftypefn  {} {} orth (@var{A})
-@deftypefnx {} {} orth (@var{A}, @var{tol})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} orth (@var{A})
+@deftypefnx {} {@var{B} =} orth (@var{A}, @var{tol})
 Return an orthonormal basis of the range space of @var{A}.
 
 The dimension of the range space is taken as the number of singular values
@@ -733,6 +809,11 @@ max (size (@var{A})) * max (svd (@var{A})) * eps
 
 @c mgorth libinterp/corefcn/mgorth.cc
 @anchor{XREFmgorth}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{y}, @var{h}] =} mgorth (@var{x}, @var{v})
 Orthogonalize a given column vector @var{x} with respect to a set of
 orthonormal vectors comprising the columns of @var{v} using the modified
@@ -753,9 +834,14 @@ On exit, @var{y} is a unit vector such that:
 
 @c pinv libinterp/corefcn/pinv.cc
 @anchor{XREFpinv}
-@deftypefn  {} {} pinv (@var{x})
-@deftypefnx {} {} pinv (@var{x}, @var{tol})
-Return the @nospell{Moore-Penrose} pseudoinverse of @var{x}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} pinv (@var{A})
+@deftypefnx {} {@var{B} =} pinv (@var{A}, @var{tol})
+Return the @nospell{Moore-Penrose} pseudoinverse of @var{A}.
 
 Singular values less than @var{tol} are ignored.
 
@@ -772,8 +858,13 @@ tol = max ([rows(@var{x}), columns(@var{x})]) * norm (@var{x}) * eps
 
 @c rank scripts/linear-algebra/rank.m
 @anchor{XREFrank}
-@deftypefn  {} {} rank (@var{A})
-@deftypefnx {} {} rank (@var{A}, @var{tol})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{k} =} rank (@var{A})
+@deftypefnx {} {@var{k} =} rank (@var{A}, @var{tol})
 Compute the rank of matrix @var{A}, using the singular value decomposition.
 
 The rank is taken to be the number of singular values of @var{A} that are
@@ -830,6 +921,11 @@ A(3,:) == -A(1,:) + 2 * A(2,:)
 
 @c rcond libinterp/corefcn/rcond.cc
 @anchor{XREFrcond}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{c} =} rcond (@var{A})
 Compute the 1-norm estimate of the reciprocal condition number as returned
 by @sc{lapack}.
@@ -846,7 +942,12 @@ instead.
 
 @c trace scripts/linear-algebra/trace.m
 @anchor{XREFtrace}
-@deftypefn {} {} trace (@var{A})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{t} =} trace (@var{A})
 Compute the trace of @var{A}, the sum of the elements along the main
 diagonal.
 
@@ -857,8 +958,13 @@ The implementation is straightforward: @code{sum (diag (@var{A}))}.
 
 @c rref scripts/linear-algebra/rref.m
 @anchor{XREFrref}
-@deftypefn  {} {} rref (@var{A})
-@deftypefnx {} {} rref (@var{A}, @var{tol})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{r} =} rref (@var{A})
+@deftypefnx {} {@var{r} =} rref (@var{A}, @var{tol})
 @deftypefnx {} {[@var{r}, @var{k}] =} rref (@dots{})
 Return the reduced row echelon form of @var{A}.
 
@@ -874,6 +980,11 @@ performed.
 
 @c vecnorm scripts/linear-algebra/vecnorm.m
 @anchor{XREFvecnorm}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{n} =} vecnorm (@var{A})
 @deftypefnx {} {@var{n} =} vecnorm (@var{A}, @var{p})
 @deftypefnx {} {@var{n} =} vecnorm (@var{A}, @var{p}, @var{dim})
@@ -888,7 +999,7 @@ $$ {\Vert A \Vert}_p  = \left[ \sum_{i=1}^N {| A_i |}^p \right] ^ {1/p} $$
 @ifnottex
 
 @example
-@var{p-norm} (@var{A}, @var{p}) = sum (abs (@var{A}) .^ @var{p})) ^ (1/@var{p})
+@var{p-norm} (@var{A}, @var{p}) = (sum (abs (@var{A}) .^ @var{p})) ^ (1/@var{p})
 @end example
 
 @end ifnottex
@@ -911,6 +1022,11 @@ non-singleton dimension is used.
 
 @c chol libinterp/corefcn/chol.cc
 @anchor{XREFchol}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{R} =} chol (@var{A})
 @deftypefnx {} {[@var{R}, @var{p}] =} chol (@var{A})
 @deftypefnx {} {[@var{R}, @var{p}, @var{Q}] =} chol (@var{A})
@@ -997,7 +1113,12 @@ sparse matrices.
 
 @c cholinv libinterp/corefcn/chol.cc
 @anchor{XREFcholinv}
-@deftypefn {} {} cholinv (@var{A})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{Ainv} =} cholinv (@var{A})
 Compute the inverse of the symmetric positive definite matrix @var{A} using
 the Cholesky@tie{}factorization.
 @xseealso{@ref{XREFchol,,chol}, @ref{XREFchol2inv,,chol2inv}, @ref{XREFinv,,inv}}
@@ -1006,19 +1127,29 @@ the Cholesky@tie{}factorization.
 
 @c chol2inv libinterp/corefcn/chol.cc
 @anchor{XREFchol2inv}
-@deftypefn {} {} chol2inv (@var{U})
-Invert a symmetric, positive definite square matrix from its Cholesky
-decomposition, @var{U}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-Note that @var{U} should be an upper-triangular matrix with positive
-diagonal elements.  @code{chol2inv (@var{U})} provides
-@code{inv (@var{U}'*@var{U})} but it is much faster than using @code{inv}.
+
+@deftypefn {} {@var{Ainv} =} chol2inv (@var{R})
+Invert a symmetric, positive definite square matrix from its Cholesky
+decomposition, @var{R}.
+
+Note that @var{R} should be an upper-triangular matrix with positive diagonal
+elements.  @code{chol2inv (@var{U})} provides @code{inv (@var{R}'*@var{R})} but
+is much faster than using @code{inv}.
 @xseealso{@ref{XREFchol,,chol}, @ref{XREFcholinv,,cholinv}, @ref{XREFinv,,inv}}
 @end deftypefn
 
 
 @c cholupdate libinterp/corefcn/chol.cc
 @anchor{XREFcholupdate}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{R1}, @var{info}] =} cholupdate (@var{R}, @var{u}, @var{op})
 Update or downdate a Cholesky@tie{}factorization.
 
@@ -1052,6 +1183,11 @@ If @var{info} is not present, an error message is printed in cases 1 and 2.
 
 @c cholinsert libinterp/corefcn/chol.cc
 @anchor{XREFcholinsert}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{R1} =} cholinsert (@var{R}, @var{j}, @var{u})
 @deftypefnx {} {[@var{R1}, @var{info}] =} cholinsert (@var{R}, @var{j}, @var{u})
 Update a Cholesky factorization given a row or column to insert in the
@@ -1080,6 +1216,11 @@ If @var{info} is not present, an error message is printed in cases 1 and 2.
 
 @c choldelete libinterp/corefcn/chol.cc
 @anchor{XREFcholdelete}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{R1} =} choldelete (@var{R}, @var{j})
 Update a Cholesky factorization given a row or column to delete from the
 original factored matrix.
@@ -1094,6 +1235,11 @@ triangular, return the Cholesky@tie{}factorization of @w{A(p,p)}, where
 
 @c cholshift libinterp/corefcn/chol.cc
 @anchor{XREFcholshift}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{R1} =} cholshift (@var{R}, @var{i}, @var{j})
 Update a Cholesky factorization given a range of columns to shift in the
 original factored matrix.
@@ -1112,6 +1258,11 @@ triangular, return the Cholesky@tie{}factorization of
 
 @c hess libinterp/corefcn/hess.cc
 @anchor{XREFhess}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{H} =} hess (@var{A})
 @deftypefnx {} {[@var{P}, @var{H}] =} hess (@var{A})
 @cindex Hessenberg decomposition
@@ -1142,6 +1293,11 @@ IEEE Transactions on Automatic Control, 1979).
 
 @c lu libinterp/corefcn/lu.cc
 @anchor{XREFlu}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{L}, @var{U}] =} lu (@var{A})
 @deftypefnx {} {[@var{L}, @var{U}, @var{P}] =} lu (@var{A})
 @deftypefnx {} {[@var{L}, @var{U}, @var{P}, @var{Q}] =} lu (@var{S})
@@ -1224,6 +1380,11 @@ permutation information.
 
 @c luupdate libinterp/corefcn/lu.cc
 @anchor{XREFluupdate}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{L}, @var{U}] =} luupdate (@var{L}, @var{U}, @var{x}, @var{y})
 @deftypefnx {} {[@var{L}, @var{U}, @var{P}] =} luupdate (@var{L}, @var{U}, @var{P}, @var{x}, @var{y})
 Given an LU@tie{}factorization of a real or complex matrix
@@ -1270,6 +1431,11 @@ factorization from scratch.
 
 @c qr libinterp/corefcn/qr.cc
 @anchor{XREFqr}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{Q}, @var{R}] =} qr (@var{A})
 @deftypefnx {} {[@var{Q}, @var{R}, @var{P}] =} qr (@var{A})
 @deftypefnx {} {@var{X} =} qr (@var{A})  # non-sparse A
@@ -1277,6 +1443,7 @@ factorization from scratch.
 @deftypefnx {} {@var{X} =} qr (@var{A}, @var{B}) # sparse A
 @deftypefnx {} {[@var{C}, @var{R}] =} qr (@var{A}, @var{B})
 @deftypefnx {} {[@dots{}] =} qr (@dots{}, 0)
+@deftypefnx {} {[@dots{}] =} qr (@dots{}, "econ")
 @deftypefnx {} {[@dots{}] =} qr (@dots{}, "vector")
 @deftypefnx {} {[@dots{}] =} qr (@dots{}, "matrix")
 @cindex QR factorization
@@ -1410,15 +1577,15 @@ approximation of @code{@var{A} \ @var{B}} to be calculated as
 @end group
 @end example
 
-If @var{A} is a sparse MxN matrix and an additional matrix @var{B} is
+If @var{A} is a sparse @nospell{MxN} matrix and an additional matrix @var{B} is
 supplied, one or two return values are possible.  If one return value @var{X}
 is requested and M < N, then @var{X} is the minimum 2-norm solution of
 @w{@code{@var{A} \ @var{B}}}.  If M >= N, @var{X} is the least squares
 approximation @w{of @code{@var{A} \ @var{B}}}.  If two return values are
 requested, @var{C} and @var{R} have the same meaning as in the dense case
-(@var{C} is dense and @var{R} is sparse).
-The version with one return parameter should be preferred because
-it uses less memory and can handle rank-deficient matrices better.
+(@var{C} is dense and @var{R} is sparse).  The version with one return
+parameter should be preferred because it uses less memory and can handle
+rank-deficient matrices better.
 
 If the final argument is the string @qcode{"vector"} then @var{P} is a
 permutation vector (of the columns of @var{A}) instead of a permutation
@@ -1431,14 +1598,14 @@ matrix.  In this case, the defining relationship is:
 The default, however, is to return a permutation matrix and this may be
 explicitly specified by using a final argument of @qcode{"matrix"}.
 
-If the final argument is the scalar 0 an @qcode{"economy"} factorization is
-returned.  If the original matrix @var{A} has size MxN and M > N, then the
-@qcode{"economy"} factorization will calculate just N rows in @var{R} and N
-columns in @var{Q} and omit the zeros in @var{R}.  If M @leq{} N, there is no
-difference between the economy and standard factorizations.  When calculating
-an @qcode{"economy"} factorization and @var{A} is dense, the output @var{P} is
-always a vector rather than a matrix.  If @var{A} is sparse, output
-@var{P} is a sparse permutation matrix.
+If the final argument is the scalar 0 or the string @qcode{"econ"}, an economy
+factorization is returned.  If the original matrix @var{A} has size
+@nospell{MxN} and M > N, then the economy factorization will calculate just N
+rows in @var{R} and N columns in @var{Q} and omit the zeros in @var{R}.  If M
+@leq{} N, there is no difference between the economy and standard
+factorizations.  When calculating an economy factorization and @var{A} is
+dense, the output @var{P} is always a vector rather than a matrix.  If @var{A}
+is sparse, output @var{P} is a sparse permutation matrix.
 
 Background: The QR factorization has applications in the solution of least
 squares problems
@@ -1473,6 +1640,11 @@ orthogonal basis of @code{span (A)}.
 
 @c qrupdate libinterp/corefcn/qr.cc
 @anchor{XREFqrupdate}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{Q1}, @var{R1}] =} qrupdate (@var{Q}, @var{R}, @var{u}, @var{v})
 Update a QR factorization given update vectors or matrices.
 
@@ -1494,6 +1666,11 @@ economized (R is square).
 
 @c qrinsert libinterp/corefcn/qr.cc
 @anchor{XREFqrinsert}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{Q1}, @var{R1}] =} qrinsert (@var{Q}, @var{R}, @var{j}, @var{x}, @var{orient})
 Update a QR factorization given a row or column to insert in the original
 factored matrix.
@@ -1525,6 +1702,11 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 
 @c qrdelete libinterp/corefcn/qr.cc
 @anchor{XREFqrdelete}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{Q1}, @var{R1}] =} qrdelete (@var{Q}, @var{R}, @var{j}, @var{orient})
 Update a QR factorization given a row or column to delete from the original
 factored matrix.
@@ -1555,6 +1737,11 @@ If @var{orient} is @qcode{"row"}, full factorization is needed.
 
 @c qrshift libinterp/corefcn/qr.cc
 @anchor{XREFqrshift}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{Q1}, @var{R1}] =} qrshift (@var{Q}, @var{R}, @var{i}, @var{j})
 Update a QR factorization given a range of columns to shift in the original
 factored matrix.
@@ -1573,10 +1760,13 @@ of @w{@var{A}(:,p)}, where @w{p} is the permutation @*
 
 @c qz libinterp/corefcn/qz.cc
 @anchor{XREFqz}
-@deftypefn  {} {@var{lambda} =} qz (@var{A}, @var{B})
-@deftypefnx {} {[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}, @var{lambda}] =} qz (@var{A}, @var{B})
-@deftypefnx {} {[@var{AA}, @var{BB}, @var{Z}] =} qz (@var{A}, @var{B}, @var{opt})
-@deftypefnx {} {[@var{AA}, @var{BB}, @var{Z}, @var{lambda}] =} qz (@var{A}, @var{B}, @var{opt})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}] =} qz (@var{A}, @var{B})
+@deftypefnx {} {[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}] =} qz (@var{A}, @var{B}, @var{opt})
 Compute the QZ@tie{}decomposition of a generalized eigenvalue problem.
 
 The generalized eigenvalue problem is defined as
@@ -1590,27 +1780,17 @@ $$A x = \lambda B x$$
 
 @end ifnottex
 
-There are three calling forms of the function:
+There are two calling forms of the function:
 
 @enumerate
-@item @code{@var{lambda} = qz (@var{A}, @var{B})}
-
-Compute the generalized eigenvalues
-@tex
-$\lambda.$
-@end tex
-@ifnottex
-@var{lambda}.
-@end ifnottex
-
 @item @code{[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}, @var{lambda}] = qz (@var{A}, @var{B})}
 
-Compute QZ@tie{}decomposition, generalized eigenvectors, and generalized
-eigenvalues.
+Compute the complex QZ@tie{}decomposition, generalized eigenvectors, and
+generalized eigenvalues.
 @tex
 $$ AA = Q^T AZ, BB = Q^T BZ $$
-$$ AV = BV{ \rm diag }(\lambda) $$
-$$ W^T A = { \rm diag }(\lambda)W^T B $$
+$$ { \rm diag }(BB)AV = BV{ \rm diag }(AA) $$
+$$ { \rm diag }(BB) W^T A = { \rm diag }(AA) W^T B $$
 @end tex
 @ifnottex
 
@@ -1618,58 +1798,32 @@ $$ W^T A = { \rm diag }(\lambda)W^T B $$
 @group
 
 @var{AA} = @var{Q} * @var{A} * @var{Z}, @var{BB} = @var{Q} * @var{B} * @var{Z}
-@var{A} * @var{V} = @var{B} * @var{V} * diag (@var{lambda})
-@var{W}' * @var{A} = diag (@var{lambda}) * @var{W}' * @var{B}
+@var{A} * @var{V} * diag (diag (@var{BB})) = @var{B} * @var{V} * diag (diag (@var{AA}))
+diag (diag (@var{BB})) * @var{W}' * @var{A} = diag (diag (@var{AA})) * @var{W}' * @var{B}
 
 @end group
 @end example
 
 @end ifnottex
-with @var{Q} and @var{Z} orthogonal (unitary for complex case).
+with @var{AA} and @var{BB} upper triangular, and @var{Q} and @var{Z}
+unitary.  The matrices @var{V} and @var{W} respectively contain the right
+and left generalized eigenvectors.
 
 @item @code{[@var{AA}, @var{BB}, @var{Z} @{, @var{lambda}@}] = qz (@var{A}, @var{B}, @var{opt})}
 
-As in form 2 above, but allows ordering of generalized eigenpairs for, e.g.,
-solution of discrete time algebraic @nospell{Riccati} equations.  Form 3 is not
-available for complex matrices, and does not compute the generalized
-eigenvectors @var{V}, @var{W}, nor the orthogonal matrix @var{Q}.
+The @var{opt} argument must be equal to either @qcode{"real"} or
+@qcode{"complex"}.  If it is equal to @qcode{"complex"}, then this
+calling form is equivalent to the first one with only two input
+arguments.
 
-@table @var
-@item opt
-for ordering eigenvalues of the @nospell{GEP} pencil.  The leading block of
-the revised pencil contains all eigenvalues that satisfy:
+If @var{opt} is equal to @qcode{"real"}, then the real QZ decomposition
+is computed.  In particular, @var{AA} is only guaranteed to be
+quasi-upper triangular with 1-by-1 and 2-by-2 blocks on the diagonal,
+and @var{Q} and @var{Z} are orthogonal.  The identities mentioned above
+for right and left generalized eigenvectors are only verified if
+@var{AA} is upper triangular (i.e., when all the generalized eigenvalues
+are real, in which case the real and complex QZ coincide).
 
-@table @asis
-@item @qcode{"N"}
-unordered (default)
-
-@item @qcode{"S"}
-small: leading block has all
-@tex
-$|\lambda| < 1$
-@end tex
-@ifnottex
-|@var{lambda}| < 1
-@end ifnottex
-
-@item @qcode{"B"}
-big: leading block has all
-@tex
-$|\lambda| \geq 1$
-@end tex
-@ifnottex
-|@var{lambda}| @geq{} 1
-@end ifnottex
-
-@item @qcode{"-"}
-negative real part: leading block has all eigenvalues in the open left
-half-plane
-
-@item @qcode{"+"}
-non-negative real part: leading block has all eigenvalues in the closed right
-half-plane
-@end table
-@end table
 @end enumerate
 
 Note: @code{qz} performs permutation balancing, but not scaling
@@ -1682,6 +1836,11 @@ compatibility with @sc{matlab}.
 
 @c qzhess scripts/linear-algebra/qzhess.m
 @anchor{XREFqzhess}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{aa}, @var{bb}, @var{q}, @var{z}] =} qzhess (@var{A}, @var{B})
 Compute the Hessenberg-triangular decomposition of the matrix pencil
 @code{(@var{A}, @var{B})}, returning
@@ -1722,6 +1881,11 @@ Algorithm taken from @nospell{Golub and Van Loan},
 
 @c schur libinterp/corefcn/schur.cc
 @anchor{XREFschur}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{S} =} schur (@var{A})
 @deftypefnx {} {@var{S} =} schur (@var{A}, "real")
 @deftypefnx {} {@var{S} =} schur (@var{A}, "complex")
@@ -1730,7 +1894,7 @@ Algorithm taken from @nospell{Golub and Van Loan},
 @cindex Schur decomposition
 Compute the Schur@tie{}decomposition of @var{A}.
 
-The Schur@tie{}decomposition is defined as
+The Schur@tie{}decomposition of a square matrix @var{A} is defined as
 @tex
 $$
  S = U^T A U
@@ -1761,39 +1925,42 @@ $2 \times 2$
 @ifnottex
 @code{2 x 2}
 @end ifnottex
-along the diagonal.  The diagonal elements of @var{S}
-(or the eigenvalues of the
-@tex
-$2 \times 2$
-@end tex
-@ifnottex
-@code{2 x 2}
-@end ifnottex
-blocks, when appropriate) are the eigenvalues of @var{A} and @var{S}.
+along the diagonal.
 
-The default for real matrices is a real Schur@tie{}decomposition.
-A complex decomposition may be forced by passing the flag
-@qcode{"complex"}.
+The default for real matrices is a real Schur@tie{}decomposition.  A complex
+decomposition may be forced by passing the flag @qcode{"complex"}.
 
 The eigenvalues are optionally ordered along the diagonal according to the
-value of @var{opt}.  @code{@var{opt} = "a"} indicates that all eigenvalues
-with negative real parts should be moved to the leading block of @var{S}
-(used in @code{are}), @code{@var{opt} = "d"} indicates that all
-eigenvalues with magnitude less than one should be moved to the leading
-block of @var{S} (used in @code{dare}), and @code{@var{opt} = "u"}, the
-default, indicates that no ordering of eigenvalues should occur.  The
-leading @var{k} columns of @var{U} always span the @var{A}-invariant
-subspace corresponding to the @var{k} leading eigenvalues of @var{S}.
+value of @var{opt}:
 
-The Schur@tie{}decomposition is used to compute eigenvalues of a square
-matrix, and has applications in the solution of algebraic @nospell{Riccati}
-equations in control (see @code{are} and @code{dare}).
-@xseealso{@ref{XREFrsf2csf,,rsf2csf}, @ref{XREFordschur,,ordschur}, @ref{XREFordeig,,ordeig}, @ref{XREFlu,,lu}, @ref{XREFchol,,chol}, @ref{XREFhess,,hess}, @ref{XREFqr,,qr}, @ref{XREFqz,,qz}, @ref{XREFsvd,,svd}}
+@table @asis
+@item @qcode{@var{opt} = "a"}
+Move eigenvalues with negative real parts to the leading block of @var{S}.
+Mnemonic: @qcode{"a"} for Algebraic @nospell{Riccati} Equations, where this
+ordering is useful.
+
+@item @qcode{@var{opt} = "d"}
+Move eigenvalues with magnitude less than one to the leading block of @var{S}.
+Mnemonic: @qcode{"d"} for Discrete Algebraic @nospell{Riccati} Equations,
+where this ordering is useful.
+
+@item @qcode{@var{opt} = "u"}
+Unordered.  No particular ordering of eigenvalues (default).
+@end table
+
+The leading @var{k} columns of @var{U} always span the @var{A}-invariant
+subspace corresponding to the @var{k} leading eigenvalues of @var{S}.
+@xseealso{@ref{XREFrsf2csf,,rsf2csf}, @ref{XREFordschur,,ordschur}, @ref{XREFordeig,,ordeig}, @ref{XREFlu,,lu}, @ref{XREFchol,,chol}, @ref{XREFhess,,hess}, @ref{XREFqr,,qr}, @ref{XREFqz,,qz}, @ref{XREFsvd,,svd}, @ref{XREFeig,,eig}}
 @end deftypefn
 
 
 @c rsf2csf libinterp/corefcn/schur.cc
 @anchor{XREFrsf2csf}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{U}, @var{T}] =} rsf2csf (@var{UR}, @var{TR})
 Convert a real, upper quasi-triangular Schur@tie{}form @var{TR} to a
 complex, upper triangular Schur@tie{}form @var{T}.
@@ -1816,8 +1983,13 @@ Note also that @var{U} and @var{T} are not unique.
 
 @c ordschur libinterp/corefcn/ordschur.cc
 @anchor{XREFordschur}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{UR}, @var{SR}] =} ordschur (@var{U}, @var{S}, @var{select})
-Reorders the real Schur factorization (@var{U},@var{S}) obtained with the
+Reorder the real Schur factorization (@var{U},@var{S}) obtained with the
 @code{schur} function, so that selected eigenvalues appear in the upper left
 diagonal blocks of the quasi triangular Schur matrix.
 
@@ -1862,6 +2034,11 @@ is in the upper left corner, by doing:
 
 @c ordqz libinterp/corefcn/ordqz.cc
 @anchor{XREFordqz}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{AR}, @var{BR}, @var{QR}, @var{ZR}] =} ordqz (@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{keyword})
 @deftypefnx {} {[@var{AR}, @var{BR}, @var{QR}, @var{ZR}] =} ordqz (@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{select})
 Reorder the QZ@tie{}decomposition of a generalized eigenvalue problem.
@@ -1961,6 +2138,11 @@ Note: The keywords are compatible with the ones from @code{qr}.
 
 @c ordeig scripts/linear-algebra/ordeig.m
 @anchor{XREFordeig}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{lambda} =} ordeig (@var{A})
 @deftypefnx {} {@var{lambda} =} ordeig (@var{A}, @var{B})
 Return the eigenvalues of quasi-triangular matrices in their order of
@@ -1978,6 +2160,11 @@ appearance of the matrix @code{@var{A}-@var{lambda}*@var{B}}.  The pair
 
 @c subspace scripts/linear-algebra/subspace.m
 @anchor{XREFsubspace}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{angle} =} subspace (@var{A}, @var{B})
 Determine the largest principal angle between two subspaces
 spanned by the columns of matrices @var{A} and @var{B}.
@@ -1986,6 +2173,11 @@ spanned by the columns of matrices @var{A} and @var{B}.
 
 @c svd libinterp/corefcn/svd.cc
 @anchor{XREFsvd}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} svd (@var{A})
 @deftypefnx {} {[@var{U}, @var{S}, @var{V}] =} svd (@var{A})
 @deftypefnx {} {[@var{U}, @var{S}, @var{V}] =} svd (@var{A}, "econ")
@@ -2089,9 +2281,14 @@ documentation for @code{svd_driver} for more information on choosing a driver.
 
 @c svd_driver libinterp/corefcn/svd.cc
 @anchor{XREFsvd_driver}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} svd_driver ()
 @deftypefnx {} {@var{old_val} =} svd_driver (@var{new_val})
-@deftypefnx {} {} svd_driver (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} svd_driver (@var{new_val}, "local")
 Query or set the underlying @sc{lapack} driver used by @code{svd}.
 
 Currently recognized values are @qcode{"gesdd"}, @qcode{"gesvd"}, and
@@ -2132,6 +2329,11 @@ in Octave has been set to @qcode{"gesvd"}.
 
 @c housh scripts/linear-algebra/housh.m
 @anchor{XREFhoush}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{housv}, @var{beta}, @var{zer}] =} housh (@var{x}, @var{j}, @var{z})
 Compute Householder reflection vector @var{housv} to reflect @var{x} to be
 the j-th column of identity, i.e.,
@@ -2172,6 +2374,11 @@ householder vector
 
 @c krylov scripts/linear-algebra/krylov.m
 @anchor{XREFkrylov}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{u}, @var{h}, @var{nu}] =} krylov (@var{A}, @var{V}, @var{k}, @var{eps1}, @var{pflg})
 Construct an orthogonal basis @var{u} of a block Krylov subspace.
 
@@ -2218,7 +2425,12 @@ the 42nd IEEE Conference on Decision and Control, December 2003.
 
 @c expm scripts/linear-algebra/expm.m
 @anchor{XREFexpm}
-@deftypefn {} {} expm (@var{A})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{r} =} expm (@var{A})
 Return the exponential of a matrix.
 
 The matrix exponential is defined as the infinite Taylor series
@@ -2276,6 +2488,11 @@ is ill-conditioned.
 
 @c logm scripts/linear-algebra/logm.m
 @anchor{XREFlogm}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} logm (@var{A})
 @deftypefnx {} {@var{s} =} logm (@var{A}, @var{opt_iters})
 @deftypefnx {} {[@var{s}, @var{iters}] =} logm (@dots{})
@@ -2298,6 +2515,11 @@ computed.
 
 @c sqrtm libinterp/corefcn/sqrtm.cc
 @anchor{XREFsqrtm}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} sqrtm (@var{A})
 @deftypefnx {} {[@var{s}, @var{error_estimate}] =} sqrtm (@var{A})
 Compute the matrix square root of the square matrix @var{A}.
@@ -2311,14 +2533,19 @@ Mathematics, Manchester, England, January 1999.
 
 @c kron libinterp/corefcn/kron.cc
 @anchor{XREFkron}
-@deftypefn  {} {} kron (@var{A}, @var{B})
-@deftypefnx {} {} kron (@var{A1}, @var{A2}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{C} =} kron (@var{A}, @var{B})
+@deftypefnx {} {@var{C} =} kron (@var{A1}, @var{A2}, @dots{})
 Form the Kronecker product of two or more matrices.
 
 This is defined block by block as
 
 @example
-x = [ a(i,j)*b ]
+c = [ a(i,j)*b ]
 @end example
 
 For example:
@@ -2341,12 +2568,60 @@ kron (kron (@var{A1}, @var{A2}), @dots{}, @var{An})
 
 @noindent
 Since the Kronecker product is associative, this is well-defined.
+@xseealso{@ref{XREFtensorprod,,tensorprod}}
+@end deftypefn
+
+
+@c tensorprod scripts/linear-algebra/tensorprod.m
+@anchor{XREFtensorprod}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{C} =} tensorprod (@var{A}, @var{B}, @var{dimA}, @var{dimB})
+@deftypefnx {} {@var{C} =} tensorprod (@var{A}, @var{B}, @var{dim})
+@deftypefnx {} {@var{C} =} tensorprod (@var{A}, @var{B})
+@deftypefnx {} {@var{C} =} tensorprod (@var{A}, @var{B}, "all")
+@deftypefnx {} {@var{C} =} tensorprod (@var{A}, @var{B}, @dots{}, "NumDimensionsA", @var{value})
+Compute the tensor product between numeric tensors @var{A} and @var{B}.
+
+The dimensions of @var{A} and @var{B} that are contracted are defined by
+@var{dimA} and @var{dimB}, respectively.  @var{dimA} and @var{dimB} are
+scalars or equal length vectors that define the dimensions to match up.
+The matched dimensions of @var{A} and @var{B} must have the same number of
+elements.
+
+When only @var{dim} is used, it is equivalent to
+@code{@var{dimA} = @var{dimB} = @var{dim}}.
+
+When no dimensions are specified, @code{@var{dimA} = @var{dimB} = []}.  This
+computes the outer product between @var{A} and @var{B}.
+
+Using the @qcode{"all"} option results in the inner product between @var{A}
+and @var{B}.  This requires @code{size (@var{A}) == size (@var{B})}.
+
+Use the property-value pair with the property name
+@nospell{@qcode{"NumDimensionsA"}} when @var{A} has trailing singleton
+dimensions that should be transferred to @var{C}.  The specified @var{value}
+should be the total number of dimensions of @var{A}.
+
+@sc{matlab} Compatibility: Octave does not currently support the
+@qcode{"@var{property_name}=@var{value}"} syntax for the
+@nospell{@qcode{"NumDimensionsA"}} parameter.
+
+@xseealso{@ref{XREFkron,,kron}, @ref{XREFdot,,dot}, @ref{XREFmtimes,,mtimes}}
 @end deftypefn
 
 
 @c blkmm libinterp/corefcn/dot.cc
 @anchor{XREFblkmm}
-@deftypefn {} {} blkmm (@var{A}, @var{B})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{C} =} blkmm (@var{A}, @var{B})
 Compute products of matrix blocks.
 
 The blocks are given as 2-dimensional subarrays of the arrays @var{A},
@@ -2366,6 +2641,11 @@ endfor
 
 @c sylvester libinterp/corefcn/sylvester.cc
 @anchor{XREFsylvester}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{X} =} sylvester (@var{A}, @var{B}, @var{C})
 Solve the Sylvester equation.
 
@@ -2401,6 +2681,11 @@ sylvester ([1, 2; 3, 4], [5, 6; 7, 8], [9, 10; 11, 12])
 
 @c bicg scripts/sparse/bicg.m
 @anchor{XREFbicg}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} bicg (@var{A}, @var{b})
 @deftypefnx {} {@var{x} =} bicg (@var{A}, @var{b}, @var{tol})
 @deftypefnx {} {@var{x} =} bicg (@var{A}, @var{b}, @var{tol}, @var{maxit})
@@ -2420,9 +2705,9 @@ The input arguments are:
 
 @item @var{A} is the matrix of the linear system and it must be square.
 @var{A} can be passed as a matrix, function handle, or inline function
-@code{Afun} such that @w{@code{Afun (x, "notransp") = A * x}} and
-@w{@code{Afun (x, "transp") = A' * x}}.  Additional parameters to
-@code{Afun} may be passed after @var{x0}.
+@code{Afcn} such that @w{@code{Afcn (x, "notransp") = A * x}} and
+@w{@code{Afcn (x, "transp") = A' * x}}.  Additional parameters to
+@code{Afcn} may be passed after @var{x0}.
 
 @item @var{b} is the right-hand side vector.  It must be a column vector
 with the same number of rows as @var{A}.
@@ -2461,7 +2746,7 @@ function sets @var{x0} to a zero vector by default.
 @end itemize
 
 Any arguments which follow @var{x0} are treated as parameters, and passed in
-an appropriate manner to any of the functions (@var{Afun} or @var{Mfun}) or
+an appropriate manner to any of the functions (@var{Afcn} or @var{Mfcn}) or
 that have been given to @code{bicg}.
 
 The output parameters are:
@@ -2517,13 +2802,13 @@ b = A * ones (n, 1);
 restart = 5;
 [M1, M2] = ilu (A);  # in this tridiag case, it corresponds to lu (A)
 M = M1 * M2;
-Afun = @@(x, string) strcmp (string, "notransp") * (A * x) + ...
+Afcn = @@(x, string) strcmp (string, "notransp") * (A * x) + ...
                      strcmp (string, "transp") * (A' * x);
-Mfun = @@(x, string) strcmp (string, "notransp") * (M \ x) + ...
+Mfcn = @@(x, string) strcmp (string, "notransp") * (M \ x) + ...
                      strcmp (string, "transp") * (M' \ x);
-M1fun = @@(x, string) strcmp (string, "notransp") * (M1 \ x) + ...
+M1fcn = @@(x, string) strcmp (string, "notransp") * (M1 \ x) + ...
                      strcmp (string, "transp") * (M1' \ x);
-M2fun = @@(x, string) strcmp (string, "notransp") * (M2 \ x) + ...
+M2fcn = @@(x, string) strcmp (string, "notransp") * (M2 \ x) + ...
                      strcmp (string, "transp") * (M2' \ x);
 @end group
 @end example
@@ -2538,7 +2823,7 @@ x = bicg (A, b)
 @code{@var{A}*@var{x}} and @code{@var{A'}*@var{x}}
 
 @example
-x = bicg (Afun, b, [], n)
+x = bicg (Afcn, b, [], n)
 @end example
 
 @sc{Example 3:} @code{bicg} with a preconditioner matrix @var{M}
@@ -2550,7 +2835,7 @@ x = bicg (A, b, 1e-6, n, M)
 @sc{Example 4:} @code{bicg} with a function as preconditioner
 
 @example
-x = bicg (Afun, b, 1e-6, n, Mfun)
+x = bicg (Afcn, b, 1e-6, n, Mfcn)
 @end example
 
 @sc{Example 5:} @code{bicg} with preconditioner matrices @var{M1}
@@ -2563,7 +2848,7 @@ x = bicg (A, b, 1e-6, n, M1, M2)
 @sc{Example 6:} @code{bicg} with functions as preconditioners
 
 @example
-x = bicg (Afun, b, 1e-6, n, M1fun, M2fun)
+x = bicg (Afcn, b, 1e-6, n, M1fcn, M2fcn)
 @end example
 
 @sc{Example 7:} @code{bicg} with as input a function requiring an argument
@@ -2584,8 +2869,8 @@ function y = Ap (A, x, string, z)
   endif
 endfunction
 
-Apfun = @@(x, string, p) Ap (A, x, string, p);
-x = bicg (Apfun, b, [], [], [], [], [], 2);
+Apfcn = @@(x, string, p) Ap (A, x, string, p);
+x = bicg (Apfcn, b, [], [], [], [], [], 2);
 @end group
 @end example
 
@@ -2600,6 +2885,11 @@ Second edition, 2003, SIAM.
 
 @c bicgstab scripts/sparse/bicgstab.m
 @anchor{XREFbicgstab}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} bicgstab (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M1}, @var{M2}, @var{x0}, @dots{})
 @deftypefnx {} {@var{x} =} bicgstab (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M}, [], @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}] =} bicgstab (@var{A}, @var{b}, @dots{})
@@ -2612,8 +2902,8 @@ The input parameters are:
 
 @item @var{A} is the matrix of the linear system and it must be square.
 @var{A} can be passed as a matrix, function handle, or inline
-function @code{Afun} such that @code{Afun(x) = A * x}.  Additional
-parameters to @code{Afun} are passed after @var{x0}.
+function @code{Afcn} such that @code{Afcn(x) = A * x}.  Additional
+parameters to @code{Afcn} are passed after @var{x0}.
 
 @item @var{b} is the right hand side vector.  It must be a column vector
 with the same number of rows as @var{A}.
@@ -2694,10 +2984,10 @@ b = A * ones (n, 1);
 restart = 5;
 [M1, M2] = ilu (A); # in this tridiag case, it corresponds to lu (A)
 M = M1 * M2;
-Afun = @@(x) A * x;
-Mfun = @@(x) M \ x;
-M1fun = @@(x) M1 \ x;
-M2fun = @@(x) M2 \ x;
+Afcn = @@(x) A * x;
+Mfcn = @@(x) M \ x;
+M1fcn = @@(x) M1 \ x;
+M2fcn = @@(x) M2 \ x;
 @end group
 @end example
 
@@ -2711,7 +3001,7 @@ x = bicgstab (A, b, [], n)
 @code{@var{A} * @var{x}}
 
 @example
-x = bicgstab (Afun, b, [], n)
+x = bicgstab (Afcn, b, [], n)
 @end example
 
 @sc{Example 3:} @code{bicgstab} with a preconditioner matrix @var{M}
@@ -2723,7 +3013,7 @@ x = bicgstab (A, b, [], 1e-06, n, M)
 @sc{Example 4:} @code{bicgstab} with a function as preconditioner
 
 @example
-x = bicgstab (Afun, b, 1e-6, n, Mfun)
+x = bicgstab (Afcn, b, 1e-6, n, Mfcn)
 @end example
 
 @sc{Example 5:} @code{bicgstab} with preconditioner matrices @var{M1}
@@ -2736,7 +3026,7 @@ x = bicgstab (A, b, [], 1e-6, n, M1, M2)
 @sc{Example 6:} @code{bicgstab} with functions as preconditioners
 
 @example
-x = bicgstab (Afun, b, 1e-6, n, M1fun, M2fun)
+x = bicgstab (Afcn, b, 1e-6, n, M1fcn, M2fcn)
 @end example
 
 @sc{Example 7:} @code{bicgstab} with as input a function requiring
@@ -2750,8 +3040,8 @@ function y = Ap (A, x, z) # compute A^z * x
      y = A * y;
    endfor
  endfunction
-Apfun = @@(x, string, p) Ap (A, x, string, p);
-x = bicgstab (Apfun, b, [], [], [], [], [], 2);
+Apfcn = @@(x, string, p) Ap (A, x, string, p);
+x = bicgstab (Apfcn, b, [], [], [], [], [], 2);
 @end group
 @end example
 
@@ -2785,6 +3075,11 @@ Systems}, Second edition, 2003, SIAM
 
 @c cgs scripts/sparse/cgs.m
 @anchor{XREFcgs}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} cgs (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M1}, @var{M2}, @var{x0}, @dots{})
 @deftypefnx {} {@var{x} =} cgs (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M}, [], @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}] =} cgs (@var{A}, @var{b}, @dots{})
@@ -2797,8 +3092,8 @@ The input arguments are:
 
 @item @var{A} is the matrix of the linear system and it must be square.
 @var{A} can be passed as a matrix, function handle, or inline
-function @code{Afun} such that @code{Afun(x) = A * x}.  Additional
-parameters to @code{Afun} are passed after @var{x0}.
+function @code{Afcn} such that @code{Afcn(x) = A * x}.  Additional
+parameters to @code{Afcn} are passed after @var{x0}.
 
 @item @var{b} is the right hand side vector.  It must be a column vector
 with same number of rows of @var{A}.
@@ -2868,10 +3163,10 @@ b = A * ones (n, 1);
 restart = 5;
 [M1, M2] = ilu (A); # in this tridiag case it corresponds to chol (A)'
 M = M1 * M2;
-Afun = @@(x) A * x;
-Mfun = @@(x) M \ x;
-M1fun = @@(x) M1 \ x;
-M2fun = @@(x) M2 \ x;
+Afcn = @@(x) A * x;
+Mfcn = @@(x) M \ x;
+M1fcn = @@(x) M1 \ x;
+M2fcn = @@(x) M2 \ x;
 @end group
 @end example
 
@@ -2885,7 +3180,7 @@ x = cgs (A, b, [], n)
 @code{@var{A} * @var{x}}
 
 @example
-x = cgs (Afun, b, [], n)
+x = cgs (Afcn, b, [], n)
 @end example
 
 @sc{Example 3:} @code{cgs} with a preconditioner matrix @var{M}
@@ -2897,7 +3192,7 @@ x = cgs (A, b, [], 1e-06, n, M)
 @sc{Example 4:} @code{cgs} with a function as preconditioner
 
 @example
-x = cgs (Afun, b, 1e-6, n, Mfun)
+x = cgs (Afcn, b, 1e-6, n, Mfcn)
 @end example
 
 @sc{Example 5:} @code{cgs} with preconditioner matrices @var{M1}
@@ -2910,7 +3205,7 @@ x = cgs (A, b, [], 1e-6, n, M1, M2)
 @sc{Example 6:} @code{cgs} with functions as preconditioners
 
 @example
-x = cgs (Afun, b, 1e-6, n, M1fun, M2fun)
+x = cgs (Afcn, b, 1e-6, n, M1fcn, M2fcn)
 @end example
 
 @sc{Example 7:} @code{cgs} with as input a function requiring an argument
@@ -2923,8 +3218,8 @@ function y = Ap (A, x, z) # compute A^z * x
      y = A * y;
    endfor
  endfunction
-Apfun = @@(x, string, p) Ap (A, x, string, p);
-x = cgs (Apfun, b, [], [], [], [], [], 2);
+Apfcn = @@(x, string, p) Ap (A, x, string, p);
+x = cgs (Apfcn, b, [], [], [], [], [], 2);
 @end group
 @end example
 
@@ -2957,6 +3252,11 @@ Second edition, 2003, SIAM
 
 @c gmres scripts/sparse/gmres.m
 @anchor{XREFgmres}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} gmres (@var{A}, @var{b}, @var{restart}, @var{tol}, @var{maxit}, @var{M1}, @var{M2}, @var{x0}, @dots{})
 @deftypefnx {} {@var{x} =} gmres (@var{A}, @var{b}, @var{restart}, @var{tol}, @var{maxit}, @var{M}, [], @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}] =} gmres (@var{A}, @var{b}, @dots{})
@@ -2969,8 +3269,8 @@ The input arguments are:
 
 @item @var{A} is the matrix of the linear system and it must be square.
 @var{A} can be passed as a matrix, function handle, or inline
-function @code{Afun} such that @code{Afun(x) = A * x}.  Additional
-parameters to @code{Afun} are passed after @var{x0}.
+function @code{Afcn} such that @code{Afcn(x) = A * x}.  Additional
+parameters to @code{Afcn} are passed after @var{x0}.
 
 @item @var{b} is the right hand side vector.  It must be a column vector
 with the same numbers of rows as @var{A}.
@@ -3074,10 +3374,10 @@ b = A * ones (n, 1);
 restart = 5;
 [M1, M2] = ilu (A); # in this tridiag case, it corresponds to lu (A)
 M = M1 * M2;
-Afun = @@(x) A * x;
-Mfun = @@(x) M \ x;
-M1fun = @@(x) M1 \ x;
-M2fun = @@(x) M2 \ x;
+Afcn = @@(x) A * x;
+Mfcn = @@(x) M \ x;
+M1fcn = @@(x) M1 \ x;
+M2fcn = @@(x) M2 \ x;
 @end group
 @end example
 
@@ -3091,7 +3391,7 @@ x = gmres (A, b, [], [], n)
 @code{@var{A} * @var{x}}
 
 @example
-x = gmres (Afun, b, [], [], n)
+x = gmres (Afcn, b, [], [], n)
 @end example
 
 @sc{Example 3:} usage of @code{gmres} with the restart
@@ -3113,7 +3413,7 @@ x = gmres (A, b, restart, 1e-06, n, M)
 @sc{Example 5:} @code{gmres} with a function as preconditioner
 
 @example
-x = gmres (Afun, b, [], 1e-6, n, Mfun)
+x = gmres (Afcn, b, [], 1e-6, n, Mfcn)
 @end example
 
 @sc{Example 6:} @code{gmres} with preconditioner matrices @var{M1}
@@ -3126,7 +3426,7 @@ x = gmres (A, b, [], 1e-6, n, M1, M2)
 @sc{Example 7:} @code{gmres} with functions as preconditioners
 
 @example
-x = gmres (Afun, b, 1e-6, n, M1fun, M2fun)
+x = gmres (Afcn, b, 1e-6, n, M1fcn, M2fcn)
 @end example
 
 @sc{Example 8:} @code{gmres} with as input a function requiring an argument
@@ -3139,8 +3439,8 @@ x = gmres (Afun, b, 1e-6, n, M1fun, M2fun)
        y = A * y;
      endfor
   endfunction
-Apfun = @@(x, p) Ap (A, x, p);
-x = gmres (Apfun, b, [], [], [], [], [], [], 2);
+Apfcn = @@(x, p) Ap (A, x, p);
+x = gmres (Apfcn, b, [], [], [], [], [], [], 2);
 @end group
 @end example
 
@@ -3173,6 +3473,11 @@ Systems}, Second edition, 2003, SIAM
 
 @c qmr scripts/sparse/qmr.m
 @anchor{XREFqmr}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} qmr (@var{A}, @var{b}, @var{rtol}, @var{maxit}, @var{M1}, @var{M2}, @var{x0})
 @deftypefnx {} {@var{x} =} qmr (@var{A}, @var{b}, @var{rtol}, @var{maxit}, @var{P})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}] =} qmr (@var{A}, @var{b}, @dots{})
@@ -3244,6 +3549,11 @@ for iterative methods}, SIAM, 2nd ed., 1994.
 
 @c tfqmr scripts/sparse/tfqmr.m
 @anchor{XREFtfqmr}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} tfqmr (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M1}, @var{M2}, @var{x0}, @dots{})
 @deftypefnx {} {@var{x} =} tfqmr (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M}, [], @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}] =} tfqmr (@var{A}, @var{b}, @dots{})
@@ -3255,8 +3565,8 @@ The input parameters are:
 
 @item @var{A} is the matrix of the linear system and it must be square.
 @var{A} can be passed as a matrix, function handle, or inline
-function @code{Afun} such that @code{Afun(x) = A * x}.  Additional
-parameters to @code{Afun} are passed after @var{x0}.
+function @code{Afcn} such that @code{Afcn(x) = A * x}.  Additional
+parameters to @code{Afcn} are passed after @var{x0}.
 
 @item @var{b} is the right hand side vector.  It must be a column vector
 with the same number of rows as @var{A}.
@@ -3335,10 +3645,10 @@ b = A * ones (n, 1);
 restart = 5;
 [M1, M2] = ilu (A); # in this tridiag case it corresponds to chol (A)'
 M = M1 * M2;
-Afun = @@(x) A * x;
-Mfun = @@(x) M \ x;
-M1fun = @@(x) M1 \ x;
-M2fun = @@(x) M2 \ x;
+Afcn = @@(x) A * x;
+Mfcn = @@(x) M \ x;
+M1fcn = @@(x) M1 \ x;
+M2fcn = @@(x) M2 \ x;
 @end group
 @end example
 
@@ -3352,7 +3662,7 @@ x = tfqmr (A, b, [], n)
 @code{@var{A} * @var{x}}
 
 @example
-x = tfqmr (Afun, b, [], n)
+x = tfqmr (Afcn, b, [], n)
 @end example
 
 @sc{Example 3:} @code{tfqmr} with a preconditioner matrix @var{M}
@@ -3364,7 +3674,7 @@ x = tfqmr (A, b, [], 1e-06, n, M)
 @sc{Example 4:} @code{tfqmr} with a function as preconditioner
 
 @example
-x = tfqmr (Afun, b, 1e-6, n, Mfun)
+x = tfqmr (Afcn, b, 1e-6, n, Mfcn)
 @end example
 
 @sc{Example 5:} @code{tfqmr} with preconditioner matrices @var{M1}
@@ -3377,7 +3687,7 @@ x = tfqmr (A, b, [], 1e-6, n, M1, M2)
 @sc{Example 6:} @code{tfmqr} with functions as preconditioners
 
 @example
-x = tfqmr (Afun, b, 1e-6, n, M1fun, M2fun)
+x = tfqmr (Afcn, b, 1e-6, n, M1fcn, M2fcn)
 @end example
 
 @sc{Example 7:} @code{tfqmr} with as input a function requiring an argument
@@ -3390,8 +3700,8 @@ function y = Ap (A, x, z) # compute A^z * x
      y = A * y;
    endfor
  endfunction
-Apfun = @@(x, string, p) Ap (A, x, string, p);
-x = tfqmr (Apfun, b, [], [], [], [], [], 2);
+Apfcn = @@(x, string, p) Ap (A, x, string, p);
+x = tfqmr (Apfcn, b, [], [], [], [], [], 2);
 @end group
 @end example
 

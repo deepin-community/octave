@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2018-2022 The Octave Project Developers
+## Copyright (C) 2018-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -85,7 +85,7 @@ function h = openfig (filename = "Untitled.fig", varargin)
     if (! ischar (varargin{i}))
       error ("openfig: input argument %d must be a string", i+1);
     endif
-    switch (tolower (varargin{i}))
+    switch (lower (varargin{i}))
       case "reuse"
         copies = false;
       case "new"

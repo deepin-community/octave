@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,63 +37,60 @@ class QStatusBar;
 class QTableView;
 class QTimer;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class find_files_dialog : public QDialog
 {
-  class base_qobject;
+  Q_OBJECT
 
-  class find_files_dialog : public QDialog
-  {
-    Q_OBJECT
+public:
 
-  public:
+  find_files_dialog (QWidget *parent);
 
-    find_files_dialog (QWidget *parent, base_qobject& oct_qobj);
+  virtual ~find_files_dialog ();
 
-    virtual ~find_files_dialog (void);
+  void save_settings ();
 
-    void save_settings (void);
+signals:
 
-  signals:
+  void file_selected (const QString& fileName);
+  void dir_selected (const QString& fileName);
 
-    void file_selected (const QString& fileName);
-    void dir_selected (const QString& fileName);
+public slots:
 
-  public slots:
+  void set_search_dir (const QString& dir);
 
-    void set_search_dir (const QString& dir);
+private slots:
 
-  private slots:
+  void start_find ();
+  void stop_find ();
+  void browse_folders ();
+  void look_for_files ();
+  void item_double_clicked (const QModelIndex&);
+  void handle_done (int);
 
-    void start_find (void);
-    void stop_find (void);
-    void browse_folders (void);
-    void look_for_files (void);
-    void item_double_clicked (const QModelIndex&);
-    void handle_done (int);
+private:
 
-  private:
+  bool is_match (const QFileInfo& info);
 
-    bool is_match (const QFileInfo& info);
+  QLineEdit *m_start_dir_edit;
+  QLineEdit *m_file_name_edit;
+  QPushButton *m_stop_button;
+  QPushButton *m_find_button;
+  QPushButton *m_close_button;
+  QPushButton *m_browse_button;
+  QTableView *m_file_list;
+  QTimer *m_timer;
+  QCheckBox *m_recurse_dirs_check;
+  QCheckBox *m_include_dirs_check;
+  QCheckBox *m_name_case_check;
+  QCheckBox *m_contains_text_check;
+  QCheckBox *m_content_case_check;
+  QLineEdit *m_contains_text_edit;
+  QDirIterator *m_dir_iterator;
+  QStatusBar *m_status_bar;
+};
 
-    base_qobject& m_octave_qobj;
-
-    QLineEdit *m_start_dir_edit;
-    QLineEdit *m_file_name_edit;
-    QPushButton *m_stop_button;
-    QPushButton *m_find_button;
-    QPushButton *m_close_button;
-    QPushButton *m_browse_button;
-    QTableView *m_file_list;
-    QTimer *m_timer;
-    QCheckBox *m_recurse_dirs_check;
-    QCheckBox *m_include_dirs_check;
-    QCheckBox *m_name_case_check;
-    QCheckBox *m_contains_text_check;
-    QCheckBox *m_content_case_check;
-    QLineEdit *m_contains_text_edit;
-    QDirIterator *m_dir_iterator;
-    QStatusBar *m_status_bar;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

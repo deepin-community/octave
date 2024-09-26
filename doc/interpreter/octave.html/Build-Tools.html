@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Build Tools (GNU Octave (version 7.1.0))</title>
+<title>Build Tools (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Build Tools (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Build Tools (GNU Octave (version 7.1.0))">
+<meta name="description" content="Build Tools (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Build Tools (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,8 @@
 <link href="Obtaining-the-Dependencies-Automatically.html" rel="prev" title="Obtaining the Dependencies Automatically">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,34 +30,34 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Build-Tools">
-<div class="header">
+<div class="subsection-level-extent" id="Build-Tools">
+<div class="nav-panel">
 <p>
 Next: <a href="External-Packages.html" accesskey="n" rel="next">External Packages</a>, Previous: <a href="Obtaining-the-Dependencies-Automatically.html" accesskey="p" rel="prev">Obtaining the Dependencies Automatically</a>, Up: <a href="Build-Dependencies.html" accesskey="u" rel="up">Build Dependencies</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Build-Tools-1"></span><h4 class="subsection">E.1.2 Build Tools</h4>
+<h4 class="subsection" id="Build-Tools-1"><span>E.1.2 Build Tools<a class="copiable-link" href="#Build-Tools-1"> &para;</a></span></h4>
 
 <p>The following tools are required:
 </p>
-<dl compact="compact">
-<dt><span>C++, C, and Fortran compilers</span></dt>
+<dl class="table">
+<dt>C++, C, and Fortran compilers</dt>
 <dd><p>The Octave sources are primarily written in C++, but some portions are
 also written in C and Fortran.  The Octave sources are intended to be
 portable.  Recent versions of the GNU compiler collection (GCC) should
-work (<a href="https://gcc.gnu.org">https://gcc.gnu.org</a>).  If you use GCC, you should avoid
+work (<a class="url" href="https://gcc.gnu.org">https://gcc.gnu.org</a>).  If you use GCC, you should avoid
 mixing versions.  For example, be sure that you are not using the
-obsolete <code>g77</code> Fortran compiler with modern versions of <code>gcc</code>
-and <code>g++</code>.
+obsolete <code class="code">g77</code> Fortran compiler with modern versions of <code class="code">gcc</code>
+and <code class="code">g++</code>.
 </p>
 </dd>
-<dt><span>GNU Make</span></dt>
-<dd><p>Tool for building software (<a href="https://www.gnu.org/software/make">https://www.gnu.org/software/make</a>).
+<dt>GNU Make</dt>
+<dd><p>Tool for building software (<a class="url" href="https://www.gnu.org/software/make">https://www.gnu.org/software/make</a>).
 Octave&rsquo;s build system requires GNU Make.  Other versions of Make will
 not work.  Fortunately, GNU Make is highly portable and easy to install.
 </p>
 </dd>
-<dt><span>AWK, sed, and other Unix utilities</span></dt>
+<dt>AWK, sed, and other Unix utilities</dt>
 <dd><p>Basic Unix system utilities are required for building Octave.  All will
 be available with any modern Unix system and also on Windows with either
 Cygwin or MinGW and MSYS.
@@ -79,48 +66,48 @@ Cygwin or MinGW and MSYS.
 
 <p>Additionally, the following tools may be needed:
 </p>
-<dl compact="compact">
-<dt><span>Bison</span></dt>
-<dd><p>Parser generator (<a href="https://www.gnu.org/software/bison">https://www.gnu.org/software/bison</a>).
-You will need Bison if you modify the <code>oct-parse.yy</code> source file or
+<dl class="table">
+<dt>Bison</dt>
+<dd><p>Parser generator (<a class="url" href="https://www.gnu.org/software/bison">https://www.gnu.org/software/bison</a>).
+You will need Bison if you modify the <code class="code">oct-parse.yy</code> source file or
 if you delete the files that are generated from it.
 </p>
 </dd>
-<dt><span>Flex</span></dt>
-<dd><p>Lexer analyzer (<a href="https://www.gnu.org/software/flex">https://www.gnu.org/software/flex</a>).  You will need
-Flex if you modify the <code>lex.ll</code> source file or if you delete the
+<dt>Flex</dt>
+<dd><p>Lexer analyzer (<a class="url" href="https://www.gnu.org/software/flex">https://www.gnu.org/software/flex</a>).  You will need
+Flex if you modify the <code class="code">lex.ll</code> source file or if you delete the
 files that are generated from it.
 </p>
 </dd>
-<dt><span>Autoconf</span></dt>
+<dt>Autoconf</dt>
 <dd><p>Package for software configuration
-(<a href="https://www.gnu.org/software/autoconf">https://www.gnu.org/software/autoconf</a>).  Autoconf is required if
-you modify Octave&rsquo;s <code>configure.ac</code> file or other files that it
+(<a class="url" href="https://www.gnu.org/software/autoconf">https://www.gnu.org/software/autoconf</a>).  Autoconf is required if
+you modify Octave&rsquo;s <code class="code">configure.ac</code> file or other files that it
 requires.
 </p>
 </dd>
-<dt><span>Automake</span></dt>
+<dt>Automake</dt>
 <dd><p>Package for Makefile generation
-(<a href="https://www.gnu.org/software/automake">https://www.gnu.org/software/automake</a>).  Automake is required if
-you modify Octave&rsquo;s <code>Makefile.am</code> files or other files that they
+(<a class="url" href="https://www.gnu.org/software/automake">https://www.gnu.org/software/automake</a>).  Automake is required if
+you modify Octave&rsquo;s <code class="code">Makefile.am</code> files or other files that they
 depend on.
 </p>
 </dd>
-<dt><span>Libtool</span></dt>
+<dt>Libtool</dt>
 <dd><p>Package for building software libraries
-(<a href="https://www.gnu.org/software/libtool">https://www.gnu.org/software/libtool</a>).  Libtool is required by
+(<a class="url" href="https://www.gnu.org/software/libtool">https://www.gnu.org/software/libtool</a>).  Libtool is required by
 Automake.
 </p>
 </dd>
-<dt><span>gperf</span></dt>
-<dd><p>Perfect hash function generator (<a href="https://www.gnu.org/software/gperf">https://www.gnu.org/software/gperf</a>).
-You will need gperf if you modify the <code>octave.gperf</code> file or if you
+<dt>gperf</dt>
+<dd><p>Perfect hash function generator (<a class="url" href="https://www.gnu.org/software/gperf">https://www.gnu.org/software/gperf</a>).
+You will need gperf if you modify the <code class="code">octave.gperf</code> file or if you
 delete the file that is generated from it.
 </p>
 </dd>
-<dt><span>Texinfo</span></dt>
+<dt>Texinfo</dt>
 <dd><p>Package for generating online and print documentation
-(<a href="https://www.gnu.org/software/texinfo">https://www.gnu.org/software/texinfo</a>).  You will need Texinfo to
+(<a class="url" href="https://www.gnu.org/software/texinfo">https://www.gnu.org/software/texinfo</a>).  You will need Texinfo to
 build Octave&rsquo;s documentation or if you modify the documentation source
 files or the docstring of any Octave function.
 </p></dd>
@@ -128,7 +115,7 @@ files or the docstring of any Octave function.
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="External-Packages.html">External Packages</a>, Previous: <a href="Obtaining-the-Dependencies-Automatically.html">Obtaining the Dependencies Automatically</a>, Up: <a href="Build-Dependencies.html">Build Dependencies</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

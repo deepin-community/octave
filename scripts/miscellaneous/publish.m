@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -451,6 +451,7 @@ function doc = parse_m_source (doc)
     endif
 
     return;
+
   endfunction
   ## Checks line of cellstring to be a paragraph line
   is_paragraph = @(cstr) is_publish_markup (cstr, 1);
@@ -1086,7 +1087,7 @@ endfunction
 function cstr = eval_context (op)
 
   ## EVAL_CONTEXT temporary evaluation context.
-  persistent ctext
+  persistent ctext;
 
   ## Variable cstr in "eval_code_helper" is newly created anyways.
   forbidden_var_names = {"__code__"};

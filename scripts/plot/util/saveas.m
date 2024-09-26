@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -127,7 +127,7 @@ function saveas (h, filename, fmt)
     endif
   endif
 
-  fmt = tolower (fmt);
+  fmt = lower (fmt);
 
   if (any (strcmp (fmt, {"ofig", "fig"})))
     savefig (fig, filename);

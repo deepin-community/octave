@@ -21,15 +21,16 @@ NOINSTALL_WRAPPERS_INC = \
   %reldir%/nproc-wrapper.h \
   %reldir%/octave-popen2.h \
   %reldir%/putenv-wrapper.h \
+  %reldir%/pwd-wrappers.h \
   %reldir%/set-program-name-wrapper.h \
   %reldir%/signal-wrappers.h \
   %reldir%/stat-wrappers.h \
+  %reldir%/strcase-wrappers.h \
   %reldir%/strdup-wrapper.h \
   %reldir%/strftime-wrapper.h \
   %reldir%/strmode-wrapper.h \
   %reldir%/strptime-wrapper.h \
   %reldir%/time-wrappers.h \
-  %reldir%/tmpfile-wrapper.h \
   %reldir%/uname-wrapper.h \
   %reldir%/unicase-wrappers.h \
   %reldir%/uniconv-wrappers.h \
@@ -46,6 +47,7 @@ WRAPPERS_SRC = \
   %reldir%/async-system-wrapper.c \
   %reldir%/base64-wrappers.c \
   %reldir%/canonicalize-file-name-wrapper.c \
+  %reldir%/cxx-signal-helpers.cc \
   %reldir%/dirent-wrappers.c \
   %reldir%/fcntl-wrappers.c \
   %reldir%/filepos-wrappers.c \
@@ -64,15 +66,16 @@ WRAPPERS_SRC = \
   %reldir%/nproc-wrapper.c \
   %reldir%/octave-popen2.c \
   %reldir%/putenv-wrapper.c \
+  %reldir%/pwd-wrappers.c \
   %reldir%/set-program-name-wrapper.c \
   %reldir%/signal-wrappers.c \
   %reldir%/stat-wrappers.c \
+  %reldir%/strcase-wrappers.c \
   %reldir%/strdup-wrapper.c \
   %reldir%/strftime-wrapper.c \
   %reldir%/strmode-wrapper.c \
   %reldir%/strptime-wrapper.c \
   %reldir%/time-wrappers.c \
-  %reldir%/tmpfile-wrapper.c \
   %reldir%/uname-wrapper.c \
   %reldir%/unicase-wrappers.c \
   %reldir%/uniconv-wrappers.c \

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} fractdiff (@var{x}, @var{d})
+## @deftypefn {} {@var{fd} =} fractdiff (@var{x}, @var{d})
 ## Compute the fractional differences @math{(1-L)^d x} where @math{L}
 ## denotes the lag-operator and @math{d} is greater than -1.
 ## @end deftypefn

@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Properties (GNU Octave (version 7.1.0))</title>
+<title>Properties (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Properties (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Properties (GNU Octave (version 7.1.0))">
+<meta name="description" content="Properties (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Properties (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Creating-a-classdef-Class.html" rel="prev" title="Creating a classdef Class">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,90 +32,93 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Properties">
-<div class="header">
+<div class="subsection-level-extent" id="Properties">
+<div class="nav-panel">
 <p>
-Next: <a href="Methods.html" accesskey="n" rel="next">Methods</a>, Previous: <a href="Creating-a-classdef-Class.html" accesskey="p" rel="prev">Creating a <code>classdef</code> Class</a>, Up: <a href="classdef-Classes.html" accesskey="u" rel="up"><code>classdef</code> Classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Methods.html" accesskey="n" rel="next">Methods</a>, Previous: <a href="Creating-a-classdef-Class.html" accesskey="p" rel="prev">Creating a <code class="code">classdef</code> Class</a>, Up: <a href="classdef-Classes.html" accesskey="u" rel="up"><code class="code">classdef</code> Classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Properties-3"></span><h4 class="subsection">34.6.2 Properties</h4>
+<h4 class="subsection" id="Properties-3"><span>34.6.2 Properties<a class="copiable-link" href="#Properties-3"> &para;</a></span></h4>
 
-<p>All class properties must be defined within <code>properties</code> blocks.  The
+<p>All class properties must be defined within <code class="code">properties</code> blocks.  The
 definition of a default value for a property is optional and can be omitted.
-The default initial value for each class property is <code>[]</code>.
+The default initial value for each class property is <code class="code">[]</code>.
 </p>
-<p>A <code>properties</code> block can have additional attributes to specify access
+<p>A <code class="code">properties</code> block can have additional attributes to specify access
 rights or to define constants:
 </p>
 <div class="example">
-<pre class="example">classdef some_class
-  properties (Access = <var>mode</var>)
-    <var>prop1</var>
+<div class="group"><pre class="example-preformatted">classdef some_class
+  properties (Access = <var class="var">mode</var>)
+    <var class="var">prop1</var>
   endproperties
 
-  properties (SetAccess = <var>mode</var>, GetAccess = <var>mode</var>)
-    <var>prop2</var>
+  properties (SetAccess = <var class="var">mode</var>, GetAccess = <var class="var">mode</var>)
+    <var class="var">prop2</var>
   endproperties
 
   properties (Constant = true)
-    <var>prop3</var> = pi ()
+    <var class="var">prop3</var> = pi ()
   endproperties
 
   properties
-    <var>prop4</var> = 1337
+    <var class="var">prop4</var> = 1337
   endproperties
 endclassdef
-</pre></div>
+</pre></div></div>
 
-<p>where <var>mode</var> can be one of:
+<p>where <var class="var">mode</var> can be one of:
 </p>
-<dl compact="compact">
-<dt><span><code>public</code></span></dt>
+<dl class="table">
+<dt><code class="code">public</code></dt>
 <dd><p>The properties can be accessed from everywhere.
 </p>
 </dd>
-<dt><span><code>private</code></span></dt>
+<dt><code class="code">private</code></dt>
 <dd><p>The properties can only be accessed from class methods.  Subclasses of that
 class cannot access them.
 </p>
 </dd>
-<dt><span><code>protected</code></span></dt>
+<dt><code class="code">protected</code></dt>
 <dd><p>The properties can only be accessed from class methods and from subclasses
 of that class.
 </p></dd>
 </dl>
 
-<p>When creating an object of <code>some_class</code>, <var>prop1</var> has the default
-value <code>[]</code> and reading from and writing to <var>prop1</var> is defined by
-a single <var>mode</var>.  For <var>prop2</var> the read and write access can be set
-differently.  Finally, <var>prop3</var> is a constant property which can only be
-initialized once within the <code>properties</code> block.
+<p>When creating an object of <code class="code">some_class</code>, <var class="var">prop1</var> has the default
+value <code class="code">[]</code> and reading from and writing to <var class="var">prop1</var> is defined by
+a single <var class="var">mode</var>.  For <var class="var">prop2</var> the read and write access can be set
+differently.  Finally, <var class="var">prop3</var> is a constant property which can only be
+initialized once within the <code class="code">properties</code> block.
 </p>
-<p>By default, in the example <var>prop4</var>, properties are not constant and have
+<p>By default, in the example <var class="var">prop4</var>, properties are not constant and have
 public read and write access.
 </p>
-<span id="XREFproperties"></span><dl class="def">
-<dt id="index-properties"><span class="category">: </span><span><em></em> <strong>properties</strong> <em>(<var>class_name</var>)</em><a href='#index-properties' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-properties-1"><span class="category">: </span><span><em></em> <strong>properties</strong> <em>(<var>obj</var>)</em><a href='#index-properties-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-properties-2"><span class="category">: </span><span><em><var>plist</var> =</em> <strong>properties</strong> <em>(&hellip;)</em><a href='#index-properties-2' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return or display the public properties for the named class
-<var>class_name</var> or classdef object <var>obj</var>.
+<a class="anchor" id="XREFproperties"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-properties"><span class="category-def">: </span><span><strong class="def-name">properties</strong> <code class="def-code-arguments">(<var class="var">obj</var>)</code><a class="copiable-link" href="#index-properties"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-properties-1"><span class="category-def">: </span><span><strong class="def-name">properties</strong> <code class="def-code-arguments">(<var class="var">class_name</var>)</code><a class="copiable-link" href="#index-properties-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-properties-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">proplist</var> =</code> <strong class="def-name">properties</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-properties-2"> &para;</a></span></dt>
+<dd><p>Display or return the public properties for the classdef object <var class="var">obj</var> or
+the named class <var class="var">class_name</var>.
 </p>
-<p>If an output value is requested, return the list of property names in a
-cell array.
+<p>If an output value is requested, return the list of property names in a cell
+array.
 </p>
-<p>Programming Note: Property names are returned if the <code>GetAccess</code>
-attribute is public and if the <code>Hidden</code> attribute is false.
+<p>Programming Note: Property names are returned if the <code class="code">GetAccess</code> attribute
+is public and if the <code class="code">Hidden</code> attribute is false.
 </p>
-<p><strong>See also:</strong> <a href="Creating-a-Class.html#XREFmethods">methods</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Creating-a-Class.html#XREFmethods">methods</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
-Next: <a href="Methods.html">Methods</a>, Previous: <a href="Creating-a-classdef-Class.html">Creating a <code>classdef</code> Class</a>, Up: <a href="classdef-Classes.html"><code>classdef</code> Classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Methods.html">Methods</a>, Previous: <a href="Creating-a-classdef-Class.html">Creating a <code class="code">classdef</code> Class</a>, Up: <a href="classdef-Classes.html"><code class="code">classdef</code> Classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

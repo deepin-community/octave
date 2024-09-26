@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -45,14 +45,19 @@ a matrix meet a specified condition.
 
 @c any libinterp/corefcn/data.cc
 @anchor{XREFany}
-@deftypefn  {} {} any (@var{x})
-@deftypefnx {} {} any (@var{x}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{tf} =} any (@var{x})
+@deftypefnx {} {@var{tf} =} any (@var{x}, @var{dim})
 For a vector argument, return true (logical 1) if any element of the vector
 is nonzero.
 
-For a matrix argument, return a row vector of logical ones and
-zeros with each element indicating whether any of the elements of the
-corresponding column of the matrix are nonzero.  For example:
+For a matrix argument, return a row vector of logical ones and zeros with each
+element indicating whether any of the elements of the corresponding column of
+the matrix are nonzero.  For example:
 
 @example
 @group
@@ -61,8 +66,8 @@ any (eye (2, 4))
 @end group
 @end example
 
-If the optional argument @var{dim} is supplied, work along dimension
-@var{dim}.  For example:
+If the optional argument @var{dim} is supplied, work along dimension @var{dim}.
+For example:
 
 @example
 @group
@@ -76,14 +81,19 @@ any (eye (2, 4), 2)
 
 @c all libinterp/corefcn/data.cc
 @anchor{XREFall}
-@deftypefn  {} {} all (@var{x})
-@deftypefnx {} {} all (@var{x}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{tf} =} all (@var{x})
+@deftypefnx {} {@var{tf} =} all (@var{x}, @var{dim})
 For a vector argument, return true (logical 1) if all elements of the vector
 are nonzero.
 
-For a matrix argument, return a row vector of logical ones and
-zeros with each element indicating whether all of the elements of the
-corresponding column of the matrix are nonzero.  For example:
+For a matrix argument, return a row vector of logical ones and zeros with each
+element indicating whether all of the elements of the corresponding column of
+the matrix are nonzero.  For example:
 
 @example
 @group
@@ -92,8 +102,7 @@ all ([2, 3; 1, 0])
 @end group
 @end example
 
-If the optional argument @var{dim} is supplied, work along dimension
-@var{dim}.
+If the optional argument @var{dim} is supplied, work along dimension @var{dim}.
 @xseealso{@ref{XREFany,,any}}
 @end deftypefn
 
@@ -119,6 +128,11 @@ Note that in conditional contexts (like the test clause of @code{if} and
 
 @c xor scripts/general/xor.m
 @anchor{XREFxor}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{z} =} xor (@var{x}, @var{y})
 @deftypefnx {} {@var{z} =} xor (@var{x1}, @var{x2}, @dots{})
 Return the @dfn{exclusive or} of @var{x} and @var{y}.
@@ -152,9 +166,14 @@ cumulatively from left to right:
 
 @c diff libinterp/corefcn/data.cc
 @anchor{XREFdiff}
-@deftypefn  {} {} diff (@var{x})
-@deftypefnx {} {} diff (@var{x}, @var{k})
-@deftypefnx {} {} diff (@var{x}, @var{k}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} diff (@var{x})
+@deftypefnx {} {@var{y} =} diff (@var{x}, @var{k})
+@deftypefnx {} {@var{y} =} diff (@var{x}, @var{k}, @var{dim})
 If @var{x} is a vector of length @math{n}, @w{@code{diff (@var{x})}} is the
 vector of first differences
 @tex
@@ -185,7 +204,12 @@ an empty matrix is returned.
 
 @c isinf libinterp/corefcn/mappers.cc
 @anchor{XREFisinf}
-@deftypefn {} {} isinf (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isinf (@var{x})
 Return a logical array which is true where the elements of @var{x} are
 infinite and false where they are not.
 
@@ -203,7 +227,12 @@ isinf ([13, Inf, NA, NaN])
 
 @c isnan libinterp/corefcn/mappers.cc
 @anchor{XREFisnan}
-@deftypefn {} {} isnan (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isnan (@var{x})
 Return a logical array which is true where the elements of @var{x} are
 NaN values and false where they are not.
 
@@ -221,7 +250,12 @@ isnan ([13, Inf, NA, NaN])
 
 @c isfinite libinterp/corefcn/mappers.cc
 @anchor{XREFisfinite}
-@deftypefn {} {} isfinite (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isfinite (@var{x})
 Return a logical array which is true where the elements of @var{x} are
 finite values and false where they are not.
 
@@ -239,6 +273,11 @@ isfinite ([13, Inf, NA, NaN])
 
 @c common_size scripts/general/common_size.m
 @anchor{XREFcommon_size}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{err}, @var{yi}, @dots{}] =} common_size (@var{xi}, @dots{})
 Determine if all input arguments are either scalar or of common size.
 
@@ -265,6 +304,11 @@ scalars or of common size.
 
 @c find libinterp/corefcn/find.cc
 @anchor{XREFfind}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{idx} =} find (@var{x})
 @deftypefnx {} {@var{idx} =} find (@var{x}, @var{n})
 @deftypefnx {} {@var{idx} =} find (@var{x}, @var{n}, @var{direction})
@@ -336,6 +380,11 @@ b = sparse (i, j, v, sz(1), sz(2));
 
 @c lookup libinterp/corefcn/lookup.cc
 @anchor{XREFlookup}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{idx} =} lookup (@var{table}, @var{y})
 @deftypefnx {} {@var{idx} =} lookup (@var{table}, @var{y}, @var{opt})
 Lookup values in a @strong{sorted} table.
@@ -393,11 +442,16 @@ its elements may have, consult @ref{Status of Variables}.
 
 @c fliplr scripts/general/fliplr.m
 @anchor{XREFfliplr}
-@deftypefn {} {} fliplr (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{B} =} fliplr (@var{A})
 Flip array left to right.
 
-Return a copy of @var{x} with the order of the columns reversed.  In other
-words, @var{x} is flipped left-to-right about a vertical axis.  For example:
+Return a copy of @var{A} with the order of the columns reversed.  In other
+words, @var{A} is flipped left-to-right about a vertical axis.  For example:
 
 @example
 @group
@@ -413,11 +467,16 @@ fliplr ([1, 2; 3, 4])
 
 @c flipud scripts/general/flipud.m
 @anchor{XREFflipud}
-@deftypefn {} {} flipud (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{B} =} flipud (@var{A})
 Flip array upside down.
 
-Return a copy of @var{x} with the order of the rows reversed.  In other
-words, @var{x} is flipped upside-down about a horizontal axis.  For example:
+Return a copy of @var{A} with the order of the rows reversed.  In other
+words, @var{A} is flipped upside-down about a horizontal axis.  For example:
 
 @example
 @group
@@ -433,9 +492,14 @@ flipud ([1, 2; 3, 4])
 
 @c flip scripts/general/flip.m
 @anchor{XREFflip}
-@deftypefn  {} {} flip (@var{x})
-@deftypefnx {} {} flip (@var{x}, @var{dim})
-Return a copy of array @var{x} flipped across dimension @var{dim}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} flip (@var{A})
+@deftypefnx {} {@var{B} =} flip (@var{A}, @var{dim})
+Return a copy of array @var{A} flipped across dimension @var{dim}.
 
 If @var{dim} is unspecified it defaults to the first non-singleton
 dimension.
@@ -471,8 +535,13 @@ flip ([1 2; 3 4], 2)
 
 @c rot90 scripts/general/rot90.m
 @anchor{XREFrot90}
-@deftypefn  {} {} rot90 (@var{A})
-@deftypefnx {} {} rot90 (@var{A}, @var{k})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} rot90 (@var{A})
+@deftypefnx {} {@var{B} =} rot90 (@var{A}, @var{k})
 Rotate array by 90 degree increments.
 
 Return a copy of @var{A} with the elements rotated counterclockwise in
@@ -513,10 +582,15 @@ i.e., rows and columns.  To perform a rotation on any other plane, use
 
 @c rotdim scripts/general/rotdim.m
 @anchor{XREFrotdim}
-@deftypefn  {} {} rotdim (@var{x})
-@deftypefnx {} {} rotdim (@var{x}, @var{n})
-@deftypefnx {} {} rotdim (@var{x}, @var{n}, @var{plane})
-Return a copy of @var{x} with the elements rotated counterclockwise in
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} rotdim (@var{A})
+@deftypefnx {} {@var{B} =} rotdim (@var{A}, @var{n})
+@deftypefnx {} {@var{B} =} rotdim (@var{A}, @var{n}, @var{plane})
+Return a copy of @var{A} with the elements rotated counterclockwise in
 90-degree increments.
 
 The second argument @var{n} is optional, and specifies how many 90-degree
@@ -555,9 +629,14 @@ rotdim ([1, 2; 3, 4], 7, [1, 2])
 
 @c cat libinterp/corefcn/data.cc
 @anchor{XREFcat}
-@deftypefn {} {} cat (@var{dim}, @var{array1}, @var{array2}, @dots{}, @var{arrayN})
-Return the concatenation of N-D array objects, @var{array1},
-@var{array2}, @dots{}, @var{arrayN} along dimension @var{dim}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{A} =} cat (@var{dim}, @var{array1}, @var{array2}, @dots{}, @var{arrayN})
+Return the concatenation of N-D array objects, @var{array1}, @var{array2},
+@dots{}, @var{arrayN} along dimension @var{dim}.
 
 @example
 @group
@@ -569,8 +648,8 @@ cat (2, A, B)
 @end group
 @end example
 
-Alternatively, we can concatenate @var{A} and @var{B} along the
-second dimension in the following way:
+Alternatively, we can concatenate @var{A} and @var{B} along the second
+dimension in the following way:
 
 @example
 @group
@@ -578,9 +657,8 @@ second dimension in the following way:
 @end group
 @end example
 
-@var{dim} can be larger than the dimensions of the N-D array objects
-and the result will thus have @var{dim} dimensions as the
-following example shows:
+@var{dim} can be larger than the dimensions of the N-D array objects and the
+result will thus have @var{dim} dimensions as the following example shows:
 
 @example
 @group
@@ -602,7 +680,12 @@ cat (4, ones (2, 2), zeros (2, 2))
 
 @c horzcat libinterp/corefcn/data.cc
 @anchor{XREFhorzcat}
-@deftypefn {} {} horzcat (@var{array1}, @var{array2}, @dots{}, @var{arrayN})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{A} =} horzcat (@var{array1}, @var{array2}, @dots{}, @var{arrayN})
 Return the horizontal concatenation of N-D array objects, @var{array1},
 @var{array2}, @dots{}, @var{arrayN} along dimension 2.
 
@@ -610,15 +693,23 @@ Arrays may also be concatenated horizontally using the syntax for creating
 new matrices.  For example:
 
 @example
-@var{hcat} = [ @var{array1}, @var{array2}, @dots{} ]
+@var{A} = [ @var{array1}, @var{array2}, @dots{} ]
 @end example
+
+This syntax is slightly more efficient because the Octave parser can
+concatenate the arrays without the overhead of a function call.
 @xseealso{@ref{XREFcat,,cat}, @ref{XREFvertcat,,vertcat}}
 @end deftypefn
 
 
 @c vertcat libinterp/corefcn/data.cc
 @anchor{XREFvertcat}
-@deftypefn {} {} vertcat (@var{array1}, @var{array2}, @dots{}, @var{arrayN})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{A} =} vertcat (@var{array1}, @var{array2}, @dots{}, @var{arrayN})
 Return the vertical concatenation of N-D array objects, @var{array1},
 @var{array2}, @dots{}, @var{arrayN} along dimension 1.
 
@@ -626,15 +717,23 @@ Arrays may also be concatenated vertically using the syntax for creating
 new matrices.  For example:
 
 @example
-@var{vcat} = [ @var{array1}; @var{array2}; @dots{} ]
+@var{A} = [ @var{array1}; @var{array2}; @dots{} ]
 @end example
+
+This syntax is slightly more efficient because the Octave parser can
+concatenate the arrays without the overhead of a function call.
 @xseealso{@ref{XREFcat,,cat}, @ref{XREFhorzcat,,horzcat}}
 @end deftypefn
 
 
 @c permute libinterp/corefcn/data.cc
 @anchor{XREFpermute}
-@deftypefn {} {} permute (@var{A}, @var{perm})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{B} =} permute (@var{A}, @var{perm})
 Return the generalized transpose for an N-D array object @var{A}.
 
 The permutation vector @var{perm} must contain the elements
@@ -665,7 +764,12 @@ size (permute (@var{x}, [1, 2, 3, 4]))
 
 @c ipermute libinterp/corefcn/data.cc
 @anchor{XREFipermute}
-@deftypefn {} {} ipermute (@var{A}, @var{iperm})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{A} =} ipermute (@var{B}, @var{iperm})
 The inverse of the @code{permute} function.
 
 The expression
@@ -682,10 +786,15 @@ returns the original array @var{A}.
 
 @c reshape libinterp/corefcn/data.cc
 @anchor{XREFreshape}
-@deftypefn  {} {} reshape (@var{A}, @var{m}, @var{n}, @dots{})
-@deftypefnx {} {} reshape (@var{A}, [@var{m} @var{n} @dots{}])
-@deftypefnx {} {} reshape (@var{A}, @dots{}, [], @dots{})
-@deftypefnx {} {} reshape (@var{A}, @var{size})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} reshape (@var{A}, @var{m}, @var{n}, @dots{})
+@deftypefnx {} {@var{B} =} reshape (@var{A}, [@var{m} @var{n} @dots{}])
+@deftypefnx {} {@var{B} =} reshape (@var{A}, @dots{}, [], @dots{})
+@deftypefnx {} {@var{B} =} reshape (@var{A}, @var{size})
 Return a matrix with the specified dimensions (@var{m}, @var{n}, @dots{})
 whose elements are taken from the matrix @var{A}.
 
@@ -717,19 +826,24 @@ the unspecified dimension.
 
 @c resize libinterp/corefcn/data.cc
 @anchor{XREFresize}
-@deftypefn  {} {} resize (@var{x}, @var{m})
-@deftypefnx {} {} resize (@var{x}, @var{m}, @var{n}, @dots{})
-@deftypefnx {} {} resize (@var{x}, [@var{m} @var{n} @dots{}])
-Resize @var{x} cutting off elements as necessary.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} resize (@var{A}, @var{m})
+@deftypefnx {} {@var{B} =} resize (@var{A}, @var{m}, @var{n}, @dots{})
+@deftypefnx {} {@var{B} =} resize (@var{A}, [@var{m} @var{n} @dots{}])
+Resize @var{A} cutting off elements as necessary.
 
 In the result, element with certain indices is equal to the corresponding
-element of @var{x} if the indices are within the bounds of @var{x};
-otherwise, the element is set to zero.
+element of @var{A} if the indices are within the bounds of @var{A}; otherwise,
+the element is set to zero.
 
 In other words, the statement
 
 @example
-y = resize (x, dv)
+B = resize (A, dv)
 @end example
 
 @noindent
@@ -737,34 +851,38 @@ is equivalent to the following code:
 
 @example
 @group
-y = zeros (dv, class (x));
-sz = min (dv, size (x));
+B = zeros (dv, class (A));
+sz = min (dv, size (A));
 for i = 1:length (sz)
   idx@{i@} = 1:sz(i);
 endfor
-y(idx@{:@}) = x(idx@{:@});
+B(idx@{:@}) = A(idx@{:@});
 @end group
 @end example
 
 @noindent
 but is performed more efficiently.
 
-If only @var{m} is supplied, and it is a scalar, the dimension of the
-result is @var{m}-by-@var{m}.
-If @var{m}, @var{n}, @dots{} are all scalars, then the dimensions of
-the result are @var{m}-by-@var{n}-by-@dots{}.
-If given a vector as input, then the
-dimensions of the result are given by the elements of that vector.
+If only @var{m} is supplied, and it is a scalar, the dimension of the result is
+@var{m}-by-@var{m}.  If @var{m}, @var{n}, @dots{} are all scalars, then the
+dimensions of the result are @var{m}-by-@var{n}-by-@dots{}.  If given a vector
+as input, then the dimensions of the result are given by the elements of that
+vector.
 
-An object can be resized to more dimensions than it has;
-in such case the missing dimensions are assumed to be 1.
-Resizing an object to fewer dimensions is not possible.
+An object can be resized to more dimensions than it has; in such case the
+missing dimensions are assumed to be 1.  Resizing an object to fewer dimensions
+is not possible.
 @xseealso{@ref{XREFreshape,,reshape}, @ref{XREFpostpad,,postpad}, @ref{XREFprepad,,prepad}, @ref{XREFcat,,cat}}
 @end deftypefn
 
 
 @c circshift scripts/general/circshift.m
 @anchor{XREFcircshift}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{y} =} circshift (@var{x}, @var{n})
 @deftypefnx {} {@var{y} =} circshift (@var{x}, @var{n}, @var{dim})
 Circularly shift the values of the array @var{x}.
@@ -814,21 +932,13 @@ circshift (x, 1, 2)
 @end deftypefn
 
 
-@c shift scripts/general/shift.m
-@anchor{XREFshift}
-@deftypefn  {} {} shift (@var{x}, @var{b})
-@deftypefnx {} {} shift (@var{x}, @var{b}, @var{dim})
-If @var{x} is a vector, perform a circular shift of length @var{b} of
-the elements of @var{x}.
-
-If @var{x} is a matrix, do the same for each column of @var{x}.
-
-If the optional @var{dim} argument is given, operate along this dimension.
-@end deftypefn
-
-
 @c shiftdim scripts/general/shiftdim.m
 @anchor{XREFshiftdim}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{y} =} shiftdim (@var{x}, @var{n})
 @deftypefnx {} {[@var{y}, @var{ns}] =} shiftdim (@var{x})
 Shift the dimensions of @var{x} by @var{n}, where @var{n} must be
@@ -865,6 +975,11 @@ size (shiftdim (x, 1))
 
 @c sort libinterp/corefcn/data.cc
 @anchor{XREFsort}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{s}, @var{i}] =} sort (@var{x})
 @deftypefnx {} {[@var{s}, @var{i}] =} sort (@var{x}, @var{dim})
 @deftypefnx {} {[@var{s}, @var{i}] =} sort (@var{x}, @var{mode})
@@ -936,6 +1051,11 @@ ordered lists.
 
 @c sortrows scripts/general/sortrows.m
 @anchor{XREFsortrows}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{s}, @var{i}] =} sortrows (@var{A})
 @deftypefnx {} {[@var{s}, @var{i}] =} sortrows (@var{A}, @var{c})
 Sort the rows of the matrix @var{A} according to the order of the columns
@@ -966,17 +1086,22 @@ sortrows (x, [-2, 3])
 
 @c issorted libinterp/corefcn/data.cc
 @anchor{XREFissorted}
-@deftypefn  {} {} issorted (@var{a})
-@deftypefnx {} {} issorted (@var{a}, @var{mode})
-@deftypefnx {} {} issorted (@var{a}, "rows", @var{mode})
-Return true if the array is sorted according to @var{mode}, which may be either
-@qcode{"ascend"}, @qcode{"descend"}, or @qcode{"either"}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{tf} =} issorted (@var{A})
+@deftypefnx {} {@var{tf} =} issorted (@var{A}, @var{mode})
+@deftypefnx {} {@var{tf} =} issorted (@var{A}, "rows", @var{mode})
+Return true if the vector @var{A} is sorted according to @var{mode}, which
+may be either @qcode{"ascend"}, @qcode{"descend"}, or @qcode{"either"}.
 
 By default, @var{mode} is @qcode{"ascend"}.  NaNs are treated in the same
 manner as @code{sort}.
 
-If the optional argument @qcode{"rows"} is supplied, check whether the array is
-sorted by rows as output by the function @code{sortrows} (with no options).
+If the optional argument @qcode{"rows"} is supplied, check whether the matrix
+is sorted by rows as output by the function @code{sortrows} (with no options).
 
 This function does not support sparse matrices.
 @xseealso{@ref{XREFsort,,sort}, @ref{XREFsortrows,,sortrows}}
@@ -985,8 +1110,13 @@ This function does not support sparse matrices.
 
 @c nth_element libinterp/corefcn/data.cc
 @anchor{XREFnth_element}
-@deftypefn  {} {} nth_element (@var{x}, @var{n})
-@deftypefnx {} {} nth_element (@var{x}, @var{n}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{nel} =} nth_element (@var{x}, @var{n})
+@deftypefnx {} {@var{nel} =} nth_element (@var{x}, @var{n}, @var{dim})
 Select the n-th smallest element of a vector, using the ordering defined by
 @code{sort}.
 
@@ -1010,6 +1140,11 @@ the ratio K/M is small; otherwise, it may be better to use @code{sort}.
 
 @c tril libinterp/corefcn/tril.cc
 @anchor{XREFtril}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{A_LO} =} tril (@var{A})
 @deftypefnx {} {@var{A_LO} =} tril (@var{A}, @var{k})
 @deftypefnx {} {@var{A_LO} =} tril (@var{A}, @var{k}, @var{pack})
@@ -1057,6 +1192,11 @@ above another, and returned as a column vector.
 
 @c triu libinterp/corefcn/tril.cc
 @anchor{XREFtriu}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{A_UP} =} triu (@var{A})
 @deftypefnx {} {@var{A_UP} =} triu (@var{A}, @var{k})
 @deftypefnx {} {@var{A_UP} =} triu (@var{A}, @var{k}, @var{pack})
@@ -1104,6 +1244,11 @@ above another, and returned as a column vector.
 
 @c vec libinterp/corefcn/data.cc
 @anchor{XREFvec}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{v} =} vec (@var{x})
 @deftypefnx {} {@var{v} =} vec (@var{x}, @var{dim})
 Return the vector obtained by stacking the columns of the matrix @var{x}
@@ -1120,7 +1265,12 @@ with all elements along the last dimension.  This is equivalent to
 
 @c vech scripts/linear-algebra/vech.m
 @anchor{XREFvech}
-@deftypefn {} {} vech (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{v} =} vech (@var{x})
 Return the vector obtained by eliminating all superdiagonal elements of
 the square matrix @var{x} and stacking the result one column above the
 other.
@@ -1133,20 +1283,25 @@ and it would be pointless to keep values above the main diagonal.
 
 @c prepad scripts/general/prepad.m
 @anchor{XREFprepad}
-@deftypefn  {} {} prepad (@var{x}, @var{l})
-@deftypefnx {} {} prepad (@var{x}, @var{l}, @var{c})
-@deftypefnx {} {} prepad (@var{x}, @var{l}, @var{c}, @var{dim})
-Prepend the scalar value @var{c} to the vector @var{x} until it is of length
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} prepad (@var{A}, @var{l})
+@deftypefnx {} {@var{B} =} prepad (@var{A}, @var{l}, @var{c})
+@deftypefnx {} {@var{B} =} prepad (@var{A}, @var{l}, @var{c}, @var{dim})
+Prepend the scalar value @var{c} to the vector @var{A} until it is of length
 @var{l}.  If @var{c} is not given, a value of 0 is used.
 
-If @code{length (@var{x}) > @var{l}}, elements from the beginning of @var{x}
+If @code{length (@var{A}) > @var{l}}, elements from the beginning of @var{A}
 are removed until a vector of length @var{l} is obtained.
 
-If @var{x} is a matrix, elements are prepended or removed from each row.
+If @var{A} is a matrix, elements are prepended or removed from each row.
 
 If the optional argument @var{dim} is given, operate along this dimension.
 
-If @var{dim} is larger than the dimensions of @var{x}, the result will have
+If @var{dim} is larger than the dimensions of @var{A}, the result will have
 @var{dim} dimensions.
 @xseealso{@ref{XREFpostpad,,postpad}, @ref{XREFcat,,cat}, @ref{XREFresize,,resize}}
 @end deftypefn
@@ -1154,20 +1309,25 @@ If @var{dim} is larger than the dimensions of @var{x}, the result will have
 
 @c postpad scripts/general/postpad.m
 @anchor{XREFpostpad}
-@deftypefn  {} {} postpad (@var{x}, @var{l})
-@deftypefnx {} {} postpad (@var{x}, @var{l}, @var{c})
-@deftypefnx {} {} postpad (@var{x}, @var{l}, @var{c}, @var{dim})
-Append the scalar value @var{c} to the vector @var{x} until it is of length
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} postpad (@var{A}, @var{l})
+@deftypefnx {} {@var{B} =} postpad (@var{A}, @var{l}, @var{c})
+@deftypefnx {} {@var{B} =} postpad (@var{A}, @var{l}, @var{c}, @var{dim})
+Append the scalar value @var{c} to the vector @var{A} until it is of length
 @var{l}.  If @var{c} is not given, a value of 0 is used.
 
-If @code{length (@var{x}) > @var{l}}, elements from the end of @var{x} are
+If @code{length (@var{A}) > @var{l}}, elements from the end of @var{A} are
 removed until a vector of length @var{l} is obtained.
 
-If @var{x} is a matrix, elements are appended or removed from each row.
+If @var{A} is a matrix, elements are appended or removed from each row.
 
 If the optional argument @var{dim} is given, operate along this dimension.
 
-If @var{dim} is larger than the dimensions of @var{x}, the result will have
+If @var{dim} is larger than the dimensions of @var{A}, the result will have
 @var{dim} dimensions.
 @xseealso{@ref{XREFprepad,,prepad}, @ref{XREFcat,,cat}, @ref{XREFresize,,resize}}
 @end deftypefn
@@ -1175,6 +1335,11 @@ If @var{dim} is larger than the dimensions of @var{x}, the result will have
 
 @c diag libinterp/corefcn/data.cc
 @anchor{XREFdiag}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{M} =} diag (@var{v})
 @deftypefnx {} {@var{M} =} diag (@var{v}, @var{k})
 @deftypefnx {} {@var{M} =} diag (@var{v}, @var{m}, @var{n})
@@ -1209,7 +1374,12 @@ Given a matrix argument, instead of a vector, @code{diag} extracts the
 
 @c blkdiag scripts/general/blkdiag.m
 @anchor{XREFblkdiag}
-@deftypefn {} {} blkdiag (@var{A}, @var{B}, @var{C}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{M} =} blkdiag (@var{A}, @var{B}, @var{C}, @dots{})
 Build a block diagonal matrix from @var{A}, @var{B}, @var{C}, @dots{}
 
 All arguments must be numeric and either two-dimensional matrices or
@@ -1223,10 +1393,15 @@ scalars.  If any argument is of type sparse, the output will also be sparse.
 
 @c eye libinterp/corefcn/data.cc
 @anchor{XREFeye}
-@deftypefn  {} {} eye (@var{n})
-@deftypefnx {} {} eye (@var{m}, @var{n})
-@deftypefnx {} {} eye ([@var{m} @var{n}])
-@deftypefnx {} {} eye (@dots{}, @var{class})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{I} =} eye (@var{n})
+@deftypefnx {} {@var{I} =} eye (@var{m}, @var{n})
+@deftypefnx {} {@var{I} =} eye ([@var{m} @var{n}])
+@deftypefnx {} {@var{I} =} eye (@dots{}, @var{class})
 Return an identity matrix.
 
 If invoked with a single scalar argument @var{n}, return a square
@@ -1274,11 +1449,16 @@ definitions are for compatibility with @sc{matlab}.
 
 @c ones libinterp/corefcn/data.cc
 @anchor{XREFones}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} ones (@var{n})
 @deftypefnx {} {@var{val} =} ones (@var{m}, @var{n})
 @deftypefnx {} {@var{val} =} ones (@var{m}, @var{n}, @var{k}, @dots{})
 @deftypefnx {} {@var{val} =} ones ([@var{m} @var{n} @dots{}])
-@deftypefnx {} {@var{val} =} ones (@dots{}, "@var{like}", @var{var}))
+@deftypefnx {} {@var{val} =} ones (@dots{}, "like", @var{var})
 @deftypefnx {} {@var{val} =} ones (@dots{}, @var{class})
 Return a matrix or N-dimensional array whose elements are all 1.
 
@@ -1310,11 +1490,16 @@ val = ones (m,n, "uint8")
 
 @c zeros libinterp/corefcn/data.cc
 @anchor{XREFzeros}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} zeros (@var{n})
 @deftypefnx {} {@var{val} =} zeros (@var{m}, @var{n})
 @deftypefnx {} {@var{val} =} zeros (@var{m}, @var{n}, @var{k}, @dots{})
 @deftypefnx {} {@var{val} =} zeros ([@var{m} @var{n} @dots{}])
-@deftypefnx {} {@var{val} =} zeros (@dots{}, "@var{like}", @var{var}))
+@deftypefnx {} {@var{val} =} zeros (@dots{}, "like", @var{var})
 @deftypefnx {} {@var{val} =} zeros (@dots{}, @var{class})
 Return a matrix or N-dimensional array whose elements are all 0.
 
@@ -1339,11 +1524,16 @@ val = zeros (m,n, "uint8")
 
 @c repmat scripts/general/repmat.m
 @anchor{XREFrepmat}
-@deftypefn  {} {} repmat (@var{A}, @var{m})
-@deftypefnx {} {} repmat (@var{A}, @var{m}, @var{n})
-@deftypefnx {} {} repmat (@var{A}, @var{m}, @var{n}, @var{p} @dots{})
-@deftypefnx {} {} repmat (@var{A}, [@var{m} @var{n}])
-@deftypefnx {} {} repmat (@var{A}, [@var{m} @var{n} @var{p} @dots{}])
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{B} =} repmat (@var{A}, @var{m})
+@deftypefnx {} {@var{B} =} repmat (@var{A}, @var{m}, @var{n})
+@deftypefnx {} {@var{B} =} repmat (@var{A}, @var{m}, @var{n}, @var{p} @dots{})
+@deftypefnx {} {@var{B} =} repmat (@var{A}, [@var{m} @var{n}])
+@deftypefnx {} {@var{B} =} repmat (@var{A}, [@var{m} @var{n} @var{p} @dots{}])
 Repeat matrix or N-D array.
 
 Form a block matrix of size @var{m} by @var{n}, with a copy of matrix
@@ -1360,7 +1550,12 @@ second argument.
 
 @c repelems libinterp/corefcn/data.cc
 @anchor{XREFrepelems}
-@deftypefn {} {} repelems (@var{x}, @var{r})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} repelems (@var{x}, @var{r})
 Construct a vector of repeated elements from @var{x}.
 
 @var{r} is a 2x@var{N} integer matrix specifying which elements to repeat
@@ -1387,6 +1582,11 @@ endfor
 
 @c repelem scripts/general/repelem.m
 @anchor{XREFrepelem}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{xxx} =} repelem (@var{x}, @var{R})
 @deftypefnx {} {@var{xxx} =} repelem (@var{x}, @var{R_1}, @dots{}, @var{R_n})
 Construct an array of repeated elements from @var{x} and repeat
@@ -1535,15 +1735,20 @@ create vectors with evenly or logarithmically spaced elements.
 
 @c linspace libinterp/corefcn/data.cc
 @anchor{XREFlinspace}
-@deftypefn  {} {} linspace (@var{start}, @var{end})
-@deftypefnx {} {} linspace (@var{start}, @var{end}, @var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} linspace (@var{start}, @var{end})
+@deftypefnx {} {@var{y} =} linspace (@var{start}, @var{end}, @var{n})
 Return a row vector with @var{n} linearly spaced elements between @var{start}
 and @var{end}.
 
-If the number of elements is greater than one, then the endpoints @var{start}
-and @var{end} are always included in the range.  If @var{start} is greater than
-@var{end}, the elements are stored in decreasing order.  If the number of
-points is not specified, a value of 100 is used.
+If the number of elements @var{n} is greater than one, then the endpoints
+@var{start} and @var{end} are always included in the range.  If @var{start} is
+greater than @var{end}, the elements are stored in decreasing order.  If the
+number of points @var{n} is not specified, a value of 100 is used.
 
 The @code{linspace} function returns a row vector when both @var{start} and
 @var{end} are scalars.  If one, or both, inputs are vectors, then
@@ -1551,17 +1756,26 @@ The @code{linspace} function returns a row vector when both @var{start} and
 each row is an independent sequence between
 @w{@code{@var{start}(@var{row_n}), @var{end}(@var{row_n})}}.
 
-For compatibility with @sc{matlab}, return the second argument (@var{end}) when
-only a single value (@var{n} = 1) is requested.
+Programming Notes: For compatibility with @sc{matlab}, return the second
+argument (@var{end}) when a single value (@var{n} = 1) is requested.  If
+@var{n} is not an integer then @code{floor (@var{n})} is used to round the
+number of elements.  If @var{n} is zero or negative then an empty 1x0 matrix
+is returned.
 @xseealso{@ref{XREFcolon,,colon}, @ref{XREFlogspace,,logspace}}
 @end deftypefn
 
 
 @c logspace scripts/general/logspace.m
 @anchor{XREFlogspace}
-@deftypefn  {} {} logspace (@var{a}, @var{b})
-@deftypefnx {} {} logspace (@var{a}, @var{b}, @var{n})
-@deftypefnx {} {} logspace (@var{a}, pi, @var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} logspace (@var{a}, @var{b})
+@deftypefnx {} {@var{y} =} logspace (@var{a}, @var{b}, @var{n})
+@deftypefnx {} {@var{y} =} logspace (@var{a}, pi)
+@deftypefnx {} {@var{y} =} logspace (@var{a}, pi, @var{n})
 Return a row vector with @var{n} elements logarithmically spaced from
 @tex
 $10^{a}$ to $10^{b}$.
@@ -1570,7 +1784,7 @@ $10^{a}$ to $10^{b}$.
 10^@var{a} to 10^@var{b}.
 @end ifnottex
 
-If @var{n} is unspecified it defaults to 50.
+If the number of elements @var{n} is unspecified it defaults to 50.
 
 If @var{b} is equal to
 @tex
@@ -1593,34 +1807,42 @@ $10^{a}$ and $10^{\pi}$,
 @ifnottex
 10^@var{a} and 10^pi,
 @end ifnottex
-in order to be compatible with the corresponding @sc{matlab} function.
+which is useful in digital signal processing.
 
-Also for compatibility with @sc{matlab}, return the right-hand side of
-the range
+Programming Notes: For compatibility with @sc{matlab}, return the right-hand
+side of the range
 @tex
 ($10^{b}$)
 @end tex
 @ifnottex
 (10^@var{b})
 @end ifnottex
-when just a single value is requested.
+when a single value (@var{n} = 1) is requested.
+If @var{n} is not an integer then @code{floor (@var{n})} is used to round
+the number of elements.  If @var{n} is zero or negative then an empty 1x0
+matrix is returned.
 @xseealso{@ref{XREFlinspace,,linspace}}
 @end deftypefn
 
 
 @c rand libinterp/corefcn/rand.cc
 @anchor{XREFrand}
-@deftypefn  {} {} rand (@var{n})
-@deftypefnx {} {} rand (@var{m}, @var{n}, @dots{})
-@deftypefnx {} {} rand ([@var{m} @var{n} @dots{}])
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} rand (@var{n})
+@deftypefnx {} {@var{x} =} rand (@var{m}, @var{n}, @dots{})
+@deftypefnx {} {@var{x} =} rand ([@var{m} @var{n} @dots{}])
+@deftypefnx {} {@var{x} =} rand (@dots{}, "single")
+@deftypefnx {} {@var{x} =} rand (@dots{}, "double")
 @deftypefnx {} {@var{v} =} rand ("state")
 @deftypefnx {} {} rand ("state", @var{v})
 @deftypefnx {} {} rand ("state", "reset")
 @deftypefnx {} {@var{v} =} rand ("seed")
 @deftypefnx {} {} rand ("seed", @var{v})
 @deftypefnx {} {} rand ("seed", "reset")
-@deftypefnx {} {} rand (@dots{}, "single")
-@deftypefnx {} {} rand (@dots{}, "double")
 Return a matrix with random elements uniformly distributed on the
 interval (0, 1).
 
@@ -1702,11 +1924,16 @@ classes.
 
 @c randi scripts/general/randi.m
 @anchor{XREFrandi}
-@deftypefn  {} {} randi (@var{imax})
-@deftypefnx {} {} randi (@var{imax}, @var{n})
-@deftypefnx {} {} randi (@var{imax}, @var{m}, @var{n}, @dots{})
-@deftypefnx {} {} randi ([@var{imin} @var{imax}], @dots{})
-@deftypefnx {} {} randi (@dots{}, "@var{class}")
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{R} =} randi (@var{imax})
+@deftypefnx {} {@var{R} =} randi (@var{imax}, @var{n})
+@deftypefnx {} {@var{R} =} randi (@var{imax}, @var{m}, @var{n}, @dots{})
+@deftypefnx {} {@var{R} =} randi ([@var{imin} @var{imax}], @dots{})
+@deftypefnx {} {@var{R} =} randi (@dots{}, "@var{class}")
 Return random integers in the range 1:@var{imax}.
 
 Additional arguments determine the shape of the return matrix.  When no
@@ -1715,7 +1942,7 @@ argument @var{n} is specified then a square matrix @w{(@var{n} x @var{n})}
 is returned.  Two or more arguments will return a multi-dimensional matrix
 @w{(@var{m} x @var{n} x @dots{})}.
 
-The integer range may optionally be described by a two element matrix with a
+The integer range may optionally be described by a two-element matrix with a
 lower and upper bound in which case the returned integers will be on the
 interval @w{[@var{imin}, @var{imax}]}.
 
@@ -1734,23 +1961,28 @@ integer (@var{imax}) and range (@var{imax} - @var{imin}) to the value
 returned by the @code{flintmax} function.  For IEEE floating point numbers
 this value is @w{@math{2^{53} - 1}}.
 
-@xseealso{@ref{XREFrand,,rand}}
+@xseealso{@ref{XREFrand,,rand}, @ref{XREFrandn,,randn}}
 @end deftypefn
 
 
 @c randn libinterp/corefcn/rand.cc
 @anchor{XREFrandn}
-@deftypefn  {} {} randn (@var{n})
-@deftypefnx {} {} randn (@var{m}, @var{n}, @dots{})
-@deftypefnx {} {} randn ([@var{m} @var{n} @dots{}])
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} randn (@var{n})
+@deftypefnx {} {@var{x} =} randn (@var{m}, @var{n}, @dots{})
+@deftypefnx {} {@var{x} =} randn ([@var{m} @var{n} @dots{}])
+@deftypefnx {} {@var{x} =} randn (@dots{}, "single")
+@deftypefnx {} {@var{x} =} randn (@dots{}, "double")
 @deftypefnx {} {@var{v} =} randn ("state")
 @deftypefnx {} {} randn ("state", @var{v})
 @deftypefnx {} {} randn ("state", "reset")
 @deftypefnx {} {@var{v} =} randn ("seed")
 @deftypefnx {} {} randn ("seed", @var{v})
 @deftypefnx {} {} randn ("seed", "reset")
-@deftypefnx {} {} randn (@dots{}, "single")
-@deftypefnx {} {} randn (@dots{}, "double")
 Return a matrix with normally distributed random elements having zero mean
 and variance one.
 
@@ -1774,17 +2006,22 @@ J. Statistical Software, vol 5, 2000,
 
 @c rande libinterp/corefcn/rand.cc
 @anchor{XREFrande}
-@deftypefn  {} {} rande (@var{n})
-@deftypefnx {} {} rande (@var{m}, @var{n}, @dots{})
-@deftypefnx {} {} rande ([@var{m} @var{n} @dots{}])
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} rande (@var{n})
+@deftypefnx {} {@var{x} =} rande (@var{m}, @var{n}, @dots{})
+@deftypefnx {} {@var{x} =} rande ([@var{m} @var{n} @dots{}])
+@deftypefnx {} {@var{x} =} rande (@dots{}, "single")
+@deftypefnx {} {@var{x} =} rande (@dots{}, "double")
 @deftypefnx {} {@var{v} =} rande ("state")
 @deftypefnx {} {} rande ("state", @var{v})
 @deftypefnx {} {} rande ("state", "reset")
 @deftypefnx {} {@var{v} =} rande ("seed")
 @deftypefnx {} {} rande ("seed", @var{v})
 @deftypefnx {} {} rande ("seed", "reset")
-@deftypefnx {} {} rande (@dots{}, "single")
-@deftypefnx {} {} rande (@dots{}, "double")
 Return a matrix with exponentially distributed random elements.
 
 The arguments are handled the same as the arguments for @code{rand}.
@@ -1808,17 +2045,22 @@ J. Statistical Software, vol 5, 2000,
 
 @c randp libinterp/corefcn/rand.cc
 @anchor{XREFrandp}
-@deftypefn  {} {} randp (@var{l}, @var{n})
-@deftypefnx {} {} randp (@var{l}, @var{m}, @var{n}, @dots{})
-@deftypefnx {} {} randp (@var{l}, [@var{m} @var{n} @dots{}])
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} randp (@var{l}, @var{n})
+@deftypefnx {} {@var{x} =} randp (@var{l}, @var{m}, @var{n}, @dots{})
+@deftypefnx {} {@var{x} =} randp (@var{l}, [@var{m} @var{n} @dots{}])
+@deftypefnx {} {@var{x} =} randp (@dots{}, "single")
+@deftypefnx {} {@var{x} =} randp (@dots{}, "double")
 @deftypefnx {} {@var{v} =} randp ("state")
 @deftypefnx {} {} randp ("state", @var{v})
 @deftypefnx {} {} randp ("state", "reset")
 @deftypefnx {} {@var{v} =} randp ("seed")
 @deftypefnx {} {} randp ("seed", @var{v})
 @deftypefnx {} {} randp ("seed", "reset")
-@deftypefnx {} {} randp (@dots{}, "single")
-@deftypefnx {} {} randp (@dots{}, "double")
 Return a matrix with Poisson distributed random elements with mean value
 parameter given by the first argument, @var{l}.
 
@@ -1860,17 +2102,22 @@ classes.
 
 @c randg libinterp/corefcn/rand.cc
 @anchor{XREFrandg}
-@deftypefn  {} {} randg (@var{a}, @var{n})
-@deftypefnx {} {} randg (@var{a}, @var{m}, @var{n}, @dots{})
-@deftypefnx {} {} randg (@var{a}, [@var{m} @var{n} @dots{}])
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} randg (@var{a}, @var{n})
+@deftypefnx {} {@var{x} =} randg (@var{a}, @var{m}, @var{n}, @dots{})
+@deftypefnx {} {@var{x} =} randg (@var{a}, [@var{m} @var{n} @dots{}])
+@deftypefnx {} {@var{x} =} randg (@dots{}, "single")
+@deftypefnx {} {@var{x} =} randg (@dots{}, "double")
 @deftypefnx {} {@var{v} =} randg ("state")
 @deftypefnx {} {} randg ("state", @var{v})
 @deftypefnx {} {} randg ("state", "reset")
 @deftypefnx {} {@var{v} =} randg ("seed")
 @deftypefnx {} {} randg ("seed", @var{v})
 @deftypefnx {} {} randg ("seed", "reset")
-@deftypefnx {} {} randg (@dots{}, "single")
-@deftypefnx {} {} randg (@dots{}, "double")
 
 Return a matrix with @code{gamma (@var{a},1)} distributed random elements.
 
@@ -1962,6 +2209,11 @@ classes.
 
 @c rng scripts/general/rng.m
 @anchor{XREFrng}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} rng (@var{seed})
 @deftypefnx {} {} rng (@var{seed}, "@var{generator}")
 @deftypefnx {} {} rng ("shuffle")
@@ -2072,8 +2324,13 @@ Houston, TX 77030.
 
 @c randperm libinterp/corefcn/rand.cc
 @anchor{XREFrandperm}
-@deftypefn  {} {} randperm (@var{n})
-@deftypefnx {} {} randperm (@var{n}, @var{m})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{v} =} randperm (@var{n})
+@deftypefnx {} {@var{v} =} randperm (@var{n}, @var{m})
 Return a row vector containing a random permutation of @code{1:@var{n}}.
 
 If @var{m} is supplied, return @var{m} unique entries, sampled without
@@ -2094,6 +2351,11 @@ The following functions return famous matrix forms.
 
 @c gallery scripts/special-matrix/gallery.m
 @anchor{XREFgallery}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} gallery (@var{name})
 @deftypefnx {} {} gallery (@var{name}, @var{args})
 Create interesting matrices for testing.
@@ -2481,7 +2743,12 @@ Create various specific matrices devised/discussed by Wilkinson.
 
 @c hadamard scripts/special-matrix/hadamard.m
 @anchor{XREFhadamard}
-@deftypefn {} {} hadamard (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{h} =} hadamard (@var{n})
 Construct a Hadamard matrix (@nospell{Hn}) of size @var{n}-by-@var{n}.
 
 The size @var{n} must be of the form @math{2^k * p} in which p is one of
@@ -2514,8 +2781,13 @@ matrix.
 
 @c hankel scripts/special-matrix/hankel.m
 @anchor{XREFhankel}
-@deftypefn  {} {} hankel (@var{c})
-@deftypefnx {} {} hankel (@var{c}, @var{r})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{h} =} hankel (@var{c})
+@deftypefnx {} {@var{h} =} hankel (@var{c}, @var{r})
 Return the Hankel matrix constructed from the first column @var{c}, and
 (optionally) the last row @var{r}.
 
@@ -2547,7 +2819,12 @@ H(i,j) = r(i+j-m),  otherwise
 
 @c hilb scripts/special-matrix/hilb.m
 @anchor{XREFhilb}
-@deftypefn {} {} hilb (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{h} =} hilb (@var{n})
 Return the Hilbert matrix of order @var{n}.
 
 The @math{i,j} element of a Hilbert matrix is defined as
@@ -2584,7 +2861,12 @@ cond (hilb (5))
 
 @c invhilb scripts/special-matrix/invhilb.m
 @anchor{XREFinvhilb}
-@deftypefn {} {} invhilb (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{hinv} =} invhilb (@var{n})
 Return the inverse of the Hilbert matrix of order @var{n}.
 
 This can be computed exactly using
@@ -2642,7 +2924,12 @@ finite precision of your computer's floating point arithmetic.
 
 @c magic scripts/special-matrix/magic.m
 @anchor{XREFmagic}
-@deftypefn {} {} magic (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{M} =} magic (@var{n})
 
 Create an @var{n}-by-@var{n} magic square.
 
@@ -2657,8 +2944,13 @@ degenerate magic squares 1 and [].
 
 @c pascal scripts/special-matrix/pascal.m
 @anchor{XREFpascal}
-@deftypefn  {} {} pascal (@var{n})
-@deftypefnx {} {} pascal (@var{n}, @var{t})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{P} =} pascal (@var{n})
+@deftypefnx {} {@var{P} =} pascal (@var{n}, @var{t})
 Return the Pascal matrix of order @var{n} if @code{@var{t} = 0}.
 
 The default value of @var{t} is 0.
@@ -2681,7 +2973,12 @@ That is, @code{pascal (@var{n}, 2) ^ 3 == eye (@var{n})}.
 
 @c rosser scripts/special-matrix/rosser.m
 @anchor{XREFrosser}
-@deftypefn {} {} rosser ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{R} =} rosser ()
 Return the @nospell{Rosser} matrix.
 
 This is a difficult test case used to evaluate eigenvalue algorithms.
@@ -2691,8 +2988,13 @@ This is a difficult test case used to evaluate eigenvalue algorithms.
 
 @c toeplitz scripts/special-matrix/toeplitz.m
 @anchor{XREFtoeplitz}
-@deftypefn  {} {} toeplitz (@var{c})
-@deftypefnx {} {} toeplitz (@var{c}, @var{r})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{T} =} toeplitz (@var{c})
+@deftypefnx {} {@var{T} =} toeplitz (@var{c}, @var{r})
 Return the Toeplitz matrix constructed from the first column @var{c},
 and optionally the first row @var{r}.
 
@@ -2733,8 +3035,13 @@ c(m) c(m-1) c(m-2) @dots{} c(m-n+1)
 
 @c vander scripts/special-matrix/vander.m
 @anchor{XREFvander}
-@deftypefn  {} {} vander (@var{c})
-@deftypefnx {} {} vander (@var{c}, @var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{V} =} vander (@var{c})
+@deftypefnx {} {@var{V} =} vander (@var{c}, @var{n})
 Return the @nospell{Vandermonde} matrix whose next to last column is
 @var{c}.
 
@@ -2770,7 +3077,12 @@ c(n)^(n-1) @dots{} c(n)^2  c(n)  1
 
 @c wilkinson scripts/special-matrix/wilkinson.m
 @anchor{XREFwilkinson}
-@deftypefn {} {} wilkinson (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{W} =} wilkinson (@var{n})
 Return the Wilkinson matrix of order @var{n}.
 
 Wilkinson matrices are symmetric and tridiagonal with pairs of nearly, but

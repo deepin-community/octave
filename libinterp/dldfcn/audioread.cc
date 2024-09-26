@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -49,7 +49,7 @@
 #  include <sndfile.h>
 #endif
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN_DLD (audioread, args, ,
            doc: /* -*- texinfo -*-
@@ -229,6 +229,9 @@ extension_to_format (const std::string& ext)
       table["ogg"] = SF_FORMAT_OGG;
       table["mpc2k"] = SF_FORMAT_MPC2K;
       table["rf64"] = SF_FORMAT_RF64;
+#if defined (HAVE_LIB_SNDFILE_FORMAT_MP3)
+      table["m1a"] = SF_FORMAT_MPEG;
+#endif
 
       initialized = true;
     }
@@ -343,6 +346,14 @@ Comment.
       // problem and produces valid files.
       chunk_size = 0x100000;
     }
+#if defined (HAVE_LIB_SNDFILE_FORMAT_MP3)
+  else if (ext == "mp1")
+    info.format = SF_FORMAT_MPEG|SF_FORMAT_MPEG_LAYER_I;
+  else if (ext == "mp2")
+    info.format = SF_FORMAT_MPEG|SF_FORMAT_MPEG_LAYER_II;
+  else if (ext == "mp3")
+    info.format = SF_FORMAT_MPEG|SF_FORMAT_MPEG_LAYER_III;
+#endif
   else
     info.format = SF_FORMAT_PCM_16;
 
@@ -406,7 +417,8 @@ Comment.
           if (! value_arg.is_scalar_type ())
             error ("audiowrite: Quality value must be a scalar");
 
-          double value = value_arg.xdouble_value ("audiowrite: Quality value must be a numeric scalar between 0 and 100");
+          double value =
+            value_arg.xdouble_value ("audiowrite: Quality value must be a numeric scalar between 0 and 100");
 
           if (math::isnan (value) || value < 0 || value > 100)
             error ("audiowrite: Quality value must be a number between 0 and 100");
@@ -465,8 +477,9 @@ Comment.
       offset += chunk_size;
     }
 
-  // FIXME: shouldn't we return something to indicate whether the file
-  // was written successfully?
+  // FIXME: Shouldn't we return something to indicate whether the file
+  //        was written successfully?  On the other hand, Matlab doesn't
+  //        return anything.
   return ovl ();
 
 #else
@@ -545,17 +558,26 @@ Comment.
 ## Test input validation
 %!testif HAVE_SNDFILE
 %! fail ("audiowrite (1, 1, 8e3)", "FILENAME must be a string");
-%! fail ("audiowrite ('foo', int64 (1), 8e3)", "wrong type argument 'int64 scalar'");
-%! fail ("audiowrite ('foo', [0 1], [8e3, 8e3])", "FS must be a positive scalar");
+%! fail ("audiowrite ('foo', int64 (1), 8e3)",
+%!       "wrong type argument 'int64 scalar'");
+%! fail ("audiowrite ('foo', [0 1], [8e3, 8e3])",
+%!       "FS must be a positive scalar");
 %! fail ("audiowrite ('foo', 1, {8e3})", "FS must be a .* integer");
 %! fail ("audiowrite ('foo', 1, -8e3)", "FS must be a positive");
-%! fail ("audiowrite ('foo', 1, 8e3, 'bitspersample')", "invalid number of arguments");
-%! fail ("audiowrite ('foo', 1, 8e3, 'bitspersample', 48)", "wrong number of bits specified");
-%! fail ("audiowrite ('foo', 1, 8e3, 'quality', [2 3 4])", "Quality value must be a scalar");
-%! fail ("audiowrite ('foo', 1, 8e3, 'quality', NaN)", "Quality value must be .* between 0 and 100");
-%! fail ("audiowrite ('foo', 1, 8e3, 'quality', -1)", "Quality value must be .* between 0 and 100");
-%! fail ("audiowrite ('foo', 1, 8e3, 'quality', 101)", "Quality value must be .* between 0 and 100");
-%! fail ("audiowrite ('foo', 1, 8e3, 'foo', 'bar')", "unrecognized option: 'foo'");
+%! fail ("audiowrite ('foo', 1, 8e3, 'bitspersample')",
+%!       "invalid number of arguments");
+%! fail ("audiowrite ('foo', 1, 8e3, 'bitspersample', 48)",
+%!       "wrong number of bits specified");
+%! fail ("audiowrite ('foo', 1, 8e3, 'quality', [2 3 4])",
+%!       "Quality value must be a scalar");
+%! fail ("audiowrite ('foo', 1, 8e3, 'quality', NaN)",
+%!       "Quality value must be .* between 0 and 100");
+%! fail ("audiowrite ('foo', 1, 8e3, 'quality', -1)",
+%!       "Quality value must be .* between 0 and 100");
+%! fail ("audiowrite ('foo', 1, 8e3, 'quality', 101)",
+%!       "Quality value must be .* between 0 and 100");
+%! fail ("audiowrite ('foo', 1, 8e3, 'foo', 'bar')",
+%!       "unrecognized option: 'foo'");
 */
 
 DEFUN_DLD (audioinfo, args, ,
@@ -771,6 +793,8 @@ with names that start with @var{format}.
         }
     }
 
+  return octave_value_list ();
+
 #else
 
   octave_unused_parameter (args);
@@ -779,8 +803,6 @@ with names that start with @var{format}.
                         "getting sound formats through libsndfile");
 
 #endif
-
-  return octave_value_list ();
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

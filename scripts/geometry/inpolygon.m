@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## or <https://octave.org/copyright/>.
@@ -39,9 +39,9 @@
 ## @end deftypefn
 
 ## Algorithm: The method for determining if a point is in a polygon is based on
-## the algorithm shown on
-## http://local.wasp.uwa.edu.au/~pbourke/geometry/insidepoly/
-## and is credited to Randolph Franklin.
+## the PnPoly algorithm from Prof W. Randolph Franklin,
+## (Rensselaer Polytechnic Institute, Troy NY), originally written in 1970.
+## URL: http://wrfranklin.org/pnpoly
 
 function [in, on] = inpolygon (x, y, xv, yv)
 
@@ -104,12 +104,12 @@ endfunction
 %! clf;
 %! plot (xv, yv);
 %! hold on;
-%! plot (x(inside), y(inside), "@g");
-%! plot (x(! in), y(! in), "@m");
-%! plot (x(on), y(on), "@b");
+%! plot (x(inside), y(inside), "og");
+%! plot (x(! in), y(! in), "sm");
+%! plot (x(on), y(on), "^b");
 %! hold off;
-%! disp ("Green points are inside polygon, magenta are outside,");
-%! disp ("and blue are on boundary.");
+%! disp ("Green circles are inside polygon, magenta squares are outside,");
+%! disp ("and blue triangles are on the boundary.");
 
 %!demo
 %!  xv = [ 0.05840, 0.48375, 0.69356, 1.47478, 1.32158, ...
@@ -129,19 +129,19 @@ endfunction
 %! clf;
 %! plot (xv, yv);
 %! hold on;
-%! plot (x(inside), y(inside), "@g");
-%! plot (x(! in), y(! in), "@m");
-%! plot (x(on), y(on), "@b");
+%! plot (x(inside), y(inside), "og");
+%! plot (x(! in), y(! in), "sm");
+%! plot (x(on), y(on), "^b");
 %! hold off;
-%! disp ("Green points are inside polygon, magenta are outside,");
-%! disp ("and blue are on boundary.");
+%! disp ("Green circles are inside polygon, magenta squares are outside,");
+%! disp ("and blue triangles are on the boundary.");
 
 %!test
 %! [in, on] = inpolygon ([1, 0, 2], [1, 0, 0], [-1, -1, 1, 1], [-1, 1, 1, -1]);
 %! assert (in, [true, true, false]);
 %! assert (on, [true, false, false]);
 
-## 3D array input
+## 3-D array input
 %!test
 %! x = zeros (2, 2, 2);
 %! x(1, 1, 1) = 1;

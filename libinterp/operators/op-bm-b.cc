@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2001-2022 The Octave Project Developers
+// Copyright (C) 2001-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -50,7 +50,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // bool matrix by bool ops.
 
@@ -74,7 +74,7 @@ oct_assignop_conv_and_assign (octave_base_value& a1,
                               const octave_value_list& idx,
                               const octave_base_value& a2)
 {
-  octave_bool_matrix& v1 = dynamic_cast<octave_bool_matrix&> (a1);
+  OCTAVE_CAST_BASE_VALUE (octave_bool_matrix&, v1, a1);
 
   // FIXME: perhaps add a warning for this conversion
   //        if the values are not all 0 or 1?
@@ -124,4 +124,4 @@ install_bm_b_ops (octave::type_info& ti)
                        conv_and_assign);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

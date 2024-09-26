@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} bartlett (@var{m})
+## @deftypefn {} {@var{c} =} bartlett (@var{m})
 ## Return the filter coefficients of a Bartlett (triangular) window of length
 ## @var{m}.
 ##
@@ -35,11 +35,11 @@
 
 function c = bartlett (m)
 
-  if (nargin < 1)
+  if (nargin != 1)
     print_usage ();
   endif
 
-  if (! (isscalar (m) && (m == fix (m)) && (m > 0)))
+  if (! (isscalar (m) && m > 0 && m == fix (m)))
     error ("bartlett: M must be a positive integer");
   endif
 

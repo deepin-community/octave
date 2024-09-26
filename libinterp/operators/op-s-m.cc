@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // scalar by matrix ops.
 
@@ -48,8 +48,8 @@ DEFNDBINOP_OP (mul, scalar, matrix, scalar, array, *)
 
 DEFBINOP (div, scalar, matrix)
 {
-  const octave_scalar& v1 = dynamic_cast<const octave_scalar&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
 
   Matrix m1 = v1.matrix_value ();
   Matrix m2 = v2.matrix_value ();
@@ -65,8 +65,8 @@ DEFBINOP_FN (pow, scalar, matrix, xpow)
 
 DEFBINOP (ldiv, scalar, matrix)
 {
-  const octave_scalar& v1 = dynamic_cast<const octave_scalar&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
 
   return octave_value (v2.array_value () / v1.double_value ());
 }
@@ -84,8 +84,8 @@ DEFNDBINOP_FN (el_pow, scalar, matrix, scalar, array, elem_xpow)
 
 DEFBINOP (el_ldiv, scalar, matrix)
 {
-  const octave_scalar& v1 = dynamic_cast<const octave_scalar&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
 
   return octave_value (v2.array_value () / v1.double_value ());
 }
@@ -97,7 +97,7 @@ DEFNDCATOP_FN (s_m, scalar, matrix, array, array, concat)
 
 DEFCONV (matrix_conv, scalar, matrix)
 {
-  const octave_scalar& v = dynamic_cast<const octave_scalar&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v, a);
 
   return new octave_matrix (v.matrix_value ());
 }
@@ -133,4 +133,4 @@ install_s_m_ops (octave::type_info& ti)
   INSTALL_WIDENOP_TI (ti, octave_scalar, octave_matrix, matrix_conv);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

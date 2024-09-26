@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} asctime (@var{tm_struct})
+## @deftypefn {} {@var{str} =} asctime (@var{tm_struct})
 ## Convert a time structure to a string using the following
 ## format: @qcode{"ddd mmm mm HH:MM:SS yyyy@backslashchar{}n"}.
 ##
@@ -41,13 +41,13 @@
 ## @seealso{ctime, localtime, time}
 ## @end deftypefn
 
-function retval = asctime (tm_struct)
+function str = asctime (tm_struct)
 
   if (nargin < 1)
     print_usage ();
   endif
 
-  retval = strftime ("%a %b %d %H:%M:%S %Y\n", tm_struct);
+  str = strftime ("%a %b %d %H:%M:%S %Y\n", tm_struct);
 
 endfunction
 

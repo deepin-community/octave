@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2005-2022 The Octave Project Developers
+// Copyright (C) 2005-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,29 +33,30 @@
 #include "oct-uname.h"
 #include "uname-wrapper.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+OCTAVE_BEGIN_NAMESPACE(sys)
+
+void
+uname::init ()
 {
-  namespace sys
-  {
-    void
-    uname::init (void)
+  char *sysname, *nodename, *release, *version, *machine;
+
+  m_errno = octave_uname_wrapper (&sysname, &nodename, &release,
+                                  &version, &machine);
+
+  if (m_errno < 0)
+    m_errmsg = std::strerror (errno);
+  else
     {
-      char *sysname, *nodename, *release, *version, *machine;
-
-      m_errno = octave_uname_wrapper (&sysname, &nodename, &release,
-                                      &version, &machine);
-
-      if (m_errno < 0)
-        m_errmsg = std::strerror (errno);
-      else
-        {
-          m_sysname = sysname;
-          m_nodename = nodename;
-          m_release = release;
-          m_version = version;
-          m_machine = machine;
-          m_errmsg = "";
-        }
+      m_sysname = sysname;
+      m_nodename = nodename;
+      m_release = release;
+      m_version = version;
+      m_machine = machine;
+      m_errmsg = "";
     }
-  }
 }
+
+OCTAVE_END_NAMESPACE(sys)
+OCTAVE_END_NAMESPACE(octave)

@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Hashing Functions (GNU Octave (version 7.1.0))</title>
+<title>Hashing Functions (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Hashing Functions (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Hashing Functions (GNU Octave (version 7.1.0))">
+<meta name="description" content="Hashing Functions (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Hashing Functions (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,10 @@
 <link href="System-Information.html" rel="prev" title="System Information">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,13 +31,13 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Hashing-Functions">
-<div class="header">
+<div class="section-level-extent" id="Hashing-Functions">
+<div class="nav-panel">
 <p>
 Previous: <a href="System-Information.html" accesskey="p" rel="prev">System Information</a>, Up: <a href="System-Utilities.html" accesskey="u" rel="up">System Utilities</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Hashing-Functions-1"></span><h3 class="section">36.12 Hashing Functions</h3>
+<h3 class="section" id="Hashing-Functions-1"><span>36.12 Hashing Functions<a class="copiable-link" href="#Hashing-Functions-1"> &para;</a></span></h3>
 
 <p>It is often necessary to find if two strings or files are identical.
 This might be done by comparing them character by character and looking
@@ -60,73 +49,76 @@ user can check the hash of the file against a known value and find if
 the file they have is the same as the one that the original hash was
 produced with.
 </p>
-<p>Octave supplies the <code>hash</code> function to calculate hash values of
-strings and files, the latter in combination with the <code>fileread</code>
-function.  The <code>hash</code> function supports the most common used
-cryptographic hash functions, namely MD5 and SHA-1.
+<p>Octave supplies the <code class="code">hash</code> function to calculate hash values of
+strings and files, the latter in combination with the <code class="code">fileread</code>
+function.  The <code class="code">hash</code> function supports many commonly used hash
+methods.
 </p>
-<span id="XREFhash"></span><dl class="def">
-<dt id="index-hash"><span class="category">: </span><span><em></em> <strong>hash</strong> <em>(<var>hfun</var>, <var>str</var>)</em><a href='#index-hash' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Calculate the hash value of the string <var>str</var> using the hash function
-<var>hfun</var>.
+<a class="anchor" id="XREFhash"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-hash"><span class="category-def">: </span><span><code class="def-type"><var class="var">hashval</var> =</code> <strong class="def-name">hash</strong> <code class="def-code-arguments">(&quot;<var class="var">hashfcn</var>&quot;, <var class="var">str</var>)</code><a class="copiable-link" href="#index-hash"> &para;</a></span></dt>
+<dd><p>Calculate the hash value of the string <var class="var">str</var> using the hash function
+<var class="var">hashfcn</var>.
 </p>
 <p>The available hash functions are given in the table below.
 </p>
-<dl compact="compact">
-<dt><span>&lsquo;<samp>MD2</samp>&rsquo;</span></dt>
+<dl class="table">
+<dt>&lsquo;<samp class="samp">MD2</samp>&rsquo;</dt>
 <dd><p>Message-Digest Algorithm 2 (RFC 1319).
 </p>
 </dd>
-<dt><span>&lsquo;<samp>MD4</samp>&rsquo;</span></dt>
+<dt>&lsquo;<samp class="samp">MD4</samp>&rsquo;</dt>
 <dd><p>Message-Digest Algorithm 4 (RFC 1320).
 </p>
 </dd>
-<dt><span>&lsquo;<samp>MD5</samp>&rsquo;</span></dt>
+<dt>&lsquo;<samp class="samp">MD5</samp>&rsquo;</dt>
 <dd><p>Message-Digest Algorithm 5 (RFC 1321).
 </p>
 </dd>
-<dt><span>&lsquo;<samp>SHA1</samp>&rsquo;</span></dt>
+<dt>&lsquo;<samp class="samp">SHA1</samp>&rsquo;</dt>
 <dd><p>Secure Hash Algorithm 1 (RFC 3174)
 </p>
 </dd>
-<dt><span>&lsquo;<samp>SHA224</samp>&rsquo;</span></dt>
+<dt>&lsquo;<samp class="samp">SHA224</samp>&rsquo;</dt>
 <dd><p>Secure Hash Algorithm 2 (224 Bits, RFC 3874)
 </p>
 </dd>
-<dt><span>&lsquo;<samp>SHA256</samp>&rsquo;</span></dt>
+<dt>&lsquo;<samp class="samp">SHA256</samp>&rsquo;</dt>
 <dd><p>Secure Hash Algorithm 2 (256 Bits, RFC 6234)
 </p>
 </dd>
-<dt><span>&lsquo;<samp>SHA384</samp>&rsquo;</span></dt>
+<dt>&lsquo;<samp class="samp">SHA384</samp>&rsquo;</dt>
 <dd><p>Secure Hash Algorithm 2 (384 Bits, RFC 6234)
 </p>
 </dd>
-<dt><span>&lsquo;<samp>SHA512</samp>&rsquo;</span></dt>
+<dt>&lsquo;<samp class="samp">SHA512</samp>&rsquo;</dt>
 <dd><p>Secure Hash Algorithm 2 (512 Bits, RFC 6234)
 </p></dd>
 </dl>
 
 <p>To calculate for example the MD5 hash value of the string
-<code>&quot;abc&quot;</code> the <code>hash</code> function is called as follows:
+<code class="code">&quot;abc&quot;</code> the <code class="code">hash</code> function is called as follows:
 </p>
 <div class="example">
-<pre class="example">hash (&quot;md5&quot;, &quot;abc&quot;)
+<div class="group"><pre class="example-preformatted">hash (&quot;md5&quot;, &quot;abc&quot;)
      -| ans = 900150983cd24fb0d6963f7d28e17f72
-</pre></div>
+</pre></div></div>
 
 <p>For the same string, the SHA-1 hash value is calculated with:
 </p>
 <div class="example">
-<pre class="example">hash (&quot;sha1&quot;, &quot;abc&quot;)
+<div class="group"><pre class="example-preformatted">hash (&quot;sha1&quot;, &quot;abc&quot;)
      -| ans = a9993e364706816aba3e25717850c26c9cd0d89d
-</pre></div>
+</pre></div></div>
 
-<p>And to compute the hash value of a file, e.g., <code>file = &quot;file.txt&quot;</code>,
-call <code>hash</code> in combination with the <code>fileread</code>:
+<p>And to compute the hash value of a file, e.g., <code class="code">file = &quot;file.txt&quot;</code>,
+call <code class="code">hash</code> in combination with the <code class="code">fileread</code>:
 </p>
 <div class="example">
-<pre class="example">hash (&quot;md5&quot;, fileread (file));
-</pre></div>
+<div class="group"><pre class="example-preformatted">hash (&quot;md5&quot;, fileread (file));
+</pre></div></div>
 
 </dd></dl>
 
@@ -134,7 +126,7 @@ call <code>hash</code> in combination with the <code>fileread</code>:
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Previous: <a href="System-Information.html">System Information</a>, Up: <a href="System-Utilities.html">System Utilities</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

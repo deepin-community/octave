@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Recording (GNU Octave (version 7.1.0))</title>
+<title>Recording (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Recording (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Recording (GNU Octave (version 7.1.0))">
+<meta name="description" content="Recording (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Recording (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,9 @@
 <link href="Data-Retrieval.html" rel="next" title="Data Retrieval">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,60 +30,96 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Recording">
-<div class="header">
+<div class="subsection-level-extent" id="Recording">
+<div class="nav-panel">
 <p>
 Next: <a href="Data-Retrieval.html" accesskey="n" rel="next">Data Retrieval</a>, Up: <a href="Audio-Recorder.html" accesskey="u" rel="up">Audio Recorder</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Recording-1"></span><h4 class="subsection">33.4.1 Recording</h4>
+<h4 class="subsection" id="Recording-1"><span>33.4.1 Recording<a class="copiable-link" href="#Recording-1"> &para;</a></span></h4>
 
 <p>The following methods control the recording process.
 </p>
-<span id="XREF_0040audiorecorder_002frecord"></span><dl class="def">
-<dt id="index-record"><span class="category">: </span><span><em></em> <strong>record</strong> <em>(<var>recorder</var>)</em><a href='#index-record' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-record-1"><span class="category">: </span><span><em></em> <strong>record</strong> <em>(<var>recorder</var>, <var>length</var>)</em><a href='#index-record-1' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREF_0040audiorecorder_002frecord"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-record"><span class="category-def">: </span><span><strong class="def-name">record</strong> <code class="def-code-arguments">(<var class="var">recorder</var>)</code><a class="copiable-link" href="#index-record"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-record-1"><span class="category-def">: </span><span><strong class="def-name">record</strong> <code class="def-code-arguments">(<var class="var">recorder</var>, <var class="var">length</var>)</code><a class="copiable-link" href="#index-record-1"> &para;</a></span></dt>
 <dd><p>Record audio without blocking using the audiorecorder object
-<var>recorder</var> until stopped or paused by the <var>stop</var> or <var>pause</var>
-method.
+<var class="var">recorder</var> until paused or stopped by the <var class="var">pause</var> or <var class="var">stop</var>
+methods.
 </p>
-<p>Given the optional argument <var>length</var>, record for <var>length</var> seconds.
+<p>Given the optional argument <var class="var">length</var>, record for <var class="var">length</var> seconds.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREF_0040audiorecorder_002frecordblocking">@audiorecorder/recordblocking</a>, <a class="ref" href="Audio-Recorder.html#XREF_0040audiorecorder_002faudiorecorder">@audiorecorder/audiorecorder</a>.
 </p></dd></dl>
 
 
-<span id="XREF_0040audiorecorder_002frecordblocking"></span><dl class="def">
-<dt id="index-recordblocking"><span class="category">: </span><span><em></em> <strong>recordblocking</strong> <em>(<var>recorder</var>, <var>length</var>)</em><a href='#index-recordblocking' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREF_0040audiorecorder_002frecordblocking"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-recordblocking"><span class="category-def">: </span><span><strong class="def-name">recordblocking</strong> <code class="def-code-arguments">(<var class="var">recorder</var>, <var class="var">length</var>)</code><a class="copiable-link" href="#index-recordblocking"> &para;</a></span></dt>
 <dd><p>Record audio with blocking (synchronous I/O).
 </p>
-<p>The length of the recording in seconds (<var>length</var>) must be specified.
+<p>The length of the recording in seconds (<var class="var">length</var>) must be specified.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREF_0040audiorecorder_002frecord">@audiorecorder/record</a>, <a class="ref" href="Audio-Recorder.html#XREF_0040audiorecorder_002faudiorecorder">@audiorecorder/audiorecorder</a>.
 </p></dd></dl>
 
 
-<span id="XREF_0040audiorecorder_002fpause"></span><dl class="def">
-<dt id="index-pause-1"><span class="category">: </span><span><em></em> <strong>pause</strong> <em>(<var>recorder</var>)</em><a href='#index-pause-1' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Pause recording with audiorecorder object <var>recorder</var>.
+<a class="anchor" id="XREF_0040audiorecorder_002fpause"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-pause-1"><span class="category-def">: </span><span><strong class="def-name">pause</strong> <code class="def-code-arguments">(<var class="var">recorder</var>)</code><a class="copiable-link" href="#index-pause-1"> &para;</a></span></dt>
+<dd><p>Pause recording for audiorecorder <var class="var">recorder</var>.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREF_0040audiorecorder_002fresume">@audiorecorder/resume</a>, <a class="ref" href="#XREF_0040audiorecorder_002fstop">@audiorecorder/stop</a>, <a class="ref" href="Audio-Recorder.html#XREF_0040audiorecorder_002faudiorecorder">@audiorecorder/audiorecorder</a>.
 </p></dd></dl>
 
 
-<span id="XREF_0040audiorecorder_002fresume"></span><dl class="def">
-<dt id="index-resume-1"><span class="category">: </span><span><em></em> <strong>resume</strong> <em>(<var>recorder</var>)</em><a href='#index-resume-1' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Resume recording with the paused audiorecorder object <var>recorder</var>.
+<a class="anchor" id="XREF_0040audiorecorder_002fresume"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-resume-1"><span class="category-def">: </span><span><strong class="def-name">resume</strong> <code class="def-code-arguments">(<var class="var">recorder</var>)</code><a class="copiable-link" href="#index-resume-1"> &para;</a></span></dt>
+<dd><p>Resume recording with the paused audiorecorder object <var class="var">recorder</var>.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREF_0040audiorecorder_002fpause">@audiorecorder/pause</a>, <a class="ref" href="#XREF_0040audiorecorder_002fstop">@audiorecorder/stop</a>, <a class="ref" href="Audio-Recorder.html#XREF_0040audiorecorder_002faudiorecorder">@audiorecorder/audiorecorder</a>.
 </p></dd></dl>
 
 
-<span id="XREF_0040audiorecorder_002fstop"></span><dl class="def">
-<dt id="index-stop-1"><span class="category">: </span><span><em></em> <strong>stop</strong> <em>(<var>recorder</var>)</em><a href='#index-stop-1' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Stop the audiorecorder object <var>recorder</var> and clean up any audio streams.
+<a class="anchor" id="XREF_0040audiorecorder_002fstop"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-stop-1"><span class="category-def">: </span><span><strong class="def-name">stop</strong> <code class="def-code-arguments">(<var class="var">recorder</var>)</code><a class="copiable-link" href="#index-stop-1"> &para;</a></span></dt>
+<dd><p>Stop recording with audiorecorder object <var class="var">recorder</var> and clean up any
+audio streams.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREF_0040audiorecorder_002fpause">@audiorecorder/pause</a>, <a class="ref" href="#XREF_0040audiorecorder_002fresume">@audiorecorder/resume</a>, <a class="ref" href="Audio-Recorder.html#XREF_0040audiorecorder_002faudiorecorder">@audiorecorder/audiorecorder</a>.
 </p></dd></dl>
 
 
-<span id="XREF_0040audiorecorder_002fisrecording"></span><dl class="def">
-<dt id="index-isrecording"><span class="category">: </span><span><em></em> <strong>isrecording</strong> <em>(<var>recorder</var>)</em><a href='#index-isrecording' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return true if the audiorecorder object <var>recorder</var> is currently
+<a class="anchor" id="XREF_0040audiorecorder_002fisrecording"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-isrecording"><span class="category-def">: </span><span><code class="def-type"><var class="var">tf</var> =</code> <strong class="def-name">isrecording</strong> <code class="def-code-arguments">(<var class="var">recorder</var>)</code><a class="copiable-link" href="#index-isrecording"> &para;</a></span></dt>
+<dd><p>Return true if the audiorecorder object <var class="var">recorder</var> is currently
 recording audio and false otherwise.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREF_0040audiorecorder_002fpause">@audiorecorder/pause</a>, <a class="ref" href="Audio-Recorder.html#XREF_0040audiorecorder_002faudiorecorder">@audiorecorder/audiorecorder</a>.
 </p></dd></dl>
 
 
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Data-Retrieval.html">Data Retrieval</a>, Up: <a href="Audio-Recorder.html">Audio Recorder</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

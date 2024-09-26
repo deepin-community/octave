@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,19 +35,20 @@
 #include "ov.h"
 #include "pt-exp.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// Expressions.
+
+octave_lvalue
+tree_expression::lvalue (tree_evaluator&)
 {
-  // Expressions.
-
-  octave_lvalue
-  tree_expression::lvalue (tree_evaluator&)
-  {
-    error ("invalid lvalue function called in expression");
-  }
-
-  std::string
-  tree_expression::original_text (void) const
-  {
-    return "";
-  }
+  error ("invalid lvalue function called in expression");
 }
+
+std::string
+tree_expression::original_text () const
+{
+  return "";
+}
+
+OCTAVE_END_NAMESPACE(octave)

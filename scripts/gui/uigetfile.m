@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -41,21 +41,19 @@
 ## If a filename is given then the file extension is extracted and used as
 ## filter.  In addition, the path is selected as current path in the dialog and
 ## the filename is selected as default file.
-## Example: @code{uigetfile ("myfun.m")}
+## Example: @code{uigetfile ("myfcn.m")}
 ##
 ## @item A single file extension @qcode{"*.ext"}
 ## Example: @code{uigetfile ("*.ext")}
 ##
 ## @item A 2-column cell array
 ## containing a file extension in the first column and a brief description in
-## the second column.
-## Example: @code{uigetfile (@{"*.ext", "My Description";"*.xyz",
-## "XYZ-Format"@})}
+## the second column.  Example:
+## @code{uigetfile (@{"*.ext", "My Description";"*.xyz", "XYZ-Format"@})}
 ##
 ## The filter string can also contain a semicolon separated list of filter
-## extensions.
-## Example: @code{uigetfile (@{"*.gif;*.png;*.jpg", "Supported Picture
-## Formats"@})}
+## extensions.  Example:
+## @code{uigetfile (@{"*.gif;*.png;*.jpg", "Supported Picture Formats"@})}
 ##
 ## @item A directory name or path name
 ## If the folder name of path name contains a trailing file separator, the
@@ -175,7 +173,7 @@ function [retfile, retpath, retindex] = uigetfile (varargin)
         if (! ischar (val))
           error ('uigetfile: MultiSelect value must be a string ("on"/"off")');
         endif
-        outargs{4} = tolower (val);
+        outargs{4} = lower (val);
       else
         error ("uigetfile: unknown argument '%s'", prop);
       endif

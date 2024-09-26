@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2007-2022 The Octave Project Developers
+## Copyright (C) 2007-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -162,7 +162,7 @@ function hlist = __pie__ (caller, varargin)
 
 endfunction
 
-function update_text_pos (all_handles)
+function update_text_pos (~, ~, all_handles)
 
   ## Text objects in the foreground should be at the base level.
   ## Text objects in the background should be at the top level.

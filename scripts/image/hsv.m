@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1999-2022 The Octave Project Developers
+## Copyright (C) 1999-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} hsv (@var{n})
+## @deftypefn  {} {@var{map} =} hsv ()
+## @deftypefnx {} {@var{map} =} hsv (@var{n})
 ## Create color colormap.  This colormap begins with red, changes through
 ## yellow, green, cyan, blue, and magenta, before returning to red.
 ##

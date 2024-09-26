@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2003-2022 The Octave Project Developers
+// Copyright (C) 2003-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,12 +35,12 @@
 #include "ov-typeinfo.h"
 #include "ops.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFASSIGNOP (assign, char_matrix_str, octave_matrix)
 {
-  octave_char_matrix_str& v1 = dynamic_cast<octave_char_matrix_str&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (octave_char_matrix_str&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
 
   octave_value tmp
     = v2.convert_to_str_internal (false, false,
@@ -70,4 +70,4 @@ install_str_m_ops (octave::type_info& ti)
   INSTALL_CATOP_TI (ti, octave_matrix, octave_char_matrix_sq_str, m_str);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

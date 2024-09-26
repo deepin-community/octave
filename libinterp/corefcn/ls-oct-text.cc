@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -270,8 +270,7 @@ load_inline_fcn (std::istream& is, const std::string& filename)
         {
           args(0) = std::string (buf);
 
-          octave::interpreter& interp
-            = octave::__get_interpreter__ ("load_inline_fcn");
+          octave::interpreter& interp = octave::__get_interpreter__ ();
 
           octave_value_list tmp = interp.feval ("inline", args, 1);
 
@@ -336,8 +335,7 @@ read_text_data (std::istream& is, const std::string& filename, bool& global,
     }
   else
     {
-      octave::type_info& type_info
-        = octave::__get_type_info__ ("read_text_data");
+      octave::type_info& type_info = octave::__get_type_info__ ();
 
       tc = type_info.lookup_type (typ);
     }
@@ -457,13 +455,13 @@ save_three_d (std::ostream& os, const octave_value& tc, bool parametric)
   return (static_cast<bool> (os));
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (save_precision, args, nargout,
        doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{val} =} save_precision ()
 @deftypefnx {} {@var{old_val} =} save_precision (@var{new_val})
-@deftypefnx {} {} save_precision (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} save_precision (@var{new_val}, "local")
 Query or set the internal variable that specifies the number of digits to
 keep when saving data in text format.
 
@@ -485,4 +483,4 @@ The original variable value is restored when exiting the function.
                                 std::numeric_limits<int>::max ());
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

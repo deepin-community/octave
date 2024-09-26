@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,86 +34,84 @@
 
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  class interpreter;
+class interpreter;
 
-  class OCTINTERP_API history_system
+class OCTINTERP_API history_system
+{
+public:
+
+  history_system (interpreter& interp);
+
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (history_system)
+
+  ~history_system () = default;
+
+  void initialize (bool read_history_file = false);
+
+  void write_timestamp ();
+
+  octave_value input_from_tmp_file (const octave_value_list& args,
+                                    int nargout);
+
+  bool input_from_tmp_file () const
   {
-  public:
+    return m_input_from_tmp_file;
+  }
 
-    history_system (interpreter& interp);
+  bool input_from_tmp_file (bool flag)
+  {
+    return set (m_input_from_tmp_file, flag);
+  }
 
-    history_system (const history_system&) = delete;
+  octave_value timestamp_format_string (const octave_value_list& args,
+                                        int nargout);
 
-    history_system& operator = (const history_system&) = delete;
+  std::string timestamp_format_string () const
+  {
+    return m_timestamp_format_string;
+  }
 
-    ~history_system (void) = default;
+  std::string timestamp_format_string (const std::string& file)
+  {
+    return set (m_timestamp_format_string, file);
+  }
 
-    void initialize (bool read_history_file = false);
+  string_vector
+  do_history (const octave_value_list& args = octave_value_list (),
+              int nargout = 0);
 
-    void write_timestamp (void);
+  void do_edit_history (const octave_value_list& args = octave_value_list ());
 
-    octave_value input_from_tmp_file (const octave_value_list& args,
-                                      int nargout);
+  void do_run_history (const octave_value_list& args = octave_value_list ());
 
-    bool input_from_tmp_file (void) const
-    {
-      return m_input_from_tmp_file;
-    }
+private:
 
-    bool input_from_tmp_file (bool flag)
-    {
-      return set (m_input_from_tmp_file, flag);
-    }
+  interpreter& m_interpreter;
 
-    octave_value timestamp_format_string (const octave_value_list& args,
-                                          int nargout);
+  // TRUE means input is coming from temporary history file.
+  bool m_input_from_tmp_file;
 
-    std::string timestamp_format_string (void) const
-    {
-      return m_timestamp_format_string;
-    }
+  // The format of the timestamp marker written to the history file when
+  // Octave exits.
+  std::string m_timestamp_format_string;
 
-    std::string timestamp_format_string (const std::string& file)
-    {
-      return set (m_timestamp_format_string, file);
-    }
+  static std::string default_file ();
 
-    string_vector
-    do_history (const octave_value_list& args = octave_value_list (),
-                int nargout = 0);
+  static int default_size ();
 
-    void do_edit_history (const octave_value_list& args = octave_value_list ());
+  static std::string default_timestamp_format ();
 
-    void do_run_history (const octave_value_list& args = octave_value_list ());
+  template <typename T>
+  T set (T& var, const T& new_val)
+  {
+    T old_val = var;
+    var = new_val;
+    return old_val;
+  }
+};
 
-  private:
-
-    interpreter& m_interpreter;
-
-    // TRUE means input is coming from temporary history file.
-    bool m_input_from_tmp_file;
-
-    // The format of the timestamp marker written to the history file when
-    // Octave exits.
-    std::string m_timestamp_format_string;
-
-    static std::string default_file (void);
-
-    static int default_size (void);
-
-    static std::string default_timestamp_format (void);
-
-    template <typename T>
-    T set (T& var, const T& new_val)
-    {
-      T old_val = var;
-      var = new_val;
-      return old_val;
-    }
-  };
-
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -171,7 +171,7 @@
 %! assert (a, [1:4]);
 
 %!test
-%! a(:,:,1) = 1:4;;
+%! a(:,:,1) = 1:4;
 %! assert (a, [1:4]);
 
 %!test
@@ -191,7 +191,7 @@
 %! assert (a, [1:4]');
 
 %!test
-%! a(:,1,:) = reshape (1:4,[1,1,4]);;
+%! a(:,1,:) = reshape (1:4,[1,1,4]);
 %! assert (a, [1:4]');
 
 %!test
@@ -247,13 +247,13 @@
 %! x(false,[],false) = [];
 %! assert (x, y);
 
-%!shared x, y
+%!test
 %! y = ones (2, 2, 2);
 %! x = ones (2, 2, 2);
 %! x(false, 1) = [];
 %! assert (x, y);
 
-%!shared x, y
+%!test
 %! y = ones (2, 2, 2);
 %! x = ones (2, 2, 2);
 %! x(false, false) = [];
@@ -414,36 +414,36 @@
 %! x(:, [], false) = [];
 %! assert (x, y);
 
-%!shared x, y
+%!test
 %! y = ones (2, 2);
 %! x = ones (2, 2);
 %!error x(1, 1, []) = []
 
-%!shared x, y
+%!test
 %! y = ones (2, 2);
 %! x = ones (2, 2);
 %! x(false, false, 1) = [];
 %! assert (x, y);
 
-%!shared x, y
+%!test
 %! y = ones (2, 2);
 %! x = ones (2, 2);
 %! x(false, false, []) = [];
 %! assert (x, y);
 
-%!shared x, y
+%!test
 %! y = ones (2, 2);
 %! x = ones (2, 2);
 %! x(false, false, [], false) = [];
 %! assert (x, y);
 
-%!shared x, y
+%!test
 %! y = ones (2, 2);
 %! x = ones (2, 2);
 %! x(1, false, [], false) = [];
 %! assert (x, y);
 
-%!shared x, y
+%!test
 %! y = ones (2, 2);
 %! x = ones (2, 2);
 %! x(:, false, 1) = [];
@@ -502,6 +502,28 @@
 %! x = ones (2, 2);
 %! x([], false, :) = [];
 %! assert (x, y);
+
+## Test deletion of non-existent dimensions
+%!test
+%! x = ones (10, 10, 2);
+%! x(:, :, 1) = [];
+%! x(:, :, 1) = [];
+%! assert (size (x), [10, 10, 0]);
+
+%!test
+%! x = ones (10, 10);
+%! x(:,:,:, 1) = [];
+%! assert (size (x), [10, 10, 1, 0]);
+
+%!test
+%! x = ones (10, 10);
+%! try
+%!   x(:,:,2) = [];
+%! catch
+%!   m = strfind (lasterr (), 'index out of bounds: value 2 out of bound 1');
+%!   assert (m > 0);
+%! end_try_catch
+%! assert (size (x), [10, 10]);
 
 ##  Test indexing of unnamed constants
 %!error <index \(0\): subscripts must be>     1(0)

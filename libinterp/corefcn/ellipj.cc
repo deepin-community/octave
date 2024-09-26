@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,7 +31,7 @@
 #include "error.h"
 #include "lo-specfun.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (ellipj, args, ,
        doc: /* -*- texinfo -*-
@@ -211,7 +211,7 @@ and 16.15), Dover, 1965.
 
                   for (octave_idx_type j = 0; j < mc; j++)
                     for (octave_idx_type i = 0; i < ur; i++)
-                      math::ellipj (pu[i], pm[j], sn(i,j), cn(i,j), dn(i,j), err(i,j));
+                      math::ellipj (pu[i], pm[j], sn(i, j), cn(i, j), dn(i, j), err(i, j));
 
                   return ovl (sn, cn, dn, err);
                 }
@@ -259,7 +259,7 @@ and 16.15), Dover, 1965.
 
                   for (octave_idx_type j = 0; j < mc; j++)
                     for (octave_idx_type i = 0; i < ur; i++)
-                      math::ellipj (pu[i], pm[j], sn(i,j), cn(i,j), dn(i,j), err(i,j));
+                      math::ellipj (pu[i], pm[j], sn(i, j), cn(i, j), dn(i, j), err(i, j));
 
                   return ovl (sn, cn, dn, err);
                 }
@@ -850,4 +850,4 @@ and 16.15), Dover, 1965.
 
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

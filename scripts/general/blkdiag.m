@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2000-2022 The Octave Project Developers
+## Copyright (C) 2000-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} blkdiag (@var{A}, @var{B}, @var{C}, @dots{})
+## @deftypefn {} {@var{M} =} blkdiag (@var{A}, @var{B}, @var{C}, @dots{})
 ## Build a block diagonal matrix from @var{A}, @var{B}, @var{C}, @dots{}
 ##
 ## All arguments must be numeric and either two-dimensional matrices or
@@ -32,7 +32,7 @@
 ## @seealso{diag, horzcat, vertcat, sparse}
 ## @end deftypefn
 
-function retval = blkdiag (varargin)
+function M = blkdiag (varargin)
 
   if (nargin < 1)
     print_usage ();
@@ -53,15 +53,15 @@ function retval = blkdiag (varargin)
   csz = cumsum ([0 0; tmp], 1);
 
   if (any (cellfun ("issparse", varargin)))
-    retval = sparse (csz(end,1), csz(end,2));
+    M = sparse (csz(end,1), csz(end,2));
   else
-    retval = zeros (csz(end,:));
+    M = zeros (csz(end,:));
   endif
 
   for p = 1:nargin
     vp = varargin{p};
     if (! isempty (vp))
-      retval((csz(p,1)+1):csz(p+1,1),(csz(p,2)+1):csz(p+1,2)) = vp;
+      M((csz(p,1)+1):csz(p+1,1),(csz(p,2)+1):csz(p+1,2)) = vp;
     endif
   endfor
 

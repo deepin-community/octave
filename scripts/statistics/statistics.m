@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} statistics (@var{x})
-## @deftypefnx {} {} statistics (@var{x}, @var{dim})
+## @deftypefn  {} {@var{stats} =} statistics (@var{x})
+## @deftypefnx {} {@var{stats} =} statistics (@var{x}, @var{dim})
 ## Return a vector with the minimum, first quartile, median, third quartile,
 ## maximum, mean, standard deviation, skewness, and kurtosis of the elements of
 ## the vector @var{x}.

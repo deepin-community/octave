@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2006-2022 The Octave Project Developers
+// Copyright (C) 2006-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -52,7 +52,7 @@
 #include "unwind-prot.h"
 #include "url-handle-manager.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (urlwrite, args, nargout,
        doc: /* -*- texinfo -*-
@@ -67,7 +67,7 @@ For example:
 
 @example
 @group
-urlwrite ("ftp://ftp.octave.org/pub/README",
+urlwrite ("http://ftp.octave.org/pub/README",
           "README.txt");
 @end group
 @end example
@@ -80,9 +80,9 @@ otherwise it is 0 in which case @var{message} contains an error message.
 If no output argument is specified and an error occurs, then the error is
 signaled through Octave's error handling mechanism.
 
-This function uses libcurl.  Curl supports, among others, the HTTP, FTP, and
-FILE protocols.  Username and password may be specified in the URL, for
-example:
+This function uses libcurl.  The curl library supports, among others, the HTTP,
+FTP, and FILE protocols.  Username and password may be specified in the URL,
+for example:
 
 @example
 @group
@@ -136,8 +136,6 @@ urlwrite ("http://www.google.com/search", "search.html",
   // create it, and the download fails.  We use unwind_protect to do
   // it so that the deletion happens no matter how we exit the function.
 
-  sys::file_stat fs (filename);
-
   std::ofstream ofile =
     sys::ofstream (filename.c_str (), std::ios::out | std::ios::binary);
 
@@ -187,7 +185,7 @@ in string @var{s}.
 For example:
 
 @example
-s = urlread ("ftp://ftp.octave.org/pub/README");
+s = urlread ("http://ftp.octave.org/pub/README");
 @end example
 
 The variable @var{success} is 1 if the download was successful,
@@ -197,9 +195,9 @@ message.
 If no output argument is specified and an error occurs, then the error is
 signaled through Octave's error handling mechanism.
 
-This function uses libcurl.  Curl supports, among others, the HTTP, FTP, and
-FILE protocols.  Username and password may be specified in the URL@.  For
-example:
+This function uses libcurl.  The curl library supports, among others, the HTTP,
+FTP, and FILE protocols.  Username and password may be specified in the URL@.
+For example:
 
 @example
 s = urlread ("http://user:password@@example.com/file.txt");
@@ -212,8 +210,8 @@ For example:
 
 @example
 @group
-s = urlread ("http://www.google.com/search", "get",
-            @{"query", "octave"@});
+s = urlread ("http://www.google.com/search",
+             "get", @{"query", "octave"@});
 @end group
 @end example
 @seealso{urlwrite}
@@ -252,17 +250,16 @@ s = urlread ("http://www.google.com/search", "get",
 
   url_xfer.http_action (param, method);
 
-  octave_value_list retval;
-
-  if (nargout > 0)
-    {
-      // Return empty string if no error occurred.
-      retval = ovl (buf.str (), url_xfer.good (),
-                    url_xfer.good () ? "" : url_xfer.lasterror ());
-    }
-
   if (nargout < 2 && ! url_xfer.good ())
     error ("urlread: %s", url_xfer.lasterror ().c_str ());
+
+  octave_value_list retval (std::max (1, std::min (nargout, 3)));
+
+  retval(0) = buf.str ();
+  if (nargout > 1)
+    retval(1) = url_xfer.good ();
+  if (nargout > 2)
+    retval(2) = url_xfer.good () ? "" : url_xfer.lasterror ();
 
   return retval;
 }
@@ -307,7 +304,7 @@ Undocumented internal function.
       if (keys(i) == "Timeout")
         {
           float timeout = object.get (keys(i)).float_value ();
-          options.Timeout = static_cast<long>(timeout * 1000);
+          options.Timeout = static_cast<long> (timeout * 1000);
         }
 
       if (keys(i) == "HeaderFields")
@@ -357,4 +354,4 @@ Undocumented internal function.
   return ovl (content.str ());
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

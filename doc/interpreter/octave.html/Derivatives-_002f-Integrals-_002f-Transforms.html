@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Derivatives / Integrals / Transforms (GNU Octave (version 7.1.0))</title>
+<title>Derivatives / Integrals / Transforms (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Derivatives / Integrals / Transforms (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Derivatives / Integrals / Transforms (GNU Octave (version 7.1.0))">
+<meta name="description" content="Derivatives / Integrals / Transforms (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Derivatives / Integrals / Transforms (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Products-of-Polynomials.html" rel="prev" title="Products of Polynomials">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,77 +32,86 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Derivatives-_002f-Integrals-_002f-Transforms">
-<div class="header">
+<div class="section-level-extent" id="Derivatives-_002f-Integrals-_002f-Transforms">
+<div class="nav-panel">
 <p>
 Next: <a href="Polynomial-Interpolation.html" accesskey="n" rel="next">Polynomial Interpolation</a>, Previous: <a href="Products-of-Polynomials.html" accesskey="p" rel="prev">Products of Polynomials</a>, Up: <a href="Polynomial-Manipulations.html" accesskey="u" rel="up">Polynomial Manipulations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Derivatives-_002f-Integrals-_002f-Transforms-1"></span><h3 class="section">28.4 Derivatives / Integrals / Transforms</h3>
+<h3 class="section" id="Derivatives-_002f-Integrals-_002f-Transforms-1"><span>28.4 Derivatives / Integrals / Transforms<a class="copiable-link" href="#Derivatives-_002f-Integrals-_002f-Transforms-1"> &para;</a></span></h3>
 
 <p>Octave comes with functions for computing the derivative and the integral
-of a polynomial.  The functions <code>polyder</code> and <code>polyint</code>
+of a polynomial.  The functions <code class="code">polyder</code> and <code class="code">polyint</code>
 both return new polynomials describing the result.  As an example we&rsquo;ll
-compute the definite integral of <em class='math'>p(x) = x^2 + 1</em> from 0 to 3.
+compute the definite integral of <em class="math">p(x) = x^2 + 1</em> from 0 to 3.
 </p>
 <div class="example">
-<pre class="example">c = [1, 0, 1];
+<div class="group"><pre class="example-preformatted">c = [1, 0, 1];
 integral = polyint (c);
 area = polyval (integral, 3) - polyval (integral, 0)
 &rArr; 12
-</pre></div>
+</pre></div></div>
 
-<span id="XREFpolyder"></span><dl class="def">
-<dt id="index-polyder"><span class="category">: </span><span><em></em> <strong>polyder</strong> <em>(<var>p</var>)</em><a href='#index-polyder' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-polyder-1"><span class="category">: </span><span><em>[<var>k</var>] =</em> <strong>polyder</strong> <em>(<var>a</var>, <var>b</var>)</em><a href='#index-polyder-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-polyder-2"><span class="category">: </span><span><em>[<var>q</var>, <var>d</var>] =</em> <strong>polyder</strong> <em>(<var>b</var>, <var>a</var>)</em><a href='#index-polyder-2' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFpolyder"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-polyder"><span class="category-def">: </span><span><code class="def-type"><var class="var">k</var> =</code> <strong class="def-name">polyder</strong> <code class="def-code-arguments">(<var class="var">p</var>)</code><a class="copiable-link" href="#index-polyder"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-polyder-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">k</var> =</code> <strong class="def-name">polyder</strong> <code class="def-code-arguments">(<var class="var">a</var>, <var class="var">b</var>)</code><a class="copiable-link" href="#index-polyder-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-polyder-2"><span class="category-def">: </span><span><code class="def-type">[<var class="var">q</var>, <var class="var">d</var>] =</code> <strong class="def-name">polyder</strong> <code class="def-code-arguments">(<var class="var">b</var>, <var class="var">a</var>)</code><a class="copiable-link" href="#index-polyder-2"> &para;</a></span></dt>
 <dd><p>Return the coefficients of the derivative of the polynomial whose
-coefficients are given by the vector <var>p</var>.
+coefficients are given by the vector <var class="var">p</var>.
 </p>
 <p>If a pair of polynomials is given, return the derivative of the product
-<em class='math'><var>a</var>*<var>b</var></em>.
+<em class="math"><var class="var">a</var>*<var class="var">b</var></em>.
 </p>
 <p>If two inputs and two outputs are given, return the derivative of the
-polynomial quotient <em class='math'><var>b</var>/<var>a</var></em>.  The quotient numerator is
-in <var>q</var> and the denominator in <var>d</var>.
+polynomial quotient <em class="math"><var class="var">b</var>/<var class="var">a</var></em>.  The quotient numerator is
+in <var class="var">q</var> and the denominator in <var class="var">d</var>.
 </p>
-<p><strong>See also:</strong> <a href="#XREFpolyint">polyint</a>, <a href="Evaluating-Polynomials.html#XREFpolyval">polyval</a>, <a href="Miscellaneous-Functions.html#XREFpolyreduce">polyreduce</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFpolyint">polyint</a>, <a class="ref" href="Evaluating-Polynomials.html#XREFpolyval">polyval</a>, <a class="ref" href="Miscellaneous-Functions.html#XREFpolyreduce">polyreduce</a>.
 </p></dd></dl>
 
 
-<span id="XREFpolyint"></span><dl class="def">
-<dt id="index-polyint"><span class="category">: </span><span><em></em> <strong>polyint</strong> <em>(<var>p</var>)</em><a href='#index-polyint' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-polyint-1"><span class="category">: </span><span><em></em> <strong>polyint</strong> <em>(<var>p</var>, <var>k</var>)</em><a href='#index-polyint-1' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFpolyint"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-polyint"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">polyint</strong> <code class="def-code-arguments">(<var class="var">p</var>)</code><a class="copiable-link" href="#index-polyint"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-polyint-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">polyint</strong> <code class="def-code-arguments">(<var class="var">p</var>, <var class="var">k</var>)</code><a class="copiable-link" href="#index-polyint-1"> &para;</a></span></dt>
 <dd><p>Return the coefficients of the integral of the polynomial whose
-coefficients are represented by the vector <var>p</var>.
+coefficients are represented by the vector <var class="var">p</var>.
 </p>
-<p>The variable <var>k</var> is the constant of integration, which by default is
+<p>The variable <var class="var">k</var> is the constant of integration, which by default is
 set to zero.
 </p>
-<p><strong>See also:</strong> <a href="#XREFpolyder">polyder</a>, <a href="Evaluating-Polynomials.html#XREFpolyval">polyval</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFpolyder">polyder</a>, <a class="ref" href="Evaluating-Polynomials.html#XREFpolyval">polyval</a>.
 </p></dd></dl>
 
 
-<span id="XREFpolyaffine"></span><dl class="def">
-<dt id="index-polyaffine"><span class="category">: </span><span><em></em> <strong>polyaffine</strong> <em>(<var>f</var>, <var>mu</var>)</em><a href='#index-polyaffine' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the coefficients of the polynomial vector <var>f</var> after an affine
+<a class="anchor" id="XREFpolyaffine"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-polyaffine"><span class="category-def">: </span><span><code class="def-type"><var class="var">g</var> =</code> <strong class="def-name">polyaffine</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">mu</var>)</code><a class="copiable-link" href="#index-polyaffine"> &para;</a></span></dt>
+<dd><p>Return the coefficients of the polynomial vector <var class="var">f</var> after an affine
 transformation.
 </p>
-<p>If <var>f</var> is the vector representing the polynomial f(x), then
-<code><var>g</var> = polyaffine (<var>f</var>, <var>mu</var>)</code> is the vector representing:
+<p>If <var class="var">f</var> is the vector representing the polynomial f(x), then
+<code class="code"><var class="var">g</var> = polyaffine (<var class="var">f</var>, <var class="var">mu</var>)</code> is the vector representing:
 </p>
 <div class="example">
-<pre class="example">g(x) = f( (x - <var>mu</var>(1)) / <var>mu</var>(2) )
+<pre class="example-preformatted">g(x) = f( (x - <var class="var">mu</var>(1)) / <var class="var">mu</var>(2) )
 </pre></div>
 
 
-<p><strong>See also:</strong> <a href="Evaluating-Polynomials.html#XREFpolyval">polyval</a>, <a href="Polynomial-Interpolation.html#XREFpolyfit">polyfit</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Evaluating-Polynomials.html#XREFpolyval">polyval</a>, <a class="ref" href="Polynomial-Interpolation.html#XREFpolyfit">polyfit</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Polynomial-Interpolation.html">Polynomial Interpolation</a>, Previous: <a href="Products-of-Polynomials.html">Products of Polynomials</a>, Up: <a href="Polynomial-Manipulations.html">Polynomial Manipulations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

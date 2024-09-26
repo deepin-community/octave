@@ -1,6 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Differential Algebraic Equations (Octave C++ Classes)</title>
@@ -20,21 +20,9 @@
 <link href="Ordinary-Differential-Equations.html" rel="prev" title="Ordinary Differential Equations">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 
@@ -42,38 +30,38 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="chapter" id="Differential-Algebraic-Equations">
-<div class="header">
+<div class="chapter-level-extent" id="Differential-Algebraic-Equations">
+<div class="nav-panel">
 <p>
 Next: <a href="Error-Handling.html" accesskey="n" rel="next">Error Handling</a>, Previous: <a href="Ordinary-Differential-Equations.html" accesskey="p" rel="prev">Ordinary Differential Equations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Differential-Algebraic-Equations-1"></span><h2 class="chapter">12 Differential Algebraic Equations</h2>
-<span id="index-DAE"></span>
+<h2 class="chapter" id="Differential-Algebraic-Equations-1"><span>12 Differential Algebraic Equations<a class="copiable-link" href="#Differential-Algebraic-Equations-1"> &para;</a></span></h2>
+<a class="index-entry-id" id="index-DAE"></a>
 
-<dl class="def">
-<dt id="index-DAE-1"><span class="category">: </span><span><em></em> <strong>DAE</strong> <em>(void)</em><a href='#index-DAE-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-DAE-2"><span class="category">: </span><span><em></em> <strong>DAE</strong> <em>(int <var>n</var>)</em><a href='#index-DAE-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-DAE-3"><span class="category">: </span><span><em></em> <strong>DAE</strong> <em>(const ColumnVector &amp;<var>x</var>, double <var>time</var>, DAEFunc &amp;<var>f</var>)</em><a href='#index-DAE-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-DAE-4"><span class="category">: </span><span><em></em> <strong>DAE</strong> <em>(const ColumnVector &amp;<var>x</var>, ColumnVector &amp;<var>xdot</var>, double <var>time</var>, DAEFunc &amp;<var>f</var>)</em><a href='#index-DAE-4' class='copiable-anchor'> &para;</a></span></dt>
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-DAE-1"><span class="category-def">: </span><span><strong class="def-name">DAE</strong> <code class="def-code-arguments">(void)</code><a class="copiable-link" href="#index-DAE-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-DAE-2"><span class="category-def">: </span><span><strong class="def-name">DAE</strong> <code class="def-code-arguments">(int <var class="var">n</var>)</code><a class="copiable-link" href="#index-DAE-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-DAE-3"><span class="category-def">: </span><span><strong class="def-name">DAE</strong> <code class="def-code-arguments">(const ColumnVector &amp;<var class="var">x</var>, double <var class="var">time</var>, DAEFunc &amp;<var class="var">f</var>)</code><a class="copiable-link" href="#index-DAE-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-DAE-4"><span class="category-def">: </span><span><strong class="def-name">DAE</strong> <code class="def-code-arguments">(const ColumnVector &amp;<var class="var">x</var>, ColumnVector &amp;<var class="var">xdot</var>, double <var class="var">time</var>, DAEFunc &amp;<var class="var">f</var>)</code><a class="copiable-link" href="#index-DAE-4"> &para;</a></span></dt>
 </dl>
 
-<dl class="def">
-<dt id="index-deriv"><span class="category">: </span><span><em>ColumnVector</em> <strong>deriv</strong> <em>(void)</em><a href='#index-deriv' class='copiable-anchor'> &para;</a></span></dt>
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-deriv"><span class="category-def">: </span><span><code class="def-type">ColumnVector</code> <strong class="def-name">deriv</strong> <code class="def-code-arguments">(void)</code><a class="copiable-link" href="#index-deriv"> &para;</a></span></dt>
 </dl>
 
-<dl class="def">
-<dt id="index-initialize-1"><span class="category">: </span><span><em>virtual void</em> <strong>initialize</strong> <em>(const ColumnVector &amp;<var>x</var>, double <var>t</var>)</em><a href='#index-initialize-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-initialize-2"><span class="category">: </span><span><em>virtual void</em> <strong>initialize</strong> <em>(const ColumnVector &amp;<var>x</var>, ColumnVector &amp;<var>xdot</var>, double <var>t</var>)</em><a href='#index-initialize-2' class='copiable-anchor'> &para;</a></span></dt>
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-initialize-1"><span class="category-def">: </span><span><code class="def-type">virtual void</code> <strong class="def-name">initialize</strong> <code class="def-code-arguments">(const ColumnVector &amp;<var class="var">x</var>, double <var class="var">t</var>)</code><a class="copiable-link" href="#index-initialize-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-initialize-2"><span class="category-def">: </span><span><code class="def-type">virtual void</code> <strong class="def-name">initialize</strong> <code class="def-code-arguments">(const ColumnVector &amp;<var class="var">x</var>, ColumnVector &amp;<var class="var">xdot</var>, double <var class="var">t</var>)</code><a class="copiable-link" href="#index-initialize-2"> &para;</a></span></dt>
 </dl>
 
-<dl class="def">
-<dt id="index-integrate-8"><span class="category">: </span><span><em>ColumnVector</em> <strong>integrate</strong> <em>(double <var>t</var>)</em><a href='#index-integrate-8' class='copiable-anchor'> &para;</a></span></dt>
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-integrate-8"><span class="category-def">: </span><span><code class="def-type">ColumnVector</code> <strong class="def-name">integrate</strong> <code class="def-code-arguments">(double <var class="var">t</var>)</code><a class="copiable-link" href="#index-integrate-8"> &para;</a></span></dt>
 </dl>
 
-<dl class="def">
-<dt id="index-integrate-9"><span class="category">: </span><span><em>Matrix</em> <strong>integrate</strong> <em>(const ColumnVector &amp;<var>tout</var>, Matrix &amp;<var>xdot_out</var>)</em><a href='#index-integrate-9' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-integrate-10"><span class="category">: </span><span><em>Matrix</em> <strong>integrate</strong> <em>(const ColumnVector &amp;<var>tout</var>, Matrix &amp;<var>xdot_out</var>, const ColumnVector &amp;<var>tcrit</var>)</em><a href='#index-integrate-10' class='copiable-anchor'> &para;</a></span></dt>
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-integrate-9"><span class="category-def">: </span><span><code class="def-type">Matrix</code> <strong class="def-name">integrate</strong> <code class="def-code-arguments">(const ColumnVector &amp;<var class="var">tout</var>, Matrix &amp;<var class="var">xdot_out</var>)</code><a class="copiable-link" href="#index-integrate-9"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-integrate-10"><span class="category-def">: </span><span><code class="def-type">Matrix</code> <strong class="def-name">integrate</strong> <code class="def-code-arguments">(const ColumnVector &amp;<var class="var">tout</var>, Matrix &amp;<var class="var">xdot_out</var>, const ColumnVector &amp;<var class="var">tcrit</var>)</code><a class="copiable-link" href="#index-integrate-10"> &para;</a></span></dt>
 </dl>
 
 </div>

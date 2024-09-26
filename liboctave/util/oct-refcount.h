@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,62 +30,61 @@
 
 #include <atomic>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// Encapsulates a reference counter.
+
+template <typename T>
+class refcount
 {
-  // Encapsulates a reference counter.
+public:
 
-  template <typename T>
-  class refcount
+  typedef T count_type;
+
+  refcount (count_type initial_count)
+    : m_count (initial_count)
+  { }
+
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (refcount)
+
+  ~refcount () = default;
+
+  // Increment/Decrement.  int is postfix.
+  count_type operator++ ()
   {
-  public:
+    return ++m_count;
+  }
 
-    typedef T count_type;
+  count_type operator++ (int)
+  {
+    return m_count++;
+  }
 
-    refcount (count_type initial_count)
-      : m_count (initial_count)
-    { }
+  count_type operator-- ()
+  {
+    return --m_count;
+  }
 
-    refcount (const refcount&) = delete;
+  count_type operator-- (int)
+  {
+    return m_count--;
+  }
 
-    refcount& operator = (const refcount&) = delete;
+  count_type value () const
+  {
+    return m_count.load ();
+  }
 
-    ~refcount (void) = default;
+  operator count_type () const
+  {
+    return value ();
+  }
 
-    // Increment/Decrement.  int is postfix.
-    count_type operator++ (void)
-    {
-      return ++m_count;
-    }
+private:
 
-    count_type operator++ (int)
-    {
-      return m_count++;
-    }
+  std::atomic<T> m_count;
+};
 
-    count_type operator-- (void)
-    {
-      return --m_count;
-    }
-
-    count_type operator-- (int)
-    {
-      return m_count--;
-    }
-
-    count_type value (void) const
-    {
-      return m_count.load ();
-    }
-
-    operator count_type (void) const
-    {
-      return value ();
-    }
-
-  private:
-
-    std::atomic<T> m_count;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

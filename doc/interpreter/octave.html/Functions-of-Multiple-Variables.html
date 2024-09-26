@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Functions of Multiple Variables (GNU Octave (version 7.1.0))</title>
+<title>Functions of Multiple Variables (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Functions of Multiple Variables (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Functions of Multiple Variables (GNU Octave (version 7.1.0))">
+<meta name="description" content="Functions of Multiple Variables (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Functions of Multiple Variables (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,10 @@
 <link href="Orthogonal-Collocation.html" rel="prev" title="Orthogonal Collocation">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,34 +31,34 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Functions-of-Multiple-Variables">
-<div class="header">
+<div class="section-level-extent" id="Functions-of-Multiple-Variables">
+<div class="nav-panel">
 <p>
 Previous: <a href="Orthogonal-Collocation.html" accesskey="p" rel="prev">Orthogonal Collocation</a>, Up: <a href="Numerical-Integration.html" accesskey="u" rel="up">Numerical Integration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Functions-of-Multiple-Variables-1"></span><h3 class="section">23.3 Functions of Multiple Variables</h3>
+<h3 class="section" id="Functions-of-Multiple-Variables-1"><span>23.3 Functions of Multiple Variables<a class="copiable-link" href="#Functions-of-Multiple-Variables-1"> &para;</a></span></h3>
 
 <p>Octave includes several functions for computing the integral of functions of
 multiple variables.  This procedure can generally be performed by creating a
-function that integrates <em class='math'>f</em> with respect to <em class='math'>x</em>, and then integrates
-that function with respect to <em class='math'>y</em>.  This procedure can be performed
+function that integrates <em class="math">f</em> with respect to <em class="math">x</em>, and then integrates
+that function with respect to <em class="math">y</em>.  This procedure can be performed
 manually using the following example which integrates the function:
 </p>
 
 <div class="example">
-<pre class="example">f(x, y) = sin(pi*x*y) * sqrt(x*y)
+<pre class="example-preformatted">f(x, y) = sin(pi*x*y) * sqrt(x*y)
 </pre></div>
 
-<p>for <em class='math'>x</em> and <em class='math'>y</em> between 0 and 1.
+<p>for <em class="math">x</em> and <em class="math">y</em> between 0 and 1.
 </p>
-<p>Using <code>quadgk</code> in the example below, a double integration can be
+<p>Using <code class="code">quadgk</code> in the example below, a double integration can be
 performed.  (Note that any of the 1-D quadrature functions can be used in this
-fashion except for <code>quad</code> since it is written in Fortran and cannot be
+fashion except for <code class="code">quad</code> since it is written in Fortran and cannot be
 called recursively.)
 </p>
 <div class="example">
-<pre class="example">function q = g(y)
+<div class="group"><pre class="example-preformatted">function q = g(y)
   q = ones (size (y));
   for i = 1:length (y)
     f = @(x) sin (pi*x.*y(i)) .* sqrt (x.*y(i));
@@ -79,139 +68,159 @@ endfunction
 
 I = quadgk (&quot;g&quot;, 0, 1)
       &rArr; 0.30022
-</pre></div>
+</pre></div></div>
 
-<p>The algorithm above is implemented in the function <code>dblquad</code> for integrals
+<p>The algorithm above is implemented in the function <code class="code">dblquad</code> for integrals
 over two variables.  The 3-D equivalent of this process is implemented in
-<code>triplequad</code> for integrals over three variables.  As an example, the
-result above can be replicated with a call to <code>dblquad</code> as shown below.
+<code class="code">triplequad</code> for integrals over three variables.  As an example, the
+result above can be replicated with a call to <code class="code">dblquad</code> as shown below.
 </p>
 <div class="example">
-<pre class="example">I = dblquad (@(x, y) sin (pi*x.*y) .* sqrt (x.*y), 0, 1, 0, 1)
+<div class="group"><pre class="example-preformatted">I = dblquad (@(x, y) sin (pi*x.*y) .* sqrt (x.*y), 0, 1, 0, 1)
       &rArr; 0.30022
-</pre></div>
+</pre></div></div>
 
-<span id="XREFdblquad"></span><dl class="def">
-<dt id="index-dblquad"><span class="category">: </span><span><em></em> <strong>dblquad</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>)</em><a href='#index-dblquad' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-dblquad-1"><span class="category">: </span><span><em></em> <strong>dblquad</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>tol</var>)</em><a href='#index-dblquad-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-dblquad-2"><span class="category">: </span><span><em></em> <strong>dblquad</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>tol</var>, <var>quadf</var>)</em><a href='#index-dblquad-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-dblquad-3"><span class="category">: </span><span><em></em> <strong>dblquad</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>tol</var>, <var>quadf</var>, &hellip;)</em><a href='#index-dblquad-3' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Numerically evaluate the double integral of <var>f</var>.
+<a class="anchor" id="XREFdblquad"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-dblquad"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">dblquad</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>)</code><a class="copiable-link" href="#index-dblquad"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-dblquad-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">dblquad</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">tol</var>)</code><a class="copiable-link" href="#index-dblquad-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-dblquad-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">dblquad</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">tol</var>, <var class="var">quadf</var>)</code><a class="copiable-link" href="#index-dblquad-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-dblquad-3"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">dblquad</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">tol</var>, <var class="var">quadf</var>, &hellip;)</code><a class="copiable-link" href="#index-dblquad-3"> &para;</a></span></dt>
+<dd><p>Numerically evaluate the double integral of <var class="var">f</var>.
 </p>
-<p><var>f</var> is a function handle, inline function, or string containing the name
-of the function to evaluate.  The function <var>f</var> must have the form
-<em class='math'>z = f(x,y)</em> where <var>x</var> is a vector and <var>y</var> is a scalar.  It
-should return a vector of the same length and orientation as <var>x</var>.
+<p><var class="var">f</var> is a function handle, inline function, or string containing the name
+of the function to evaluate.  The function <var class="var">f</var> must have the form
+<em class="math">z = f(x,y)</em> where <var class="var">x</var> is a vector and <var class="var">y</var> is a scalar.  It
+should return a vector of the same length and orientation as <var class="var">x</var>.
 </p>
-<p><var>xa</var>, <var>ya</var> and <var>xb</var>, <var>yb</var> are the lower and upper limits of
+<p><var class="var">xa</var>, <var class="var">ya</var> and <var class="var">xb</var>, <var class="var">yb</var> are the lower and upper limits of
 integration for x and y respectively.  The underlying integrator determines
 whether infinite bounds are accepted.
 </p>
-<p>The optional argument <var>tol</var> defines the absolute tolerance used to
+<p>The optional argument <var class="var">tol</var> defines the absolute tolerance used to
 integrate each sub-integral.  The default value is 1e-6.
 </p>
-<p>The optional argument <var>quadf</var> specifies which underlying integrator
-function to use.  Any choice but <code>quad</code> is available and the default
-is <code>quadcc</code>.
+<p>The optional argument <var class="var">quadf</var> specifies which underlying integrator
+function to use.  Any choice but <code class="code">quad</code> is available and the default
+is <code class="code">quadcc</code>.
 </p>
-<p>Additional arguments, are passed directly to <var>f</var>.  To use the default
-value for <var>tol</var> or <var>quadf</var> one may pass <code>':'</code> or an empty
+<p>Additional arguments, are passed directly to <var class="var">f</var>.  To use the default
+value for <var class="var">tol</var> or <var class="var">quadf</var> one may pass <code class="code">':'</code> or an empty
 matrix ([]).
 </p>
-<p><strong>See also:</strong> <a href="#XREFintegral2">integral2</a>, <a href="#XREFintegral3">integral3</a>, <a href="#XREFtriplequad">triplequad</a>, <a href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFintegral2">integral2</a>, <a class="ref" href="#XREFintegral3">integral3</a>, <a class="ref" href="#XREFtriplequad">triplequad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>.
 </p></dd></dl>
 
 
-<span id="XREFtriplequad"></span><dl class="def">
-<dt id="index-triplequad"><span class="category">: </span><span><em></em> <strong>triplequad</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>za</var>, <var>zb</var>)</em><a href='#index-triplequad' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-triplequad-1"><span class="category">: </span><span><em></em> <strong>triplequad</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>za</var>, <var>zb</var>, <var>tol</var>)</em><a href='#index-triplequad-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-triplequad-2"><span class="category">: </span><span><em></em> <strong>triplequad</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>za</var>, <var>zb</var>, <var>tol</var>, <var>quadf</var>)</em><a href='#index-triplequad-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-triplequad-3"><span class="category">: </span><span><em></em> <strong>triplequad</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>za</var>, <var>zb</var>, <var>tol</var>, <var>quadf</var>, &hellip;)</em><a href='#index-triplequad-3' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Numerically evaluate the triple integral of <var>f</var>.
+<a class="anchor" id="XREFtriplequad"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-triplequad"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">triplequad</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">za</var>, <var class="var">zb</var>)</code><a class="copiable-link" href="#index-triplequad"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-triplequad-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">triplequad</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">za</var>, <var class="var">zb</var>, <var class="var">tol</var>)</code><a class="copiable-link" href="#index-triplequad-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-triplequad-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">triplequad</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">za</var>, <var class="var">zb</var>, <var class="var">tol</var>, <var class="var">quadf</var>)</code><a class="copiable-link" href="#index-triplequad-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-triplequad-3"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">triplequad</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">za</var>, <var class="var">zb</var>, <var class="var">tol</var>, <var class="var">quadf</var>, &hellip;)</code><a class="copiable-link" href="#index-triplequad-3"> &para;</a></span></dt>
+<dd><p>Numerically evaluate the triple integral of <var class="var">f</var>.
 </p>
-<p><var>f</var> is a function handle, inline function, or string containing the name
-of the function to evaluate.  The function <var>f</var> must have the form
-<em class='math'>w = f(x,y,z)</em> where either <var>x</var> or <var>y</var> is a vector and the
+<p><var class="var">f</var> is a function handle, inline function, or string containing the name
+of the function to evaluate.  The function <var class="var">f</var> must have the form
+<em class="math">w = f(x,y,z)</em> where either <var class="var">x</var> or <var class="var">y</var> is a vector and the
 remaining inputs are scalars.  It should return a vector of the same length
-and orientation as <var>x</var> or <var>y</var>.
+and orientation as <var class="var">x</var> or <var class="var">y</var>.
 </p>
-<p><var>xa</var>, <var>ya</var>, <var>za</var> and <var>xb</var>, <var>yb</var>, <var>zb</var> are the lower
+<p><var class="var">xa</var>, <var class="var">ya</var>, <var class="var">za</var> and <var class="var">xb</var>, <var class="var">yb</var>, <var class="var">zb</var> are the lower
 and upper limits of integration for x, y, and z respectively.  The
 underlying integrator determines whether infinite bounds are accepted.
 </p>
-<p>The optional argument <var>tol</var> defines the absolute tolerance used to
+<p>The optional argument <var class="var">tol</var> defines the absolute tolerance used to
 integrate each sub-integral.  The default value is 1e-6.
 </p>
-<p>The optional argument <var>quadf</var> specifies which underlying integrator
-function to use.  Any choice but <code>quad</code> is available and the default
-is <code>quadcc</code>.
+<p>The optional argument <var class="var">quadf</var> specifies which underlying integrator
+function to use.  Any choice but <code class="code">quad</code> is available and the default
+is <code class="code">quadcc</code>.
 </p>
-<p>Additional arguments, are passed directly to <var>f</var>.  To use the default
-value for <var>tol</var> or <var>quadf</var> one may pass <code>':'</code> or an empty
+<p>Additional arguments, are passed directly to <var class="var">f</var>.  To use the default
+value for <var class="var">tol</var> or <var class="var">quadf</var> one may pass <code class="code">':'</code> or an empty
 matrix ([]).
 </p>
-<p><strong>See also:</strong> <a href="#XREFintegral3">integral3</a>, <a href="#XREFintegral2">integral2</a>, <a href="#XREFdblquad">dblquad</a>, <a href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFintegral3">integral3</a>, <a class="ref" href="#XREFintegral2">integral2</a>, <a class="ref" href="#XREFdblquad">dblquad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>.
 </p></dd></dl>
 
 
 <p>The recursive algorithm for quadrature presented above is referred to as
-<code>&quot;iterated&quot;</code>.  A separate 2-D integration method is implemented in the
-function <code>quad2d</code>.  This function performs a <code>&quot;tiled&quot;</code> integration
+<code class="code">&quot;iterated&quot;</code>.  A separate 2-D integration method is implemented in the
+function <code class="code">quad2d</code>.  This function performs a <code class="code">&quot;tiled&quot;</code> integration
 by subdividing the integration domain into rectangular regions and performing
 separate integrations over those domains.  The domains are further subdivided
 in areas requiring refinement to reach the desired numerical accuracy.  For
 certain functions this method can be faster than the 2-D iteration used in the
 other functions above.
 </p>
-<span id="XREFquad2d"></span><dl class="def">
-<dt id="index-quad2d"><span class="category">: </span><span><em><var>q</var> =</em> <strong>quad2d</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>)</em><a href='#index-quad2d' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-quad2d-1"><span class="category">: </span><span><em><var>q</var> =</em> <strong>quad2d</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>prop</var>, <var>val</var>, &hellip;)</em><a href='#index-quad2d-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-quad2d-2"><span class="category">: </span><span><em>[<var>q</var>, <var>err</var>, <var>iter</var>] =</em> <strong>quad2d</strong> <em>(&hellip;)</em><a href='#index-quad2d-2' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFquad2d"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-quad2d"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">quad2d</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>)</code><a class="copiable-link" href="#index-quad2d"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-quad2d-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">quad2d</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">prop</var>, <var class="var">val</var>, &hellip;)</code><a class="copiable-link" href="#index-quad2d-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-quad2d-2"><span class="category-def">: </span><span><code class="def-type">[<var class="var">q</var>, <var class="var">err</var>, <var class="var">iter</var>] =</code> <strong class="def-name">quad2d</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-quad2d-2"> &para;</a></span></dt>
 <dd>
-<p>Numerically evaluate the two-dimensional integral of <var>f</var> using adaptive
-quadrature over the two-dimensional domain defined by <var>xa</var>, <var>xb</var>,
-<var>ya</var>, <var>yb</var> using tiled integration.  Additionally, <var>ya</var> and
-<var>yb</var> may be scalar functions of <var>x</var>, allowing for the integration
+<p>Numerically evaluate the two-dimensional integral of <var class="var">f</var> using adaptive
+quadrature over the two-dimensional domain defined by <var class="var">xa</var>, <var class="var">xb</var>,
+<var class="var">ya</var>, <var class="var">yb</var> using tiled integration.  Additionally, <var class="var">ya</var> and
+<var class="var">yb</var> may be scalar functions of <var class="var">x</var>, allowing for the integration
 over non-rectangular domains.
 </p>
-<p><var>f</var> is a function handle, inline function, or string containing the name
-of the function to evaluate.  The function <var>f</var> must be of the form
-<em class='math'>z = f(x,y)</em> where <var>x</var> is a vector and <var>y</var> is a scalar.  It
-should return a vector of the same length and orientation as <var>x</var>.
+<p><var class="var">f</var> is a function handle, inline function, or string containing the
+name of the function to evaluate.  The function <var class="var">f</var> must be of the form
+<em class="math">z = f(x,y)</em>, and all operations must be vectorized such that <var class="var">x</var>
+and <var class="var">y</var> accept array inputs and return array outputs of the same size.
+(It can be assumed that <var class="var">x</var> and <var class="var">y</var> will either be same-size arrays
+or one will be a scalar.)  The underlying integrators will input arrays of
+integration points into <var class="var">f</var> and/or use internal vector expansions to
+speed computation that can produce unpredictable results if <var class="var">f</var> is not
+restricted to elementwise operations.  For integrands where this is
+unavoidable, the <code class="code">(&quot;Vectorized&quot;) option described below may produce</code>
+more reliable results.
 </p>
 <p>Additional optional parameters can be specified using
-<code>&quot;<var>property</var>&quot;, <var>value</var></code> pairs.  Valid properties are:
+<code class="code">&quot;<var class="var">property</var>&quot;, <var class="var">value</var></code> pairs.  Valid properties are:
 </p>
-<dl compact="compact">
-<dt><span><code>AbsTol</code></span></dt>
+<dl class="table">
+<dt><code class="code">AbsTol</code></dt>
 <dd><p>Define the absolute error tolerance for the quadrature.  The default
 value is 1e-10 (1e-5 for single).
 </p>
 </dd>
-<dt><span><code>RelTol</code></span></dt>
+<dt><code class="code">RelTol</code></dt>
 <dd><p>Define the relative error tolerance for the quadrature.  The default
 value is 1e-6 (1e-4 for single).
 </p>
 </dd>
-<dt><span><code>MaxFunEvals</code></span></dt>
-<dd><p>The maximum number of function calls to the vectorized function <var>f</var>.
+<dt><code class="code">MaxFunEvals</code></dt>
+<dd><p>The maximum number of function calls to the vectorized function <var class="var">f</var>.
 The default value is 5000.
 </p>
 </dd>
-<dt><span><code>Singular</code></span></dt>
+<dt><code class="code">Singular</code></dt>
 <dd><p>Enable/disable transforms to weaken singularities on the edge of the
-integration domain.  The default value is <var>true</var>.
+integration domain.  The default value is <var class="var">true</var>.
 </p>
 </dd>
-<dt><span><code>Vectorized</code></span></dt>
-<dd><p>Option to disable vectorized integration, forcing Octave to use only scalar
-inputs when calling the integrand.  The default value is <var>false</var>.
+<dt><code class="code">Vectorized</code></dt>
+<dd><p>Enable or disable vectorized integration.  A value of <code class="code">false</code> forces
+Octave to use only scalar inputs when calling the integrand, which enables
+integrands <em class="math">f(x,y)</em> that have not been vectorized or only accept
+scalar values of <var class="var">x</var> or <var class="var">y</var>.  The default value is <code class="code">true</code>.
+Note that this is achieved by wrapping <em class="math">f(x,y)</em> with the function
+<code class="code">arrayfun</code>, which may significantly decrease computation speed.
 </p>
 </dd>
-<dt><span><code>FailurePlot</code></span></dt>
-<dd><p>If <code>quad2d</code> fails to converge to the desired error tolerance before
+<dt><code class="code">FailurePlot</code></dt>
+<dd><p>If <code class="code">quad2d</code> fails to converge to the desired error tolerance before
 MaxFunEvals is reached, a plot of the areas that still need refinement
-is created.  The default value is <var>false</var>.
+is created.  The default value is <var class="var">false</var>.
 </p></dd>
 </dl>
 
@@ -219,108 +228,142 @@ is created.  The default value is <var>false</var>.
 following is satisfied:
 </p>
 <div class="example">
-<pre class="example">        <var>error</var> &lt;= max (<var>AbsTol</var>, <var>RelTol</var>*|<var>q</var>|)
-</pre></div>
+<div class="group"><pre class="example-preformatted">        <var class="var">error</var> &lt;= max (<var class="var">AbsTol</var>, <var class="var">RelTol</var>*|<var class="var">q</var>|)
+</pre></div></div>
 
 
-<p>The optional output <var>err</var> is an approximate bound on the error in the
-integral <code>abs (<var>q</var> - <var>I</var>)</code>, where <var>I</var> is the exact value
-of the integral.  The optional output <var>iter</var> is the number of vectorized
-function calls to the function <var>f</var> that were used.
+<p>The optional output <var class="var">err</var> is an approximate bound on the error in the
+integral <code class="code">abs (<var class="var">q</var> - <var class="var">I</var>)</code>, where <var class="var">I</var> is the exact value
+of the integral.  The optional output <var class="var">iter</var> is the number of vectorized
+function calls to the function <var class="var">f</var> that were used.
 </p>
 <p>Example 1 : integrate a rectangular region in x-y plane
 </p>
 <div class="example">
-<pre class="example"><var>f</var> = @(<var>x</var>,<var>y</var>) 2*ones (size (<var>x</var>));
-<var>q</var> = quad2d (<var>f</var>, 0, 1, 0, 1)
-  &rArr; <var>q</var> =  2
-</pre></div>
+<div class="group"><pre class="example-preformatted"><var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) 2*ones (size (<var class="var">x</var>));
+<var class="var">q</var> = quad2d (<var class="var">f</var>, 0, 1, 0, 1)
+  &rArr; <var class="var">q</var> =  2
+</pre></div></div>
 
 <p>The result is a volume, which for this constant-value integrand, is just
-<code><var>Length</var> * <var>Width</var> * <var>Height</var></code>.
+<code class="code"><var class="var">Length</var> * <var class="var">Width</var> * <var class="var">Height</var></code>.
 </p>
 <p>Example 2 : integrate a triangular region in x-y plane
 </p>
 <div class="example">
-<pre class="example"><var>f</var> = @(<var>x</var>,<var>y</var>) 2*ones (size (<var>x</var>));
-<var>ymax</var> = @(<var>x</var>) 1 - <var>x</var>;
-<var>q</var> = quad2d (<var>f</var>, 0, 1, 0, <var>ymax</var>)
-  &rArr; <var>q</var> =  1
-</pre></div>
+<div class="group"><pre class="example-preformatted"><var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) 2*ones (size (<var class="var">x</var>));
+<var class="var">ymax</var> = @(<var class="var">x</var>) 1 - <var class="var">x</var>;
+<var class="var">q</var> = quad2d (<var class="var">f</var>, 0, 1, 0, <var class="var">ymax</var>)
+  &rArr; <var class="var">q</var> =  1
+</pre></div></div>
 
-<p>The result is a volume, which for this constant-value integrand, is the
-Triangle Area x Height or
-<code>1/2 * <var>Base</var> * <var>Width</var> * <var>Height</var></code>.
+<p>The result is a volume, which for this constant-value integrand
+<em class="math"><var class="var">f</var> = 2</em><!-- /@w -->, is the Triangle Area x Height or
+<code class="code">1/2&nbsp;*&nbsp;<var class="var">Base</var>&nbsp;*&nbsp;<var class="var">Width</var>&nbsp;*&nbsp;<var class="var">Height</var></code><!-- /@w -->.
+</p>
+<p>Example 3 : integrate a non-vectorized function over a square region
+</p>
+<div class="example">
+<div class="group"><pre class="example-preformatted"><var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) sinc (<var class="var">x</var>) * sinc (<var class="var">y</var>));
+<var class="var">q</var> = quad2d (<var class="var">f</var>, -1, 1, -1, 1)
+  &rArr; <var class="var">q</var> =  12.328  (incorrect)
+<var class="var">q</var> = quad2d (<var class="var">f</var>, -1, 1, -1, 1, &quot;Vectorized&quot;, false)
+  &rArr; <var class="var">q</var> =  1.390 (correct)
+<var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) sinc (<var class="var">x</var>) .* sinc (<var class="var">y</var>);
+<var class="var">q</var> = quad2d (<var class="var">f</var>, -1, 1, -1, 1)
+  &rArr; <var class="var">q</var> =  1.390  (correct)
+</pre></div></div>
+
+<p>The first result is incorrect as the non-elementwise operator between the
+sinc functions in <var class="var">f</var> create unintended matrix multiplications between
+the internal integration arrays used by <code class="code">quad2d</code>.  In the second
+result, setting <code class="code">&quot;Vectorized&quot;</code> to false forces <code class="code">quad2d</code> to
+perform scalar internal operations to compute the integral, resulting in
+the correct numerical result at the cost of about a 20x increase in
+computation time. In the third result, vectorizing the integrand <var class="var">f</var>
+using the elementwise multiplication operator gets the correct result
+without increasing computation time.
 </p>
 <p>Programming Notes: If there are singularities within the integration region
 it is best to split the integral and place the singularities on the
 boundary.
 </p>
-<p>Known <small>MATLAB</small> incompatibility: If tolerances are left unspecified, and
-any integration limits are of type <code>single</code>, then Octave&rsquo;s integral
+<p>Known <small class="sc">MATLAB</small> incompatibility: If tolerances are left unspecified, and
+any integration limits are of type <code class="code">single</code>, then Octave&rsquo;s integral
 functions automatically reduce the default absolute and relative error
 tolerances as specified above.  If tighter tolerances are desired they
-must be specified.  <small>MATLAB</small> leaves the tighter tolerances appropriate
-for <code>double</code> inputs in place regardless of the class of the
+must be specified.  <small class="sc">MATLAB</small> leaves the tighter tolerances appropriate
+for <code class="code">double</code> inputs in place regardless of the class of the
 integration limits.
 </p>
 <p>Reference: L.F. Shampine,
-<cite><small>MATLAB</small> program for quadrature in 2D</cite>, Applied Mathematics and
+<cite class="cite"><small class="sc">MATLAB</small> program for quadrature in 2D</cite>, Applied Mathematics and
 Computation, pp. 266&ndash;274, Vol 1, 2008.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFintegral2">integral2</a>, <a href="#XREFdblquad">dblquad</a>, <a href="Functions-of-One-Variable.html#XREFintegral">integral</a>, <a href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>, <a href="#XREFintegral3">integral3</a>, <a href="#XREFtriplequad">triplequad</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFintegral2">integral2</a>, <a class="ref" href="#XREFdblquad">dblquad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFintegral">integral</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>, <a class="ref" href="#XREFintegral3">integral3</a>, <a class="ref" href="#XREFtriplequad">triplequad</a>.
 </p></dd></dl>
 
 
-<p>Finally, the functions <code>integral2</code> and <code>integral3</code> are provided
+<p>Finally, the functions <code class="code">integral2</code> and <code class="code">integral3</code> are provided
 as general 2-D and 3-D integration functions.  They will auto-select between
-iterated and tiled integration methods and, unlike <code>dblquad</code> and
-<code>triplequad</code>, will work with non-rectangular integration domains.
+iterated and tiled integration methods and, unlike <code class="code">dblquad</code> and
+<code class="code">triplequad</code>, will work with non-rectangular integration domains.
 </p>
-<span id="XREFintegral2"></span><dl class="def">
-<dt id="index-integral2"><span class="category">: </span><span><em><var>q</var> =</em> <strong>integral2</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>)</em><a href='#index-integral2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-integral2-1"><span class="category">: </span><span><em><var>q</var> =</em> <strong>integral2</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>prop</var>, <var>val</var>, &hellip;)</em><a href='#index-integral2-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-integral2-2"><span class="category">: </span><span><em>[<var>q</var>, <var>err</var>] =</em> <strong>integral2</strong> <em>(&hellip;)</em><a href='#index-integral2-2' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFintegral2"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-integral2"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">integral2</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>)</code><a class="copiable-link" href="#index-integral2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-integral2-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">integral2</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">prop</var>, <var class="var">val</var>, &hellip;)</code><a class="copiable-link" href="#index-integral2-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-integral2-2"><span class="category-def">: </span><span><code class="def-type">[<var class="var">q</var>, <var class="var">err</var>] =</code> <strong class="def-name">integral2</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-integral2-2"> &para;</a></span></dt>
 <dd>
-<p>Numerically evaluate the two-dimensional integral of <var>f</var> using adaptive
-quadrature over the two-dimensional domain defined by <var>xa</var>, <var>xb</var>,
-<var>ya</var>, <var>yb</var> (scalars may be finite or infinite).  Additionally,
-<var>ya</var> and <var>yb</var> may be scalar functions of <var>x</var>, allowing for
+<p>Numerically evaluate the two-dimensional integral of <var class="var">f</var> using adaptive
+quadrature over the two-dimensional domain defined by <var class="var">xa</var>, <var class="var">xb</var>,
+<var class="var">ya</var>, <var class="var">yb</var> (scalars may be finite or infinite).  Additionally,
+<var class="var">ya</var> and <var class="var">yb</var> may be scalar functions of <var class="var">x</var>, allowing for
 integration over non-rectangular domains.
 </p>
-<p><var>f</var> is a function handle, inline function, or string containing the name
-of the function to evaluate.  The function <var>f</var> must be of the form
-<em class='math'>z = f(x,y)</em> where <var>x</var> is a vector and <var>y</var> is a scalar.  It
-should return a vector of the same length and orientation as <var>x</var>.
+<p><var class="var">f</var> is a function handle, inline function, or string containing the
+name of the function to evaluate.  The function <var class="var">f</var> must be of the form
+<em class="math">z = f(x,y)</em>, and all operations must be vectorized such that <var class="var">x</var>
+and <var class="var">y</var> accept array inputs and return array outputs of the same size.
+(It can be assumed that <var class="var">x</var> and <var class="var">y</var> will either be same-size arrays
+or one will be a scalar.)  The underlying integrators will input arrays of
+integration points into <var class="var">f</var> and/or use internal vector expansions to
+speed computation that can produce unpredictable results if <var class="var">f</var> is not
+restricted to elementwise operations.  For integrands where this is
+unavoidable, the <code class="code">(&quot;Vectorized&quot;) option described below may produce</code>
+more reliable results.
 </p>
 <p>Additional optional parameters can be specified using
-<code>&quot;<var>property</var>&quot;, <var>value</var></code> pairs.  Valid properties are:
+<code class="code">&quot;<var class="var">property</var>&quot;, <var class="var">value</var></code> pairs.  Valid properties are:
 </p>
-<dl compact="compact">
-<dt><span><code>AbsTol</code></span></dt>
+<dl class="table">
+<dt><code class="code">AbsTol</code></dt>
 <dd><p>Define the absolute error tolerance for the quadrature.  The default
 value is 1e-10 (1e-5 for single).
 </p>
 </dd>
-<dt><span><code>RelTol</code></span></dt>
+<dt><code class="code">RelTol</code></dt>
 <dd><p>Define the relative error tolerance for the quadrature.  The default
 value is 1e-6 (1e-4 for single).
 </p>
 </dd>
-<dt><span><code>Method</code></span></dt>
+<dt><code class="code">Method</code></dt>
 <dd><p>Specify the two-dimensional integration method to be used, with valid
-options being <code>&quot;auto&quot;</code> (default), <code>&quot;tiled&quot;</code>, or
-<code>&quot;iterated&quot;</code>.  When using <code>&quot;auto&quot;</code>, Octave will choose the
-<code>&quot;tiled&quot;</code> method unless any of the integration limits are infinite.
+options being <code class="code">&quot;auto&quot;</code> (default), <code class="code">&quot;tiled&quot;</code>, or
+<code class="code">&quot;iterated&quot;</code>.  When using <code class="code">&quot;auto&quot;</code>, Octave will choose the
+<code class="code">&quot;tiled&quot;</code> method unless any of the integration limits are infinite.
 </p>
 </dd>
-<dt><span><code>Vectorized</code></span></dt>
-<dd><p>Enable or disable vectorized integration.  A value of <code>false</code> forces
+<dt><code class="code">Vectorized</code></dt>
+<dd><p>Enable or disable vectorized integration.  A value of <code class="code">false</code> forces
 Octave to use only scalar inputs when calling the integrand, which enables
-integrands <em class='math'>f(x,y)</em> that have not been vectorized and only accept
-<var>x</var> and <var>y</var> as scalars to be used.  The default value is
-<code>true</code>.
+integrands <em class="math">f(x,y)</em> that have not been vectorized or only accept
+scalar values of <var class="var">x</var> or <var class="var">y</var>.  The default value is <code class="code">true</code>.
+Note that this is achieved by wrapping <em class="math">f(x,y)</em> with the function
+<code class="code">arrayfun</code>, which may significantly decrease computation speed.
 </p></dd>
 </dl>
 
@@ -328,103 +371,138 @@ integrands <em class='math'>f(x,y)</em> that have not been vectorized and only a
 following is satisfied:
 </p>
 <div class="example">
-<pre class="example">        <var>error</var> &lt;= max (<var>AbsTol</var>, <var>RelTol</var>*|<var>q</var>|)
-</pre></div>
+<div class="group"><pre class="example-preformatted">        <var class="var">error</var> &lt;= max (<var class="var">AbsTol</var>, <var class="var">RelTol</var>*|<var class="var">q</var>|)
+</pre></div></div>
 
 
-<p><var>err</var> is an approximate bound on the error in the integral
-<code>abs (<var>q</var> - <var>I</var>)</code>, where <var>I</var> is the exact value of the
+<p><var class="var">err</var> is an approximate bound on the error in the integral
+<code class="code">abs (<var class="var">q</var> - <var class="var">I</var>)</code>, where <var class="var">I</var> is the exact value of the
 integral.
 </p>
 <p>Example 1 : integrate a rectangular region in x-y plane
 </p>
 <div class="example">
-<pre class="example"><var>f</var> = @(<var>x</var>,<var>y</var>) 2*ones (size (<var>x</var>));
-<var>q</var> = integral2 (<var>f</var>, 0, 1, 0, 1)
-  &rArr; <var>q</var> =  2
-</pre></div>
+<div class="group"><pre class="example-preformatted"><var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) 2*ones (size (<var class="var">x</var>));
+<var class="var">q</var> = integral2 (<var class="var">f</var>, 0, 1, 0, 1)
+  &rArr; <var class="var">q</var> =  2
+</pre></div></div>
 
 <p>The result is a volume, which for this constant-value integrand, is just
-<code><var>Length</var> * <var>Width</var> * <var>Height</var></code>.
+<code class="code"><var class="var">Length</var>&nbsp;*&nbsp;<var class="var">Width</var>&nbsp;*&nbsp;<var class="var">Height</var></code><!-- /@w -->.
 </p>
 <p>Example 2 : integrate a triangular region in x-y plane
 </p>
 <div class="example">
-<pre class="example"><var>f</var> = @(<var>x</var>,<var>y</var>) 2*ones (size (<var>x</var>));
-<var>ymax</var> = @(<var>x</var>) 1 - <var>x</var>;
-<var>q</var> = integral2 (<var>f</var>, 0, 1, 0, <var>ymax</var>)
-  &rArr; <var>q</var> =  1
-</pre></div>
+<div class="group"><pre class="example-preformatted"><var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) 2*ones (size (<var class="var">x</var>));
+<var class="var">ymax</var> = @(<var class="var">x</var>) 1 - <var class="var">x</var>;
+<var class="var">q</var> = integral2 (<var class="var">f</var>, 0, 1, 0, <var class="var">ymax</var>)
+  &rArr; <var class="var">q</var> =  1
+</pre></div></div>
 
-<p>The result is a volume, which for this constant-value integrand, is the
-Triangle Area x Height or
-<code>1/2 * <var>Base</var> * <var>Width</var> * <var>Height</var></code>.
+<p>The result is a volume, which for this constant-value integrand
+<em class="math"><var class="var">f</var> = 2</em><!-- /@w -->, is the Triangle Area x Height or
+<code class="code">1/2&nbsp;*&nbsp;<var class="var">Base</var>&nbsp;*&nbsp;<var class="var">Width</var>&nbsp;*&nbsp;<var class="var">Height</var></code><!-- /@w -->.
+</p>
+<p>Example 3 : integrate a non-vectorized function over a square region
+</p>
+<div class="example">
+<div class="group"><pre class="example-preformatted"><var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) sinc (<var class="var">x</var>) * sinc (<var class="var">y</var>));
+<var class="var">q</var> = integral2 (<var class="var">f</var>, -1, 1, -1, 1)
+  &rArr; <var class="var">q</var> =  12.328  (incorrect)
+<var class="var">q</var> = integral2 (<var class="var">f</var>, -1, 1, -1, 1, &quot;Vectorized&quot;, false)
+  &rArr; <var class="var">q</var> =  1.390 (correct)
+<var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) sinc (<var class="var">x</var>) .* sinc (<var class="var">y</var>);
+<var class="var">q</var> = integral2 (<var class="var">f</var>, -1, 1, -1, 1)
+  &rArr; <var class="var">q</var> =  1.390  (correct)
+</pre></div></div>
+
+<p>The first result is incorrect as the non-elementwise operator between the
+sinc functions in <var class="var">f</var> create unintended matrix multiplications between
+the internal integration arrays used by <code class="code">integral2</code>.  In the second
+result, setting <code class="code">&quot;Vectorized&quot;</code> to false forces <code class="code">integral2</code> to
+perform scalar internal operations to compute the integral, resulting in
+the correct numerical result at the cost of about a 20x increase in
+computation time. In the third result, vectorizing the integrand <var class="var">f</var>
+using the elementwise multiplication operator gets the correct result
+without increasing computation time.
 </p>
 <p>Programming Notes: If there are singularities within the integration region
 it is best to split the integral and place the singularities on the
 boundary.
 </p>
-<p>Known <small>MATLAB</small> incompatibility: If tolerances are left unspecified, and
-any integration limits are of type <code>single</code>, then Octave&rsquo;s integral
+<p>Known <small class="sc">MATLAB</small> incompatibility: If tolerances are left unspecified, and
+any integration limits are of type <code class="code">single</code>, then Octave&rsquo;s integral
 functions automatically reduce the default absolute and relative error
 tolerances as specified above.  If tighter tolerances are desired they
-must be specified.  <small>MATLAB</small> leaves the tighter tolerances appropriate
-for <code>double</code> inputs in place regardless of the class of the
+must be specified.  <small class="sc">MATLAB</small> leaves the tighter tolerances appropriate
+for <code class="code">double</code> inputs in place regardless of the class of the
 integration limits.
 </p>
 <p>Reference: L.F. Shampine,
-<cite><small>MATLAB</small> program for quadrature in 2D</cite>, Applied Mathematics and
+<cite class="cite"><small class="sc">MATLAB</small> program for quadrature in 2D</cite>, Applied Mathematics and
 Computation, pp. 266&ndash;274, Vol 1, 2008.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFquad2d">quad2d</a>, <a href="#XREFdblquad">dblquad</a>, <a href="Functions-of-One-Variable.html#XREFintegral">integral</a>, <a href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>, <a href="#XREFintegral3">integral3</a>, <a href="#XREFtriplequad">triplequad</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFquad2d">quad2d</a>, <a class="ref" href="#XREFdblquad">dblquad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFintegral">integral</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>, <a class="ref" href="#XREFintegral3">integral3</a>, <a class="ref" href="#XREFtriplequad">triplequad</a>.
 </p></dd></dl>
 
 
-<span id="XREFintegral3"></span><dl class="def">
-<dt id="index-integral3"><span class="category">: </span><span><em><var>q</var> =</em> <strong>integral3</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>za</var>, <var>zb</var>)</em><a href='#index-integral3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-integral3-1"><span class="category">: </span><span><em><var>q</var> =</em> <strong>integral3</strong> <em>(<var>f</var>, <var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>za</var>, <var>zb</var>, <var>prop</var>, <var>val</var>, &hellip;)</em><a href='#index-integral3-1' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFintegral3"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-integral3"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">integral3</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">za</var>, <var class="var">zb</var>)</code><a class="copiable-link" href="#index-integral3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-integral3-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">q</var> =</code> <strong class="def-name">integral3</strong> <code class="def-code-arguments">(<var class="var">f</var>, <var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">za</var>, <var class="var">zb</var>, <var class="var">prop</var>, <var class="var">val</var>, &hellip;)</code><a class="copiable-link" href="#index-integral3-1"> &para;</a></span></dt>
 <dd>
-<p>Numerically evaluate the three-dimensional integral of <var>f</var> using
+<p>Numerically evaluate the three-dimensional integral of <var class="var">f</var> using
 adaptive quadrature over the three-dimensional domain defined by
-<var>xa</var>, <var>xb</var>, <var>ya</var>, <var>yb</var>, <var>za</var>, <var>zb</var> (scalars may
-be finite or infinite).  Additionally, <var>ya</var> and <var>yb</var> may be
-scalar functions of <var>x</var> and <var>za</var>, and <var>zb</var> maybe be scalar
-functions of <var>x</var> and <var>y</var>, allowing for integration over
+<var class="var">xa</var>, <var class="var">xb</var>, <var class="var">ya</var>, <var class="var">yb</var>, <var class="var">za</var>, <var class="var">zb</var> (scalars may
+be finite or infinite).  Additionally, <var class="var">ya</var> and <var class="var">yb</var> may be
+scalar functions of <var class="var">x</var> and <var class="var">za</var>, and <var class="var">zb</var> maybe be scalar
+functions of <var class="var">x</var> and <var class="var">y</var>, allowing for integration over
 non-rectangular domains.
 </p>
-<p><var>f</var> is a function handle, inline function, or string containing the name
-of the function to evaluate.  The function <var>f</var> must be of the form
-<em class='math'>z = f(x,y)</em> where <var>x</var> is a vector and <var>y</var> is a scalar.  It
-should return a vector of the same length and orientation as <var>x</var>.
+<p><var class="var">f</var> is a function handle, inline function, or string containing the
+name of the function to evaluate.  The function <var class="var">f</var> must be of the form
+<em class="math">z = f(x,y,z)</em>, and all operations must be vectorized such that
+<var class="var">x</var>, <var class="var">y</var>, and <var class="var">z</var> accept array inputs and return array outputs
+of the same size.  (It can be assumed that <var class="var">x</var>, <var class="var">y</var>, and <var class="var">z</var>
+will either be same-size arrays or scalars.)  The underlying integrators
+will input arrays of integration points into <var class="var">f</var> and/or use internal
+vector expansions to speed computation that can produce unpredictable
+results if <var class="var">f</var> is not restricted to elementwise operations.  For
+integrands where this is unavoidable, the <code class="code">(&quot;Vectorized&quot;) option</code>
+described below may produce more reliable results.
 </p>
 <p>Additional optional parameters can be specified using
-<code>&quot;<var>property</var>&quot;, <var>value</var></code> pairs.  Valid properties are:
+<code class="code">&quot;<var class="var">property</var>&quot;, <var class="var">value</var></code> pairs.  Valid properties are:
 </p>
-<dl compact="compact">
-<dt><span><code>AbsTol</code></span></dt>
+<dl class="table">
+<dt><code class="code">AbsTol</code></dt>
 <dd><p>Define the absolute error tolerance for the quadrature.  The default
 value is 1e-10 (1e-5 for single).
 </p>
 </dd>
-<dt><span><code>RelTol</code></span></dt>
+<dt><code class="code">RelTol</code></dt>
 <dd><p>Define the relative error tolerance for the quadrature.  The default
 value is 1e-6 (1e-4 for single).
 </p>
 </dd>
-<dt><span><code>Method</code></span></dt>
+<dt><code class="code">Method</code></dt>
 <dd><p>Specify the two-dimensional integration method to be used, with valid
-options being <code>&quot;auto&quot;</code> (default), <code>&quot;tiled&quot;</code>, or
-<code>&quot;iterated&quot;</code>.  When using <code>&quot;auto&quot;</code>, Octave will choose the
-<code>&quot;tiled&quot;</code> method unless any of the integration limits are infinite.
+options being <code class="code">&quot;auto&quot;</code> (default), <code class="code">&quot;tiled&quot;</code>, or
+<code class="code">&quot;iterated&quot;</code>.  When using <code class="code">&quot;auto&quot;</code>, Octave will choose the
+<code class="code">&quot;tiled&quot;</code> method unless any of the integration limits are infinite.
 </p>
 </dd>
-<dt><span><code>Vectorized</code></span></dt>
-<dd><p>Enable or disable vectorized integration.  A value of <code>false</code> forces
+<dt><code class="code">Vectorized</code></dt>
+<dd><p>Enable or disable vectorized integration.  A value of <code class="code">false</code> forces
 Octave to use only scalar inputs when calling the integrand, which enables
-integrands <em class='math'>f(x,y)</em> that have not been vectorized and only accept
-<var>x</var> and <var>y</var> as scalars to be used.  The default value is
-<code>true</code>.
+integrands <em class="math">f(x,y,z)</em> that have not been vectorized or only accept
+scalar values of <var class="var">x</var>, <var class="var">y</var>, or <var class="var">z</var>.  The default value is
+<code class="code">true</code>.  Note that this is achieved by wrapping <em class="math">f(x,y,z)</em> with
+the function <code class="code">arrayfun</code>, which may significantly decrease computation
+speed.
 </p></dd>
 </dl>
 
@@ -432,86 +510,109 @@ integrands <em class='math'>f(x,y)</em> that have not been vectorized and only a
 following is satisfied:
 </p>
 <div class="example">
-<pre class="example">        <var>error</var> &lt;= max (<var>AbsTol</var>, <var>RelTol</var>*|<var>q</var>|)
-</pre></div>
+<div class="group"><pre class="example-preformatted">        <var class="var">error</var> &lt;= max (<var class="var">AbsTol</var>, <var class="var">RelTol</var>*|<var class="var">q</var>|)
+</pre></div></div>
 
 
-<p><var>err</var> is an approximate bound on the error in the integral
-<code>abs (<var>q</var> - <var>I</var>)</code>, where <var>I</var> is the exact value of the
+<p><var class="var">err</var> is an approximate bound on the error in the integral
+<code class="code">abs (<var class="var">q</var> - <var class="var">I</var>)</code>, where <var class="var">I</var> is the exact value of the
 integral.
 </p>
 <p>Example 1 : integrate over a rectangular volume
 </p>
 <div class="example">
-<pre class="example"><var>f</var> = @(<var>x</var>,<var>y</var>,<var>z</var>) ones (size (<var>x</var>));
-<var>q</var> = integral3 (<var>f</var>, 0, 1, 0, 1, 0, 1)
-  &rArr; <var>q</var> =  1.00000
-</pre></div>
+<div class="group"><pre class="example-preformatted"><var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>,<var class="var">z</var>) ones (size (<var class="var">x</var>));
+<var class="var">q</var> = integral3 (<var class="var">f</var>, 0, 1, 0, 1, 0, 1)
+  &rArr; <var class="var">q</var> =  1.00000
+</pre></div></div>
 
 <p>For this constant-value integrand, the result is a volume which is just
-<code><var>Length</var> * <var>Width</var> * <var>Height</var></code>.
+<code class="code"><var class="var">Length</var> * <var class="var">Width</var> * <var class="var">Height</var></code>.
 </p>
 <p>Example 2 : integrate over a spherical volume
 </p>
 <div class="example">
-<pre class="example"><var>f</var> = @(<var>x</var>,<var>y</var>) ones (size (<var>x</var>));
-<var>ymax</var> = @(<var>x</var>) sqrt (1 - <var>x</var>.^2);
-<var>zmax</var> = @(<var>x</var>,<var>y</var>) sqrt (1 - <var>x</var>.^2 - <var>y</var>.^2);
-<var>q</var> = integral3 (<var>f</var>, 0, 1, 0, <var>ymax</var>, 0, <var>zmax</var>)
-  &rArr; <var>q</var> =  0.52360
-</pre></div>
+<div class="group"><pre class="example-preformatted"><var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) ones (size (<var class="var">x</var>));
+<var class="var">ymax</var> = @(<var class="var">x</var>) sqrt (1 - <var class="var">x</var>.^2);
+<var class="var">zmax</var> = @(<var class="var">x</var>,<var class="var">y</var>) sqrt (1 - <var class="var">x</var>.^2 - <var class="var">y</var>.^2);
+<var class="var">q</var> = integral3 (<var class="var">f</var>, 0, 1, 0, <var class="var">ymax</var>, 0, <var class="var">zmax</var>)
+  &rArr; <var class="var">q</var> =  0.52360
+</pre></div></div>
 
 <p>For this constant-value integrand, the result is a volume which is 1/8th
-of a unit sphere or <code>1/8 * 4/3 * pi</code>.
+of a unit sphere or <code class="code">1/8 * 4/3 * pi</code>.
+</p>
+<p>Example 3 : integrate a non-vectorized function over a cubic volume
+</p>
+<div class="example">
+<div class="group"><pre class="example-preformatted"><var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>) sinc (<var class="var">x</var>) * sinc (<var class="var">y</var>), * sinc (<var class="var">z</var>);
+<var class="var">q</var> = integral3 (<var class="var">f</var>, -1, 1, -1, 1, -1, 1)
+  &rArr; <var class="var">q</var> =  14.535  (incorrect)
+<var class="var">q</var> = integral3 (<var class="var">f</var>, -1, 1, -1, 1, -1, 1, &quot;Vectorized&quot;, false)
+  &rArr; <var class="var">q</var> =  1.6388 (correct)
+<var class="var">f</var> = @(<var class="var">x</var>,<var class="var">y</var>,<var class="var">z</var>) sinc (<var class="var">x</var>) .* sinc (<var class="var">y</var>), .* sinc (<var class="var">z</var>);
+<var class="var">q</var> = integral3 (<var class="var">f</var>, -1, 1, -1, 1, -1, 1)
+  &rArr; <var class="var">q</var> =  1.6388  (correct)
+</pre></div></div>
+
+<p>The first result is incorrect as the non-elementwise operator between the
+sinc functions in <var class="var">f</var> create unintended matrix multiplications between
+the internal integration arrays used by <code class="code">integral3</code>.  In the second
+result, setting <code class="code">&quot;Vectorized&quot;</code> to false forces <code class="code">integral3</code> to
+perform scalar internal operations to compute the integral, resulting in
+the correct numerical result at the cost of about a 30x increase in
+computation time. In the third result, vectorizing the integrand <var class="var">f</var>
+using the elementwise multiplication operator gets the correct result
+without increasing computation time.
 </p>
 <p>Programming Notes: If there are singularities within the integration region
 it is best to split the integral and place the singularities on the
 boundary.
 </p>
-<p>Known <small>MATLAB</small> incompatibility: If tolerances are left unspecified, and
-any integration limits are of type <code>single</code>, then Octave&rsquo;s integral
+<p>Known <small class="sc">MATLAB</small> incompatibility: If tolerances are left unspecified, and
+any integration limits are of type <code class="code">single</code>, then Octave&rsquo;s integral
 functions automatically reduce the default absolute and relative error
 tolerances as specified above.  If tighter tolerances are desired they
-must be specified.  <small>MATLAB</small> leaves the tighter tolerances appropriate
-for <code>double</code> inputs in place regardless of the class of the
+must be specified.  <small class="sc">MATLAB</small> leaves the tighter tolerances appropriate
+for <code class="code">double</code> inputs in place regardless of the class of the
 integration limits.
 </p>
 <p>Reference: L.F. Shampine,
-<cite><small>MATLAB</small> program for quadrature in 2D</cite>, Applied Mathematics and
+<cite class="cite"><small class="sc">MATLAB</small> program for quadrature in 2D</cite>, Applied Mathematics and
 Computation, pp. 266&ndash;274, Vol 1, 2008.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFtriplequad">triplequad</a>, <a href="Functions-of-One-Variable.html#XREFintegral">integral</a>, <a href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>, <a href="#XREFintegral2">integral2</a>, <a href="#XREFquad2d">quad2d</a>, <a href="#XREFdblquad">dblquad</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFtriplequad">triplequad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFintegral">integral</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquad">quad</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadgk">quadgk</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadv">quadv</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadl">quadl</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFquadcc">quadcc</a>, <a class="ref" href="Functions-of-One-Variable.html#XREFtrapz">trapz</a>, <a class="ref" href="#XREFintegral2">integral2</a>, <a class="ref" href="#XREFquad2d">quad2d</a>, <a class="ref" href="#XREFdblquad">dblquad</a>.
 </p></dd></dl>
 
 
 <p>The above integrations can be fairly slow, and that problem increases
 exponentially with the dimensionality of the integral.  Another possible
 solution for 2-D integration is to use Orthogonal Collocation as described in
-the previous section (see <a href="Orthogonal-Collocation.html">Orthogonal Collocation</a>).  The integral of a
-function <em class='math'>f(x,y)</em> for <em class='math'>x</em> and <em class='math'>y</em> between 0 and 1 can be
-approximated using <em class='math'>n</em> points by
-the sum over <code>i=1:n</code> and <code>j=1:n</code> of <code>q(i)*q(j)*f(r(i),r(j))</code>,
-where <em class='math'>q</em> and <em class='math'>r</em> is as returned by <code>colloc (n)</code>.  The
+the previous section (see <a class="pxref" href="Orthogonal-Collocation.html">Orthogonal Collocation</a>).  The integral of a
+function <em class="math">f(x,y)</em> for <em class="math">x</em> and <em class="math">y</em> between 0 and 1 can be
+approximated using <em class="math">n</em> points by
+the sum over <code class="code">i=1:n</code> and <code class="code">j=1:n</code> of <code class="code">q(i)*q(j)*f(r(i),r(j))</code>,
+where <em class="math">q</em> and <em class="math">r</em> is as returned by <code class="code">colloc (n)</code>.  The
 generalization to more than two variables is straight forward.  The
-following code computes the studied integral using <em class='math'>n=8</em> points.
+following code computes the studied integral using <em class="math">n=8</em> points.
 </p>
 <div class="example">
-<pre class="example">f = @(x,y) sin (pi*x*y') .* sqrt (x*y');
+<div class="group"><pre class="example-preformatted">f = @(x,y) sin (pi*x*y') .* sqrt (x*y');
 n = 8;
 [t, ~, ~, q] = colloc (n);
 I = q'*f(t,t)*q;
       &rArr; 0.30022
-</pre></div>
+</pre></div></div>
 
 <p>It should be noted that the number of points determines the quality
 of the approximation.  If the integration needs to be performed between
-<em class='math'>a</em> and <em class='math'>b</em>, instead of 0 and 1, then a change of variables is needed.
+<em class="math">a</em> and <em class="math">b</em>, instead of 0 and 1, then a change of variables is needed.
 </p>
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Previous: <a href="Orthogonal-Collocation.html">Orthogonal Collocation</a>, Up: <a href="Numerical-Integration.html">Numerical Integration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

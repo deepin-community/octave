@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -28,6 +28,7 @@
 ## @deftypefnx {} {} help --list
 ## @deftypefnx {} {} help .
 ## @deftypefnx {} {} help
+## @deftypefnx {} {@var{help_text} =} help (@dots{})
 ## Display the help text for @var{name}.
 ##
 ## For example, the command @kbd{help help} prints a short message describing

@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Base64 and Binary Data Transmission (GNU Octave (version 7.1.0))</title>
+<title>Base64 and Binary Data Transmission (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Base64 and Binary Data Transmission (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Base64 and Binary Data Transmission (GNU Octave (version 7.1.0))">
+<meta name="description" content="Base64 and Binary Data Transmission (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Base64 and Binary Data Transmission (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,9 @@
 <link href="WWW-Access.html" rel="prev" title="WWW Access">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,68 +30,85 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Base64-and-Binary-Data-Transmission">
-<div class="header">
+<div class="subsection-level-extent" id="Base64-and-Binary-Data-Transmission">
+<div class="nav-panel">
 <p>
 Previous: <a href="WWW-Access.html" accesskey="p" rel="prev">WWW Access</a>, Up: <a href="Networking-Utilities.html" accesskey="u" rel="up">Networking Utilities</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Base64-and-Binary-Data-Transmission-1"></span><h4 class="subsection">36.4.3 Base64 and Binary Data Transmission</h4>
+<h4 class="subsection" id="Base64-and-Binary-Data-Transmission-1"><span>36.4.3 Base64 and Binary Data Transmission<a class="copiable-link" href="#Base64-and-Binary-Data-Transmission-1"> &para;</a></span></h4>
 
 <p>Some transmission channels can not accept binary data.  It is customary to
 encode binary data in Base64 for transmission and to decode the data upon
 reception.
 </p>
-<span id="XREFbase64_005fencode"></span><dl class="def">
-<dt id="index-base64_005fencode"><span class="category">: </span><span><em><var>s</var> =</em> <strong>base64_encode</strong> <em>(<var>x</var>)</em><a href='#index-base64_005fencode' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Encode a double matrix or array <var>x</var> into the base64 format string
-<var>s</var>.
+<a class="anchor" id="XREFbase64_005fencode"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-base64_005fencode"><span class="category-def">: </span><span><code class="def-type"><var class="var">s</var> =</code> <strong class="def-name">base64_encode</strong> <code class="def-code-arguments">(<var class="var">x</var>)</code><a class="copiable-link" href="#index-base64_005fencode"> &para;</a></span></dt>
+<dd><p>Encode a double matrix or array <var class="var">x</var> into the base64 format string
+<var class="var">s</var>.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFbase64_005fdecode">base64_decode</a>, <a href="#XREFmatlab_005fnet_005fbase64decode">matlab.net.base64decode</a>, <a href="#XREFmatlab_005fnet_005fbase64encode">matlab.net.base64encode</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFbase64_005fdecode">base64_decode</a>, <a class="ref" href="#XREFmatlab_005fnet_005fbase64decode">matlab.net.base64decode</a>, <a class="ref" href="#XREFmatlab_005fnet_005fbase64encode">matlab.net.base64encode</a>.
 </p></dd></dl>
 
 
-<span id="XREFbase64_005fdecode"></span><dl class="def">
-<dt id="index-base64_005fdecode"><span class="category">: </span><span><em><var>x</var> =</em> <strong>base64_decode</strong> <em>(<var>s</var>)</em><a href='#index-base64_005fdecode' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-base64_005fdecode-1"><span class="category">: </span><span><em><var>x</var> =</em> <strong>base64_decode</strong> <em>(<var>s</var>, <var>dims</var>)</em><a href='#index-base64_005fdecode-1' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Decode the double matrix or array <var>x</var> from the base64 encoded string
-<var>s</var>.
+<a class="anchor" id="XREFbase64_005fdecode"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-base64_005fdecode"><span class="category-def">: </span><span><code class="def-type"><var class="var">x</var> =</code> <strong class="def-name">base64_decode</strong> <code class="def-code-arguments">(<var class="var">s</var>)</code><a class="copiable-link" href="#index-base64_005fdecode"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-base64_005fdecode-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">x</var> =</code> <strong class="def-name">base64_decode</strong> <code class="def-code-arguments">(<var class="var">s</var>, <var class="var">dims</var>)</code><a class="copiable-link" href="#index-base64_005fdecode-1"> &para;</a></span></dt>
+<dd><p>Decode the double matrix or array <var class="var">x</var> from the base64 encoded string
+<var class="var">s</var>.
 </p>
-<p>The optional input parameter <var>dims</var> should be a vector containing the
+<p>The optional input parameter <var class="var">dims</var> should be a vector containing the
 dimensions of the decoded array.
 </p>
-<p><strong>See also:</strong> <a href="#XREFbase64_005fencode">base64_encode</a>, <a href="#XREFmatlab_005fnet_005fbase64decode">matlab.net.base64decode</a>, <a href="#XREFmatlab_005fnet_005fbase64encode">matlab.net.base64encode</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFbase64_005fencode">base64_encode</a>, <a class="ref" href="#XREFmatlab_005fnet_005fbase64decode">matlab.net.base64decode</a>, <a class="ref" href="#XREFmatlab_005fnet_005fbase64encode">matlab.net.base64encode</a>.
 </p></dd></dl>
 
 
-<span id="XREFmatlab_005fnet_005fbase64encode"></span><dl class="def">
-<dt id="index-matlab_002enet_002ebase64encode"><span class="category">: </span><span><em><var>b64_str</var> =</em> <strong>matlab.net.base64encode</strong> <em>(<var>in</var>)</em><a href='#index-matlab_002enet_002ebase64encode' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFmatlab_005fnet_005fbase64encode"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-matlab_002enet_002ebase64encode"><span class="category-def">: </span><span><code class="def-type"><var class="var">b64_str</var> =</code> <strong class="def-name">matlab.net.base64encode</strong> <code class="def-code-arguments">(<var class="var">in</var>)</code><a class="copiable-link" href="#index-matlab_002enet_002ebase64encode"> &para;</a></span></dt>
 <dd>
-<p>Convert <var>in</var> to a base64 encoded string <var>b64_str</var>.
+<p>Convert <var class="var">in</var> to a base64 encoded string <var class="var">b64_str</var>.
 </p>
-<p>The input <var>in</var> can be a string or numeric vector.
-The output <var>b64_str</var> will be encoded according to RFC 4648.
+<p>The input <var class="var">in</var> can be a string or numeric vector.
+The output <var class="var">b64_str</var> will be encoded according to RFC 4648.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFmatlab_005fnet_005fbase64decode">matlab.net.base64decode</a>, <a href="#XREFbase64_005fdecode">base64_decode</a>, <a href="#XREFbase64_005fencode">base64_encode</a>, <a href="String-encoding.html#XREFunicode2native">unicode2native</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFmatlab_005fnet_005fbase64decode">matlab.net.base64decode</a>, <a class="ref" href="#XREFbase64_005fdecode">base64_decode</a>, <a class="ref" href="#XREFbase64_005fencode">base64_encode</a>, <a class="ref" href="String-encoding.html#XREFunicode2native">unicode2native</a>.
 </p></dd></dl>
 
 
-<span id="XREFmatlab_005fnet_005fbase64decode"></span><dl class="def">
-<dt id="index-matlab_002enet_002ebase64decode"><span class="category">: </span><span><em><var>out_vec</var> =</em> <strong>matlab.net.base64decode</strong> <em>(<var>b64_str</var>)</em><a href='#index-matlab_002enet_002ebase64decode' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFmatlab_005fnet_005fbase64decode"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-matlab_002enet_002ebase64decode"><span class="category-def">: </span><span><code class="def-type"><var class="var">out_vec</var> =</code> <strong class="def-name">matlab.net.base64decode</strong> <code class="def-code-arguments">(<var class="var">b64_str</var>)</code><a class="copiable-link" href="#index-matlab_002enet_002ebase64decode"> &para;</a></span></dt>
 <dd>
-<p>Convert base64 encoded <var>b64_str</var> to uint8 vector <var>out_vec</var>.
+<p>Convert base64 encoded <var class="var">b64_str</var> to uint8 vector <var class="var">out_vec</var>.
 </p>
-<p>The input <var>b64_str</var> must be a string vector.
-The output <var>out_vec</var> will be a uint8 vector that is decoded
+<p>The input <var class="var">b64_str</var> must be a string vector.
+The output <var class="var">out_vec</var> will be a uint8 vector that is decoded
 according to RFC 4648.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFmatlab_005fnet_005fbase64encode">matlab.net.base64encode</a>, <a href="#XREFbase64_005fdecode">base64_decode</a>, <a href="#XREFbase64_005fencode">base64_encode</a>, <a href="String-encoding.html#XREFnative2unicode">native2unicode</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFmatlab_005fnet_005fbase64encode">matlab.net.base64encode</a>, <a class="ref" href="#XREFbase64_005fdecode">base64_decode</a>, <a class="ref" href="#XREFbase64_005fencode">base64_encode</a>, <a class="ref" href="String-encoding.html#XREFnative2unicode">native2unicode</a>.
 </p></dd></dl>
 
 
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Previous: <a href="WWW-Access.html">WWW Access</a>, Up: <a href="Networking-Utilities.html">Networking Utilities</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

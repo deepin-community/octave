@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,22 +30,24 @@
 // Instantiate Arrays of bool values.
 
 #include "Array.h"
-#include "Array.cc"
+
+// Prevent implicit instantiations on some systems (Windows, others?)
+// that can lead to duplicate definitions of static data members.
+
+extern template class OCTAVE_EXTERN_TEMPLATE_API Array<octave::idx_vector>;
+extern template class Array<octave_idx_type>;
+
+#include "Array-base.cc"
 
 #define INLINE_ASCENDING_SORT 1
 #define INLINE_DESCENDING_SORT 1
 #include "oct-sort.cc"
 
-// Prevent implicit instantiations on some systems (Windows, others?)
-// that can lead to duplicate definitions of static data members.
-
-extern template class Array<octave::idx_vector>;
-extern template class Array<octave_idx_type>;
-
 // Specialize bool sorting (aka stable partitioning).
 
 template <bool desc>
-static void do_bool_partition (bool *data, octave_idx_type nel)
+static void
+do_bool_partition (bool *data, octave_idx_type nel)
 {
   octave_idx_type k = 0;
   for (octave_idx_type i = 0; i < nel; i++)
@@ -56,8 +58,9 @@ static void do_bool_partition (bool *data, octave_idx_type nel)
 }
 
 template <bool desc>
-static void do_bool_partition (bool *data, octave_idx_type *idx,
-                               octave_idx_type nel)
+static void
+do_bool_partition (bool *data, octave_idx_type *idx,
+                   octave_idx_type nel)
 {
   // FIXME: This is essentially a simple bucket sort.
   // Can it be efficiently done by std::partition?
@@ -120,7 +123,7 @@ octave_sort<bool>::sort (bool *data, octave_idx_type *idx, octave_idx_type nel,
 
 template class octave_sort<bool>;
 
-INSTANTIATE_ARRAY (bool, OCTAVE_API);
+INSTANTIATE_ARRAY (bool, OCTAVE_CLASS_TEMPLATE_INSTANTIATION_API);
 
 template OCTAVE_API std::ostream& operator << (std::ostream&,
                                                const Array<bool>&);

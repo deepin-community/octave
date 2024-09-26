@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2007-2022 The Octave Project Developers
+// Copyright (C) 2007-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -63,7 +63,6 @@
 #include "oct-process.h"
 #include "oct-shlib.h"
 #include "ov-java.h"
-#include "parse.h"
 #include "variables.h"
 
 #if defined (HAVE_JAVA)
@@ -89,10 +88,10 @@
 #define TO_JNIENV(env) reinterpret_cast<JNIEnv *> (env)
 
 typedef jint (JNICALL *JNI_CreateJavaVM_t) (JavaVM **pvm, JNIEnv **penv,
-                                            void *args);
+    void *args);
 
 typedef jint (JNICALL *JNI_GetCreatedJavaVMs_t) (JavaVM **pvm, jsize bufLen,
-                                                 jsize *nVMs);
+    jsize *nVMs);
 
 template <typename T>
 class java_local_ref
@@ -210,8 +209,8 @@ static bool jvm_attached = false;
 
 static octave::dynamic_library jvm_lib;
 
-static std::map<int,octave_value> listener_map;
-static std::map<int,octave_value> octave_ref_map;
+static std::map<int, octave_value> listener_map;
+static std::map<int, octave_value> octave_ref_map;
 static int octave_java_refcount = 0;
 
 //! The thread id of the currently executing thread or @c -1 if this is
@@ -224,102 +223,102 @@ bool Vjava_matrix_autoconversion = false;
 bool Vjava_unsigned_autoconversion = true;
 bool Vdebug_java = false;
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  class JVMArgs
+class JVMArgs
+{
+public:
+
+  JVMArgs ()
   {
-  public:
+    m_vm_args.version = JNI_VERSION_1_6;
+    m_vm_args.nOptions = 0;
+    m_vm_args.options = nullptr;
+    m_vm_args.ignoreUnrecognized = false;
+  }
 
-    JVMArgs (void)
-    {
-      m_vm_args.version = JNI_VERSION_1_6;
-      m_vm_args.nOptions = 0;
-      m_vm_args.options = nullptr;
-      m_vm_args.ignoreUnrecognized = false;
-    }
+  ~JVMArgs ()
+  {
+    clean ();
+  }
 
-    ~JVMArgs (void)
-    {
-      clean ();
-    }
+  JavaVMInitArgs * to_args ()
+  {
+    update ();
+    return &m_vm_args;
+  }
 
-    JavaVMInitArgs * to_args ()
-    {
-      update ();
-      return &m_vm_args;
-    }
+  void add (const std::string& opt)
+  {
+    m_java_opts.push_back (opt);
+  }
 
-    void add (const std::string& opt)
-    {
-      m_java_opts.push_back (opt);
-    }
+  void read_java_opts (const std::string& filename)
+  {
+    std::ifstream js = sys::ifstream (filename.c_str ());
 
-    void read_java_opts (const std::string& filename)
-    {
-      std::ifstream js = sys::ifstream (filename.c_str ());
+    if (! js.bad () && ! js.fail ())
+      {
+        std::string line;
 
-      if (! js.bad () && ! js.fail ())
-        {
-          std::string line;
+        while (! js.eof () && ! js.fail ())
+          {
+            std::getline (js, line);
 
-          while (! js.eof () && ! js.fail ())
-            {
-              std::getline (js, line);
+            if (line.find ('-') == 0)
+              m_java_opts.push_back (line);
+            else if (line.length () > 0 && Vdebug_java)
+              warning ("invalid JVM option, skipping: %s", line.c_str ());
+          }
+      }
+  }
 
-              if (line.find ('-') == 0)
-                m_java_opts.push_back (line);
-              else if (line.length () > 0 && Vdebug_java)
-                warning ("invalid JVM option, skipping: %s", line.c_str ());
-            }
-        }
-    }
+private:
 
-  private:
+  void clean ()
+  {
+    if (m_vm_args.options != nullptr)
+      {
+        for (int i = 0; i < m_vm_args.nOptions; i++)
+          delete [] m_vm_args.options[i].optionString;
 
-    void clean (void)
-    {
-      if (m_vm_args.options != nullptr)
-        {
-          for (int i = 0; i < m_vm_args.nOptions; i++)
-            delete [] m_vm_args.options[i].optionString;
+        delete [] m_vm_args.options;
 
-          delete [] m_vm_args.options;
+        m_vm_args.options = nullptr;
+        m_vm_args.nOptions = 0;
+      }
+  }
 
-          m_vm_args.options = nullptr;
-          m_vm_args.nOptions = 0;
-        }
-    }
+  void update ()
+  {
+    clean ();
 
-    void update (void)
-    {
-      clean ();
+    if (m_java_opts.size () > 0)
+      {
+        int index = 0;
 
-      if (m_java_opts.size () > 0)
-        {
-          int index = 0;
+        m_vm_args.nOptions = m_java_opts.size ();
+        m_vm_args.options = new JavaVMOption [m_vm_args.nOptions];
 
-          m_vm_args.nOptions = m_java_opts.size ();
-          m_vm_args.options = new JavaVMOption [m_vm_args.nOptions];
+        for (const auto& opt : m_java_opts)
+          {
+            if (Vdebug_java)
+              octave_stdout << opt << std::endl;
+            m_vm_args.options[index++].optionString = strsave (opt.c_str ());
+          }
 
-          for (const auto& opt : m_java_opts)
-            {
-              if (Vdebug_java)
-                octave_stdout << opt << std::endl;
-              m_vm_args.options[index++].optionString = strsave (opt.c_str ());
-            }
+        m_java_opts.clear ();
+      }
+  }
 
-          m_java_opts.clear ();
-        }
-    }
+private:
 
-  private:
+  JavaVMInitArgs m_vm_args;
 
-    JavaVMInitArgs m_vm_args;
+  std::list<std::string> m_java_opts;
+};
 
-    std::list<std::string> m_java_opts;
-  };
-
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 
 //! The java initialization directory is given by the environment variable
 //! @c OCTAVE_JAVA_DIR if defined; otherwise it is the directory of Octave's
@@ -341,7 +340,7 @@ OCTAVE_NAMESPACE_END
 //! the options given by @c java.opts.
 
 static std::string
-initial_java_dir (void)
+initial_java_dir ()
 {
   static std::string java_dir;
 
@@ -404,7 +403,7 @@ read_classpath_txt (const std::string& filepath)
 //! Return the initial classpath.
 //!
 //! The initial classpath starts with a pointer to @c octave.jar which is
-//! located in the initial java directory given by #java_init_dir().
+//! located in the initial java directory given by #initial_java_dir().
 //!
 //! @attention This is nowhere documented and also the script
 //! @c javaclasspath.m drops this.  On the other hand, this is vital because
@@ -420,7 +419,7 @@ read_classpath_txt (const std::string& filepath)
 //! @returns The initial classpath.
 
 static std::string
-initial_class_path (void)
+initial_class_path ()
 {
   std::string java_dir = initial_java_dir ();
 
@@ -452,7 +451,8 @@ initial_class_path (void)
           // The filename is "javaclasspath.txt", but historically has been
           // "classpath.txt" so both are supported.
           std::vector<std::string> cp_list = {"javaclasspath.txt",
-                                              "classpath.txt"};
+                                              "classpath.txt"
+                                             };
 
           for (std::string filename : cp_list)
             {
@@ -517,10 +517,11 @@ get_jvm_lib_path_in_subdir (std::string java_home_path)
   const std::array<const std::string, 2> subdirs = {"bin/client", "bin/server"};
 #else
   const std::array<const std::string, 8> subdirs =
-    {"jre/lib/server", "jre/lib", "lib/client", "lib/server",
-     "jre/lib/amd64/client", "jre/lib/amd64/server",
-     "jre/lib/i386/client", "jre/lib/i386/server"
-    };
+  {
+    "jre/lib/server", "jre/lib", "lib/client", "lib/server",
+    "jre/lib/amd64/client", "jre/lib/amd64/server",
+    "jre/lib/i386/client", "jre/lib/i386/server"
+  };
 #endif
 
   for (std::size_t i = 0; i < subdirs.size (); i++)
@@ -535,12 +536,12 @@ get_jvm_lib_path_in_subdir (std::string java_home_path)
 
 #if defined (OCTAVE_USE_WINDOWS_API)
 
-OCTAVE_NAMESPACE_BEGIN
-  // Declare function defined in sysdep.cc
-  extern LONG
-  get_regkey_value (HKEY h_rootkey, const std::string subkey,
-                    const std::string name, octave_value& value);
-OCTAVE_NAMESPACE_END
+OCTAVE_BEGIN_NAMESPACE(octave)
+// Declare function defined in sysdep.cc
+extern LONG
+get_regkey_value (HKEY h_rootkey, const std::string subkey,
+                  const std::string name, octave_value& value);
+OCTAVE_END_NAMESPACE(octave)
 
 static std::string
 get_jvm_lib_path_from_registry ()
@@ -656,7 +657,7 @@ get_jvm_lib_path_from_registry ()
 //! - '-Xrs'
 //!
 //! Further options are read from the file @c java.opts in the directory given
-//! by #java_init_dir().
+//! by #initial_java_dir().
 //!
 //! Note that #initial_class_path() determines the initial classpath.  This
 //! is the static classpath which cannot be changed.  Elements of the dynamic
@@ -666,7 +667,7 @@ get_jvm_lib_path_from_registry ()
 //! @see #terminate_jvm()
 
 static void
-initialize_jvm (void)
+initialize_jvm ()
 {
   // Most of the time JVM already exists and has been initialized.
   // Also it seems, as if jvm is set, the jvm is already attached.
@@ -808,8 +809,8 @@ initialize_jvm (void)
 
       // Additional options given by file java.opts.
       m_vm_args.read_java_opts (initial_java_dir () +
-                              octave::sys::file_ops::dir_sep_str () +
-                              "java.opts");
+                                octave::sys::file_ops::dir_sep_str () +
+                                "java.opts");
 
       if (create_vm (&jvm, &current_env, m_vm_args.to_args ()) != JNI_OK)
         error ("unable to start Java VM in %s", jvm_lib_path.c_str ());
@@ -828,7 +829,7 @@ initialize_jvm (void)
 //! @see #initialize_jvm()
 
 static void
-terminate_jvm (void)
+terminate_jvm ()
 {
   // There is nothing to do if jvm is not set (= nullptr).
   if (jvm)
@@ -892,7 +893,7 @@ jstring_to_string (JNIEnv *jni_env, jobject obj)
 //! @returns A reference to jni, if #jvm is present, otherwise @c nullptr.
 
 static inline JNIEnv *
-thread_jni_env (void)
+thread_jni_env ()
 {
   JNIEnv *env = nullptr;
 
@@ -905,7 +906,7 @@ thread_jni_env (void)
 #endif
 
 bool
-octave_java::is_java_string (void) const
+octave_java::is_java_string () const
 {
 #if defined (HAVE_JAVA)
 
@@ -982,7 +983,7 @@ check_exception (JNIEnv *jni_env)
                                             "()Ljava/lang/String;");
       jstring_ref js (jni_env,
                       reinterpret_cast<jstring> (jni_env->CallObjectMethod (ex,
-                                                                            mID)));
+                          mID)));
       std::string msg = jstring_to_string (jni_env, js);
 
       error ("[java] %s", msg.c_str ());
@@ -1012,9 +1013,9 @@ find_octave_class (JNIEnv *jni_env, const char *name)
               jclass_ref syscls (jni_env,
                                  jni_env->FindClass ("java/lang/System"));
               jmethodID mID = jni_env->GetStaticMethodID
-                (syscls,
-                 "getProperty",
-                 "(Ljava/lang/String;)Ljava/lang/String;");
+                              (syscls,
+                               "getProperty",
+                               "(Ljava/lang/String;)Ljava/lang/String;");
               jstring_ref js (jni_env,
                               jni_env->NewStringUTF ("octave.class.loader"));
               js = reinterpret_cast<jstring> (jni_env->CallStaticObjectMethod
@@ -1037,7 +1038,7 @@ find_octave_class (JNIEnv *jni_env, const char *name)
               jclass_ref jcls2 (jni_env,
                                 jni_env->FindClass ("org/openide/util/Lookup"));
               jmethodID mID = jni_env->GetStaticMethodID
-                (jcls2, "getDefault", "()Lorg/openide/util/Lookup;");
+                              (jcls2, "getDefault", "()Lorg/openide/util/Lookup;");
               jobject_ref lObj (jni_env,
                                 jni_env->CallStaticObjectMethod (jcls2, mID));
               mID = jni_env->GetMethodID (jcls2, "lookup",
@@ -1052,21 +1053,21 @@ find_octave_class (JNIEnv *jni_env, const char *name)
               jstring_ref js (jni_env,
                               jni_env->NewStringUTF (class_loader.c_str ()));
               uicls = reinterpret_cast<jclass>
-                (jni_env->CallObjectMethod (cLoader, mID, jstring (js)));
+                      (jni_env->CallObjectMethod (cLoader, mID, jstring (js)));
             }
 
           if (uicls)
             uiClass = reinterpret_cast<jclass>
-              (jni_env->NewGlobalRef (jclass (uicls)));
+                      (jni_env->NewGlobalRef (jclass (uicls)));
         }
 
       if (uiClass)
         {
           jmethodID mID = jni_env->GetStaticMethodID
-            (uiClass, "findClass", "(Ljava/lang/String;)Ljava/lang/Class;");
+                          (uiClass, "findClass", "(Ljava/lang/String;)Ljava/lang/Class;");
           jstring_ref js (jni_env, jni_env->NewStringUTF (name));
           jcls = reinterpret_cast<jclass>
-            (jni_env->CallStaticObjectMethod (uiClass, mID, jstring (js)));
+                 (jni_env->CallStaticObjectMethod (uiClass, mID, jstring (js)));
         }
     }
 
@@ -1081,8 +1082,8 @@ compute_array_dimensions (JNIEnv *jni_env, jobject obj)
   jclass_ref ccls (jni_env, jni_env->GetObjectClass (jcls));
   jmethodID isArray_ID = jni_env->GetMethodID (ccls, "isArray", "()Z");
   jmethodID getComponentType_ID = jni_env->GetMethodID (ccls,
-                                                        "getComponentType",
-                                                        "()Ljava/lang/Class;");
+                                  "getComponentType",
+                                  "()Ljava/lang/Class;");
 
   dim_vector dv (1, 1);
   int idx = 0;
@@ -1095,11 +1096,11 @@ compute_array_dimensions (JNIEnv *jni_env, jobject obj)
         dv.resize (idx+1);
       dv(idx) = len;
       jcls = reinterpret_cast<jclass>
-        (jni_env->CallObjectMethod (jcls, getComponentType_ID));
+             (jni_env->CallObjectMethod (jcls, getComponentType_ID));
       jobj = len > 0
-        ? reinterpret_cast<jobjectArray> (jni_env->GetObjectArrayElement (jobj,
-                                                                          0))
-        : nullptr;
+             ? reinterpret_cast<jobjectArray> (jni_env->GetObjectArrayElement (jobj,
+                 0))
+             : nullptr;
       idx++;
     }
 
@@ -1155,12 +1156,12 @@ get_array_elements (JNIEnv *jni_env, jobject jobj,
 
   jclass_ref helperClass (jni_env,
                           find_octave_class (jni_env,
-                                             "org/octave/ClassHelper"));
+                              "org/octave/ClassHelper"));
   jmethodID mID = jni_env
-    ->GetStaticMethodID (helperClass, "arraySubsref",
-                         "(Ljava/lang/Object;[[I)Ljava/lang/Object;");
+                  ->GetStaticMethodID (helperClass, "arraySubsref",
+                                       "(Ljava/lang/Object;[[I)Ljava/lang/Object;");
   resObj = jni_env->CallStaticObjectMethod
-    (helperClass, mID, jobj, jobject (java_idx));
+           (helperClass, mID, jobj, jobject (java_idx));
 
   if (resObj)
     retval = box (jni_env, resObj);
@@ -1187,11 +1188,11 @@ set_array_elements (JNIEnv *jni_env, jobject jobj,
     {
       jclass_ref helperClass (jni_env,
                               find_octave_class (jni_env,
-                                                 "org/octave/ClassHelper"));
+                                  "org/octave/ClassHelper"));
       jmethodID mID = jni_env->GetStaticMethodID (helperClass, "arraySubsasgn",
-          "(Ljava/lang/Object;[[ILjava/lang/Object;)" "Ljava/lang/Object;");
+                      "(Ljava/lang/Object;[[ILjava/lang/Object;)" "Ljava/lang/Object;");
       resObj = jni_env->CallStaticObjectMethod
-        (helperClass, mID, jobj, jobject (java_idx), jobject (rhsObj));
+               (helperClass, mID, jobj, jobject (java_idx), jobject (rhsObj));
     }
 
   if (resObj)
@@ -1216,9 +1217,9 @@ get_invoke_list (JNIEnv *jni_env, void *jobj_arg)
       jclass_ref cls (jni_env, jni_env->GetObjectClass (jobj));
       jclass_ref ccls (jni_env, jni_env->GetObjectClass (cls));
       jmethodID getMethods_ID = jni_env->GetMethodID
-        (ccls, "getMethods", "()[Ljava/lang/reflect/Method;");
+                                (ccls, "getMethods", "()[Ljava/lang/reflect/Method;");
       jmethodID getFields_ID = jni_env->GetMethodID
-        (ccls, "getFields", "()[Ljava/lang/reflect/Field;");
+                               (ccls, "getFields", "()[Ljava/lang/reflect/Field;");
       jobjectArray_ref mList (jni_env,
                               reinterpret_cast<jobjectArray>
                               (jni_env->CallObjectMethod (cls, getMethods_ID)));
@@ -1232,16 +1233,16 @@ get_invoke_list (JNIEnv *jni_env, void *jobj_arg)
       jclass_ref fCls (jni_env,
                        jni_env->FindClass ("java/lang/reflect/Field"));
       jmethodID m_getName_ID = jni_env->GetMethodID (mCls, "getName",
-                                                     "()Ljava/lang/String;");
+                               "()Ljava/lang/String;");
       jmethodID f_getName_ID = jni_env->GetMethodID (fCls, "getName",
-                                                     "()Ljava/lang/String;");
+                               "()Ljava/lang/String;");
 
       for (int i = 0; i < mLen; i++)
         {
           jobject_ref meth (jni_env, jni_env->GetObjectArrayElement (mList, i));
           jstring_ref methName (jni_env, reinterpret_cast<jstring>
-                                 (jni_env->CallObjectMethod (meth,
-                                                             m_getName_ID)));
+                                (jni_env->CallObjectMethod (meth,
+                                    m_getName_ID)));
           name_list.push_back (jstring_to_string (jni_env, methName));
         }
 
@@ -1265,7 +1266,8 @@ get_invoke_list (JNIEnv *jni_env, void *jobj_arg)
 }
 
 static octave_value
-convert_to_string (JNIEnv *jni_env, jobject m_java_object, bool force, char type)
+convert_to_string (JNIEnv *jni_env, jobject m_java_object, bool force,
+                   char type)
 {
   octave_value retval;
 
@@ -1274,7 +1276,8 @@ convert_to_string (JNIEnv *jni_env, jobject m_java_object, bool force, char type
       jclass_ref cls (jni_env, jni_env->FindClass ("java/lang/String"));
 
       if (jni_env->IsInstanceOf (m_java_object, cls))
-        retval = octave_value (jstring_to_string (jni_env, m_java_object), type);
+        retval = octave_value (jstring_to_string (jni_env, m_java_object),
+                               type);
       else if (force)
         {
           cls = jni_env->FindClass ("[Ljava/lang/String;");
@@ -1306,8 +1309,8 @@ convert_to_string (JNIEnv *jni_env, jobject m_java_object, bool force, char type
                                                     "()Ljava/lang/String;");
               jstring_ref js (jni_env,
                               reinterpret_cast<jstring>
-                                (jni_env->CallObjectMethod (m_java_object,
-                                                            mID)));
+                              (jni_env->CallObjectMethod (m_java_object,
+                                  mID)));
 
               if (js)
                 retval = octave_value (jstring_to_string (jni_env, js), type);
@@ -1333,6 +1336,7 @@ convert_to_string (JNIEnv *jni_env, jobject m_java_object, bool force, char type
 //! @c Integer, @c Long, @c Short, @c Float, or @c Double, then it will be
 //! converted using the @c java.lang.Number.doubleValue() method.
 //!
+//! @param jni_env JNI environment pointer.
 //! @param jobj Java object being returned to Octave
 //! @return @c true if @c jobj shall be converted into a numeric value
 //!         automatically, @c false otherwise
@@ -1468,7 +1472,7 @@ box (JNIEnv *jni_env, void *jobj_arg, void *jcls_arg)
                                 reinterpret_cast<jintArray>
                                 (jni_env->CallObjectMethod (jobj, mID)));
               jint *iv_data = jni_env->GetIntArrayElements (jintArray (iv),
-                                                            nullptr);
+                              nullptr);
               dim_vector dims;
               dims.resize (jni_env->GetArrayLength (jintArray (iv)));
 
@@ -1490,8 +1494,8 @@ box (JNIEnv *jni_env, void *jobj_arg, void *jcls_arg)
                   mID = jni_env->GetMethodID (cls, "toDouble", "()[D");
                   jdoubleArray_ref dv (jni_env,
                                        reinterpret_cast<jdoubleArray>
-                                         (jni_env->CallObjectMethod (jobj,
-                                                                     mID)));
+                                       (jni_env->CallObjectMethod (jobj,
+                                           mID)));
                   jni_env->GetDoubleArrayRegion (dv, 0, m.numel (),
                                                  m.fortran_vec ());
                   retval = m;
@@ -1505,11 +1509,11 @@ box (JNIEnv *jni_env, void *jobj_arg, void *jcls_arg)
                       mID = jni_env->GetMethodID (cls, "toByte", "()[B");
                       jbyteArray_ref dv (jni_env,
                                          reinterpret_cast<jbyteArray>
-                                           (jni_env->CallObjectMethod (jobj,
-                                                                       mID)));
+                                         (jni_env->CallObjectMethod (jobj,
+                                             mID)));
                       jni_env->GetByteArrayRegion (dv, 0, m.numel (),
                                                    reinterpret_cast<jbyte *>
-                                                     (m.fortran_vec ()));
+                                                   (m.fortran_vec ()));
                       retval = m;
                       break;
                     }
@@ -1519,11 +1523,11 @@ box (JNIEnv *jni_env, void *jobj_arg, void *jcls_arg)
                       mID = jni_env->GetMethodID (cls, "toByte", "()[B");
                       jbyteArray_ref dv (jni_env,
                                          reinterpret_cast<jbyteArray>
-                                           (jni_env->CallObjectMethod (jobj,
-                                                                       mID)));
+                                         (jni_env->CallObjectMethod (jobj,
+                                             mID)));
                       jni_env->GetByteArrayRegion (dv, 0, m.numel (),
                                                    reinterpret_cast<jbyte *>
-                                                     (m.fortran_vec ()));
+                                                   (m.fortran_vec ()));
                       retval = m;
                       break;
                     }
@@ -1536,11 +1540,11 @@ box (JNIEnv *jni_env, void *jobj_arg, void *jcls_arg)
                       mID = jni_env->GetMethodID (cls, "toInt", "()[I");
                       jintArray_ref dv (jni_env,
                                         reinterpret_cast<jintArray>
-                                          (jni_env->CallObjectMethod (jobj,
-                                                                      mID)));
+                                        (jni_env->CallObjectMethod (jobj,
+                                            mID)));
                       jni_env->GetIntArrayRegion (dv, 0, m.numel (),
                                                   reinterpret_cast<jint *>
-                                                    (m.fortran_vec ()));
+                                                  (m.fortran_vec ()));
                       retval = m;
                       break;
                     }
@@ -1550,11 +1554,11 @@ box (JNIEnv *jni_env, void *jobj_arg, void *jcls_arg)
                       mID = jni_env->GetMethodID (cls, "toInt", "()[I");
                       jintArray_ref dv (jni_env,
                                         reinterpret_cast<jintArray>
-                                          (jni_env->CallObjectMethod (jobj,
-                                                                      mID)));
+                                        (jni_env->CallObjectMethod (jobj,
+                                            mID)));
                       jni_env->GetIntArrayRegion (dv, 0, m.numel (),
                                                   reinterpret_cast<jint *>
-                                                    (m.fortran_vec ()));
+                                                  (m.fortran_vec ()));
                       retval = m;
                       break;
                     }
@@ -1635,8 +1639,8 @@ box_more (JNIEnv *jni_env, void *jobj_arg, void *jcls_arg)
                     {
                       jdoubleArray_ref row (jni_env,
                                             reinterpret_cast<jdoubleArray>
-                                              (jni_env->GetObjectArrayElement
-                                                (jarr, r)));
+                                            (jni_env->GetObjectArrayElement
+                                             (jarr, r)));
 
                       if (m.isempty ())
                         {
@@ -1644,7 +1648,7 @@ box_more (JNIEnv *jni_env, void *jobj_arg, void *jcls_arg)
                           m.resize (cols, rows);
                         }
                       jni_env->GetDoubleArrayRegion
-                        (row, 0, cols, m.fortran_vec () + r * cols);
+                      (row, 0, cols, m.fortran_vec () + r * cols);
                     }
                   retval = m.transpose ();
                 }
@@ -1743,7 +1747,7 @@ unbox (JNIEnv *jni_env, const octave_value& val, jobject_ref& jobj,
       // into a String[], not into a char array
 
       if (val.is_double_type ())
-        UNBOX_PRIMITIVE_ARRAY ( , , jdouble, Double);
+        UNBOX_PRIMITIVE_ARRAY (,, jdouble, Double);
       else if (val.islogical ())
         UNBOX_PRIMITIVE_ARRAY (bool_, bool, jboolean, Boolean);
       else if (val.isfloat ())
@@ -1831,7 +1835,7 @@ unbox (JNIEnv *jni_env, const octave_value& val, jobject_ref& jobj,
            && val.isreal ())
     {
       jclass_ref mcls (jni_env, find_octave_class (jni_env,
-                                                   "org/octave/Matrix"));
+                       "org/octave/Matrix"));
       dim_vector dims = val.dims ();
       jintArray_ref iv (jni_env, jni_env->NewIntArray (dims.ndims ()));
       jint *iv_data = jni_env->GetIntArrayElements (jintArray (iv), nullptr);
@@ -1861,7 +1865,7 @@ unbox (JNIEnv *jni_env, const octave_value& val, jobject_ref& jobj,
                                        (m.fortran_vec ()));
           jmethodID mID = jni_env->GetMethodID (mcls, "<init>", "([B[I)V");
           jobj = jni_env->NewObject
-            (jclass (mcls), mID, jbyteArray (bv), jintArray (iv));
+                 (jclass (mcls), mID, jbyteArray (bv), jintArray (iv));
           jcls = jni_env->GetObjectClass (jobj);
         }
       else if (val.is_uint8_type ())
@@ -1873,7 +1877,7 @@ unbox (JNIEnv *jni_env, const octave_value& val, jobject_ref& jobj,
                                        (m.fortran_vec ()));
           jmethodID mID = jni_env->GetMethodID (mcls, "<init>", "([B[I)V");
           jobj = jni_env->NewObject
-            (jclass (mcls), mID, jbyteArray (bv), jintArray (iv));
+                 (jclass (mcls), mID, jbyteArray (bv), jintArray (iv));
           jcls = jni_env->GetObjectClass (jobj);
         }
       else if (val.is_int32_type ())
@@ -1885,7 +1889,7 @@ unbox (JNIEnv *jni_env, const octave_value& val, jobject_ref& jobj,
                                       (m.fortran_vec ()));
           jmethodID mID = jni_env->GetMethodID (mcls, "<init>", "([I[I)V");
           jobj = jni_env->NewObject
-            (jclass (mcls), mID, jintArray (v), jintArray (iv));
+                 (jclass (mcls), mID, jintArray (v), jintArray (iv));
           jcls = jni_env->GetObjectClass (jobj);
         }
       else
@@ -1954,7 +1958,7 @@ get_current_thread_ID (JNIEnv *jni_env)
       // Call Java method static Thread java.lang.Thread.currentThread().
       jclass_ref cls (jni_env, jni_env->FindClass ("java/lang/Thread"));
       jmethodID mID = jni_env->GetStaticMethodID (cls, "currentThread",
-                                                  "()Ljava/lang/Thread;");
+                      "()Ljava/lang/Thread;");
       jobject_ref jthread (jni_env, jni_env->CallStaticObjectMethod (cls, mID));
 
       if (jthread)
@@ -1975,7 +1979,7 @@ get_current_thread_ID (JNIEnv *jni_env)
 //! @returns 0 in any case for good reason.
 
 static int
-java_event_hook (void)
+java_event_hook ()
 {
   JNIEnv *current_env = thread_jni_env ();
 
@@ -1983,9 +1987,9 @@ java_event_hook (void)
     {
       // Invoke static void org.octave.Octave.checkPendingAction().
       jclass_ref cls (current_env, find_octave_class (current_env,
-                                                      "org/octave/Octave"));
+                      "org/octave/Octave"));
       jmethodID mID = current_env->GetStaticMethodID
-        (cls, "checkPendingAction", "()V");
+                      (cls, "checkPendingAction", "()V");
       current_env->CallStaticVoidMethod (cls, mID);
 
       octave_set_default_fpucw ();
@@ -2002,7 +2006,7 @@ java_event_hook (void)
 //! @c __java_get__, @c __java_set__, and @c __java2mat__.
 
 static void
-initialize_java (void)
+initialize_java ()
 {
   if (! jvm)
     {
@@ -2026,20 +2030,22 @@ initialize_java (void)
 }
 
 JNIEXPORT jboolean JNICALL
-Java_org_octave_Octave_call (JNIEnv *env, jclass, jstring funcName,
+Java_org_octave_Octave_call (JNIEnv *env, jclass, jstring fcnName,
                              jobjectArray argin, jobjectArray argout)
 {
-  std::string fname = jstring_to_string (env, funcName);
+  std::string fname = jstring_to_string (env, fcnName);
 
   int nargout = env->GetArrayLength (argout);
   int nargin = env->GetArrayLength (argin);
 
-  octave_value_list varargin, varargout;
+  octave_value_list varargin;
 
   for (int i = 0; i < nargin; i++)
     varargin(i) = box (env, env->GetObjectArrayElement (argin, i), nullptr);
 
-  varargout = octave::feval (fname, varargin, nargout);
+  octave::interpreter& interp = octave::__get_interpreter__ ();
+
+  octave_value_list varargout = interp.feval (fname, varargin, nargout);
 
   jobjectArray_ref out_objs (env, argout), out_clss (env);
   out_objs.detach ();
@@ -2070,10 +2076,12 @@ Java_org_octave_Octave_doInvoke (JNIEnv *env, jclass, jint ID,
           oct_args(i) = box (env, jobj, nullptr);
         }
 
+      octave::interpreter& interp = octave::__get_interpreter__ ();
+
       if (val.is_function_handle ())
         {
           octave_function *fcn = val.function_value ();
-          octave::feval (fcn, oct_args);
+          interp.feval (fcn, oct_args);
         }
       else if (val.iscell () && val.length () > 0
                && (val.rows () == 1 || val.columns () == 1)
@@ -2085,7 +2093,7 @@ Java_org_octave_Octave_doInvoke (JNIEnv *env, jclass, jint ID,
           for (int i=1; i<c.numel (); i++)
             oct_args(len+i-1) = c(i);
 
-          octave::feval (fcn, oct_args);
+          interp.feval (fcn, oct_args);
         }
       else
         error ("trying to invoke non-invocable object");
@@ -2095,8 +2103,7 @@ Java_org_octave_Octave_doInvoke (JNIEnv *env, jclass, jint ID,
 JNIEXPORT void JNICALL
 Java_org_octave_Octave_doEvalString (JNIEnv *env, jclass, jstring cmd)
 {
-  octave::interpreter& interp
-    = octave::__get_interpreter__ ("Java_org_octave_Octave_doEvalString");
+  octave::interpreter& interp = octave::__get_interpreter__ ();
 
   std::string s = jstring_to_string (env, cmd);
   int pstatus;
@@ -2113,7 +2120,7 @@ Java_org_octave_Octave_needThreadedInvokation (JNIEnv *env, jclass)
 
 //! Ctor.
 
-octave_java::octave_java (void)
+octave_java::octave_java ()
   : octave_base_value (), m_java_object (nullptr), m_java_class (nullptr)
 {
 #if ! defined (HAVE_JAVA)
@@ -2140,16 +2147,16 @@ octave_java::octave_java (const voidptr& jobj, void *jcls)
 #endif
 }
 
-int octave_java::t_id (-1);
+int octave_java::s_t_id (-1);
 
-const std::string octave_java::t_name ("octave_java");
+const std::string octave_java::s_t_name ("octave_java");
 
 void
 octave_java::register_type (octave::type_info& ti)
 {
 #if defined (HAVE_JAVA)
 
-  t_id = ti.register_type (octave_java::t_name, "<unknown>",
+  s_t_id = ti.register_type (octave_java::s_t_name, "<unknown>",
                            octave_value (new octave_java ()));
 
 #else
@@ -2160,7 +2167,7 @@ octave_java::register_type (octave::type_info& ti)
 }
 
 dim_vector
-octave_java::dims (void) const
+octave_java::dims () const
 {
 #if defined (HAVE_JAVA)
 
@@ -2197,10 +2204,10 @@ octave_java::subsref (const std::string& type,
     case '.':
       if (type.length () > 1 && type[1] == '(')
         {
-          octave_value_list ovl;
-          count++;
-          ovl(1) = octave_value (this);
+          octave_value_list ovl (2);
+          m_count++;
           ovl(0) = (idx.front ())(0);
+          ovl(1) = octave_value (this);
           auto it = idx.begin ();
           ovl.append (*++it);
           retval = octave::FjavaMethod (ovl, 1);
@@ -2208,8 +2215,8 @@ octave_java::subsref (const std::string& type,
         }
       else
         {
-          octave_value_list ovl;
-          count++;
+          octave_value_list ovl (2);
+          m_count++;
           ovl(0) = octave_value (this);
           ovl(1) = (idx.front ())(0);
           retval = octave::F__java_get__ (ovl, 1);
@@ -2219,7 +2226,7 @@ octave_java::subsref (const std::string& type,
     case '(':
       if (current_env)
         retval = get_array_elements
-          (current_env, TO_JOBJECT (to_java ()), idx.front ());
+                 (current_env, TO_JOBJECT (to_java ()), idx.front ());
       break;
 
     default:
@@ -2263,14 +2270,14 @@ octave_java::subsasgn (const std::string& type,
       if (type.length () == 1)
         {
           // field assignment
-          octave_value_list ovl;
-          count++;
+          octave_value_list ovl (3);
+          m_count++;
           ovl(0) = octave_value (this);
           ovl(1) = (idx.front ())(0);
           ovl(2) = rhs;
           octave::F__java_set__ (ovl);
 
-          count++;
+          m_count++;
           retval = octave_value (this);
         }
       else if (type.length () > 2 && type[1] == '(')
@@ -2286,7 +2293,7 @@ octave_java::subsasgn (const std::string& type,
           next_idx.erase (next_idx.begin ());
           u(0).subsasgn (type.substr (2), next_idx, rhs);
 
-          count++;
+          m_count++;
           retval = octave_value (this);
         }
       else if (type[1] == '.')
@@ -2297,7 +2304,7 @@ octave_java::subsasgn (const std::string& type,
           next_idx.erase (next_idx.begin ());
           u(0).subsasgn (type.substr (1), next_idx, rhs);
 
-          count++;
+          m_count++;
           retval = octave_value (this);
         }
       else
@@ -2310,7 +2317,7 @@ octave_java::subsasgn (const std::string& type,
           set_array_elements (current_env, TO_JOBJECT (to_java ()),
                               idx.front (), rhs);
 
-          count++;
+          m_count++;
           retval = octave_value (this);
         }
       break;
@@ -2337,7 +2344,7 @@ octave_java::subsasgn (const std::string& type,
 }
 
 string_vector
-octave_java::map_keys (void) const
+octave_java::map_keys () const
 {
 #if defined (HAVE_JAVA)
 
@@ -2366,7 +2373,8 @@ octave_java::convert_to_str_internal (bool, bool force, char type) const
   JNIEnv *current_env = thread_jni_env ();
 
   if (current_env)
-    return convert_to_string (current_env, TO_JOBJECT (to_java ()), force, type);
+    return convert_to_string (current_env, TO_JOBJECT (to_java ()), force,
+                              type);
   else
     return octave_value ("");
 
@@ -2463,10 +2471,11 @@ octave_java::do_javaMethod (void *jni_env_arg, const std::string& name,
         {
           jclass_ref helperClass (jni_env, find_octave_class (jni_env, "org/octave/ClassHelper"));
           jmethodID mID = jni_env->GetStaticMethodID (helperClass, "invokeMethod",
-                                                      "(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;[Ljava/lang/Class;)Ljava/lang/Object;");
+                          "(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;[Ljava/lang/Class;)Ljava/lang/Object;");
           jstring_ref methName (jni_env, jni_env->NewStringUTF (name.c_str ()));
-          jobjectArray_ref resObj (jni_env, reinterpret_cast<jobjectArray> (jni_env->CallStaticObjectMethod (helperClass, mID,
-                                                                                                             to_java (), jstring (methName), jobjectArray (arg_objs), jobjectArray (arg_types))));
+          jobjectArray_ref resObj (jni_env,
+                                   reinterpret_cast<jobjectArray> (jni_env->CallStaticObjectMethod (helperClass, mID,
+                                       to_java (), jstring (methName), jobjectArray (arg_objs), jobjectArray (arg_types))));
           if (resObj)
             retval = box (jni_env, resObj);
           else
@@ -2532,21 +2541,21 @@ octave_java::do_javaMethod (void *jni_env_arg,
         {
           jclass_ref helperClass (jni_env,
                                   find_octave_class (jni_env,
-                                                     "org/octave/ClassHelper"));
+                                      "org/octave/ClassHelper"));
           jmethodID mID = jni_env->GetStaticMethodID (helperClass,
-                                                      "invokeStaticMethod",
-                                                      "(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;[Ljava/lang/Class;)Ljava/lang/Object;");
+                          "invokeStaticMethod",
+                          "(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;[Ljava/lang/Class;)Ljava/lang/Object;");
           jstring_ref methName (jni_env,
                                 jni_env->NewStringUTF (name.c_str ()));
           jstring_ref clsName (jni_env,
                                jni_env->NewStringUTF (class_name.c_str ()));
           jobject_ref resObj (jni_env,
                               jni_env->CallStaticObjectMethod (helperClass,
-                                                               mID,
-                                                               jstring (clsName),
-                                                               jstring (methName),
-                                                               jobjectArray (arg_objs),
-                                                               jobjectArray (arg_types)));
+                                  mID,
+                                  jstring (clsName),
+                                  jstring (methName),
+                                  jobjectArray (arg_objs),
+                                  jobjectArray (arg_types)));
           if (resObj)
             retval = box (jni_env, resObj);
           else
@@ -2614,18 +2623,18 @@ octave_java::do_javaObject (void *jni_env_arg, const std::string& name,
         {
           jclass_ref helperClass (jni_env,
                                   find_octave_class (jni_env,
-                                                     "org/octave/ClassHelper"));
+                                      "org/octave/ClassHelper"));
           jmethodID mID = jni_env->GetStaticMethodID (helperClass,
-                                                      "invokeConstructor",
-                                                      "(Ljava/lang/String;[Ljava/lang/Object;[Ljava/lang/Class;)Ljava/lang/Object;");
+                          "invokeConstructor",
+                          "(Ljava/lang/String;[Ljava/lang/Object;[Ljava/lang/Class;)Ljava/lang/Object;");
           jstring_ref clsName (jni_env,
                                jni_env->NewStringUTF (name.c_str ()));
           jobject_ref resObj (jni_env,
                               jni_env->CallStaticObjectMethod (helperClass,
-                                                               mID,
-                                                               jstring (clsName),
-                                                               jobjectArray (arg_objs),
-                                                               jobjectArray (arg_types)));
+                                  mID,
+                                  jstring (clsName),
+                                  jobjectArray (arg_objs),
+                                  jobjectArray (arg_types)));
 
           if (resObj)
             retval = octave_value (new octave_java (resObj, nullptr));
@@ -2686,15 +2695,15 @@ octave_java::do_java_get (void *jni_env_arg, const std::string& name)
     {
       jclass_ref helperClass (jni_env,
                               find_octave_class (jni_env,
-                                                 "org/octave/ClassHelper"));
+                                  "org/octave/ClassHelper"));
       jmethodID mID = jni_env->GetStaticMethodID (helperClass, "getField",
-          "(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;");
+                      "(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;");
       jstring_ref fName (jni_env, jni_env->NewStringUTF (name.c_str ()));
       jobject_ref resObj (jni_env,
                           jni_env->CallStaticObjectMethod (helperClass,
-                                                           mID,
-                                                           to_java (),
-                                                           jstring (fName)));
+                              mID,
+                              to_java (),
+                              jstring (fName)));
 
       if (resObj)
         retval = box (jni_env, resObj);
@@ -2752,16 +2761,16 @@ octave_java::do_java_get (void *jni_env_arg, const std::string& class_name,
     {
       jclass_ref helperClass (jni_env,
                               find_octave_class (jni_env,
-                                                 "org/octave/ClassHelper"));
+                                  "org/octave/ClassHelper"));
       jmethodID mID = jni_env->GetStaticMethodID (helperClass,
-                                                  "getStaticField",
-                                                  "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;");
+                      "getStaticField",
+                      "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;");
       jstring_ref cName (jni_env, jni_env->NewStringUTF (class_name.c_str ()));
       jstring_ref fName (jni_env, jni_env->NewStringUTF (name.c_str ()));
       jobject_ref resObj (jni_env,
                           jni_env->CallStaticObjectMethod (helperClass, mID,
-                                                           jstring (cName),
-                                                           jstring (fName)));
+                              jstring (cName),
+                              jstring (fName)));
       if (resObj)
         retval = box (jni_env, resObj);
       else
@@ -2826,9 +2835,9 @@ octave_java::do_java_set (void *jni_env_arg, const std::string& name,
         {
           jclass_ref helperClass (jni_env,
                                   find_octave_class (jni_env,
-                                                     "org/octave/ClassHelper"));
+                                      "org/octave/ClassHelper"));
           jmethodID mID = jni_env->GetStaticMethodID (helperClass, "setField",
-                                                      "(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)V");
+                          "(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)V");
           jstring_ref fName (jni_env, jni_env->NewStringUTF (name.c_str ()));
           jni_env->CallStaticObjectMethod (helperClass, mID, to_java (),
                                            jstring (fName), jobject (jobj));
@@ -2893,10 +2902,10 @@ octave_java::do_java_set (void *jni_env_arg, const std::string& class_name,
         {
           jclass_ref helperClass (jni_env,
                                   find_octave_class (jni_env,
-                                                     "org/octave/ClassHelper"));
+                                      "org/octave/ClassHelper"));
           jmethodID mID = jni_env->GetStaticMethodID (helperClass,
-                                                      "setStaticField",
-                                                      "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;)V");
+                          "setStaticField",
+                          "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;)V");
           jstring_ref cName (jni_env,
                              jni_env->NewStringUTF (class_name.c_str ()));
           jstring_ref fName (jni_env, jni_env->NewStringUTF (name.c_str ()));
@@ -2977,8 +2986,8 @@ octave_java::init (void *jobj_arg, void *jcls_arg)
           jclass_ref clsCls (current_env,
                              current_env->GetObjectClass (TO_JCLASS (m_java_class)));
           jmethodID mID = current_env->GetMethodID (clsCls,
-                                                    "getCanonicalName",
-                                                    "()Ljava/lang/String;");
+                          "getCanonicalName",
+                          "()Ljava/lang/String;");
           jobject_ref resObj (current_env,
                               current_env->CallObjectMethod (TO_JCLASS (m_java_class), mID));
           m_java_classname = jstring_to_string (current_env, resObj);
@@ -2999,7 +3008,7 @@ octave_java::init (void *jobj_arg, void *jcls_arg)
 }
 
 void
-octave_java::release (void)
+octave_java::release ()
 {
 #if defined (HAVE_JAVA)
 
@@ -3027,17 +3036,21 @@ octave_java::release (void)
 #endif
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // DEFUN blocks below must be outside of HAVE_JAVA block so that documentation
 // strings are always available, even when functions are not.
 
 DEFUN (__java_init__, , ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} __java_init__ ()
-Internal function used @strong{only} when debugging Java interface.
+@deftypefn {} {@var{status} =} __java_init__ ()
+Internal function used @strong{only} when debugging the Java interface.
 
-Function will directly call initialize_java to create an instance of a JVM.
+This function will directly call @code{initialize_java} to create an instance
+of a JVM.
+
+The return variable @var{status} is 1 if the Java interface has been created,
+and 0 otherwise.
 @end deftypefn */)
 {
 #if defined (HAVE_JAVA)
@@ -3062,8 +3075,7 @@ DEFUN (__java_exit__, , ,
 @deftypefn {} {} __java_exit__ ()
 Internal function used @strong{only} when debugging Java interface.
 
-Function will directly call terminate_jvm to destroy the current JVM
-instance.
+Function will directly call terminate_jvm to destroy the current JVM instance.
 @end deftypefn */)
 {
 #if defined (HAVE_JAVA)
@@ -3334,7 +3346,7 @@ equivalent
 
 DEFUN (__java2mat__, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} __java2mat__ (@var{javaobj})
+@deftypefn {} {@var{mat} =} __java2mat__ (@var{javaobj})
 Undocumented internal function.
 @end deftypefn */)
 {
@@ -3372,7 +3384,7 @@ DEFUN (java_matrix_autoconversion, args, nargout,
        doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{val} =} java_matrix_autoconversion ()
 @deftypefnx {} {@var{old_val} =} java_matrix_autoconversion (@var{new_val})
-@deftypefnx {} {} java_matrix_autoconversion (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} java_matrix_autoconversion (@var{new_val}, "local")
 Query or set the internal variable that controls whether Java arrays are
 automatically converted to Octave matrices.
 
@@ -3403,7 +3415,7 @@ DEFUN (java_unsigned_autoconversion, args, nargout,
        doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{val} =} java_unsigned_autoconversion ()
 @deftypefnx {} {@var{old_val} =} java_unsigned_autoconversion (@var{new_val})
-@deftypefnx {} {} java_unsigned_autoconversion (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} java_unsigned_autoconversion (@var{new_val}, "local")
 Query or set the internal variable that controls how integer classes are
 converted when @code{java_matrix_autoconversion} is enabled.
 
@@ -3435,7 +3447,7 @@ DEFUN (debug_java, args, nargout,
        doc: /* -*- texinfo -*-
 @deftypefn  {} {@var{val} =} debug_java ()
 @deftypefnx {} {@var{old_val} =} debug_java (@var{new_val})
-@deftypefnx {} {} debug_java (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} debug_java (@var{new_val}, "local")
 Query or set the internal variable that determines whether extra debugging
 information regarding the initialization of the JVM and any Java exceptions
 is printed.
@@ -3466,7 +3478,7 @@ The original variable value is restored when exiting the function.
 
 DEFUN (isjava, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} isjava (@var{x})
+@deftypefn {} {@var{tf} =} isjava (@var{x})
 Return true if @var{x} is a Java object.
 @seealso{class, typeinfo, isa, javaObject}
 @end deftypefn */)
@@ -3494,14 +3506,22 @@ Return true if @var{x} is a Java object.
 
 ## Check we can create objects that wrap java literals
 %!testif HAVE_JAVA; usejava ("jvm") <*38821>
-%! assert (class (javaObject ("java.lang.Byte",     uint8 (1))), "java.lang.Byte");
-%! assert (class (javaObject ("java.lang.Byte",      int8 (1))), "java.lang.Byte");
-%! assert (class (javaObject ("java.lang.Short",   uint16 (1))), "java.lang.Short");
-%! assert (class (javaObject ("java.lang.Short",    int16 (1))), "java.lang.Short");
-%! assert (class (javaObject ("java.lang.Integer", uint32 (1))), "java.lang.Integer");
-%! assert (class (javaObject ("java.lang.Integer",  int32 (1))), "java.lang.Integer");
-%! assert (class (javaObject ("java.lang.Long",    uint64 (1))), "java.lang.Long");
-%! assert (class (javaObject ("java.lang.Long",     int64 (1))), "java.lang.Long");
+%! assert (class (javaObject ("java.lang.Byte",     uint8 (1))),
+%!         "java.lang.Byte");
+%! assert (class (javaObject ("java.lang.Byte",      int8 (1))),
+%!         "java.lang.Byte");
+%! assert (class (javaObject ("java.lang.Short",   uint16 (1))),
+%!         "java.lang.Short");
+%! assert (class (javaObject ("java.lang.Short",    int16 (1))),
+%!         "java.lang.Short");
+%! assert (class (javaObject ("java.lang.Integer", uint32 (1))),
+%!         "java.lang.Integer");
+%! assert (class (javaObject ("java.lang.Integer",  int32 (1))),
+%!         "java.lang.Integer");
+%! assert (class (javaObject ("java.lang.Long",    uint64 (1))),
+%!         "java.lang.Long");
+%! assert (class (javaObject ("java.lang.Long",     int64 (1))),
+%!         "java.lang.Long");
 
 ## More checks of java numeric and boolean class instances
 %!testif HAVE_JAVA; usejava ("jvm")
@@ -3559,8 +3579,10 @@ Return true if @var{x} is a Java object.
 %! assert (javaMethod ("valueOf", "java.lang.Long",    int64 (1)), 1)
 %! assert (javaMethod ("valueOf", "java.lang.Float",  single (1)), 1)
 %! assert (javaMethod ("valueOf", "java.lang.Double", double (1)), 1)
-%! assert (class (javaMethod ("valueOf", "java.math.BigDecimal", double (1))), "java.math.BigDecimal")
-%! assert (class (javaMethod ("valueOf", "java.math.BigInteger",  int64 (1))), "java.math.BigInteger")
+%! assert (class (javaMethod ("valueOf", "java.math.BigDecimal", double (1))),
+%!         "java.math.BigDecimal")
+%! assert (class (javaMethod ("valueOf", "java.math.BigInteger",  int64 (1))),
+%!         "java.math.BigInteger")
 
 ## Automatic conversion from string cell array into String[]
 %!testif HAVE_JAVA; usejava ("jvm") <*45290>
@@ -3595,4 +3617,4 @@ Return true if @var{x} is a Java object.
 %! assert (frame.isResizable ());
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

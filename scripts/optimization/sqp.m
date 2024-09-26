@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -121,8 +121,7 @@
 ## inequality constraints @var{g} and @var{h}.  If the arguments are vectors
 ## then @var{x}(i) is bound by @var{lb}(i) and @var{ub}(i).  A bound can also
 ## be a scalar in which case all elements of @var{x} will share the same
-## bound.  If only one bound (lb, ub) is specified then the other will
-## default to (-@var{realmax}, +@var{realmax}).
+## bound.
 ##
 ## The seventh argument @var{maxiter} specifies the maximum number of
 ## iterations.  The default value is 100.
@@ -213,14 +212,14 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
   if (iscell (objf))
     switch (numel (objf))
       case 1
-        obj_fun = objf{1};
-        obj_grd = @(x, obj) fd_obj_grd (x, obj, obj_fun);
+        obj_fcn = objf{1};
+        obj_grd = @(x, obj) fd_obj_grd (x, obj, obj_fcn);
       case 2
-        obj_fun = objf{1};
+        obj_fcn = objf{1};
         obj_grd = objf{2};
         have_grd = 1;
       case 3
-        obj_fun = objf{1};
+        obj_fcn = objf{1};
         obj_grd = objf{2};
         obj_hess = objf{3};
         have_grd = 1;
@@ -229,31 +228,31 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
         error ("sqp: invalid objective function specification");
     endswitch
   else
-    obj_fun = objf;   # No cell array, only obj_fun set
-    obj_grd = @(x, obj) fd_obj_grd (x, obj, obj_fun);
+    obj_fcn = objf;   # No cell array, only obj_fcn set
+    obj_grd = @(x, obj) fd_obj_grd (x, obj, obj_fcn);
   endif
 
-  ce_fun = @empty_cf;
+  ce_fcn = @empty_cf;
   ce_grd = @empty_jac;
   if (nargin > 2)
     if (iscell (cef))
       switch (numel (cef))
         case 1
-          ce_fun = cef{1};
-          ce_grd = @(x) fd_ce_jac (x, ce_fun);
+          ce_fcn = cef{1};
+          ce_grd = @(x) fd_ce_jac (x, ce_fcn);
         case 2
-          ce_fun = cef{1};
+          ce_fcn = cef{1};
           ce_grd = cef{2};
         otherwise
           error ("sqp: invalid equality constraint function specification");
       endswitch
     elseif (! isempty (cef))
-      ce_fun = cef;   # No cell array, only constraint equality function set
-      ce_grd = @(x) fd_ce_jac (x, ce_fun);
+      ce_fcn = cef;   # No cell array, only constraint equality function set
+      ce_grd = @(x) fd_ce_jac (x, ce_fcn);
     endif
   endif
 
-  ci_fun = @empty_cf;
+  ci_fcn = @empty_cf;
   ci_grd = @empty_jac;
   if (nargin > 3)
     ## constraint function given by user with possible gradient
@@ -274,55 +273,61 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
       if (iscell (cif))
         switch (length (cif))
           case 1
-            ci_fun = cif{1};
+            ci_fcn = cif{1};
           case 2
-            ci_fun = cif{1};
+            ci_fcn = cif{1};
             ci_grd = cif{2};
           otherwise
            error ("sqp: invalid inequality constraint function specification");
         endswitch
       elseif (! isempty (cif))
-        ci_fun = cif;   # No cell array, only constraint inequality function set
+        ci_fcn = cif;   # No cell array, only constraint inequality function set
       endif
     else
       ## constraint inequality function with bounds present
       lb_idx = ub_idx = true (size (x0));
       ub_grad = - (lb_grad = eye (rows (x0)));
-      if (isvector (lb))
-        globals.lb = tmp_lb = lb(:);
-        lb_idx(:) = tmp_idx = (lb != -Inf);
-        globals.lb = globals.lb(tmp_idx, 1);
-        lb_grad = lb_grad(lb_idx, :);
-      elseif (isempty (lb))
+
+      ## if unspecified set ub and lb to +/-Inf, preserving single type
+      if (isempty (lb))
         if (isa (x0, "single"))
-          globals.lb = tmp_lb = -realmax ("single");
+          lb = - inf (size (x0), "single");
         else
-          globals.lb = tmp_lb = -realmax ();
+          lb = - inf (size (x0));
         endif
+      endif
+
+      if (isvector (lb))
+        lb = lb(:);
+        lb_idx(:) = (lb != -Inf);
+        globals.lb = lb(lb_idx, 1);
+        lb_grad = lb_grad(lb_idx, :);
       else
         error ("sqp: invalid lower bound");
       endif
 
-      if (isvector (ub))
-        globals.ub = tmp_ub = ub(:);
-        ub_idx(:) = tmp_idx = (ub != Inf);
-        globals.ub = globals.ub(tmp_idx, 1);
-        ub_grad = ub_grad(ub_idx, :);
-      elseif (isempty (ub))
+      if (isempty (ub))
         if (isa (x0, "single"))
-          globals.ub = tmp_ub = realmax ("single");
+          ub = inf (size (x0), "single");
         else
-          globals.ub = tmp_ub = realmax ();
+          ub = inf (size (x0));
         endif
+      endif
+
+      if (isvector (ub))
+        ub = ub(:);
+        ub_idx(:) = (ub != Inf);
+        globals.ub = ub(ub_idx, 1);
+        ub_grad = ub_grad(ub_idx, :);
       else
         error ("sqp: invalid upper bound");
       endif
 
-      if (any (tmp_lb > tmp_ub))
+      if (any (globals.lb > globals.ub))
         error ("sqp: upper bound smaller than lower bound");
       endif
       bounds_grad = [lb_grad; ub_grad];
-      ci_fun = @(x) cf_ub_lb (x, lb_idx, ub_idx, globals);
+      ci_fcn = @(x) cf_ub_lb (x, lb_idx, ub_idx, globals);
       ci_grd = @(x) cigrad_ub_lb (x, bounds_grad, globals);
     endif
 
@@ -350,15 +355,15 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
   ## Seed x with initial guess and evaluate objective function, constraints,
   ## and gradients at initial value x0.
   ##
-  ## obj_fun   -- objective function
+  ## obj_fcn   -- objective function
   ## obj_grad  -- objective gradient
-  ## ce_fun    -- equality constraint functions
-  ## ci_fun    -- inequality constraint functions
+  ## ce_fcn    -- equality constraint functions
+  ## ci_fcn    -- inequality constraint functions
   ## A == [grad_{x_1} cx_fun, grad_{x_2} cx_fun, ..., grad_{x_n} cx_fun]^T
   x = x0;
 
-  obj = feval (obj_fun, x0);
-  globals.nfun = 1;
+  obj = feval (obj_fcn, x0);
+  globals.nfev = 1;
 
   if (have_grd)
     c = feval (obj_grd, x0);
@@ -374,10 +379,10 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
     B = eye (n, n);
   endif
 
-  ce = feval (ce_fun, x0);
+  ce = feval (ce_fcn, x0);
   F = feval (ce_grd, x0);
 
-  ci = feval (ci_fun, x0);
+  ci = feval (ci_fcn, x0);
   C = feval (ci_grd, x0);
 
   A = [F; C];
@@ -391,7 +396,7 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
   info = 0;
   iter = 0;
   ## report ();  # Called with no arguments to initialize reporting
-  ## report (iter, qp_iter, alpha, __sqp_nfun__, obj);
+  ## report (iter, qp_iter, alpha, __sqp_nfev__, obj);
 
   while (++iter < iter_max)
 
@@ -445,7 +450,7 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
     ## Choose mu such that p is a descent direction for the chosen
     ## merit function phi.
     [x_new, alpha, obj_new, globals] = ...
-        linesearch_L1 (x, p, obj_fun, obj_grd, ce_fun, ci_fun, lambda, ...
+        linesearch_L1 (x, p, obj_fcn, obj_grd, ce_fcn, ci_fcn, lambda, ...
                        obj, c, globals);
 
     delx = x_new - x;
@@ -463,10 +468,10 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
       c_new = feval (obj_grd, x_new, obj_new);
     endif
 
-    ce_new = feval (ce_fun, x_new);
+    ce_new = feval (ce_fcn, x_new);
     F_new = feval (ce_grd, x_new);
 
-    ci_new = feval (ci_fun, x_new);
+    ci_new = feval (ci_fcn, x_new);
     C_new = feval (ci_grd, x_new);
 
     A_new = [F_new; C_new];
@@ -533,7 +538,7 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
 
     A = A_new;
 
-    ## report (iter, qp_iter, alpha, __sqp_nfun__, obj);
+    ## report (iter, qp_iter, alpha, __sqp_nfev__, obj);
 
   endwhile
 
@@ -542,24 +547,24 @@ function [x, obj, info, iter, nf, lambda] = sqp (x0, objf, cef, cif, lb, ub, max
     info = 103;
   endif
 
-  nf = globals.nfun;
+  nf = globals.nfev;
 
 endfunction
 
 
-function [merit, obj, globals] = phi_L1 (obj, obj_fun, ce_fun, ci_fun, ...
+function [merit, obj, globals] = phi_L1 (obj, obj_fcn, ce_fcn, ci_fcn, ...
                                          x, mu, globals)
 
-  ce = feval (ce_fun, x);
-  ci = feval (ci_fun, x);
+  ce = feval (ce_fcn, x);
+  ci = feval (ci_fcn, x);
 
   idx = ci < 0;
 
   con = [ce; ci(idx)];
 
   if (isempty (obj))
-    obj = feval (obj_fun, x);
-    globals.nfun += 1;
+    obj = feval (obj_fcn, x);
+    globals.nfev += 1;
   endif
 
   merit = obj;
@@ -573,7 +578,7 @@ endfunction
 
 
 function [x_new, alpha, obj, globals] = ...
-  linesearch_L1 (x, p, obj_fun, obj_grd, ce_fun, ci_fun, lambda, obj, c, globals)
+  linesearch_L1 (x, p, obj_fcn, obj_grd, ce_fcn, ci_fcn, lambda, obj, c, globals)
 
   ## Choose parameters
   ##
@@ -593,13 +598,13 @@ function [x_new, alpha, obj, globals] = ...
 
   alpha = 1;
 
-  ce = feval (ce_fun, x);
+  ce = feval (ce_fcn, x);
 
-  [phi_x_mu, obj, globals] = phi_L1 (obj, obj_fun, ce_fun, ci_fun, x, ...
+  [phi_x_mu, obj, globals] = phi_L1 (obj, obj_fcn, ce_fcn, ci_fcn, x, ...
                                      mu, globals);
 
   D_phi_x_mu = c' * p;
-  d = feval (ci_fun, x);
+  d = feval (ci_fcn, x);
   ## only those elements of d corresponding
   ## to violated constraints should be included.
   idx = d < 0;
@@ -609,7 +614,7 @@ function [x_new, alpha, obj, globals] = ...
   endif
 
   while (1)
-    [p1, obj, globals] = phi_L1 ([], obj_fun, ce_fun, ci_fun, ...
+    [p1, obj, globals] = phi_L1 ([], obj_fcn, ce_fcn, ci_fcn, ...
                                  x+alpha*p, mu, globals);
     p2 = phi_x_mu+eta*alpha*D_phi_x_mu;
     if (p1 > p2)
@@ -668,9 +673,9 @@ function jac = fdjac (f, x)
 endfunction
 
 
-function grd = fd_obj_grd (x, obj, obj_fun)
+function grd = fd_obj_grd (x, obj, obj_fcn)
 
-  grd = fdgrd (obj_fun, x, obj);
+  grd = fdgrd (obj_fcn, x, obj);
 
 endfunction
 
@@ -689,9 +694,9 @@ function res = empty_jac (x)
 endfunction
 
 
-function jac = fd_ce_jac (x, ce_fun)
+function jac = fd_ce_jac (x, ce_fcn)
 
-  jac = fdjac (ce_fun, x);
+  jac = fdjac (ce_fcn, x);
 
 endfunction
 
@@ -705,14 +710,31 @@ endfunction
 
 
 function res = cf_ub_lb (x, lbidx, ubidx, globals)
+  ## function returning constraint evaluated at x, and distance between ub/lb
+  ## and x, when they are specified (otherwise return empty)
 
-  ## combine constraint function with ub and lb
-  if (isempty (globals.cifcn))
-    res = [x(lbidx,1)-globals.lb; globals.ub-x(ubidx,1)];
+  ## inequality constraints
+  if (! isempty (globals.cifcn))
+    ci = feval (globals.cifcn, x);
   else
-    res = [feval(globals.cifcn,x); x(lbidx,1)-globals.lb;
-           globals.ub-x(ubidx,1)];
+    ci = [];
   endif
+
+  ## lower bounds
+  if (! isempty (globals.lb))
+    lb = x(lbidx, 1) - globals.lb;
+  else
+    lb = [];
+  endif
+
+  ## upper bounds
+  if (! isempty (globals.ub))
+    ub = globals.ub - x(ubidx, 1);
+  else
+    ub = [];
+  endif
+
+  res = [ci; lb; ub];
 
 endfunction
 
@@ -734,12 +756,12 @@ function res = cigrad_ub_lb (x, bgrad, globals)
 endfunction
 
 ## Utility function used to debug sqp
-function report (iter, qp_iter, alpha, nfun, obj)
+function report (iter, qp_iter, alpha, nfev, obj)
 
   if (nargin == 0)
-    printf ("  Itn ItQP     Step  Nfun     Objective\n");
+    printf ("  Itn ItQP     Step  Nfev     Objective\n");
   else
-    printf ("%5d %4d %8.1g %5d %13.6e\n", iter, qp_iter, alpha, nfun, obj);
+    printf ("%5d %4d %8.1g %5d %13.6e\n", iter, qp_iter, alpha, nfev, obj);
   endif
 
 endfunction
@@ -772,7 +794,7 @@ endfunction
 %!
 %! obj_opt = 0.0539498477702739;
 %!
-%! assert (x, x_opt, 8*sqrt (eps));
+%! assert (x, x_opt, 10 * sqrt (eps));
 %! assert (obj, obj_opt, sqrt (eps));
 
 ## Test input validation

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -42,7 +42,7 @@
 #  define MATRIXV MATRIX
 #endif
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFNDBINOP_OP (sdmmul, SCALAR, MATRIX, SCALARV, MATRIXV, *)
 DEFNDBINOP_OP (dmsmul, MATRIX, SCALAR, MATRIXV, SCALARV, *)
@@ -54,24 +54,24 @@ DEFNDBINOP_OP (dmsmul, MATRIX, SCALAR, MATRIXV, SCALARV, *)
 
 DEFBINOP (dmsdiv, MATRIX, SCALAR)
 {
-  const OCTAVE_MATRIX& v1 = dynamic_cast<const OCTAVE_MATRIX&> (a1);
-  const OCTAVE_SCALAR& v2 = dynamic_cast<const OCTAVE_SCALAR&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_MATRIX&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_SCALAR&, v2, a2);
 
   return v1.MATRIX_VALUE () / v2.SCALAR_VALUE ();
 }
 
 DEFBINOP (sdmldiv, SCALAR, MATRIX)
 {
-  const OCTAVE_SCALAR& v1 = dynamic_cast<const OCTAVE_SCALAR&> (a1);
-  const OCTAVE_MATRIX& v2 = dynamic_cast<const OCTAVE_MATRIX&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_SCALAR&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_MATRIX&, v2, a2);
 
   return v2.MATRIX_VALUE () / v1.SCALAR_VALUE ();
 }
 
 DEFBINOP (dmspow, MATRIX, SCALAR)
 {
-  const OCTAVE_MATRIX& v1 = dynamic_cast<const OCTAVE_MATRIX&> (a1);
-  const OCTAVE_SCALAR& v2 = dynamic_cast<const OCTAVE_SCALAR&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_MATRIX&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const OCTAVE_SCALAR&, v2, a2);
 
   return xpow (v1.MATRIX_VALUE (), v2.SCALAR_VALUE ());
 }
@@ -89,4 +89,4 @@ INST_NAME (octave::type_info& ti)
   INSTALL_BINOP_TI (ti, op_pow, OCTAVE_MATRIX, OCTAVE_SCALAR, dmspow);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

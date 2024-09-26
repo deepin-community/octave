@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,7 +32,7 @@
 #include "oct-prcstrm.h"
 #include "sysdep.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 octave::stream
 octave_iprocstream::create (const std::string& n, std::ios::openmode arg_md,
@@ -50,7 +50,7 @@ octave_iprocstream::octave_iprocstream (const std::string& n,
                          arg_md, ff, encoding, octave::pclose)
 { }
 
-octave_iprocstream::~octave_iprocstream (void)
+octave_iprocstream::~octave_iprocstream ()
 {
   do_close ();
 }
@@ -71,9 +71,9 @@ octave_oprocstream::octave_oprocstream (const std::string& n,
                          arg_md, ff, encoding, octave::pclose)
 { }
 
-octave_oprocstream::~octave_oprocstream (void)
+octave_oprocstream::~octave_oprocstream ()
 {
   do_close ();
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

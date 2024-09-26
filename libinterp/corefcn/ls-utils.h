@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2003-2022 The Octave Project Developers
+// Copyright (C) 2003-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,7 +30,7 @@
 
 #include "data-conv.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 extern OCTINTERP_API save_type
 get_save_type (double max_val, double min_val);
@@ -38,24 +38,6 @@ get_save_type (double max_val, double min_val);
 extern OCTINTERP_API save_type
 get_save_type (float max_val, float min_val);
 
-OCTAVE_NAMESPACE_END
-
-#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-
-OCTAVE_DEPRECATED (7, "use 'octave::get_save_type' instead")
-inline save_type
-get_save_type (double max_val, double min_val)
-{
-  return octave::get_save_type (max_val, min_val);
-}
-
-OCTAVE_DEPRECATED (7, "use 'octave::get_save_type' instead")
-inline save_type
-get_save_type (float max_val, float min_val)
-{
-  return octave::get_save_type (max_val, min_val);
-}
-
-#endif
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

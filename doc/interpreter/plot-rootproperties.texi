@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -19,6 +22,177 @@
 @c <https://www.gnu.org/licenses/>.
 
 Properties of the root graphics object:
+
+@subsubheading Categories:
+
+@ref{XREFrootcategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFrootcategoryCommandWindowDisplay, , @w{Command Window Display}}@: | @ref{XREFrootcategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFrootcategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFrootcategoryParent/Children, , @w{Parent/Children}}@: | @ref{XREFrootcategoryPointerInformation, , @w{Pointer Information}}@: | @ref{XREFrootcategoryScreenInformation, , @w{Screen Information}}@: | @ref{XREFrootcategoryUnused, , @w{Unused}}@: 
+
+@anchor{XREFrootcategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex root CallbackExecution
+
+@table @asis
+
+@anchor{XREFrootcallbackobject}
+@prindex root callbackobject
+@item @code{callbackobject} (read-only): graphics handle, def. @code{[](0x0)}
+Graphics handle of the current object whose callback is executing.
+
+@end table
+
+@anchor{XREFrootcategoryCommandWindowDisplay}
+@subsubheading Command Window Display
+@prindex root CommandWindowDisplay
+
+@table @asis
+
+@anchor{XREFrootcommandwindowsize}
+@prindex root commandwindowsize
+@item @code{commandwindowsize} (read-only): two-element vector, def. @code{[0   0]}
+The number of columns and rows displayed in a newly created command window.
+
+
+@anchor{XREFrootfixedwidthfontname}
+@prindex root fixedwidthfontname
+@item @code{fixedwidthfontname}: string, def. @qcode{"Courier"}
+Name of the fixed-width font that will be used for graphics objects when the @qcode{"fontname"} property is set to @qcode{"FixedWidth"}.
+
+@end table
+
+@anchor{XREFrootcategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex root MouseInteraction
+
+@table @asis
+
+@anchor{XREFrootcontextmenu}
+@prindex root contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this root object.
+
+@end table
+
+@anchor{XREFrootcategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex root ObjectIdentification
+
+@table @asis
+
+@anchor{XREFrootcurrentfigure}
+@prindex root currentfigure
+@item @code{currentfigure}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the current figure.
+
+
+@anchor{XREFroottag}
+@prindex root tag
+@item @code{tag}: string, def. @qcode{""}
+A user-defined string to label the graphics object.
+
+
+@anchor{XREFroottype}
+@prindex root type
+@item @code{type} (read-only): string
+Class name of the graphics object.  @code{type} is always @qcode{"root"}.
+
+
+@anchor{XREFrootuserdata}
+@prindex root userdata
+@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
+User-defined data to associate with the graphics object.
+
+@end table
+
+@anchor{XREFrootcategoryParent/Children}
+@subsubheading Parent/Children
+@prindex root Parent/Children
+
+@table @asis
+
+@anchor{XREFrootchildren}
+@prindex root children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Graphics handles of the root's children.
+
+
+@anchor{XREFroothandlevisibility}
+@prindex root handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+The root object handle is always visible.  Changing this setting to @qcode{"callback"} or @qcode{"off"} has no effect.
+
+
+@anchor{XREFrootparent}
+@prindex root parent
+@item @code{parent}: graphics handle, def. @code{[](0x0)}
+Root object has no parent graphics object.  @code{parent} is always empty.
+
+
+@anchor{XREFrootshowhiddenhandles}
+@prindex root showhiddenhandles
+@item @code{showhiddenhandles}: @{@qcode{"off"}@} | @qcode{"on"}
+If @code{showhiddenhandles} is @qcode{"on"}, all graphics objects handles are visible in their parents' children list, regardless of the value of their @code{handlevisibility} property.
+
+@end table
+
+@anchor{XREFrootcategoryPointerInformation}
+@subsubheading Pointer Information
+@prindex root PointerInformation
+
+@table @asis
+
+@anchor{XREFrootpointerlocation}
+@prindex root pointerlocation
+@item @code{pointerlocation}: two-element vector, def. @code{[0   0]}
+Global pointer location         tracking is not yet implemented for root objects.  @code{pointerlocation} is unused.  @code{pointerlocation} for root objects will always be         [0 0].
+
+
+@anchor{XREFrootpointerwindow}
+@prindex root pointerwindow
+@item @code{pointerwindow} (read-only): graphics handle, def. @code{0}
+Pointer window tracking is not yet implemented for root objects.  @code{pointerwindow} is unused.  @code{pointerwindow} value for root objects will always be 0.
+
+@end table
+
+@anchor{XREFrootcategoryScreenInformation}
+@subsubheading Screen Information
+@prindex root ScreenInformation
+
+@table @asis
+
+@anchor{XREFrootmonitorpositions}
+@prindex root monitorpositions
+@item @code{monitorpositions} (read-only): four-element vector
+Reports the width and height of connected monitors.  Note: Octave only partially implements @code{monitorpositions}.  Only information about the primary monitor is stored in @code{monitorpositions} which is the same information stored in the @ref{XREFrootscreensize, , @w{@qcode{"screensize"} property}}.
+
+
+@anchor{XREFrootscreendepth}
+@prindex root screendepth
+@item @code{screendepth} (read-only): double
+Color depth in bits per pixel of the display.
+
+
+@anchor{XREFrootscreenpixelsperinch}
+@prindex root screenpixelsperinch
+@item @code{screenpixelsperinch} (read-only): double
+The screen resolution of the primary display in units of pixels per inch.
+
+
+@anchor{XREFrootscreensize}
+@prindex root screensize
+@item @code{screensize} (read-only): four-element vector
+Size of the primary display represented as the four-element vector [left, bottom, width, height].
+
+
+@anchor{XREFrootunits}
+@prindex root units
+@item @code{units}: @qcode{"centimeters"} | @qcode{"characters"} | @qcode{"inches"} | @qcode{"normalized"} | @{@qcode{"pixels"}@} | @qcode{"points"}
+The unit type used for the @ref{XREFrootmonitorpositions, , @qcode{"monitorpositions"}}, @ref{XREFrootpointerlocation, , @qcode{"pointerlocation"}}, and @ref{XREFrootscreensize, , @qcode{"screensize"}} properties.
+
+@end table
+
+@anchor{XREFrootcategoryUnused}
+@subsubheading Unused
+@prindex root Unused
 
 @table @asis
 
@@ -40,34 +214,10 @@ Properties of the root graphics object:
 @code{buttondownfcn} is unused.
 
 
-@anchor{XREFrootcallbackobject}
-@prindex root callbackobject
-@item @code{callbackobject} (read-only): graphics handle, def. @code{[](0x0)}
-Graphics handle of the current object whose callback is executing.
-
-
-@anchor{XREFrootchildren}
-@prindex root children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-Graphics handles of the root's children.
-
-
 @anchor{XREFrootclipping}
 @prindex root clipping
 @item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
 @code{clipping} is unused.
-
-
-@anchor{XREFrootcommandwindowsize}
-@prindex root commandwindowsize
-@item @code{commandwindowsize} (read-only): def. @code{[0   0]}
-
-
-
-@anchor{XREFrootcontextmenu}
-@prindex root contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this root object.
 
 
 @anchor{XREFrootcreatefcn}
@@ -76,28 +226,10 @@ Graphics handle of the uicontextmenu object that is currently associated to this
 @code{createfcn} is unused.
 
 
-@anchor{XREFrootcurrentfigure}
-@prindex root currentfigure
-@item @code{currentfigure}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the current figure.
-
-
 @anchor{XREFrootdeletefcn}
 @prindex root deletefcn
 @item @code{deletefcn}: string | function handle, def. @code{[](0x0)}
 @code{deletefcn} is unused.
-
-
-@anchor{XREFrootfixedwidthfontname}
-@prindex root fixedwidthfontname
-@item @code{fixedwidthfontname}: string, def. @qcode{"Courier"}
-
-
-
-@anchor{XREFroothandlevisibility}
-@prindex root handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-@code{handlevisibility} is unused.
 
 
 @anchor{XREFroothittest}
@@ -112,52 +244,10 @@ Graphics handle of the current figure.
 @code{interruptible} is unused.
 
 
-@anchor{XREFrootmonitorpositions}
-@prindex root monitorpositions
-@item @code{monitorpositions} (read-only):
-@code{monitorpositions} is unused.
-
-
-@anchor{XREFrootparent}
-@prindex root parent
-@item @code{parent}: graphics handle, def. @code{[](0x0)}
-Root object has no parent graphics object.  @code{parent} is always empty.
-
-
 @anchor{XREFrootpickableparts}
 @prindex root pickableparts
 @item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
 @code{pickableparts} is unused.
-
-
-@anchor{XREFrootpointerlocation}
-@prindex root pointerlocation
-@item @code{pointerlocation}: two-element vector, def. @code{[0   0]}
-@code{pointerlocation} is unused.
-
-
-@anchor{XREFrootpointerwindow}
-@prindex root pointerwindow
-@item @code{pointerwindow} (read-only): graphics handle, def. @code{0}
-@code{pointerwindow} is unused.
-
-
-@anchor{XREFrootscreendepth}
-@prindex root screendepth
-@item @code{screendepth} (read-only): double
-
-
-
-@anchor{XREFrootscreenpixelsperinch}
-@prindex root screenpixelsperinch
-@item @code{screenpixelsperinch} (read-only): double
-
-
-
-@anchor{XREFrootscreensize}
-@prindex root screensize
-@item @code{screensize} (read-only): four-element vector
-
 
 
 @anchor{XREFrootselected}
@@ -170,36 +260,6 @@ Root object has no parent graphics object.  @code{parent} is always empty.
 @prindex root selectionhighlight
 @item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
 @code{selectionhighlight} is unused.
-
-
-@anchor{XREFrootshowhiddenhandles}
-@prindex root showhiddenhandles
-@item @code{showhiddenhandles}: @{@qcode{"off"}@} | @qcode{"on"}
-If @code{showhiddenhandles} is @qcode{"on"}, all graphics objects handles are visible in their parents' children list, regardless of the value of their @code{handlevisibility} property.
-
-
-@anchor{XREFroottag}
-@prindex root tag
-@item @code{tag}: string, def. @qcode{""}
-A user-defined string to label the graphics object.
-
-
-@anchor{XREFroottype}
-@prindex root type
-@item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"root"}
-
-
-@anchor{XREFrootunits}
-@prindex root units
-@item @code{units}: @qcode{"centimeters"} | @qcode{"characters"} | @qcode{"inches"} | @qcode{"normalized"} | @{@qcode{"pixels"}@} | @qcode{"points"}
-
-
-
-@anchor{XREFrootuserdata}
-@prindex root userdata
-@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
-User-defined data to associate with the graphics object.
 
 
 @anchor{XREFrootvisible}

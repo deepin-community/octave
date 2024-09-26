@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -445,7 +445,6 @@ function [__n, __nmax, __nxfail, __nbug, __nskip, __nrtskip, __nregression] = te
 ### FUNCTION
 
       elseif (strcmp (__type, "function"))
-        persistent __fn = 0;
         __name_position = function_name (__block);
         if (isempty (__name_position))
           __success = false;
@@ -732,7 +731,7 @@ function [__n, __nmax, __nxfail, __nbug, __nskip, __nrtskip, __nregression] = te
             && ! strcmp (__type, "testif")
             && ! strcmp (__type, "xtest")
             && ! all (__shared == " "))
-          fputs (__fid, "shared variables ");
+          fdisp (__fid, "shared variables ");
           eval (sprintf ("fdisp (__fid,var2struct(%s));", __shared));
         endif
         fflush (__fid);
@@ -1101,7 +1100,7 @@ endfunction
 ## %!invalid                   # unknown block type
 ## %!error  toeplitz ([1,2,3]); # correct usage
 ## %!test   syntax errors)     # syntax errors fail properly
-## %!shared garbage in         # variables must be comma separated
+## %!shared garbage in         # variables must be comma-separated
 ## %!error  syntax++error      # error test fails on syntax errors
 ## %!error  "succeeds.";       # error test fails if code succeeds
 ## %!error <wrong pattern> error ("message")  # error pattern must match

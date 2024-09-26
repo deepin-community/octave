@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -29,90 +29,104 @@
 #include <QCheckBox>
 #include <QDialog>
 #include <QLineEdit>
+#include <QMessageBox>
 #include <QRadioButton>
 
 #include "color-picker.h"
 #include "gui-preferences-ed.h"
-#include "gui-settings.h"
 #include "ui-settings-dialog.h"
 
 class QsciLexer;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+// Ui::settings_dialog is a generated class.
+
+class settings_dialog : public QDialog, private Ui::settings_dialog
 {
-  class base_qobject;
+  Q_OBJECT
 
-  // Ui::settings_dialog is a generated class.
+public:
 
-  class settings_dialog : public QDialog, private Ui::settings_dialog
+  explicit settings_dialog (QWidget *parent,
+                            const QString& desired_tab = QString ());
+
+  ~settings_dialog () = default;
+
+  void show_tab (const QString&);
+
+signals:
+
+  void apply_new_settings ();
+
+private slots:
+
+  void get_octave_dir ();
+  void get_file_browser_dir ();
+  void get_dir (QLineEdit *, const QString&);
+  void set_disabled_pref_file_browser_dir (bool disable);
+  void proxy_items_update ();
+
+  // slots updating colors depending on theme
+  void update_terminal_colors (int def = 0);
+  void update_workspace_colors (int def = 0);
+  void update_varedit_colors (int def = 0);
+  void update_editor_lexers (int def = 0);
+
+  // slots for dialog's buttons
+  void button_clicked (QAbstractButton *button);
+
+  // slots for import/export-buttons of shortcut sets
+  void import_shortcut_set ();
+  void export_shortcut_set ();
+  void default_shortcut_set ();
+
+private:
+
+  enum import_export_action
   {
-  Q_OBJECT public:
-
-    explicit settings_dialog (QWidget *parent, base_qobject& octave_qobj,
-                              const QString& desired_tab = QString ());
-
-    ~settings_dialog (void) = default;
-
-    void show_tab (const QString&);
-
-  signals:
-
-    void apply_new_settings (void);
-
-  private slots:
-
-    void get_octave_dir (void);
-    void get_file_browser_dir (void);
-    void get_dir (QLineEdit *, const QString&);
-    void set_disabled_pref_file_browser_dir (bool disable);
-    void proxy_items_update (void);
-
-    // slots updating colors depending on theme
-    void update_terminal_colors (int def = 0);
-    void update_workspace_colors (int def = 0);
-    void update_varedit_colors (int def = 0);
-    void update_editor_lexers (int def = 0);
-
-    // slots for dialog's buttons
-    void button_clicked (QAbstractButton *button);
-
-    // slots for import/export-buttons of shortcut sets
-    void import_shortcut_set (void);
-    void export_shortcut_set (void);
-    void default_shortcut_set (void);
-
-  private:
+    OSC_IMPORT,
+    OSC_EXPORT
+  };
 
 #if defined (HAVE_QSCINTILLA)
-    void update_lexer (QsciLexer *lexer, gui_settings *settings, int mode, int def = 0);
-    void get_lexer_settings (QsciLexer *lexer, gui_settings *settings);
-    void write_lexer_settings (QsciLexer *lexer, gui_settings *settings);
+  void update_lexer (QsciLexer *lexer, int mode, int def = 0);
+  void get_lexer_settings (QsciLexer *lexer);
+  void write_lexer_settings (QsciLexer *lexer);
 #endif
 
-    void write_changed_settings (bool closing);
+  void read_settings (bool first);
 
-    void read_workspace_colors (gui_settings *settings);
-    void write_workspace_colors (gui_settings *settings);
+  void write_changed_settings ();
 
-    void read_terminal_colors (gui_settings *settings);
-    void write_terminal_colors (gui_settings *settings);
+  void read_workspace_colors ();
+  void write_workspace_colors ();
 
-    void read_varedit_colors (gui_settings *settings);
-    void write_varedit_colors (gui_settings *settings);
+  void read_terminal_colors ();
+  void write_terminal_colors ();
 
-    base_qobject& m_octave_qobj;
+  void read_varedit_colors ();
+  void write_varedit_colors ();
 
-    color_picker *m_widget_title_bg_color;
-    color_picker *m_widget_title_bg_color_active;
-    color_picker *m_widget_title_fg_color;
-    color_picker *m_widget_title_fg_color_active;
+  QString get_shortcuts_file_name (import_export_action action);
 
-    QRadioButton *m_rb_comment_strings[ed_comment_strings_count];
-    QCheckBox *m_rb_uncomment_strings[ed_comment_strings_count];
+  QMessageBox* wait_message_box (const QString& test, QWidget *p);
+  void close_wait_message_box (QMessageBox *mbox);
 
-    QCheckBox *m_ws_enable_colors;
-    QCheckBox *m_ws_hide_tool_tips;
-  };
-}
+  bool overwrite_all_shortcuts ();
+
+  color_picker *m_widget_title_bg_color;
+  color_picker *m_widget_title_bg_color_active;
+  color_picker *m_widget_title_fg_color;
+  color_picker *m_widget_title_fg_color_active;
+
+  QRadioButton *m_rb_comment_strings[ed_comment_strings_count];
+  QCheckBox *m_rb_uncomment_strings[ed_comment_strings_count];
+
+  QCheckBox *m_ws_enable_colors;
+  QCheckBox *m_ws_hide_tool_tips;
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

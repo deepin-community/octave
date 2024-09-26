@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,26 +31,25 @@
 
 #include "TextEdit.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+void
+TextEdit::focusOutEvent (QFocusEvent *xevent)
 {
+  QTextEdit::focusOutEvent (xevent);
 
-  void
-  TextEdit::focusOutEvent (QFocusEvent *xevent)
-  {
-    QTextEdit::focusOutEvent (xevent);
-
-    emit editingFinished ();
-  }
-
-  void
-  TextEdit::keyPressEvent (QKeyEvent *xevent)
-  {
-    QTextEdit::keyPressEvent (xevent);
-
-    if ((xevent->key () == Qt::Key_Return
-         || xevent->key () == Qt::Key_Enter)
-        && xevent->modifiers () == Qt::ControlModifier)
-      emit returnPressed ();
-  }
-
+  emit editingFinished ();
 }
+
+void
+TextEdit::keyPressEvent (QKeyEvent *xevent)
+{
+  QTextEdit::keyPressEvent (xevent);
+
+  if ((xevent->key () == Qt::Key_Return
+       || xevent->key () == Qt::Key_Enter)
+      && xevent->modifiers () == Qt::ControlModifier)
+    emit returnPressed ();
+}
+
+OCTAVE_END_NAMESPACE(octave)

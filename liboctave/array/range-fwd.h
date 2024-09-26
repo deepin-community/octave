@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2021-2022 The Octave Project Developers
+// Copyright (C) 2021-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,9 +28,10 @@
 
 #include "octave-config.h"
 
-namespace octave
-{
-  template <typename T, typename ENABLE = void> class OCTAVE_API range;
-}
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+template <typename T, typename ENABLE = void> class OCTAVE_API range;
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

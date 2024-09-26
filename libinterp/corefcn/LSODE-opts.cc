@@ -1,5 +1,5 @@
 // DO NOT EDIT!
-// Generated automatically from /home/jwe/src/octave-stable/liboctave/numeric/LSODE-opts.in.
+// Generated automatically from ../liboctave/numeric/LSODE-opts.in.
 
 // This file should not include config.h.  It is only included in other
 // C++ source files that should have included config.h before including
@@ -30,7 +30,7 @@ struct LSODE_options_struct
   int min_toks_to_match;
 };
 
-#define NUM_OPTIONS 8
+#define NUM_OPTIONS 11
 
 static LSODE_options_struct LSODE_options_table [] =
 {
@@ -64,6 +64,18 @@ static LSODE_options_struct LSODE_options_table [] =
 
   { "step limit",
     { "step", "limit", nullptr, nullptr, },
+    { 1, 0, 0, 0, }, 1, },
+
+  { "jacobian type",
+    { "jacobian", "type", nullptr, nullptr, },
+    { 1, 0, 0, 0, }, 1, },
+
+  { "lower jacobian subdiagonals",
+    { "lower", "jacobian", "subdiagonals", nullptr, },
+    { 1, 0, 0, 0, }, 1, },
+
+  { "upper jacobian subdiagonals",
+    { "upper", "jacobian", "subdiagonals", nullptr, },
     { 1, 0, 0, 0, }, 1, },
 };
 
@@ -183,6 +195,40 @@ print_LSODE_options (std::ostream& os)
     os << val << "\n";
   }
 
+  {
+    os << "  "
+        << std::setiosflags (std::ios::left) << std::setw (50)
+        << list[8].keyword
+        << std::resetiosflags (std::ios::left)
+        << "  ";
+
+    os << lsode_opts.jacobian_type () << "\n";
+  }
+
+  {
+    os << "  "
+        << std::setiosflags (std::ios::left) << std::setw (50)
+        << list[9].keyword
+        << std::resetiosflags (std::ios::left)
+        << "  ";
+
+    int val = lsode_opts.lower_jacobian_subdiagonals ();
+
+    os << val << "\n";
+  }
+
+  {
+    os << "  "
+        << std::setiosflags (std::ios::left) << std::setw (50)
+        << list[10].keyword
+        << std::resetiosflags (std::ios::left)
+        << "  ";
+
+    int val = lsode_opts.upper_jacobian_subdiagonals ();
+
+    os << val << "\n";
+  }
+
   os << "\n";
 }
 
@@ -246,6 +292,27 @@ set_LSODE_options (const std::string& keyword, const octave_value& val)
       int tmp = val.int_value ();
 
       lsode_opts.set_step_limit (tmp);
+    }
+  else if (octave::keyword_almost_match (list[8].kw_tok, list[8].min_len,
+           keyword, list[8].min_toks_to_match, MAX_TOKENS))
+    {
+      std::string tmp = val.string_value ();
+
+      lsode_opts.set_jacobian_type (tmp);
+    }
+  else if (octave::keyword_almost_match (list[9].kw_tok, list[9].min_len,
+           keyword, list[9].min_toks_to_match, MAX_TOKENS))
+    {
+      int tmp = val.int_value ();
+
+      lsode_opts.set_lower_jacobian_subdiagonals (tmp);
+    }
+  else if (octave::keyword_almost_match (list[10].kw_tok, list[10].min_len,
+           keyword, list[10].min_toks_to_match, MAX_TOKENS))
+    {
+      int tmp = val.int_value ();
+
+      lsode_opts.set_upper_jacobian_subdiagonals (tmp);
     }
   else
     {
@@ -321,6 +388,25 @@ show_LSODE_options (const std::string& keyword)
 
       retval = static_cast<double> (val);
     }
+  else if (octave::keyword_almost_match (list[8].kw_tok, list[8].min_len,
+           keyword, list[8].min_toks_to_match, MAX_TOKENS))
+    {
+      retval = lsode_opts.jacobian_type ();
+    }
+  else if (octave::keyword_almost_match (list[9].kw_tok, list[9].min_len,
+           keyword, list[9].min_toks_to_match, MAX_TOKENS))
+    {
+      int val = lsode_opts.lower_jacobian_subdiagonals ();
+
+      retval = static_cast<double> (val);
+    }
+  else if (octave::keyword_almost_match (list[10].kw_tok, list[10].min_len,
+           keyword, list[10].min_toks_to_match, MAX_TOKENS))
+    {
+      int val = lsode_opts.upper_jacobian_subdiagonals ();
+
+      retval = static_cast<double> (val);
+    }
   else
     {
       warning ("lsode_options: no match for `%s'", keyword.c_str ());
@@ -329,7 +415,7 @@ show_LSODE_options (const std::string& keyword)
   return retval;
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (lsode_options, args, ,
        doc: /* -*- texinfo -*-
@@ -400,6 +486,40 @@ The minimum absolute step size allowed (default is 0).
 
 @item @qcode{"step limit"}
 Maximum number of steps allowed (default is 100000).
+
+@item @qcode{"jacobian type"}
+A string specifying the type of Jacobian used with the stiff backward
+differentiation formula (BDF) integration method.  Valid values are
+
+@table @asis
+@item @qcode{"full"}
+The default.  All partial derivatives are approximated or used from the
+user-supplied Jacobian function.
+
+@item @qcode{"banded"}
+Only the diagonal and the number of lower and upper subdiagonals specified by
+the options @qcode{"lower jacobian subdiagonals"} and @qcode{"upper jacobian
+subdiagonals"}, respectively, are approximated or used from the user-supplied
+Jacobian function.  A user-supplied Jacobian function may set all other
+partial derivatives to arbitrary values.
+
+@item @qcode{"diagonal"}
+If a Jacobian function is supplied by the user, this setting has no effect.
+A Jacobian approximated by @code{lsode} is restricted to the diagonal, where
+each partial derivative is computed by applying a finite change to all
+elements of the state together; if the real Jacobian is indeed always diagonal,
+this has the same effect as applying the finite change only to the respective
+element of the state, but is more efficient.
+@end table
+
+@item @qcode{"lower jacobian subdiagonals"}
+Number of lower subdiagonals used if option @qcode{"jacobian type"} is set to
+@qcode{"banded"}.  The default is zero.
+
+@item @qcode{"upper jacobian subdiagonals"}
+Number of upper subdiagonals used if option @qcode{"jacobian type"} is set to
+@qcode{"banded"}.  The default is zero.
+
 @end table
 @end deftypefn */)
 {
@@ -427,5 +547,5 @@ Maximum number of steps allowed (default is 100000).
   return retval;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 

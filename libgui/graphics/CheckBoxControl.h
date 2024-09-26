@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,31 +30,25 @@
 
 class QCheckBox;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class CheckBoxControl : public ButtonControl
 {
-  class base_qobject;
-  class interpreter;
-}
+public:
+  CheckBoxControl (octave::interpreter& interp, const graphics_object& go,
+                   QCheckBox *box);
+  ~CheckBoxControl ();
 
-namespace octave
-{
+  static CheckBoxControl *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  class CheckBoxControl : public ButtonControl
-  {
-  public:
-    CheckBoxControl (octave::base_qobject& oct_qobj,
-                     octave::interpreter& interp, const graphics_object& go,
-                     QCheckBox *box);
-    ~CheckBoxControl (void);
+protected:
+  void update (int pId);
+};
 
-    static CheckBoxControl *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
-
-  protected:
-    void update (int pId);
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

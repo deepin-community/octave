@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} regexptranslate (@var{op}, @var{s})
+## @deftypefn {} {@var{str} =} regexptranslate (@var{op}, @var{s})
 ## Translate a string for use in a regular expression.
 ##
 ## This may include either wildcard replacement or special character escaping.
@@ -59,7 +59,7 @@
 ## @seealso{regexp, regexpi, regexprep}
 ## @end deftypefn
 
-function y = regexptranslate (op, s)
+function str = regexptranslate (op, s)
 
   if (nargin != 2)
     print_usage ();
@@ -69,13 +69,13 @@ function y = regexptranslate (op, s)
     error ("regexptranslate: operation OP must be a string");
   endif
 
-  op = tolower (op);
+  op = lower (op);
   if (strcmp ("wildcard", op))
-    y = strrep (strrep (strrep (s, '.', '\.'),
-                                   '*', '.*'),
-                                   '?', '.');
+    str = strrep (strrep (strrep (s, '.', '\.'),
+                                     '*', '.*'),
+                                     '?', '.');
   elseif (strcmp ("escape", op))
-    y = regexprep (s, '([][(){}.*+?^$|\\])', '\\$1');
+    str = regexprep (s, '([][(){}.*+?^$|\\])', '\\$1');
   else
     error ("regexptranslate: invalid operation OP");
   endif

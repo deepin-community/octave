@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2015-2022 The Octave Project Developers
+## Copyright (C) 2015-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -166,7 +166,7 @@
 ## @end deftypefn
 
 ## Author: Markus Bergholz <markuman@gmail.com>
-## Author: Nicholas R. Jankowski <jankowskin@asme.org>
+## Author: Nicholas R. Jankowski <jankowski.nicholas@gmail.com>
 
 ## As a U.S. government employee, Nicholas R. Jankowski makes no claim
 ## of copyright.

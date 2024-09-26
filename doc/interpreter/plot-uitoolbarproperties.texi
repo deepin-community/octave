@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,13 +23,15 @@
 
 Properties of @code{uitoolbar} objects (@pxref{XREFuitoolbar,,uitoolbar}):
 
+@subsubheading Categories:
+
+@ref{XREFuitoolbarcategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFuitoolbarcategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFuitoolbarcategoryDisplay, , @w{Display}}@: | @ref{XREFuitoolbarcategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFuitoolbarcategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFuitoolbarcategoryParent/Children, , @w{Parent/Children}}@: 
+
+@anchor{XREFuitoolbarcategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex uitoolbar CallbackExecution
+
 @table @asis
-
-@anchor{XREFuitoolbarbeingdeleted}
-@prindex uitoolbar beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
 
 @anchor{XREFuitoolbarbusyaction}
 @prindex uitoolbar busyaction
@@ -35,28 +40,24 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFuitoolbarbuttondownfcn}
-@prindex uitoolbar buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
-@code{buttondownfcn} is unused.
+@anchor{XREFuitoolbarinterruptible}
+@prindex uitoolbar interruptible
+@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
+@xref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFuitoolbarchildren}
-@prindex uitoolbar children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-Graphics handles of the uitoolbar's children.
+@anchor{XREFuitoolbarcategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex uitoolbar Creation/Deletion
 
+@table @asis
 
-@anchor{XREFuitoolbarclipping}
-@prindex uitoolbar clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the uitoolbar is clipped in its parent axes limits.
-
-
-@anchor{XREFuitoolbarcontextmenu}
-@prindex uitoolbar contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this uitoolbar object.
+@anchor{XREFuitoolbarbeingdeleted}
+@prindex uitoolbar beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
 
 
 @anchor{XREFuitoolbarcreatefcn}
@@ -74,30 +75,49 @@ Callback function executed immediately before uitoolbar is deleted.
 
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFuitoolbarhandlevisibility}
-@prindex uitoolbar handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the uitoolbar's handle is not visible in its parent's "children" property.
+@anchor{XREFuitoolbarcategoryDisplay}
+@subsubheading Display
+@prindex uitoolbar Display
+
+@table @asis
+
+@anchor{XREFuitoolbarclipping}
+@prindex uitoolbar clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the uitoolbar is clipped in its parent axes limits.
+
+
+@anchor{XREFuitoolbarvisible}
+@prindex uitoolbar visible
+@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{visible} is @qcode{"off"}, the uitoolbar is not rendered on screen.
+
+@end table
+
+@anchor{XREFuitoolbarcategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex uitoolbar MouseInteraction
+
+@table @asis
+
+@anchor{XREFuitoolbarbuttondownfcn}
+@prindex uitoolbar buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+@code{buttondownfcn} is unused.
+
+
+@anchor{XREFuitoolbarcontextmenu}
+@prindex uitoolbar contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this uitoolbar object.
 
 
 @anchor{XREFuitoolbarhittest}
 @prindex uitoolbar hittest
 @item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
 Specify whether uitoolbar processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFuitoolbarpickableparts, , @w{pickableparts property}}.
-
-
-@anchor{XREFuitoolbarinterruptible}
-@prindex uitoolbar interruptible
-@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
-@xref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFuitoolbarparent}
-@prindex uitoolbar parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
 
 
 @anchor{XREFuitoolbarpickableparts}
@@ -109,14 +129,21 @@ Specify whether uitoolbar will accept mouse clicks.  By default, @code{pickablep
 @anchor{XREFuitoolbarselected}
 @prindex uitoolbar selected
 @item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
+Property indicates whether this uitoolbar is selected.
 
 
 @anchor{XREFuitoolbarselectionhighlight}
 @prindex uitoolbar selectionhighlight
 @item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the uitoolbar's selection state is visually highlighted.
 
+@end table
 
+@anchor{XREFuitoolbarcategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex uitoolbar ObjectIdentification
+
+@table @asis
 
 @anchor{XREFuitoolbartag}
 @prindex uitoolbar tag
@@ -127,7 +154,7 @@ A user-defined string to label the graphics object.
 @anchor{XREFuitoolbartype}
 @prindex uitoolbar type
 @item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"uitoolbar"}
+Class name of the graphics object.  @code{type} is always @qcode{"uitoolbar"}.
 
 
 @anchor{XREFuitoolbaruserdata}
@@ -135,10 +162,29 @@ Class name of the graphics object.  @code{type} is always @qcode{"uitoolbar"}
 @item @code{userdata}: Any Octave data, def. @code{[](0x0)}
 User-defined data to associate with the graphics object.
 
+@end table
 
-@anchor{XREFuitoolbarvisible}
-@prindex uitoolbar visible
-@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{visible} is @qcode{"off"}, the uitoolbar is not rendered on screen.
+@anchor{XREFuitoolbarcategoryParent/Children}
+@subsubheading Parent/Children
+@prindex uitoolbar Parent/Children
+
+@table @asis
+
+@anchor{XREFuitoolbarchildren}
+@prindex uitoolbar children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Graphics handles of the uitoolbar's children.
+
+
+@anchor{XREFuitoolbarhandlevisibility}
+@prindex uitoolbar handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the uitoolbar's handle is not visible in its parent's @qcode{"children"} property.
+
+
+@anchor{XREFuitoolbarparent}
+@prindex uitoolbar parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
 
 @end table

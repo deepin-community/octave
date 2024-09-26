@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -336,19 +336,20 @@ F77_FUNC (xstopx, XSTOPX) (F77_CONST_CHAR_ARG_DECL
 
 #if defined (__cplusplus)
 
-namespace octave
-{
-  inline F77_INT
-  to_f77_int (octave_idx_type x)
-  {
-    if (x < std::numeric_limits<F77_INT>::min ()
-        || x > std::numeric_limits<F77_INT>::max ())
-      (*current_liboctave_error_handler)
-        ("integer dimension or index out of range for Fortran INTEGER type");
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-    return static_cast<F77_INT> (x);
-  }
+inline F77_INT
+to_f77_int (octave_idx_type x)
+{
+  if (x < std::numeric_limits<F77_INT>::min ()
+      || x > std::numeric_limits<F77_INT>::max ())
+    (*current_liboctave_error_handler)
+      ("integer dimension or index out of range for Fortran INTEGER type");
+
+  return static_cast<F77_INT> (x);
 }
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif
 

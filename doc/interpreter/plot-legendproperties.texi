@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -19,6 +22,41 @@
 @c <https://www.gnu.org/licenses/>.
 
 Properties of @code{legend} objects (@pxref{XREFlegend,,legend}):
+
+@subsubheading Categories:
+
+@ref{XREFlegendcategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFlegendcategoryLayout, , @w{Layout}}@: | @ref{XREFlegendcategoryLegendAppearance, , @w{Legend Appearance}}@: | @ref{XREFlegendcategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFlegendcategoryObjectPosition, , @w{Object Position}}@: | @ref{XREFlegendcategoryTextAppearance, , @w{Text Appearance}}@: 
+
+@anchor{XREFlegendcategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex legend CallbackExecution
+
+@table @asis
+
+@anchor{XREFlegenditemhitfcn}
+@prindex legend itemhitfcn
+@item @code{itemhitfcn}: def. @code{[](0x0)}
+Callback function which is executed when a legend item is clicked.  @xref{Callbacks, , @w{Callbacks section}}.
+
+The callback function must have the following prototype @code{fcn (hlegend, evnt)}, where @code{hlegend} is the legend object handle and @code{evnt} is a structure with the following fields:
+@table @code
+@item Peer
+Handle of the plot object to which the clicked item is associated.
+@item Region
+May be @qcode{"icon"} or @qcode{"label"} depending on which part of the item is clicked.
+@item SelectionType
+One of @qcode{"normal"}, @qcode{"extend"}, @qcode{"open"}, or @qcode{"alt"}.  @xref{XREFfigureselectiontype, , @w{Figure @qcode{"selectiontype"}}}.
+@item Source
+Handle of the legend object.
+@item EventName
+Name is @qcode{"ItemHit"}.
+@end table
+
+@end table
+
+@anchor{XREFlegendcategoryLayout}
+@subsubheading Layout
+@prindex legend Layout
 
 @table @asis
 
@@ -44,6 +82,33 @@ plot ((1:10) * 3);
 @end example
 
 
+@anchor{XREFlegendnumcolumns}
+@prindex legend numcolumns
+@item @code{numcolumns}: scalar integer, def. @code{1}
+Control the number of columns used in the layout of the legend items.  For example:
+@example
+@group
+figure ();
+plot (rand (30));
+legend ("numcolumns", 3);
+@end group
+@end example
+Setting @code{numcolumns} also forces the @code{numcolumnsmode} property to be set to @qcode{"manual"}..
+
+
+@anchor{XREFlegendorientation}
+@prindex legend orientation
+@item @code{orientation}: @qcode{"horizontal"} | @{@qcode{"vertical"}@}
+Control whether the legend items are arranged vertically (column-wise) or horizontally (row-wise).
+
+@end table
+
+@anchor{XREFlegendcategoryLegendAppearance}
+@subsubheading Legend Appearance
+@prindex legend LegendAppearance
+
+@table @asis
+
 @anchor{XREFlegendbox}
 @prindex legend box
 @item @code{box}: @qcode{"off"} | @{@qcode{"on"}@}
@@ -61,6 +126,51 @@ Color of the legend background.  @xref{Colors, , colorspec}.
 @item @code{edgecolor}: colorspec, def. @code{[0.1500   0.1500   0.1500]}
 Control the color of the legend outline.
 
+@end table
+
+@anchor{XREFlegendcategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex legend ObjectIdentification
+
+@table @asis
+
+@anchor{XREFlegendtitle}
+@prindex legend title
+@item @code{title}: graphics handle
+Graphics handle of the title text object.
+
+@end table
+
+@anchor{XREFlegendcategoryObjectPosition}
+@subsubheading Object Position
+@prindex legend ObjectPosition
+
+@table @asis
+
+@anchor{XREFlegendlocation}
+@prindex legend location
+@item @code{location}: @qcode{"best"} | @qcode{"bestoutside"} | @qcode{"east"} | @qcode{"eastoutside"} | @qcode{"none"} | @qcode{"north"} | @{@qcode{"northeast"}@} | @qcode{"northeastoutside"} | @qcode{"northoutside"} | @qcode{"northwest"} | @qcode{"northwestoutside"} | @qcode{"south"} | @qcode{"southeast"} | @qcode{"southeastoutside"} | @qcode{"southoutside"} | @qcode{"southwest"} | @qcode{"southwestoutside"} | @qcode{"west"} | @qcode{"westoutside"}
+Control the location of the legend.
+
+
+@anchor{XREFlegendposition}
+@prindex legend position
+@item @code{position}: four-element vector
+Specify the position of the legend excluding its title.  The four elements of the vector are the coordinates of the lower left corner and width and height of the legend.  Changing this property also switches the @qcode{"location"} to @qcode{"none"}.
+
+
+@anchor{XREFlegendunits}
+@prindex legend units
+@item @code{units}: @qcode{"centimeters"} | @qcode{"characters"} | @qcode{"inches"} | @{@qcode{"normalized"}@} | @qcode{"pixels"} | @qcode{"points"}
+Units used to interpret the @qcode{"position"} property.
+
+@end table
+
+@anchor{XREFlegendcategoryTextAppearance}
+@subsubheading Text Appearance
+@prindex legend TextAppearance
+
+@table @asis
 
 @anchor{XREFlegendfontangle}
 @prindex legend fontangle
@@ -79,7 +189,7 @@ Programming Note: On systems that don’t use FontConfig natively (all but Linux
 @anchor{XREFlegendfontsize}
 @prindex legend fontsize
 @item @code{fontsize}: scalar, def. @code{9}
-Size of the font used for text rendering.  @xref{XREFlegendfontunits, , fontunits property}.
+Size of the font used for text rendering.  @xref{XREFlegendfontunits, , fontunits property}.  Setting @code{fontsize} also forces the @code{fontsizemode} property to be set to @qcode{"manual"}..
 
 
 @anchor{XREFlegendfontunits}
@@ -92,38 +202,6 @@ Units used to interpret the @qcode{"fontsize"} property.
 @prindex legend fontweight
 @item @code{fontweight}: @qcode{"bold"} | @{@qcode{"normal"}@}
 Control the variant of the base font used for text rendering.
-
-
-@anchor{XREFlegendlocation}
-@prindex legend location
-@item @code{location}: @qcode{"best"} | @qcode{"bestoutside"} | @qcode{"east"} | @qcode{"eastoutside"} | @qcode{"none"} | @qcode{"north"} | @{@qcode{"northeast"}@} | @qcode{"northeastoutside"} | @qcode{"northoutside"} | @qcode{"northwest"} | @qcode{"northwestoutside"} | @qcode{"south"} | @qcode{"southeast"} | @qcode{"southeastoutside"} | @qcode{"southoutside"} | @qcode{"southwest"} | @qcode{"southwestoutside"} | @qcode{"west"} | @qcode{"westoutside"}
-Control the location of the legend.
-
-
-@anchor{XREFlegendnumcolumns}
-@prindex legend numcolumns
-@item @code{numcolumns}: scalar interger, def. @code{1}
-Control the number of columns used in the layout of the legend items.  For example:
-@example
-@group
-figure ();
-plot (rand (30));
-legend ("numcolumns", 3);
-@end group
-@end example
-Setting @code{numcolumns} also forces the @code{numcolumnsmode} property to be set to @qcode{"manual"}.
-
-
-@anchor{XREFlegendorientation}
-@prindex legend orientation
-@item @code{orientation}: @qcode{"horizontal"} | @{@qcode{"vertical"}@}
-Control whether the legend items are arranged vertically (column-wise) or horizontally (row-wise).
-
-
-@anchor{XREFlegendposition}
-@prindex legend position
-@item @code{position}: four-element vector
-Specify the position of the legend excluding its title. The four elements of the vector are the coordinates of the lower left corner and width and height of the legend.  Changing this property also switches the @qcode{"location"} to @qcode{"none"}.
 
 
 @anchor{XREFlegendstring}
@@ -148,17 +226,5 @@ set (hl, "string", str);
 @prindex legend textcolor
 @item @code{textcolor}: colorspec, def. @code{[0   0   0]}
 Control the color of the text strings for legend items.
-
-
-@anchor{XREFlegendtitle}
-@prindex legend title
-@item @code{title}: graphics handle
-Graphics handle of the title text object.
-
-
-@anchor{XREFlegendunits}
-@prindex legend units
-@item @code{units}: @qcode{"centimeters"} | @qcode{"characters"} | @qcode{"inches"} | @{@qcode{"normalized"}@} | @qcode{"pixels"} | @qcode{"points"}
-Units used to interpret the @qcode{"position"},  property.
 
 @end table

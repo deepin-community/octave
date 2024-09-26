@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,14 +24,16 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} triangle_lw (@var{n}, @var{b})
-## Triangular lag window.  Subfunction used for spectral density
-## estimation.
+## @deftypefn {} {@var{c} =} triangle_lw (@var{n}, @var{b})
+## Triangular lag window.
+##
+## Subfunction used for spectral density estimation.
+## @seealso{spectral_adf}
 ## @end deftypefn
 
-function retval = triangle_lw (n, b)
+function c = triangle_lw (n, b)
 
-  retval = 1 - (0 : n-1)' * b;
-  retval = max ([retval'; (zeros (1, n))])';
+  c = 1 - (0 : n-1)' * b;
+  c = max ([c'; (zeros (1, n))])';
 
 endfunction

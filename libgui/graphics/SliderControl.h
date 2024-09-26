@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,38 +30,33 @@
 
 class QAbstractSlider;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class SliderControl : public BaseControl
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  SliderControl (octave::interpreter& interp,
+                 const graphics_object& go, QAbstractSlider *slider);
+  ~SliderControl ();
 
-  class SliderControl : public BaseControl
-  {
-    Q_OBJECT
+  static SliderControl *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  public:
-    SliderControl (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-                   const graphics_object& go, QAbstractSlider *slider);
-    ~SliderControl (void);
+protected:
+  void update (int pId);
 
-    static SliderControl *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+private slots:
+  void valueChanged (int ival);
 
-  protected:
-    void update (int pId);
+private:
+  bool m_blockUpdates;
+};
 
-  private slots:
-    void valueChanged (int ival);
-
-  private:
-    bool m_blockUpdates;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

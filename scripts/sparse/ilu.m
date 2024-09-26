@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} ilu (@var{A})
-## @deftypefnx {} {} ilu (@var{A}, @var{opts})
+## @deftypefn  {} {@var{LUA} =} ilu (@var{A})
+## @deftypefnx {} {@var{LUA} =} ilu (@var{A}, @var{opts})
 ## @deftypefnx {} {[@var{L}, @var{U}] =} ilu (@dots{})
 ## @deftypefnx {} {[@var{L}, @var{U}, @var{P}] =} ilu (@dots{})
 ##
@@ -190,7 +190,7 @@ function [L, U, P] = ilu (A, opts = struct ())
   if (! isfield (opts, "type"))
     opts.type = "nofill";  # set default
   else
-    type = tolower (getfield (opts, "type"));
+    type = lower (getfield (opts, "type"));
     if (! any (strcmp (type, {"nofill", "crout", "ilutp"})))
       error ("ilu: invalid TYPE specified");
     endif
@@ -209,7 +209,7 @@ function [L, U, P] = ilu (A, opts = struct ())
   if (! isfield (opts, "milu"))
     opts.milu = "off";     # set default
   else
-    milu = tolower (getfield (opts, "milu"));
+    milu = lower (getfield (opts, "milu"));
     if (! any (strcmp (milu, {"off", "col", "row"})))
       error ('ilu: MILU must be one of "off", "col", or "row"');
     endif

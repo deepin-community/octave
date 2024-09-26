@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,40 +32,39 @@
 
 class QString;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class Object;
+
+class ObjectProxy : public QObject
 {
+  Q_OBJECT
 
-  class Object;
+public:
+  ObjectProxy (Object *obj = nullptr);
 
-  class ObjectProxy : public QObject
-  {
-    Q_OBJECT
+  void update (int pId);
+  void finalize ();
+  void redraw ();
+  void show ();
+  void print (const QString& file_cmd, const QString& term);
+  uint8NDArray get_pixels ();
 
-  public:
-    ObjectProxy (Object *obj = nullptr);
+  Object * object () { return m_object; }
+  void setObject (Object *obj);
 
-    void update (int pId);
-    void finalize (void);
-    void redraw (void);
-    void show (void);
-    void print (const QString& file_cmd, const QString& term);
-    uint8NDArray get_pixels (void);
+signals:
+  void sendUpdate (int pId);
+  void sendRedraw ();
+  void sendShow ();
 
-    Object * object (void) { return m_object; }
-    void setObject (Object *obj);
+private:
+  void init (Object *obj);
 
-  signals:
-    void sendUpdate (int pId);
-    void sendRedraw (void);
-    void sendShow (void);
-
-  private:
-    void init (Object *obj);
-
-  private:
-    Object *m_object;
-  };
-
+private:
+  Object *m_object;
 };
+
+OCTAVE_END_NAMESPACE(octave);
 
 #endif

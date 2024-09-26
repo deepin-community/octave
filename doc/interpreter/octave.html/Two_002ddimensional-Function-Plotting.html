@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Two-dimensional Function Plotting (GNU Octave (version 7.1.0))</title>
+<title>Two-dimensional Function Plotting (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Two-dimensional Function Plotting (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Two-dimensional Function Plotting (GNU Octave (version 7.1.0))">
+<meta name="description" content="Two-dimensional Function Plotting (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Two-dimensional Function Plotting (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Axis-Configuration.html" rel="prev" title="Axis Configuration">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,266 +32,281 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsubsection" id="Two_002ddimensional-Function-Plotting">
-<div class="header">
+<div class="subsubsection-level-extent" id="Two_002ddimensional-Function-Plotting">
+<div class="nav-panel">
 <p>
 Next: <a href="Two_002ddimensional-Geometric-Shapes.html" accesskey="n" rel="next">Two-dimensional Geometric Shapes</a>, Previous: <a href="Axis-Configuration.html" accesskey="p" rel="prev">Axis Configuration</a>, Up: <a href="Two_002dDimensional-Plots.html" accesskey="u" rel="up">Two-Dimensional Plots</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Two_002ddimensional-Function-Plotting-1"></span><h4 class="subsubsection">15.2.1.2 Two-dimensional Function Plotting</h4>
-<span id="index-plotting_002c-two_002ddimensional-functions"></span>
+<h4 class="subsubsection" id="Two_002ddimensional-Function-Plotting-1"><span>15.2.1.2 Two-dimensional Function Plotting<a class="copiable-link" href="#Two_002ddimensional-Function-Plotting-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-plotting_002c-two_002ddimensional-functions"></a>
 
 <p>Octave can plot a function from a function handle or string defining the
 function without the user needing to explicitly create the data to be
-plotted.  The function <code>fplot</code> also generates two-dimensional plots
+plotted.  The function <code class="code">fplot</code> also generates two-dimensional plots
 with linear axes using a function name and limits for the range of the
 x-coordinate instead of the x and y data.  For example,
 </p>
 <div class="example">
-<pre class="example">fplot (@sin, [-10, 10], 201);
-</pre></div>
+<div class="group"><pre class="example-preformatted">fplot (@sin, [-10, 10], 201);
+</pre></div></div>
 
 <p>produces a plot that is equivalent to the one above, but also includes a
 legend displaying the name of the plotted function.
 </p>
-<span id="XREFfplot"></span><dl class="def">
-<dt id="index-fplot"><span class="category">: </span><span><em></em> <strong>fplot</strong> <em>(<var>fn</var>)</em><a href='#index-fplot' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-fplot-1"><span class="category">: </span><span><em></em> <strong>fplot</strong> <em>(<var>fn</var>, <var>limits</var>)</em><a href='#index-fplot-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-fplot-2"><span class="category">: </span><span><em></em> <strong>fplot</strong> <em>(&hellip;, <var>tol</var>)</em><a href='#index-fplot-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-fplot-3"><span class="category">: </span><span><em></em> <strong>fplot</strong> <em>(&hellip;, <var>n</var>)</em><a href='#index-fplot-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-fplot-4"><span class="category">: </span><span><em></em> <strong>fplot</strong> <em>(&hellip;, <var>fmt</var>)</em><a href='#index-fplot-4' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-fplot-5"><span class="category">: </span><span><em></em> <strong>fplot</strong> <em>(&hellip;, <var>property</var>, <var>value</var>, &hellip;)</em><a href='#index-fplot-5' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-fplot-6"><span class="category">: </span><span><em></em> <strong>fplot</strong> <em>(<var>hax</var>, &hellip;)</em><a href='#index-fplot-6' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-fplot-7"><span class="category">: </span><span><em>[<var>x</var>, <var>y</var>] =</em> <strong>fplot</strong> <em>(&hellip;)</em><a href='#index-fplot-7' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Plot a function <var>fn</var> within the range defined by <var>limits</var>.
+<a class="anchor" id="XREFfplot"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-fplot"><span class="category-def">: </span><span><strong class="def-name">fplot</strong> <code class="def-code-arguments">(<var class="var">fcn</var>)</code><a class="copiable-link" href="#index-fplot"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-fplot-1"><span class="category-def">: </span><span><strong class="def-name">fplot</strong> <code class="def-code-arguments">(<var class="var">fcn</var>, <var class="var">limits</var>)</code><a class="copiable-link" href="#index-fplot-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-fplot-2"><span class="category-def">: </span><span><strong class="def-name">fplot</strong> <code class="def-code-arguments">(&hellip;, <var class="var">tol</var>)</code><a class="copiable-link" href="#index-fplot-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-fplot-3"><span class="category-def">: </span><span><strong class="def-name">fplot</strong> <code class="def-code-arguments">(&hellip;, <var class="var">n</var>)</code><a class="copiable-link" href="#index-fplot-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-fplot-4"><span class="category-def">: </span><span><strong class="def-name">fplot</strong> <code class="def-code-arguments">(&hellip;, <var class="var">fmt</var>)</code><a class="copiable-link" href="#index-fplot-4"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-fplot-5"><span class="category-def">: </span><span><strong class="def-name">fplot</strong> <code class="def-code-arguments">(&hellip;, <var class="var">property</var>, <var class="var">value</var>, &hellip;)</code><a class="copiable-link" href="#index-fplot-5"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-fplot-6"><span class="category-def">: </span><span><strong class="def-name">fplot</strong> <code class="def-code-arguments">(<var class="var">hax</var>, &hellip;)</code><a class="copiable-link" href="#index-fplot-6"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-fplot-7"><span class="category-def">: </span><span><code class="def-type">[<var class="var">x</var>, <var class="var">y</var>] =</code> <strong class="def-name">fplot</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-fplot-7"> &para;</a></span></dt>
+<dd><p>Plot a function <var class="var">fcn</var> within the range defined by <var class="var">limits</var>.
 </p>
-<p><var>fn</var> is a function handle, inline function, or string containing the
+<p><var class="var">fcn</var> is a function handle, inline function, or string containing the
 name of the function to evaluate.
 </p>
-<p>The limits of the plot are of the form <code>[<var>xlo</var>,&nbsp;<var>xhi</var>]</code><!-- /@w --> or
-<code>[<var>xlo</var>,&nbsp;<var>xhi</var>,&nbsp;<var>ylo</var>,&nbsp;<var>yhi</var>]</code><!-- /@w -->.  If no limits
-are specified the default is <code>[-5, 5]</code>.
+<p>The limits of the plot are of the form <code class="code">[<var class="var">xlo</var>,&nbsp;<var class="var">xhi</var>]</code><!-- /@w --> or
+<code class="code">[<var class="var">xlo</var>,&nbsp;<var class="var">xhi</var>,&nbsp;<var class="var">ylo</var>,&nbsp;<var class="var">yhi</var>]</code><!-- /@w -->.  If no limits
+are specified the default is <code class="code">[-5, 5]</code>.
 </p>
 <p>The next three arguments are all optional and any number of them may be
 given in any order.
 </p>
-<p><var>tol</var> is the relative tolerance to use for the plot and defaults
+<p><var class="var">tol</var> is the relative tolerance to use for the plot and defaults
 to 2e-3 (.2%).
 </p>
-<p><var>n</var> is the minimum number of points to use.  When <var>n</var> is specified,
-the maximum stepsize will be <code>(<var>xhi</var> - <var>xlo</var>) / <var>n</var></code>.  More
-than <var>n</var> points may still be used in order to meet the relative
+<p><var class="var">n</var> is the minimum number of points to use.  When <var class="var">n</var> is specified,
+the maximum stepsize will be <code class="code">(<var class="var">xhi</var> - <var class="var">xlo</var>) / <var class="var">n</var></code>.  More
+than <var class="var">n</var> points may still be used in order to meet the relative
 tolerance requirement.
 </p>
-<p>The <var>fmt</var> argument specifies the linestyle to be used by the plot
+<p>The <var class="var">fmt</var> argument specifies the linestyle to be used by the plot
 command.
 </p>
 <p>Multiple property-value pairs may also be specified, but they must appear
 in pairs.  These arguments are applied to the line objects drawn by
-<code>plot</code>.
+<code class="code">plot</code>.
 </p>
 <p>The full list of line properties is documented at
-<a href="Line-Properties.html">Line Properties</a>.
+<a class="ref" href="Line-Properties.html">Line Properties</a>.
 </p>
-<p>If the first argument <var>hax</var> is an axes handle, then plot into this axes,
-rather than the current axes returned by <code>gca</code>.
+<p>If the first argument <var class="var">hax</var> is an axes handle, then plot into this axes,
+rather than the current axes returned by <code class="code">gca</code>.
 </p>
 <p>With no output arguments, the results are immediately plotted.  With two
 output arguments, the 2-D plot data is returned.  The data can subsequently
-be plotted manually with <code>plot (<var>x</var>, <var>y</var>)</code>.
+be plotted manually with <code class="code">plot (<var class="var">x</var>, <var class="var">y</var>)</code>.
 </p>
 <p>Example:
 </p>
 <div class="example">
-<pre class="example">fplot (@cos, [0, 2*pi])
+<div class="group"><pre class="example-preformatted">fplot (@cos, [0, 2*pi])
 fplot (&quot;[cos(x), sin(x)]&quot;, [0, 2*pi])
-</pre></div>
+</pre></div></div>
 
 <p>Programming Notes:
 </p>
-<p><code>fplot</code> works best with continuous functions.  Functions with
+<p><code class="code">fplot</code> works best with continuous functions.  Functions with
 discontinuities are unlikely to plot well.  This restriction may be removed
 in the future.
 </p>
-<p><code>fplot</code> performance is better when the function accepts and returns a
+<p><code class="code">fplot</code> performance is better when the function accepts and returns a
 vector argument.  Consider this when writing user-defined functions and use
-element-by-element operators such as <code>.*</code>, <code>./</code>, etc.
+element-by-element operators such as <code class="code">.*</code>, <code class="code">./</code>, etc.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFezplot">ezplot</a>, <a href="Two_002dDimensional-Plots.html#XREFplot">plot</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFezplot">ezplot</a>, <a class="ref" href="Two_002dDimensional-Plots.html#XREFplot">plot</a>.
 </p></dd></dl>
 
 
 <p>Other functions that can create two-dimensional plots directly from a
-function include <code>ezplot</code>, <code>ezcontour</code>, <code>ezcontourf</code> and
-<code>ezpolar</code>.
+function include <code class="code">ezplot</code>, <code class="code">ezcontour</code>, <code class="code">ezcontourf</code> and
+<code class="code">ezpolar</code>.
 </p>
-<span id="XREFezplot"></span><dl class="def">
-<dt id="index-ezplot"><span class="category">: </span><span><em></em> <strong>ezplot</strong> <em>(<var>f</var>)</em><a href='#index-ezplot' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezplot-1"><span class="category">: </span><span><em></em> <strong>ezplot</strong> <em>(<var>f2v</var>)</em><a href='#index-ezplot-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezplot-2"><span class="category">: </span><span><em></em> <strong>ezplot</strong> <em>(<var>fx</var>, <var>fy</var>)</em><a href='#index-ezplot-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezplot-3"><span class="category">: </span><span><em></em> <strong>ezplot</strong> <em>(&hellip;, <var>dom</var>)</em><a href='#index-ezplot-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezplot-4"><span class="category">: </span><span><em></em> <strong>ezplot</strong> <em>(&hellip;, <var>n</var>)</em><a href='#index-ezplot-4' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezplot-5"><span class="category">: </span><span><em></em> <strong>ezplot</strong> <em>(<var>hax</var>, &hellip;)</em><a href='#index-ezplot-5' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezplot-6"><span class="category">: </span><span><em><var>h</var> =</em> <strong>ezplot</strong> <em>(&hellip;)</em><a href='#index-ezplot-6' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFezplot"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-ezplot"><span class="category-def">: </span><span><strong class="def-name">ezplot</strong> <code class="def-code-arguments">(<var class="var">f</var>)</code><a class="copiable-link" href="#index-ezplot"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezplot-1"><span class="category-def">: </span><span><strong class="def-name">ezplot</strong> <code class="def-code-arguments">(<var class="var">f2v</var>)</code><a class="copiable-link" href="#index-ezplot-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezplot-2"><span class="category-def">: </span><span><strong class="def-name">ezplot</strong> <code class="def-code-arguments">(<var class="var">fx</var>, <var class="var">fy</var>)</code><a class="copiable-link" href="#index-ezplot-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezplot-3"><span class="category-def">: </span><span><strong class="def-name">ezplot</strong> <code class="def-code-arguments">(&hellip;, <var class="var">dom</var>)</code><a class="copiable-link" href="#index-ezplot-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezplot-4"><span class="category-def">: </span><span><strong class="def-name">ezplot</strong> <code class="def-code-arguments">(&hellip;, <var class="var">n</var>)</code><a class="copiable-link" href="#index-ezplot-4"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezplot-5"><span class="category-def">: </span><span><strong class="def-name">ezplot</strong> <code class="def-code-arguments">(<var class="var">hax</var>, &hellip;)</code><a class="copiable-link" href="#index-ezplot-5"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezplot-6"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">ezplot</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-ezplot-6"> &para;</a></span></dt>
 <dd>
-<p>Plot the 2-D curve defined by the function <var>f</var>.
+<p>Plot the 2-D curve defined by the function <var class="var">f</var>.
 </p>
-<p>The function <var>f</var> may be a string, inline function, or function handle
-and can have either one or two variables.  If <var>f</var> has one variable, then
-the function is plotted over the domain <code>-2*pi &lt; <var>x</var> &lt; 2*pi</code>
+<p>The function <var class="var">f</var> may be a string, inline function, or function handle
+and can have either one or two variables.  If <var class="var">f</var> has one variable, then
+the function is plotted over the domain <code class="code">-2*pi &lt; <var class="var">x</var> &lt; 2*pi</code>
 with 500 points.
 </p>
-<p>If <var>f2v</var> is a function of two variables then the implicit function
-<code><var>f</var>(<var>x</var>,<var>y</var>) = 0</code> is calculated over the meshed domain
-<code>-2*pi &lt;= <var>x</var> | <var>y</var> &lt;= 2*pi</code> with 60 points in each dimension.
+<p>If <var class="var">f2v</var> is a function of two variables then the implicit function
+<code class="code"><var class="var">f</var>(<var class="var">x</var>,<var class="var">y</var>) = 0</code> is calculated over the meshed domain
+<code class="code">-2*pi &lt;= <var class="var">x</var> | <var class="var">y</var> &lt;= 2*pi</code> with 60 points in each dimension.
 </p>
 <p>For example:
 </p>
 <div class="example">
-<pre class="example">ezplot (@(<var>x</var>, <var>y</var>) <var>x</var>.^2 - <var>y</var>.^2 - 1)
+<pre class="example-preformatted">ezplot (@(<var class="var">x</var>, <var class="var">y</var>) <var class="var">x</var>.^2 - <var class="var">y</var>.^2 - 1)
 </pre></div>
 
 <p>If two functions are passed as inputs then the parametric function
 </p>
 <div class="example">
-<pre class="example"><var>x</var> = <var>fx</var> (<var>t</var>)
-<var>y</var> = <var>fy</var> (<var>t</var>)
-</pre></div>
+<div class="group"><pre class="example-preformatted"><var class="var">x</var> = <var class="var">fx</var> (<var class="var">t</var>)
+<var class="var">y</var> = <var class="var">fy</var> (<var class="var">t</var>)
+</pre></div></div>
 
-<p>is plotted over the domain <code>-2*pi &lt;= <var>t</var> &lt;= 2*pi</code> with 500 points.
+<p>is plotted over the domain <code class="code">-2*pi &lt;= <var class="var">t</var> &lt;= 2*pi</code> with 500 points.
 </p>
-<p>If <var>dom</var> is a two element vector, it represents the minimum and maximum
-values of both <var>x</var> and <var>y</var>, or <var>t</var> for a parametric plot.  If
-<var>dom</var> is a four element vector, then the minimum and maximum values are
-<code>[xmin xmax ymin ymax]</code>.
+<p>If <var class="var">dom</var> is a two element vector, it represents the minimum and maximum
+values of both <var class="var">x</var> and <var class="var">y</var>, or <var class="var">t</var> for a parametric plot.  If
+<var class="var">dom</var> is a four element vector, then the minimum and maximum values are
+<code class="code">[xmin xmax ymin ymax]</code>.
 </p>
-<p><var>n</var> is a scalar defining the number of points to use in plotting
+<p><var class="var">n</var> is a scalar defining the number of points to use in plotting
 the function.
 </p>
-<p>If the first argument <var>hax</var> is an axes handle, then plot into this axes,
-rather than the current axes returned by <code>gca</code>.
+<p>If the first argument <var class="var">hax</var> is an axes handle, then plot into this axes,
+rather than the current axes returned by <code class="code">gca</code>.
 </p>
-<p>The optional return value <var>h</var> is a vector of graphics handles to
+<p>The optional return value <var class="var">h</var> is a vector of graphics handles to
 the created line objects.
 </p>
 
-<p><strong>See also:</strong> <a href="Two_002dDimensional-Plots.html#XREFplot">plot</a>, <a href="Three_002ddimensional-Function-Plotting.html#XREFezplot3">ezplot3</a>, <a href="#XREFezpolar">ezpolar</a>, <a href="#XREFezcontour">ezcontour</a>, <a href="#XREFezcontourf">ezcontourf</a>, <a href="Three_002ddimensional-Function-Plotting.html#XREFezmesh">ezmesh</a>, <a href="Three_002ddimensional-Function-Plotting.html#XREFezmeshc">ezmeshc</a>, <a href="Three_002ddimensional-Function-Plotting.html#XREFezsurf">ezsurf</a>, <a href="Three_002ddimensional-Function-Plotting.html#XREFezsurfc">ezsurfc</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Two_002dDimensional-Plots.html#XREFplot">plot</a>, <a class="ref" href="Three_002ddimensional-Function-Plotting.html#XREFezplot3">ezplot3</a>, <a class="ref" href="#XREFezpolar">ezpolar</a>, <a class="ref" href="#XREFezcontour">ezcontour</a>, <a class="ref" href="#XREFezcontourf">ezcontourf</a>, <a class="ref" href="Three_002ddimensional-Function-Plotting.html#XREFezmesh">ezmesh</a>, <a class="ref" href="Three_002ddimensional-Function-Plotting.html#XREFezmeshc">ezmeshc</a>, <a class="ref" href="Three_002ddimensional-Function-Plotting.html#XREFezsurf">ezsurf</a>, <a class="ref" href="Three_002ddimensional-Function-Plotting.html#XREFezsurfc">ezsurfc</a>.
 </p></dd></dl>
 
 
-<span id="XREFezcontour"></span><dl class="def">
-<dt id="index-ezcontour"><span class="category">: </span><span><em></em> <strong>ezcontour</strong> <em>(<var>f</var>)</em><a href='#index-ezcontour' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezcontour-1"><span class="category">: </span><span><em></em> <strong>ezcontour</strong> <em>(&hellip;, <var>dom</var>)</em><a href='#index-ezcontour-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezcontour-2"><span class="category">: </span><span><em></em> <strong>ezcontour</strong> <em>(&hellip;, <var>n</var>)</em><a href='#index-ezcontour-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezcontour-3"><span class="category">: </span><span><em></em> <strong>ezcontour</strong> <em>(<var>hax</var>, &hellip;)</em><a href='#index-ezcontour-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezcontour-4"><span class="category">: </span><span><em><var>h</var> =</em> <strong>ezcontour</strong> <em>(&hellip;)</em><a href='#index-ezcontour-4' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFezcontour"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-ezcontour"><span class="category-def">: </span><span><strong class="def-name">ezcontour</strong> <code class="def-code-arguments">(<var class="var">f</var>)</code><a class="copiable-link" href="#index-ezcontour"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezcontour-1"><span class="category-def">: </span><span><strong class="def-name">ezcontour</strong> <code class="def-code-arguments">(&hellip;, <var class="var">dom</var>)</code><a class="copiable-link" href="#index-ezcontour-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezcontour-2"><span class="category-def">: </span><span><strong class="def-name">ezcontour</strong> <code class="def-code-arguments">(&hellip;, <var class="var">n</var>)</code><a class="copiable-link" href="#index-ezcontour-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezcontour-3"><span class="category-def">: </span><span><strong class="def-name">ezcontour</strong> <code class="def-code-arguments">(<var class="var">hax</var>, &hellip;)</code><a class="copiable-link" href="#index-ezcontour-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezcontour-4"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">ezcontour</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-ezcontour-4"> &para;</a></span></dt>
 <dd>
 <p>Plot the contour lines of a function.
 </p>
-<p><var>f</var> is a string, inline function, or function handle with two arguments
+<p><var class="var">f</var> is a string, inline function, or function handle with two arguments
 defining the function.  By default the plot is over the meshed domain
-<code>-2*pi &lt;= <var>x</var> | <var>y</var> &lt;= 2*pi</code> with 60 points in each dimension.
+<code class="code">-2*pi &lt;= <var class="var">x</var> | <var class="var">y</var> &lt;= 2*pi</code> with 60 points in each dimension.
 </p>
-<p>If <var>dom</var> is a two element vector, it represents the minimum and maximum
-values of both <var>x</var> and <var>y</var>.  If <var>dom</var> is a four element vector,
-then the minimum and maximum values are <code>[xmin xmax ymin ymax]</code>.
+<p>If <var class="var">dom</var> is a two element vector, it represents the minimum and maximum
+values of both <var class="var">x</var> and <var class="var">y</var>.  If <var class="var">dom</var> is a four element vector,
+then the minimum and maximum values are <code class="code">[xmin xmax ymin ymax]</code>.
 </p>
-<p><var>n</var> is a scalar defining the number of points to use in each dimension.
+<p><var class="var">n</var> is a scalar defining the number of points to use in each dimension.
 </p>
-<p>If the first argument <var>hax</var> is an axes handle, then plot into this axes,
-rather than the current axes returned by <code>gca</code>.
+<p>If the first argument <var class="var">hax</var> is an axes handle, then plot into this axes,
+rather than the current axes returned by <code class="code">gca</code>.
 </p>
-<p>The optional return value <var>h</var> is a graphics handle to the created plot.
+<p>The optional return value <var class="var">h</var> is a graphics handle to the created plot.
 </p>
 <p>Example:
 </p>
 <div class="example">
-<pre class="example">f = @(x,y) sqrt (abs (x .* y)) ./ (1 + x.^2 + y.^2);
+<div class="group"><pre class="example-preformatted">f = @(x,y) sqrt (abs (x .* y)) ./ (1 + x.^2 + y.^2);
 ezcontour (f, [-3, 3]);
-</pre></div>
+</pre></div></div>
 
 
-<p><strong>See also:</strong> <a href="Two_002dDimensional-Plots.html#XREFcontour">contour</a>, <a href="#XREFezcontourf">ezcontourf</a>, <a href="#XREFezplot">ezplot</a>, <a href="Three_002ddimensional-Function-Plotting.html#XREFezmeshc">ezmeshc</a>, <a href="Three_002ddimensional-Function-Plotting.html#XREFezsurfc">ezsurfc</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Two_002dDimensional-Plots.html#XREFcontour">contour</a>, <a class="ref" href="#XREFezcontourf">ezcontourf</a>, <a class="ref" href="#XREFezplot">ezplot</a>, <a class="ref" href="Three_002ddimensional-Function-Plotting.html#XREFezmeshc">ezmeshc</a>, <a class="ref" href="Three_002ddimensional-Function-Plotting.html#XREFezsurfc">ezsurfc</a>.
 </p></dd></dl>
 
 
-<span id="XREFezcontourf"></span><dl class="def">
-<dt id="index-ezcontourf"><span class="category">: </span><span><em></em> <strong>ezcontourf</strong> <em>(<var>f</var>)</em><a href='#index-ezcontourf' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezcontourf-1"><span class="category">: </span><span><em></em> <strong>ezcontourf</strong> <em>(&hellip;, <var>dom</var>)</em><a href='#index-ezcontourf-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezcontourf-2"><span class="category">: </span><span><em></em> <strong>ezcontourf</strong> <em>(&hellip;, <var>n</var>)</em><a href='#index-ezcontourf-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezcontourf-3"><span class="category">: </span><span><em></em> <strong>ezcontourf</strong> <em>(<var>hax</var>, &hellip;)</em><a href='#index-ezcontourf-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezcontourf-4"><span class="category">: </span><span><em><var>h</var> =</em> <strong>ezcontourf</strong> <em>(&hellip;)</em><a href='#index-ezcontourf-4' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFezcontourf"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-ezcontourf"><span class="category-def">: </span><span><strong class="def-name">ezcontourf</strong> <code class="def-code-arguments">(<var class="var">f</var>)</code><a class="copiable-link" href="#index-ezcontourf"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezcontourf-1"><span class="category-def">: </span><span><strong class="def-name">ezcontourf</strong> <code class="def-code-arguments">(&hellip;, <var class="var">dom</var>)</code><a class="copiable-link" href="#index-ezcontourf-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezcontourf-2"><span class="category-def">: </span><span><strong class="def-name">ezcontourf</strong> <code class="def-code-arguments">(&hellip;, <var class="var">n</var>)</code><a class="copiable-link" href="#index-ezcontourf-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezcontourf-3"><span class="category-def">: </span><span><strong class="def-name">ezcontourf</strong> <code class="def-code-arguments">(<var class="var">hax</var>, &hellip;)</code><a class="copiable-link" href="#index-ezcontourf-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezcontourf-4"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">ezcontourf</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-ezcontourf-4"> &para;</a></span></dt>
 <dd>
 <p>Plot the filled contour lines of a function.
 </p>
-<p><var>f</var> is a string, inline function, or function handle with two arguments
+<p><var class="var">f</var> is a string, inline function, or function handle with two arguments
 defining the function.  By default the plot is over the meshed domain
-<code>-2*pi &lt;= <var>x</var> | <var>y</var> &lt;= 2*pi</code> with 60 points in each dimension.
+<code class="code">-2*pi &lt;= <var class="var">x</var> | <var class="var">y</var> &lt;= 2*pi</code> with 60 points in each dimension.
 </p>
-<p>If <var>dom</var> is a two element vector, it represents the minimum and maximum
-values of both <var>x</var> and <var>y</var>.  If <var>dom</var> is a four element vector,
-then the minimum and maximum values are <code>[xmin xmax ymin ymax]</code>.
+<p>If <var class="var">dom</var> is a two element vector, it represents the minimum and maximum
+values of both <var class="var">x</var> and <var class="var">y</var>.  If <var class="var">dom</var> is a four element vector,
+then the minimum and maximum values are <code class="code">[xmin xmax ymin ymax]</code>.
 </p>
-<p><var>n</var> is a scalar defining the number of points to use in each dimension.
+<p><var class="var">n</var> is a scalar defining the number of points to use in each dimension.
 </p>
-<p>If the first argument <var>hax</var> is an axes handle, then plot into this axes,
-rather than the current axes returned by <code>gca</code>.
+<p>If the first argument <var class="var">hax</var> is an axes handle, then plot into this axes,
+rather than the current axes returned by <code class="code">gca</code>.
 </p>
-<p>The optional return value <var>h</var> is a graphics handle to the created plot.
+<p>The optional return value <var class="var">h</var> is a graphics handle to the created plot.
 </p>
 <p>Example:
 </p>
 <div class="example">
-<pre class="example">f = @(x,y) sqrt (abs (x .* y)) ./ (1 + x.^2 + y.^2);
+<div class="group"><pre class="example-preformatted">f = @(x,y) sqrt (abs (x .* y)) ./ (1 + x.^2 + y.^2);
 ezcontourf (f, [-3, 3]);
-</pre></div>
+</pre></div></div>
 
 
-<p><strong>See also:</strong> <a href="Two_002dDimensional-Plots.html#XREFcontourf">contourf</a>, <a href="#XREFezcontour">ezcontour</a>, <a href="#XREFezplot">ezplot</a>, <a href="Three_002ddimensional-Function-Plotting.html#XREFezmeshc">ezmeshc</a>, <a href="Three_002ddimensional-Function-Plotting.html#XREFezsurfc">ezsurfc</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Two_002dDimensional-Plots.html#XREFcontourf">contourf</a>, <a class="ref" href="#XREFezcontour">ezcontour</a>, <a class="ref" href="#XREFezplot">ezplot</a>, <a class="ref" href="Three_002ddimensional-Function-Plotting.html#XREFezmeshc">ezmeshc</a>, <a class="ref" href="Three_002ddimensional-Function-Plotting.html#XREFezsurfc">ezsurfc</a>.
 </p></dd></dl>
 
 
-<span id="XREFezpolar"></span><dl class="def">
-<dt id="index-ezpolar"><span class="category">: </span><span><em></em> <strong>ezpolar</strong> <em>(<var>f</var>)</em><a href='#index-ezpolar' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezpolar-1"><span class="category">: </span><span><em></em> <strong>ezpolar</strong> <em>(&hellip;, <var>dom</var>)</em><a href='#index-ezpolar-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezpolar-2"><span class="category">: </span><span><em></em> <strong>ezpolar</strong> <em>(&hellip;, <var>n</var>)</em><a href='#index-ezpolar-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezpolar-3"><span class="category">: </span><span><em></em> <strong>ezpolar</strong> <em>(<var>hax</var>, &hellip;)</em><a href='#index-ezpolar-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-ezpolar-4"><span class="category">: </span><span><em><var>h</var> =</em> <strong>ezpolar</strong> <em>(&hellip;)</em><a href='#index-ezpolar-4' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFezpolar"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-ezpolar"><span class="category-def">: </span><span><strong class="def-name">ezpolar</strong> <code class="def-code-arguments">(<var class="var">f</var>)</code><a class="copiable-link" href="#index-ezpolar"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezpolar-1"><span class="category-def">: </span><span><strong class="def-name">ezpolar</strong> <code class="def-code-arguments">(&hellip;, <var class="var">dom</var>)</code><a class="copiable-link" href="#index-ezpolar-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezpolar-2"><span class="category-def">: </span><span><strong class="def-name">ezpolar</strong> <code class="def-code-arguments">(&hellip;, <var class="var">n</var>)</code><a class="copiable-link" href="#index-ezpolar-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezpolar-3"><span class="category-def">: </span><span><strong class="def-name">ezpolar</strong> <code class="def-code-arguments">(<var class="var">hax</var>, &hellip;)</code><a class="copiable-link" href="#index-ezpolar-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-ezpolar-4"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">ezpolar</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-ezpolar-4"> &para;</a></span></dt>
 <dd>
 <p>Plot a 2-D function in polar coordinates.
 </p>
-<p>The function <var>f</var> is a string, inline function, or function handle with
+<p>The function <var class="var">f</var> is a string, inline function, or function handle with
 a single argument.  The expected form of the function is
-<code><var>rho</var> = <var>f</var>(<var>theta</var>)</code>.
-By default the plot is over the domain <code>0 &lt;= <var>theta</var> &lt;= 2*pi</code>
+<code class="code"><var class="var">rho</var> = <var class="var">f</var>(<var class="var">theta</var>)</code>.
+By default the plot is over the domain <code class="code">0 &lt;= <var class="var">theta</var> &lt;= 2*pi</code>
 with 500 points.
 </p>
-<p>If <var>dom</var> is a two element vector, it represents the minimum and maximum
-values of <var>theta</var>.
+<p>If <var class="var">dom</var> is a two element vector, it represents the minimum and maximum
+values of <var class="var">theta</var>.
 </p>
-<p><var>n</var> is a scalar defining the number of points to use in plotting
+<p><var class="var">n</var> is a scalar defining the number of points to use in plotting
 the function.
 </p>
-<p>If the first argument <var>hax</var> is an axes handle, then plot into this axes,
-rather than the current axes returned by <code>gca</code>.
+<p>If the first argument <var class="var">hax</var> is an axes handle, then plot into this axes,
+rather than the current axes returned by <code class="code">gca</code>.
 </p>
-<p>The optional return value <var>h</var> is a graphics handle to the created plot.
+<p>The optional return value <var class="var">h</var> is a graphics handle to the created plot.
 </p>
 <p>Example:
 </p>
 <div class="example">
-<pre class="example">ezpolar (@(t) sin (5/4 * t), [0, 8*pi]);
+<pre class="example-preformatted">ezpolar (@(t) sin (5/4 * t), [0, 8*pi]);
 </pre></div>
 
 
-<p><strong>See also:</strong> <a href="Two_002dDimensional-Plots.html#XREFpolar">polar</a>, <a href="#XREFezplot">ezplot</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Two_002dDimensional-Plots.html#XREFpolar">polar</a>, <a class="ref" href="#XREFezplot">ezplot</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Two_002ddimensional-Geometric-Shapes.html">Two-dimensional Geometric Shapes</a>, Previous: <a href="Axis-Configuration.html">Axis Configuration</a>, Up: <a href="Two_002dDimensional-Plots.html">Two-Dimensional Plots</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

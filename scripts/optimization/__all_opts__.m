@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -55,15 +55,15 @@ function names = __all_opts__ (varargin)
     for i = 1:nargin
       try
         opts = optimset (varargin{i});
-        fn = fieldnames (opts).';
-        names = [names, fn];
+        fcn = fieldnames (opts).';
+        names = [names, fcn];
       catch
         ## throw the error as a warning.
         warning (lasterr ());
       end_try_catch
     endfor
     names = unique (names);
-    [lnames, idx] = unique (tolower (names));
+    [lnames, idx] = unique (lower (names));
     if (length (lnames) < length (names))
       ## This is bad.
       error ("__all_opts__: duplicate options with inconsistent case");

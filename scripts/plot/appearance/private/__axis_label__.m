@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,10 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __axis_label__ (@var{caller}, @var{hax}, @var{txt}, @dots{})
-## Undocumented internal function.
+## @deftypefn  {} {} __axis_label__ (@var{hax}, @var{caller}, @var{txt}, @dots{})
+## @deftypefnx {} {@var{h} =} __axis_label__ (@dots{})
+## Internal function with common code for axis labeling functions.
+## @seealso{xlabel, ylabel, zlabel, title}
 ## @end deftypefn
 
 function retval = __axis_label__ (hax, caller, txt, varargin)

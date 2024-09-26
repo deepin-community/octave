@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Defining Indexing And Indexed Assignment (GNU Octave (version 7.1.0))</title>
+<title>Defining Indexing And Indexed Assignment (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Defining Indexing And Indexed Assignment (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Defining Indexing And Indexed Assignment (GNU Octave (version 7.1.0))">
+<meta name="description" content="Defining Indexing And Indexed Assignment (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Defining Indexing And Indexed Assignment (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,10 @@
 <link href="Indexed-Assignment-Optimization.html" rel="next" title="Indexed Assignment Optimization">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,37 +31,40 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Defining-Indexing-And-Indexed-Assignment">
-<div class="header">
+<div class="subsection-level-extent" id="Defining-Indexing-And-Indexed-Assignment">
+<div class="nav-panel">
 <p>
 Next: <a href="Indexed-Assignment-Optimization.html" accesskey="n" rel="next">Indexed Assignment Optimization</a>, Up: <a href="Indexing-Objects.html" accesskey="u" rel="up">Indexing Objects</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Defining-Indexing-And-Indexed-Assignment-1"></span><h4 class="subsection">34.3.1 Defining Indexing And Indexed Assignment</h4>
+<h4 class="subsection" id="Defining-Indexing-And-Indexed-Assignment-1"><span>34.3.1 Defining Indexing And Indexed Assignment<a class="copiable-link" href="#Defining-Indexing-And-Indexed-Assignment-1"> &para;</a></span></h4>
 
 <p>Objects can be indexed with parentheses or braces, either like
-<code><var>obj</var>(<var>idx</var>)</code> or like <code><var>obj</var>{<var>idx</var>}</code>, or even
-like <code><var>obj</var>(<var>idx</var>).<var>field</var></code>.  However, it is up to the
+<code class="code"><var class="var">obj</var>(<var class="var">idx</var>)</code> or like <code class="code"><var class="var">obj</var>{<var class="var">idx</var>}</code>, or even
+like <code class="code"><var class="var">obj</var>(<var class="var">idx</var>).<var class="var">field</var></code>.  However, it is up to the
 programmer to decide what this indexing actually means.  In the case of the
-polynomial class <code><var>p</var>(<var>n</var>)</code> might mean either the coefficient of
-the <var>n</var>-th power of the polynomial, or it might be the evaluation of the
-polynomial at <var>n</var>.  The meaning of this subscripted referencing is
-determined by the <code>subsref</code> method.
+polynomial class <code class="code"><var class="var">p</var>(<var class="var">n</var>)</code> might mean either the coefficient of
+the <var class="var">n</var>-th power of the polynomial, or it might be the evaluation of the
+polynomial at <var class="var">n</var>.  The meaning of this subscripted referencing is
+determined by the <code class="code">subsref</code> method.
 </p>
-<span id="XREFsubsref"></span><dl class="def">
-<dt id="index-subsref"><span class="category">: </span><span><em></em> <strong>subsref</strong> <em>(<var>val</var>, <var>idx</var>)</em><a href='#index-subsref' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Perform the subscripted element selection operation on <var>val</var> according
-to the subscript specified by <var>idx</var>.
+<a class="anchor" id="XREFsubsref"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-subsref"><span class="category-def">: </span><span><code class="def-type"><var class="var">newval</var> =</code> <strong class="def-name">subsref</strong> <code class="def-code-arguments">(<var class="var">val</var>, <var class="var">idx</var>)</code><a class="copiable-link" href="#index-subsref"> &para;</a></span></dt>
+<dd><p>Perform the subscripted element selection operation on <var class="var">val</var> according
+to the subscript specified by <var class="var">idx</var>.
 </p>
-<p>The subscript <var>idx</var> must be a structure array with fields &lsquo;<samp>type</samp>&rsquo;
-and &lsquo;<samp>subs</samp>&rsquo;.  Valid values for &lsquo;<samp>type</samp>&rsquo; are <code>&quot;()&quot;</code>,
-<code>&quot;{}&quot;</code>, and <code>&quot;.&quot;</code>.  The &lsquo;<samp>subs</samp>&rsquo; field may be either
-<code>&quot;:&quot;</code> or a cell array of index values.
+<p>The subscript <var class="var">idx</var> must be a structure array with fields &lsquo;<samp class="samp">type</samp>&rsquo;
+and &lsquo;<samp class="samp">subs</samp>&rsquo;.  Valid values for &lsquo;<samp class="samp">type</samp>&rsquo; are <code class="code">&quot;()&quot;</code>,
+<code class="code">&quot;{}&quot;</code>, and <code class="code">&quot;.&quot;</code>.  The &lsquo;<samp class="samp">subs</samp>&rsquo; field may be either
+<code class="code">&quot;:&quot;</code> or a cell array of index values.
 </p>
 <p>The following example shows how to extract the first two columns of a matrix
 </p>
 <div class="example">
-<pre class="example">val = magic (3)
+<div class="group"><pre class="example-preformatted">val = magic (3)
     &rArr; val = [ 8   1   6
                3   5   7
                4   9   2 ]
@@ -82,21 +74,24 @@ subsref (val, idx)
      &rArr; [ 8   1
           3   5
           4   9 ]
-</pre></div>
+</pre></div></div>
 
-<p>Note that this is the same as writing <code>val(:, 1:2)</code>.
+<p>Note that this is the same as writing <code class="code">val(:, 1:2)</code>.
 </p>
-<p>If <var>idx</var> is an empty structure array with fields &lsquo;<samp>type</samp>&rsquo; and
-&lsquo;<samp>subs</samp>&rsquo;, return <var>val</var>.
+<p>If <var class="var">idx</var> is an empty structure array with fields &lsquo;<samp class="samp">type</samp>&rsquo; and
+&lsquo;<samp class="samp">subs</samp>&rsquo;, return <var class="var">val</var>.
 </p>
-<p><strong>See also:</strong> <a href="#XREFsubsasgn">subsasgn</a>, <a href="Manipulating-Structures.html#XREFsubstruct">substruct</a>.
+<p>The keyword <code class="code">end</code> cannot be used within <code class="code">subsref</code> for indexing
+assignments.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFsubsasgn">subsasgn</a>, <a class="ref" href="Manipulating-Structures.html#XREFsubstruct">substruct</a>.
 </p></dd></dl>
 
 
-<p>For example, this class uses the convention that indexing with <code>&quot;()&quot;</code>
-evaluates the polynomial and indexing with <code>&quot;{}&quot;</code> returns the
-<var>n</var>-th coefficient (of the <var>n</var>-th power).  The code for the
-<code>subsref</code> method looks like
+<p>For example, this class uses the convention that indexing with <code class="code">&quot;()&quot;</code>
+evaluates the polynomial and indexing with <code class="code">&quot;{}&quot;</code> returns the
+<var class="var">n</var>-th coefficient (of the <var class="var">n</var>-th power).  The code for the
+<code class="code">subsref</code> method looks like
 </p>
 <div class="example">
 <pre class="verbatim">function r = subsref (p, s)
@@ -146,69 +141,78 @@ endfunction
 </pre></div>
 
 <p>The equivalent functionality for subscripted assignments uses the
-<code>subsasgn</code> method.
+<code class="code">subsasgn</code> method.
 </p>
-<span id="XREFsubsasgn"></span><dl class="def">
-<dt id="index-subsasgn"><span class="category">: </span><span><em></em> <strong>subsasgn</strong> <em>(<var>val</var>, <var>idx</var>, <var>rhs</var>)</em><a href='#index-subsasgn' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFsubsasgn"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-subsasgn"><span class="category-def">: </span><span><code class="def-type"><var class="var">newval</var> =</code> <strong class="def-name">subsasgn</strong> <code class="def-code-arguments">(<var class="var">val</var>, <var class="var">idx</var>, <var class="var">rhs</var>)</code><a class="copiable-link" href="#index-subsasgn"> &para;</a></span></dt>
 <dd><p>Perform the subscripted assignment operation according to the subscript
-specified by <var>idx</var>.
+specified by <var class="var">idx</var>.
 </p>
-<p>The subscript <var>idx</var> must be a structure array with fields &lsquo;<samp>type</samp>&rsquo;
-and &lsquo;<samp>subs</samp>&rsquo;.  Valid values for &lsquo;<samp>type</samp>&rsquo; are <code>&quot;()&quot;</code>,
-<code>&quot;{}&quot;</code>, and <code>&quot;.&quot;</code>.  The &lsquo;<samp>subs</samp>&rsquo; field may be either
-<code>&quot;:&quot;</code> or a cell array of index values.
+<p>The subscript <var class="var">idx</var> must be a structure array with fields &lsquo;<samp class="samp">type</samp>&rsquo;
+and &lsquo;<samp class="samp">subs</samp>&rsquo;.  Valid values for &lsquo;<samp class="samp">type</samp>&rsquo; are <code class="code">&quot;()&quot;</code>,
+<code class="code">&quot;{}&quot;</code>, and <code class="code">&quot;.&quot;</code>.  The &lsquo;<samp class="samp">subs</samp>&rsquo; field may be either
+<code class="code">&quot;:&quot;</code> or a cell array of index values.
 </p>
 <p>The following example shows how to set the two first columns of a 3-by-3
 matrix to zero.
 </p>
 <div class="example">
-<pre class="example">val = magic (3);
+<div class="group"><pre class="example-preformatted">val = magic (3);
 idx.type = &quot;()&quot;;
 idx.subs = {&quot;:&quot;, 1:2};
-subsasgn (val, idx, 0)
+val = subsasgn (val, idx, 0)
      &rArr;  [ 0   0   6
            0   0   7
            0   0   2 ]
-</pre></div>
+</pre></div></div>
 
-<p>Note that this is the same as writing <code>val(:, 1:2) = 0</code>.
+<p>Note that this is the same as writing <code class="code">val(:, 1:2) = 0</code>.
 </p>
-<p>If <var>idx</var> is an empty structure array with fields &lsquo;<samp>type</samp>&rsquo; and
-&lsquo;<samp>subs</samp>&rsquo;, return <var>rhs</var>.
+<p>If <var class="var">idx</var> is an empty structure array with fields &lsquo;<samp class="samp">type</samp>&rsquo; and
+&lsquo;<samp class="samp">subs</samp>&rsquo;, return <var class="var">rhs</var>.
 </p>
-<p><strong>See also:</strong> <a href="#XREFsubsref">subsref</a>, <a href="Manipulating-Structures.html#XREFsubstruct">substruct</a>, <a href="#XREFoptimize_005fsubsasgn_005fcalls">optimize_subsasgn_calls</a>.
+<p>The keyword <code class="code">end</code> cannot be used within <code class="code">subsasgn</code> for indexing
+assignments.
+</p>
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFsubsref">subsref</a>, <a class="ref" href="Manipulating-Structures.html#XREFsubstruct">substruct</a>, <a class="ref" href="#XREFoptimize_005fsubsasgn_005fcalls">optimize_subsasgn_calls</a>.
 </p></dd></dl>
 
 
-<span id="XREFoptimize_005fsubsasgn_005fcalls"></span><dl class="def">
-<dt id="index-optimize_005fsubsasgn_005fcalls"><span class="category">: </span><span><em><var>val</var> =</em> <strong>optimize_subsasgn_calls</strong> <em>()</em><a href='#index-optimize_005fsubsasgn_005fcalls' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-optimize_005fsubsasgn_005fcalls-1"><span class="category">: </span><span><em><var>old_val</var> =</em> <strong>optimize_subsasgn_calls</strong> <em>(<var>new_val</var>)</em><a href='#index-optimize_005fsubsasgn_005fcalls-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-optimize_005fsubsasgn_005fcalls-2"><span class="category">: </span><span><em></em> <strong>optimize_subsasgn_calls</strong> <em>(<var>new_val</var>, &quot;local&quot;)</em><a href='#index-optimize_005fsubsasgn_005fcalls-2' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Query or set the internal flag for <code>subsasgn</code> method call
+<a class="anchor" id="XREFoptimize_005fsubsasgn_005fcalls"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-optimize_005fsubsasgn_005fcalls"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">optimize_subsasgn_calls</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-optimize_005fsubsasgn_005fcalls"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-optimize_005fsubsasgn_005fcalls-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">optimize_subsasgn_calls</strong> <code class="def-code-arguments">(<var class="var">new_val</var>)</code><a class="copiable-link" href="#index-optimize_005fsubsasgn_005fcalls-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-optimize_005fsubsasgn_005fcalls-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">optimize_subsasgn_calls</strong> <code class="def-code-arguments">(<var class="var">new_val</var>, &quot;local&quot;)</code><a class="copiable-link" href="#index-optimize_005fsubsasgn_005fcalls-2"> &para;</a></span></dt>
+<dd><p>Query or set the internal flag for <code class="code">subsasgn</code> method call
 optimizations.
 </p>
 <p>If true, Octave will attempt to eliminate the redundant copying when calling
-the <code>subsasgn</code> method of a user-defined class.
+the <code class="code">subsasgn</code> method of a user-defined class.
 </p>
-<p>When called from inside a function with the <code>&quot;local&quot;</code> option, the
+<p>When called from inside a function with the <code class="code">&quot;local&quot;</code> option, the
 variable is changed locally for the function and any subroutines it calls.
 The original variable value is restored when exiting the function.
 </p>
-<p><strong>See also:</strong> <a href="#XREFsubsasgn">subsasgn</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFsubsasgn">subsasgn</a>.
 </p></dd></dl>
 
 
-<p>Note that the <code>subsref</code> and <code>subsasgn</code> methods always receive the
+<p>Note that the <code class="code">subsref</code> and <code class="code">subsasgn</code> methods always receive the
 whole index chain, while they usually handle only the first element.  It is the
 responsibility of these methods to handle the rest of the chain (if needed),
-usually by forwarding it again to <code>subsref</code> or <code>subsasgn</code>.
+usually by forwarding it again to <code class="code">subsref</code> or <code class="code">subsasgn</code>.
 </p>
-<p>If you wish to use the <code>end</code> keyword in subscripted expressions of an
-object, then there must be an <code>end</code> method defined.  For example, the
-<code>end</code> method for the polynomial class might look like
+<p>If you wish to use the <code class="code">end</code> keyword in subscripted expressions of an
+object, then there must be an <code class="code">end</code> method defined.  For example, the
+<code class="code">end</code> method for the polynomial class might look like
 </p>
 <div class="example">
-<pre class="verbatim">function r = end (obj, index_pos, num_indices)
+<div class="group"><pre class="verbatim">function r = end (obj, index_pos, num_indices)
 
   if (num_indices != 1)
     error (&quot;polynomial object may only have one index&quot;);
@@ -217,78 +221,84 @@ object, then there must be an <code>end</code> method defined.  For example, the
   r = length (obj.poly) - 1;
 
 endfunction
-</pre></div>
+</pre></div></div>
 
-<p>which is a fairly generic <code>end</code> method that has a behavior similar to the
-<code>end</code> keyword for Octave Array classes.  An example using the polynomial
+<p>which is a fairly generic <code class="code">end</code> method that has a behavior similar to the
+<code class="code">end</code> keyword for Octave Array classes.  An example using the polynomial
 class is then
 </p>
 <div class="example">
-<pre class="example">p = polynomial ([1,2,3,4]);
+<div class="group"><pre class="example-preformatted">p = polynomial ([1,2,3,4]);
 p{end-1}
   &rArr; 3
-</pre></div>
+</pre></div></div>
 
 <p>Objects can also be used themselves as the index in a subscripted expression
-and this is controlled by the <code>subsindex</code> function.
+and this is controlled by the <code class="code">subsindex</code> function.
 </p>
-<span id="XREFsubsindex"></span><dl class="def">
-<dt id="index-subsindex"><span class="category">: </span><span><em><var>idx</var> =</em> <strong>subsindex</strong> <em>(<var>obj</var>)</em><a href='#index-subsindex' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFsubsindex"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-subsindex"><span class="category-def">: </span><span><code class="def-type"><var class="var">idx</var> =</code> <strong class="def-name">subsindex</strong> <code class="def-code-arguments">(<var class="var">obj</var>)</code><a class="copiable-link" href="#index-subsindex"> &para;</a></span></dt>
 <dd><p>Convert an object to an index vector.
 </p>
-<p>When <var>obj</var> is a class object defined with a class constructor, then
-<code>subsindex</code> is the overloading method that allows the conversion of
+<p>When <var class="var">obj</var> is a class object defined with a class constructor, then
+<code class="code">subsindex</code> is the overloading method that allows the conversion of
 this class object to a valid indexing vector.  It is important to note that
-<code>subsindex</code> must return a zero-based real integer vector of the class
-<code>&quot;double&quot;</code>.  For example, if the class constructor were
+<code class="code">subsindex</code> must return a zero-based real integer vector of the class
+<code class="code">&quot;double&quot;</code>.  For example, if the class constructor were
 </p>
 <div class="example">
-<pre class="example">function obj = myclass (a)
+<div class="group"><pre class="example-preformatted">function obj = myclass (a)
   obj = class (struct (&quot;a&quot;, a), &quot;myclass&quot;);
 endfunction
-</pre></div>
+</pre></div></div>
 
-<p>then the <code>subsindex</code> function
+<p>then the <code class="code">subsindex</code> function
 </p>
 <div class="example">
-<pre class="example">function idx = subsindex (obj)
+<div class="group"><pre class="example-preformatted">function idx = subsindex (obj)
   idx = double (obj.a) - 1.0;
 endfunction
-</pre></div>
+</pre></div></div>
 
 <p>could be used as follows
 </p>
 <div class="example">
-<pre class="example">a = myclass (1:4);
+<div class="group"><pre class="example-preformatted">a = myclass (1:4);
 b = 1:10;
 b(a)
 &rArr; 1  2  3  4
-</pre></div>
+</pre></div></div>
 
 
-<p><strong>See also:</strong> <a href="Built_002din-Data-Types.html#XREFclass">class</a>, <a href="#XREFsubsref">subsref</a>, <a href="#XREFsubsasgn">subsasgn</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Built_002din-Data-Types.html#XREFclass">class</a>, <a class="ref" href="#XREFsubsref">subsref</a>, <a class="ref" href="#XREFsubsasgn">subsasgn</a>.
 </p></dd></dl>
 
 
-<p>Finally, objects can be used like ranges by providing a <code>colon</code> method.
+<p>Finally, objects can be used like ranges by providing a <code class="code">colon</code> method.
 </p>
-<span id="XREFcolon"></span><dl class="def">
-<dt id="index-colon"><span class="category">: </span><span><em><var>r</var> =</em> <strong>colon</strong> <em>(<var>base</var>, <var>limit</var>)</em><a href='#index-colon' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-colon-1"><span class="category">: </span><span><em><var>r</var> =</em> <strong>colon</strong> <em>(<var>base</var>, <var>increment</var>, <var>limit</var>)</em><a href='#index-colon-1' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the result of the colon expression corresponding to <var>base</var>,
-<var>limit</var>, and optionally, <var>increment</var>.
+<a class="anchor" id="XREFcolon"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-colon"><span class="category-def">: </span><span><code class="def-type"><var class="var">r</var> =</code> <strong class="def-name">colon</strong> <code class="def-code-arguments">(<var class="var">base</var>, <var class="var">limit</var>)</code><a class="copiable-link" href="#index-colon"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-colon-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">r</var> =</code> <strong class="def-name">colon</strong> <code class="def-code-arguments">(<var class="var">base</var>, <var class="var">increment</var>, <var class="var">limit</var>)</code><a class="copiable-link" href="#index-colon-1"> &para;</a></span></dt>
+<dd><p>Return the result of the colon expression corresponding to <var class="var">base</var>,
+<var class="var">limit</var>, and optionally, <var class="var">increment</var>.
 </p>
 <p>This function is equivalent to the operator syntax
-<code><var>base</var>&nbsp;:&nbsp;<var>limit</var></code><!-- /@w --> or
-<code><var>base</var>&nbsp;:&nbsp;<var>increment</var>&nbsp;:&nbsp;<var>limit</var></code><!-- /@w -->.
+<code class="code"><var class="var">base</var>&nbsp;:&nbsp;<var class="var">limit</var></code><!-- /@w --> or
+<code class="code"><var class="var">base</var>&nbsp;:&nbsp;<var class="var">increment</var>&nbsp;:&nbsp;<var class="var">limit</var></code><!-- /@w -->.
 </p>
-<p><strong>See also:</strong> <a href="Special-Utility-Matrices.html#XREFlinspace">linspace</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Special-Utility-Matrices.html#XREFlinspace">linspace</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Indexed-Assignment-Optimization.html">Indexed Assignment Optimization</a>, Up: <a href="Indexing-Objects.html">Indexing Objects</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

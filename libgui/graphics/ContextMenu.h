@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,43 +33,38 @@
 
 class QMenu;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class ContextMenu : public Object, public MenuContainer
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  ContextMenu (octave::interpreter& interp,
+               const graphics_object& go, QMenu *menu);
+  ~ContextMenu ();
 
-  class ContextMenu : public Object, public MenuContainer
-  {
-    Q_OBJECT
+  static ContextMenu *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  public:
-    ContextMenu (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-                 const graphics_object& go, QMenu *menu);
-    ~ContextMenu (void);
+  static void executeAt (octave::interpreter& interp,
+                         const base_properties& props, const QPoint& pt);
 
-    static ContextMenu *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+  Container * innerContainer () { return nullptr; }
 
-    static void executeAt (octave::interpreter& interp,
-                           const base_properties& props, const QPoint& pt);
+  QWidget * menu ();
 
-    Container * innerContainer (void) { return nullptr; }
+protected:
+  void update (int pId);
 
-    QWidget * menu (void);
+private slots:
+  void aboutToShow ();
+  void aboutToHide ();
+};
 
-  protected:
-    void update (int pId);
-
-  private slots:
-    void aboutToShow (void);
-    void aboutToHide (void);
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

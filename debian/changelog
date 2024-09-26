@@ -1,8 +1,197 @@
-octave (7.1.0-2) UNRELEASED; urgency=medium
+octave (9.2.0-3) unstable; urgency=medium
 
-  * update
+  * Use the “zero” JVM on archs where the “server” JVM does not exist
+    (Closes: #1077977)
 
- -- Debian Octave Group <team+pkg-octave-team@tracker.debian.org>  Wed, 06 Jul 2022 14:00:12 +0800
+ -- Sébastien Villemot <sebastien@debian.org>  Tue, 03 Sep 2024 17:59:30 +0200
+
+octave (9.2.0-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Sébastien Villemot <sebastien@debian.org>  Wed, 19 Jun 2024 13:20:54 +0200
+
+octave (9.2.0-1) experimental; urgency=medium
+
+  * New upstream version 9.2.0
+  * d/control: add Breaks against older versions of octave-ga and
+    octave-queueing
+
+ -- Sébastien Villemot <sebastien@debian.org>  Wed, 19 Jun 2024 13:19:54 +0200
+
+octave (9.1.0-3) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Sébastien Villemot <sebastien@debian.org>  Fri, 10 May 2024 14:52:27 +0200
+
+octave (9.1.0-2) experimental; urgency=medium
+
+  [ Rafael Laboissière ]
+  * d/control: Bump Standards-Version to 4.7.0 (no changes needed)
+
+  [ Sébastien Villemot ]
+  * Enable Java on armel, it now works there.
+    By the way, update the list of archs which do not have a JDK.
+    (Closes: #1069542)
+
+ -- Sébastien Villemot <sebastien@debian.org>  Fri, 10 May 2024 14:52:22 +0200
+
+octave (9.1.0-1) experimental; urgency=medium
+
+  * New upstream version 9.1.0
+
+ -- Sébastien Villemot <sebastien@debian.org>  Sat, 16 Mar 2024 19:14:58 +0100
+
+octave (9.0.90-1) experimental; urgency=medium
+
+  * New upstream version 9.0.90
+  * d/copyright: reflect upstream changes
+  * Bump to Qt 6 for building the GUI
+
+ -- Sébastien Villemot <sebastien@debian.org>  Fri, 09 Feb 2024 11:02:24 +0100
+
+octave (8.4.0-1) unstable; urgency=medium
+
+  * New upstream version 8.4.0
+  * mkoctfile-skip-options.patch: drop patch, applied upstream
+  * Add lintian override for false positive related to documentation source
+  * Remove no longer needed lintian overrides related to changelog trimming
+  * Drop transitional liboctave-dev package
+  * Drop old Breaks relationships
+  * Drop workarounds for mipsel and kfreebsd-*, those archs have been removed
+  * README.Debian:
+    + update section about optimized BLAS implementations
+    + mention the new XDG-compliant location for octaverc
+
+ -- Sébastien Villemot <sebastien@debian.org>  Wed, 08 Nov 2023 11:10:01 +0100
+
+octave (8.3.0-3) unstable; urgency=medium
+
+  * d/p/mkoctfile-skip-options.patch: Update patch.
+    Thanks to Markus Mützel <markus.muetzel@gmx.de> (Closes: #1052973)
+
+ -- Rafael Laboissière <rafael@debian.org>  Sat, 30 Sep 2023 10:35:07 -0300
+
+octave (8.3.0-2) unstable; urgency=medium
+
+  * d/p/mkoctfile-skip-options.patch: New patch.
+    Thanks to Markus Mützel <markus.muetzel@gmx.de> (Closes: #1050082)
+
+ -- Rafael Laboissière <rafael@debian.org>  Wed, 30 Aug 2023 06:02:05 -0300
+
+octave (8.3.0-1) unstable; urgency=medium
+
+  * New upstream version 8.3.0
+  * suitesparse7-part{1,2}.patch: drop patches, applied upstream
+  * Update lintian override info format in d/octave.lintian-overrides on line 3.
+
+ -- Sébastien Villemot <sebastien@debian.org>  Sat, 12 Aug 2023 20:18:54 +0200
+
+octave (8.2.0-6) unstable; urgency=medium
+
+  * Re-enable SPQR on 32-bit architectures.
+    suitesparse 1:7.1.0+dfsg-3 fixes the issue.
+
+ -- Sébastien Villemot <sebastien@debian.org>  Wed, 02 Aug 2023 18:44:22 +0200
+
+octave (8.2.0-5) unstable; urgency=medium
+
+  * Disable SPQR on 32-bit architectures.
+    This is a (hopefully temporary) workaround for the breakage of suitesparse 7
+    on those architectures.
+    Also add a new suitesparse7-patch2.patch. (Closes: #1041460)
+
+ -- Sébastien Villemot <sebastien@debian.org>  Wed, 19 Jul 2023 14:02:56 +0200
+
+octave (8.2.0-4) unstable; urgency=medium
+
+  * d/control: as an alternative to libopenblas0, recommend libblis4
+    instead of libatlas3-base
+  * suitesparse7.patch: new patch taken from upstream.
+    Fixes compilation against suitesparse 7.
+
+ -- Sébastien Villemot <sebastien@debian.org>  Tue, 18 Jul 2023 19:53:04 +0200
+
+octave (8.2.0-3) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Sébastien Villemot <sebastien@debian.org>  Sat, 01 Jul 2023 10:57:11 +0200
+
+octave (8.2.0-2) experimental; urgency=medium
+
+  [ Rafael Laboissière ]
+  * d/debian_missing_handler.m: Update name of package liboctave-dev to
+    octave-dev
+
+  [ Sébastien Villemot ]
+  * d/rules: enable link-time optimizations (LTO)
+
+ -- Sébastien Villemot <sebastien@debian.org>  Tue, 13 Jun 2023 20:42:13 +0200
+
+octave (8.2.0-1) experimental; urgency=medium
+
+  * New upstream version 8.2.0
+  * d/control: add missing Breaks+Replaces of octave-dev on old liboctave-dev
+    (Closes: #1033011)
+
+ -- Sébastien Villemot <sebastien@debian.org>  Sat, 15 Apr 2023 20:10:08 +0200
+
+octave (8.1.0-1) experimental; urgency=medium
+
+  * New upstream version 8.1.0
+
+ -- Sébastien Villemot <sebastien@debian.org>  Wed, 08 Mar 2023 17:55:11 +0100
+
+octave (8.0.90-1) experimental; urgency=medium
+
+  [ Sébastien Villemot ]
+  * New upstream version 8.0.90
+  * d/copyright: reflect upstream changes
+  * Build against PCRE2, now that it is supported (Closes: #1000011)
+  * README.Debian: replace liboctave-dev by octave-dev
+  * Replace Depends on libgl1-mesa-dev by libgl-dev
+  * Replace (Build-)Depends on libncurses5-dev by libncurses-dev
+  * Replace Build-Depends on libfontconfig1-dev by libfontconfig-dev
+  * Bump S-V to 4.6.2
+  * Add lintian overrides for national encoding tag in octave-common
+  * Pass --disable-rpath to configure script
+
+  [ Rafael Laboissière ]
+  * d/octave-common.lintian-overrides: Add override for
+    package-contains-documentation-outside-usr-share-doc
+  * Add overrides for debian-news-entry-has-unknown-version
+  * d/octave-dev.lintian-overrides: Add override for
+    hardening-no-fortify-functions
+
+ -- Sébastien Villemot <sebastien@debian.org>  Wed, 25 Jan 2023 11:52:20 +0100
+
+octave (7.3.0-1) unstable; urgency=medium
+
+  * New upstream version 7.3.0
+
+ -- Sébastien Villemot <sebastien@debian.org>  Sat, 05 Nov 2022 09:29:53 +0100
+
+octave (7.2.0-1) unstable; urgency=medium
+
+  * New upstream version 7.2.0
+    In particular, fixes FTBFS due to missing header in randmtzig.cc.
+    (Closes: #1016271)
+  * Overhaul lintian overrides
+
+ -- Sébastien Villemot <sebastien@debian.org>  Sat, 30 Jul 2022 22:13:01 +0200
+
+octave (7.1.90-1) experimental; urgency=medium
+
+  [ Rafael Laboissière ]
+  * d/control: Bump Standards-Version to 4.6.1 (no changes needed)
+
+  [ Sébastien Villemot ]
+  * New upstream version 7.1.90
+  * d/copyright: reflect upstream changes
+
+ -- Sébastien Villemot <sebastien@debian.org>  Tue, 14 Jun 2022 17:51:22 +0200
 
 octave (7.1.0-2) unstable; urgency=medium
 

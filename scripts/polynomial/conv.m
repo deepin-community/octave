@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1994-2022 The Octave Project Developers
+## Copyright (C) 1994-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} conv (@var{a}, @var{b})
-## @deftypefnx {} {} conv (@var{a}, @var{b}, @var{shape})
+## @deftypefn  {} {@var{y} =} conv (@var{a}, @var{b})
+## @deftypefnx {} {@var{y} =} conv (@var{a}, @var{b}, @var{shape})
 ## Convolve two vectors @var{a} and @var{b}.
 ##
 ## When @var{a} and @var{b} are the coefficient vectors of two polynomials, the

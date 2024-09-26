@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -78,7 +78,7 @@ function h = meshc (varargin)
     hax = newplot (hax);
 
     ## FIXME: gnuplot does not support a filled surface and a
-    ##        non-filled contour.  3D filled patches are also not supported.
+    ##        non-filled contour.  3-D filled patches are also not supported.
     ##        Thus, the facecolor will be transparent for the gnuplot backend.
     mesh_props = {"facecolor", "w", "edgecolor", "flat", ...
                   "facelighting", "none", "edgelighting", "flat"};

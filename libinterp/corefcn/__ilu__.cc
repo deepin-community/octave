@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,7 +35,7 @@
 
 #include "builtin-defun-decls.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // This function implements the IKJ and JKI variants of Gaussian elimination to
 // perform the ILU0 decomposition.  The behavior is controlled by milu
@@ -183,10 +183,11 @@ Undocumented internal function.
 }
 
 template <typename octave_matrix_t, typename T>
-void ilu_crout (octave_matrix_t& sm_l, octave_matrix_t& sm_u,
-                octave_matrix_t& L, octave_matrix_t& U, T *cols_norm,
-                T *rows_norm, const T droptol = 0,
-                const std::string milu = "off")
+void
+ilu_crout (octave_matrix_t& sm_l, octave_matrix_t& sm_u,
+           octave_matrix_t& L, octave_matrix_t& U, T *cols_norm,
+           T *rows_norm, const T droptol = 0,
+           const std::string milu = "off")
 {
   // Map the strings into chars for faster comparing inside loops
   char opt;
@@ -483,9 +484,11 @@ Undocumented internal function.
       SparseMatrix sm_l = Ftril (ovl (sm, -1))(0).sparse_matrix_value ();
       SparseMatrix U, L;
 
+      RowVector sm_col_norms = xcolnorms (sm);
+      ColumnVector sm_row_norms = xrownorms (sm);
       ilu_crout <SparseMatrix, double> (sm_l, sm_u, L, U,
-                                        xcolnorms (sm).fortran_vec (),
-                                        xrownorms (sm).fortran_vec (),
+                                        sm_col_norms.fortran_vec (),
+                                        sm_row_norms.fortran_vec (),
                                         droptol, milu);
 
       SparseMatrix speye (DiagMatrix (L.cols (), L.cols (), 1.0));
@@ -502,9 +505,9 @@ Undocumented internal function.
       Array<Complex> rows_norm = xrownorms (sm);
 
       ilu_crout <SparseComplexMatrix, Complex> (sm_l, sm_u, L, U,
-                                                cols_norm.fortran_vec (),
-                                                rows_norm.fortran_vec (),
-                                                Complex (droptol), milu);
+          cols_norm.fortran_vec (),
+          rows_norm.fortran_vec (),
+          Complex (droptol), milu);
 
       SparseMatrix speye (DiagMatrix (L.cols (), L.cols (), 1.0));
 
@@ -521,11 +524,12 @@ Undocumented internal function.
 // case IKJ version is used and column pivoting is performed.
 
 template <typename octave_matrix_t, typename T>
-void ilu_tp (octave_matrix_t& sm, octave_matrix_t& L, octave_matrix_t& U,
-             octave_idx_type nnz_u, octave_idx_type nnz_l, T *cols_norm,
-             Array <octave_idx_type>& perm_vec, const T droptol = T(0),
-             const T thresh = T(0), const  std::string milu = "off",
-             const double udiag = 0)
+void
+ilu_tp (octave_matrix_t& sm, octave_matrix_t& L, octave_matrix_t& U,
+        octave_idx_type nnz_u, octave_idx_type nnz_l, T *cols_norm,
+        Array <octave_idx_type>& perm_vec, const T droptol = T(0),
+        const T thresh = T(0), const  std::string milu = "off",
+        const double udiag = 0)
 {
   char opt;
   enum {OFF, ROW, COL};
@@ -972,8 +976,8 @@ Undocumented internal function.
       Array <octave_idx_type> perm (dim_vector (sm.cols (), 1));
 
       ilu_tp <SparseComplexMatrix, Complex>
-              (sm, L, U, nnz_u, nnz_l, rc_norm.fortran_vec (), perm,
-               Complex (droptol), Complex (thresh), milu, udiag);
+      (sm, L, U, nnz_u, nnz_l, rc_norm.fortran_vec (), perm,
+       Complex (droptol), Complex (thresh), milu, udiag);
 
       SparseMatrix speye (DiagMatrix (L.cols (), L.cols (), 1.0));
       if (milu == "row")
@@ -1008,4 +1012,4 @@ Undocumented internal function.
 %!assert (1)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

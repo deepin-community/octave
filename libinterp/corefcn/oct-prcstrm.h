@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 // already have classes with those names (see procstream.h).  We need to
 // find a way to resolve this naming issue.
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 class
 octave_iprocstream : public octave::stdiostream
@@ -48,24 +48,20 @@ public:
   octave_iprocstream (const std::string& n,
                       std::ios::openmode arg_md = std::ios::in,
                       octave::mach_info::float_format flt_fmt
-                        = octave::mach_info::native_float_format (),
+                      = octave::mach_info::native_float_format (),
                       const std::string& encoding = "utf-8");
 
-  // No copying!
-
-  octave_iprocstream (const octave_iprocstream&) = delete;
-
-  octave_iprocstream& operator = (const octave_iprocstream&) = delete;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (octave_iprocstream)
 
   static octave::stream
   create (const std::string& n, std::ios::openmode arg_md = std::ios::in,
           octave::mach_info::float_format flt_fmt
-            = octave::mach_info::native_float_format (),
+          = octave::mach_info::native_float_format (),
           const std::string& encoding = "utf-8");
 
 protected:
 
-  ~octave_iprocstream (void);
+  ~octave_iprocstream ();
 };
 
 class
@@ -76,36 +72,22 @@ public:
   octave_oprocstream (const std::string& n,
                       std::ios::openmode arg_md = std::ios::out,
                       octave::mach_info::float_format flt_fmt
-                        = octave::mach_info::native_float_format (),
+                      = octave::mach_info::native_float_format (),
                       const std::string& encoding = "utf-8");
 
-  // No copying!
-
-  octave_oprocstream (const octave_oprocstream&) = delete;
-
-  octave_oprocstream& operator = (const octave_oprocstream&) = delete;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (octave_oprocstream)
 
   static octave::stream
   create (const std::string& n, std::ios::openmode arg_md = std::ios::out,
           octave::mach_info::float_format flt_fmt
-            = octave::mach_info::native_float_format (),
+          = octave::mach_info::native_float_format (),
           const std::string& encoding = "utf-8");
 
 protected:
 
-  ~octave_oprocstream (void);
+  ~octave_oprocstream ();
 };
 
-OCTAVE_NAMESPACE_END
-
-#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-
-OCTAVE_DEPRECATED (7, "use 'octave::octave_iprocstream' instead")
-typedef octave::octave_iprocstream octave_iprocstream;
-
-OCTAVE_DEPRECATED (7, "use 'octave::octave_oprocstream' instead")
-typedef octave::octave_oprocstream octave_oprocstream;
-
-#endif
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

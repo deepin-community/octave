@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2019-2022 The Octave Project Developers
+// Copyright (C) 2019-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,13 +30,12 @@
 
 #include "qt-interpreter-events.h"
 
-namespace octave
-{
-  class interpreter;
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  class base_qobject;
+class interpreter;
 
-  extern void graphics_init (interpreter& interp, base_qobject& oct_qobj);
-}
+extern void graphics_init (interpreter& interp);
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

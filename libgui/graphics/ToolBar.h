@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,46 +31,41 @@
 class QAction;
 class QToolBar;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class Figure;
+
+class ToolBar : public Object
 {
-  class base_qobject;
-  class interpreter;
-}
+  Q_OBJECT
 
-namespace octave
-{
+public:
+  ToolBar (octave::interpreter& interp,
+           const graphics_object& go, QToolBar *bar);
+  ~ToolBar ();
 
-  class Figure;
+  static ToolBar *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  class ToolBar : public Object
-  {
-    Q_OBJECT
+  Container * innerContainer () { return nullptr; }
 
-  public:
-    ToolBar (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-             const graphics_object& go, QToolBar *bar);
-    ~ToolBar (void);
+  bool eventFilter (QObject *watched, QEvent *event);
 
-    static ToolBar *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
+protected:
+  void update (int pId);
+  void beingDeleted ();
 
-    Container * innerContainer (void) { return nullptr; }
+private slots:
+  void hideEmpty ();
 
-    bool eventFilter (QObject *watched, QEvent *event);
+private:
+  QAction *m_empty;
+  Figure *m_figure;
+};
 
-  protected:
-    void update (int pId);
-    void beingDeleted (void);
-
-  private slots:
-    void hideEmpty (void);
-
-  private:
-    QAction *m_empty;
-    Figure *m_figure;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

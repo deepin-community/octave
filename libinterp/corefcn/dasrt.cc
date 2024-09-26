@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2002-2022 The Octave Project Developers
+// Copyright (C) 2002-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,18 +37,18 @@
 #include "error.h"
 #include "errwarn.h"
 #include "interpreter-private.h"
+#include "interpreter.h"
 #include "ovl.h"
 #include "ov-fcn.h"
 #include "ov-cell.h"
 #include "pager.h"
-#include "parse.h"
 #include "unwind-prot.h"
 #include "utils.h"
 #include "variables.h"
 
 #include "DASRT-opts.cc"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Global pointers for user defined function required by dasrt.
 static octave_value dasrt_fcn;
@@ -69,7 +69,7 @@ dasrt_user_f (const ColumnVector& x, const ColumnVector& xdot,
 {
   ColumnVector retval;
 
-  assert (x.numel () == xdot.numel ());
+  error_unless (x.numel () == xdot.numel ());
 
   octave_value_list args;
 
@@ -83,7 +83,9 @@ dasrt_user_f (const ColumnVector& x, const ColumnVector& xdot,
 
       try
         {
-          tmp = feval (dasrt_fcn, args, 1);
+          interpreter& interp = __get_interpreter__ ();
+
+          tmp = interp.feval (dasrt_fcn, args, 1);
         }
       catch (execution_exception& ee)
         {
@@ -124,7 +126,9 @@ dasrt_user_cf (const ColumnVector& x, double t)
 
       try
         {
-          tmp = feval (dasrt_cf, args, 1);
+          interpreter& interp = __get_interpreter__ ();
+
+          tmp = interp.feval (dasrt_cf, args, 1);
         }
       catch (execution_exception& ee)
         {
@@ -155,7 +159,7 @@ dasrt_user_j (const ColumnVector& x, const ColumnVector& xdot,
 {
   Matrix retval;
 
-  assert (x.numel () == xdot.numel ());
+  error_unless (x.numel () == xdot.numel ());
 
   octave_value_list args;
 
@@ -170,7 +174,9 @@ dasrt_user_j (const ColumnVector& x, const ColumnVector& xdot,
 
       try
         {
-          tmp = feval (dasrt_jac, args, 1);
+          interpreter& interp = __get_interpreter__ ();
+
+          tmp = interp.feval (dasrt_jac, args, 1);
         }
       catch (execution_exception& ee)
         {
@@ -432,7 +438,7 @@ parameters for @code{dasrt}.
   if (dasrt_fcn.is_undefined ())
     error ("dasrt: FCN argument is not a valid function name or handle");
 
-  DAERTFunc func (dasrt_user_f);
+  DAERTFunc fcn (dasrt_user_f);
 
   argp++;
 
@@ -457,7 +463,7 @@ parameters for @code{dasrt}.
         {
           argp++;
 
-          func.set_constraint_function (dasrt_user_cf);
+          fcn.set_constraint_function (dasrt_user_cf);
         }
     }
 
@@ -485,11 +491,11 @@ parameters for @code{dasrt}.
     }
 
   if (dasrt_jac.is_defined ())
-    func.set_jacobian_function (dasrt_user_j);
+    fcn.set_jacobian_function (dasrt_user_j);
 
   DASRT_result output;
 
-  DASRT dae = DASRT (state, stateprime, tzero, func);
+  DASRT dae = DASRT (state, stateprime, tzero, fcn);
 
   dae.set_options (dasrt_opts);
 
@@ -522,4 +528,4 @@ parameters for @code{dasrt}.
   return retval;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

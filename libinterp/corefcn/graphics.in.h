@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2007-2022 The Octave Project Developers
+// Copyright (C) 2007-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -52,7 +52,7 @@
 #include "ov.h"
 #include "text-renderer.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // FIXME: maybe this should be a configure option?
 // Matlab defaults to "Helvetica", but that causes problems for many
@@ -66,9 +66,10 @@ OCTAVE_NAMESPACE_BEGIN
 class OCTINTERP_API base_scaler
 {
 public:
-  base_scaler (void) { }
 
-  virtual ~base_scaler (void) = default;
+  OCTAVE_DEFAULT_CONSTRUCT_COPY_MOVE (base_scaler)
+
+  virtual ~base_scaler () = default;
 
   virtual Matrix scale (const Matrix&) const
   {
@@ -93,14 +94,15 @@ public:
   virtual base_scaler * clone () const
   { return new base_scaler (); }
 
-  virtual bool is_linear (void) const
+  virtual bool is_linear () const
   { return false; }
 };
 
 class lin_scaler : public base_scaler
 {
 public:
-  lin_scaler (void) { }
+
+  OCTAVE_DEFAULT_CONSTRUCT_COPY_MOVE_DELETE (lin_scaler)
 
   Matrix scale (const Matrix& m) const { return m; }
 
@@ -110,15 +112,16 @@ public:
 
   double unscale (double d) const { return d; }
 
-  base_scaler * clone (void) const { return new lin_scaler (); }
+  base_scaler * clone () const { return new lin_scaler (); }
 
-  bool is_linear (void) const { return true; }
+  bool is_linear () const { return true; }
 };
 
 class log_scaler : public base_scaler
 {
 public:
-  log_scaler (void) { }
+
+  OCTAVE_DEFAULT_CONSTRUCT_COPY_MOVE_DELETE (log_scaler)
 
   Matrix scale (const Matrix& m) const
   {
@@ -144,7 +147,7 @@ public:
   double unscale (double d) const
   { return std::pow (10.0, d); }
 
-  base_scaler * clone (void) const
+  base_scaler * clone () const
   { return new log_scaler (); }
 
 private:
@@ -158,7 +161,8 @@ private:
 class OCTINTERP_API neg_log_scaler : public base_scaler
 {
 public:
-  neg_log_scaler (void) { }
+
+  OCTAVE_DEFAULT_CONSTRUCT_COPY_MOVE_DELETE (neg_log_scaler)
 
   Matrix scale (const Matrix& m) const
   {
@@ -184,7 +188,7 @@ public:
   double unscale (double d) const
   { return -std::pow (10.0, -d); }
 
-  base_scaler * clone (void) const
+  base_scaler * clone () const
   { return new neg_log_scaler (); }
 
 private:
@@ -198,7 +202,8 @@ private:
 class OCTINTERP_API scaler
 {
 public:
-  scaler (void) : m_rep (new base_scaler ()) { }
+
+  scaler () : m_rep (new base_scaler ()) { }
 
   scaler (const scaler& s) : m_rep (s.m_rep->clone ()) { }
 
@@ -212,7 +217,7 @@ public:
                    : new base_scaler ())))
   { }
 
-  ~scaler (void) { delete m_rep; }
+  ~scaler () { delete m_rep; }
 
   Matrix scale (const Matrix& m) const
   { return m_rep->scale (m); }
@@ -226,18 +231,14 @@ public:
   double unscale (double d) const
   { return m_rep->unscale (d); }
 
-  bool is_linear (void) const
+  bool is_linear () const
   { return m_rep->is_linear (); }
 
   scaler& operator = (const scaler& s)
   {
     if (&s != this)
       {
-        if (m_rep)
-          {
-            delete m_rep;
-            m_rep = nullptr;
-          }
+        delete m_rep;
 
         m_rep = s.m_rep->clone ();
       }
@@ -247,11 +248,7 @@ public:
 
   scaler& operator = (const std::string& s)
   {
-    if (m_rep)
-      {
-        delete m_rep;
-        m_rep = nullptr;
-      }
+    delete m_rep;
 
     if (s == "log")
       m_rep = new log_scaler ();
@@ -286,7 +283,7 @@ public:
   friend class property;
 
 public:
-  base_property (void)
+  base_property ()
     : m_id (-1), m_count (1), m_name (), m_parent (), m_hidden (),
       m_listeners ()
   { }
@@ -301,25 +298,28 @@ public:
       m_hidden (p.m_hidden), m_listeners ()
   { }
 
-  virtual ~base_property (void) = default;
+  // FIXME: should we define assignment?
+  base_property& operator = (const base_property&) = delete;
 
-  bool ok (void) const { return m_parent.ok (); }
+  virtual ~base_property () = default;
 
-  std::string get_name (void) const { return m_name; }
+  bool ok () const { return m_parent.ok (); }
+
+  std::string get_name () const { return m_name; }
 
   void set_name (const std::string& s) { m_name = s; }
 
-  graphics_handle get_parent (void) const { return m_parent; }
+  graphics_handle get_parent () const { return m_parent; }
 
   void set_parent (const graphics_handle& h) { m_parent = h; }
 
-  bool is_hidden (void) const { return m_hidden; }
+  bool is_hidden () const { return m_hidden; }
 
   void set_hidden (bool flag) { m_hidden = flag; }
 
-  virtual bool is_radio (void) const { return false; }
+  virtual bool is_radio () const { return false; }
 
-  int get_id (void) const { return m_id; }
+  int get_id () const { return m_id; }
 
   void set_id (int d) { m_id = d; }
 
@@ -328,17 +328,17 @@ public:
   OCTINTERP_API bool set (const octave_value& v, bool do_run = true,
                           bool do_notify_toolkit = true);
 
-  virtual octave_value get (void) const
+  virtual octave_value get () const
   {
     error (R"(get: invalid property "%s")", m_name.c_str ());
   }
 
-  virtual std::string values_as_string (void) const
+  virtual std::string values_as_string () const
   {
     error (R"(values_as_string: invalid property "%s")", m_name.c_str ());
   }
 
-  virtual Cell values_as_cell (void) const
+  virtual Cell values_as_cell () const
   {
     error (R"(values_as_cell: invalid property "%s")", m_name.c_str ());
   }
@@ -408,7 +408,7 @@ public:
 
   OCTINTERP_API void run_listeners (listener_mode mode = GCB_POSTSET);
 
-  virtual base_property * clone (void) const
+  virtual base_property * clone () const
   { return new base_property (*this); }
 
 protected:
@@ -438,17 +438,24 @@ private:
 class OCTINTERP_API string_property : public base_property
 {
 public:
+
+  string_property () = delete;
+
   string_property (const std::string& s, const graphics_handle& h,
                    const std::string& val = "")
     : base_property (s, h), m_str (val) { }
 
-  string_property (const string_property& p)
-    : base_property (p), m_str (p.m_str) { }
+  string_property (const string_property&) = default;
 
-  octave_value get (void) const
+  // FIXME: should we define assignment?
+  string_property& operator = (const string_property&) = delete;
+
+  ~string_property () = default;
+
+  octave_value get () const
   { return octave_value (m_str); }
 
-  std::string string_value (void) const { return m_str; }
+  std::string string_value () const { return m_str; }
 
   string_property& operator = (const octave_value& val)
   {
@@ -456,7 +463,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const { return new string_property (*this); }
+  base_property * clone () const { return new string_property (*this); }
 
 protected:
   bool do_set (const octave_value& val)
@@ -485,6 +492,8 @@ class OCTINTERP_API string_array_property : public base_property
 {
 public:
   enum desired_enum { string_t, cell_t };
+
+  string_array_property () = delete;
 
   string_array_property (const std::string& s, const graphics_handle& h,
                          const std::string& val = "", const char& sep = '|',
@@ -526,11 +535,14 @@ public:
     m_str = strings;
   }
 
-  string_array_property (const string_array_property& p)
-    : base_property (p), m_desired_type (p.m_desired_type),
-      m_separator (p.m_separator), m_str (p.m_str) { }
+  string_array_property (const string_array_property&) = default;
 
-  octave_value get (void) const
+  // FIXME: should we define assignment?
+  string_array_property& operator = (const string_array_property&) = delete;
+
+  ~string_array_property () = default;
+
+  octave_value get () const
   {
     if (m_desired_type == string_t)
       return octave_value (string_value ());
@@ -538,7 +550,7 @@ public:
       return octave_value (cell_value ());
   }
 
-  std::string string_value (void) const
+  std::string string_value () const
   {
     std::string s;
 
@@ -552,9 +564,9 @@ public:
     return s;
   }
 
-  Cell cell_value (void) const {return Cell (m_str);}
+  Cell cell_value () const {return Cell (m_str);}
 
-  string_vector string_vector_value (void) const { return m_str; }
+  string_vector string_vector_value () const { return m_str; }
 
   string_array_property& operator = (const octave_value& val)
   {
@@ -562,7 +574,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const
+  base_property * clone () const
   { return new string_array_property (*this); }
 
 protected:
@@ -686,6 +698,8 @@ class OCTINTERP_API text_label_property : public base_property
 public:
   enum type { char_t, cellstr_t };
 
+  text_label_property () = delete;
+
   text_label_property (const std::string& s, const graphics_handle& h,
                        const std::string& val = "")
     : base_property (s, h), m_value (val), m_stored_type (char_t)
@@ -732,17 +746,20 @@ public:
       }
   }
 
-  text_label_property (const text_label_property& p)
-    : base_property (p), m_value (p.m_value), m_stored_type (p.m_stored_type)
-  { }
+  text_label_property (const text_label_property&) = default;
 
-  bool empty (void) const
+  // FIXME: should we define assignment?
+  text_label_property& operator = (const text_label_property&) = delete;
+
+  ~text_label_property () = default;
+
+  bool empty () const
   {
     octave_value tmp = get ();
     return tmp.isempty ();
   }
 
-  octave_value get (void) const
+  octave_value get () const
   {
     if (m_stored_type == char_t)
       return octave_value (char_value ());
@@ -750,16 +767,16 @@ public:
       return octave_value (cell_value ());
   }
 
-  std::string string_value (void) const
+  std::string string_value () const
   {
     return m_value.empty () ? "" : m_value[0];
   }
 
-  string_vector string_vector_value (void) const { return m_value; }
+  string_vector string_vector_value () const { return m_value; }
 
-  charMatrix char_value (void) const { return charMatrix (m_value, ' '); }
+  charMatrix char_value () const { return charMatrix (m_value, ' '); }
 
-  Cell cell_value (void) const {return Cell (m_value); }
+  Cell cell_value () const {return Cell (m_value); }
 
   text_label_property& operator = (const octave_value& val)
   {
@@ -767,7 +784,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const { return new text_label_property (*this); }
+  base_property * clone () const { return new text_label_property (*this); }
 
 protected:
 
@@ -848,21 +865,9 @@ class OCTINTERP_API radio_values
 public:
   OCTINTERP_API radio_values (const std::string& opt_string = "");
 
-  radio_values (const radio_values& a)
-    : m_default_val (a.m_default_val), m_possible_vals (a.m_possible_vals) { }
+  OCTAVE_DEFAULT_COPY_MOVE_DELETE (radio_values)
 
-  radio_values& operator = (const radio_values& a)
-  {
-    if (&a != this)
-      {
-        m_default_val = a.m_default_val;
-        m_possible_vals = a.m_possible_vals;
-      }
-
-    return *this;
-  }
-
-  std::string default_value (void) const { return m_default_val; }
+  std::string default_value () const { return m_default_val; }
 
   bool validate (const std::string& val, std::string& match)
   {
@@ -913,11 +918,11 @@ public:
       return false;
   }
 
-  OCTINTERP_API std::string values_as_string (void) const;
+  OCTINTERP_API std::string values_as_string () const;
 
-  OCTINTERP_API Cell values_as_cell (void) const;
+  OCTINTERP_API Cell values_as_cell () const;
 
-  octave_idx_type nelem (void) const { return m_possible_vals.size (); }
+  octave_idx_type nelem () const { return m_possible_vals.size (); }
 
 private:
   // Might also want to cache
@@ -928,6 +933,9 @@ private:
 class OCTINTERP_API radio_property : public base_property
 {
 public:
+
+  radio_property () = delete;
+
   radio_property (const std::string& nm, const graphics_handle& h,
                   const radio_values& v = radio_values ())
     : base_property (nm, h),
@@ -943,21 +951,24 @@ public:
     : base_property (nm, h),
       m_vals (v), m_current_val (def) { }
 
-  radio_property (const radio_property& p)
-    : base_property (p), m_vals (p.m_vals), m_current_val (p.m_current_val) { }
+  OCTAVE_DEFAULT_COPY_MOVE_CTOR (radio_property)
+  OCTAVE_DISABLE_COPY_MOVE_ASGN (radio_property)
 
-  octave_value get (void) const { return octave_value (m_current_val); }
+  ~radio_property () = default;
 
-  const std::string& current_value (void) const { return m_current_val; }
+  octave_value get () const { return octave_value (m_current_val); }
 
-  std::string values_as_string (void) const { return m_vals.values_as_string (); }
+  const std::string& current_value () const { return m_current_val; }
 
-  Cell values_as_cell (void) const { return m_vals.values_as_cell (); }
+  std::string values_as_string () const
+  { return m_vals.values_as_string (); }
+
+  Cell values_as_cell () const { return m_vals.values_as_cell (); }
 
   bool is (const caseless_str& v) const
   { return v.compare (m_current_val); }
 
-  bool is_radio (void) const { return true; }
+  bool is_radio () const { return true; }
 
   radio_property& operator = (const octave_value& val)
   {
@@ -965,7 +976,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const { return new radio_property (*this); }
+  base_property * clone () const { return new radio_property (*this); }
 
 protected:
   bool do_set (const octave_value& newval)
@@ -1022,17 +1033,7 @@ public:
       error ("invalid color specification: %s", str.c_str ());
   }
 
-  color_values (const color_values& c)
-    : m_rgb (c.m_rgb)
-  { }
-
-  color_values& operator = (const color_values& c)
-  {
-    if (&c != this)
-      m_rgb = c.m_rgb;
-
-    return *this;
-  }
+  OCTAVE_DEFAULT_COPY_MOVE_DELETE (color_values)
 
   bool operator == (const color_values& c) const
   {
@@ -1044,11 +1045,11 @@ public:
   bool operator != (const color_values& c) const
   { return ! (*this == c); }
 
-  Matrix rgb (void) const { return m_rgb; }
+  Matrix rgb () const { return m_rgb; }
 
-  operator octave_value (void) const { return m_rgb; }
+  operator octave_value () const { return m_rgb; }
 
-  void validate (void) const
+  void validate () const
   {
     for (int i = 0; i < 3; i++)
       {
@@ -1066,6 +1067,9 @@ private:
 class OCTINTERP_API color_property : public base_property
 {
 public:
+
+  color_property () = delete;
+
   color_property (const color_values& c, const radio_values& v)
     : base_property ("", graphics_handle ()),
       m_current_type (color_t), m_color_val (c), m_radio_val (v),
@@ -1107,12 +1111,12 @@ public:
       m_radio_val (v.m_radio_val), m_current_val (v.m_current_val)
   { }
 
-  color_property (const color_property& p)
-    : base_property (p), m_current_type (p.m_current_type),
-      m_color_val (p.m_color_val), m_radio_val (p.m_radio_val),
-      m_current_val (p.m_current_val) { }
+  OCTAVE_DEFAULT_COPY_MOVE_CTOR (color_property)
+  OCTAVE_DISABLE_COPY_MOVE_ASGN (color_property)
 
-  octave_value get (void) const
+  ~color_property () = default;
+
+  octave_value get () const
   {
     if (m_current_type == color_t)
       return m_color_val.rgb ();
@@ -1120,14 +1124,14 @@ public:
     return m_current_val;
   }
 
-  bool is_rgb (void) const { return (m_current_type == color_t); }
+  bool is_rgb () const { return (m_current_type == color_t); }
 
-  bool is_radio (void) const { return (m_current_type == radio_t); }
+  bool is_radio () const { return (m_current_type == radio_t); }
 
   bool is (const std::string& v) const
   { return (is_radio () && m_current_val == v); }
 
-  Matrix rgb (void) const
+  Matrix rgb () const
   {
     if (m_current_type != color_t)
       error ("color has no RGB value");
@@ -1135,7 +1139,7 @@ public:
     return m_color_val.rgb ();
   }
 
-  const std::string& current_value (void) const
+  const std::string& current_value () const
   {
     if (m_current_type != radio_t)
       error ("color has no radio value");
@@ -1149,14 +1153,14 @@ public:
     return *this;
   }
 
-  operator octave_value (void) const { return get (); }
+  operator octave_value () const { return get (); }
 
-  base_property * clone (void) const { return new color_property (*this); }
+  base_property * clone () const { return new color_property (*this); }
 
-  std::string values_as_string (void) const
+  std::string values_as_string () const
   { return m_radio_val.values_as_string (); }
 
-  Cell values_as_cell (void) const { return m_radio_val.values_as_cell (); }
+  Cell values_as_cell () const { return m_radio_val.values_as_cell (); }
 
 protected:
   OCTINTERP_API bool do_set (const octave_value& newval);
@@ -1181,6 +1185,9 @@ enum finite_type
 class OCTINTERP_API double_property : public base_property
 {
 public:
+
+  double_property () = delete;
+
   double_property (const std::string& nm, const graphics_handle& h,
                    double d = 0)
     : base_property (nm, h),
@@ -1194,9 +1201,14 @@ public:
       m_minval (std::pair<double, bool> (octave_NaN, true)),
       m_maxval (std::pair<double, bool> (octave_NaN, true)) { }
 
-  octave_value get (void) const { return octave_value (m_current_val); }
+  // FIXME: should we define assignment?
+  double_property& operator = (const double_property&) = delete;
 
-  double double_value (void) const { return m_current_val; }
+  ~double_property () = default;
+
+  octave_value get () const { return octave_value (m_current_val); }
+
+  double double_value () const { return m_current_val; }
 
   double_property& operator = (const octave_value& val)
   {
@@ -1204,7 +1216,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const
+  base_property * clone () const
   {
     double_property *p = new double_property (*this);
 
@@ -1293,6 +1305,9 @@ private:
 class OCTINTERP_API double_radio_property : public base_property
 {
 public:
+
+  double_radio_property () = delete;
+
   double_radio_property (double d, const radio_values& v)
     : base_property ("", graphics_handle ()),
       m_current_type (double_t), m_dval (d), m_radio_val (v),
@@ -1313,12 +1328,12 @@ public:
       m_radio_val (v.m_radio_val), m_current_val (v.m_current_val)
   { }
 
-  double_radio_property (const double_radio_property& p)
-    : base_property (p), m_current_type (p.m_current_type),
-      m_dval (p.m_dval), m_radio_val (p.m_radio_val),
-      m_current_val (p.m_current_val) { }
+  OCTAVE_DEFAULT_COPY_MOVE_CTOR (double_radio_property)
+  OCTAVE_DISABLE_COPY_MOVE_ASGN (double_radio_property)
 
-  octave_value get (void) const
+  ~double_radio_property () = default;
+
+  octave_value get () const
   {
     if (m_current_type == double_t)
       return m_dval;
@@ -1326,14 +1341,14 @@ public:
     return m_current_val;
   }
 
-  bool is_double (void) const { return (m_current_type == double_t); }
+  bool is_double () const { return (m_current_type == double_t); }
 
-  bool is_radio (void) const { return (m_current_type == radio_t); }
+  bool is_radio () const { return (m_current_type == radio_t); }
 
   bool is (const std::string& v) const
   { return (is_radio () && m_current_val == v); }
 
-  double double_value (void) const
+  double double_value () const
   {
     if (m_current_type != double_t)
       error ("%s: property has no double", get_name ().c_str ());
@@ -1341,7 +1356,7 @@ public:
     return m_dval;
   }
 
-  const std::string& current_value (void) const
+  const std::string& current_value () const
   {
     if (m_current_type != radio_t)
       error ("%s: property has no radio value", get_name ().c_str ());
@@ -1355,9 +1370,9 @@ public:
     return *this;
   }
 
-  operator octave_value (void) const { return get (); }
+  operator octave_value () const { return get (); }
 
-  base_property * clone (void) const
+  base_property * clone () const
   { return new double_radio_property (*this); }
 
 protected:
@@ -1375,10 +1390,11 @@ private:
 class OCTINTERP_API array_property : public base_property
 {
 public:
-  array_property (void)
+  array_property ()
     : base_property ("", graphics_handle ()), m_data (Matrix ()),
       m_min_val (), m_max_val (), m_min_pos (), m_max_neg (),
-      m_type_constraints (), m_size_constraints (), m_finite_constraint (NO_CHECK),
+      m_type_constraints (), m_size_constraints (),
+      m_finite_constraint (NO_CHECK),
       m_minval (std::pair<double, bool> (octave_NaN, true)),
       m_maxval (std::pair<double, bool> (octave_NaN, true))
   {
@@ -1389,7 +1405,8 @@ public:
                   const octave_value& m)
     : base_property (nm, h), m_data (m.issparse () ? m.full_value () : m),
       m_min_val (), m_max_val (), m_min_pos (), m_max_neg (),
-      m_type_constraints (), m_size_constraints (), m_finite_constraint (NO_CHECK),
+      m_type_constraints (), m_size_constraints (),
+      m_finite_constraint (NO_CHECK),
       m_minval (std::pair<double, bool> (octave_NaN, true)),
       m_maxval (std::pair<double, bool> (octave_NaN, true))
   {
@@ -1401,13 +1418,20 @@ public:
   // copy constraints.
   array_property (const array_property& p)
     : base_property (p), m_data (p.m_data),
-      m_min_val (p.m_min_val), m_max_val (p.m_max_val), m_min_pos (p.m_min_pos), m_max_neg (p.m_max_neg),
-      m_type_constraints (), m_size_constraints (), m_finite_constraint (NO_CHECK),
+      m_min_val (p.m_min_val), m_max_val (p.m_max_val),
+      m_min_pos (p.m_min_pos), m_max_neg (p.m_max_neg),
+      m_type_constraints (), m_size_constraints (),
+      m_finite_constraint (NO_CHECK),
       m_minval (std::pair<double, bool> (octave_NaN, true)),
       m_maxval (std::pair<double, bool> (octave_NaN, true))
   { }
 
-  octave_value get (void) const { return m_data; }
+  // FIXME: Should we define assignment?
+  array_property& operator = (const array_property&) = delete;
+
+  ~array_property () = default;
+
+  octave_value get () const { return m_data; }
 
   void add_constraint (const std::string& type)
   { m_type_constraints.insert (type); }
@@ -1426,12 +1450,12 @@ public:
       m_maxval = std::pair<double, bool> (val, inclusive);
   }
 
-  double min_val (void) const { return m_min_val; }
-  double max_val (void) const { return m_max_val; }
-  double min_pos (void) const { return m_min_pos; }
-  double max_neg (void) const { return m_max_neg; }
+  double min_val () const { return m_min_val; }
+  double max_val () const { return m_max_val; }
+  double min_pos () const { return m_min_pos; }
+  double max_neg () const { return m_max_neg; }
 
-  Matrix get_limits (void) const
+  Matrix get_limits () const
   {
     Matrix m (1, 4);
 
@@ -1449,7 +1473,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const
+  base_property * clone () const
   {
     array_property *p = new array_property (*this);
 
@@ -1489,7 +1513,7 @@ private:
 
   OCTINTERP_API bool is_equal (const octave_value& v) const;
 
-  OCTINTERP_API void get_data_limits (void);
+  OCTINTERP_API void get_data_limits ();
 
 protected:
   octave_value m_data;
@@ -1506,6 +1530,9 @@ protected:
 class OCTINTERP_API row_vector_property : public array_property
 {
 public:
+
+  row_vector_property () = delete;
+
   row_vector_property (const std::string& nm, const graphics_handle& h,
                        const octave_value& m)
     : array_property (nm, h, m)
@@ -1522,6 +1549,11 @@ public:
     add_constraint (dim_vector (1, -1));
     add_constraint (dim_vector (0, 0));
   }
+
+  // FIXME: should we define assignment?
+  row_vector_property& operator = (const row_vector_property&) = delete;
+
+  ~row_vector_property () = default;
 
   void add_constraint (const std::string& type)
   {
@@ -1559,7 +1591,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const
+  base_property * clone () const
   {
     row_vector_property *p = new row_vector_property (*this);
 
@@ -1600,6 +1632,9 @@ private:
 class OCTINTERP_API bool_property : public radio_property
 {
 public:
+
+  bool_property () = delete;
+
   bool_property (const std::string& nm, const graphics_handle& h,
                  bool val)
     : radio_property (nm, h, radio_values (val ? "{on}|off" : "on|{off}"))
@@ -1611,10 +1646,12 @@ public:
                                            "{on}|off" : "on|{off}"), val)
   { }
 
-  bool_property (const bool_property& p)
-    : radio_property (p) { }
+  OCTAVE_DEFAULT_COPY_MOVE_CTOR (bool_property)
+  OCTAVE_DISABLE_COPY_MOVE_ASGN (bool_property)
 
-  bool is_on (void) const { return is ("on"); }
+  ~bool_property () = default;
+
+  bool is_on () const { return is ("on"); }
 
   bool_property& operator = (const octave_value& val)
   {
@@ -1622,7 +1659,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const { return new bool_property (*this); }
+  base_property * clone () const { return new bool_property (*this); }
 
 protected:
   bool do_set (const octave_value& val)
@@ -1639,17 +1676,24 @@ protected:
 class OCTINTERP_API handle_property : public base_property
 {
 public:
+
+  handle_property () = delete;
+
   handle_property (const std::string& nm, const graphics_handle& h,
                    const graphics_handle& val = graphics_handle ())
     : base_property (nm, h),
       m_current_val (val) { }
 
-  handle_property (const handle_property& p)
-    : base_property (p), m_current_val (p.m_current_val) { }
+  handle_property (const handle_property&) = default;
 
-  octave_value get (void) const { return m_current_val.as_octave_value (); }
+  // FIXME: should we define assignment?
+  handle_property& operator = (const handle_property&) = delete;
 
-  graphics_handle handle_value (void) const { return m_current_val; }
+  ~handle_property () = default;
+
+  octave_value get () const { return m_current_val.as_octave_value (); }
+
+  graphics_handle handle_value () const { return m_current_val; }
 
   handle_property& operator = (const octave_value& val)
   {
@@ -1663,10 +1707,10 @@ public:
     return *this;
   }
 
-  void invalidate (void)
+  void invalidate ()
   { m_current_val = octave::numeric_limits<double>::NaN (); }
 
-  base_property * clone (void) const { return new handle_property (*this); }
+  base_property * clone () const { return new handle_property (*this); }
 
   void add_constraint (const std::string& type)
   { m_type_constraints.insert (type); }
@@ -1684,14 +1728,19 @@ private:
 class OCTINTERP_API any_property : public base_property
 {
 public:
+
+  any_property () = delete;
+
   any_property (const std::string& nm, const graphics_handle& h,
                 const octave_value& m = Matrix ())
     : base_property (nm, h), m_data (m) { }
 
-  any_property (const any_property& p)
-    : base_property (p), m_data (p.m_data) { }
+  OCTAVE_DEFAULT_COPY_MOVE_CTOR (any_property)
+  OCTAVE_DISABLE_COPY_MOVE_ASGN (any_property)
 
-  octave_value get (void) const { return m_data; }
+  ~any_property () = default;
+
+  octave_value get () const { return m_data; }
 
   any_property& operator = (const octave_value& val)
   {
@@ -1699,7 +1748,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const { return new any_property (*this); }
+  base_property * clone () const { return new any_property (*this); }
 
 protected:
   bool do_set (const octave_value& v)
@@ -1717,7 +1766,7 @@ private:
 class OCTINTERP_API children_property : public base_property
 {
 public:
-  children_property (void)
+  children_property ()
     : base_property ("", graphics_handle ()), m_children_list ()
   {
     do_init_children (Matrix ());
@@ -1742,7 +1791,12 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const { return new children_property (*this); }
+  // FIXME: should we define assignment?
+  children_property& operator = (const children_property&) = delete;
+
+  ~children_property () = default;
+
+  base_property * clone () const { return new children_property (*this); }
 
   bool remove_child (double val)
   {
@@ -1754,22 +1808,22 @@ public:
     do_adopt_child (val);
   }
 
-  Matrix get_children (void) const
+  Matrix get_children () const
   {
     return do_get_children (false);
   }
 
-  Matrix get_hidden (void) const
+  Matrix get_hidden () const
   {
     return do_get_children (true);
   }
 
-  Matrix get_all (void) const
+  Matrix get_all () const
   {
     return do_get_all_children ();
   }
 
-  octave_value get (void) const
+  octave_value get () const
   {
     return octave_value (get_children ());
   }
@@ -1820,12 +1874,13 @@ protected:
     bool add_hidden = true;
 
     const Matrix visible_kids = do_get_children (false);
+    const Matrix hidden_kids = do_get_children (true);
 
     if (visible_kids.numel () == new_kids.numel ())
       {
         Matrix t1 = visible_kids.sort ();
         Matrix t2 = new_kids_column.sort ();
-        Matrix t3 = get_hidden ().sort ();
+        Matrix t3 = hidden_kids.sort ();
 
         if (t1 != t2)
           is_ok = false;
@@ -1837,22 +1892,22 @@ protected:
       is_ok = false;
 
     if (! is_ok)
-      error ("set: new children must be a permutation of existing children");
-
-    Matrix tmp = new_kids_column;
-
-    if (add_hidden)
-      tmp.stack (get_hidden ());
+      error ("set: new children list must be a permutation of existing "
+             "children with visible handles");
 
     m_children_list.clear ();
 
     // Don't use do_init_children here, as that reverses the
     // order of the list, and we don't want to do that if setting
     // the child list directly.
-    for (octave_idx_type i = 0; i < tmp.numel (); i++)
-      m_children_list.push_back (tmp.xelem (i));
+    for (octave_idx_type i = 0; i < new_kids_column.numel (); i++)
+      m_children_list.push_back (new_kids_column.xelem (i));
 
-    return is_ok;
+    if (add_hidden)
+      for (octave_idx_type i = 0; i < hidden_kids.numel (); i++)
+        m_children_list.push_back (hidden_kids.xelem (i));
+
+    return true;
   }
 
 private:
@@ -1871,7 +1926,7 @@ private:
 
   OCTINTERP_API Matrix do_get_children (bool return_hidden) const;
 
-  Matrix do_get_all_children (void) const
+  Matrix do_get_all_children () const
   {
     Matrix retval (m_children_list.size (), 1);
     octave_idx_type i = 0;
@@ -1908,18 +1963,25 @@ private:
 class OCTINTERP_API callback_property : public base_property
 {
 public:
+
+  callback_property () = delete;
+
   callback_property (const std::string& nm, const graphics_handle& h,
                      const octave_value& m)
     : base_property (nm, h), m_callback (m) { }
 
-  callback_property (const callback_property& p)
-    : base_property (p), m_callback (p.m_callback) { }
+  callback_property (const callback_property&) = default;
 
-  octave_value get (void) const { return m_callback; }
+  // FIXME: should we define assignment?
+  callback_property& operator = (const callback_property&) = delete;
+
+  ~callback_property () = default;
+
+  octave_value get () const { return m_callback; }
 
   OCTINTERP_API void execute (const octave_value& data = octave_value ()) const;
 
-  bool is_defined (void) const
+  bool is_defined () const
   {
     return (m_callback.is_defined () && ! m_callback.isempty ());
   }
@@ -1930,7 +1992,7 @@ public:
     return *this;
   }
 
-  base_property * clone (void) const { return new callback_property (*this); }
+  base_property * clone () const { return new callback_property (*this); }
 
 protected:
   bool do_set (const octave_value& v)
@@ -1956,7 +2018,7 @@ private:
 class OCTINTERP_API property
 {
 public:
-  property (void) : m_rep (new base_property ("", graphics_handle ()))
+  property () : m_rep (new base_property ("", graphics_handle ()))
   { }
 
   property (base_property *bp, bool persist = false) : m_rep (bp)
@@ -1967,53 +2029,53 @@ public:
     m_rep->m_count++;
   }
 
-  ~property (void)
+  ~property ()
   {
     if (--m_rep->m_count == 0)
       delete m_rep;
   }
 
-  bool ok (void) const
+  bool ok () const
   { return m_rep->ok (); }
 
-  std::string get_name (void) const
+  std::string get_name () const
   { return m_rep->get_name (); }
 
   void set_name (const std::string& name)
   { m_rep->set_name (name); }
 
-  graphics_handle get_parent (void) const
+  graphics_handle get_parent () const
   { return m_rep->get_parent (); }
 
   void set_parent (const graphics_handle& h)
   { m_rep->set_parent (h); }
 
-  bool is_hidden (void) const
+  bool is_hidden () const
   { return m_rep->is_hidden (); }
 
   void set_hidden (bool flag)
   { m_rep->set_hidden (flag); }
 
-  bool is_radio (void) const
+  bool is_radio () const
   { return m_rep->is_radio (); }
 
-  int get_id (void) const
+  int get_id () const
   { return m_rep->get_id (); }
 
   void set_id (int d)
   { m_rep->set_id (d); }
 
-  octave_value get (void) const
+  octave_value get () const
   { return m_rep->get (); }
 
   bool set (const octave_value& val, bool do_run = true,
             bool do_notify_toolkit = true)
   { return m_rep->set (val, do_run, do_notify_toolkit); }
 
-  std::string values_as_string (void) const
+  std::string values_as_string () const
   { return m_rep->values_as_string (); }
 
-  Cell values_as_cell (void) const
+  Cell values_as_cell () const
   { return m_rep->values_as_cell (); }
 
   property& operator = (const octave_value& val)
@@ -2047,28 +2109,8 @@ public:
   create (const std::string& name, const graphics_handle& parent,
           const caseless_str& type, const octave_value_list& args);
 
-  property clone (void) const
+  property clone () const
   { return property (m_rep->clone ()); }
-
-#if 0
-  const string_property& as_string_property (void) const
-  { return *(dynamic_cast<string_property *> (m_rep)); }
-
-  const radio_property& as_radio_property (void) const
-  { return *(dynamic_cast<radio_property *> (m_rep)); }
-
-  const color_property& as_color_property (void) const
-  { return *(dynamic_cast<color_property *> (m_rep)); }
-
-  const double_property& as_double_property (void) const
-  { return *(dynamic_cast<double_property *> (m_rep)); }
-
-  const bool_property& as_bool_property (void) const
-  { return *(dynamic_cast<bool_property *> (m_rep)); }
-
-  const handle_property& as_handle_property (void) const
-  { return *(dynamic_cast<handle_property *> (m_rep)); }
-#endif
 
 private:
   base_property *m_rep;
@@ -2157,17 +2199,17 @@ public:
   property_list (const plist_map_type& m = plist_map_type ())
     : m_plist_map (m) { }
 
-  ~property_list (void) = default;
+  OCTAVE_DEFAULT_COPY_MOVE_DELETE (property_list)
 
   OCTINTERP_API void set (const caseless_str& name, const octave_value& val);
 
   OCTINTERP_API octave_value lookup (const caseless_str& name) const;
 
-  plist_map_iterator begin (void) { return m_plist_map.begin (); }
-  plist_map_const_iterator begin (void) const { return m_plist_map.begin (); }
+  plist_map_iterator begin () { return m_plist_map.begin (); }
+  plist_map_const_iterator begin () const { return m_plist_map.begin (); }
 
-  plist_map_iterator end (void) { return m_plist_map.end (); }
-  plist_map_const_iterator end (void) const { return m_plist_map.end (); }
+  plist_map_iterator end () { return m_plist_map.end (); }
+  plist_map_const_iterator end () const { return m_plist_map.end (); }
 
   plist_map_iterator find (const std::string& go_name)
   {
@@ -2198,11 +2240,13 @@ public:
                    const graphics_handle& mh = graphics_handle (),
                    const graphics_handle& p = graphics_handle ());
 
-  virtual ~base_properties (void) = default;
+  OCTAVE_DISABLE_COPY_MOVE (base_properties)
 
-  virtual std::string graphics_object_name (void) const { return "unknown"; }
+  virtual ~base_properties () = default;
 
-  OCTINTERP_API void mark_modified (void);
+  virtual std::string graphics_object_name () const { return "unknown"; }
+
+  OCTINTERP_API void mark_modified ();
 
   OCTINTERP_API void override_defaults (base_graphics_object& obj);
 
@@ -2251,7 +2295,7 @@ public:
     return false;
   }
 
-  bool is_modified (void) const { return is___modified__ (); }
+  bool is_modified () const { return is___modified__ (); }
 
   virtual void remove_child (const graphics_handle& h, bool = false)
   {
@@ -2269,14 +2313,14 @@ public:
     mark_modified ();
   }
 
-  virtual octave::graphics_toolkit get_toolkit (void) const;
+  virtual octave::graphics_toolkit get_toolkit () const;
 
   virtual Matrix
   get_boundingbox (bool /* finternal */ = false,
                    const Matrix& /* parent_pix_size */ = Matrix ()) const
   { return Matrix (1, 4, 0.0); }
 
-  virtual void update_boundingbox (void);
+  virtual void update_boundingbox ();
 
   virtual void update_autopos (const std::string& elem_type);
 
@@ -2296,17 +2340,17 @@ public:
 
   OCTINTERP_API void set_parent (const octave_value& val);
 
-  Matrix get_children (void) const
+  Matrix get_children () const
   {
     return m_children.get_children ();
   }
 
-  Matrix get_all_children (void) const
+  Matrix get_all_children () const
   {
     return m_children.get_all ();
   }
 
-  Matrix get_hidden_children (void) const
+  Matrix get_hidden_children () const
   {
     return m_children.get_hidden ();
   }
@@ -2314,7 +2358,7 @@ public:
   OCTINTERP_API void
   get_children_of_type (const caseless_str& type, bool get_invisible,
                         bool traverse,
-                        std::list<graphics_object> &children_list) const;
+                        std::list<graphics_object>& children_list) const;
 
   void set_modified (const octave_value& val) { set___modified__ (val); }
 
@@ -2322,7 +2366,7 @@ public:
 
   // Redirect calls to "uicontextmenu" to "contextmenu".
 
-  graphics_handle get_uicontextmenu (void) const
+  graphics_handle get_uicontextmenu () const
   {
     return get_contextmenu ();
   }
@@ -2342,7 +2386,7 @@ public:
   virtual void update_axis_limits (const std::string& axis_type,
                                    const graphics_handle& h) const;
 
-  virtual void update_contextmenu (void) const;
+  virtual void update_contextmenu () const;
 
   virtual void delete_children (bool clear = false, bool from_root = false)
   {
@@ -2359,28 +2403,28 @@ public:
     m_parent = new_gh;
   }
 
-  static OCTINTERP_API property_list::pval_map_type factory_defaults (void);
+  static OCTINTERP_API property_list::pval_map_type factory_defaults ();
 
   // FIXME: These functions should be generated automatically by the
   //        genprops.awk script.
   //
   // EMIT_BASE_PROPERTIES_GET_FUNCTIONS
 
-  virtual octave_value get_alim (void) const { return octave_value (); }
-  virtual octave_value get_clim (void) const { return octave_value (); }
-  virtual octave_value get_xlim (void) const { return octave_value (); }
-  virtual octave_value get_ylim (void) const { return octave_value (); }
-  virtual octave_value get_zlim (void) const { return octave_value (); }
+  virtual octave_value get_alim () const { return octave_value (); }
+  virtual octave_value get_clim () const { return octave_value (); }
+  virtual octave_value get_xlim () const { return octave_value (); }
+  virtual octave_value get_ylim () const { return octave_value (); }
+  virtual octave_value get_zlim () const { return octave_value (); }
 
-  virtual bool is_aliminclude (void) const { return false; }
-  virtual bool is_climinclude (void) const { return false; }
-  virtual bool is_xliminclude (void) const { return false; }
-  virtual bool is_yliminclude (void) const { return false; }
-  virtual bool is_zliminclude (void) const { return false; }
+  virtual bool is_aliminclude () const { return false; }
+  virtual bool is_climinclude () const { return false; }
+  virtual bool is_xliminclude () const { return false; }
+  virtual bool is_yliminclude () const { return false; }
+  virtual bool is_zliminclude () const { return false; }
 
-  OCTINTERP_API bool is_handle_visible (void) const;
+  OCTINTERP_API bool is_handle_visible () const;
 
-  OCTINTERP_API std::set<std::string> dynamic_property_names (void) const;
+  OCTINTERP_API std::set<std::string> dynamic_property_names () const;
 
   OCTINTERP_API bool has_dynamic_property (const std::string& pname) const;
 
@@ -2425,11 +2469,11 @@ protected:
     graphics_handle __myhandle__ fhrs , mh
   END_PROPERTIES
 
-  virtual void update_beingdeleted (void) { };
+  virtual void update_beingdeleted () { };
 
-  virtual void update_handlevisibility (void);
+  virtual void update_handlevisibility ();
 
-  virtual void update_visible (void) { };
+  virtual void update_visible () { };
 
 protected:
   struct cmp_caseless_str
@@ -2450,7 +2494,7 @@ protected:
 
 protected:
 
-  virtual void init (void)
+  virtual void init ()
   {
     m_contextmenu.add_constraint ("uicontextmenu");
   }
@@ -2461,17 +2505,13 @@ class OCTINTERP_API base_graphics_object
 public:
   friend class graphics_object;
 
-  base_graphics_object (void) : m_toolkit_flag (false) { }
+  base_graphics_object () : m_toolkit_flag (false) { }
 
-  // No copying!
+  OCTAVE_DISABLE_COPY_MOVE (base_graphics_object)
 
-  base_graphics_object (const base_graphics_object&) = delete;
+  virtual ~base_graphics_object () = default;
 
-  base_graphics_object& operator = (const base_graphics_object&) = delete;
-
-  virtual ~base_graphics_object (void) = default;
-
-  virtual void mark_modified (void)
+  virtual void mark_modified ()
   {
     if (! valid_object ())
       error ("base_graphics_object::mark_modified: invalid graphics object");
@@ -2533,12 +2573,12 @@ public:
 
   virtual octave_value get_factory_default (const caseless_str&) const;
 
-  virtual octave_value get_defaults (void) const
+  virtual octave_value get_defaults () const
   {
     error ("base_graphics_object::get_defaults: invalid graphics object");
   }
 
-  virtual property_list get_defaults_list (void) const
+  virtual property_list get_defaults_list () const
   {
     if (! valid_object ())
       error ("base_graphics_object::get_defaults_list: invalid graphics object");
@@ -2546,12 +2586,12 @@ public:
     return property_list ();
   }
 
-  virtual octave_value get_factory_defaults (void) const
+  virtual octave_value get_factory_defaults () const
   {
     error ("base_graphics_object::get_factory_defaults: invalid graphics object");
   }
 
-  virtual property_list get_factory_defaults_list (void) const
+  virtual property_list get_factory_defaults_list () const
   {
     error ("base_graphics_object::get_factory_defaults_list: invalid graphics object");
   }
@@ -2563,7 +2603,7 @@ public:
 
   // FIXME: It seems like this function should be const, but that is
   // currently not possible.
-  virtual std::string values_as_string (void);
+  virtual std::string values_as_string ();
 
   // FIXME: It seems like this function should be const, but that is
   // currently not possible.
@@ -2571,9 +2611,9 @@ public:
 
   // FIXME: It seems like this function should be const, but that is
   // currently not possible.
-  virtual octave_scalar_map values_as_struct (void);
+  virtual octave_scalar_map values_as_struct ();
 
-  virtual graphics_handle get_parent (void) const
+  virtual graphics_handle get_parent () const
   {
     if (! valid_object ())
       error ("base_graphics_object::get_parent: invalid graphics object");
@@ -2581,7 +2621,7 @@ public:
     return get_properties ().get_parent ();
   }
 
-  graphics_handle get_handle (void) const
+  graphics_handle get_handle () const
   {
     if (! valid_object ())
       error ("base_graphics_object::get_handle: invalid graphics object");
@@ -2613,7 +2653,7 @@ public:
     get_properties ().reparent (np);
   }
 
-  virtual void defaults (void) const
+  virtual void defaults () const
   {
     if (! valid_object ())
       error ("base_graphics_object::default: invalid graphics object");
@@ -2622,14 +2662,14 @@ public:
     err_not_implemented (msg.c_str ());
   }
 
-  virtual base_properties& get_properties (void)
+  virtual base_properties& get_properties ()
   {
     static base_properties properties;
     warning ("base_graphics_object::get_properties: invalid graphics object");
     return properties;
   }
 
-  virtual const base_properties& get_properties (void) const
+  virtual const base_properties& get_properties () const
   {
     static base_properties properties;
     warning ("base_graphics_object::get_properties: invalid graphics object");
@@ -2641,11 +2681,11 @@ public:
   virtual void update_axis_limits (const std::string& axis_type,
                                    const graphics_handle& h);
 
-  virtual bool valid_object (void) const { return false; }
+  virtual bool valid_object () const { return false; }
 
-  bool valid_toolkit_object (void) const { return m_toolkit_flag; }
+  bool valid_toolkit_object () const { return m_toolkit_flag; }
 
-  virtual std::string type (void) const
+  virtual std::string type () const
   {
     return (valid_object () ? get_properties ().graphics_object_name ()
                             : "unknown");
@@ -2656,7 +2696,7 @@ public:
     return type () == go_name;
   }
 
-  virtual octave::graphics_toolkit get_toolkit (void) const
+  virtual octave::graphics_toolkit get_toolkit () const
   {
     if (! valid_object ())
       error ("base_graphics_object::get_toolkit: invalid graphics object");
@@ -2680,9 +2720,9 @@ public:
       get_properties ().delete_listener (nm, v, mode);
   }
 
-  virtual void remove_all_listeners (void);
+  virtual void remove_all_listeners ();
 
-  virtual void reset_default_properties (void);
+  virtual void reset_default_properties ();
 
 protected:
   virtual void initialize (const graphics_object& go)
@@ -2717,7 +2757,7 @@ class OCTINTERP_API graphics_object
 {
 public:
 
-  graphics_object (void) : m_rep (new base_graphics_object ()) { }
+  graphics_object () : m_rep (new base_graphics_object ()) { }
 
   graphics_object (base_graphics_object *new_rep) : m_rep (new_rep) { }
 
@@ -2725,16 +2765,16 @@ public:
 
   graphics_object& operator = (const graphics_object&) = default;
 
-  ~graphics_object (void) = default;
+  ~graphics_object () = default;
 
-  void mark_modified (void) { m_rep->mark_modified (); }
+  void mark_modified () { m_rep->mark_modified (); }
 
   void override_defaults (base_graphics_object& obj)
   {
     m_rep->override_defaults (obj);
   }
 
-  void override_defaults (void)
+  void override_defaults ()
   {
     m_rep->override_defaults (*m_rep);
   }
@@ -2794,19 +2834,19 @@ public:
     return m_rep->get_factory_default (name);
   }
 
-  octave_value get_defaults (void) const { return m_rep->get_defaults (); }
+  octave_value get_defaults () const { return m_rep->get_defaults (); }
 
-  property_list get_defaults_list (void) const
+  property_list get_defaults_list () const
   {
     return m_rep->get_defaults_list ();
   }
 
-  octave_value get_factory_defaults (void) const
+  octave_value get_factory_defaults () const
   {
     return m_rep->get_factory_defaults ();
   }
 
-  property_list get_factory_defaults_list (void) const
+  property_list get_factory_defaults_list () const
   {
     return m_rep->get_factory_defaults_list ();
   }
@@ -2818,7 +2858,7 @@ public:
 
   // FIXME: It seems like this function should be const, but that is
   // currently not possible.
-  std::string values_as_string (void) { return m_rep->values_as_string (); }
+  std::string values_as_string () { return m_rep->values_as_string (); }
 
   // FIXME: It seems like this function should be const, but that is
   // currently not possible.
@@ -2829,11 +2869,11 @@ public:
 
   // FIXME: It seems like this function should be const, but that is
   // currently not possible.
-  octave_map values_as_struct (void) { return m_rep->values_as_struct (); }
+  octave_map values_as_struct () { return m_rep->values_as_struct (); }
 
-  graphics_handle get_parent (void) const { return m_rep->get_parent (); }
+  graphics_handle get_parent () const { return m_rep->get_parent (); }
 
-  graphics_handle get_handle (void) const { return m_rep->get_handle (); }
+  graphics_handle get_handle () const { return m_rep->get_handle (); }
 
   OCTINTERP_API graphics_object get_ancestor (const std::string& type) const;
 
@@ -2843,13 +2883,13 @@ public:
 
   void reparent (const graphics_handle& h) { m_rep->reparent (h); }
 
-  void defaults (void) const { m_rep->defaults (); }
+  void defaults () const { m_rep->defaults (); }
 
   bool isa (const std::string& go_name) const { return m_rep->isa (go_name); }
 
-  base_properties& get_properties (void) { return m_rep->get_properties (); }
+  base_properties& get_properties () { return m_rep->get_properties (); }
 
-  const base_properties& get_properties (void) const
+  const base_properties& get_properties () const
   {
     return m_rep->get_properties ();
   }
@@ -2865,51 +2905,51 @@ public:
     m_rep->update_axis_limits (axis_type, h);
   }
 
-  bool valid_object (void) const { return m_rep->valid_object (); }
+  bool valid_object () const { return m_rep->valid_object (); }
 
-  std::string type (void) const { return m_rep->type (); }
+  std::string type () const { return m_rep->type (); }
 
-  operator bool (void) const { return m_rep->valid_object (); }
+  operator bool () const { return m_rep->valid_object (); }
 
   // FIXME: These functions should be generated automatically by the
   //        genprops.awk script.
   //
   // EMIT_GRAPHICS_OBJECT_GET_FUNCTIONS
 
-  octave_value get_alim (void) const
+  octave_value get_alim () const
   { return get_properties ().get_alim (); }
 
-  octave_value get_clim (void) const
+  octave_value get_clim () const
   { return get_properties ().get_clim (); }
 
-  octave_value get_xlim (void) const
+  octave_value get_xlim () const
   { return get_properties ().get_xlim (); }
 
-  octave_value get_ylim (void) const
+  octave_value get_ylim () const
   { return get_properties ().get_ylim (); }
 
-  octave_value get_zlim (void) const
+  octave_value get_zlim () const
   { return get_properties ().get_zlim (); }
 
-  bool is_aliminclude (void) const
+  bool is_aliminclude () const
   { return get_properties ().is_aliminclude (); }
 
-  bool is_climinclude (void) const
+  bool is_climinclude () const
   { return get_properties ().is_climinclude (); }
 
-  bool is_xliminclude (void) const
+  bool is_xliminclude () const
   { return get_properties ().is_xliminclude (); }
 
-  bool is_yliminclude (void) const
+  bool is_yliminclude () const
   { return get_properties ().is_yliminclude (); }
 
-  bool is_zliminclude (void) const
+  bool is_zliminclude () const
   { return get_properties ().is_zliminclude (); }
 
-  bool is_handle_visible (void) const
+  bool is_handle_visible () const
   { return get_properties ().is_handle_visible (); }
 
-  octave::graphics_toolkit get_toolkit (void) const
+  octave::graphics_toolkit get_toolkit () const
   { return m_rep->get_toolkit (); }
 
   void add_property_listener (const std::string& nm, const octave_value& v,
@@ -2920,15 +2960,15 @@ public:
                                  listener_mode mode = GCB_POSTSET)
   { m_rep->delete_property_listener (nm, v, mode); }
 
-  void remove_all_listeners (void) { m_rep->remove_all_listeners (); }
+  void remove_all_listeners () { m_rep->remove_all_listeners (); }
 
-  void initialize (void) { m_rep->initialize (*this); }
+  void initialize () { m_rep->initialize (*this); }
 
-  void finalize (void) { m_rep->finalize (*this); }
+  void finalize () { m_rep->finalize (*this); }
 
   void update (int id) { m_rep->update (*this, id); }
 
-  void reset_default_properties (void)
+  void reset_default_properties ()
   { m_rep->reset_default_properties (); }
 
 private:
@@ -2995,20 +3035,18 @@ private:
 
 protected:
 
-  root_figure (void)
+  root_figure ()
     : m_properties (0, graphics_handle ()), m_default_properties (),
       m_factory_properties (init_factory_properties ())
   { }
 
 public:
 
-  ~root_figure (void) = default;
+  OCTAVE_DISABLE_COPY_MOVE (root_figure)
 
-  root_figure (const root_figure&) = delete;
+  ~root_figure () = default;
 
-  root_figure& operator = (const root_figure&) = delete;
-
-  void mark_modified (void) { }
+  void mark_modified () { }
 
   void override_defaults (base_graphics_object& obj)
   {
@@ -3071,33 +3109,33 @@ public:
     return retval;
   }
 
-  octave_value get_defaults (void) const
+  octave_value get_defaults () const
   {
     return m_default_properties.as_struct ("default");
   }
 
-  property_list get_defaults_list (void) const
+  property_list get_defaults_list () const
   {
     return m_default_properties;
   }
 
-  octave_value get_factory_defaults (void) const
+  octave_value get_factory_defaults () const
   {
     return m_factory_properties.as_struct ("factory");
   }
 
-  property_list get_factory_defaults_list (void) const
+  property_list get_factory_defaults_list () const
   {
     return m_factory_properties;
   }
 
-  base_properties& get_properties (void) { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  const base_properties& get_properties () const { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  bool valid_object () const { return true; }
 
-  OCTINTERP_API void reset_default_properties (void);
+  OCTINTERP_API void reset_default_properties ();
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -3114,7 +3152,7 @@ private:
   property_list m_factory_properties;
 
   static OCTINTERP_API property_list::plist_map_type
-  init_factory_properties (void);
+  init_factory_properties ();
 };
 
 // ---------------------------------------------------------------------
@@ -3136,13 +3174,24 @@ public:
 
     OCTINTERP_API void set_visible (const octave_value& val);
 
-    OCTINTERP_API octave::graphics_toolkit get_toolkit (void) const;
+    OCTINTERP_API octave::graphics_toolkit get_toolkit () const;
 
     OCTINTERP_API void set_toolkit (const octave::graphics_toolkit& b);
 
     OCTINTERP_API void set___graphics_toolkit__ (const octave_value& val);
 
     OCTINTERP_API void adopt (const graphics_handle& h);
+
+    // Alias "innerposition" to "position".
+    octave_value get_innerposition () const
+    {
+      return get_position ();
+    }
+
+    void set_innerposition (const octave_value& val)
+    {
+      set_position (val);
+    }
 
     OCTINTERP_API void set_position (const octave_value& val,
                                      bool do_notify_toolkit = true);
@@ -3168,7 +3217,7 @@ public:
 
     OCTINTERP_API void update_paperunits (const caseless_str& old_paperunits);
 
-    OCTINTERP_API std::string get_title (void) const;
+    OCTINTERP_API std::string get_title () const;
 
     // See the genprops.awk script for an explanation of the
     // properties declarations.
@@ -3184,9 +3233,10 @@ public:
       string_property currentcharacter r , ""
       handle_property currentobject r , graphics_handle ()
       array_property currentpoint r , Matrix (2, 1, 0)
-      bool_property dockcontrols , "off"
+      bool_property dockcontrols , "on"
       string_property filename , ""
       bool_property graphicssmoothing , "on"
+      array_property innerposition sg , default_figure_position ()
       bool_property integerhandle S , "on"
       bool_property inverthardcopy , "on"
       callback_property keypressfcn , Matrix ()
@@ -3204,7 +3254,7 @@ public:
       array_property papersize U , default_figure_papersize ()
       radio_property papertype SU , "{usletter}|uslegal|a0|a1|a2|a3|a4|a5|b0|b1|b2|b3|b4|b5|arch-a|arch-b|arch-c|arch-d|arch-e|a|b|c|d|e|tabloid|<custom>"
       radio_property paperunits Su , "{inches}|centimeters|normalized|points"
-      radio_property pointer , "crosshair|{arrow}|ibeam|watch|topl|topr|botl|botr|left|top|right|bottom|circle|cross|fleur|custom|hand"
+      radio_property pointer , "{arrow}|crosshair|ibeam|watch|topl|topr|botl|botr|left|top|right|bottom|circle|cross|fleur|custom|hand"
       array_property pointershapecdata , Matrix (16, 16, 1)
       array_property pointershapehotspot , Matrix (1, 2, 1)
       array_property position s , default_figure_position ()
@@ -3225,6 +3275,7 @@ public:
       callback_property windowkeypressfcn , Matrix ()
       callback_property windowkeyreleasefcn , Matrix ()
       callback_property windowscrollwheelfcn , Matrix ()
+      radio_property windowstate , "{normal}|minimized|maximized|fullscreen"
       radio_property windowstyle , "{normal}|modal|docked"
 
       // Overridden base property
@@ -3251,7 +3302,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_alphamap.add_constraint (dim_vector (-1, 1));
       m_alphamap.add_constraint (dim_vector (1, -1));
@@ -3273,17 +3324,17 @@ public:
     }
 
   private:
-    OCTINTERP_API Matrix get_auto_paperposition (void);
+    OCTINTERP_API Matrix get_auto_paperposition ();
 
-    void update_paperpositionmode (void)
+    void update_paperpositionmode ()
     {
       if (m_paperpositionmode.is ("auto"))
         m_paperposition.set (get_auto_paperposition ());
     }
 
-    OCTINTERP_API void update_handlevisibility (void);
+    OCTINTERP_API void update_handlevisibility ();
 
-    OCTINTERP_API void init_toolkit (void);
+    OCTINTERP_API void init_toolkit ();
 
     octave::graphics_toolkit m_toolkit;
   };
@@ -3292,11 +3343,14 @@ private:
   properties m_properties;
 
 public:
+
   figure (const graphics_handle& mh, const graphics_handle& p)
     : base_graphics_object (), m_properties (mh, p), m_default_properties ()
   { }
 
-  ~figure (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (figure)
+
+  ~figure () = default;
 
   void override_defaults (base_graphics_object& obj)
   {
@@ -3337,23 +3391,23 @@ public:
 
   OCTINTERP_API octave_value get_default (const caseless_str& name) const;
 
-  octave_value get_defaults (void) const
+  octave_value get_defaults () const
   {
     return m_default_properties.as_struct ("default");
   }
 
-  property_list get_defaults_list (void) const
+  property_list get_defaults_list () const
   {
     return m_default_properties;
   }
 
-  base_properties& get_properties (void) { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  const base_properties& get_properties () const { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  bool valid_object () const { return true; }
 
-  OCTINTERP_API void reset_default_properties (void);
+  OCTINTERP_API void reset_default_properties ();
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -3373,7 +3427,7 @@ class OCTINTERP_API graphics_xform
 {
 public:
 
-  graphics_xform (void)
+  graphics_xform ()
     : m_xform (xform_eye ()), m_xform_inv (xform_eye ()),
       m_sx ("linear"), m_sy ("linear"), m_sz ("linear"),  m_zlim (1, 2, 0.0)
   {
@@ -3383,13 +3437,15 @@ public:
   graphics_xform (const Matrix& xm, const Matrix& xim,
                   const scaler& x, const scaler& y, const scaler& z,
                   const Matrix& zl)
-    : m_xform (xm), m_xform_inv (xim), m_sx (x), m_sy (y), m_sz (z), m_zlim (zl) { }
+    : m_xform (xm), m_xform_inv (xim), m_sx (x), m_sy (y),
+      m_sz (z), m_zlim (zl)
+  { }
 
   graphics_xform (const graphics_xform& g)
     : m_xform (g.m_xform), m_xform_inv (g.m_xform_inv), m_sx (g.m_sx),
       m_sy (g.m_sy), m_sz (g.m_sz), m_zlim (g.m_zlim) { }
 
-  ~graphics_xform (void) = default;
+  ~graphics_xform () = default;
 
   graphics_xform& operator = (const graphics_xform& g)
   {
@@ -3405,7 +3461,7 @@ public:
 
   static OCTINTERP_API ColumnVector xform_vector (double x, double y, double z);
 
-  static OCTINTERP_API Matrix xform_eye (void);
+  static OCTINTERP_API Matrix xform_eye ();
 
   OCTINTERP_API ColumnVector
   transform (double x, double y, double z, bool use_scale = true) const;
@@ -3434,10 +3490,10 @@ public:
 
     for (int i = 0; i < r; i++)
       {
-        retval(i,0) = m_sx.scale (m(i,0));
-        retval(i,1) = m_sy.scale (m(i,1));
+        retval(i, 0) = m_sx.scale (m(i, 0));
+        retval(i, 1) = m_sy.scale (m(i, 1));
         if (has_z)
-          retval(i,2) = m_sz.scale (m(i,2));
+          retval(i, 2) = m_sz.scale (m(i, 2));
       }
 
     return retval;
@@ -3474,9 +3530,9 @@ public:
 
     OCTINTERP_API void adopt (const graphics_handle& h);
 
-    const scaler& get_x_scaler (void) const { return m_sx; }
-    const scaler& get_y_scaler (void) const { return m_sy; }
-    const scaler& get_z_scaler (void) const { return m_sz; }
+    const scaler& get_x_scaler () const { return m_sx; }
+    const scaler& get_y_scaler () const { return m_sy; }
+    const scaler& get_z_scaler () const { return m_sz; }
 
     OCTINTERP_API Matrix
     get_boundingbox (bool internal = false,
@@ -3488,7 +3544,7 @@ public:
     OCTINTERP_API double
     get___fontsize_points__ (double box_pix_height = 0) const;
 
-    void update_boundingbox (void)
+    void update_boundingbox ()
     {
       if (units_is ("normalized"))
         {
@@ -3497,21 +3553,21 @@ public:
         }
     }
 
-    OCTINTERP_API void update_camera (void);
-    OCTINTERP_API void update_axes_layout (void);
-    OCTINTERP_API void update_aspectratios (void);
-    void update_transform (void)
+    OCTINTERP_API void update_camera ();
+    OCTINTERP_API void update_axes_layout ();
+    OCTINTERP_API void update_aspectratios ();
+    void update_transform ()
     {
       update_aspectratios ();
       update_camera ();
       update_axes_layout ();
     }
 
-    OCTINTERP_API void sync_positions (void);
+    OCTINTERP_API void sync_positions ();
 
     // Redirect calls to "activepositionproperty" to "positionconstraint".
 
-    std::string get_activepositionproperty (void) const
+    std::string get_activepositionproperty () const
     {
       std::string cur_val;
 
@@ -3536,7 +3592,7 @@ public:
 
     // Redirect calls to "innerposition" to "position".
 
-    octave_value get_innerposition (void) const
+    octave_value get_innerposition () const
     {
       return get_position ();
     }
@@ -3547,63 +3603,69 @@ public:
     }
 
     OCTINTERP_API void update_autopos (const std::string& elem_type);
-    OCTINTERP_API void update_xlabel_position (void);
-    OCTINTERP_API void update_ylabel_position (void);
-    OCTINTERP_API void update_zlabel_position (void);
-    OCTINTERP_API void update_title_position (void);
+    OCTINTERP_API void update_xlabel_position ();
+    OCTINTERP_API void update_ylabel_position ();
+    OCTINTERP_API void update_zlabel_position ();
+    OCTINTERP_API void update_title_position ();
 
-    graphics_xform get_transform (void) const
-    { return graphics_xform (m_x_render, m_x_render_inv, m_sx, m_sy, m_sz, m_x_zlim); }
+    graphics_xform get_transform () const
+    {
+      return graphics_xform (m_x_render, m_x_render_inv,
+                             m_sx, m_sy, m_sz, m_x_zlim);
+    }
 
-    Matrix get_transform_matrix (void) const { return m_x_render; }
-    Matrix get_inverse_transform_matrix (void) const { return m_x_render_inv; }
-    Matrix get_opengl_matrix_1 (void) const { return m_x_gl_mat1; }
-    Matrix get_opengl_matrix_2 (void) const { return m_x_gl_mat2; }
-    Matrix get_transform_zlim (void) const { return m_x_zlim; }
+    Matrix get_transform_matrix () const { return m_x_render; }
+    Matrix get_inverse_transform_matrix () const { return m_x_render_inv; }
+    Matrix get_opengl_matrix_1 () const { return m_x_gl_mat1; }
+    Matrix get_opengl_matrix_2 () const { return m_x_gl_mat2; }
+    Matrix get_transform_zlim () const { return m_x_zlim; }
 
-    int get_xstate (void) const { return m_xstate; }
-    int get_ystate (void) const { return m_ystate; }
-    int get_zstate (void) const { return m_zstate; }
-    double get_xPlane (void) const { return m_xPlane; }
-    double get_xPlaneN (void) const { return m_xPlaneN; }
-    double get_yPlane (void) const { return m_yPlane; }
-    double get_yPlaneN (void) const { return m_yPlaneN; }
-    double get_zPlane (void) const { return m_zPlane; }
-    double get_zPlaneN (void) const { return m_zPlaneN; }
-    double get_xpTick (void) const { return m_xpTick; }
-    double get_xpTickN (void) const { return m_xpTickN; }
-    double get_ypTick (void) const { return m_ypTick; }
-    double get_ypTickN (void) const { return m_ypTickN; }
-    double get_zpTick (void) const { return m_zpTick; }
-    double get_zpTickN (void) const { return m_zpTickN; }
-    double get_x_min (void) const { return std::min (m_xPlane, m_xPlaneN); }
-    double get_x_max (void) const { return std::max (m_xPlane, m_xPlaneN); }
-    double get_y_min (void) const { return std::min (m_yPlane, m_yPlaneN); }
-    double get_y_max (void) const { return std::max (m_yPlane, m_yPlaneN); }
-    double get_z_min (void) const { return std::min (m_zPlane, m_zPlaneN); }
-    double get_z_max (void) const { return std::max (m_zPlane, m_zPlaneN); }
-    double get_fx (void) const { return m_fx; }
-    double get_fy (void) const { return m_fy; }
-    double get_fz (void) const { return m_fz; }
-    double get_xticklen (void) const { return m_xticklen; }
-    double get_yticklen (void) const { return m_yticklen; }
-    double get_zticklen (void) const { return m_zticklen; }
-    double get_xtickoffset (void) const { return m_xtickoffset; }
-    double get_ytickoffset (void) const { return m_ytickoffset; }
-    double get_ztickoffset (void) const { return m_ztickoffset; }
-    bool get_x2Dtop (void) const { return m_x2Dtop; }
-    bool get_y2Dright (void) const { return m_y2Dright; }
-    bool get_layer2Dtop (void) const { return m_layer2Dtop; }
+    int get_xstate () const { return m_xstate; }
+    int get_ystate () const { return m_ystate; }
+    int get_zstate () const { return m_zstate; }
+    double get_xPlane () const { return m_xPlane; }
+    double get_xPlaneN () const { return m_xPlaneN; }
+    double get_yPlane () const { return m_yPlane; }
+    double get_yPlaneN () const { return m_yPlaneN; }
+    double get_zPlane () const { return m_zPlane; }
+    double get_zPlaneN () const { return m_zPlaneN; }
+    double get_xpTick () const { return m_xpTick; }
+    double get_xpTickN () const { return m_xpTickN; }
+    double get_ypTick () const { return m_ypTick; }
+    double get_ypTickN () const { return m_ypTickN; }
+    double get_zpTick () const { return m_zpTick; }
+    double get_zpTickN () const { return m_zpTickN; }
+    double get_x_min () const { return std::min (m_xPlane, m_xPlaneN); }
+    double get_x_max () const { return std::max (m_xPlane, m_xPlaneN); }
+    double get_y_min () const { return std::min (m_yPlane, m_yPlaneN); }
+    double get_y_max () const { return std::max (m_yPlane, m_yPlaneN); }
+    double get_z_min () const { return std::min (m_zPlane, m_zPlaneN); }
+    double get_z_max () const { return std::max (m_zPlane, m_zPlaneN); }
+    double get_fx () const { return m_fx; }
+    double get_fy () const { return m_fy; }
+    double get_fz () const { return m_fz; }
+    double get_xticklen () const { return m_xticklen; }
+    double get_yticklen () const { return m_yticklen; }
+    double get_zticklen () const { return m_zticklen; }
+    double get_xtickoffset () const { return m_xtickoffset; }
+    double get_ytickoffset () const { return m_ytickoffset; }
+    double get_ztickoffset () const { return m_ztickoffset; }
+    bool get_x2Dtop () const { return m_x2Dtop; }
+    bool get_y2Dright () const { return m_y2Dright; }
+    bool get_layer2Dtop () const { return m_layer2Dtop; }
     bool get_is2D (bool include_kids = false) const
     { return (include_kids ? (m_is2D && ! m_has3Dkids) : m_is2D); }
     void set_has3Dkids (bool val) { m_has3Dkids = val; }
-    bool get_xySym (void) const { return m_xySym; }
-    bool get_xyzSym (void) const { return m_xyzSym; }
-    bool get_zSign (void) const { return m_zSign; }
-    bool get_nearhoriz (void) const { return m_nearhoriz; }
+    bool get_xySym () const { return m_xySym; }
+    bool get_xyzSym () const { return m_xyzSym; }
+    bool get_zSign () const { return m_zSign; }
+    bool get_nearhoriz () const { return m_nearhoriz; }
 
     ColumnVector pixel2coord (double px, double py) const
-    { return get_transform ().untransform (px, py, (m_x_zlim(0)+m_x_zlim(1))/2); }
+    {
+      return get_transform ().untransform (px, py,
+                                           (m_x_zlim(0)+m_x_zlim(1))/2);
+    }
 
     ColumnVector coord2pixel (double x, double y, double z) const
     { return get_transform ().transform (x, y, z); }
@@ -3635,9 +3697,9 @@ public:
     rotate_view (double delta_az, double delta_el,
                  bool push_to_zoom_stack = true);
 
-    OCTINTERP_API void unzoom (void);
-    OCTINTERP_API void update_handlevisibility (void);
-    OCTINTERP_API void push_zoom_stack (void);
+    OCTINTERP_API void unzoom ();
+    OCTINTERP_API void update_handlevisibility ();
+    OCTINTERP_API void push_zoom_stack ();
     OCTINTERP_API void clear_zoom_stack (bool do_unzoom = true);
 
     OCTINTERP_API void update_units (const caseless_str& old_units);
@@ -3646,9 +3708,9 @@ public:
 
     OCTINTERP_API void update_fontunits (const caseless_str& old_fontunits);
 
-    void increase_num_lights (void) { m_num_lights++; }
-    void decrease_num_lights (void) { m_num_lights--; }
-    unsigned int get_num_lights (void) const { return m_num_lights; }
+    void increase_num_lights () { m_num_lights++; }
+    void decrease_num_lights () { m_num_lights--; }
+    unsigned int get_num_lights () const { return m_num_lights; }
 
   private:
 
@@ -3766,7 +3828,8 @@ public:
       radio_property gridcolormode , "{auto}|manual"
       radio_property gridlinestyle , "{-}|--|:|-.|none"
       array_property innerposition sg , default_axes_position ()
-      // FIXME: Should be an array of "interaction objects". Make it read-only for now.
+      // FIXME: Should be an array of "interaction objects".
+      // Make it read-only for now.
       any_property interactions r , Matrix ()
       double_property labelfontsizemultiplier u , 1.1
       radio_property layer u , "{bottom}|top"
@@ -3792,7 +3855,7 @@ public:
       radio_property positionconstraint , "{outerposition}|innerposition"
       radio_property projection , "{orthographic}|perspective"
       radio_property sortmethod , "{depth}|childorder"
-      radio_property tickdir mu , "{in}|out"
+      radio_property tickdir mu , "{in}|out|both|none"
       radio_property tickdirmode u , "{auto}|manual"
       // FIXME: Added recently to Matlab, should replace interpreter property.
       radio_property ticklabelinterpreter u , "{tex}|latex|none"
@@ -3814,6 +3877,7 @@ public:
       bool_property xgrid , "off"
       handle_property xlabel SOf , make_graphics_handle ("text", m___myhandle__, false, false, false)
       row_vector_property xlim mu , default_lim ()
+      radio_property xlimitmethod u , "{tickaligned}|tight|padded"
       radio_property xlimmode al , "{auto}|manual"
       bool_property xminorgrid , "off"
       bool_property xminortick , "off"
@@ -3833,6 +3897,7 @@ public:
       bool_property ygrid , "off"
       handle_property ylabel SOf , make_graphics_handle ("text", m___myhandle__, false, false, false)
       row_vector_property ylim mu , default_lim ()
+      radio_property ylimitmethod u , "{tickaligned}|tight|padded"
       radio_property ylimmode al , "{auto}|manual"
       bool_property yminorgrid , "off"
       bool_property yminortick , "off"
@@ -3850,6 +3915,7 @@ public:
       bool_property zgrid , "off"
       handle_property zlabel SOf , make_graphics_handle ("text", m___myhandle__, false, false, false)
       row_vector_property zlim mu , default_lim ()
+      radio_property zlimitmethod u , "{tickaligned}|tight|padded"
       radio_property zlimmode al , "{auto}|manual"
       bool_property zminorgrid , "off"
       bool_property zminortick , "off"
@@ -3877,7 +3943,7 @@ public:
    END_PROPERTIES
 
   protected:
-    OCTINTERP_API void init (void);
+    OCTINTERP_API void init ();
 
   private:
 
@@ -3892,67 +3958,67 @@ public:
       return retval;
     }
 
-    void update_xscale (void)
+    void update_xscale ()
     {
       m_sx = get_scale (get_xscale (), m_xlim.get ().matrix_value ());
     }
 
-    void update_yscale (void)
+    void update_yscale ()
     {
       m_sy = get_scale (get_yscale (), m_ylim.get ().matrix_value ());
     }
 
-    void update_zscale (void)
+    void update_zscale ()
     {
       m_sz = get_scale (get_zscale (), m_zlim.get ().matrix_value ());
     }
 
     OCTINTERP_API void
     update_label_color (handle_property label, color_property col);
-    void update_xcolor (void)
+    void update_xcolor ()
     { update_label_color (m_xlabel, m_xcolor); }
 
-    void update_ycolor (void)
+    void update_ycolor ()
     { update_label_color (m_ylabel, m_ycolor); }
 
-    void update_zcolor (void)
+    void update_zcolor ()
     { update_label_color (m_zlabel, m_zcolor); }
 
-    void update_view (void) { sync_positions (); }
+    void update_view () { sync_positions (); }
 
-    void update_cameraposition (void) { update_transform (); }
-    void update_cameratarget (void) { update_transform (); }
-    void update_cameraupvector (void) { update_transform (); }
-    void update_cameraviewangle (void) { update_transform (); }
+    void update_cameraposition () { update_transform (); }
+    void update_cameratarget () { update_transform (); }
+    void update_cameraupvector () { update_transform (); }
+    void update_cameraviewangle () { update_transform (); }
 
-    void update_camerapositionmode (void)
+    void update_camerapositionmode ()
     {
       if (camerapositionmode_is ("auto"))
         update_cameraposition ();
     }
-    void update_cameratargetmode (void)
+    void update_cameratargetmode ()
     {
       if (cameratargetmode_is ("auto"))
         update_cameratarget ();
     }
-    void update_cameraupvectormode (void)
+    void update_cameraupvectormode ()
     {
       if (cameraupvectormode_is ("auto"))
         update_cameraupvector ();
     }
-    void update_cameraviewanglemode (void)
+    void update_cameraviewanglemode ()
     {
       if (cameraviewanglemode_is ("auto"))
         update_cameraviewangle ();
     }
 
-    void update_dataaspectratio (void) { sync_positions (); }
-    void update_dataaspectratiomode (void) { sync_positions (); }
-    void update_plotboxaspectratio (void) { sync_positions (); }
-    void update_plotboxaspectratiomode (void) { sync_positions (); }
+    void update_dataaspectratio () { sync_positions (); }
+    void update_dataaspectratiomode () { sync_positions (); }
+    void update_plotboxaspectratio () { sync_positions (); }
+    void update_plotboxaspectratiomode () { sync_positions (); }
 
-    void update_layer (void) { update_axes_layout (); }
-    void update_box (void)
+    void update_layer () { update_axes_layout (); }
+    void update_box ()
     {
       if (m_xticklabelmode.is ("auto"))
         calc_ticklabels (m_xtick, m_xticklabel, m_xscale.is ("log"),
@@ -3969,7 +4035,7 @@ public:
                              (xaxislocation_is ("bottom") ? -1 : 1)),
                          m_ylim);
     }
-    void update_yaxislocation (void)
+    void update_yaxislocation ()
     {
       sync_positions ();
       update_axes_layout ();
@@ -3989,7 +4055,7 @@ public:
                          m_ylim);
       update_ylabel_position ();
     }
-    void update_xaxislocation (void)
+    void update_xaxislocation ()
     {
       sync_positions ();
       update_axes_layout ();
@@ -4010,15 +4076,15 @@ public:
       update_xlabel_position ();
     }
 
-    void update_xdir (void) { update_camera (); update_axes_layout (); }
-    void update_ydir (void) { update_camera (); update_axes_layout (); }
-    void update_zdir (void) { update_camera (); update_axes_layout (); }
+    void update_xdir () { update_camera (); update_axes_layout (); }
+    void update_ydir () { update_camera (); update_axes_layout (); }
+    void update_zdir () { update_camera (); update_axes_layout (); }
 
-    void update_ticklength (void);
-    void update_tickdir (void) { update_ticklength (); }
-    void update_tickdirmode (void) { update_ticklength (); }
+    void update_ticklength ();
+    void update_tickdir () { update_ticklength (); }
+    void update_tickdirmode () { update_ticklength (); }
 
-    void update_ticklabelinterpreter (void)
+    void update_ticklabelinterpreter ()
     {
       update_xtick (false);
       update_ytick (false);
@@ -4029,7 +4095,8 @@ public:
     {
       calc_ticks_and_lims (m_xlim, m_xtick, m_xminortickvalues,
                            m_xlimmode.is ("auto"), m_xtickmode.is ("auto"),
-                           m_xscale.is ("log"));
+                           m_xscale.is ("log"), m_xlimitmethod.is ("padded"),
+                           m_xlimitmethod.is ("tight"));
       if (m_xticklabelmode.is ("auto"))
         calc_ticklabels (m_xtick, m_xticklabel, m_xscale.is ("log"),
                          xaxislocation_is ("origin"),
@@ -4045,7 +4112,8 @@ public:
     {
       calc_ticks_and_lims (m_ylim, m_ytick, m_yminortickvalues,
                            m_ylimmode.is ("auto"), m_ytickmode.is ("auto"),
-                           m_yscale.is ("log"));
+                           m_yscale.is ("log"), m_ylimitmethod.is ("padded"),
+                           m_ylimitmethod.is ("tight"));
       if (m_yticklabelmode.is ("auto"))
         calc_ticklabels (m_ytick, m_yticklabel, m_yscale.is ("log"),
                          yaxislocation_is ("origin"),
@@ -4061,7 +4129,8 @@ public:
     {
       calc_ticks_and_lims (m_zlim, m_ztick, m_zminortickvalues,
                            m_zlimmode.is ("auto"), m_ztickmode.is ("auto"),
-                           m_zscale.is ("log"));
+                           m_zscale.is ("log"), m_zlimitmethod.is ("padded"),
+                           m_zlimitmethod.is ("tight"));
       if (m_zticklabelmode.is ("auto"))
         calc_ticklabels (m_ztick, m_zticklabel, m_zscale.is ("log"), false,
                          2, m_zlim);
@@ -4070,23 +4139,23 @@ public:
         sync_positions ();
     }
 
-    void update_xtickmode (void)
+    void update_xtickmode ()
     {
       if (m_xtickmode.is ("auto"))
         update_xtick ();
     }
-    void update_ytickmode (void)
+    void update_ytickmode ()
     {
       if (m_ytickmode.is ("auto"))
         update_ytick ();
     }
-    void update_ztickmode (void)
+    void update_ztickmode ()
     {
       if (m_ztickmode.is ("auto"))
         update_ztick ();
     }
 
-    void update_xticklabelmode (void)
+    void update_xticklabelmode ()
     {
       if (m_xticklabelmode.is ("auto"))
         calc_ticklabels (m_xtick, m_xticklabel, m_xscale.is ("log"),
@@ -4096,7 +4165,7 @@ public:
                              (yaxislocation_is ("left") ? -1 : 1)),
                          m_xlim);
     }
-    void update_yticklabelmode (void)
+    void update_yticklabelmode ()
     {
       if (m_yticklabelmode.is ("auto"))
         calc_ticklabels (m_ytick, m_yticklabel, m_yscale.is ("log"),
@@ -4106,66 +4175,68 @@ public:
                              (xaxislocation_is ("bottom") ? -1 : 1)),
                          m_ylim);
     }
-    void update_zticklabelmode (void)
+    void update_zticklabelmode ()
     {
       if (m_zticklabelmode.is ("auto"))
-        calc_ticklabels (m_ztick, m_zticklabel, m_zscale.is ("log"), false, 2, m_zlim);
+        calc_ticklabels (m_ztick, m_zticklabel, m_zscale.is ("log"),
+                         false, 2, m_zlim);
     }
 
-    void update_fontname (void)
+    void update_fontname ()
     {
       update_font ("fontname");
       sync_positions ();
     }
-    void update_fontsize (void)
+    void update_fontsize ()
     {
       update_font ("fontsize");
       sync_positions ();
     }
-    void update_fontsmoothing (void)
+    void update_fontsmoothing ()
     {
       update_font ("fontsmoothing");
     }
-    void update_fontangle (void)
+    void update_fontangle ()
     {
       update_font ("fontangle");
       sync_positions ();
     }
-    void update_fontweight (void)
+    void update_fontweight ()
     {
       update_font ("fontweight");
       sync_positions ();
     }
 
-    void update_titlefontsizemultiplier (void)
+    void update_titlefontsizemultiplier ()
     {
       // update_font handles title and axis labels
       update_font ("fontsize");
       sync_positions ();
     }
 
-    void update_labelfontsizemultiplier (void)
+    void update_labelfontsizemultiplier ()
     {
       update_font ("fontsize");
       sync_positions ();
     }
 
-    void update_titlefontweight (void)
+    void update_titlefontweight ()
     {
       // update_font handles title and axis labels
       update_font ("fontweight");
       sync_positions ();
     }
 
-    OCTINTERP_API void update_outerposition (void);
-    OCTINTERP_API void update_position (void);
-    OCTINTERP_API void update_looseinset (void);
+    OCTINTERP_API void update_outerposition ();
+    OCTINTERP_API void update_position ();
+    OCTINTERP_API void update_looseinset ();
 
     OCTINTERP_API double calc_tick_sep (double minval, double maxval);
     OCTINTERP_API void
     calc_ticks_and_lims (array_property& lims, array_property& ticks,
                          array_property& mticks, bool limmode_is_auto,
-                         bool tickmode_is_auto, bool is_logscale);
+                         bool tickmode_is_auto, bool is_logscale,
+                         bool method_is_padded, bool method_is_tight);
     OCTINTERP_API void
     calc_ticklabels (const array_property& ticks, any_property& labels,
                      bool is_logscale, const bool is_origin,
@@ -4203,18 +4274,18 @@ public:
       set___colormap__ (val);
     }
 
-    void update___colormap__ (void)
+    void update___colormap__ ()
     {
       m_colormap.run_listeners (GCB_POSTSET);
     }
 
-    OCTINTERP_API octave_value get_colormap (void) const;
+    OCTINTERP_API octave_value get_colormap () const;
 
   public:
     OCTINTERP_API Matrix
     get_axis_limits (double xmin, double xmax,
                      double min_pos, double max_neg,
-                     const bool logscale);
+                     const bool logscale, const std::string& method);
 
     OCTINTERP_API void
     check_axis_limits (Matrix& limits, const Matrix kids,
@@ -4226,7 +4297,8 @@ public:
 
       calc_ticks_and_lims (m_xlim, m_xtick, m_xminortickvalues,
                            m_xlimmode.is ("auto"), m_xtickmode.is ("auto"),
-                           m_xscale.is ("log"));
+                           m_xscale.is ("log"), m_xlimitmethod.is ("padded"),
+                           m_xlimitmethod.is ("tight"));
       if (m_xticklabelmode.is ("auto"))
         calc_ticklabels (m_xtick, m_xticklabel, m_xscale.is ("log"),
                          m_xaxislocation.is ("origin"),
@@ -4242,13 +4314,19 @@ public:
       update_axes_layout ();
     }
 
-    void update_ylim (void)
+    void update_xlimitmethod ()
+    {
+      update_xlim ();
+    }
+
+    void update_ylim ()
     {
       update_axis_limits ("ylim");
 
       calc_ticks_and_lims (m_ylim, m_ytick, m_yminortickvalues,
                            m_ylimmode.is ("auto"), m_ytickmode.is ("auto"),
-                           m_yscale.is ("log"));
+                           m_yscale.is ("log"), m_ylimitmethod.is ("padded"),
+                           m_ylimitmethod.is ("tight"));
       if (m_yticklabelmode.is ("auto"))
         calc_ticklabels (m_ytick, m_yticklabel, m_yscale.is ("log"),
                          yaxislocation_is ("origin"),
@@ -4264,13 +4342,19 @@ public:
       update_axes_layout ();
     }
 
-    void update_zlim (void)
+    void update_ylimitmethod ()
+    {
+      update_ylim ();
+    }
+
+    void update_zlim ()
     {
       update_axis_limits ("zlim");
 
       calc_ticks_and_lims (m_zlim, m_ztick, m_zminortickvalues,
                            m_zlimmode.is ("auto"), m_ztickmode.is ("auto"),
-                           m_zscale.is ("log"));
+                           m_zscale.is ("log"), m_zlimitmethod.is ("padded"),
+                           m_zlimitmethod.is ("tight"));
       if (m_zticklabelmode.is ("auto"))
         calc_ticklabels (m_ztick, m_zticklabel, m_zscale.is ("log"), false,
                          2, m_zlim);
@@ -4282,7 +4366,12 @@ public:
       update_axes_layout ();
     }
 
-    void trigger_normals_calc (void);
+    void update_zlimitmethod ()
+    {
+      update_zlim ();
+    }
+
+    void trigger_normals_calc ();
 
   };
 
@@ -4296,7 +4385,9 @@ public:
     m_properties.update_transform ();
   }
 
-  ~axes (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (axes)
+
+  ~axes () = default;
 
   void override_defaults (base_graphics_object& obj)
   {
@@ -4343,28 +4434,28 @@ public:
 
   OCTINTERP_API octave_value get_default (const caseless_str& name) const;
 
-  octave_value get_defaults (void) const
+  octave_value get_defaults () const
   {
     return m_default_properties.as_struct ("default");
   }
 
-  property_list get_defaults_list (void) const
+  property_list get_defaults_list () const
   {
     return m_default_properties;
   }
 
-  base_properties& get_properties (void) { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  const base_properties& get_properties () const { return m_properties; }
 
   OCTINTERP_API void update_axis_limits (const std::string& axis_type);
 
   OCTINTERP_API void update_axis_limits (const std::string& axis_type,
                                          const graphics_handle& h);
 
-  bool valid_object (void) const { return true; }
+  bool valid_object () const { return true; }
 
-  OCTINTERP_API void reset_default_properties (void);
+  OCTINTERP_API void reset_default_properties ();
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -4422,21 +4513,21 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_linewidth.add_constraint ("min", 0, false);
       m_markersize.add_constraint ("min", 0, false);
     }
 
   private:
-    OCTINTERP_API Matrix compute_xlim (void) const;
-    OCTINTERP_API Matrix compute_ylim (void) const;
+    OCTINTERP_API Matrix compute_xlim () const;
+    OCTINTERP_API Matrix compute_ylim () const;
 
-    void update_xdata (void) { set_xlim (compute_xlim ()); }
+    void update_xdata () { set_xlim (compute_xlim ()); }
 
-    void update_ydata (void) { set_ylim (compute_ylim ()); }
+    void update_ydata () { set_ylim (compute_ylim ()); }
 
-    void update_zdata (void) { set_zlim (m_zdata.get_limits ()); }
+    void update_zdata () { set_zlim (m_zdata.get_limits ()); }
   };
 
 private:
@@ -4447,13 +4538,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~line (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (line)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~line () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -4477,9 +4570,9 @@ public:
     OCTINTERP_API double
     get___fontsize_points__ (double box_pix_height = 0) const;
 
-    OCTINTERP_API void update_text_extent (void);
+    OCTINTERP_API void update_text_extent ();
 
-    OCTINTERP_API void update_font (void);
+    OCTINTERP_API void update_font ();
 
     void set_position (const octave_value& val)
     {
@@ -4547,15 +4640,15 @@ public:
       double_property __fontsize_points__ hgr , 0
     END_PROPERTIES
 
-    OCTINTERP_API Matrix get_data_position (void) const;
+    OCTINTERP_API Matrix get_data_position () const;
     OCTINTERP_API Matrix get_extent_matrix (bool rotated = false) const;
-    const uint8NDArray& get_pixels (void) const { return m_pixels; }
+    const uint8NDArray& get_pixels () const { return m_pixels; }
 
     // Text renderer, used for calculation of text size
     octave::text_renderer m_txt_renderer;
 
   protected:
-    void init (void)
+    void init ()
     {
       m_position.add_constraint (dim_vector (1, 3));
       m_fontsize.add_constraint ("min", 0.0, false);
@@ -4566,7 +4659,7 @@ public:
     }
 
   private:
-    void update_position (void)
+    void update_position ()
     {
       Matrix pos = get_data_position ();
       Matrix lim;
@@ -4588,26 +4681,23 @@ public:
                                 : lim(2));
           lim(3) = (lim(3) >= 0 ? -octave::numeric_limits<double>::Inf ()
                                 : lim(3));
-          set_zliminclude ("on");
           set_zlim (lim);
         }
-      else
-        set_zliminclude ("off");
     }
 
-    OCTINTERP_API void request_autopos (void);
-    void update_positionmode (void) { request_autopos (); }
-    void update_rotationmode (void) { request_autopos (); }
-    void update_horizontalalignmentmode (void) { request_autopos (); }
-    void update_verticalalignmentmode (void) { request_autopos (); }
+    OCTINTERP_API void request_autopos ();
+    void update_positionmode () { request_autopos (); }
+    void update_rotationmode () { request_autopos (); }
+    void update_horizontalalignmentmode () { request_autopos (); }
+    void update_verticalalignmentmode () { request_autopos (); }
 
-    void update_string (void) { request_autopos (); update_text_extent (); }
-    void update_rotation (void) { update_text_extent (); }
-    void update_fontname (void) { update_font (); update_text_extent (); }
-    void update_fontsize (void) { update_font (); update_text_extent (); }
-    void update_fontsmoothing (void) { update_font (); update_text_extent (); }
+    void update_string () { request_autopos (); update_text_extent (); }
+    void update_rotation () { update_text_extent (); }
+    void update_fontname () { update_font (); update_text_extent (); }
+    void update_fontsize () { update_font (); update_text_extent (); }
+    void update_fontsmoothing () { update_font (); update_text_extent (); }
 
-    void update_color (void)
+    void update_color ()
     {
       if (! m_color.is ("none"))
         {
@@ -4616,18 +4706,18 @@ public:
         }
     }
 
-    void update_fontangle (void)
+    void update_fontangle ()
     {
       update_font ();
       update_text_extent ();
     }
-    void update_fontweight (void) { update_font (); update_text_extent (); }
+    void update_fontweight () { update_font (); update_text_extent (); }
 
-    void update_interpreter (void) { update_text_extent (); }
-    void update_horizontalalignment (void) { update_text_extent (); }
-    void update_verticalalignment (void) { update_text_extent (); }
+    void update_interpreter () { update_text_extent (); }
+    void update_horizontalalignment () { update_text_extent (); }
+    void update_verticalalignment () { update_text_extent (); }
 
-    OCTINTERP_API void update_units (void);
+    OCTINTERP_API void update_units ();
     OCTINTERP_API void update_fontunits (const caseless_str& old_fontunits);
 
   private:
@@ -4645,13 +4735,15 @@ public:
     m_properties.set_clipping ("off");
   }
 
-  ~text (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (text)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~text () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -4672,19 +4764,19 @@ public:
   {
   public:
 
-    bool is_aliminclude (void) const
+    bool is_aliminclude () const
     { return (m_aliminclude.is_on () && m_alphadatamapping.is ("scaled")); }
-    std::string get_aliminclude (void) const
+    std::string get_aliminclude () const
     { return m_aliminclude.current_value (); }
 
-    bool is_climinclude (void) const
+    bool is_climinclude () const
     { return (m_climinclude.is_on () && m_cdatamapping.is ("scaled")); }
-    std::string get_climinclude (void) const
+    std::string get_climinclude () const
     { return m_climinclude.current_value (); }
 
-    OCTINTERP_API octave_value get_color_data (void) const;
+    OCTINTERP_API octave_value get_color_data () const;
 
-    void initialize_data (void) { update_cdata (); }
+    void initialize_data () { update_cdata (); }
 
     // See the genprops.awk script for an explanation of the
     // properties declarations.
@@ -4711,7 +4803,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_xdata.add_constraint (2);
       m_xdata.add_constraint (dim_vector (0, 0));
@@ -4737,7 +4829,7 @@ public:
     }
 
   private:
-    void update_alphadata (void)
+    void update_alphadata ()
     {
       if (alphadatamapping_is ("scaled"))
         set_alim (m_alphadata.get_limits ());
@@ -4745,7 +4837,7 @@ public:
         m_alim = m_alphadata.get_limits ();
     }
 
-    void update_cdata (void)
+    void update_cdata ()
     {
       if (cdatamapping_is ("scaled"))
         set_clim (m_cdata.get_limits ());
@@ -4759,7 +4851,7 @@ public:
         update_ydata ();
     }
 
-    void update_xdata (void)
+    void update_xdata ()
     {
       if (m_xdata.get ().isempty ())
         set_xdatamode ("auto");
@@ -4778,7 +4870,7 @@ public:
       set_xlim (limits);
     }
 
-    void update_ydata (void)
+    void update_ydata ()
     {
       if (m_ydata.get ().isempty ())
         set_ydatamode ("auto");
@@ -4797,7 +4889,7 @@ public:
       set_ylim (limits);
     }
 
-    Matrix get_auto_xdata (void)
+    Matrix get_auto_xdata ()
     {
       dim_vector dv = get_cdata ().dims ();
       Matrix data;
@@ -4809,7 +4901,7 @@ public:
       return data;
     }
 
-    Matrix get_auto_ydata (void)
+    Matrix get_auto_ydata ()
     {
       dim_vector dv = get_cdata ().dims ();
       Matrix data;
@@ -4839,12 +4931,12 @@ public:
     }
 
   public:
-    float pixel_xsize (void)
+    float pixel_xsize ()
     {
       return pixel_size ((get_cdata ().dims ())(1), m_xdata.get_limits ());
     }
 
-    float pixel_ysize (void)
+    float pixel_ysize ()
     {
       return pixel_size ((get_cdata ().dims ())(0), m_ydata.get_limits ());
     }
@@ -4860,13 +4952,15 @@ public:
     m_properties.initialize_data ();
   }
 
-  ~image (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (image)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~image () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -4896,13 +4990,13 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_position.add_constraint (dim_vector (1, 3));
     }
 
   private:
-    OCTINTERP_API void update_visible (void);
+    OCTINTERP_API void update_visible ();
   };
 
 private:
@@ -4913,13 +5007,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~light (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (light)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~light () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -4943,7 +5039,7 @@ public:
   {
   public:
 
-    octave_value get_color_data (void) const;
+    octave_value get_color_data () const;
 
     // Matlab allows incoherent data to be stored into patch properties.
     // The patch should then be ignored by the renderer.
@@ -4953,17 +5049,17 @@ public:
       return ! msg.empty ();
     }
 
-    bool is_aliminclude (void) const
+    bool is_aliminclude () const
     { return (m_aliminclude.is_on () && m_alphadatamapping.is ("scaled")); }
-    std::string get_aliminclude (void) const
+    std::string get_aliminclude () const
     { return m_aliminclude.current_value (); }
 
-    bool is_climinclude (void) const
+    bool is_climinclude () const
     { return (m_climinclude.is_on () && m_cdatamapping.is ("scaled")); }
-    std::string get_climinclude (void) const
+    std::string get_climinclude () const
     { return m_climinclude.current_value (); }
 
-    OCTINTERP_API bool get_do_lighting (void) const;
+    OCTINTERP_API bool get_do_lighting () const;
 
     std::vector<std::vector<octave_idx_type>> m_coplanar_last_idx;
 
@@ -5020,7 +5116,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_xdata.add_constraint (dim_vector (-1, -1));
       m_ydata.add_constraint (dim_vector (-1, -1));
@@ -5076,15 +5172,15 @@ public:
   private:
     std::string m_bad_data_msg;
 
-    void update_faces (void) { update_data ();}
+    void update_faces () { update_data ();}
 
-    void update_vertices (void) { update_data ();}
+    void update_vertices () { update_data ();}
 
-    void update_facevertexcdata (void) { update_data ();}
+    void update_facevertexcdata () { update_data ();}
 
-    OCTINTERP_API void update_fvc (void);
+    OCTINTERP_API void update_fvc ();
 
-    void update_xdata (void)
+    void update_xdata ()
     {
       if (get_xdata ().isempty ())
         {
@@ -5105,7 +5201,7 @@ public:
       set_xlim (m_xdata.get_limits ());
     }
 
-    void update_ydata (void)
+    void update_ydata ()
     {
       if (get_ydata ().isempty ())
         {
@@ -5123,14 +5219,14 @@ public:
       set_ylim (m_ydata.get_limits ());
     }
 
-    void update_zdata (void)
+    void update_zdata ()
     {
       update_fvc ();
       update_normals (true);
       set_zlim (m_zdata.get_limits ());
     }
 
-    void update_cdata (void)
+    void update_cdata ()
     {
       update_fvc ();
       update_normals (false);
@@ -5141,33 +5237,33 @@ public:
         m_clim = m_cdata.get_limits ();
     }
 
-    OCTINTERP_API void update_data (void);
+    OCTINTERP_API void update_data ();
 
     OCTINTERP_API void calc_face_normals (Matrix& normals);
     OCTINTERP_API void update_face_normals (bool reset, bool force = false);
     OCTINTERP_API void update_vertex_normals (bool reset, bool force = false);
 
-    void update_edgelighting (void)
+    void update_edgelighting ()
     {
       update_normals (false);
     }
 
-    void update_facelighting (void)
+    void update_facelighting ()
     {
       update_normals (false);
     }
 
-    void update_facenormalsmode (void)
+    void update_facenormalsmode ()
     {
       update_face_normals (false);
     }
 
-    void update_vertexnormalsmode (void)
+    void update_vertexnormalsmode ()
     {
       update_vertex_normals (false);
     }
 
-    void update_visible (void)
+    void update_visible ()
     {
       if (is_visible ())
         update_normals (false);
@@ -5183,13 +5279,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~patch (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (patch)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~patch () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -5199,7 +5297,7 @@ public:
     return retval;
   }
 
-  OCTINTERP_API void reset_default_properties (void);
+  OCTINTERP_API void reset_default_properties ();
 
 protected:
   OCTINTERP_API void initialize (const graphics_object& go);
@@ -5216,7 +5314,7 @@ public:
   {
   public:
 
-    OCTINTERP_API octave_value get_color_data (void) const;
+    OCTINTERP_API octave_value get_color_data () const;
 
     // Matlab allows incoherent data to be stored in scatter properties.
     // The scatter object should then be ignored by the renderer.
@@ -5226,14 +5324,14 @@ public:
       return ! msg.empty ();
     }
 
-    bool is_aliminclude (void) const
+    bool is_aliminclude () const
     { return m_aliminclude.is_on (); }
-    std::string get_aliminclude (void) const
+    std::string get_aliminclude () const
     { return m_aliminclude.current_value (); }
 
-    bool is_climinclude (void) const
+    bool is_climinclude () const
     { return m_climinclude.is_on (); }
-    std::string get_climinclude (void) const
+    std::string get_climinclude () const
     { return m_climinclude.current_value (); }
 
     // See the genprops.awk script for an explanation of the
@@ -5285,7 +5383,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_xdata.add_constraint (dim_vector (-1, 1));
       m_xdata.add_constraint (dim_vector (1, -1));
@@ -5328,12 +5426,12 @@ public:
     }
 
   public:
-    OCTINTERP_API void update_color (void);
+    OCTINTERP_API void update_color ();
 
   private:
     std::string m_bad_data_msg;
 
-    void update_xdata (void)
+    void update_xdata ()
     {
       if (get_xdata ().isempty ())
         {
@@ -5352,7 +5450,7 @@ public:
       update_data ();
     }
 
-    void update_ydata (void)
+    void update_ydata ()
     {
       if (get_ydata ().isempty ())
         {
@@ -5369,19 +5467,19 @@ public:
       update_data ();
     }
 
-    void update_zdata (void)
+    void update_zdata ()
     {
       set_zlim (m_zdata.get_limits ());
 
       update_data ();
     }
 
-    void update_sizedata (void)
+    void update_sizedata ()
     {
       update_data ();
     }
 
-    void update_cdata (void)
+    void update_cdata ()
     {
       if (get_cdata ().matrix_value ().rows () == 1)
         set_clim (m_cdata.get_limits ());
@@ -5391,19 +5489,19 @@ public:
       update_data ();
     }
 
-    void update_cdatamode (void)
+    void update_cdatamode ()
     {
       if (m_cdatamode.is ("auto"))
         update_color ();
     }
 
-    void update_seriesindex (void)
+    void update_seriesindex ()
     {
       if (m_cdatamode.is ("auto"))
         update_color ();
     }
 
-    void update_data (void);
+    void update_data ();
 
   };
 
@@ -5419,13 +5517,15 @@ public:
     // object is added to the axes.
   }
 
-  ~scatter (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (scatter)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~scatter () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -5450,19 +5550,19 @@ public:
   {
   public:
 
-    octave_value get_color_data (void) const;
+    octave_value get_color_data () const;
 
-    bool is_aliminclude (void) const
+    bool is_aliminclude () const
     { return (m_aliminclude.is_on () && m_alphadatamapping.is ("scaled")); }
-    std::string get_aliminclude (void) const
+    std::string get_aliminclude () const
     { return m_aliminclude.current_value (); }
 
-    bool is_climinclude (void) const
+    bool is_climinclude () const
     { return (m_climinclude.is_on () && m_cdatamapping.is ("scaled")); }
-    std::string get_climinclude (void) const
+    std::string get_climinclude () const
     { return m_climinclude.current_value (); }
 
-    OCTINTERP_API bool get_do_lighting (void) const;
+    OCTINTERP_API bool get_do_lighting () const;
 
     // See the genprops.awk script for an explanation of the
     // properties declarations.
@@ -5519,7 +5619,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_xdata.add_constraint (dim_vector (-1, -1));
       m_ydata.add_constraint (dim_vector (-1, -1));
@@ -5568,7 +5668,7 @@ public:
 
 
   private:
-    void update_alphadata (void)
+    void update_alphadata ()
     {
       if (alphadatamapping_is ("scaled"))
         set_alim (m_alphadata.get_limits ());
@@ -5576,7 +5676,7 @@ public:
         m_alim = m_alphadata.get_limits ();
     }
 
-    void update_cdata (void)
+    void update_cdata ()
     {
       if (cdatamapping_is ("scaled"))
         set_clim (m_cdata.get_limits ());
@@ -5584,19 +5684,19 @@ public:
         m_clim = m_cdata.get_limits ();
     }
 
-    void update_xdata (void)
+    void update_xdata ()
     {
       update_normals (true);
       set_xlim (m_xdata.get_limits ());
     }
 
-    void update_ydata (void)
+    void update_ydata ()
     {
       update_normals (true);
       set_ylim (m_ydata.get_limits ());
     }
 
-    void update_zdata (void)
+    void update_zdata ()
     {
       update_normals (true);
       set_zlim (m_zdata.get_limits ());
@@ -5605,19 +5705,19 @@ public:
     OCTINTERP_API void update_face_normals (bool reset, bool force = false);
     OCTINTERP_API void update_vertex_normals (bool reset, bool force = false);
 
-    void update_facenormalsmode (void)
+    void update_facenormalsmode ()
     { update_face_normals (false); }
 
-    void update_vertexnormalsmode (void)
+    void update_vertexnormalsmode ()
     { update_vertex_normals (false); }
 
-    void update_edgelighting (void)
+    void update_edgelighting ()
     { update_normals (false); }
 
-    void update_facelighting (void)
+    void update_facelighting ()
     { update_normals (false); }
 
-    void update_visible (void)
+    void update_visible ()
     {
       if (is_visible ())
         update_normals (false);
@@ -5633,13 +5733,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~surface (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (surface)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~surface () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -5686,12 +5788,12 @@ public:
     END_PROPERTIES
 
   private:
-    OCTINTERP_API void update_limits (void) const;
+    OCTINTERP_API void update_limits () const;
 
     OCTINTERP_API void update_limits (const graphics_handle& h) const;
 
   protected:
-    void init (void)
+    void init ()
     { }
 
   };
@@ -5704,13 +5806,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~hggroup (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (hggroup)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~hggroup () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   OCTINTERP_API void update_axis_limits (const std::string& axis_type);
 
@@ -5753,11 +5857,16 @@ public:
 
     BEGIN_PROPERTIES (uimenu)
       string_property accelerator , ""
-      callback_property callback , Matrix ()
+      // Deprecated in R2017b (replaced by "MenuSelectedFcn")
+      callback_property callback hgs , Matrix ()
       bool_property checked , "off"
       bool_property enable , "on"
       color_property foregroundcolor , color_values (0, 0, 0)
-      string_property label gs , ""
+      // Deprecated in R2017b (replaced by "Text")
+      string_property label hgs , ""
+      callback_property menuselectedfcn , Matrix ()
+      // Deprecated in R2017b, but replacement of re-ordering "children"
+      // property of parent does not work yet in Octave.
       double_property position , 0
       bool_property separator , "off"
       string_property text , ""
@@ -5767,8 +5876,8 @@ public:
       any_property __object__ h , Matrix ()
     END_PROPERTIES
 
-    // Redirect calls from "Label" to "Text".
-    std::string get_label (void) const
+    // Make "Label" an alias for "Text".
+    std::string get_label () const
     {
       return get_text ();
     }
@@ -5778,10 +5887,21 @@ public:
       set_text (val);
     }
 
-  protected:
-    void init (void)
+    // Make "Callback" an alias for "MenuSelectedFcn".
+    octave_value get_callback () const
     {
-      m_position.add_constraint ("min", 0, false);
+      return get_menuselectedfcn ();
+    }
+
+    void set_callback (const octave_value& val)
+    {
+      set_menuselectedfcn (val);
+    }
+
+  protected:
+    void init ()
+    {
+      m_position.add_constraint ("min", 0, true);
     }
   };
 
@@ -5793,13 +5913,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~uimenu (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (uimenu)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~uimenu () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -5827,7 +5949,7 @@ public:
 
     // FIXME: the list may contain duplicates.
     //        Should we return only unique elements?
-    const std::list<graphics_handle> get_dependent_obj_list (void)
+    const std::list<graphics_handle> get_dependent_obj_list ()
     { return m_dependent_obj_list; }
 
     // See the genprops.awk script for an explanation of the
@@ -5843,7 +5965,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_position.add_constraint (dim_vector (1, 2));
       m_position.add_constraint (dim_vector (2, 1));
@@ -5854,7 +5976,7 @@ public:
     // List of objects that might depend on this uicontextmenu object
     std::list<graphics_handle> m_dependent_obj_list;
 
-    OCTINTERP_API void update_beingdeleted (void);
+    OCTINTERP_API void update_beingdeleted ();
 
   };
 
@@ -5866,13 +5988,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~uicontextmenu (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (uicontextmenu)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~uicontextmenu () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -5941,7 +6065,7 @@ public:
     std::string m_cached_units;
 
   protected:
-    void init (void)
+    void init ()
     {
       m_cdata.add_constraint ("double");
       m_cdata.add_constraint ("single");
@@ -5954,20 +6078,20 @@ public:
       m_cached_units = get_units ();
     }
 
-    OCTINTERP_API void update_text_extent (void);
+    OCTINTERP_API void update_text_extent ();
 
-    void update_string (void) { update_text_extent (); }
-    void update_fontname (void) { update_text_extent (); }
-    void update_fontsize (void) { update_text_extent (); }
-    void update_fontangle (void)
+    void update_string () { update_text_extent (); }
+    void update_fontname () { update_text_extent (); }
+    void update_fontsize () { update_text_extent (); }
+    void update_fontangle ()
     {
       update_text_extent ();
     }
-    void update_fontweight (void) { update_text_extent (); }
+    void update_fontweight () { update_text_extent (); }
 
     OCTINTERP_API void update_fontunits (const caseless_str& old_units);
 
-    OCTINTERP_API void update_units (void);
+    OCTINTERP_API void update_units ();
 
   };
 
@@ -5979,13 +6103,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~uicontrol (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (uicontrol)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~uicontrol () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -6052,19 +6178,19 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_position.add_constraint (dim_vector (1, 4));
       m_borderwidth.add_constraint ("min", 0.0, true);
       m_fontsize.add_constraint ("min", 0.0, false);
     }
 
-    // void update_text_extent (void);
-    // void update_string (void) { update_text_extent (); }
-    // void update_fontname (void) { update_text_extent (); }
-    // void update_fontsize (void) { update_text_extent (); }
-    // void update_fontangle (void) { update_text_extent (); }
-    // void update_fontweight (void) { update_fontweight (); }
+    // void update_text_extent ();
+    // void update_string () { update_text_extent (); }
+    // void update_fontname () { update_text_extent (); }
+    // void update_fontsize () { update_text_extent (); }
+    // void update_fontangle () { update_text_extent (); }
+    // void update_fontweight () { update_fontweight (); }
 
     OCTINTERP_API void update_units (const caseless_str& old_units);
     OCTINTERP_API void update_fontunits (const caseless_str& old_units);
@@ -6079,13 +6205,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~uibuttongroup (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (uibuttongroup)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~uibuttongroup () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -6144,7 +6272,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_borderwidth.add_constraint ("min", 0.0, true);
       m_fontsize.add_constraint ("min", 0.0, false);
@@ -6164,13 +6292,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~uipanel (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (uipanel)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~uipanel () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -6236,14 +6366,14 @@ public:
       radio_property units S , "normalized|inches|centimeters|points|{pixels}|characters"
     END_PROPERTIES
 
-    OCTINTERP_API Matrix get_extent_matrix (void) const;
+    OCTINTERP_API Matrix get_extent_matrix () const;
 
-    OCTINTERP_API Matrix get_backgroundcolor_rgb (void);
+    OCTINTERP_API Matrix get_backgroundcolor_rgb ();
 
-    OCTINTERP_API Matrix get_alternatebackgroundcolor_rgb (void);
+    OCTINTERP_API Matrix get_alternatebackgroundcolor_rgb ();
 
   protected:
-    void init (void)
+    void init ()
     {
       m_position.add_constraint (dim_vector (1, 4));
       m_extent.add_constraint (dim_vector (1, 4));
@@ -6254,15 +6384,15 @@ public:
 
     OCTINTERP_API void update_units (const caseless_str& old_units);
     OCTINTERP_API void update_fontunits (const caseless_str& old_units);
-    void update_table_extent (void) { };
-    void update_data (void) { update_table_extent (); }
-    void update_fontname (void) { update_table_extent (); }
-    void update_fontsize (void) { update_table_extent (); }
-    void update_fontangle (void)
+    void update_table_extent () { };
+    void update_data () { update_table_extent (); }
+    void update_fontname () { update_table_extent (); }
+    void update_fontsize () { update_table_extent (); }
+    void update_fontangle ()
     {
       update_table_extent ();
     }
-    void update_fontweight (void) { update_table_extent (); }
+    void update_fontweight () { update_table_extent (); }
   };
 
 private:
@@ -6273,13 +6403,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~uitable (void) { }
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (uitable)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~uitable () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -6310,7 +6442,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     { }
   };
 
@@ -6322,7 +6454,9 @@ public:
     : base_graphics_object (), m_properties (mh, p), m_default_properties ()
   { }
 
-  ~uitoolbar (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (uitoolbar)
+
+  ~uitoolbar () = default;
 
   void override_defaults (base_graphics_object& obj)
   {
@@ -6363,23 +6497,23 @@ public:
 
   OCTINTERP_API octave_value get_default (const caseless_str& name) const;
 
-  octave_value get_defaults (void) const
+  octave_value get_defaults () const
   {
     return m_default_properties.as_struct ("default");
   }
 
-  property_list get_defaults_list (void) const
+  property_list get_defaults_list () const
   {
     return m_default_properties;
   }
 
-  base_properties& get_properties (void) { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  const base_properties& get_properties () const { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  bool valid_object () const { return true; }
 
-  OCTINTERP_API void reset_default_properties (void);
+  OCTINTERP_API void reset_default_properties ();
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -6420,7 +6554,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_cdata.add_constraint ("double");
       m_cdata.add_constraint ("single");
@@ -6438,13 +6572,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~uipushtool (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (uipushtool)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~uipushtool () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -6486,7 +6622,7 @@ public:
     END_PROPERTIES
 
   protected:
-    void init (void)
+    void init ()
     {
       m_cdata.add_constraint ("double");
       m_cdata.add_constraint ("single");
@@ -6504,13 +6640,15 @@ public:
     : base_graphics_object (), m_properties (mh, p)
   { }
 
-  ~uitoggletool (void) = default;
+  OCTAVE_DISABLE_CONSTRUCT_COPY_MOVE (uitoggletool)
 
-  base_properties& get_properties (void) { return m_properties; }
+  ~uitoggletool () = default;
 
-  const base_properties& get_properties (void) const { return m_properties; }
+  base_properties& get_properties () { return m_properties; }
 
-  bool valid_object (void) const { return true; }
+  const base_properties& get_properties () const { return m_properties; }
+
+  bool valid_object () const { return true; }
 
   bool has_readonly_property (const caseless_str& pname) const
   {
@@ -6526,10 +6664,10 @@ public:
 
 OCTINTERP_API octave_value
 get_property_from_handle (double handle, const std::string& property,
-                          const std::string& func);
+                          const std::string& fcn);
 OCTINTERP_API bool
 set_property_in_handle (double handle, const std::string& property,
-                        const octave_value& arg, const std::string& func);
+                        const octave_value& arg, const std::string& fcn);
 
 // ---------------------------------------------------------------------
 
@@ -6544,7 +6682,7 @@ public:
 
   friend class graphics_event;
 
-  base_graphics_event (void)
+  base_graphics_event ()
     : m_busyaction (QUEUE)
   { };
 
@@ -6552,11 +6690,13 @@ public:
     : m_busyaction (busyaction)
   { };
 
-  virtual ~base_graphics_event (void) = default;
+  OCTAVE_DEFAULT_COPY_MOVE (base_graphics_event)
 
-  int get_busyaction (void) { return m_busyaction; };
+  virtual ~base_graphics_event () = default;
 
-  virtual void execute (void) = 0;
+  int get_busyaction () { return m_busyaction; };
+
+  virtual void execute () = 0;
 
 private:
   int m_busyaction;
@@ -6570,17 +6710,17 @@ public:
 
   typedef void (*event_fcn) (void *);
 
-  graphics_event (void) = default;
+  graphics_event () = default;
 
   graphics_event (base_graphics_event *new_rep) : m_rep (new_rep) { }
 
   graphics_event (const graphics_event&) = default;
 
-  ~graphics_event (void) = default;
+  ~graphics_event () = default;
 
   graphics_event& operator = (const graphics_event&) = default;
 
-  int get_busyaction (void)
+  int get_busyaction ()
   {
     if (ok ())
       return m_rep->get_busyaction ();
@@ -6588,13 +6728,13 @@ public:
       error ("graphics_event::busyaction: invalid graphics_event");
   }
 
-  void execute (void)
+  void execute ()
   {
     if (ok ())
       m_rep->execute ();
   }
 
-  bool ok (void) const { return (m_rep != nullptr); }
+  bool ok () const { return (m_rep != nullptr); }
 
   static OCTINTERP_API graphics_event
   create_callback_event (const graphics_handle& h,
@@ -6624,255 +6764,10 @@ private:
   std::shared_ptr <base_graphics_event> m_rep;
 };
 
-class OCTINTERP_API gh_manager
-{
-public:
-
-  typedef std::pair<uint8NDArray /*pixels*/, std::string /*svg*/> latex_data;
-
-  OCTINTERP_API gh_manager (octave::interpreter& interp);
-
-  // FIXME: eventually eliminate these static functions and access
-  // gh_manager object through the interpreter.
-
-  OCTINTERP_API graphics_handle get_handle (bool integer_figure_handle);
-
-  OCTINTERP_API void free (const graphics_handle& h, bool from_root = false);
-
-  OCTINTERP_API void renumber_figure (const graphics_handle& old_gh,
-                                      const graphics_handle& new_gh);
-
-  graphics_handle lookup (double val) const
-  {
-    const_iterator p = (octave::math::isnan (val)
-                        ? m_handle_map.end () : m_handle_map.find (val));
-
-    return (p != m_handle_map.end ()) ? p->first : graphics_handle ();
-  }
-
-  graphics_handle lookup (const octave_value& val) const
-  {
-    return (val.is_real_scalar ()
-            ? lookup (val.double_value ()) : graphics_handle ());
-  }
-
-  graphics_object get_object (double val) const
-  {
-    return get_object (lookup (val));
-  }
-
-  graphics_object get_object (const graphics_handle& h) const
-  {
-    const_iterator p = (h.ok () ? m_handle_map.find (h) : m_handle_map.end ());
-
-    return (p != m_handle_map.end ()) ? p->second : graphics_object ();
-  }
-
-  OCTINTERP_API graphics_handle
-  make_graphics_handle (const std::string& go_name,
-                        const graphics_handle& p,
-                        bool integer_figure_handle = false,
-                        bool call_createfcn = true,
-                        bool notify_toolkit = true);
-
-  OCTINTERP_API graphics_handle
-  make_figure_handle (double val, bool notify_toolkit = true);
-
-  OCTINTERP_API void push_figure (const graphics_handle& h);
-
-  OCTINTERP_API void pop_figure (const graphics_handle& h);
-
-  graphics_handle current_figure (void) const
-  {
-    graphics_handle retval;
-
-    for (const auto& hfig : m_figure_list)
-      {
-        if (is_handle_visible (hfig))
-          retval = hfig;
-      }
-
-    return retval;
-  }
-
-  Matrix handle_list (bool show_hidden = false)
-  {
-    Matrix retval (1, m_handle_map.size ());
-
-    octave_idx_type i = 0;
-    for (const auto& h_iter : m_handle_map)
-      {
-        graphics_handle h = h_iter.first;
-
-        if (show_hidden || is_handle_visible (h))
-          retval(i++) = h.value ();
-      }
-
-    retval.resize (1, i);
-
-    return retval;
-  }
-
-  void lock (void) { m_graphics_lock.lock (); }
-
-  bool try_lock (void) { return m_graphics_lock.try_lock (); }
-
-  void unlock (void) { m_graphics_lock.unlock (); }
-
-  Matrix figure_handle_list (bool show_hidden = false)
-  {
-    Matrix retval (1, m_figure_list.size ());
-
-    octave_idx_type i = 0;
-    for (const auto& hfig : m_figure_list)
-      {
-        if (show_hidden || is_handle_visible (hfig))
-          retval(i++) = hfig.value ();
-      }
-
-    retval.resize (1, i);
-
-    return retval;
-  }
-
-  OCTINTERP_API void
-  execute_listener (const graphics_handle& h, const octave_value& l);
-
-  void execute_callback (const graphics_handle& h,
-                         const std::string& name,
-                         const octave_value& data = Matrix ())
-  {
-    octave_value cb;
-
-    if (true)
-      {
-        octave::autolock guard (graphics_lock ());
-
-        graphics_object go = get_object (h);
-
-        if (go.valid_object ())
-          cb = go.get (name);
-      }
-
-    execute_callback (h, cb, data);
-  }
-
-  OCTINTERP_API void
-  execute_callback (const graphics_handle& h, const octave_value& cb,
-                    const octave_value& data = Matrix ());
-
-  OCTINTERP_API void
-  post_callback (const graphics_handle& h, const std::string& name,
-                 const octave_value& data = Matrix ());
-
-  OCTINTERP_API void
-  post_function (graphics_event::event_fcn fcn, void *fcn_data = nullptr);
-
-  OCTINTERP_API void
-  post_set (const graphics_handle& h, const std::string& name,
-            const octave_value& value, bool notify_toolkit = true,
-            bool redraw_figure = false);
-
-  OCTINTERP_API int process_events (bool force = false);
-
-  OCTINTERP_API void enable_event_processing (bool enable = true);
-
-  bool is_handle_visible (const graphics_handle& h) const
-  {
-    bool retval = false;
-
-    graphics_object go = get_object (h);
-
-    if (go.valid_object ())
-      retval = go.is_handle_visible ();
-
-    return retval;
-  }
-
-  OCTINTERP_API void close_all_figures (void);
-
-  OCTINTERP_API void restore_gcbo (void);
-
-  OCTINTERP_API void post_event (const graphics_event& e);
-
-  octave::mutex graphics_lock (void)
-  {
-    return m_graphics_lock;
-  }
-
-  latex_data get_latex_data (const std::string& key) const
-  {
-    latex_data retval;
-
-    const auto it = m_latex_cache.find (key);
-
-    if (it != m_latex_cache.end ())
-      retval = it->second;
-
-    return retval;
-  }
-
-  void set_latex_data (const std::string& key, latex_data val)
-  {
-    // Limit the number of cache entries to 500
-    if (m_latex_keys.size () >= 500)
-      {
-        auto it = m_latex_cache.find (m_latex_keys.front ());
-
-        if (it != m_latex_cache.end ())
-          m_latex_cache.erase (it);
-
-        m_latex_keys.pop_front ();
-      }
-
-    m_latex_cache[key] = val;
-    m_latex_keys.push_back (key);
-  }
-
-private:
-
-  typedef std::map<graphics_handle, graphics_object>::iterator iterator;
-  typedef std::map<graphics_handle, graphics_object>::const_iterator
-    const_iterator;
-
-  typedef std::set<graphics_handle>::iterator free_list_iterator;
-  typedef std::set<graphics_handle>::const_iterator const_free_list_iterator;
-
-  typedef std::list<graphics_handle>::iterator figure_list_iterator;
-  typedef std::list<graphics_handle>::const_iterator const_figure_list_iterator;
-
-  octave::interpreter& m_interpreter;
-
-  // A map of handles to graphics objects.
-  std::map<graphics_handle, graphics_object> m_handle_map;
-
-  // The available graphics handles.
-  std::set<graphics_handle> m_handle_free_list;
-
-  // The next handle available if m_handle_free_list is empty.
-  double m_next_handle;
-
-  // The allocated figure handles.  Top of the stack is most recently
-  // created.
-  std::list<graphics_handle> m_figure_list;
-
-  // The lock for accessing the graphics sytsem.
-  octave::mutex m_graphics_lock;
-
-  // The list of events queued by graphics toolkits.
-  std::list<graphics_event> m_event_queue;
-
-  // The stack of callback objects.
-  std::list<graphics_object> m_callback_objects;
-
-  // A flag telling whether event processing must be constantly on.
-  int m_event_processing;
-
-  // Cache of already parsed latex strings. Store a separate list of keys
-  // to allow for erasing oldest entries if cache size becomes too large.
-  std::unordered_map<std::string, latex_data> m_latex_cache;
-  std::list<std::string> m_latex_keys;
-};
+OCTINTERP_API base_graphics_object *
+make_graphics_object_from_type (const caseless_str& type,
+                                const graphics_handle& h = graphics_handle (),
+                                const graphics_handle& p = graphics_handle ());
 
 OCTINTERP_API void
 get_children_limits (double& min_val, double& max_val,
@@ -6882,173 +6777,13 @@ get_children_limits (double& min_val, double& max_val,
 OCTINTERP_API int calc_dimensions (const graphics_object& gh);
 
 // This function is NOT equivalent to the scripting language function gcf.
-OCTINTERP_API graphics_handle gcf (void);
+OCTINTERP_API graphics_handle gcf ();
 
 // This function is NOT equivalent to the scripting language function gca.
-OCTINTERP_API graphics_handle gca (void);
+OCTINTERP_API graphics_handle gca ();
 
-OCTINTERP_API void close_all_figures (void);
+OCTINTERP_API void close_all_figures ();
 
-OCTAVE_NAMESPACE_END
-
-#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-
-OCTAVE_DEPRECATED (7, "use 'octave::base_scaler' instead")
-typedef octave::base_scaler base_scaler;
-
-OCTAVE_DEPRECATED (7, "use 'octave::lin_scaler' instead")
-typedef octave::lin_scaler lin_scaler;
-
-OCTAVE_DEPRECATED (7, "use 'octave::log_scaler' instead")
-typedef octave::log_scaler log_scaler;
-
-OCTAVE_DEPRECATED (7, "use 'octave::neg_log_scaler' instead")
-typedef octave::neg_log_scaler neg_log_scaler;
-
-OCTAVE_DEPRECATED (7, "use 'octave::scaler' instead")
-typedef octave::scaler scaler;
-
-OCTAVE_DEPRECATED (7, "use 'octave::base_property' instead")
-typedef octave::base_property base_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::string_property' instead")
-typedef octave::string_property string_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::string_array_property' instead")
-typedef octave::string_array_property string_array_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::text_label_property' instead")
-typedef octave::text_label_property text_label_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::radio_values' instead")
-typedef octave::radio_values radio_values;
-
-OCTAVE_DEPRECATED (7, "use 'octave::radio_property' instead")
-typedef octave::radio_property radio_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::color_values' instead")
-typedef octave::color_values color_values;
-
-OCTAVE_DEPRECATED (7, "use 'octave::color_property' instead")
-typedef octave::color_property color_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::double_property' instead")
-typedef octave::double_property double_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::double_radio_property' instead")
-typedef octave::double_radio_property double_radio_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::array_property' instead")
-typedef octave::array_property array_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::row_vector_property' instead")
-typedef octave::row_vector_property row_vector_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::bool_property' instead")
-typedef octave::bool_property bool_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::handle_property' instead")
-typedef octave::handle_property handle_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::any_property' instead")
-typedef octave::any_property any_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::children_property' instead")
-typedef octave::children_property children_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::callback_property' instead")
-typedef octave::callback_property callback_property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::property' instead")
-typedef octave::property property;
-
-OCTAVE_DEPRECATED (7, "use 'octave::pval_vector' instead")
-typedef octave::pval_vector pval_vector;
-
-OCTAVE_DEPRECATED (7, "use 'octave::property_list' instead")
-typedef octave::property_list property_list;
-
-OCTAVE_DEPRECATED (7, "use 'octave::base_properties' instead")
-typedef octave::base_properties base_properties;
-
-OCTAVE_DEPRECATED (7, "use 'octave::base_graphics_object' instead")
-typedef octave::base_graphics_object base_graphics_object;
-
-OCTAVE_DEPRECATED (7, "use 'octave::graphics_object' instead")
-typedef octave::graphics_object graphics_object;
-
-OCTAVE_DEPRECATED (7, "use 'octave::root_figure' instead")
-typedef octave::root_figure root_figure;
-
-OCTAVE_DEPRECATED (7, "use 'octave::figure' instead")
-typedef octave::figure figure;
-
-OCTAVE_DEPRECATED (7, "use 'octave::graphics_xform' instead")
-typedef octave::graphics_xform graphics_xform;
-
-OCTAVE_DEPRECATED (7, "use 'octave::axes' instead")
-typedef octave::axes axes;
-
-OCTAVE_DEPRECATED (7, "use 'octave::line' instead")
-typedef octave::line line;
-
-OCTAVE_DEPRECATED (7, "use 'octave::text' instead")
-typedef octave::text text;
-
-OCTAVE_DEPRECATED (7, "use 'octave::image' instead")
-typedef octave::image image;
-
-OCTAVE_DEPRECATED (7, "use 'octave::light' instead")
-typedef octave::light light;
-
-OCTAVE_DEPRECATED (7, "use 'octave::patch' instead")
-typedef octave::patch patch;
-
-OCTAVE_DEPRECATED (7, "use 'octave::scatter' instead")
-typedef octave::scatter scatter;
-
-OCTAVE_DEPRECATED (7, "use 'octave::surface' instead")
-typedef octave::surface surface;
-
-OCTAVE_DEPRECATED (7, "use 'octave::hggroup' instead")
-typedef octave::hggroup hggroup;
-
-OCTAVE_DEPRECATED (7, "use 'octave::uimenu' instead")
-typedef octave::uimenu uimenu;
-
-OCTAVE_DEPRECATED (7, "use 'octave::uicontextmenu' instead")
-typedef octave::uicontextmenu uicontextmenu;
-
-OCTAVE_DEPRECATED (7, "use 'octave::uicontrol' instead")
-typedef octave::uicontrol uicontrol;
-
-OCTAVE_DEPRECATED (7, "use 'octave::uibuttongroup' instead")
-typedef octave::uibuttongroup uibuttongroup;
-
-OCTAVE_DEPRECATED (7, "use 'octave::uipanel' instead")
-typedef octave::uipanel uipanel;
-
-OCTAVE_DEPRECATED (7, "use 'octave::uitable' instead")
-typedef octave::uitable uitable;
-
-OCTAVE_DEPRECATED (7, "use 'octave::uitoolbar' instead")
-typedef octave::uitoolbar uitoolbar;
-
-OCTAVE_DEPRECATED (7, "use 'octave::uipushtool' instead")
-typedef octave::uipushtool uipushtool;
-
-OCTAVE_DEPRECATED (7, "use 'octave::uitoggletool' instead")
-typedef octave::uitoggletool uitoggletool;
-
-OCTAVE_DEPRECATED (7, "use 'octave::base_graphics_event' instead")
-typedef octave::base_graphics_event base_graphics_event;
-
-OCTAVE_DEPRECATED (7, "use 'octave::graphics_event' instead")
-typedef octave::graphics_event graphics_event;
-
-OCTAVE_DEPRECATED (7, "use 'octave::gh_manager' instead")
-typedef octave::gh_manager gh_manager;
-
-#endif
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

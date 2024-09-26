@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Using Sparse Matrices in Oct-Files (GNU Octave (version 7.1.0))</title>
+<title>Using Sparse Matrices in Oct-Files (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Using Sparse Matrices in Oct-Files (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Using Sparse Matrices in Oct-Files (GNU Octave (version 7.1.0))">
+<meta name="description" content="Using Sparse Matrices in Oct-Files (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Using Sparse Matrices in Oct-Files (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,9 @@
 <link href="Creating-Sparse-Matrices-in-Oct_002dFiles.html" rel="prev" title="Creating Sparse Matrices in Oct-Files">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,33 +30,33 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsubsection" id="Using-Sparse-Matrices-in-Oct_002dFiles">
-<div class="header">
+<div class="subsubsection-level-extent" id="Using-Sparse-Matrices-in-Oct_002dFiles">
+<div class="nav-panel">
 <p>
 Previous: <a href="Creating-Sparse-Matrices-in-Oct_002dFiles.html" accesskey="p" rel="prev">Creating Sparse Matrices in Oct-Files</a>, Up: <a href="Sparse-Matrices-in-Oct_002dFiles.html" accesskey="u" rel="up">Sparse Matrices in Oct-Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Using-Sparse-Matrices-in-Oct_002dFiles-1"></span><h4 class="subsubsection">A.1.6.3 Using Sparse Matrices in Oct-Files</h4>
+<h4 class="subsubsection" id="Using-Sparse-Matrices-in-Oct_002dFiles-1"><span>A.1.6.3 Using Sparse Matrices in Oct-Files<a class="copiable-link" href="#Using-Sparse-Matrices-in-Oct_002dFiles-1"> &para;</a></span></h4>
 
 <p>Most of the same operators and functions for sparse matrices that are available
 from the Octave interpreter are also available within oct-files.  The basic
-means of extracting a sparse matrix from an <code>octave_value</code>, and returning
-it as an <code>octave_value</code>, can be seen in the following example.
+means of extracting a sparse matrix from an <code class="code">octave_value</code>, and returning
+it as an <code class="code">octave_value</code>, can be seen in the following example.
 </p>
 <div class="example">
-<pre class="example">octave_value_list retval;
+<div class="group"><pre class="example-preformatted">octave_value_list retval;
 
 SparseMatrix sm = args(0).sparse_matrix_value ();
 SparseComplexMatrix scm = args(1).sparse_complex_matrix_value ();
 SparseBoolMatrix sbm = args(2).sparse_bool_matrix_value ();
-&hellip;
+...
 retval(2) = sbm;
 retval(1) = scm;
 retval(0) = sm;
-</pre></div>
+</pre></div></div>
 
-<p>The conversion to an <code>octave_value</code> is handled by the sparse
-<code>octave_value</code> constructors, and so no special care is needed.
+<p>The conversion to an <code class="code">octave_value</code> is handled by the sparse
+<code class="code">octave_value</code> constructors, and so no special care is needed.
 </p>
 </div>
 

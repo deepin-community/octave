@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017-2022 The Octave Project Developers
+// Copyright (C) 2017-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -48,20 +48,98 @@ octave_u8_conv_from_encoding (const char *fromcode, const char *src,
                                 src, srclen, NULL, NULL, lengthp);
 }
 
+static char *
+octave_u8_conv_to_encoding_intern (const char *tocode,
+                                   enum iconv_ilseq_handler handler,
+                                   const uint8_t *src, size_t srclen,
+                                   size_t *offsets, size_t *lengthp)
+{
+  // FIXME: It looks like the input to u8_conv_to_encoding must be at least
+  //        four bytes and zero-terminated to work correctly.  Zero-pad input.
+  //        Should this be fixed in gnulib or iconv instead?
+  size_t minlen = 4;
+  size_t padlen = (srclen > minlen ? srclen : minlen);
+
+  // Do not zero-terminate when the output encoding is a UTF encoding, i.e.,
+  // the surrogates are different than a byte.
+  if ((tocode[0] != 'u' && tocode[0] != 'U')
+      || (tocode[1] != 't' && tocode[1] != 'T')
+      || (tocode[2] != 'f' && tocode[2] != 'F'))
+    padlen++;
+
+  uint8_t *u8_str = NULL;
+  const uint8_t *cu8_str;
+  if (srclen < padlen)
+    {
+      u8_str = (uint8_t *) malloc (padlen);
+      memcpy (u8_str, src, srclen);
+      for (size_t i_pad = 0; i_pad < padlen-srclen; i_pad++)
+        u8_str[srclen+i_pad] = 0;
+      cu8_str = u8_str;
+    }
+  else
+    cu8_str = src;
+
+  // Convert from UTF-8 to output encoding
+  char *ret = u8_conv_to_encoding (tocode, handler, cu8_str, padlen,
+                                   offsets, NULL, lengthp);
+
+  if (srclen < padlen)
+    free ((void *) u8_str);
+
+  // FIXME: This assumes that "\0" is converted to a single byte.  This might
+  //        not be true for some exotic output encodings (like UTF-7?).
+  *lengthp = (*lengthp <= (padlen-srclen) ? 0 : *lengthp - (padlen-srclen));
+
+  return ret;
+}
+
 char *
 octave_u8_conv_to_encoding (const char *tocode, const uint8_t *src,
                             size_t srclen, size_t *lengthp)
 {
-  return u8_conv_to_encoding (tocode, iconveh_question_mark,
-                              src, srclen, NULL, NULL, lengthp);
+  return octave_u8_conv_to_encoding_intern (tocode, iconveh_question_mark,
+                                            src, srclen, NULL, lengthp);
 }
 
 char *
 octave_u8_conv_to_encoding_strict (const char *tocode, const uint8_t *src,
                                    size_t srclen, size_t *lengthp)
 {
-  return u8_conv_to_encoding (tocode, iconveh_error,
-                              src, srclen, NULL, NULL, lengthp);
+  return octave_u8_conv_to_encoding_intern (tocode, iconveh_error,
+                                            src, srclen, NULL, lengthp);
+}
+
+uint16_t *
+octave_u16_conv_from_encoding (const char *fromcode, const char *src,
+                               size_t srclen, size_t *lengthp)
+{
+  return u16_conv_from_encoding (fromcode, iconveh_question_mark,
+                                 src, srclen, NULL, NULL, lengthp);
+}
+
+uint16_t *
+octave_u16_conv_from_encoding_strict (const char *fromcode, const char *src,
+                                      size_t srclen, size_t *lengthp)
+{
+  return u16_conv_from_encoding (fromcode, iconveh_error,
+                                 src, srclen, NULL, NULL, lengthp);
+}
+
+char *
+octave_u16_conv_to_encoding (const char *tocode, const uint16_t *src,
+                             size_t srclen, size_t *lengthp)
+{
+  return u16_conv_to_encoding (tocode, iconveh_question_mark,
+                               src, srclen, NULL, NULL, lengthp);
+}
+
+char *
+octave_u16_conv_to_encoding_strict (const char *tocode, const uint16_t *src,
+                                    size_t srclen, size_t *lengthp)
+{
+  return u16_conv_to_encoding (tocode, iconveh_error,
+                               src, srclen, NULL, NULL, lengthp);
 }
 
 char *
@@ -70,6 +148,24 @@ octave_u32_conv_to_encoding_strict (const char *tocode, const uint32_t *src,
 {
   return u32_conv_to_encoding (tocode, iconveh_error,
                                src, srclen, NULL, NULL, lengthp);
+}
+
+uint8_t *
+octave_u8_conv_from_encoding_offsets
+  (const char *fromcode, const char *src, size_t srclen,
+   size_t *offsets, size_t *lengthp)
+{
+  return u8_conv_from_encoding (fromcode, iconveh_question_mark,
+                                src, srclen, offsets, NULL, lengthp);
+}
+
+char *
+octave_u8_conv_to_encoding_offsets
+  (const char *tocode, const uint8_t *src, size_t srclen,
+   size_t *offsets, size_t *lengthp)
+{
+  return octave_u8_conv_to_encoding_intern (tocode, iconveh_question_mark,
+                                            src, srclen, offsets, lengthp);
 }
 
 char *

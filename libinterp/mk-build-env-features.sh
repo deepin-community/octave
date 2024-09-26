@@ -2,7 +2,7 @@
 
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -43,12 +43,12 @@ cat << EOF
 #include "build-env.h"
 #include "ov.h"
 
-namespace octave
-{
-  namespace build_env
-  {
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+OCTAVE_BEGIN_NAMESPACE(build_env)
+
     octave_scalar_map
-    features (void)
+    features ()
     {
       static bool initialized = false;
 
@@ -82,6 +82,7 @@ cat << EOF
 
       return m;
     }
-  };
-};
+
+OCTAVE_END_NAMESPACE(build_env)
+OCTAVE_END_NAMESPACE(octave)
 EOF

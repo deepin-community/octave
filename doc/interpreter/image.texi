@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -67,6 +67,11 @@ imwrite (J, "my_output_image.img");
 
 @c imread scripts/image/imread.m
 @anchor{XREFimread}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{img}, @var{map}, @var{alpha}] =} imread (@var{filename})
 @deftypefnx {} {[@dots{}] =} imread (@var{url})
 @deftypefnx {} {[@dots{}] =} imread (@dots{}, @var{ext})
@@ -137,6 +142,11 @@ imread (filename)(200:600, 300:700);
 
 @c imwrite scripts/image/imwrite.m
 @anchor{XREFimwrite}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} imwrite (@var{img}, @var{filename})
 @deftypefnx {} {} imwrite (@var{img}, @var{filename}, @var{ext})
 @deftypefnx {} {} imwrite (@var{img}, @var{map}, @var{filename})
@@ -218,9 +228,14 @@ matrix that could be expected when using @code{imread} with the option
 
 @c IMAGE_PATH libinterp/corefcn/environment.cc
 @anchor{XREFIMAGE_PATH}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} IMAGE_PATH ()
 @deftypefnx {} {@var{old_val} =} IMAGE_PATH (@var{new_val})
-@deftypefnx {} {} IMAGE_PATH (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} IMAGE_PATH (@var{new_val}, "local")
 Query or set the internal variable that specifies a colon separated
 list of directories in which to search for image files.
 
@@ -239,6 +254,11 @@ image file.
 
 @c imfinfo scripts/image/imfinfo.m
 @anchor{XREFimfinfo}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{info} =} imfinfo (@var{filename})
 @deftypefnx {} {@var{info} =} imfinfo (@var{url})
 @deftypefnx {} {@var{info} =} imfinfo (@dots{}, @var{ext})
@@ -393,6 +413,11 @@ unsupported.
 
 @c imformats scripts/image/imformats.m
 @anchor{XREFimformats}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} imformats ()
 @deftypefnx {} {@var{formats} =} imformats (@var{ext})
 @deftypefnx {} {@var{formats} =} imformats (@var{format})
@@ -454,6 +479,11 @@ shows the image given in the first input argument.
 
 @c imshow scripts/image/imshow.m
 @anchor{XREFimshow}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} imshow (@var{im})
 @deftypefnx {} {} imshow (@var{im}, @var{limits})
 @deftypefnx {} {} imshow (@var{im}, @var{map})
@@ -507,6 +537,11 @@ The optional return value @var{h} is a graphics handle to the image.
 
 @c image scripts/image/image.m
 @anchor{XREFimage}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} image (@var{img})
 @deftypefnx {} {} image (@var{x}, @var{y}, @var{img})
 @deftypefnx {} {} image (@dots{}, "@var{prop}", @var{val}, @dots{})
@@ -553,6 +588,11 @@ Graphic Properties: The full list of properties is documented at
 
 @c imagesc scripts/image/imagesc.m
 @anchor{XREFimagesc}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} imagesc (@var{img})
 @deftypefnx {} {} imagesc (@var{x}, @var{y}, @var{img})
 @deftypefnx {} {} imagesc (@dots{}, @var{climits})
@@ -620,20 +660,24 @@ formats.
 
 @c im2double scripts/image/im2double.m
 @anchor{XREFim2double}
-@deftypefn  {} {} im2double (@var{img})
-@deftypefnx {} {} im2double (@var{img}, "indexed")
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{dimg} =} im2double (@var{img})
+@deftypefnx {} {@var{dimg} =} im2double (@var{img}, "indexed")
 Convert image to double precision.
 
-The conversion of @var{img} to double precision, is dependent
-on the type of input image.  The following input classes are
-supported:
+The conversion of @var{img} to double precision, is dependent on the type of
+input image.  The following input classes are supported:
 
 @table @samp
 @item uint8, uint16, and int16
 The range of values from the class is scaled to the interval [0 1].
 
 @item logical
-True and false values are assigned a value of 0 and 1 respectively.
+True and false values are assigned a value of 1 and 0 respectively.
 
 @item single
 Values are cast to double.
@@ -643,10 +687,10 @@ Returns the same image.
 
 @end table
 
-If @var{img} is an indexed image, then the second argument should be
-the string @qcode{"indexed"}.  If so, then @var{img} must either be
-of floating point class, or unsigned integer class and it will simply
-be cast to double.  If it is an integer class, a +1 offset is applied.
+If @var{img} is an indexed image, then the second argument should be the
+string @qcode{"indexed"}.  If so, then @var{img} must either be of floating
+point class, or unsigned integer class and it will simply be cast to double.
+If it is an integer class, an offset of +1 is applied.
 
 @xseealso{@ref{XREFdouble,,double}}
 @end deftypefn
@@ -654,6 +698,11 @@ be cast to double.  If it is an integer class, a +1 offset is applied.
 
 @c gray2ind scripts/image/gray2ind.m
 @anchor{XREFgray2ind}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{img} =} gray2ind (@var{I})
 @deftypefnx {} {@var{img} =} gray2ind (@var{I}, @var{n})
 @deftypefnx {} {@var{img} =} gray2ind (@var{BW})
@@ -673,6 +722,11 @@ The output @var{img} is of class uint8 if @var{n} is less than or equal to
 
 @c ind2gray scripts/image/ind2gray.m
 @anchor{XREFind2gray}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{I} =} ind2gray (@var{x}, @var{map})
 Convert a color indexed image to a grayscale intensity image.
 
@@ -695,6 +749,11 @@ using a single color channel from @code{ind2rgb}.
 
 @c rgb2ind scripts/image/rgb2ind.m
 @anchor{XREFrgb2ind}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{x}, @var{map}] =} rgb2ind (@var{rgb})
 @deftypefnx {} {[@var{x}, @var{map}] =} rgb2ind (@var{R}, @var{G}, @var{B})
 Convert an image in red-green-blue (RGB) color space to an indexed image.
@@ -720,6 +779,11 @@ as separate variables.
 
 @c ind2rgb scripts/image/ind2rgb.m
 @anchor{XREFind2rgb}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{rgb} =} ind2rgb (@var{x}, @var{map})
 @deftypefnx {} {[@var{R}, @var{G}, @var{B}] =} ind2rgb (@var{x}, @var{map})
 Convert an indexed image to red, green, and blue color components.
@@ -747,6 +811,11 @@ with the corresponding colormap (@qcode{"colormap"} field).
 
 @c getframe scripts/image/getframe.m
 @anchor{XREFgetframe}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{frame} =} getframe ()
 @deftypefnx {} {@var{frame} =} getframe (@var{hax})
 @deftypefnx {} {@var{frame} =} getframe (@var{hfig})
@@ -757,8 +826,9 @@ Capture a figure or axes as a movie frame structure.
 Without an argument, capture the current axes excluding ticklabels, title,
 and x/y/zlabels.  The returned structure @var{frame} has a field
 @code{cdata}, which contains the actual image data in the form of an
-@nospell{NxMx3} (RGB) uint8 matrix, and a field @code{colormap} which is
-provided for @sc{matlab} compatibility but is always empty.
+@nospell{NxMx3} (RGB) uint8 matrix in physical screen pixels, and a field
+@code{colormap} which is provided for @sc{matlab} compatibility but is
+always empty.
 
 If the first argument @var{hax} is an axes handle, then capture this axes,
 rather than the current axes returned by @code{gca}.
@@ -777,6 +847,11 @@ property, @var{rect} must be defined in @strong{pixels}.
 
 @c movie scripts/image/movie.m
 @anchor{XREFmovie}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} movie (@var{mov})
 @deftypefnx {} {} movie (@var{mov}, @var{n})
 @deftypefnx {} {} movie (@var{mov}, @var{n}, @var{fps})
@@ -817,6 +892,11 @@ played in that figure or axes instead of the current axes.
 
 @c frame2im scripts/image/frame2im.m
 @anchor{XREFframe2im}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{x}, @var{map}] =} frame2im (@var{frame})
 Convert movie frame to indexed image.
 
@@ -834,8 +914,13 @@ along the 4th dimension.
 
 @c im2frame scripts/image/im2frame.m
 @anchor{XREFim2frame}
-@deftypefn  {} {} im2frame (@var{rgb})
-@deftypefnx {} {} im2frame (@var{x}, @var{map})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{frame} =} im2frame (@var{rgb})
+@deftypefnx {} {@var{frame} =} im2frame (@var{x}, @var{map})
 Convert image to movie frame.
 
 A movie frame is simply a struct with the fields @qcode{"cdata"} and
@@ -855,6 +940,11 @@ axes or figure.
 
 @c colormap scripts/image/colormap.m
 @anchor{XREFcolormap}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{cmap} =} colormap ()
 @deftypefnx {} {@var{cmap} =} colormap (@var{map})
 @deftypefnx {} {@var{cmap} =} colormap (@qcode{"default"})
@@ -921,7 +1011,12 @@ The list of built-in colormaps is:
 
 @c iscolormap scripts/image/iscolormap.m
 @anchor{XREFiscolormap}
-@deftypefn {} {} iscolormap (@var{cmap})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} iscolormap (@var{cmap})
 Return true if @var{cmap} is a colormap.
 
 A colormap is a real matrix, of class single or double, with 3 columns.
@@ -941,6 +1036,11 @@ requested by name using the @code{colormap} function.
 
 @c rgbplot scripts/image/rgbplot.m
 @anchor{XREFrgbplot}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} rgbplot (@var{cmap})
 @deftypefnx {} {} rgbplot (@var{cmap}, @var{style})
 @deftypefnx {} {@var{h} =} rgbplot (@dots{})
@@ -970,6 +1070,11 @@ option.
 
 @c autumn scripts/image/autumn.m
 @anchor{XREFautumn}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} autumn ()
 @deftypefnx {} {@var{map} =} autumn (@var{n})
 Create color colormap.
@@ -983,6 +1088,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c bone scripts/image/bone.m
 @anchor{XREFbone}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} bone ()
 @deftypefnx {} {@var{map} =} bone (@var{n})
 Create color colormap.  This colormap varies from black to white with
@@ -996,6 +1106,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c colorcube scripts/image/colorcube.m
 @anchor{XREFcolorcube}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} colorcube ()
 @deftypefnx {} {@var{map} =} colorcube (@var{n})
 Create color colormap.  This colormap is composed of as many equally
@@ -1013,6 +1128,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c cool scripts/image/cool.m
 @anchor{XREFcool}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} cool ()
 @deftypefnx {} {@var{map} =} cool (@var{n})
 Create color colormap.  The colormap varies from cyan to magenta.
@@ -1025,6 +1145,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c copper scripts/image/copper.m
 @anchor{XREFcopper}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} copper ()
 @deftypefnx {} {@var{map} =} copper (@var{n})
 Create color colormap.  This colormap varies from black to a light copper
@@ -1038,6 +1163,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c cubehelix scripts/image/cubehelix.m
 @anchor{XREFcubehelix}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} cubehelix ()
 @deftypefnx {} {@var{map} =} cubehelix (@var{n})
 @deftypefnx {} {@var{map} =} cubehelix (@var{n}, @var{start}, @var{rots}, @var{hue}, @var{gamma})
@@ -1066,6 +1196,11 @@ images}, Bulletin of the Astronomical Society of India, 39, 289.
 
 @c flag scripts/image/flag.m
 @anchor{XREFflag}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} flag ()
 @deftypefnx {} {@var{map} =} flag (@var{n})
 Create color colormap.  This colormap cycles through red, white, blue, and
@@ -1079,6 +1214,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c gray scripts/image/gray.m
 @anchor{XREFgray}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} gray ()
 @deftypefnx {} {@var{map} =} gray (@var{n})
 Create gray colormap.  This colormap varies from black to white with shades
@@ -1092,6 +1232,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c hot scripts/image/hot.m
 @anchor{XREFhot}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} hot ()
 @deftypefnx {} {@var{map} =} hot (@var{n})
 Create color colormap.  This colormap ranges from black through dark red,
@@ -1105,7 +1250,13 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c hsv scripts/image/hsv.m
 @anchor{XREFhsv}
-@deftypefn {} {} hsv (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{map} =} hsv ()
+@deftypefnx {} {@var{map} =} hsv (@var{n})
 Create color colormap.  This colormap begins with red, changes through
 yellow, green, cyan, blue, and magenta, before returning to red.
 
@@ -1122,6 +1273,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c jet scripts/image/jet.m
 @anchor{XREFjet}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} jet ()
 @deftypefnx {} {@var{map} =} jet (@var{n})
 Create color colormap.  This colormap ranges from dark blue through blue,
@@ -1140,6 +1296,11 @@ the @code{turbo} colormap.
 
 @c lines scripts/image/lines.m
 @anchor{XREFlines}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} lines ()
 @deftypefnx {} {@var{map} =} lines (@var{n})
 Create color colormap.  This colormap is composed of the list of colors
@@ -1154,6 +1315,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c ocean scripts/image/ocean.m
 @anchor{XREFocean}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} ocean ()
 @deftypefnx {} {@var{map} =} ocean (@var{n})
 Create color colormap.  This colormap varies from black to white with shades
@@ -1167,6 +1333,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c pink scripts/image/pink.m
 @anchor{XREFpink}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} pink ()
 @deftypefnx {} {@var{map} =} pink (@var{n})
 Create color colormap.  This colormap varies from black to white with
@@ -1182,6 +1353,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c prism scripts/image/prism.m
 @anchor{XREFprism}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} prism ()
 @deftypefnx {} {@var{map} =} prism (@var{n})
 Create color colormap.  This colormap cycles through red, orange, yellow,
@@ -1195,6 +1371,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c rainbow scripts/image/rainbow.m
 @anchor{XREFrainbow}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} rainbow ()
 @deftypefnx {} {@var{map} =} rainbow (@var{n})
 Create color colormap.  This colormap ranges from red through orange,
@@ -1208,6 +1389,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c spring scripts/image/spring.m
 @anchor{XREFspring}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} spring ()
 @deftypefnx {} {@var{map} =} spring (@var{n})
 Create color colormap.  This colormap varies from magenta to yellow.
@@ -1220,6 +1406,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c summer scripts/image/summer.m
 @anchor{XREFsummer}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} summer ()
 @deftypefnx {} {@var{map} =} summer (@var{n})
 Create color colormap.  This colormap varies from green to yellow.
@@ -1232,6 +1423,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c turbo scripts/image/turbo.m
 @anchor{XREFturbo}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} turbo ()
 @deftypefnx {} {@var{map} =} turbo (@var{n})
 Create color colormap.  This colormap ranges from dark blue through green
@@ -1246,6 +1442,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c viridis scripts/image/viridis.m
 @anchor{XREFviridis}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} viridis ()
 @deftypefnx {} {@var{map} =} viridis (@var{n})
 Create color colormap.  This colormap ranges from dark purplish-blue through
@@ -1259,6 +1460,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c white scripts/image/white.m
 @anchor{XREFwhite}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} white ()
 @deftypefnx {} {@var{map} =} white (@var{n})
 Create color colormap.  This colormap is completely white.
@@ -1271,6 +1477,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c winter scripts/image/winter.m
 @anchor{XREFwinter}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map} =} winter ()
 @deftypefnx {} {@var{map} =} winter (@var{n})
 Create color colormap.  This colormap varies from blue to green.
@@ -1283,6 +1494,11 @@ If unspecified, the length of the current colormap, or 64, is used.
 
 @c contrast scripts/image/contrast.m
 @anchor{XREFcontrast}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{cmap} =} contrast (@var{x})
 @deftypefnx {} {@var{cmap} =} contrast (@var{x}, @var{n})
 Return a gray colormap that maximizes the contrast in an image.
@@ -1298,6 +1514,11 @@ replace it.
 
 @c brighten scripts/image/brighten.m
 @anchor{XREFbrighten}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{map_out} =} brighten (@var{beta})
 @deftypefnx {} {@var{map_out} =} brighten (@var{map}, @var{beta})
 @deftypefnx {} {@var{map_out} =} brighten (@var{h}, @var{beta})
@@ -1321,6 +1542,11 @@ colormap.
 
 @c spinmap scripts/image/spinmap.m
 @anchor{XREFspinmap}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} spinmap ()
 @deftypefnx {} {} spinmap (@var{t})
 @deftypefnx {} {} spinmap (@var{t}, @var{inc})
@@ -1340,6 +1566,11 @@ value of @var{inc} will cause faster cycling through the colormap.
 
 @c whitebg scripts/plot/appearance/whitebg.m
 @anchor{XREFwhitebg}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} whitebg ()
 @deftypefnx {} {} whitebg (@var{color})
 @deftypefnx {} {} whitebg ("none")
@@ -1379,6 +1610,11 @@ The following functions can be used to manipulate colormaps.
 
 @c cmunique scripts/image/cmunique.m
 @anchor{XREFcmunique}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{Y}, @var{newmap}] =} cmunique (@var{X}, @var{map})
 @deftypefnx {} {[@var{Y}, @var{newmap}] =} cmunique (@var{RGB})
 @deftypefnx {} {[@var{Y}, @var{newmap}] =} cmunique (@var{I})
@@ -1415,6 +1651,11 @@ less than or equal to 256.  Otherwise, the output image is of class double.
 
 @c cmpermute scripts/image/cmpermute.m
 @anchor{XREFcmpermute}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{Y}, @var{newmap}] =} cmpermute (@var{X}, @var{map})
 @deftypefnx {} {[@var{Y}, @var{newmap}] =} cmpermute (@var{X}, @var{map}, @var{index})
 Reorder colors in a colormap.
@@ -1469,6 +1710,11 @@ grayscale image.
 
 @c rgb2hsv scripts/image/rgb2hsv.m
 @anchor{XREFrgb2hsv}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{hsv_map} =} rgb2hsv (@var{rgb_map})
 @deftypefnx {} {@var{hsv_img} =} rgb2hsv (@var{rgb_img})
 Transform a colormap or image from RGB to HSV color space.
@@ -1489,6 +1735,11 @@ Output class and size will be the same as input.
 
 @c hsv2rgb scripts/image/hsv2rgb.m
 @anchor{XREFhsv2rgb}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{rgb_map} =} hsv2rgb (@var{hsv_map})
 @deftypefnx {} {@var{rgb_img} =} hsv2rgb (@var{hsv_img})
 Transform a colormap or image from HSV to RGB color space.
@@ -1525,6 +1776,11 @@ Output class and size will be the same as input.
 
 @c rgb2gray scripts/image/rgb2gray.m
 @anchor{XREFrgb2gray}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{I} =} rgb2gray (@var{rgb_img})
 @deftypefnx {} {@var{gray_map} =} rgb2gray (@var{rgb_map})
 Transform an image or colormap from red-green-blue (RGB) color space to

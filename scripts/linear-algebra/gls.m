@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -137,11 +137,9 @@ function [beta, v, r] = gls (y, x, o)
 
   beta = reshape (b, cx, cy);
 
-  if (isargout (2) || isargout (3))
+  if (nargout > 1)
     r = y - x * beta;
-    if (isargout (2))
-      v = (reshape (r, ry*cy, 1))' * (o^2) * reshape (r, ry*cy, 1) / (rx*cy - r);
-    endif
+    v = (reshape (r, ry*cy, 1))' * (o^2) * reshape (r, ry*cy, 1) / (rx*cy - r);
   endif
 
 endfunction

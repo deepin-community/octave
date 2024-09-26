@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,34 +30,40 @@
 
 #include <ios>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class
+preserve_stream_state
 {
-  class
-  preserve_stream_state
+public:
+
+  preserve_stream_state () = delete;
+
+  preserve_stream_state (std::ios& s)
+    : m_stream (s), m_oflags (s.flags ()), m_oprecision (s.precision ()),
+      m_owidth (s.width ()), m_ofill (s.fill ())
+  { }
+
+  OCTAVE_DEFAULT_COPY_MOVE_CTOR (preserve_stream_state)
+  OCTAVE_DISABLE_COPY_MOVE_ASGN (preserve_stream_state)
+
+  ~preserve_stream_state ()
   {
-  public:
+    m_stream.flags (m_oflags);
+    m_stream.precision (m_oprecision);
+    m_stream.width (m_owidth);
+    m_stream.fill (m_ofill);
+  }
 
-    preserve_stream_state (std::ios& s)
-      : m_stream (s), m_oflags (s.flags ()), m_oprecision (s.precision ()),
-        m_owidth (s.width ()), m_ofill (s.fill ())
-    { }
+private:
 
-    ~preserve_stream_state (void)
-    {
-      m_stream.flags (m_oflags);
-      m_stream.precision (m_oprecision);
-      m_stream.width (m_owidth);
-      m_stream.fill (m_ofill);
-    }
+  std::ios& m_stream;
+  std::ios::fmtflags m_oflags;
+  std::streamsize m_oprecision;
+  int m_owidth;
+  char m_ofill;
+};
 
-  private:
-
-    std::ios& m_stream;
-    std::ios::fmtflags m_oflags;
-    std::streamsize m_oprecision;
-    int m_owidth;
-    char m_ofill;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

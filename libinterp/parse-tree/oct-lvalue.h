@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -34,80 +34,68 @@
 #include "stack-frame.h"
 #include "symrec.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class octave_lvalue
 {
-  class octave_lvalue
-  {
-  public:
+public:
 
-    octave_lvalue (const symbol_record& sr,
-                   const std::shared_ptr<stack_frame>& frame)
-      : m_sym (sr), m_frame (frame), m_black_hole (false),
-        m_type (), m_idx ()
-    { }
+  octave_lvalue (const symbol_record& sr,
+                 const std::shared_ptr<stack_frame>& frame)
+    : m_sym (sr), m_frame (frame), m_black_hole (false),
+      m_type (), m_idx ()
+  { }
 
-    octave_lvalue (const octave_lvalue&) = default;
+  OCTAVE_DEFAULT_CONSTRUCT_COPY_MOVE_DELETE (octave_lvalue)
 
-    octave_lvalue& operator = (const octave_lvalue&) = delete;
+  bool is_black_hole () const { return m_black_hole; }
 
-    ~octave_lvalue (void) = default;
+  void mark_black_hole () { m_black_hole = true; }
 
-    bool is_black_hole (void) const { return m_black_hole; }
+  bool is_defined () const;
 
-    void mark_black_hole (void) { m_black_hole = true; }
+  bool is_undefined () const;
 
-    bool is_defined (void) const;
+  bool isstruct () const { return value().isstruct (); }
 
-    bool is_undefined (void) const;
+  void define (const octave_value& v);
 
-    bool isstruct (void) const { return value().isstruct (); }
+  void assign (octave_value::assign_op, const octave_value&);
 
-    void define (const octave_value& v);
+  octave_idx_type numel () const;
 
-    void assign (octave_value::assign_op, const octave_value&);
+  void set_index (const std::string& t,
+                  const std::list<octave_value_list>& i);
 
-    octave_idx_type numel (void) const;
+  void clear_index () { m_type = ""; m_idx.clear (); }
 
-    void set_index (const std::string& t, const std::list<octave_value_list>& i);
+  std::string index_type () const { return m_type; }
 
-    void clear_index (void) { m_type = ""; m_idx.clear (); }
+  bool index_is_empty () const;
 
-    std::string index_type (void) const { return m_type; }
+  bool index_is_colon () const;
 
-    bool index_is_empty (void) const;
+  void unary_op (octave_value::unary_op op);
 
-    bool index_is_colon (void) const;
+  octave_value value () const;
 
-    void unary_op (octave_value::unary_op op);
+private:
 
-#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-    OCTAVE_DEPRECATED (7, "use 'octave_lvalue::unary_op' instead")
-    void do_unary_op (octave_value::unary_op op)
-    {
-      return unary_op (op);
-    }
-#endif
+  octave_value
+  eval_for_numel (const std::string& type,
+                  const std::list<octave_value_list>& idx) const;
 
-    octave_value value (void) const;
+  symbol_record m_sym;
 
-  private:
+  std::shared_ptr<stack_frame> m_frame;
 
-    octave_value
-    eval_for_numel (const std::string& type,
-                    const std::list<octave_value_list>& idx) const;
+  bool m_black_hole;
 
-    symbol_record m_sym;
+  std::string m_type;
 
-    std::shared_ptr<stack_frame> m_frame;
+  std::list<octave_value_list> m_idx;
+};
 
-    bool m_black_hole;
-
-    std::string m_type;
-
-    std::list<octave_value_list> m_idx;
-
-    octave_idx_type m_nel;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

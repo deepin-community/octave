@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017-2022 The Octave Project Developers
+// Copyright (C) 2017-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -27,6 +27,7 @@
 #  include "config.h"
 #endif
 
+#include <cstdio>
 #include <iostream>
 
 #if defined (OCTAVE_USE_WINDOWS_API)
@@ -43,7 +44,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QPrinter>
-#include <QRegExp>
+#include <QRegularExpression>
 
 // Include a set of path rendering functions extracted from Qt-5.12 source
 #include "octave-qsvghandler.h"
@@ -52,60 +53,62 @@
 class pdfpainter : public QPainter
 {
 public:
+
+  pdfpainter () = delete;
+
   pdfpainter (QString fname, QRectF sz)
-      :  m_printer ()
+    : m_printer ()
   {
     // Printer settings
     m_printer.setOutputFormat (QPrinter::PdfFormat);
     m_printer.setFontEmbeddingEnabled (true);
     m_printer.setOutputFileName (fname);
     m_printer.setFullPage (true);
-#if defined (HAVE_QPRINTER_SETPAGESIZE)
     m_printer.setPageSize (QPageSize (sz.size (), QPageSize::Point,
                                       QString ("custom"),
                                       QPageSize::ExactMatch));
-#else
-    m_printer.setPaperSize (sz.size (), QPrinter::Point);
-#endif
 
     // Painter settings
     begin (&m_printer);
     setWindow (sz.toRect ());
   }
 
-  ~pdfpainter (void) { end (); }
+  OCTAVE_DISABLE_COPY_MOVE (pdfpainter)
+
+  ~pdfpainter () { end (); }
 
 private:
+
   QPrinter m_printer;
 };
 
 // String conversion functions+QVector<double> qstr2vectorf (QString str)
-QVector<double> qstr2vectorf (QString str)
+QVector<double>
+qstr2vectorf (QString str)
 {
   QVector<double> pts;
   QStringList coords = str.split (",");
-  for (QStringList::iterator p = coords.begin (); p != coords.end (); p += 1)
-    {
-      double pt = (*p).toDouble ();
-      pts.append (pt);
-    }
-  return pts;
-}
-
-QVector<double> qstr2vectord (QString str)
-{
-  QVector<double> pts;
-  QStringList coords = str.split (",");
-  for (QStringList::iterator p = coords.begin (); p != coords.end (); p += 1)
-    {
-      double pt = (*p).toDouble ();
-      pts.append (pt);
-    }
+  for (auto& p : coords)
+    pts.append (p.toDouble ());
 
   return pts;
 }
 
-QVector<QPointF> qstr2ptsvector (QString str)
+// FIXME: What's the difference between qstr2vectorf and qstr2vectord?
+// Can one be called from the other to avoid code duplication, or deleted?
+QVector<double>
+qstr2vectord (QString str)
+{
+  QVector<double> pts;
+  QStringList coords = str.split (",");
+  for (auto& p : coords)
+    pts.append (p.toDouble ());
+
+  return pts;
+}
+
+QVector<QPointF>
+qstr2ptsvector (QString str)
 {
   QVector<QPointF> pts;
   str = str.trimmed ();
@@ -119,7 +122,10 @@ QVector<QPointF> qstr2ptsvector (QString str)
   return pts;
 }
 
-QVector<QPoint> qstr2ptsvectord (QString str)
+// FIXME: What's the difference between qstr2ptsvector and qstr2ptsvectord?
+// Can one be called from the other to avoid code duplication, or deleted?
+QVector<QPoint>
+qstr2ptsvectord (QString str)
 {
   QVector<QPoint> pts;
   str = str.trimmed ();
@@ -134,14 +140,12 @@ QVector<QPoint> qstr2ptsvectord (QString str)
 }
 
 // Extract field arguments in a style-like string, e.g. "bla field(1,34,56) bla"
-QString get_field (QString str, QString field)
+QString
+get_field (QString str, QString field)
 {
-  QString retval;
-  QRegExp rx (field + "\\(([^\\)]*)\\)");
-  int pos = 0;
-  pos = rx.indexIn (str, pos);
-  if (pos > -1)
-    retval = rx.cap (1);
+  QRegularExpression rx (field + "\\(([^\\)]*)\\)");
+  QRegularExpressionMatch match = rx.match (str);
+  QString retval = match.captured (1);
 
   return retval;
 }
@@ -150,29 +154,27 @@ QString get_field (QString str, QString field)
 class octave_polygon
 {
 public:
-  octave_polygon (void)
-  { }
 
   octave_polygon (QPolygonF p)
   { m_polygons.push_back (p); }
 
-  ~octave_polygon (void) { }
+  OCTAVE_DEFAULT_CONSTRUCT_COPY_MOVE_DELETE (octave_polygon)
 
-  int count (void) const
+  int count () const
   { return m_polygons.count (); }
 
-  void reset (void)
+  void reset ()
   { m_polygons.clear (); }
 
-  QList<QPolygonF> reconstruct (void)
+  QList<QPolygonF> reconstruct (int reconstruct_level)
   {
     if (m_polygons.isEmpty ())
       return QList<QPolygonF> ();
+    else if (reconstruct_level < 2)
+      return m_polygons;
 
     // Once a polygon has been merged to another, it is marked unsuded
-    QVector<bool> unused;
-    for (auto it = m_polygons.begin (); it != m_polygons.end (); it++)
-      unused.push_back (false);
+    QVector<bool> unused (m_polygons.count (), false);
 
     bool tryagain = (m_polygons.count () > 1);
 
@@ -334,12 +336,13 @@ private:
   QList<QPolygonF> m_polygons;
 };
 
-void draw (QDomElement& parent_elt, pdfpainter& painter)
+void
+draw (QDomElement& parent_elt, pdfpainter& painter)
 {
   QDomNodeList nodes = parent_elt.childNodes ();
 
   static QString clippath_id;
-  static QMap< QString, QVector<QPoint> > clippath;
+  static QMap< QString, QVector<QPoint>> clippath;
 
   // tspan elements must have access to the font and position extracted from
   // their parent text element
@@ -448,7 +451,11 @@ void draw (QDomElement& parent_elt, pdfpainter& painter)
               painter.save ();
               if (! str.isEmpty ())
                 {
-                  QStringRef tf (&str);
+#if HAVE_QSTRINGVIEW
+                  QStringView tf {str};
+#else
+                  QStringRef tf {&str};
+#endif
                   QTransform  tform =
                     parseTransformationMatrix (tf) * painter.transform ();
                   painter.setTransform (tform);
@@ -478,7 +485,11 @@ void draw (QDomElement& parent_elt, pdfpainter& painter)
 
               if (! d.isEmpty ())
                 {
-                  QStringRef data (&d);
+#if HAVE_QSTRINGVIEW
+                  QStringView data {d};
+#else
+                  QStringRef data {&d};
+#endif
                   QPainterPath path;
                   if (! parsePathDataFast (data, path))
                     continue; // Something went wrong, pass
@@ -653,6 +664,9 @@ void draw (QDomElement& parent_elt, pdfpainter& painter)
                 }
 
               painter.setRenderHint (QPainter::Antialiasing, false);
+#if defined (HAVE_QPAINTER_RENDERHINT_LOSSLESS)
+              painter.setRenderHint (QPainter::LosslessImageRendering);
+#endif
               painter.drawImage (pos, img);
               painter.setRenderHint (QPainter::Antialiasing, true);
               painter.restore  ();
@@ -660,12 +674,6 @@ void draw (QDomElement& parent_elt, pdfpainter& painter)
         }
       else if (elt.tagName () == "rect")
         {
-          // Color
-          QColor col (Qt::black);
-          QString str = elt.attribute ("fill");
-          if (! str.isEmpty ())
-            col = QColor (str);
-
           // Position
           double x = elt.attribute ("x").toDouble ();
           double y = elt.attribute ("y").toDouble ();
@@ -674,10 +682,19 @@ void draw (QDomElement& parent_elt, pdfpainter& painter)
           double wd = elt.attribute ("width").toDouble ();
           double hg = elt.attribute ("height").toDouble ();
 
-          painter.setBrush (col);
+          // Color
+          QColor saved_color = painter.brush ().color ();
+
+          QString str = elt.attribute ("fill");
+          if (! str.isEmpty ())
+            painter.setBrush (QColor (str));
+
           painter.setPen (Qt::NoPen);
 
           painter.drawRect (QRectF (x, y, wd, hg));
+
+          if (! str.isEmpty ())
+            painter.setBrush (saved_color);
         }
       else if (elt.tagName () == "polygon")
         {
@@ -715,8 +732,9 @@ void draw (QDomElement& parent_elt, pdfpainter& painter)
 // Append a list of reconstructed child polygons to a QDomElement and remove
 // the original nodes
 
-void replace_polygons (QDomElement& parent_elt, QList<QDomNode> orig,
-                       QList<QPolygonF> polygons)
+void
+replace_polygons (QDomElement& parent_elt, QList<QDomNode> orig,
+                  QList<QPolygonF> polygons)
 {
   if (! orig.count () || (orig.count () == polygons.count ()))
     return;
@@ -746,7 +764,8 @@ void replace_polygons (QDomElement& parent_elt, QList<QDomNode> orig,
     parent_elt.removeChild (orig.at (ii));
 }
 
-void reconstruct_polygons (QDomElement& parent_elt)
+void
+reconstruct_polygons (QDomElement& parent_elt, int reconstruct_level)
 {
   QDomNodeList nodes = parent_elt.childNodes ();
   QColor current_color;
@@ -754,7 +773,7 @@ void reconstruct_polygons (QDomElement& parent_elt)
   octave_polygon current_polygon;
 
   // Collection of child nodes to be removed and polygons to be added
-  QList< QPair<QList<QDomNode>,QList<QPolygonF> > > collection;
+  QList< QPair<QList<QDomNode>, QList<QPolygonF>>> collection;
 
   for (int ii = 0; ii < nodes.count (); ii++)
     {
@@ -784,8 +803,9 @@ void reconstruct_polygons (QDomElement& parent_elt)
               if (color != current_color)
                 {
                   // Reconstruct the previous series of triangles
-                  QList<QPolygonF> polygons = current_polygon.reconstruct ();
-                  collection.push_back (QPair<QList<QDomNode>,QList<QPolygonF> >
+                  QList<QPolygonF> polygons
+                    = current_polygon.reconstruct (reconstruct_level);
+                  collection.push_back (QPair<QList<QDomNode>, QList<QPolygonF>>
                                         (replaced_nodes, polygons));
 
                   replaced_nodes.clear ();
@@ -803,22 +823,44 @@ void reconstruct_polygons (QDomElement& parent_elt)
         {
           if (current_polygon.count ())
             {
-              QList<QPolygonF> polygons = current_polygon.reconstruct ();
-              collection.push_back (QPair<QList<QDomNode>,QList<QPolygonF> >
+              QList<QPolygonF> polygons = current_polygon.reconstruct (reconstruct_level);
+              collection.push_back (QPair<QList<QDomNode>, QList<QPolygonF>>
                                     (replaced_nodes, polygons));
               replaced_nodes.clear ();
               current_polygon.reset ();
             }
-          reconstruct_polygons (elt);
+          reconstruct_polygons (elt, reconstruct_level);
         }
     }
 
   // Finish
-  collection.push_back (QPair<QList<QDomNode>,QList<QPolygonF> >
-                        (replaced_nodes, current_polygon.reconstruct ()));
+  collection.push_back (QPair<QList<QDomNode>, QList<QPolygonF>>
+                        (replaced_nodes,
+                         current_polygon.reconstruct (reconstruct_level)));
 
   for (int ii = 0; ii < collection.count (); ii++)
     replace_polygons (parent_elt, collection[ii].first, collection[ii].second);
+}
+
+void
+add_custom_properties (QDomElement& parent_elt)
+{
+  QDomNodeList nodes = parent_elt.childNodes ();
+
+  for (int ii = 0; ii < nodes.count (); ii++)
+    {
+      QDomNode node = nodes.at (ii);
+      if (! node.isElement ())
+        continue;
+
+      QDomElement elt = node.toElement ();
+
+      if (elt.tagName () == "image")
+        elt.setAttribute ("image-rendering", "optimizeSpeed");
+      else
+        add_custom_properties (elt);
+    }
+
 }
 
 #if defined (OCTAVE_USE_WINDOWS_API) && defined (_UNICODE)
@@ -853,7 +895,10 @@ read from stdin\n\
 * fmt: format of the output file. May be one of pdf or svg\n\
 * dpi: device dependent resolution in screen pixel per inch\n\
 * font: specify a file name for the default FreeSans font\n\
-* reconstruct: specify whether to reconstruct triangle to polygons (0 or 1)\n\
+* reconstruct: specify whether to reconstruct triangle to polygons\n\
+  0: no reconstruction (merging) of polygons\n\
+  1: merge consecutive triangles if they share an edge\n\
+  2: merge all triangles that share edges (might take a long time)\n\
 * outfile: output file name\n";
 
   if (strcmp (argv[1], "-h") == 0)
@@ -954,8 +999,12 @@ read from stdin\n\
     }
 
   // Do basic polygons reconstruction
-  if (QString (argv[5]).toInt ())
-    reconstruct_polygons (root);
+  int reconstruct_level = QString (argv[5]).toInt ();
+  if (reconstruct_level)
+    reconstruct_polygons (root, reconstruct_level);
+
+  // Add custom properties to SVG
+  add_custom_properties (root);
 
   // Draw
   if (! strcmp (argv[2], "pdf"))
@@ -969,7 +1018,11 @@ read from stdin\n\
     {
       // Return modified svg document
       QTextStream out (&fout);
+#if HAVE_QTEXTSTREAM_SETENCODING
+      out.setEncoding (QStringConverter::Utf8);
+#else
       out.setCodec ("UTF-8");
+#endif
       out << document.toByteArray ();
     }
 

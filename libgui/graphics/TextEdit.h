@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,26 +28,25 @@
 
 #include <QTextEdit>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class TextEdit : public QTextEdit
 {
+  Q_OBJECT
 
-  class TextEdit : public QTextEdit
-  {
-    Q_OBJECT
+public:
+  TextEdit (QWidget *xparent) : QTextEdit (xparent) { }
+  ~TextEdit () = default;
 
-  public:
-    TextEdit (QWidget *xparent) : QTextEdit (xparent) { }
-    ~TextEdit (void) = default;
+signals:
+  void editingFinished ();
+  void returnPressed ();
 
-  signals:
-    void editingFinished (void);
-    void returnPressed (void);
+protected:
+  void focusOutEvent (QFocusEvent *event);
+  void keyPressEvent (QKeyEvent *event);
+};
 
-  protected:
-    void focusOutEvent (QFocusEvent *event);
-    void keyPressEvent (QKeyEvent *event);
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

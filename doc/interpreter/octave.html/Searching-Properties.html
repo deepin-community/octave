@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Searching Properties (GNU Octave (version 7.1.0))</title>
+<title>Searching Properties (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Searching Properties (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Searching Properties (GNU Octave (version 7.1.0))">
+<meta name="description" content="Searching Properties (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Searching Properties (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Graphics-Object-Properties.html" rel="prev" title="Graphics Object Properties">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,23 +32,26 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Searching-Properties">
-<div class="header">
+<div class="subsection-level-extent" id="Searching-Properties">
+<div class="nav-panel">
 <p>
 Next: <a href="Managing-Default-Properties.html" accesskey="n" rel="next">Managing Default Properties</a>, Previous: <a href="Graphics-Object-Properties.html" accesskey="p" rel="prev">Graphics Object Properties</a>, Up: <a href="Graphics-Data-Structures.html" accesskey="u" rel="up">Graphics Data Structures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Searching-Properties-1"></span><h4 class="subsection">15.3.4 Searching Properties</h4>
+<h4 class="subsection" id="Searching-Properties-1"><span>15.3.4 Searching Properties<a class="copiable-link" href="#Searching-Properties-1"> &para;</a></span></h4>
 
-<span id="XREFfindobj"></span><dl class="def">
-<dt id="index-findobj"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findobj</strong> <em>()</em><a href='#index-findobj' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findobj-1"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findobj</strong> <em>(<var>prop_name</var>, <var>prop_value</var>, &hellip;)</em><a href='#index-findobj-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findobj-2"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findobj</strong> <em>(<var>prop_name</var>, <var>prop_value</var>, &quot;-<var>logical_op</var>&quot;, <var>prop_name</var>, <var>prop_value</var>)</em><a href='#index-findobj-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findobj-3"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findobj</strong> <em>(&quot;-property&quot;, <var>prop_name</var>)</em><a href='#index-findobj-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findobj-4"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findobj</strong> <em>(&quot;-regexp&quot;, <var>prop_name</var>, <var>pattern</var>)</em><a href='#index-findobj-4' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findobj-5"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findobj</strong> <em>(<var>hlist</var>, &hellip;)</em><a href='#index-findobj-5' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findobj-6"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findobj</strong> <em>(<var>hlist</var>, &quot;flat&quot;, &hellip;)</em><a href='#index-findobj-6' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findobj-7"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findobj</strong> <em>(<var>hlist</var>, &quot;-depth&quot;, <var>d</var>, &hellip;)</em><a href='#index-findobj-7' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFfindobj"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-findobj"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findobj</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-findobj"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findobj-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findobj</strong> <code class="def-code-arguments">(<var class="var">prop_name</var>, <var class="var">prop_value</var>, &hellip;)</code><a class="copiable-link" href="#index-findobj-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findobj-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findobj</strong> <code class="def-code-arguments">(<var class="var">prop_name</var>, <var class="var">prop_value</var>, &quot;-<var class="var">logical_op</var>&quot;, <var class="var">prop_name</var>, <var class="var">prop_value</var>)</code><a class="copiable-link" href="#index-findobj-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findobj-3"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findobj</strong> <code class="def-code-arguments">(&quot;-property&quot;, <var class="var">prop_name</var>)</code><a class="copiable-link" href="#index-findobj-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findobj-4"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findobj</strong> <code class="def-code-arguments">(&quot;-regexp&quot;, <var class="var">prop_name</var>, <var class="var">pattern</var>)</code><a class="copiable-link" href="#index-findobj-4"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findobj-5"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findobj</strong> <code class="def-code-arguments">(<var class="var">hlist</var>, &hellip;)</code><a class="copiable-link" href="#index-findobj-5"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findobj-6"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findobj</strong> <code class="def-code-arguments">(<var class="var">hlist</var>, &quot;flat&quot;, &hellip;)</code><a class="copiable-link" href="#index-findobj-6"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findobj-7"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findobj</strong> <code class="def-code-arguments">(<var class="var">hlist</var>, &quot;-depth&quot;, <var class="var">d</var>, &hellip;)</code><a class="copiable-link" href="#index-findobj-7"> &para;</a></span></dt>
 <dd><p>Find graphics objects with specified properties.
 </p>
 <p>When called without arguments, return all graphic objects beginning with the
@@ -68,84 +60,87 @@ root object (0) and including all of its descendants.
 <p>The simplest form for narrowing the results is
 </p>
 <div class="example">
-<pre class="example">findobj (<var>prop_name</var>, <var>prop_value</var>)
+<pre class="example-preformatted">findobj (<var class="var">prop_name</var>, <var class="var">prop_value</var>)
 </pre></div>
 
 <p>which returns the handles of all objects which have a property named
-<var>prop_name</var> that has the value <var>prop_value</var>.  If multiple
+<var class="var">prop_name</var> that has the value <var class="var">prop_value</var>.  If multiple
 property/value pairs are specified then only objects meeting all of the
-conditions (equivalent to <code>-and</code>) are returned.
+conditions (equivalent to <code class="code">-and</code>) are returned.
 </p>
 <p>The search can be limited to a particular set of objects and their
-descendants, by passing a handle or set of handles <var>hlist</var> as the first
+descendants, by passing a handle or set of handles <var class="var">hlist</var> as the first
 argument.
 </p>
 <p>The depth of the object hierarchy to search can be limited with the
-<code>&quot;-depth&quot;</code> argument.  An example of searching through only three
+<code class="code">&quot;-depth&quot;</code> argument.  An example of searching through only three
 generations of children is:
 </p>
 <div class="example">
-<pre class="example">findobj (<var>hlist</var>, &quot;-depth&quot;, 3, <var>prop_name</var>, <var>prop_value</var>)
+<pre class="example-preformatted">findobj (<var class="var">hlist</var>, &quot;-depth&quot;, 3, <var class="var">prop_name</var>, <var class="var">prop_value</var>)
 </pre></div>
 
-<p>Specifying a depth <var>d</var> of 0 limits the search to the set of objects
-passed in <var>hlist</var>.  A depth of 0 is also equivalent to the
-<code>&quot;flat&quot;</code> argument.  The default depth value is <code>Inf</code> which
+<p>Specifying a depth <var class="var">d</var> of 0 limits the search to the set of objects
+passed in <var class="var">hlist</var>.  A depth of 0 is also equivalent to the
+<code class="code">&quot;flat&quot;</code> argument.  The default depth value is <code class="code">Inf</code> which
 includes all descendants.
 </p>
-<p>A specified logical operator may be used between <var>prop_name</var>,
-<var>prop_value</var> pairs.  The supported logical operators are:
-<code>&quot;-and&quot;</code>, <code>&quot;-or&quot;</code>, <code>&quot;-xor&quot;</code>, <code>&quot;-not&quot;</code>.  Example code
+<p>A specified logical operator may be used between <var class="var">prop_name</var>,
+<var class="var">prop_value</var> pairs.  The supported logical operators are:
+<code class="code">&quot;-and&quot;</code>, <code class="code">&quot;-or&quot;</code>, <code class="code">&quot;-xor&quot;</code>, <code class="code">&quot;-not&quot;</code>.  Example code
 to locate all figure and axes objects is
 </p>
 <div class="example">
-<pre class="example">findobj (&quot;type&quot;, &quot;figure&quot;, &quot;-or&quot;, &quot;type&quot;, &quot;axes&quot;)
+<pre class="example-preformatted">findobj (&quot;type&quot;, &quot;figure&quot;, &quot;-or&quot;, &quot;type&quot;, &quot;axes&quot;)
 </pre></div>
 
 <p>Objects may also be matched by comparing a regular expression to the
 property values, where property values that match
-<code>regexp (<var>prop_value</var>, <var>pattern</var>)</code> are returned.
+<code class="code">regexp (<var class="var">prop_value</var>, <var class="var">pattern</var>)</code> are returned.
 </p>
 <p>Finally, objects which have a property name can be found with the
-<code>&quot;-property&quot;</code> option.  For example, code to locate objects with a
-<code>&quot;meshstyle&quot;</code> property is
+<code class="code">&quot;-property&quot;</code> option.  For example, code to locate objects with a
+<code class="code">&quot;meshstyle&quot;</code> property is
 </p>
 <div class="example">
-<pre class="example">findobj (&quot;-property&quot;, &quot;meshstyle&quot;)
+<pre class="example-preformatted">findobj (&quot;-property&quot;, &quot;meshstyle&quot;)
 </pre></div>
 
 <p>Implementation Note: The search only includes objects with visible
-handles (HandleVisibility<!-- /@w --> = <code>&quot;on&quot;</code>).
-See <a href="#XREFfindall"><code>findall</code></a>, to search for all objects including
+handles (HandleVisibility<!-- /@w --> = <code class="code">&quot;on&quot;</code>).
+See <a class="xref" href="#XREFfindall"><code class="code">findall</code></a>, to search for all objects including
 hidden ones.
 </p>
-<p><strong>See also:</strong> <a href="#XREFfindall">findall</a>, <a href="Graphics-Objects.html#XREFallchild">allchild</a>, <a href="Graphics-Objects.html#XREFget">get</a>, <a href="Graphics-Objects.html#XREFset">set</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFfindall">findall</a>, <a class="ref" href="Graphics-Objects.html#XREFallchild">allchild</a>, <a class="ref" href="Graphics-Objects.html#XREFget">get</a>, <a class="ref" href="Graphics-Objects.html#XREFset">set</a>.
 </p></dd></dl>
 
 
-<span id="XREFfindall"></span><dl class="def">
-<dt id="index-findall"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findall</strong> <em>()</em><a href='#index-findall' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findall-1"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findall</strong> <em>(<var>prop_name</var>, <var>prop_value</var>, &hellip;)</em><a href='#index-findall-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findall-2"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findall</strong> <em>(<var>prop_name</var>, <var>prop_value</var>, &quot;-<var>logical_op</var>&quot;, <var>prop_name</var>, <var>prop_value</var>)</em><a href='#index-findall-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findall-3"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findall</strong> <em>(&quot;-property&quot;, <var>prop_name</var>)</em><a href='#index-findall-3' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findall-4"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findall</strong> <em>(&quot;-regexp&quot;, <var>prop_name</var>, <var>pattern</var>)</em><a href='#index-findall-4' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findall-5"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findall</strong> <em>(<var>hlist</var>, &hellip;)</em><a href='#index-findall-5' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findall-6"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findall</strong> <em>(<var>hlist</var>, &quot;flat&quot;, &hellip;)</em><a href='#index-findall-6' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-findall-7"><span class="category">: </span><span><em><var>h</var> =</em> <strong>findall</strong> <em>(<var>hlist</var>, &quot;-depth&quot;, <var>d</var>, &hellip;)</em><a href='#index-findall-7' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFfindall"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-findall"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findall</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-findall"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findall-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findall</strong> <code class="def-code-arguments">(<var class="var">prop_name</var>, <var class="var">prop_value</var>, &hellip;)</code><a class="copiable-link" href="#index-findall-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findall-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findall</strong> <code class="def-code-arguments">(<var class="var">prop_name</var>, <var class="var">prop_value</var>, &quot;-<var class="var">logical_op</var>&quot;, <var class="var">prop_name</var>, <var class="var">prop_value</var>)</code><a class="copiable-link" href="#index-findall-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findall-3"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findall</strong> <code class="def-code-arguments">(&quot;-property&quot;, <var class="var">prop_name</var>)</code><a class="copiable-link" href="#index-findall-3"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findall-4"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findall</strong> <code class="def-code-arguments">(&quot;-regexp&quot;, <var class="var">prop_name</var>, <var class="var">pattern</var>)</code><a class="copiable-link" href="#index-findall-4"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findall-5"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findall</strong> <code class="def-code-arguments">(<var class="var">hlist</var>, &hellip;)</code><a class="copiable-link" href="#index-findall-5"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findall-6"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findall</strong> <code class="def-code-arguments">(<var class="var">hlist</var>, &quot;flat&quot;, &hellip;)</code><a class="copiable-link" href="#index-findall-6"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-findall-7"><span class="category-def">: </span><span><code class="def-type"><var class="var">h</var> =</code> <strong class="def-name">findall</strong> <code class="def-code-arguments">(<var class="var">hlist</var>, &quot;-depth&quot;, <var class="var">d</var>, &hellip;)</code><a class="copiable-link" href="#index-findall-7"> &para;</a></span></dt>
 <dd><p>Find graphics object, including hidden ones, with specified properties.
 </p>
-<p>The return value <var>h</var> is a list of handles to the found graphic objects.
+<p>The return value <var class="var">h</var> is a list of handles to the found graphic objects.
 </p>
-<p><code>findall</code> performs the same search as <code>findobj</code>, but it
-includes hidden objects (HandleVisibility = <code>&quot;off&quot;</code>).  For full
-documentation, see <a href="#XREFfindobj"><code>findobj</code></a>.
+<p><code class="code">findall</code> performs the same search as <code class="code">findobj</code>, but it
+includes hidden objects (HandleVisibility = <code class="code">&quot;off&quot;</code>).  For full
+documentation, see <a class="pxref" href="#XREFfindobj"><code class="code">findobj</code></a>.
 </p>
-<p><strong>See also:</strong> <a href="#XREFfindobj">findobj</a>, <a href="Graphics-Objects.html#XREFallchild">allchild</a>, <a href="Graphics-Objects.html#XREFget">get</a>, <a href="Graphics-Objects.html#XREFset">set</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFfindobj">findobj</a>, <a class="ref" href="Graphics-Objects.html#XREFallchild">allchild</a>, <a class="ref" href="Graphics-Objects.html#XREFget">get</a>, <a class="ref" href="Graphics-Objects.html#XREFset">set</a>.
 </p></dd></dl>
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Managing-Default-Properties.html">Managing Default Properties</a>, Previous: <a href="Graphics-Object-Properties.html">Graphics Object Properties</a>, Up: <a href="Graphics-Data-Structures.html">Graphics Data Structures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

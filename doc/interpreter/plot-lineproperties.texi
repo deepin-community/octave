@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,13 +23,15 @@
 
 Properties of @code{line} objects (@pxref{XREFline,,line}):
 
+@subsubheading Categories:
+
+@ref{XREFlinecategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFlinecategoryCoordinateData, , @w{Coordinate Data}}@: | @ref{XREFlinecategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFlinecategoryDisplay, , @w{Display}}@: | @ref{XREFlinecategoryLegendOptions, , @w{Legend Options}}@: | @ref{XREFlinecategoryLineAppearance, , @w{Line Appearance}}@: | @ref{XREFlinecategoryMarkerAppearance, , @w{Marker Appearance}}@: | @ref{XREFlinecategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFlinecategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFlinecategoryParent/Children, , @w{Parent/Children}}@: 
+
+@anchor{XREFlinecategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex line CallbackExecution
+
 @table @asis
-
-@anchor{XREFlinebeingdeleted}
-@prindex line beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
 
 @anchor{XREFlinebusyaction}
 @prindex line busyaction
@@ -35,166 +40,19 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFlinebuttondownfcn}
-@prindex line buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
-For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFlinechildren}
-@prindex line children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-@code{children} is unused.
-
-
-@anchor{XREFlineclipping}
-@prindex line clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the line is clipped in its parent axes limits.
-
-
-@anchor{XREFlinecolor}
-@prindex line color
-@item @code{color}: colorspec, def. @code{[0   0   0]}
-Color of the line object.  @xref{Colors, , colorspec}.
-
-
-@anchor{XREFlinecontextmenu}
-@prindex line contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this line object.
-
-
-@anchor{XREFlinecreatefcn}
-@prindex line createfcn
-@item @code{createfcn}: string | function handle, def. @code{[](0x0)}
-Callback function executed immediately after line has been created.  Function is set by using default property on root object, e.g., @code{set (groot, "defaultlinecreatefcn", 'disp ("line created!")')}.
-
-For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFlinedeletefcn}
-@prindex line deletefcn
-@item @code{deletefcn}: string | function handle, def. @code{[](0x0)}
-Callback function executed immediately before line is deleted.
-
-For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFlinedisplayname}
-@prindex line displayname
-@item @code{displayname}: string | cell array of strings, def. @qcode{""}
-Text for the legend entry corresponding to this line.
-
-
-@anchor{XREFlinehandlevisibility}
-@prindex line handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the line's handle is not visible in its parent's "children" property.
-
-
-@anchor{XREFlinehittest}
-@prindex line hittest
-@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether line processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFlinepickableparts, , @w{pickableparts property}}.
-
-
 @anchor{XREFlineinterruptible}
 @prindex line interruptible
 @item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
 Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
 @xref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFlinelinejoin}
-@prindex line linejoin
-@item @code{linejoin}: @qcode{"chamfer"} | @qcode{"miter"} | @{@qcode{"round"}@}
-Control the shape of the junction of line segments. This property currently only affects the printed output.
+@anchor{XREFlinecategoryCoordinateData}
+@subsubheading Coordinate Data
+@prindex line CoordinateData
 
-
-@anchor{XREFlinelinestyle}
-@prindex line linestyle
-@item @code{linestyle}: @{@qcode{"-"}@} | @qcode{"--"} | @qcode{"-."} | @qcode{":"} | @qcode{"none"}
-@xref{Line Styles}.
-
-
-@anchor{XREFlinelinewidth}
-@prindex line linewidth
-@item @code{linewidth}: def. @code{0.5000}
-Width of the line object measured in points.
-
-
-@anchor{XREFlinemarker}
-@prindex line marker
-@item @code{marker}: @qcode{"*"} | @qcode{"+"} | @qcode{"."} | @qcode{"<"} | @qcode{">"} | @qcode{"^"} | @qcode{"_"} | @qcode{"d"} | @qcode{"diamond"} | @qcode{"h"} | @qcode{"hexagram"} | @{@qcode{"none"}@} | @qcode{"o"} | @qcode{"p"} | @qcode{"pentagram"} | @qcode{"s"} | @qcode{"square"} | @qcode{"v"} | @qcode{"x"} | @qcode{"|"}
-Shape of the marker for each data point.  @xref{Marker Styles}.
-
-
-@anchor{XREFlinemarkeredgecolor}
-@prindex line markeredgecolor
-@item @code{markeredgecolor}: @{@qcode{"auto"}@} | @qcode{"none"}
-Color of the edge of the markers.  When set to @qcode{"auto"}, the marker edges have the same color as the line.  If set to @qcode{"none"}, no marker edges are displayed.  This property can also be set to any color.  @xref{Colors, , colorspec}.
-
-
-@anchor{XREFlinemarkerfacecolor}
-@prindex line markerfacecolor
-@item @code{markerfacecolor}: @qcode{"auto"} | @{@qcode{"none"}@}
-Color of the face of the markers.  When set to @qcode{"auto"}, the marker faces have the same color as the line.  If set to @qcode{"none"}, the marker faces are not displayed.  This property can also be set to any color.  @xref{Colors, , colorspec}.
-
-
-@anchor{XREFlinemarkersize}
-@prindex line markersize
-@item @code{markersize}: scalar, def. @code{6}
-Size of the markers measured in points.
-
-
-@anchor{XREFlineparent}
-@prindex line parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
-
-
-@anchor{XREFlinepickableparts}
-@prindex line pickableparts
-@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
-Specify whether line will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the line or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFlinehittest, , @w{hittest property}}.
-
-
-@anchor{XREFlineselected}
-@prindex line selected
-@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
-
-@anchor{XREFlineselectionhighlight}
-@prindex line selectionhighlight
-@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
-
-
-
-@anchor{XREFlinetag}
-@prindex line tag
-@item @code{tag}: string, def. @qcode{""}
-A user-defined string to label the graphics object.
-
-
-@anchor{XREFlinetype}
-@prindex line type
-@item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"line"}
-
-
-@anchor{XREFlineuserdata}
-@prindex line userdata
-@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
-User-defined data to associate with the graphics object.
-
-
-@anchor{XREFlinevisible}
-@prindex line visible
-@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{visible} is @qcode{"off"}, the line is not rendered on screen.
-
+@table @asis
 
 @anchor{XREFlinexdata}
 @prindex line xdata
@@ -230,5 +88,221 @@ Vector of z data to be plotted.
 @prindex line zdatasource
 @item @code{zdatasource}: string, def. @qcode{""}
 Name of a vector in the current base workspace to use as z data.
+
+@end table
+
+@anchor{XREFlinecategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex line Creation/Deletion
+
+@table @asis
+
+@anchor{XREFlinebeingdeleted}
+@prindex line beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
+
+
+@anchor{XREFlinecreatefcn}
+@prindex line createfcn
+@item @code{createfcn}: string | function handle, def. @code{[](0x0)}
+Callback function executed immediately after line has been created.  Function is set by using default property on root object, e.g., @code{set (groot, "defaultlinecreatefcn", 'disp ("line created!")')}.
+
+For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+
+
+@anchor{XREFlinedeletefcn}
+@prindex line deletefcn
+@item @code{deletefcn}: string | function handle, def. @code{[](0x0)}
+Callback function executed immediately before line is deleted.
+
+For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+
+@end table
+
+@anchor{XREFlinecategoryDisplay}
+@subsubheading Display
+@prindex line Display
+
+@table @asis
+
+@anchor{XREFlineclipping}
+@prindex line clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the line is clipped in its parent axes limits.
+
+
+@anchor{XREFlinevisible}
+@prindex line visible
+@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{visible} is @qcode{"off"}, the line is not rendered on screen.
+
+@end table
+
+@anchor{XREFlinecategoryLegendOptions}
+@subsubheading Legend Options
+@prindex line LegendOptions
+
+@table @asis
+
+@anchor{XREFlinedisplayname}
+@prindex line displayname
+@item @code{displayname}: string | cell array of strings, def. @qcode{""}
+Text for the legend entry corresponding to this line.
+
+@end table
+
+@anchor{XREFlinecategoryLineAppearance}
+@subsubheading Line Appearance
+@prindex line LineAppearance
+
+@table @asis
+
+@anchor{XREFlinecolor}
+@prindex line color
+@item @code{color}: colorspec, def. @code{[0   0   0]}
+Color of the line object.  @xref{Colors, , colorspec}.
+
+
+@anchor{XREFlinelinejoin}
+@prindex line linejoin
+@item @code{linejoin}: @qcode{"chamfer"} | @qcode{"miter"} | @{@qcode{"round"}@}
+Control the shape of the junction of line segments.  This property currently only affects the printed output.
+
+
+@anchor{XREFlinelinestyle}
+@prindex line linestyle
+@item @code{linestyle}: @{@qcode{"-"}@} | @qcode{"--"} | @qcode{"-."} | @qcode{":"} | @qcode{"none"}
+@xref{Line Styles}.
+
+
+@anchor{XREFlinelinewidth}
+@prindex line linewidth
+@item @code{linewidth}: scalar, def. @code{0.5000}
+Width of the line object measured in points.
+
+@end table
+
+@anchor{XREFlinecategoryMarkerAppearance}
+@subsubheading Marker Appearance
+@prindex line MarkerAppearance
+
+@table @asis
+
+@anchor{XREFlinemarker}
+@prindex line marker
+@item @code{marker}: @qcode{"*"} | @qcode{"+"} | @qcode{"."} | @qcode{"<"} | @qcode{">"} | @qcode{"^"} | @qcode{"_"} | @qcode{"d"} | @qcode{"diamond"} | @qcode{"h"} | @qcode{"hexagram"} | @{@qcode{"none"}@} | @qcode{"o"} | @qcode{"p"} | @qcode{"pentagram"} | @qcode{"s"} | @qcode{"square"} | @qcode{"v"} | @qcode{"x"} | @qcode{"|"}
+Shape of the marker for each data point.  @xref{Marker Styles}.
+
+
+@anchor{XREFlinemarkeredgecolor}
+@prindex line markeredgecolor
+@item @code{markeredgecolor}: @{@qcode{"auto"}@} | @qcode{"none"}
+Color of the edge of the markers.  When set to @qcode{"auto"}, the marker edges have the same color as the line.  If set to @qcode{"none"}, no marker edges are displayed.  This property can also be set to any color.  @xref{Colors, , colorspec}.
+
+
+@anchor{XREFlinemarkerfacecolor}
+@prindex line markerfacecolor
+@item @code{markerfacecolor}: @qcode{"auto"} | @{@qcode{"none"}@}
+Color of the face of the markers.  When set to @qcode{"auto"}, the marker faces have the same color as the line.  If set to @qcode{"none"}, the marker faces are not displayed.  This property can also be set to any color.  @xref{Colors, , colorspec}.
+
+
+@anchor{XREFlinemarkersize}
+@prindex line markersize
+@item @code{markersize}: scalar, def. @code{6}
+Size of the markers measured in points.
+
+@end table
+
+@anchor{XREFlinecategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex line MouseInteraction
+
+@table @asis
+
+@anchor{XREFlinebuttondownfcn}
+@prindex line buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+
+
+@anchor{XREFlinecontextmenu}
+@prindex line contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this line object.
+
+
+@anchor{XREFlinehittest}
+@prindex line hittest
+@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether line processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFlinepickableparts, , @w{pickableparts property}}.
+
+
+@anchor{XREFlinepickableparts}
+@prindex line pickableparts
+@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
+Specify whether line will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the line or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFlinehittest, , @w{hittest property}}.
+
+
+@anchor{XREFlineselected}
+@prindex line selected
+@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicates whether this line is selected.
+
+
+@anchor{XREFlineselectionhighlight}
+@prindex line selectionhighlight
+@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the line's selection state is visually highlighted.
+
+@end table
+
+@anchor{XREFlinecategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex line ObjectIdentification
+
+@table @asis
+
+@anchor{XREFlinetag}
+@prindex line tag
+@item @code{tag}: string, def. @qcode{""}
+A user-defined string to label the graphics object.
+
+
+@anchor{XREFlinetype}
+@prindex line type
+@item @code{type} (read-only): string
+Class name of the graphics object.  @code{type} is always @qcode{"line"}.
+
+
+@anchor{XREFlineuserdata}
+@prindex line userdata
+@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
+User-defined data to associate with the graphics object.
+
+@end table
+
+@anchor{XREFlinecategoryParent/Children}
+@subsubheading Parent/Children
+@prindex line Parent/Children
+
+@table @asis
+
+@anchor{XREFlinechildren}
+@prindex line children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Child objects for lines is not yet implemented for line objects.  @code{children} is unused.
+
+
+@anchor{XREFlinehandlevisibility}
+@prindex line handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the line's handle is not visible in its parent's @qcode{"children"} property.
+
+
+@anchor{XREFlineparent}
+@prindex line parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
 
 @end table

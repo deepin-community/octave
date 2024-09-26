@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2003-2022 The Octave Project Developers
+// Copyright (C) 2003-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,7 +31,7 @@
 
 #include "ls-utils.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // MAX_VAL and MIN_VAL are assumed to have integral values even though
 // they are stored in doubles.
@@ -92,5 +92,4 @@ get_save_type (float /* max_val */, float /* min_val */)
   return st;
 }
 
-OCTAVE_NAMESPACE_END
-
+OCTAVE_END_NAMESPACE(octave)

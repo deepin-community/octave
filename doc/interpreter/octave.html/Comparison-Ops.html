@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Comparison Ops (GNU Octave (version 7.1.0))</title>
+<title>Comparison Ops (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Comparison Ops (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Comparison Ops (GNU Octave (version 7.1.0))">
+<meta name="description" content="Comparison Ops (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Comparison Ops (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Arithmetic-Ops.html" rel="prev" title="Arithmetic Ops">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,167 +32,191 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Comparison-Ops">
-<div class="header">
+<div class="section-level-extent" id="Comparison-Ops">
+<div class="nav-panel">
 <p>
 Next: <a href="Boolean-Expressions.html" accesskey="n" rel="next">Boolean Expressions</a>, Previous: <a href="Arithmetic-Ops.html" accesskey="p" rel="prev">Arithmetic Operators</a>, Up: <a href="Expressions.html" accesskey="u" rel="up">Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Comparison-Operators"></span><h3 class="section">8.4 Comparison Operators</h3>
-<span id="index-comparison-expressions"></span>
-<span id="index-expressions_002c-comparison"></span>
-<span id="index-relational-operators"></span>
-<span id="index-operators_002c-relational"></span>
-<span id="index-less-than-operator"></span>
-<span id="index-greater-than-operator"></span>
-<span id="index-equality-operator"></span>
-<span id="index-tests-for-equality"></span>
-<span id="index-equality_002c-tests-for"></span>
+<h3 class="section" id="Comparison-Operators"><span>8.4 Comparison Operators<a class="copiable-link" href="#Comparison-Operators"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-comparison-expressions"></a>
+<a class="index-entry-id" id="index-expressions_002c-comparison"></a>
+<a class="index-entry-id" id="index-relational-operators"></a>
+<a class="index-entry-id" id="index-operators_002c-relational"></a>
+<a class="index-entry-id" id="index-less-than-operator"></a>
+<a class="index-entry-id" id="index-greater-than-operator"></a>
+<a class="index-entry-id" id="index-equality-operator"></a>
+<a class="index-entry-id" id="index-tests-for-equality"></a>
+<a class="index-entry-id" id="index-equality_002c-tests-for"></a>
 
-<p><em>Comparison operators</em> compare numeric values for relationships
+<p><em class="dfn">Comparison operators</em> compare numeric values for relationships
 such as equality.  They are written using
-<em>relational operators</em>.
+<em class="emph">relational operators</em>.
 </p>
 <p>All of Octave&rsquo;s comparison operators return a value of 1 if the
 comparison is true, or 0 if it is false.  For matrix values, they all
 work on an element-by-element basis.  Broadcasting rules apply.
-See <a href="Broadcasting.html">Broadcasting</a>.  For example:
+See <a class="xref" href="Broadcasting.html">Broadcasting</a>.  For example:
 </p>
 <div class="example">
-<pre class="example">[1, 2; 3, 4] == [1, 3; 2, 4]
+<div class="group"><pre class="example-preformatted">[1, 2; 3, 4] == [1, 3; 2, 4]
      &rArr;  1  0
          0  1
-</pre></div>
+</pre></div></div>
 
 <p>According to broadcasting rules, if one operand is a scalar and the
 other is a matrix, the scalar is compared to each element of the matrix
 in turn, and the result is the same size as the matrix.
 </p>
-<dl compact="compact">
-<dt id='index-_003c'><span><code><var>x</var> &lt; <var>y</var></code><a href='#index-_003c' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>True if <var>x</var> is less than <var>y</var>.
+<dl class="table">
+<dt><a id="index-_003c"></a><span><code class="code"><var class="var">x</var> &lt; <var class="var">y</var></code><a class="copiable-link" href="#index-_003c"> &para;</a></span></dt>
+<dd><p>True if <var class="var">x</var> is less than <var class="var">y</var>.
 </p>
 </dd>
-<dt id='index-_003c_003d'><span><code><var>x</var> &lt;= <var>y</var></code><a href='#index-_003c_003d' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>True if <var>x</var> is less than or equal to <var>y</var>.
+<dt><a id="index-_003c_003d"></a><span><code class="code"><var class="var">x</var> &lt;= <var class="var">y</var></code><a class="copiable-link" href="#index-_003c_003d"> &para;</a></span></dt>
+<dd><p>True if <var class="var">x</var> is less than or equal to <var class="var">y</var>.
 </p>
 </dd>
-<dt id='index-_003d_003d'><span><code><var>x</var> == <var>y</var></code><a href='#index-_003d_003d' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>True if <var>x</var> is equal to <var>y</var>.
+<dt><a id="index-_003d_003d"></a><span><code class="code"><var class="var">x</var> == <var class="var">y</var></code><a class="copiable-link" href="#index-_003d_003d"> &para;</a></span></dt>
+<dd><p>True if <var class="var">x</var> is equal to <var class="var">y</var>.
 </p>
 </dd>
-<dt id='index-_003e_003d'><span><code><var>x</var> &gt;= <var>y</var></code><a href='#index-_003e_003d' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>True if <var>x</var> is greater than or equal to <var>y</var>.
+<dt><a id="index-_003e_003d"></a><span><code class="code"><var class="var">x</var> &gt;= <var class="var">y</var></code><a class="copiable-link" href="#index-_003e_003d"> &para;</a></span></dt>
+<dd><p>True if <var class="var">x</var> is greater than or equal to <var class="var">y</var>.
 </p>
 </dd>
-<dt id='index-_003e'><span><code><var>x</var> &gt; <var>y</var></code><a href='#index-_003e' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>True if <var>x</var> is greater than <var>y</var>.
+<dt><a id="index-_003e"></a><span><code class="code"><var class="var">x</var> &gt; <var class="var">y</var></code><a class="copiable-link" href="#index-_003e"> &para;</a></span></dt>
+<dd><p>True if <var class="var">x</var> is greater than <var class="var">y</var>.
 </p>
 </dd>
-<dt id='index-_0021_003d'><span><code><var>x</var> != <var>y</var></code><a href='#index-_0021_003d' class='copiable-anchor'> &para;</a></span></dt>
-<dt><span><code><var>x</var> ~= <var>y</var></code></span></dt>
-<dd><span id="index-_007e_003d"></span>
-<p>True if <var>x</var> is not equal to <var>y</var>.
+<dt><a class="index-entry-id" id="index-_007e_003d"></a>
+<a id="index-_0021_003d"></a><span><code class="code"><var class="var">x</var> != <var class="var">y</var></code><a class="copiable-link" href="#index-_0021_003d"> &para;</a></span></dt>
+<dt><code class="code"><var class="var">x</var> ~= <var class="var">y</var></code></dt>
+<dd><p>True if <var class="var">x</var> is not equal to <var class="var">y</var>.
 </p></dd>
 </dl>
 
 <p>For complex numbers, the following ordering is defined:
-<var>z1</var> &lt; <var>z2</var>
+<var class="var">z1</var> &lt; <var class="var">z2</var>
 if and only if
 </p>
 <div class="example">
-<pre class="example">  abs (<var>z1</var>) &lt; abs (<var>z2</var>)
-  || (abs (<var>z1</var>) == abs (<var>z2</var>) &amp;&amp; arg (<var>z1</var>) &lt; arg (<var>z2</var>))
-</pre></div>
+<div class="group"><pre class="example-preformatted">  abs (<var class="var">z1</var>) &lt; abs (<var class="var">z2</var>)
+  || (abs (<var class="var">z1</var>) == abs (<var class="var">z2</var>) &amp;&amp; arg (<var class="var">z1</var>) &lt; arg (<var class="var">z2</var>))
+</pre></div></div>
 
-<p>This is consistent with the ordering used by <em>max</em>, <em>min</em> and
-<em>sort</em>, but is not consistent with <small>MATLAB</small>, which only compares the real
+<p>This is consistent with the ordering used by <em class="dfn">max</em>, <em class="dfn">min</em> and
+<em class="dfn">sort</em>, but is not consistent with <small class="sc">MATLAB</small>, which only compares the real
 parts.
 </p>
-<p>String comparisons may also be performed with the <code>strcmp</code>
+<p>String comparisons may also be performed with the <code class="code">strcmp</code>
 function, not with the comparison operators listed above.
-See <a href="Strings.html">Strings</a>.
+See <a class="xref" href="Strings.html">Strings</a>.
 </p>
-<span id="index-_003d_003d-1"></span>
-<span id="XREFeq"></span><dl class="def">
-<dt id="index-eq"><span class="category">: </span><span><em></em> <strong>eq</strong> <em>(<var>x</var>, <var>y</var>)</em><a href='#index-eq' class='copiable-anchor'> &para;</a></span></dt>
+<a class="index-entry-id" id="index-_003d_003d-1"></a>
+<a class="anchor" id="XREFeq"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-eq"><span class="category-def">: </span><span><code class="def-type"><var class="var">TF</var> =</code> <strong class="def-name">eq</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">B</var>)</code><a class="copiable-link" href="#index-eq"> &para;</a></span></dt>
 <dd><p>Return true if the two inputs are equal.
 </p>
-<p>This function is equivalent to <code><var>x</var>&nbsp;==&nbsp;<var>y</var></code><!-- /@w -->.
+<p>This function is equivalent to <code class="code"><var class="var">A</var>&nbsp;==&nbsp;<var class="var">B</var></code><!-- /@w -->.
 </p>
-<p><strong>See also:</strong> <a href="#XREFne">ne</a>, <a href="#XREFisequal">isequal</a>, <a href="#XREFle">le</a>, <a href="#XREFge">ge</a>, <a href="#XREFgt">gt</a>, <a href="#XREFne">ne</a>, <a href="#XREFlt">lt</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFne">ne</a>, <a class="ref" href="#XREFisequal">isequal</a>, <a class="ref" href="#XREFle">le</a>, <a class="ref" href="#XREFge">ge</a>, <a class="ref" href="#XREFgt">gt</a>, <a class="ref" href="#XREFne">ne</a>, <a class="ref" href="#XREFlt">lt</a>.
 </p></dd></dl>
 
 
-<span id="index-_003e_003d-1"></span>
-<span id="XREFge"></span><dl class="def">
-<dt id="index-ge"><span class="category">: </span><span><em></em> <strong>ge</strong> <em>(<var>x</var>, <var>y</var>)</em><a href='#index-ge' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>This function is equivalent to <code><var>x</var>&nbsp;&gt;=&nbsp;<var>y</var></code><!-- /@w -->.
+<a class="index-entry-id" id="index-_003e_003d-1"></a>
+<a class="anchor" id="XREFge"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-ge"><span class="category-def">: </span><span><code class="def-type"><var class="var">TF</var> =</code> <strong class="def-name">ge</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">B</var>)</code><a class="copiable-link" href="#index-ge"> &para;</a></span></dt>
+<dd><p>This function is equivalent to <code class="code"><var class="var">A</var>&nbsp;&gt;=&nbsp;<var class="var">B</var></code><!-- /@w -->.
 </p>
-<p><strong>See also:</strong> <a href="#XREFle">le</a>, <a href="#XREFeq">eq</a>, <a href="#XREFgt">gt</a>, <a href="#XREFne">ne</a>, <a href="#XREFlt">lt</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFle">le</a>, <a class="ref" href="#XREFeq">eq</a>, <a class="ref" href="#XREFgt">gt</a>, <a class="ref" href="#XREFne">ne</a>, <a class="ref" href="#XREFlt">lt</a>.
 </p></dd></dl>
 
 
-<span id="index-_003e-1"></span>
-<span id="XREFgt"></span><dl class="def">
-<dt id="index-gt"><span class="category">: </span><span><em></em> <strong>gt</strong> <em>(<var>x</var>, <var>y</var>)</em><a href='#index-gt' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>This function is equivalent to <code><var>x</var>&nbsp;&gt;&nbsp;<var>y</var></code><!-- /@w -->.
+<a class="index-entry-id" id="index-_003e-1"></a>
+<a class="anchor" id="XREFgt"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-gt"><span class="category-def">: </span><span><code class="def-type"><var class="var">TF</var> =</code> <strong class="def-name">gt</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">B</var>)</code><a class="copiable-link" href="#index-gt"> &para;</a></span></dt>
+<dd><p>This function is equivalent to <code class="code"><var class="var">A</var>&nbsp;&gt;&nbsp;<var class="var">B</var></code><!-- /@w -->.
 </p>
-<p><strong>See also:</strong> <a href="#XREFle">le</a>, <a href="#XREFeq">eq</a>, <a href="#XREFge">ge</a>, <a href="#XREFne">ne</a>, <a href="#XREFlt">lt</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFle">le</a>, <a class="ref" href="#XREFeq">eq</a>, <a class="ref" href="#XREFge">ge</a>, <a class="ref" href="#XREFne">ne</a>, <a class="ref" href="#XREFlt">lt</a>.
 </p></dd></dl>
 
 
-<span id="XREFisequal"></span><dl class="def">
-<dt id="index-isequal"><span class="category">: </span><span><em></em> <strong>isequal</strong> <em>(<var>x1</var>, <var>x2</var>, &hellip;)</em><a href='#index-isequal' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return true if all of <var>x1</var>, <var>x2</var>, &hellip; are equal.
+<a class="anchor" id="XREFisequal"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-isequal"><span class="category-def">: </span><span><code class="def-type"><var class="var">tf</var> =</code> <strong class="def-name">isequal</strong> <code class="def-code-arguments">(<var class="var">x1</var>, <var class="var">x2</var>, &hellip;)</code><a class="copiable-link" href="#index-isequal"> &para;</a></span></dt>
+<dd><p>Return true if all of <var class="var">x1</var>, <var class="var">x2</var>, &hellip; are equal.
 </p>
-<p><strong>See also:</strong> <a href="#XREFisequaln">isequaln</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFisequaln">isequaln</a>.
 </p></dd></dl>
 
 
-<span id="XREFisequaln"></span><dl class="def">
-<dt id="index-isequaln"><span class="category">: </span><span><em></em> <strong>isequaln</strong> <em>(<var>x1</var>, <var>x2</var>, &hellip;)</em><a href='#index-isequaln' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return true if all of <var>x1</var>, <var>x2</var>, &hellip; are equal under the
+<a class="anchor" id="XREFisequaln"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-isequaln"><span class="category-def">: </span><span><code class="def-type"><var class="var">tf</var> =</code> <strong class="def-name">isequaln</strong> <code class="def-code-arguments">(<var class="var">x1</var>, <var class="var">x2</var>, &hellip;)</code><a class="copiable-link" href="#index-isequaln"> &para;</a></span></dt>
+<dd><p>Return true if all of <var class="var">x1</var>, <var class="var">x2</var>, &hellip; are equal under the
 additional assumption that NaN == NaN (no comparison of NaN placeholders
 in dataset).
 </p>
-<p><strong>See also:</strong> <a href="#XREFisequal">isequal</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFisequal">isequal</a>.
 </p></dd></dl>
 
 
-<span id="index-_003c_003d-1"></span>
-<span id="XREFle"></span><dl class="def">
-<dt id="index-le"><span class="category">: </span><span><em></em> <strong>le</strong> <em>(<var>x</var>, <var>y</var>)</em><a href='#index-le' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>This function is equivalent to <code><var>x</var>&nbsp;&lt;=&nbsp;<var>y</var></code><!-- /@w -->.
+<a class="index-entry-id" id="index-_003c_003d-1"></a>
+<a class="anchor" id="XREFle"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-le"><span class="category-def">: </span><span><code class="def-type"><var class="var">TF</var> =</code> <strong class="def-name">le</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">B</var>)</code><a class="copiable-link" href="#index-le"> &para;</a></span></dt>
+<dd><p>This function is equivalent to <code class="code"><var class="var">A</var>&nbsp;&lt;=&nbsp;<var class="var">B</var></code><!-- /@w -->.
 </p>
-<p><strong>See also:</strong> <a href="#XREFeq">eq</a>, <a href="#XREFge">ge</a>, <a href="#XREFgt">gt</a>, <a href="#XREFne">ne</a>, <a href="#XREFlt">lt</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFeq">eq</a>, <a class="ref" href="#XREFge">ge</a>, <a class="ref" href="#XREFgt">gt</a>, <a class="ref" href="#XREFne">ne</a>, <a class="ref" href="#XREFlt">lt</a>.
 </p></dd></dl>
 
 
-<span id="index-_003c-1"></span>
-<span id="XREFlt"></span><dl class="def">
-<dt id="index-lt"><span class="category">: </span><span><em></em> <strong>lt</strong> <em>(<var>x</var>, <var>y</var>)</em><a href='#index-lt' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>This function is equivalent to <code><var>x</var>&nbsp;&lt;&nbsp;<var>y</var></code><!-- /@w -->.
+<a class="index-entry-id" id="index-_003c-1"></a>
+<a class="anchor" id="XREFlt"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-lt"><span class="category-def">: </span><span><code class="def-type"><var class="var">TF</var> =</code> <strong class="def-name">lt</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">B</var>)</code><a class="copiable-link" href="#index-lt"> &para;</a></span></dt>
+<dd><p>This function is equivalent to <code class="code"><var class="var">A</var>&nbsp;&lt;&nbsp;<var class="var">B</var></code><!-- /@w -->.
 </p>
-<p><strong>See also:</strong> <a href="#XREFle">le</a>, <a href="#XREFeq">eq</a>, <a href="#XREFge">ge</a>, <a href="#XREFgt">gt</a>, <a href="#XREFne">ne</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFle">le</a>, <a class="ref" href="#XREFeq">eq</a>, <a class="ref" href="#XREFge">ge</a>, <a class="ref" href="#XREFgt">gt</a>, <a class="ref" href="#XREFne">ne</a>.
 </p></dd></dl>
 
 
-<span id="index-_0021_003d-1"></span>
-<span id="index-_007e_003d-1"></span>
-<span id="XREFne"></span><dl class="def">
-<dt id="index-ne"><span class="category">: </span><span><em></em> <strong>ne</strong> <em>(<var>x</var>, <var>y</var>)</em><a href='#index-ne' class='copiable-anchor'> &para;</a></span></dt>
+<a class="index-entry-id" id="index-_0021_003d-1"></a>
+<a class="index-entry-id" id="index-_007e_003d-1"></a>
+<a class="anchor" id="XREFne"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-ne"><span class="category-def">: </span><span><code class="def-type"><var class="var">TF</var> =</code> <strong class="def-name">ne</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">B</var>)</code><a class="copiable-link" href="#index-ne"> &para;</a></span></dt>
 <dd><p>Return true if the two inputs are not equal.
 </p>
-<p>This function is equivalent to <code><var>x</var>&nbsp;!=&nbsp;<var>y</var></code><!-- /@w -->.
+<p>This function is equivalent to <code class="code"><var class="var">A</var>&nbsp;!=&nbsp;<var class="var">B</var></code><!-- /@w -->.
 </p>
-<p><strong>See also:</strong> <a href="#XREFeq">eq</a>, <a href="#XREFisequal">isequal</a>, <a href="#XREFle">le</a>, <a href="#XREFge">ge</a>, <a href="#XREFlt">lt</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFeq">eq</a>, <a class="ref" href="#XREFisequal">isequal</a>, <a class="ref" href="#XREFle">le</a>, <a class="ref" href="#XREFge">ge</a>, <a class="ref" href="#XREFlt">lt</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Boolean-Expressions.html">Boolean Expressions</a>, Previous: <a href="Arithmetic-Ops.html">Arithmetic Operators</a>, Up: <a href="Expressions.html">Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

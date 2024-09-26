@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -164,7 +164,11 @@ replace_prefix (std::string s)
   std::size_t pos = s.find (match);
   while (pos != std::string::npos )
     {
-      s.replace (pos, match.length (), repl);
+      // Quote replacement path if the input isn't quoted.
+      if (pos > 0 && s[pos-1] != '"' && s[pos-1] != '\'')
+        s.replace (pos, match.length (), quote_path (repl));
+      else
+        s.replace (pos, match.length (), repl);
       pos = s.find (match);
     }
 #endif
@@ -315,7 +319,7 @@ make_vars_map (bool link_stand_alone, bool verbose, bool debug)
 
   vars["LIBOCTINTERP"] = "-loctinterp";
 
-  vars["READLINE_LIBS"] = "-lreadline";
+  vars["READLINE_LIBS"] = %OCTAVE_CONF_READLINE_LIBS%;
 
   vars["LAPACK_LIBS"] = get_variable ("LAPACK_LIBS", %OCTAVE_CONF_LAPACK_LIBS%);
 
@@ -355,11 +359,6 @@ make_vars_map (bool link_stand_alone, bool verbose, bool debug)
 
   vars["LD_STATIC_FLAG"] = get_variable ("LD_STATIC_FLAG",
                                          %OCTAVE_CONF_LD_STATIC_FLAG%);
-
-  // FIXME: Remove LFLAGS in Octave 9
-  vars["LFLAGS"] = get_variable ("LFLAGS", DEFAULT_LDFLAGS);
-  if (vars["LFLAGS"] != DEFAULT_LDFLAGS)
-    std::cerr << "mkoctfile: warning: LFLAGS is deprecated and will be removed in a future version of Octave, use LDFLAGS instead" << std::endl;
 
   vars["F77_INTEGER8_FLAG"] = get_variable ("F77_INTEGER8_FLAG",
                                             %OCTAVE_CONF_F77_INTEGER_8_FLAG%);
@@ -608,7 +607,7 @@ is_true (const std::string& s)
 }
 
 static std::string
-get_temp_directory (void)
+get_temp_directory ()
 {
   std::string tempd;
 
@@ -648,7 +647,7 @@ get_temp_directory (void)
 }
 
 static std::string
-create_interleaved_complex_file (void)
+create_interleaved_complex_file ()
 {
   std::string tmpl = get_temp_directory () + "/oct-XXXXXX.c";
 
@@ -674,7 +673,7 @@ create_interleaved_complex_file (void)
 }
 
 static std::string
-tmp_objfile_name (void)
+tmp_objfile_name ()
 {
   std::string tmpl = get_temp_directory () + "/oct-XXXXXX.o";
 
@@ -756,12 +755,15 @@ main (int argc, char **sys_argv)
   bool r2018a_option = false;
   // The default for this may change in the future.
   bool mx_has_interleaved_complex = false;
+  bool pass_on_followup = false;
 
   for (int i = 1; i < argc; i++)
     {
       std::string arg = argv[i];
 
       std::string file;
+
+      bool found_unknown_dash_arg = false;
 
       if (ends_with (arg, ".c"))
         {
@@ -888,10 +890,6 @@ main (int argc, char **sys_argv)
             {
               ++i;
 
-              // FIXME: Remove LFLAGS checking in Octave 9
-              if (argv[i] == "LFLAGS")
-                std::cerr << "mkoctfile: warning: LFLAGS is deprecated and will be removed in a future version of Octave, use LDFLAGS instead" << std::endl;
-
               if (! var_to_print.empty ())
                 std::cerr << "mkoctfile: warning: only one '" << arg
                           << "' option will be processed" << std::endl;
@@ -941,25 +939,31 @@ main (int argc, char **sys_argv)
         }
       else if (starts_with (arg, "-"))
         {
+          found_unknown_dash_arg = true;
+
           // Pass through any unrecognized options.
           pass_on_options += (' ' + arg);
-          // Check for an additional argument following the option.
-          // However, don't check the final position which is typically a file
+
+          // Don't pass on the final position which is typically a file.
+          // FIXME: Does it make sense to have that exception for the last
+          //        argument?
           if (i < argc-2)
-            {
-              arg = argv[i+1];
-              if (arg[0] != '-')
-                {
-                  pass_on_options += (' ' + arg);
-                  i++;
-                }
-            }
+            pass_on_followup = true;
+        }
+      else if (pass_on_followup)
+        {
+          // Pass through a followup argument.
+          pass_on_options += (' ' + arg);
         }
       else
         {
           std::cerr << "mkoctfile: unrecognized argument " << arg << std::endl;
           return 1;
         }
+
+      // reset pass_on_followup if anything but an unknown argument was found
+      if (! found_unknown_dash_arg)
+        pass_on_followup = false;
 
       if (! file.empty () && octfile.empty ())
         octfile = file;
@@ -1317,13 +1321,12 @@ main (int argc, char **sys_argv)
           octave_libs = "-L" + quote_path (vars["OCTLIBDIR"])
                         + ' ' + vars["OCTAVE_LIBS"];
 
-          // FIXME: Remove LFLAGS in Octave 9
           std::string cmd
             = (vars["CXXLD"] + ' ' + vars["CPPFLAGS"] + ' '
                + vars["ALL_CXXFLAGS"] + ' ' + vars["RDYNAMIC_FLAG"] + ' '
                + pass_on_options + ' ' + output_option + ' ' + objfiles + ' '
                + libfiles + ' ' + ldflags + ' ' + vars["ALL_LDFLAGS"] + ' '
-               + vars["LFLAGS"] + ' ' + octave_libs + ' '
+               + octave_libs + ' '
                + vars["OCTAVE_LINK_OPTS"] + ' ' + vars["OCTAVE_LINK_DEPS"]);
 
           int status = run_command (cmd, verbose, printonly);
@@ -1348,12 +1351,11 @@ main (int argc, char **sys_argv)
                     + ' ' + vars["OCTAVE_LIBS"];
 #endif
 
-      // FIXME: Remove LFLAGS in Octave 9
       std::string cmd
         = (vars["CXXLD"] + ' ' + vars["ALL_CXXFLAGS"] + ' '
            + pass_on_options + " -o " + octfile + ' ' + objfiles + ' '
            + libfiles + ' ' + ldflags + ' ' + vars["DL_LDFLAGS"] + ' '
-           + vars["LDFLAGS"] + ' ' + vars["LFLAGS"] + ' ' + octave_libs + ' '
+           + vars["LDFLAGS"] + ' ' + octave_libs + ' '
            + vars["OCT_LINK_OPTS"] + ' ' + vars["OCT_LINK_DEPS"]);
 
 #if defined (OCTAVE_USE_WINDOWS_API) || defined(CROSS)

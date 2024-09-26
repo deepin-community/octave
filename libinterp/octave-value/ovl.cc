@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1994-2022 The Octave Project Developers
+// Copyright (C) 1994-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -71,7 +71,7 @@ octave_value_list::octave_value_list (const std::list<octave_value_list>& lst)
             m_data[k++] = ovl(i);
         }
 
-      assert (k == nel);
+      panic_unless (k == nel);
     }
 
 }
@@ -121,7 +121,7 @@ octave_value_list::append (const octave_value_list& lst)
 }
 
 octave_value_list&
-octave_value_list::reverse (void)
+octave_value_list::reverse ()
 {
   octave_idx_type n = length ();
 
@@ -173,7 +173,7 @@ octave_value_list::splice (octave_idx_type offset, octave_idx_type rep_length,
 }
 
 bool
-octave_value_list::all_strings_p (void) const
+octave_value_list::all_strings_p () const
 {
   octave_idx_type n = length ();
 
@@ -185,7 +185,7 @@ octave_value_list::all_strings_p (void) const
 }
 
 bool
-octave_value_list::all_scalars (void) const
+octave_value_list::all_scalars () const
 {
   octave_idx_type n = length ();
 
@@ -200,7 +200,7 @@ octave_value_list::all_scalars (void) const
 }
 
 bool
-octave_value_list::any_cell (void) const
+octave_value_list::any_cell () const
 {
   octave_idx_type n = length ();
 
@@ -212,7 +212,7 @@ octave_value_list::any_cell (void) const
 }
 
 bool
-octave_value_list::has_magic_colon (void) const
+octave_value_list::has_magic_colon () const
 {
   octave_idx_type n = length ();
 
@@ -274,7 +274,7 @@ octave_value_list::make_argv (const std::string& fcn_name) const
 }
 
 void
-octave_value_list::make_storable_values (void)
+octave_value_list::make_storable_values ()
 {
   octave_idx_type len = length ();
   const std::vector<octave_value>& cdata = m_data;

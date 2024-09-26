@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1994-2022 The Octave Project Developers
+// Copyright (C) 1994-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,65 +30,66 @@
 
 #include <iosfwd>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+OCTAVE_BEGIN_NAMESPACE(math)
+
+template <typename T>
+class
+hess
 {
-  namespace math
+public:
+
+  hess ()
+    : m_hess_mat (), m_unitary_hess_mat ()
+  { }
+
+  hess (const T& a)
+    : m_hess_mat (), m_unitary_hess_mat ()
   {
-    template <typename T>
-    class
-    hess
-    {
-    public:
-
-      hess (void)
-        : m_hess_mat (), m_unitary_hess_mat ()
-      { }
-
-      hess (const T& a)
-        : m_hess_mat (), m_unitary_hess_mat ()
-      {
-        init (a);
-      }
-
-      hess (const T& a, octave_idx_type& info)
-        : m_hess_mat (), m_unitary_hess_mat ()
-      {
-        info = init (a);
-      }
-
-      hess (const hess& a)
-        : m_hess_mat (a.m_hess_mat), m_unitary_hess_mat (a.m_unitary_hess_mat)
-      { }
-
-      hess& operator = (const hess& a)
-      {
-        if (this != &a)
-          {
-            m_hess_mat = a.m_hess_mat;
-            m_unitary_hess_mat = a.m_unitary_hess_mat;
-          }
-
-        return *this;
-      }
-
-      ~hess (void) = default;
-
-      T hess_matrix (void) const { return m_hess_mat; }
-
-      T unitary_hess_matrix (void) const { return m_unitary_hess_mat; }
-
-    private:
-
-      T m_hess_mat;
-      T m_unitary_hess_mat;
-
-      OCTAVE_API octave_idx_type init (const T& a);
-    };
-
-    template <typename T>
-    extern OCTAVE_API std::ostream&
-    operator << (std::ostream& os, const hess<T>& a);
+    init (a);
   }
-}
+
+  hess (const T& a, octave_idx_type& info)
+    : m_hess_mat (), m_unitary_hess_mat ()
+  {
+    info = init (a);
+  }
+
+  hess (const hess& a)
+    : m_hess_mat (a.m_hess_mat), m_unitary_hess_mat (a.m_unitary_hess_mat)
+  { }
+
+  hess& operator = (const hess& a)
+  {
+    if (this != &a)
+      {
+        m_hess_mat = a.m_hess_mat;
+        m_unitary_hess_mat = a.m_unitary_hess_mat;
+      }
+
+    return *this;
+  }
+
+  ~hess () = default;
+
+  T hess_matrix () const { return m_hess_mat; }
+
+  T unitary_hess_matrix () const { return m_unitary_hess_mat; }
+
+private:
+
+  T m_hess_mat;
+  T m_unitary_hess_mat;
+
+  OCTAVE_API octave_idx_type init (const T& a);
+};
+
+template <typename T>
+extern OCTAVE_API std::ostream&
+operator << (std::ostream& os, const hess<T>& a);
+
+OCTAVE_END_NAMESPACE(math)
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

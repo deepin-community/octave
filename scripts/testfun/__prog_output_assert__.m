@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,19 +24,19 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __prog_output_assert__ (@var{str})
+## @deftypefn {} {@var{retval} =} __prog_output_assert__ (@var{str})
 ## Undocumented internal function.
 ## @end deftypefn
 
-function ret = __prog_output_assert__ (str)
+function retval = __prog_output_assert__ (str)
   global __assert_printf__ = "";
 
   if (isempty (__assert_printf__))
-    ret = isempty (str);
+    retval = isempty (str);
   elseif (__assert_printf__(end) == "\n")
-    ret = strcmp (__assert_printf__(1:(end-1)), str);
+    retval = strcmp (__assert_printf__(1:(end-1)), str);
   else
-    ret = strcmp (__assert_printf__, str);
+    retval = strcmp (__assert_printf__, str);
   endif
 
   __assert_printf__ = "";

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,158 +31,156 @@
 #include <QMouseEvent>
 #include <QToolButton>
 
-#include "gui-settings.h"
 #include "qt-interpreter-events.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class main_window;
+
+// The few decoration items common to both main window and variable editor.
+
+class label_dock_widget : public QDockWidget
 {
-  class base_qobject;
-  class main_window;
+  Q_OBJECT
 
-  // The few decoration items common to both main window and variable editor.
+public:
 
-  class label_dock_widget : public QDockWidget
-  {
-    Q_OBJECT
+  label_dock_widget (QWidget *p);
 
-  public:
+  ~label_dock_widget () = default;
 
-    label_dock_widget (QWidget *p, base_qobject& oct_qobj);
+  // set_title() uses the custom title bar while setWindowTitle() uses
+  // the default title bar (with style sheets)
+  void set_title (const QString&);
 
-    ~label_dock_widget (void) = default;
+protected slots:
 
-    // set_title() uses the custom title bar while setWindowTitle() uses
-    // the default title bar (with style sheets)
-    void set_title (const QString&);
+  //! Slots to handle copy & paste.
+  //!@{
+  virtual void copyClipboard () { }
+  virtual void pasteClipboard () { }
+  virtual void selectAll () { }
+  //!@}
 
-  protected slots:
+  //! Slot to handle undo.
 
-    //! Slots to handle copy & paste.
-    //!@{
-    virtual void copyClipboard (void) { }
-    virtual void pasteClipboard (void) { }
-    virtual void selectAll (void) { }
-    //!@}
+  virtual void do_undo () { }
 
-    //! Slot to handle undo.
+protected:
 
-    virtual void do_undo (void) { }
+  int m_icon_size;
+  QWidget *m_title_widget;
+  QToolButton *m_dock_button;
+  QToolButton *m_close_button;
+  QAction *m_dock_action;
+  QAction *m_close_action;
 
-  protected:
+  QAbstractButton *m_default_float_button;
+  QAbstractButton *m_default_close_button;
+};
 
-    base_qobject& m_octave_qobj;
+class octave_dock_widget : public label_dock_widget
+{
+  Q_OBJECT
 
-    int m_icon_size;
-    QWidget *m_title_widget;
-    QToolButton *m_dock_button;
-    QToolButton *m_close_button;
-    QAction *m_dock_action;
-    QAction *m_close_action;
+public:
 
-    QAbstractButton *m_default_float_button;
-    QAbstractButton *m_default_close_button;
-  };
+  octave_dock_widget (const QString& obj_name, QWidget *p);
 
-  class octave_dock_widget : public label_dock_widget
-  {
-    Q_OBJECT
+  ~octave_dock_widget () = default;
 
-  public:
+  void set_predecessor_widget (octave_dock_widget *prev_widget);
 
-    octave_dock_widget (const QString& obj_name, QWidget *p,
-                        base_qobject& oct_qobj);
+  void set_main_window (main_window *mw);
 
-    ~octave_dock_widget (void) = default;
+  void set_adopted (bool adopted = true) { m_adopted = adopted; }
+  bool adopted () const { return m_adopted; }
 
-    void set_predecessor_widget (octave_dock_widget *prev_widget);
+signals:
 
-    void set_main_window (main_window *mw);
+  //! Custom signal that tells whether a user has clicked away that dock
+  //! widget, i.e. the active dock widget has changed.
 
-    void set_adopted (bool adopted = true) { m_adopted = adopted; }
-    bool adopted (void) const { return m_adopted; }
+  void active_changed (bool active);
 
-  signals:
+  void queue_make_window (bool widget_was_dragged);
 
-    //! Custom signal that tells whether a user has clicked away that dock
-    //! widget, i.e. the active dock widget has changed.
+  void queue_make_widget ();
 
-    void active_changed (bool active);
+protected:
 
-    void queue_make_window (bool widget_was_dragged);
+  virtual void closeEvent (QCloseEvent *e);
 
-    void queue_make_widget (void);
+  QWidget * focusWidget ();
 
-  protected:
+  bool event (QEvent *event);
 
-    virtual void closeEvent (QCloseEvent *e);
+public slots:
 
-    QWidget * focusWidget (void);
+  virtual void activate ();
 
-    bool event (QEvent *event);
+  virtual void handle_visibility (bool visible);
 
-  public slots:
+  virtual void notice_settings () { }
 
-    virtual void activate (void);
+  virtual void save_settings ();
 
-    virtual void handle_visibility (bool visible);
+  void init_window_menu_entry ();
 
-    virtual void notice_settings (const gui_settings *) { }
+  void handle_settings ();
 
-    virtual void save_settings (void);
+  void handle_active_dock_changed (octave_dock_widget *, octave_dock_widget *);
 
-    void init_window_menu_entry (void);
+  void moveEvent (QMoveEvent *event);
 
-    void handle_settings (const gui_settings *);
+  void resizeEvent (QResizeEvent *event);
 
-    void handle_active_dock_changed (octave_dock_widget *, octave_dock_widget *);
+  void make_window (bool widget_was_dragged = false);
 
-    void moveEvent (QMoveEvent *event);
+  void make_widget (bool not_used = false);
 
-    void resizeEvent (QResizeEvent *event);
+  void default_dock (bool not_used = false);
 
-    void make_window (bool widget_was_dragged = false);
+protected slots:
 
-    void make_widget (bool not_used = false);
+  virtual void toplevel_change (bool);
 
-    void default_dock (bool not_used = false);
+  //! Event filter for double clicks into the window decoration elements.
 
-  protected slots:
+  bool eventFilter (QObject *obj, QEvent *e);
 
-    virtual void toplevel_change (bool);
+private slots:
 
-    //! Event filter for double clicks into the window decoration elements.
+  void change_visibility (bool);
 
-    bool eventFilter (QObject *obj, QEvent *e);
+private:
 
-  private slots:
+  void set_style (bool active);
+  void set_focus_predecessor ();
+  void store_geometry ();
 
-    void change_visibility (bool);
+private:
 
-  private:
+  //! Stores the parent, since we are reparenting to 0.
 
-    void set_style (bool active);
-    void set_focus_predecessor (void);
-    void store_geometry (void);
+  main_window *m_main_window;
 
-    //! Stores the parent, since we are reparenting to 0.
+  bool m_adopted;
+  bool m_custom_style;
+  bool m_focus_follows_mouse;
+  int m_title_3d;
+  QColor m_bg_color;
+  QColor m_bg_color_active;
+  QColor m_fg_color;
+  QColor m_fg_color_active;
+  QString m_icon_color;
+  QString m_icon_color_active;
+  octave_dock_widget *m_predecessor_widget;
+  QRect m_recent_float_geom;
+  QRect m_recent_dock_geom;
+  bool m_waiting_for_mouse_button_release;
+};
 
-    main_window *m_main_window;
-
-    bool m_adopted;
-    bool m_custom_style;
-    bool m_focus_follows_mouse;
-    int m_title_3d;
-    QColor m_bg_color;
-    QColor m_bg_color_active;
-    QColor m_fg_color;
-    QColor m_fg_color_active;
-    QString m_icon_color;
-    QString m_icon_color_active;
-    octave_dock_widget *m_predecessor_widget;
-    QRect m_recent_float_geom;
-    QRect m_recent_dock_geom;
-    bool m_waiting_for_mouse_button_release;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

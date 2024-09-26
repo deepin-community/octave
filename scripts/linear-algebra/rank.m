@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1993-2022 The Octave Project Developers
+## Copyright (C) 1993-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} rank (@var{A})
-## @deftypefnx {} {} rank (@var{A}, @var{tol})
+## @deftypefn  {} {@var{k} =} rank (@var{A})
+## @deftypefnx {} {@var{k} =} rank (@var{A}, @var{tol})
 ## Compute the rank of matrix @var{A}, using the singular value decomposition.
 ##
 ## The rank is taken to be the number of singular values of @var{A} that are
@@ -79,7 +79,7 @@
 ## @seealso{null, orth, sprank, svd, eps}
 ## @end deftypefn
 
-function retval = rank (A, tol)
+function k = rank (A, tol)
 
   if (nargin < 1)
     print_usage ();
@@ -101,7 +101,7 @@ function retval = rank (A, tol)
     tolerance = tol;
   endif
 
-  retval = sum (sigma > tolerance);
+  k = sum (sigma > tolerance);
 
 endfunction
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2001-2022 The Octave Project Developers
+// Copyright (C) 2001-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -59,7 +59,7 @@
 #include "utils.h"
 #include "variables.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 static octave_value
 bp_lines_to_ov (const octave::bp_table::bp_lines& lines)
@@ -78,13 +78,13 @@ bp_lines_to_ov (const octave::bp_table::bp_lines& lines)
 
 DEFMETHOD (dbstop, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} dbstop @var{func}
-@deftypefnx {} {} dbstop @var{func} @var{line}
-@deftypefnx {} {} dbstop @var{func} @var{line1} @var{line2} @dots{}
+@deftypefn  {} {} dbstop @var{fcn}
+@deftypefnx {} {} dbstop @var{fcn} @var{line}
+@deftypefnx {} {} dbstop @var{fcn} @var{line1} @var{line2} @dots{}
 @deftypefnx {} {} dbstop @var{line1} @dots{}
-@deftypefnx {} {} dbstop in @var{func}
-@deftypefnx {} {} dbstop in @var{func} at @var{line}
-@deftypefnx {} {} dbstop in @var{func} at @var{line} if "@var{condition}"
+@deftypefnx {} {} dbstop in @var{fcn}
+@deftypefnx {} {} dbstop in @var{fcn} at @var{line}
+@deftypefnx {} {} dbstop in @var{fcn} at @var{line} if "@var{condition}"
 @deftypefnx {} {} dbstop in @var{class} at @var{method}
 @deftypefnx {} {} dbstop if @var{event}
 @deftypefnx {} {} dbstop if @var{event} @var{ID}
@@ -93,16 +93,16 @@ DEFMETHOD (dbstop, interp, args, ,
 
 Set breakpoints for the built-in debugger.
 
-@var{func} is the name of a function on the current @code{path}.  When
-already in debug mode the @var{func} argument can be omitted and the current
+@var{fcn} is the name of a function on the current @code{path}.  When
+already in debug mode the @var{fcn} argument can be omitted and the current
 function will be used.  Breakpoints at subfunctions are set with the scope
 operator @samp{>}.  For example, If @file{file.m} has a subfunction
-@code{func2}, then a breakpoint in @code{func2} can be specified by
-@code{file>func2}.
+@code{fcn2}, then a breakpoint in @code{fcn2} can be specified by
+@code{file>fcn2}.
 
 @var{line} is the line number at which to break.  If @var{line} is not
 specified, it defaults to the first executable line in the file
-@file{func.m}.  Multiple lines can be specified in a single command; when
+@file{fcn.m}.  Multiple lines can be specified in a single command; when
 function syntax is used, the lines may also be passed as a single vector
 argument (@code{[@var{line1}, @var{line2}, @dots{}]}).
 
@@ -111,24 +111,24 @@ context that exists at the breakpoint.  When the breakpoint is encountered,
 @var{condition} will be evaluated, and execution will stop if
 @var{condition} is true.  If @var{condition} cannot be evaluated, for
 example because it refers to an undefined variable, an error will be thrown.
- Expressions with side effects (such as @code{y++ > 1}) will alter
-variables, and should generally be avoided.  Conditions containing quotes
-(@samp{"}, @samp{'}) or comment characters (@samp{#}, @samp{%}) must be
-enclosed in quotes.  (This does not apply to conditions entered from the
-editor's context menu.)  For example:
+Expressions with side effects (such as @code{y++ > 1}) will alter variables,
+and should generally be avoided.  Conditions containing quotes (@samp{"},
+@samp{'}) or comment characters (@samp{#}, @samp{%}) must be enclosed in
+quotes.  (This does not apply to conditions entered from the editor's context
+menu.)  For example:
 
 @example
 dbstop in axis at 246 if 'any (opt == "x")'
 @end example
 
-The form specifying @var{event} does not cause a specific breakpoint at a
-given function and line number.  Instead it causes debug mode to be entered
-when certain unexpected events are encountered.  Possible values are
+The form specifying @var{event} does not cause a specific breakpoint at a given
+function and line number.  Instead it causes debug mode to be entered when
+certain unexpected events are encountered.  Possible values are
 
 @table @code
 @item error
-Stop when an error is reported.  This is equivalent to specifying
-both @code{debug_on_error (true)} and @code{debug_on_interrupt (true)}.
+Stop when an error is reported.  This is equivalent to specifying both
+@code{debug_on_error (true)} and @code{debug_on_interrupt (true)}.
 
 @item caught error
 Stop when an error is caught by a try-catch block (not yet implemented).
@@ -145,10 +145,9 @@ Stop when a warning is reported.  This is equivalent to specifying
 @end table
 
 The events @code{error}, @code{caught error}, and @code{warning} can all be
-followed by a string specifying an error ID or warning ID@.  If that is
-done, only errors with the specified ID will cause execution to stop.  To
-stop on one of a set of IDs, multiple @code{dbstop} commands must be
-issued.
+followed by a string specifying an error ID or warning ID@.  If that is done,
+only errors with the specified ID will cause execution to stop.  To stop on one
+of a set of IDs, multiple @code{dbstop} commands must be issued.
 
 Breakpoints and events can be removed using the @code{dbclear} command with
 the same syntax.
@@ -158,11 +157,11 @@ the commands @code{bp_state = dbstatus; @dots{}; dbstop (bp_state)}.
 
 The optional output @var{rline} is the real line number where the breakpoint
 was set.  This can differ from the specified line if the line is not
-executable.  For example, if a breakpoint attempted on a blank line then
-Octave will set the real breakpoint at the next executable line.
+executable.  For example, if a breakpoint attempted on a blank line then Octave
+will set the real breakpoint at the next executable line.
 
-When a file is re-parsed, such as when it is modified outside the GUI,
-all breakpoints within the file are cleared.
+When a file is re-parsed, such as when it is modified outside the GUI, all
+breakpoints within the file are cleared.
 
 @seealso{dbclear, dbstatus, dbstep, debug_on_error, debug_on_warning,
 debug_on_interrupt}
@@ -190,8 +189,14 @@ debug_on_interrupt}
 
       if (symbol_name != "")
         {
-          retmap = bptab.add_breakpoints_in_function (symbol_name, class_name,
-                                                      lines, condition);
+          std::string fcn_ident;
+          if (class_name.empty ())
+            fcn_ident = symbol_name;
+          else
+            fcn_ident = "@" + class_name + "/" + symbol_name;
+
+          retmap = bptab.add_breakpoints_in_function (fcn_ident, lines,
+                                                      condition);
           retval = bp_lines_to_ov (retmap);
         }
     }
@@ -237,9 +242,13 @@ debug_on_interrupt}
           std::string unconditional = "";
           for (octave_idx_type i = 0; i < line.numel (); i++)
             {
+              // FIXME: This isn't very clear, but add_breakpoints_in_function
+              // requires this argument to be of type bp_table::bp_lines type
+              // which is std::set<int>.
+              lines.clear ();
               lines.insert (line(i).int_value ());
               bptab.add_breakpoints_in_function (name(i).string_value (),
-                                                 "", lines,
+                                                 lines,
                                                  (use_cond
                                                   ? cond(i).string_value ()
                                                   : unconditional));
@@ -256,26 +265,26 @@ debug_on_interrupt}
 
 DEFMETHOD (dbclear, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} dbclear @var{func}
-@deftypefnx {} {} dbclear @var{func} @var{line}
-@deftypefnx {} {} dbclear @var{func} @var{line1} @var{line2} @dots{}
+@deftypefn  {} {} dbclear @var{fcn}
+@deftypefnx {} {} dbclear @var{fcn} @var{line}
+@deftypefnx {} {} dbclear @var{fcn} @var{line1} @var{line2} @dots{}
 @deftypefnx {} {} dbclear @var{line} @dots{}
 @deftypefnx {} {} dbclear all
-@deftypefnx {} {} dbclear in @var{func}
-@deftypefnx {} {} dbclear in @var{func} at @var{line}
+@deftypefnx {} {} dbclear in @var{fcn}
+@deftypefnx {} {} dbclear in @var{fcn} at @var{line}
 @deftypefnx {} {} dbclear if @var{event}
-@deftypefnx {} {} dbclear ("@var{func}")
-@deftypefnx {} {} dbclear ("@var{func}", @var{line})
-@deftypefnx {} {} dbclear ("@var{func}", @var{line1}, @var{line2}, @dots{})
-@deftypefnx {} {} dbclear ("@var{func}", @var{line1}, @dots{})
+@deftypefnx {} {} dbclear ("@var{fcn}")
+@deftypefnx {} {} dbclear ("@var{fcn}", @var{line})
+@deftypefnx {} {} dbclear ("@var{fcn}", @var{line1}, @var{line2}, @dots{})
+@deftypefnx {} {} dbclear ("@var{fcn}", @var{line1}, @dots{})
 @deftypefnx {} {} dbclear (@var{line}, @dots{})
 @deftypefnx {} {} dbclear ("all")
-Delete a breakpoint at line number @var{line} in the function @var{func}.
+Delete a breakpoint at line number @var{line} in the function @var{fcn}.
 
 Arguments are
 
 @table @var
-@item func
+@item fcn
 Function name as a string variable.  When already in debug mode this
 argument can be omitted and the current function will be used.
 
@@ -303,8 +312,6 @@ files.
   octave::bp_table::bp_lines lines;
   std::string dummy;             // "if" condition -- only used for dbstop
 
-  int nargin = args.length ();
-
   octave::tree_evaluator& tw = interp.get_evaluator ();
 
   octave::bp_table& bptab = tw.get_bp_table ();
@@ -312,15 +319,20 @@ files.
   bptab.parse_dbfunction_params ("dbclear", args, symbol_name, class_name,
                                  lines, dummy);
 
-  if (nargin == 1 && symbol_name == "all")
+  if (args.length () == 1 && symbol_name == "all")
     {
       bptab.remove_all_breakpoints ();
       bptab.dbclear_all_signals ();
     }
-  else
+  else if (symbol_name != "")
     {
-      if (symbol_name != "")
-        bptab.remove_breakpoints_from_function (symbol_name, lines);
+      std::string fcn_ident;
+      if (class_name.empty ())
+        fcn_ident = symbol_name;
+      else
+        fcn_ident = "@" + class_name + "/" + symbol_name;
+
+      bptab.remove_breakpoints_from_function (fcn_ident, lines);
     }
 
   // If we remove a breakpoint, we also need to reset debug_mode.
@@ -332,7 +344,7 @@ files.
 DEFMETHOD (dbstatus, interp, args, nargout,
            doc: /* -*- texinfo -*-
 @deftypefn  {} {} dbstatus
-@deftypefnx {} {} dbstatus @var{func}
+@deftypefnx {} {} dbstatus @var{fcn}
 @deftypefnx {} {@var{bp_list} =} dbstatus @dots{}
 Report the location of active breakpoints.
 
@@ -340,16 +352,16 @@ When called with no input or output arguments, print the list of all
 functions with breakpoints and the line numbers where those breakpoints are
 set.
 
-If a function name @var{func} is specified then only report breakpoints
+If a function name @var{fcn} is specified then only report breakpoints
 for the named function and its subfunctions.
 
 The optional return argument @var{bp_list} is a struct array with the
-following fields.
+following fields:
 
 @table @asis
 @item name
-The name of the function with a breakpoint.  A subfunction, say @code{func2}
-within an m-file, say @file{file.m}, is specified as @code{file>func2}.
+The name of the function with a breakpoint.  A subfunction, say @code{fcn2}
+within an m-file, say @file{file.m}, is specified as @code{file>fcn2}.
 
 @item file
 The name of the m-file where the function code is located.
@@ -398,17 +410,17 @@ The @qcode{"warn"} field is set similarly by @code{dbstop if warning}.
     }
   else
     {
-/*
-      if (tw.in_debug_repl ())
-        {
-          octave_user_code *dbg_fcn = tw.get_user_code ();
-          if (dbg_fcn)
-            {
-              symbol_name = dbg_fcn->name ();
-              fcn_list(0) = symbol_name;
-            }
-        }
-*/
+      /*
+            if (tw.in_debug_repl ())
+              {
+                octave_user_code *dbg_fcn = tw.get_user_code ();
+                if (dbg_fcn)
+                  {
+                    symbol_name = dbg_fcn->name ();
+                    fcn_list(0) = symbol_name;
+                  }
+              }
+      */
 
       bp_list = bptab.get_breakpoint_list (fcn_list);
     }
@@ -484,9 +496,9 @@ The @qcode{"warn"} field is set similarly by @code{dbstop if warning}.
       for (const auto& fnm_bp_p : bp_list)
         {
           std::string filename = fnm_bp_p.first;
-          const char *sub_fun = strchr (filename.c_str (), '>');
-          if (sub_fun)
-            filename = filename.substr(0, sub_fun - filename.c_str ());
+          const char *sub_fcn = strchr (filename.c_str (), '>');
+          if (sub_fcn)
+            filename = filename.substr(0, sub_fcn - filename.c_str ());
           octave_value path_name;
           path_name
             = octave::sys::canonicalize_file_name (help_sys.which (filename));
@@ -529,21 +541,35 @@ The @qcode{"warn"} field is set similarly by @code{dbstop if warning}.
 %!test
 %! if (isguirunning ())
 %!   orig_show_dbg = __event_manager_gui_preference__ ("editor/show_dbg_file",
-%!                                                   "0");
+%!                                                     "false");
 %! endif
 %! unwind_protect
 %!   dbclear all;   # Clear out breakpoints before test
 %!   dbstop @ftp/dir;
-%!   dbstop @audioplayer/set 70;
+%!   dbstop @audioplayer/set 75;
 %!   dbstop quantile>__quantile__;
 %!   dbstop ls;
-%!   s = dbstatus;
+%!   dbstop in inputParser at addOptional;
+%!   dbstop in inputParser at 285;
+%!   s = dbstatus ();
 %!   dbclear all;
+%!   ## For Matlab compatibility, the following name should be:
+%!   ## audioplayer.set>setproperty
 %!   assert (s(1).name, "@audioplayer/set>setproperty");
+%!   ## For Matlab compatibility, the following name should be:
+%!   ## ftp.dir
 %!   assert (s(2).name, "@ftp/dir");
-%!   assert (s(3).name, "ls");
-%!   assert (s(4).name, "quantile>__quantile__");
 %!   assert (s(2).file(end-10:end), [filesep "@ftp" filesep "dir.m"]);
+%!   ## For Matlab compatibility, the following two names should be:
+%!   ## inputParser.inputParser>inputParser.addOptional
+%!   assert (s(3).name, "@inputParser/addOptional");
+%!   assert (s(3).line, 278);
+%!   assert (s(4).name, "@inputParser/addOptional");
+%!   assert (s(4).line, 285);
+%!   assert (s(5).name, "ls");
+%!   assert (s(6).name, "quantile>__quantile__");
+%!   s = dbstatus ();
+%!   assert (isempty (s));
 %! unwind_protect_cleanup
 %!   if (isguirunning ())
 %!     __event_manager_gui_preference__ ("editor/show_dbg_file", orig_show_dbg);
@@ -602,19 +628,19 @@ DEFMETHOD (dbtype, interp, args, ,
 @deftypefn  {} {} dbtype
 @deftypefnx {} {} dbtype @var{lineno}
 @deftypefnx {} {} dbtype @var{startl:endl}
-@deftypefnx {} {} dbtype @var{startl:end}
-@deftypefnx {} {} dbtype @var{func}
-@deftypefnx {} {} dbtype @var{func} @var{lineno}
-@deftypefnx {} {} dbtype @var{func} @var{startl:endl}
-@deftypefnx {} {} dbtype @var{func} @var{startl:end}
+@deftypefnx {} {} dbtype @var{startl}:end
+@deftypefnx {} {} dbtype @var{fcn}
+@deftypefnx {} {} dbtype @var{fcn} @var{lineno}
+@deftypefnx {} {} dbtype @var{fcn} @var{startl:endl}
+@deftypefnx {} {} dbtype @var{fcn} @var{startl}:end
 Display a script file with line numbers.
 
 When called with no arguments in debugging mode, display the script file
 currently being debugged.
 
 An optional range specification can be used to list only a portion of the
-file.  The special keyword @qcode{"end"} is a valid line number
-specification for the last line of the file.
+file.  The special keyword @qcode{"end"} is a valid line number specification
+for the last line of the file.
 
 When called with the name of a function, list that script file with line
 numbers.
@@ -640,7 +666,7 @@ numbers.
 
       break;
 
-    case 1:  // (dbtype start:end) || (dbtype func) || (dbtype lineno)
+    case 1:  // (dbtype start:end) || (dbtype fcn) || (dbtype lineno)
       {
         std::string arg = argv[1];
 
@@ -672,11 +698,11 @@ numbers.
                            start, end);
               }
           }
-        else  // (dbtype func) || (dbtype lineno)
+        else  // (dbtype fcn) || (dbtype lineno)
           {
             int line = atoi (arg.c_str ());
 
-            if (line == 0)  // (dbtype func)
+            if (line == 0)  // (dbtype fcn)
               {
                 dbg_fcn = tw.get_user_code (arg);
 
@@ -701,7 +727,7 @@ numbers.
       }
       break;
 
-    case 2:  // (dbtype func start:end) || (dbtype func start)
+    case 2:  // (dbtype fcn start:end) || (dbtype fcn start)
       {
         dbg_fcn = tw.get_user_code (argv[1]);
 
@@ -938,9 +964,9 @@ do_dbstack (octave::interpreter& interp, const octave_value_list& args,
 // for example.
 
 void
-show_octave_dbstack (void)
+show_octave_dbstack ()
 {
-  do_dbstack (octave::__get_interpreter__ ("show_octave_dbstack"),
+  do_dbstack (octave::__get_interpreter__ (),
               octave_value_list (), 0, std::cerr);
 }
 
@@ -1063,7 +1089,8 @@ any m-files defined on the next line.
 Using @code{dbstep out} will cause execution to continue until the current
 function returns.
 
-@code{dbnext} is an alias for @code{dbstep}.
+Programming Note: @code{dbnext} is an alias for @code{dbstep} and can be used
+interchangeably.
 @seealso{dbcont, dbquit}
 @end deftypefn */)
 {
@@ -1137,8 +1164,9 @@ DEFMETHOD (dbquit, interp, args, ,
            doc: /* -*- texinfo -*-
 @deftypefn  {} {} dbquit
 @deftypefnx {} {} dbquit all
-Quit debugging mode immediately without further code execution.  With no
-arguments, exit the current debugging level.  With argument @code{all},
+Quit debugging mode immediately without further code execution.
+
+With no arguments, exit the current debugging level.  With argument @code{all},
 exit all debugging levels and return to the Octave prompt.
 @seealso{dbcont, dbstep}
 @end deftypefn */)
@@ -1171,7 +1199,7 @@ exit all debugging levels and return to the Octave prompt.
 
 DEFMETHOD (isdebugmode, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} isdebugmode ()
+@deftypefn {} {@var{tf} =} isdebugmode ()
 Return true if in debugging mode, otherwise false.
 @seealso{dbwhere, dbstack, dbstatus}
 @end deftypefn */)
@@ -1210,4 +1238,4 @@ With a logical argument @var{flag}, set the state on or off.
   return ovl ();
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

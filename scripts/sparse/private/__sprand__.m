@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2004-2022 The Octave Project Developers
+## Copyright (C) 2004-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -27,9 +27,9 @@
 ## public domain.
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} __sprand__ (@var{s}, @var{randfun})
-## @deftypefnx {} {} __sprand__ (@var{m}, @var{n}, @var{d}, @var{fcnname}, @var{randfun})
-## @deftypefnx {} {} __sprand__ (@var{m}, @var{n}, @var{d}, @var{rc}, @var{fcnname}, @var{randfun})
+## @deftypefn  {} {@var{S} =} __sprand__ (@var{s}, @var{randfcn})
+## @deftypefnx {} {@var{S} =} __sprand__ (@var{m}, @var{n}, @var{d}, @var{fcnname}, @var{randfcn})
+## @deftypefnx {} {@var{S} =} __sprand__ (@var{m}, @var{n}, @var{d}, @var{rc}, @var{fcnname}, @var{randfcn})
 ## Undocumented internal function.
 ## @end deftypefn
 
@@ -38,15 +38,15 @@
 function S = __sprand__ (varargin)
 
   if (nargin == 2)
-    [m, randfun] = deal (varargin{1:2});
+    [m, randfcn] = deal (varargin{1:2});
     [i, j] = find (m);
     [nr, nc] = size (m);
-    S = sparse (i, j, randfun (size (i)), nr, nc);
+    S = sparse (i, j, randfcn (size (i)), nr, nc);
   else
     if (nargin == 5)
-      [m, n, d, fcnname, randfun] = deal (varargin{:});
+      [m, n, d, fcnname, randfcn] = deal (varargin{:});
     else
-      [m, n, d, rc, fcnname, randfun] = deal (varargin{:});
+      [m, n, d, rc, fcnname, randfcn] = deal (varargin{:});
     endif
 
     if (! (isscalar (m) && m == fix (m) && m >= 0))
@@ -87,7 +87,7 @@ function S = __sprand__ (varargin)
         [i, j] = ind2sub ([m, n], idx);
       endif
 
-      S = sparse (i, j, randfun (k, 1), m, n);
+      S = sparse (i, j, randfcn (k, 1), m, n);
 
     elseif (nargin == 6)
       ## Create a matrix with specified reciprocal condition number.

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -43,7 +43,7 @@
 #include "oct-spparms.h"
 #include "sparse-xdiv.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 static void
 solve_singularity_warning (double rcond)
@@ -294,7 +294,8 @@ xdiv (const SparseComplexMatrix& a, const SparseComplexMatrix& b,
 }
 
 template <typename RT, typename SM, typename DM>
-RT do_rightdiv_sm_dm (const SM& a, const DM& d)
+RT
+do_rightdiv_sm_dm (const SM& a, const DM& d)
 {
   const octave_idx_type d_nr = d.rows ();
 
@@ -561,7 +562,8 @@ xleftdiv (const SparseComplexMatrix& a, const SparseComplexMatrix& b,
 }
 
 template <typename RT, typename DM, typename SM>
-RT do_leftdiv_dm_sm (const DM& d, const SM& a)
+RT
+do_leftdiv_dm_sm (const DM& d, const SM& a)
 {
   const octave_idx_type a_nr = a.rows ();
   const octave_idx_type a_nc = a.cols ();
@@ -636,4 +638,4 @@ xleftdiv (const ComplexDiagMatrix& d, const SparseComplexMatrix& a,
   return do_leftdiv_dm_sm<SparseComplexMatrix> (d, a);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

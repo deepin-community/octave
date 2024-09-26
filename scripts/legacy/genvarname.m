@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -149,7 +149,7 @@ function varname = genvarname (str, exclusions = {})
     str{i}(! (isalnum (str{i}) | str{i} == "_")) = "_";
     ## do not use keywords
     if (iskeyword (str{i}))
-      firstcharacter = toupper (str{i}(1));
+      firstcharacter = upper (str{i}(1));
       str{i} = ["x", firstcharacter, str{i}(2:end)];
     endif
     ## The variable cannot be empty

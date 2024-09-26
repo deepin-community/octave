@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1999-2022 The Octave Project Developers
+## Copyright (C) 1999-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __gnuplot_print__ (@var{@dots{}})
+## @deftypefn {} {@var{opts} =} __gnuplot_print__ (@var{@dots{}})
 ## Undocumented internal function.
 ## @end deftypefn
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2005-2022 The Octave Project Developers
+// Copyright (C) 2005-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -89,16 +89,27 @@
 #  include <SuiteSparseQR.hpp>
 #endif
 
-// Cope with new SuiteSparse versions
+// Cope with API differences between SuiteSparse versions
 
 #if defined (SUITESPARSE_VERSION)
-#  if (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (4, 3))
+#  if (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (7, 0))
 #    define SUITESPARSE_NAME(name) SuiteSparse_ ## name
-#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) (SuiteSparse_config.f_name = f_assign)
-#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) (SuiteSparse_config.f_name = SUITESPARSE_NAME (f_assign))
+#    define SUITESPARSE_SET_FCN(name) SuiteSparse_config_ ## name ## _set
+#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
+       SUITESPARSE_SET_FCN(f_name) (f_assign)
+#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
+       SUITESPARSE_SET_FCN(f_name) (SUITESPARSE_NAME (f_assign))
+#  elif (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (4, 3))
+#    define SUITESPARSE_NAME(name) SuiteSparse_ ## name
+#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
+       (SuiteSparse_config.f_name = f_assign)
+#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
+       (SuiteSparse_config.f_name = SUITESPARSE_NAME (f_assign))
 #  else
-#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) (f_var = f_assign)
-#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) (f_var = CHOLMOD_NAME (f_assign))
+#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
+       (f_var = f_assign)
+#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
+       (f_var = CHOLMOD_NAME (f_assign))
 #  endif
 #endif
 
@@ -165,48 +176,49 @@
      || defined (HAVE_CXSPARSE) || defined (HAVE_SPQR)          \
      || defined (HAVE_UMFPACK))
 
-namespace octave
-{
+OCTAVE_BEGIN_NAMESPACE(octave)
+
 #  if defined (OCTAVE_ENABLE_64)
-  typedef SuiteSparse_long suitesparse_integer;
+typedef SuiteSparse_long suitesparse_integer;
 #  else
-  typedef int suitesparse_integer;
+typedef int suitesparse_integer;
 #  endif
 
-  extern OCTAVE_API suitesparse_integer *
-  to_suitesparse_intptr (octave_idx_type *i);
+extern OCTAVE_API suitesparse_integer *
+to_suitesparse_intptr (octave_idx_type *i);
 
-  extern const OCTAVE_API suitesparse_integer *
-  to_suitesparse_intptr (const octave_idx_type *i);
+extern const OCTAVE_API suitesparse_integer *
+to_suitesparse_intptr (const octave_idx_type *i);
 
-  extern OCTAVE_API octave_idx_type *
-  to_octave_idx_type_ptr (suitesparse_integer *i);
+extern OCTAVE_API octave_idx_type *
+to_octave_idx_type_ptr (suitesparse_integer *i);
 
-  extern const OCTAVE_API octave_idx_type *
-  to_octave_idx_type_ptr (const suitesparse_integer *i);
+extern const OCTAVE_API octave_idx_type *
+to_octave_idx_type_ptr (const suitesparse_integer *i);
 
-  inline octave_idx_type
-  from_suitesparse_long (SuiteSparse_long x)
-  {
-    if (x < std::numeric_limits<octave_idx_type>::min ()
-        || x > std::numeric_limits<octave_idx_type>::max ())
-      (*current_liboctave_error_handler)
-        ("integer dimension or index out of range for Octave's indexing type");
+inline octave_idx_type
+from_suitesparse_long (SuiteSparse_long x)
+{
+  if (x < std::numeric_limits<octave_idx_type>::min ()
+      || x > std::numeric_limits<octave_idx_type>::max ())
+    (*current_liboctave_error_handler)
+      ("integer dimension or index out of range for Octave's indexing type");
 
-    return static_cast<octave_idx_type> (x);
-  }
-
-  inline octave_idx_type
-  from_size_t (std::size_t x)
-  {
-    // std::size_t is guaranteed to be unsigned
-    if (x > std::numeric_limits<octave_idx_type>::max ())
-      (*current_liboctave_error_handler)
-        ("integer dimension or index out of range for Octave's index type");
-
-    return static_cast<octave_idx_type> (x);
-  }
+  return static_cast<octave_idx_type> (x);
 }
+
+inline octave_idx_type
+from_size_t (std::size_t x)
+{
+  // std::size_t is guaranteed to be unsigned
+  if (x > std::numeric_limits<octave_idx_type>::max ())
+    (*current_liboctave_error_handler)
+      ("integer dimension or index out of range for Octave's index type");
+
+  return static_cast<octave_idx_type> (x);
+}
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif
 #endif

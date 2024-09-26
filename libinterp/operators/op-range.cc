@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -36,14 +36,14 @@
 #include "ov-null-mat.h"
 #include "ops.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Allow +RNG_VAL to avoid conversion to array.
 DEFUNOP_OP (uplus, range, /* no-op */)
 
 CONVDECL (range_to_matrix)
 {
-  const octave_range& v = dynamic_cast<const octave_range&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_range&, v, a);
 
   return new octave_matrix (v.array_value ());
 }
@@ -66,4 +66,4 @@ install_range_ops (octave::type_info& ti)
   INSTALL_WIDENOP_TI (ti, octave_range, octave_matrix, range_to_matrix);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

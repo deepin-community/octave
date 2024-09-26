@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -41,13 +41,13 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // scalar unary ops.
 
 DEFUNOP (not, scalar)
 {
-  const octave_scalar& v = dynamic_cast<const octave_scalar&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v, a);
   double x = v.scalar_value ();
   if (octave::math::isnan (x))
     octave::err_nan_to_logical_conversion ();
@@ -71,8 +71,8 @@ DEFBINOP_OP (mul, scalar, scalar, *)
 
 DEFBINOP (div, scalar, scalar)
 {
-  const octave_scalar& v1 = dynamic_cast<const octave_scalar&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v1.double_value () / v2.double_value ());
 }
@@ -81,8 +81,8 @@ DEFBINOP_FN (pow, scalar, scalar, xpow)
 
 DEFBINOP (ldiv, scalar, scalar)
 {
-  const octave_scalar& v1 = dynamic_cast<const octave_scalar&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v2.double_value () / v1.double_value ());
 }
@@ -98,8 +98,8 @@ DEFBINOP_OP (el_mul, scalar, scalar, *)
 
 DEFBINOP (el_div, scalar, scalar)
 {
-  const octave_scalar& v1 = dynamic_cast<const octave_scalar&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v1.double_value () / v2.double_value ());
 }
@@ -108,8 +108,8 @@ DEFBINOP_FN (el_pow, scalar, scalar, xpow)
 
 DEFBINOP (el_ldiv, scalar, scalar)
 {
-  const octave_scalar& v1 = dynamic_cast<const octave_scalar&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return octave_value (v2.double_value () / v1.double_value ());
 }
@@ -161,4 +161,4 @@ install_s_s_ops (octave::type_info& ti)
   INSTALL_ASSIGNCONV_TI (ti, octave_scalar, octave_null_sq_str, octave_matrix);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

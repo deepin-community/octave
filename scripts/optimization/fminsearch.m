@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2003-2022 The Octave Project Developers
+## Copyright (C) 2003-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,15 +24,15 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {@var{x} =} fminsearch (@var{fun}, @var{x0})
-## @deftypefnx {} {@var{x} =} fminsearch (@var{fun}, @var{x0}, @var{options})
+## @deftypefn  {} {@var{x} =} fminsearch (@var{fcn}, @var{x0})
+## @deftypefnx {} {@var{x} =} fminsearch (@var{fcn}, @var{x0}, @var{options})
 ## @deftypefnx {} {@var{x} =} fminsearch (@var{problem})
 ## @deftypefnx {} {[@var{x}, @var{fval}, @var{exitflag}, @var{output}] =} fminsearch (@dots{})
 ##
 ## Find a value of @var{x} which minimizes the multi-variable function
-## @var{fun}.
+## @var{fcn}.
 ##
-## @var{fun} is a function handle, inline function, or string containing the
+## @var{fcn} is a function handle, inline function, or string containing the
 ## name of the function to evaluate.
 ##
 ## The search begins at the point @var{x0} and iterates using the
@@ -103,7 +103,7 @@
 ##
 ## The fourth output is a structure @var{output} containing runtime
 ## about the algorithm.  Fields in the structure are @code{funcCount}
-## containing the number of function calls to @var{fun}, @code{iterations}
+## containing the number of function calls to @var{fcn}, @code{iterations}
 ## containing the number of iteration steps, @code{algorithm} with the name of
 ## the search algorithm (always:
 ## @nospell{@qcode{"Nelder-Mead simplex direct search"}}), and @code{message}
@@ -115,8 +115,20 @@
 ## fminsearch (@@(x) (x(1)-5).^2+(x(2)-8).^4, [0;0])
 ## @end example
 ##
-## Note: If you need to find the minimum of a single variable function it is
+## Application Notes:
+## @enumerate
+## @item
+## If you need to find the minimum of a single variable function it is
 ## probably better to use @code{fminbnd}.
+## @item
+## The legacy, undocumented syntax for passing parameters to @var{fcn} by
+## appending them to the input argument list after @var{options} is
+## discouraged and will be completely removed in Octave 10.  The
+## preferred, cross-platform compatible method of passing parameters to
+## @var{fcn} is through use of @ref{Anonymous Functions}.  For specific
+## examples of doing so for @code{fminsearch} and other minimization
+## functions see the @ref{Minimizers} section of the GNU Octave manual.
+## @end enumerate
 ## @seealso{fminbnd, fminunc, optimset}
 ## @end deftypefn
 
@@ -146,7 +158,7 @@ function [x, fval, exitflag, output] = fminsearch (varargin)
     if (! isstruct (problem))
       error ("fminsearch: PROBLEM must be a structure");
     endif
-    fun = problem.objective;
+    fcn = problem.objective;
     x0 = problem.x0;
     if (! strcmp (problem.solver, "fminsearch"))
       error ('fminsearch: problem.solver must be set to "fminsearch"');
@@ -157,7 +169,7 @@ function [x, fval, exitflag, output] = fminsearch (varargin)
       options = [];
     endif
   elseif (nargin > 1)
-    fun = varargin{1};
+    fcn = varargin{1};
     x0 = varargin{2};
     if (nargin > 2)
       options = varargin{3};
@@ -168,25 +180,25 @@ function [x, fval, exitflag, output] = fminsearch (varargin)
     endif
   endif
 
-  if (ischar (fun))
-    fun = str2func (fun);
+  if (ischar (fcn))
+    fcn = str2func (fcn);
   endif
 
   if (isempty (options))
     options = struct ();
   endif
 
-  [x, exitflag, output] = nmsmax (fun, x0, options, varargin{:});
+  [x, exitflag, output] = nmsmax (fcn, x0, options, varargin{:});
 
-  if (isargout (2))
-    fval = feval (fun, x);
+  if (nargout > 1)
+    fval = feval (fcn, x, varargin{:});
   endif
 
 endfunction
 
 ## NMSMAX  Nelder-Mead simplex method for direct search optimization.
-##        [x, fmax, nf] = NMSMAX(FUN, x0, STOPIT, SAVIT) attempts to
-##        maximize the function FUN, using the starting vector x0.
+##        [x, fmax, nf] = NMSMAX(FCN, x0, STOPIT, SAVIT) attempts to
+##        maximize the function FCN, using the starting vector x0.
 ##        The Nelder-Mead direct search method is used.
 ##        Output arguments:
 ##               x    = vector yielding largest function value found,
@@ -210,8 +222,8 @@ endfunction
 ##        'SAVE SAVIT x fmax nf' is executed after each inner iteration.
 ##        NB: x0 can be a matrix.  In the output argument, in SAVIT saves,
 ##            and in function calls, x has the same shape as x0.
-##        NMSMAX(fun, x0, STOPIT, SAVIT, P1, P2,...) allows additional
-##        arguments to be passed to fun, via feval(fun,x,P1,P2,...).
+##        NMSMAX(FCN, x0, STOPIT, SAVIT, P1, P2,...) allows additional
+##        arguments to be passed to FCN, via feval(FCN,x,P1,P2,...).
 ## References:
 ## N. J. Higham, Optimization by direct search in matrix computations,
 ##    SIAM J. Matrix Anal. Appl, 14(2): 317-333, 1993.
@@ -270,16 +282,16 @@ function [stopit, savit, dirn, trace, tol, maxiter, tol_f, outfcn] = ...
 
 endfunction
 
-function [x, exitflag, output] = nmsmax (fun, x, options, varargin)
+function [x, exitflag, output] = nmsmax (fcn, x, options, varargin)
 
   [stopit, savit, dirn, trace, tol, maxiter, tol_f, outfcn] = ...
                                                     parse_options (options, x);
 
   if (strcmpi (optimget (options, "FunValCheck", "off"), "on"))
     ## Replace fcn with a guarded version.
-    fun = @(x) guarded_eval (fun, x, varargin{:});
+    fcn = @(x) guarded_eval (fcn, x, varargin{:});
   else
-    fun = @(x) real (fun (x, varargin{:}));
+    fcn = @(x) real (fcn (x, varargin{:}));
   endif
 
   x0 = x(:);  # Work with column vector internally.
@@ -288,7 +300,7 @@ function [x, exitflag, output] = nmsmax (fun, x, options, varargin)
   V = [zeros(n,1) eye(n)];
   f = zeros (n+1,1);
   V(:,1) = x0;
-  f(1) = dirn * fun (x);
+  f(1) = dirn * fcn (x);
   fmax_old = f(1);
   nf = 1;
 
@@ -308,7 +320,7 @@ function [x, exitflag, output] = nmsmax (fun, x, options, varargin)
     for j = 2:n+1
       V(j-1,j) = x0(j-1) + alpha(1);
       x(:) = V(:,j);
-      f(j) = dirn * fun (x);
+      f(j) = dirn * fcn (x);
     endfor
   else
     ## Right-angled simplex based on co-ordinate axes.
@@ -316,7 +328,7 @@ function [x, exitflag, output] = nmsmax (fun, x, options, varargin)
     for j = 2:n+1
       V(:,j) = x0 + alpha(j)*V(:,j);
       x(:) = V(:,j);
-      f(j) = dirn * fun (x);
+      f(j) = dirn * fcn (x);
     endfor
   endif
   nf += n;
@@ -419,14 +431,14 @@ function [x, exitflag, output] = nmsmax (fun, x, options, varargin)
     vbar = (sum (V(:,1:n)')/n)';  # Mean value
     vr = (1 + alpha)*vbar - alpha*V(:,n+1);
     x(:) = vr;
-    fr = dirn * fun (x);
+    fr = dirn * fcn (x);
     nf += 1;
     vk = vr;  fk = fr; how = "reflect";
     if (fr > f(n))
       if (fr > f(1))
         ve = gamma*vr + (1-gamma)*vbar;
         x(:) = ve;
-        fe = dirn * fun (x);
+        fe = dirn * fcn (x);
         nf += 1;
         if (fe > f(1))
           vk = ve;
@@ -443,7 +455,7 @@ function [x, exitflag, output] = nmsmax (fun, x, options, varargin)
       endif
       vc = beta*vt + (1-beta)*vbar;
       x(:) = vc;
-      fc = dirn * fun (x);
+      fc = dirn * fcn (x);
       nf += 1;
       if (fc > f(n))
         vk = vc; fk = fc;
@@ -452,12 +464,12 @@ function [x, exitflag, output] = nmsmax (fun, x, options, varargin)
         for j = 2:n
           V(:,j) = (V(:,1) + V(:,j))/2;
           x(:) = V(:,j);
-          f(j) = dirn * fun (x);
+          f(j) = dirn * fcn (x);
         endfor
         nf += n-1;
         vk = (V(:,1) + V(:,n+1))/2;
         x(:) = vk;
-        fk = dirn * fun (x);
+        fk = dirn * fcn (x);
         nf += 1;
         how = "shrink";
       endif
@@ -497,9 +509,9 @@ function [x, exitflag, output] = nmsmax (fun, x, options, varargin)
 endfunction
 
 ## A helper function that evaluates a function and checks for bad results.
-function y = guarded_eval (fun, x, varargin)
+function y = guarded_eval (fcn, x, varargin)
 
-  y = fun (x, varargin{:});
+  y = fcn (x, varargin{:});
 
   if (! (isreal (y)))
     error ("fminsearch:notreal", "fminsearch: non-real value encountered");

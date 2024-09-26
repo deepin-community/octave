@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -68,6 +68,11 @@ values with @code{disp} and through the normal echoing mechanism.
 
 @c disp libinterp/corefcn/pr-output.cc
 @anchor{XREFdisp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} disp (@var{x})
 @deftypefnx {} {@var{str} =} disp (@var{x})
 Display the value of @var{x}.
@@ -94,7 +99,12 @@ formatted output in a string.
 
 @c list_in_columns libinterp/corefcn/strfns.cc
 @anchor{XREFlist_in_columns}
-@deftypefn {} {} list_in_columns (@var{arg}, @var{width}, @var{prefix})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{str} =} list_in_columns (@var{arg}, @var{width}, @var{prefix})
 Return a string containing the elements of @var{arg} listed in columns with
 an overall maximum width of @var{width} and optional prefix @var{prefix}.
 
@@ -131,39 +141,56 @@ whos ans
 
 @c terminal_size libinterp/corefcn/pager.cc
 @anchor{XREFterminal_size}
-@deftypefn {} {} terminal_size ()
-Query or set the size of the terminal window.  If called with no
-arguments, return a two-element row vector containing the current size
-of the terminal window in characters (rows and columns).  If called with
-a two-element vector of integer values, set the terminal size and return
-the previous setting.  Setting the size manually should not be needed
-when using readline for command-line editing.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {[@var{rows}, @var{cols}] =} terminal_size ()
+@deftypefnx {} {} terminal_size ([@var{rows}, @var{cols}])
+Query or set the size of the terminal window.  If called with no arguments,
+return a two-element row vector containing the current size of the terminal
+window in characters (rows and columns).  If called with a two-element vector
+of integer values, set the terminal size and return the previous setting.
+Setting the size manually should not be needed when using readline for
+command-line editing.
 @xseealso{@ref{XREFlist_in_columns,,list_in_columns}}
 @end deftypefn
 
 
 @c format libinterp/corefcn/pr-output.cc
 @anchor{XREFformat}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} format
 @deftypefnx {} {} format options
+@deftypefnx {} {} format (@var{options})
 @deftypefnx {} {[@var{format}, @var{formatspacing}, @var{uppercase}] =} format
 Reset or specify the format of the output produced by @code{disp} and Octave's
 normal echoing mechanism.
 
-This command only affects the display of numbers, but not how they are stored
+This command only affects the display of numbers, not how they are stored
 or computed.  To change the internal representation from the default double use
 one of the conversion functions such as @code{single}, @code{uint8},
-@code{int64}, etc.
+@code{int64}, etc.  Any @code{format} options that change the number of
+displayed significant digits will also be reflected by the
+@code{output_precision} function.
 
 By default, Octave displays 5 significant digits in a human readable form
 (option @samp{short}, option @samp{lowercase}, and option @samp{loose} format
-for matrices).  If @code{format} is invoked without any options, this default
-format is restored.
+for matrices).  If @code{format} is invoked without any options, or the option
+@samp{default} is specified, then this default format is restored.
 
 Valid format options for floating point numbers are listed in the following
 table.
 
 @table @code
+@item default
+Restore the default format state described above.
+
 @item short
 Fixed point format with 5 significant figures (default).
 
@@ -173,18 +200,19 @@ Fixed point format with 16 significant figures.
 As with the @samp{short} format, Octave will switch to an exponential @samp{e}
 format if it is unable to format a matrix properly using the current format.
 
-@item  short e
-@itemx long e
+@item  shorte
+@itemx longe
 Exponential format.  The number to be represented is split between a mantissa
 and an exponent (power of 10).  The mantissa has 5 significant digits in the
 short format.  In the long format, double values are displayed with 16
 significant digits and single values are displayed with 8.  For example,
-with the @samp{short e} format, @code{pi} is displayed as @code{3.1416e+00}.
+with the @samp{shorte} format, @code{pi} is displayed as @code{3.1416e+00}.
+Optionally, the trailing @samp{e} can be split into a second argument.
 
-@item  short g
-@itemx long g
+@item  shortg
+@itemx longg
 Optimally choose between fixed point and exponential format based on the
-magnitude of the number.  For example, with the @samp{short g} format,
+magnitude of the number.  For example, with the @samp{shortg} format,
 @code{pi .^ [2; 4; 8; 16; 32]} is displayed as
 
 @example
@@ -199,11 +227,14 @@ ans =
 @end group
 @end example
 
-@item  short eng
-@itemx long eng
-Identical to @samp{short e} or @samp{long e} but displays the value using an
+Optionally, the trailing @samp{g} can be split into a second argument.
+
+@item  shorteng
+@itemx longeng
+Identical to @samp{shorte} or @samp{longe} but displays the value using an
 engineering format, where the exponent is divisible by 3.  For example, with
-the @samp{short eng} format, @code{10 * pi} is displayed as @code{31.416e+00}.
+the @samp{shorteng} format, @code{10 * pi} is displayed as @code{31.416e+00}.
+Optionally, the trailing @samp{eng} can be split into a second argument.
 
 @item  free
 @itemx none
@@ -249,34 +280,61 @@ Print variable in a format appropriate for a currency (fixed format with two
 digits to the right of the decimal point).  Only the real part of a variable is
 displayed, as the imaginary part makes no sense for a currency.
 
-@item native-hex
-Print the hexadecimal representation of numbers as they are stored in memory.
-For example, on a workstation which stores 8 byte real values in IEEE format
-with the least significant byte first, the value of @code{pi} when printed in
-@code{native-hex} format is @code{400921fb54442d18}.
-
-@item hex
-The same as @code{native-hex}, but always print the most significant byte
-first.
-
-@item native-bit
-Print the bit representation of numbers as stored in memory.  For example, the
-value of @code{pi} is
+@item bit
+Print the bit representation of numbers in memory, always with the
+most significant bit first.  For example, @code{pi} is printed like this:
 
 @example
 @group
-01000000000010010010000111111011
-01010100010001000010110100011000
+0 10000000000 1001001000011111101101010100010001000010110100011000
 @end group
 @end example
 
-(shown here in two 32 bit sections for typesetting purposes) when printed in
-native-bit format on a workstation which stores 8 byte real values in IEEE
-format with the least significant byte first.
+@noindent
+where spaces have been added for clarity to show the sign bit, the 11-bit
+exponent, and the 52-bit mantissa, in that order.  Together they represent
+@code{pi} as an IEEE 754 double precision floating point number in the normal
+form.  Single precision floating point numbers are analogous.
 
-@item bit
-The same as @code{native-bit}, but always print the most significant bits
-first.
+@item native-bit
+Print the bit representation of numbers as stored in memory.  For big-endian
+machines, this is identical to the @code{format bit} layout seen above.
+For little-endian machines, it will print the bytes in the opposite order,
+though bits within a byte will still be presented with the most significant
+bit on the left.
+
+For example, the value of @code{pi} in this format on x86-64 is:
+
+@example
+@group
+00011000 00101101 01000100 01010100 11111011 00100001 00001001 01000000
+@end group
+@end example
+
+@noindent
+shown here with spaces added for clarity.  Compare with the previous bit string
+from @code{format bit} to see the grouping into bytes and their ordering.
+
+@item hex
+The same as @code{format bit} above, except that bits are grouped four at a
+time into hexadecimal digits for brevity.  Thus @code{pi} is represented as:
+
+@example
+@group
+400921fb54442d18
+@end group
+@end example
+
+@item native-hex
+The same as @code{format native-bit} above, except that bits are grouped four
+at a time into hexadecimal digits for brevity.  Thus @code{pi} is represented
+on an x86-64 as:
+
+@example
+@group
+182d4454fb210940
+@end group
+@end example
 
 @item rat
 Print a rational approximation, i.e., values are approximated as the ratio of
@@ -309,10 +367,12 @@ produce a more readable output with less data per page.
 @end table
 
 If @code{format} is called with multiple competing options, the rightmost one
-is used.  In case of an error the format remains unchanged.
+is used, except for @samp{default} which will override all other options.  In
+case of an error the format remains unchanged.
 
 If called with one to three output arguments, and no inputs, return the current
-format, format spacing, and uppercase preference.
+format, format spacing, and uppercase preference.  Specifying both outputs and
+inputs will produce an error.
 
 @xseealso{@ref{XREFfixed_point_format,,fixed_point_format}, @ref{XREFoutput_precision,,output_precision}, @ref{XREFsplit_long_rows,,split_long_rows}, @ref{XREFprint_empty_dimensions,,print_empty_dimensions}, @ref{XREFrats,,rats}}
 @end deftypefn
@@ -346,6 +406,11 @@ and configure the pager itself with the @code{PAGER_FLAGS} function.
 
 @c more libinterp/corefcn/pager.cc
 @anchor{XREFmore}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} more
 @deftypefnx {} {} more on
 @deftypefnx {} {} more off
@@ -360,9 +425,14 @@ The current state can be determined via @code{page_screen_output}.
 
 @c PAGER libinterp/corefcn/pager.cc
 @anchor{XREFPAGER}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} PAGER ()
 @deftypefnx {} {@var{old_val} =} PAGER (@var{new_val})
-@deftypefnx {} {} PAGER (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} PAGER (@var{new_val}, "local")
 Query or set the internal variable that specifies the program to use
 to display terminal output on your system.
 
@@ -379,9 +449,14 @@ The original variable value is restored when exiting the function.
 
 @c PAGER_FLAGS libinterp/corefcn/pager.cc
 @anchor{XREFPAGER_FLAGS}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} PAGER_FLAGS ()
 @deftypefnx {} {@var{old_val} =} PAGER_FLAGS (@var{new_val})
-@deftypefnx {} {} PAGER_FLAGS (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} PAGER_FLAGS (@var{new_val}, "local")
 Query or set the internal variable that specifies the options to pass
 to the pager.
 
@@ -394,9 +469,14 @@ The original variable value is restored when exiting the function.
 
 @c page_screen_output libinterp/corefcn/pager.cc
 @anchor{XREFpage_screen_output}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} page_screen_output ()
 @deftypefnx {} {@var{old_val} =} page_screen_output (@var{new_val})
-@deftypefnx {} {} page_screen_output (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} page_screen_output (@var{new_val}, "local")
 Query or set the internal variable that controls whether output intended
 for the terminal window that is longer than one page is sent through a
 pager.
@@ -414,9 +494,14 @@ The original variable value is restored when exiting the function.
 
 @c page_output_immediately libinterp/corefcn/pager.cc
 @anchor{XREFpage_output_immediately}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} page_output_immediately ()
 @deftypefnx {} {@var{old_val} =} page_output_immediately (@var{new_val})
-@deftypefnx {} {} page_output_immediately (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} page_output_immediately (@var{new_val}, "local")
 Query or set the internal variable that controls whether Octave sends
 output to the pager as soon as it is available.
 
@@ -434,7 +519,12 @@ The original variable value is restored when exiting the function.
 
 @c fflush libinterp/corefcn/file-io.cc
 @anchor{XREFfflush}
-@deftypefn {} {} fflush (@var{fid})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{status} =} fflush (@var{fid})
 Flush output to file descriptor @var{fid}.
 
 @code{fflush} returns 0 on success and an OS dependent error value
@@ -464,6 +554,11 @@ used for managing an interactive dialog with a user, and the
 
 @c input libinterp/corefcn/input.cc
 @anchor{XREFinput}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{ans} =} input (@var{prompt})
 @deftypefnx {} {@var{ans} =} input (@var{prompt}, "s")
 Print @var{prompt} and wait for user input.
@@ -504,6 +599,11 @@ your prompt.
 
 @c menu scripts/miscellaneous/menu.m
 @anchor{XREFmenu}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{choice} =} menu (@var{title}, @var{opt1}, @dots{})
 @deftypefnx {} {@var{choice} =} menu (@var{title}, @{@var{opt1}, @dots{}@})
 Display a menu with heading @var{title} and options @var{opt1}, @dots{},
@@ -529,6 +629,11 @@ more than will fit easily on one screen.
 
 @c yes_or_no libinterp/corefcn/input.cc
 @anchor{XREFyes_or_no}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{ans} =} yes_or_no ("@var{prompt}")
 Ask the user a yes-or-no question.
 
@@ -551,29 +656,36 @@ carriage return.
 
 @c kbhit libinterp/corefcn/sysdep.cc
 @anchor{XREFkbhit}
-@deftypefn  {} {} kbhit ()
-@deftypefnx {} {} kbhit (1)
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{c} =} kbhit ()
+@deftypefnx {} {@var{c} =} kbhit (1)
 Read a single keystroke from the keyboard.
 
-If called with an argument, don't wait for a keypress.
+If called with an argument (typically 1), don't wait for a keypress and
+immediately return the next keystroke in the keyboard input buffer or an empty
+string ("") if no keystroke is available.
 
 For example,
 
 @example
-x = kbhit ();
+c = kbhit ();
 @end example
 
 @noindent
-will set @var{x} to the next character typed at the keyboard as soon as
-it is typed.
+will set @var{c} to the next character typed at the keyboard as soon as it is
+typed.
 
 @example
-x = kbhit (1);
+c = kbhit (1);
 @end example
 
 @noindent
-is identical to the above example, but doesn't wait for a keypress,
-returning the empty string if no key is available.
+is identical to the above example, but doesn't wait for a keypress, returning
+the empty string if no key is available.
 @xseealso{@ref{XREFinput,,input}, @ref{XREFpause,,pause}}
 @end deftypefn
 
@@ -615,6 +727,11 @@ A
 
 @c save libinterp/corefcn/load-save.cc
 @anchor{XREFsave}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} save file
 @deftypefnx {} {} save options file
 @deftypefnx {} {} save options file @var{v1} @var{v2} @dots{}
@@ -677,10 +794,10 @@ Use this format @strong{only} if you know that all the values to be saved can
 be represented in single precision.
 
 @item -hdf5
-Save the data in @sc{hdf5} format.
-(HDF5 is a free, portable, binary format developed by the National Center for
-Supercomputing Applications at the University of Illinois.) This format is only
-available if Octave was built with a link to the @sc{hdf5} libraries.
+Save the data in @sc{hdf5} format.  (HDF5 is a free, portable, binary format
+developed by the National Center for Supercomputing Applications at the
+University of Illinois.) This format is only available if Octave was built
+with a link to the @sc{hdf5} libraries.
 
 @item -float-hdf5
 Save the data in @sc{hdf5} format but using only single precision.  Use this
@@ -693,7 +810,8 @@ Save the data in Octave's text data format.  (default)
 @item  -v7.3
 @itemx -V7.3
 @itemx -7.3
-Octave does @strong{not} yet implement @sc{matlab}'s v7.3 binary data format.
+Octave does @strong{not} yet implement saving in @sc{matlab}'s v7.3 binary
+data format.
 
 @item  -v7
 @itemx -V7
@@ -767,9 +885,14 @@ There are three functions that modify the behavior of @code{save}.
 
 @c save_default_options libinterp/corefcn/load-save.cc
 @anchor{XREFsave_default_options}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} save_default_options ()
 @deftypefnx {} {@var{old_val} =} save_default_options (@var{new_val})
-@deftypefnx {} {} save_default_options (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} save_default_options (@var{new_val}, "local")
 Query or set the internal variable that specifies the default options
 for the @code{save} command, and defines the default format.
 
@@ -785,9 +908,14 @@ The original variable value is restored when exiting the function.
 
 @c save_precision libinterp/corefcn/ls-oct-text.cc
 @anchor{XREFsave_precision}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} save_precision ()
 @deftypefnx {} {@var{old_val} =} save_precision (@var{new_val})
-@deftypefnx {} {} save_precision (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} save_precision (@var{new_val}, "local")
 Query or set the internal variable that specifies the number of digits to
 keep when saving data in text format.
 
@@ -807,9 +935,14 @@ The original variable value is restored when exiting the function.
 
 @c save_header_format_string libinterp/corefcn/load-save.cc
 @anchor{XREFsave_header_format_string}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} save_header_format_string ()
 @deftypefnx {} {@var{old_val} =} save_header_format_string (@var{new_val})
-@deftypefnx {} {} save_header_format_string (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} save_header_format_string (@var{new_val}, "local")
 Query or set the internal variable that specifies the format string used for
 the comment line written at the beginning of text-format data files saved by
 Octave.
@@ -833,6 +966,11 @@ The original variable value is restored when exiting the function.
 
 @c load libinterp/corefcn/load-save.cc
 @anchor{XREFload}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} load file
 @deftypefnx {} {} load options file
 @deftypefnx {} {} load options file v1 v2 @dots{}
@@ -896,12 +1034,13 @@ name of the file.
 Force Octave to assume the file is in Octave's binary format.
 
 @item -hdf5
-Force Octave to assume the file is in @sc{hdf5} format.
-(@sc{hdf5} is a free, portable binary format developed by the National
-Center for Supercomputing Applications at the University of Illinois.)
-Note that Octave can only read @sc{hdf5} files that were created by itself with
-@code{save}.  This format is only available if Octave was built with a link to
-the @sc{hdf5} libraries.
+Force Octave to assume the file is in @sc{hdf5} format.  (@sc{hdf5} is a free,
+portable binary format developed by the National Center for Supercomputing
+Applications at the University of Illinois.)  Note that Octave can only
+read @sc{hdf5} files that were created by itself with @code{save} or with
+@sc{matlab}'s @code{-v7.3} option (which saves in @sc{hdf5} format). This
+format is only available if Octave was built with a link to the @sc{hdf5}
+libraries.
 
 @item -import
 This option is accepted for backward compatibility but is ignored.
@@ -914,7 +1053,10 @@ Force Octave to assume the file is in Octave's text format.
 @item  -v7.3
 @itemx -V7.3
 @itemx -7.3
-Octave does @strong{not} yet implement @sc{matlab}'s v7.3 binary data format.
+Force Octave to assume the file is in @sc{matlab}'s v7.3 binary data format.
+As the v7.3 format is an HDF5 based format, those files often can also be
+opened with the @qcode{"-hdf5"} option.  Note that Octave @strong{can not}
+currently save in this format.
 
 @item  -v7
 @itemx -V7
@@ -942,15 +1084,37 @@ Force Octave to assume the file is in @sc{matlab}'s version 4 binary format.
 
 @c fileread scripts/io/fileread.m
 @anchor{XREFfileread}
-@deftypefn {} {@var{str} =} fileread (@var{filename})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{str} =} fileread (@var{filename})
+@deftypefnx {} {@var{str} =} fileread (@var{filename}, @var{param}, @var{value}, @dots{})
 Read the contents of @var{filename} and return it as a string.
-@xseealso{@ref{XREFfread,,fread}, @ref{XREFfscanf,,fscanf}, @ref{XREFimportdata,,importdata}, @ref{XREFtextscan,,textscan}, @ref{XREFtype,,type}}
+
+@var{param}, @var{value} are optional pairs of parameters and values.  Valid
+options are:
+
+@table @asis
+@item @qcode{"Encoding"}
+Specify encoding used when reading from the file.  This is a character
+string of a valid encoding identifier.  The default is
+@nospell{@qcode{"utf-8"}}.
+@end table
+
+@xseealso{@ref{XREFfopen,,fopen}, @ref{XREFfread,,fread}, @ref{XREFfscanf,,fscanf}, @ref{XREFimportdata,,importdata}, @ref{XREFtextscan,,textscan}, @ref{XREFtype,,type}}
 @end deftypefn
 
 
 @c native_float_format libinterp/corefcn/sysdep.cc
 @anchor{XREFnative_float_format}
-@deftypefn {} {} native_float_format ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{fmtstr} =} native_float_format ()
 Return the native floating point format as a string.
 @end deftypefn
 
@@ -976,6 +1140,11 @@ and @code{fclose}.
 
 @c fdisp libinterp/corefcn/pr-output.cc
 @anchor{XREFfdisp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} fdisp (@var{fid}, @var{x})
 Display the value of @var{x} on the stream @var{fid}.
 
@@ -1001,6 +1170,11 @@ separated lists.
 
 @c dlmwrite scripts/io/dlmwrite.m
 @anchor{XREFdlmwrite}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} dlmwrite (@var{file}, @var{M})
 @deftypefnx {} {} dlmwrite (@var{file}, @var{M}, @var{delim}, @var{r}, @var{c})
 @deftypefnx {} {} dlmwrite (@var{file}, @var{M}, @var{key}, @var{val} @dots{})
@@ -1065,6 +1239,11 @@ dlmwrite ("file.tex", a, "delimiter", "&", "newline", "\n")
 
 @c dlmread libinterp/corefcn/dlmread.cc
 @anchor{XREFdlmread}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{data} =} dlmread (@var{file})
 @deftypefnx {} {@var{data} =} dlmread (@var{file}, @var{sep})
 @deftypefnx {} {@var{data} =} dlmread (@var{file}, @var{sep}, @var{r0}, @var{c0})
@@ -1101,6 +1280,11 @@ such as text, are also replaced by the @qcode{"emptyvalue"}.
 
 @c csvwrite scripts/io/csvwrite.m
 @anchor{XREFcsvwrite}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} csvwrite (@var{filename}, @var{x})
 @deftypefnx {} {} csvwrite (@var{filename}, @var{x}, @var{dlm_opt1}, @dots{})
 Write the numeric matrix @var{x} to the file @var{filename} in
@@ -1120,6 +1304,11 @@ Any optional arguments are passed directly to @code{dlmwrite}
 
 @c csvread scripts/io/csvread.m
 @anchor{XREFcsvread}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{x} =} csvread (@var{filename})
 @deftypefnx {} {@var{x} =} csvread (@var{filename}, @var{dlm_opt1}, @dots{})
 Read the comma-separated-value (CSV) file @var{filename} into the matrix
@@ -1143,6 +1332,11 @@ Formatted data from can be read from, or written to, text files as well.
 
 @c textread scripts/legacy/textread.m
 @anchor{XREFtextread}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{a}, @dots{}] =} textread (@var{filename})
 @deftypefnx {} {[@var{a}, @dots{}] =} textread (@var{filename}, @var{format})
 @deftypefnx {} {[@var{a}, @dots{}] =} textread (@var{filename}, @var{format}, @var{n})
@@ -1240,6 +1434,11 @@ Examples:
 
 @c textscan libinterp/corefcn/file-io.cc
 @anchor{XREFtextscan}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{C} =} textscan (@var{fid}, @var{format})
 @deftypefnx {} {@var{C} =} textscan (@var{fid}, @var{format}, @var{repeat})
 @deftypefnx {} {@var{C} =} textscan (@var{fid}, @var{format}, @var{param}, @var{value}, @dots{})
@@ -1509,6 +1708,11 @@ variety of data.
 
 @c importdata scripts/io/importdata.m
 @anchor{XREFimportdata}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{A} =} importdata (@var{fname})
 @deftypefnx {} {@var{A} =} importdata (@var{fname}, @var{delimiter})
 @deftypefnx {} {@var{A} =} importdata (@var{fname}, @var{delimiter}, @var{header_rows})
@@ -1559,6 +1763,11 @@ range.
 
 @c rescale scripts/general/rescale.m
 @anchor{XREFrescale}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{B} =} rescale (@var{A})
 @deftypefnx {} {@var{B} =} rescale (@var{A}, @var{l}, @var{u})
 @deftypefnx {} {@var{B} =} rescale (@dots{}, "inputmin", @var{inmin})
@@ -1613,9 +1822,14 @@ functions.
 
 @c crash_dumps_octave_core libinterp/corefcn/load-save.cc
 @anchor{XREFcrash_dumps_octave_core}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} crash_dumps_octave_core ()
 @deftypefnx {} {@var{old_val} =} crash_dumps_octave_core (@var{new_val})
-@deftypefnx {} {} crash_dumps_octave_core (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} crash_dumps_octave_core (@var{new_val}, "local")
 Query or set the internal variable that controls whether Octave tries
 to save all current variables to the file @file{octave-workspace} if it
 crashes or receives a hangup, terminate or similar signal.
@@ -1629,9 +1843,14 @@ The original variable value is restored when exiting the function.
 
 @c sighup_dumps_octave_core libinterp/corefcn/sighandlers.cc
 @anchor{XREFsighup_dumps_octave_core}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} sighup_dumps_octave_core ()
 @deftypefnx {} {@var{old_val} =} sighup_dumps_octave_core (@var{new_val})
-@deftypefnx {} {} sighup_dumps_octave_core (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} sighup_dumps_octave_core (@var{new_val}, "local")
 Query or set the internal variable that controls whether Octave tries
 to save all current variables to the file @file{octave-workspace} if it
 receives a hangup signal.
@@ -1644,9 +1863,14 @@ The original variable value is restored when exiting the function.
 
 @c sigquit_dumps_octave_core libinterp/corefcn/sighandlers.cc
 @anchor{XREFsigquit_dumps_octave_core}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} sigquit_dumps_octave_core ()
 @deftypefnx {} {@var{old_val} =} sigquit_dumps_octave_core (@var{new_val})
-@deftypefnx {} {} sigquit_dumps_octave_core (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} sigquit_dumps_octave_core (@var{new_val}, "local")
 Query or set the internal variable that controls whether Octave tries
 to save all current variables to the file @file{octave-workspace} if it
 receives a quit signal.
@@ -1659,9 +1883,14 @@ The original variable value is restored when exiting the function.
 
 @c sigterm_dumps_octave_core libinterp/corefcn/sighandlers.cc
 @anchor{XREFsigterm_dumps_octave_core}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} sigterm_dumps_octave_core ()
 @deftypefnx {} {@var{old_val} =} sigterm_dumps_octave_core (@var{new_val})
-@deftypefnx {} {} sigterm_dumps_octave_core (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} sigterm_dumps_octave_core (@var{new_val}, "local")
 Query or set the internal variable that controls whether Octave tries
 to save all current variables to the file @file{octave-workspace} if it
 receives a terminate signal.
@@ -1674,9 +1903,14 @@ The original variable value is restored when exiting the function.
 
 @c octave_core_file_options libinterp/corefcn/load-save.cc
 @anchor{XREFoctave_core_file_options}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} octave_core_file_options ()
 @deftypefnx {} {@var{old_val} =} octave_core_file_options (@var{new_val})
-@deftypefnx {} {} octave_core_file_options (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} octave_core_file_options (@var{new_val}, "local")
 Query or set the internal variable that specifies the options used for
 saving the workspace data if Octave aborts.
 
@@ -1693,9 +1927,14 @@ The original variable value is restored when exiting the function.
 
 @c octave_core_file_limit libinterp/corefcn/load-save.cc
 @anchor{XREFoctave_core_file_limit}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} octave_core_file_limit ()
 @deftypefnx {} {@var{old_val} =} octave_core_file_limit (@var{new_val})
-@deftypefnx {} {} octave_core_file_limit (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} octave_core_file_limit (@var{new_val}, "local")
 Query or set the internal variable that specifies the maximum amount of memory
 that Octave will save when writing a crash dump file.
 
@@ -1717,9 +1956,14 @@ The original variable value is restored when exiting the function.
 
 @c octave_core_file_name libinterp/corefcn/load-save.cc
 @anchor{XREFoctave_core_file_name}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} octave_core_file_name ()
 @deftypefnx {} {@var{old_val} =} octave_core_file_name (@var{new_val})
-@deftypefnx {} {} octave_core_file_name (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} octave_core_file_name (@var{new_val}, "local")
 Query or set the internal variable that specifies the name of the file
 used for saving data from the top-level workspace if Octave aborts.
 
@@ -1750,7 +1994,12 @@ make your programs easier to understand.
 
 @c stdin libinterp/corefcn/file-io.cc
 @anchor{XREFstdin}
-@deftypefn {} {} stdin ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{fid} =} stdin ()
 Return the numeric value corresponding to the standard input stream.
 
 When Octave is used interactively, stdin is filtered through the command
@@ -1761,7 +2010,12 @@ line editing functions.
 
 @c stdout libinterp/corefcn/file-io.cc
 @anchor{XREFstdout}
-@deftypefn {} {} stdout ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{fid} =} stdout ()
 Return the numeric value corresponding to the standard output stream.
 
 Data written to the standard output may be filtered through the pager.
@@ -1771,7 +2025,12 @@ Data written to the standard output may be filtered through the pager.
 
 @c stderr libinterp/corefcn/file-io.cc
 @anchor{XREFstderr}
-@deftypefn {} {} stderr ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{fid} =} stderr ()
 Return the numeric value corresponding to the standard error stream.
 
 Even if paging is turned on, the standard error is not sent to the pager.
@@ -1824,6 +2083,11 @@ fclose (fid);
 
 @c fopen libinterp/corefcn/file-io.cc
 @anchor{XREFfopen}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{fid} =} fopen (@var{name})
 @deftypefnx {} {@var{fid} =} fopen (@var{name}, @var{mode})
 @deftypefnx {} {@var{fid} =} fopen (@var{name}, @var{mode}, @var{arch})
@@ -1842,8 +2106,7 @@ corresponding system error message.  The @var{mode} is a one or two
 character string that specifies whether the file is to be opened for
 reading, writing, or both.  The @var{encoding} is a character string with a
 valid encoding identifier.  This encoding is used when strings are read from
-or written to the file.  By default, the same encoding specified for reading
-@file{.m} files is used for interpreting user files.
+or written to the file.  By default, that is UTF-8.
 
 The second form of the @code{fopen} function returns a vector of file ids
 corresponding to all the currently open files, excluding the
@@ -1933,8 +2196,12 @@ after data has been written then the write should be followed by a call to
 
 @c fclose libinterp/corefcn/file-io.cc
 @anchor{XREFfclose}
-@deftypefn  {} {} fclose (@var{fid})
-@deftypefnx {} {} fclose ("all")
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{status} =} fclose (@var{fid})
 @deftypefnx {} {@var{status} =} fclose ("all")
 Close the file specified by the file descriptor @var{fid}.
 
@@ -1948,7 +2215,12 @@ with gnuplot.
 
 @c is_valid_file_id scripts/io/is_valid_file_id.m
 @anchor{XREFis_valid_file_id}
-@deftypefn {} {} is_valid_file_id (@var{fid})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} is_valid_file_id (@var{fid})
 Return true if @var{fid} refers to an open file.
 @xseealso{@ref{XREFfreport,,freport}, @ref{XREFfopen,,fopen}}
 @end deftypefn
@@ -1973,15 +2245,20 @@ fclose (fid);
 
 @c fputs libinterp/corefcn/file-io.cc
 @anchor{XREFfputs}
-@deftypefn  {} {} fputs (@var{fid}, @var{string})
-@deftypefnx {} {@var{status} =} fputs (@var{fid}, @var{string})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{status} =} fputs (@var{fid}, @var{string})
 Write the string @var{string} to the file with file descriptor @var{fid}.
 
 The string is written to the file with no additional formatting.  Use
 @code{fdisp} instead to automatically append a newline character appropriate
 for the local machine.
 
-Return a non-negative number on success or EOF on error.
+The optional output @var{status} is 0 for success, or -1 if an error was
+encountered.
 @xseealso{@ref{XREFfdisp,,fdisp}, @ref{XREFfprintf,,fprintf}, @ref{XREFfwrite,,fwrite}, @ref{XREFfopen,,fopen}}
 @end deftypefn
 
@@ -1992,14 +2269,19 @@ except it doesn't take a file pointer as its input.
 
 @c puts libinterp/corefcn/file-io.cc
 @anchor{XREFputs}
-@deftypefn  {} {} puts (@var{string})
-@deftypefnx {} {@var{status} =} puts (@var{string})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{status} =} puts (@var{string})
 Write a string to the standard output with no formatting.
 
 The string is written verbatim to the standard output.  Use @code{disp} to
 automatically append a newline character appropriate for the local machine.
 
-Return a non-negative number on success and EOF on error.
+The optional output @var{status} is 0 for success, or -1 if an error was
+encountered.
 @xseealso{@ref{XREFfputs,,fputs}, @ref{XREFdisp,,disp}}
 @end deftypefn
 
@@ -2026,6 +2308,11 @@ the line @samp{Free Software is needed for Free Science}.
 
 @c fgetl libinterp/corefcn/file-io.cc
 @anchor{XREFfgetl}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{str} =} fgetl (@var{fid})
 @deftypefnx {} {@var{str} =} fgetl (@var{fid}, @var{len})
 Read characters from a file, stopping after a newline, or EOF,
@@ -2047,6 +2334,11 @@ To read a line and return the terminating newline,
 
 @c fgets libinterp/corefcn/file-io.cc
 @anchor{XREFfgets}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{str} =} fgets (@var{fid})
 @deftypefnx {} {@var{str} =} fgets (@var{fid}, @var{len})
 Read characters from a file, stopping after a newline, or EOF,
@@ -2068,6 +2360,11 @@ To read a line and discard the terminating newline,
 
 @c fskipl libinterp/corefcn/file-io.cc
 @anchor{XREFfskipl}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{nlines} =} fskipl (@var{fid})
 @deftypefnx {} {@var{nlines} =} fskipl (@var{fid}, @var{count})
 @deftypefnx {} {@var{nlines} =} fskipl (@var{fid}, Inf)
@@ -2102,15 +2399,23 @@ expanded even when the template string is defined with single quotes.
 
 @c printf libinterp/corefcn/file-io.cc
 @anchor{XREFprintf}
-@deftypefn {} {} printf (@var{template}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {} printf (@var{template}, @dots{})
+@deftypefnx {} {@var{numbytes} =} printf (@dots{})
 Print optional arguments under the control of the template string
-@var{template} to the stream @code{stdout} and return the number of
-characters printed.
+@var{template} to the stream @code{stdout} and return the number of characters
+printed.
 @ifclear OCTAVE_MANUAL
 
-See the Formatted Output section of the GNU Octave manual for a
-complete description of the syntax of the template string.
+See the Formatted Output section of the GNU Octave manual for a complete
+description of the syntax of the template string.
 @end ifclear
+
+The optional output @var{numbytes} returns the number of bytes printed.
 
 Implementation Note: For compatibility with @sc{matlab}, escape sequences in
 the template string (e.g., @qcode{"@backslashchar{}n"} => newline) are
@@ -2121,6 +2426,11 @@ expanded even when the template string is defined with single quotes.
 
 @c fprintf libinterp/corefcn/file-io.cc
 @anchor{XREFfprintf}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} fprintf (@var{fid}, @var{template}, @dots{})
 @deftypefnx {} {} fprintf (@var{template}, @dots{})
 @deftypefnx {} {@var{numbytes} =} fprintf (@dots{})
@@ -2130,7 +2440,8 @@ written to the file descriptor @var{fid} instead of @code{stdout}.
 If @var{fid} is omitted, the output is written to @code{stdout} making the
 function exactly equivalent to @code{printf}.
 
-The optional output returns the number of bytes written to the file.
+The optional output @var{numbytes} returns the number of bytes written to the
+file.
 
 Implementation Note: For compatibility with @sc{matlab}, escape sequences in
 the template string (e.g., @qcode{"@backslashchar{}n"} => newline) are
@@ -2141,7 +2452,12 @@ expanded even when the template string is defined with single quotes.
 
 @c sprintf libinterp/corefcn/file-io.cc
 @anchor{XREFsprintf}
-@deftypefn {} {} sprintf (@var{template}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{str} =} sprintf (@var{template}, @dots{})
 This is like @code{printf}, except that the output is returned as a
 string.
 
@@ -2557,6 +2873,11 @@ the other is more `C-like'.
 
 @c fscanf libinterp/corefcn/file-io.cc
 @anchor{XREFfscanf}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{val}, @var{count}, @var{errmsg}] =} fscanf (@var{fid}, @var{template}, @var{size})
 @deftypefnx {} {[@var{v1}, @var{v2}, @dots{}, @var{count}, @var{errmsg}] =} fscanf (@var{fid}, @var{template}, "C")
 In the first form, read from @var{fid} according to @var{template},
@@ -2608,6 +2929,11 @@ complete description of the syntax of the template string.
 
 @c scanf libinterp/corefcn/file-io.cc
 @anchor{XREFscanf}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{val}, @var{count}, @var{errmsg}] =} scanf (@var{template}, @var{size})
 @deftypefnx {} {[@var{v1}, @var{v2}, @dots{}, @var{count}, @var{errmsg}] =} scanf (@var{template}, "C")
 This is equivalent to calling @code{fscanf} with @var{fid} = @code{stdin}.
@@ -2619,6 +2945,11 @@ It is currently not useful to call @code{scanf} in interactive programs.
 
 @c sscanf libinterp/corefcn/file-io.cc
 @anchor{XREFsscanf}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{val}, @var{count}, @var{errmsg}, @var{pos}] =} sscanf (@var{string}, @var{template}, @var{size})
 @deftypefnx {} {[@var{v1}, @var{v2}, @dots{}, @var{count}, @var{errmsg}] =} sscanf (@var{string}, @var{template}, "C")
 This is like @code{fscanf}, except that the characters are taken from the
@@ -2871,6 +3202,11 @@ as the data are read.
 
 @c fread libinterp/corefcn/file-io.cc
 @anchor{XREFfread}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} fread (@var{fid})
 @deftypefnx {} {@var{val} =} fread (@var{fid}, @var{size})
 @deftypefnx {} {@var{val} =} fread (@var{fid}, @var{size}, @var{precision})
@@ -3029,23 +3365,28 @@ The optional return value @var{count} contains the number of elements read.
 
 @c fwrite libinterp/corefcn/file-io.cc
 @anchor{XREFfwrite}
-@deftypefn  {} {} fwrite (@var{fid}, @var{data})
-@deftypefnx {} {} fwrite (@var{fid}, @var{data}, @var{precision})
-@deftypefnx {} {} fwrite (@var{fid}, @var{data}, @var{precision}, @var{skip})
-@deftypefnx {} {} fwrite (@var{fid}, @var{data}, @var{precision}, @var{skip}, @var{arch})
-@deftypefnx {} {@var{count} =} fwrite (@dots{})
-Write data in binary form to the file specified by the file descriptor
-@var{fid}, returning the number of values @var{count} successfully written
-to the file.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-The argument @var{data} is a matrix of values that are to be written to
-the file.  The values are extracted in column-major order.
+
+@deftypefn  {} {@var{count} =} fwrite (@var{fid}, @var{data})
+@deftypefnx {} {@var{count} =} fwrite (@var{fid}, @var{data}, @var{precision})
+@deftypefnx {} {@var{count} =} fwrite (@var{fid}, @var{data}, @var{precision}, @var{skip})
+@deftypefnx {} {@var{count} =} fwrite (@var{fid}, @var{data}, @var{precision}, @var{skip}, @var{arch})
+Write data in binary form to the file specified by the file descriptor
+@var{fid}.
+
+The argument @var{data} is a matrix of values that are to be written to the
+file.  The values are extracted in column-major order.
 
 The remaining arguments @var{precision}, @var{skip}, and @var{arch} are
 optional, and are interpreted as described for @code{fread}.
 
-The behavior of @code{fwrite} is undefined if the values in @var{data}
-are too large to fit in the specified precision.
+The output @var{count} is the number of data items successfully written.
+
+Programming Note: The behavior of @code{fwrite} is undefined if the values in
+@var{data} are too large to fit in the specified precision.
 @xseealso{@ref{XREFfread,,fread}, @ref{XREFfputs,,fputs}, @ref{XREFfprintf,,fprintf}, @ref{XREFfopen,,fopen}}
 @end deftypefn
 
@@ -3060,6 +3401,11 @@ files will be deleted, so this step need not be executed manually.
 
 @c mkstemp libinterp/corefcn/file-io.cc
 @anchor{XREFmkstemp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{fid}, @var{name}, @var{msg}] =} mkstemp ("@var{template}")
 @deftypefnx {} {[@var{fid}, @var{name}, @var{msg}] =} mkstemp ("@var{template}", @var{delete})
 Return the file descriptor @var{fid} corresponding to a new temporary file
@@ -3070,7 +3416,7 @@ these are replaced with a string that makes the filename unique.  The file
 is then created with mode read/write and permissions that are system
 dependent (on GNU/Linux systems, the permissions will be 0600 for versions
 of glibc 2.0.7 and later).  The file is opened in binary mode and with the
-@w{@code{O_EXCL}} flag.
+@w{@code{O_EXCL}}@ flag.
 
 If the optional argument @var{delete} is supplied and is true, the file will
 be deleted automatically when Octave exits.
@@ -3085,6 +3431,11 @@ message.
 
 @c tmpfile libinterp/corefcn/file-io.cc
 @anchor{XREFtmpfile}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {[@var{fid}, @var{msg}] =} tmpfile ()
 Return the file ID corresponding to a new temporary file with a unique
 name.
@@ -3101,6 +3452,11 @@ system-dependent error message.
 
 @c tempname libinterp/corefcn/file-io.cc
 @anchor{XREFtempname}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{fname} =} tempname ()
 @deftypefnx {} {@var{fname} =} tempname (@var{dir})
 @deftypefnx {} {@var{fname} =} tempname (@var{dir}, @var{prefix})
@@ -3120,13 +3476,20 @@ by the time your program attempts to open it.  If this is a concern,
 @end deftypefn
 
 
-@c tempdir scripts/miscellaneous/tempdir.m
+@c tempdir libinterp/corefcn/file-io.cc
 @anchor{XREFtempdir}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{dir} =} tempdir ()
 Return the name of the host system's directory for temporary files.
 
-The directory name is taken first from the environment variable
-@env{TMPDIR}.  If that does not exist the system default returned by
+The directory name is taken first from the environment variable @env{TMPDIR}.
+If that does not exist, the environment variable @env{TMP} (and on Windows
+platforms also with higher priority the environment variable @env{TEMP}) is
+checked.  If none of those are set, the system default returned by
 @code{P_tmpdir} is used.
 @xseealso{@ref{XREFP_tmpdir,,P_tmpdir}, @ref{XREFtempname,,tempname}, @ref{XREFmkstemp,,mkstemp}, @ref{XREFtmpfile,,tmpfile}}
 @end deftypefn
@@ -3134,7 +3497,12 @@ The directory name is taken first from the environment variable
 
 @c P_tmpdir libinterp/corefcn/file-io.cc
 @anchor{XREFP_tmpdir}
-@deftypefn {} {} P_tmpdir ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{sys_tmpdir} =} P_tmpdir ()
 Return the name of the host system's @strong{default} directory for
 temporary files.
 
@@ -3174,6 +3542,11 @@ above code.
 
 @c feof libinterp/corefcn/file-io.cc
 @anchor{XREFfeof}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{status} =} feof (@var{fid})
 Return 1 if an end-of-file condition has been encountered for the file
 specified by file descriptor @var{fid} and 0 otherwise.
@@ -3187,6 +3560,11 @@ end-of-file condition.
 
 @c ferror libinterp/corefcn/file-io.cc
 @anchor{XREFferror}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{msg} =} ferror (@var{fid})
 @deftypefnx {} {[@var{msg}, @var{err}] =} ferror (@var{fid})
 @deftypefnx {} {[@dots{}] =} ferror (@var{fid}, "clear")
@@ -3209,6 +3587,11 @@ whether the next operation will result in an error condition.
 
 @c fclear libinterp/corefcn/file-io.cc
 @anchor{XREFfclear}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} fclear (@var{fid})
 Clear the stream state for the file specified by the file descriptor
 @var{fid}.
@@ -3218,6 +3601,11 @@ Clear the stream state for the file specified by the file descriptor
 
 @c freport libinterp/corefcn/file-io.cc
 @anchor{XREFfreport}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {} freport ()
 Print a list of which files have been opened, and whether they are open
 for reading, writing, or both.
@@ -3248,6 +3636,11 @@ the file pointer for a given file.
 
 @c ftell libinterp/corefcn/file-io.cc
 @anchor{XREFftell}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{pos} =} ftell (@var{fid})
 Return the position of the file pointer as the number of characters from the
 beginning of the file specified by file descriptor @var{fid}.
@@ -3257,16 +3650,20 @@ beginning of the file specified by file descriptor @var{fid}.
 
 @c fseek libinterp/corefcn/file-io.cc
 @anchor{XREFfseek}
-@deftypefn  {} {} fseek (@var{fid}, @var{offset})
-@deftypefnx {} {} fseek (@var{fid}, @var{offset}, @var{origin})
-@deftypefnx {} {@var{status} =} fseek (@dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{status} =} fseek (@var{fid}, @var{offset})
+@deftypefnx {} {@var{status} =} fseek (@var{fid}, @var{offset}, @var{origin})
 Set the file pointer to the location @var{offset} within the file @var{fid}.
 
 The pointer is positioned @var{offset} characters from the @var{origin}, which
-may be one of the predefined variables @w{@qcode{SEEK_SET}} (beginning),
-@w{@qcode{SEEK_CUR}} (current position), or @w{@qcode{SEEK_END}} (end of file)
+may be one of the predefined variables @w{@qcode{SEEK_SET}}@ (beginning),
+@w{@qcode{SEEK_CUR}}@ (current position), or @w{@qcode{SEEK_END}}@ (end of file)
 or strings @nospell{@qcode{"bof"}}, @nospell{@qcode{"cof"}}, or
-@nospell{@qcode{"eof"}}.  If @var{origin} is omitted, @w{@qcode{SEEK_SET}} is
+@nospell{@qcode{"eof"}}.  If @var{origin} is omitted, @w{@qcode{SEEK_SET}}@ is
 assumed.  @var{offset} may be positive, negative, or zero but not all
 combinations of @var{origin} and @var{offset} can be realized.
 
@@ -3277,7 +3674,12 @@ combinations of @var{origin} and @var{offset} can be realized.
 
 @c SEEK_SET libinterp/corefcn/file-io.cc
 @anchor{XREFSEEK_SET}
-@deftypefn {} {} SEEK_SET ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{fseek_origin} =} SEEK_SET ()
 Return the numerical value to pass to @code{fseek} to position the file pointer
 relative to the beginning of the file.
 @xseealso{@ref{XREFSEEK_CUR,,SEEK_CUR}, @ref{XREFSEEK_END,,SEEK_END}, @ref{XREFfseek,,fseek}}
@@ -3286,7 +3688,12 @@ relative to the beginning of the file.
 
 @c SEEK_CUR libinterp/corefcn/file-io.cc
 @anchor{XREFSEEK_CUR}
-@deftypefn {} {} SEEK_CUR ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{fseek_origin} =} SEEK_CUR ()
 Return the numerical value to pass to @code{fseek} to position the file pointer
 relative to the current position.
 @xseealso{@ref{XREFSEEK_SET,,SEEK_SET}, @ref{XREFSEEK_END,,SEEK_END}, @ref{XREFfseek,,fseek}}
@@ -3295,7 +3702,12 @@ relative to the current position.
 
 @c SEEK_END libinterp/corefcn/file-io.cc
 @anchor{XREFSEEK_END}
-@deftypefn {} {} SEEK_END ()
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{fseek_origin} =} SEEK_END ()
 Return the numerical value to pass to @code{fseek} to position the file pointer
 relative to the end of the file.
 @xseealso{@ref{XREFSEEK_SET,,SEEK_SET}, @ref{XREFSEEK_CUR,,SEEK_CUR}, @ref{XREFfseek,,fseek}}
@@ -3304,13 +3716,21 @@ relative to the end of the file.
 
 @c frewind libinterp/corefcn/file-io.cc
 @anchor{XREFfrewind}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} frewind (@var{fid})
 @deftypefnx {} {@var{status} =} frewind (@var{fid})
 Move the file pointer to the beginning of the file specified by file
 descriptor @var{fid}.
 
-@code{frewind} returns 0 for success, and -1 if an error is encountered.  It
-is equivalent to @code{fseek (@var{fid}, 0, SEEK_SET)}.
+If an output @var{status} is requested then @code{frewind} returns 0 for
+success, and -1 if an error is encountered.
+
+Programming Note: @code{frewind} is equivalent to
+@code{fseek (@var{fid}, 0, SEEK_SET)}.
 @xseealso{@ref{XREFfseek,,fseek}, @ref{XREFftell,,ftell}, @ref{XREFfopen,,fopen}}
 @end deftypefn
 

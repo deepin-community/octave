@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Variables (GNU Octave (version 7.1.0))</title>
+<title>Variables (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Variables (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Variables (GNU Octave (version 7.1.0))">
+<meta name="description" content="Variables (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Variables (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,10 @@
 <link href="Data-Containers.html" rel="prev" title="Data Containers">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,15 +32,15 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="chapter" id="Variables">
-<div class="header">
+<div class="chapter-level-extent" id="Variables">
+<div class="nav-panel">
 <p>
 Next: <a href="Expressions.html" accesskey="n" rel="next">Expressions</a>, Previous: <a href="Data-Containers.html" accesskey="p" rel="prev">Data Containers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Variables-1"></span><h2 class="chapter">7 Variables</h2>
-<span id="index-variables_002c-user_002ddefined"></span>
-<span id="index-user_002ddefined-variables"></span>
+<h2 class="chapter" id="Variables-1"><span>7 Variables<a class="copiable-link" href="#Variables-1"> &para;</a></span></h2>
+<a class="index-entry-id" id="index-variables_002c-user_002ddefined"></a>
+<a class="index-entry-id" id="index-user_002ddefined-variables"></a>
 
 <p>Variables let you give names to values and refer to them later.  You have
 already seen variables in many of the examples.  The name of a variable
@@ -61,166 +50,181 @@ names, but it is seldom useful to have variables with names longer than
 about 30 characters.  The following are all valid variable names
 </p>
 <div class="example">
-<pre class="example">x
+<div class="group"><pre class="example-preformatted">x
 x15
 __foo_bar_baz__
 fucnrdthsucngtagdjb
-</pre></div>
+</pre></div></div>
 
-<p>However, names like <code>__foo_bar_baz__</code> that begin and end with two
+<p>However, names like <code class="code">__foo_bar_baz__</code> that begin and end with two
 underscores are understood to be reserved for internal use by Octave.
 You should not use them in code you write, except to access Octave&rsquo;s
 documented internal variables and built-in symbolic constants.
 </p>
-<p>Case is significant in variable names.  The symbols <code>a</code> and
-<code>A</code> are distinct variables.
+<p>Case is significant in variable names.  The symbols <code class="code">a</code> and
+<code class="code">A</code> are distinct variables.
 </p>
 <p>A variable name is a valid expression by itself.  It represents the
 variable&rsquo;s current value.  Variables are given new values with
-<em>assignment operators</em> and <em>increment operators</em>.
-See <a href="Assignment-Ops.html">Assignment Expressions</a>.
+<em class="dfn">assignment operators</em> and <em class="dfn">increment operators</em>.
+See <a class="xref" href="Assignment-Ops.html">Assignment Expressions</a>.
 </p>
 <p>There is one automatically created variable with a special meaning.  The
-<code>ans</code> variable always contains the result of the last computation,
-where the output wasn&rsquo;t assigned to any variable.  The code <code>a =
-cos (pi)</code> will assign the value -1 to the variable <code>a</code>, but will
-not change the value of <code>ans</code>.  However, the code <code>cos (pi)</code>
-will set the value of <code>ans</code> to -1.
+<code class="code">ans</code> variable always contains the result of the last computation,
+where the output wasn&rsquo;t assigned to any variable.  The code <code class="code">a =
+cos (pi)</code> will assign the value -1 to the variable <code class="code">a</code>, but will
+not change the value of <code class="code">ans</code>.  However, the code <code class="code">cos (pi)</code>
+will set the value of <code class="code">ans</code> to -1.
 </p>
 <p>Variables in Octave do not have fixed types, so it is possible to first
 store a numeric value in a variable and then to later use the same name
 to hold a string value in the same program.  Variables may not be used
 before they have been given a value.  Doing so results in an error.
 </p>
-<span id="index-ans"></span>
-<span id="XREFans"></span><dl class="def">
-<dt id="index-ans-1"><span class="category">Automatic Variable: </span><span><strong>ans</strong><a href='#index-ans-1' class='copiable-anchor'> &para;</a></span></dt>
+<a class="index-entry-id" id="index-ans"></a>
+<a class="anchor" id="XREFans"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-defvr">
+<dt class="defvr" id="index-ans-1"><span class="category-def">Automatic Variable: </span><span><strong class="def-name">ans</strong><a class="copiable-link" href="#index-ans-1"> &para;</a></span></dt>
 <dd><p>The most recently computed result that was not explicitly assigned to a
 variable.
 </p>
 <p>For example, after the expression
 </p>
 <div class="example">
-<pre class="example">3^2 + 4^2
+<pre class="example-preformatted">3^2 + 4^2
 </pre></div>
 
-<p>is evaluated, the value returned by <code>ans</code> is 25.
+<p>is evaluated, the value returned by <code class="code">ans</code> is 25.
 </p></dd></dl>
 
 
-<span id="XREFisvarname"></span><dl class="def">
-<dt id="index-isvarname"><span class="category">: </span><span><em></em> <strong>isvarname</strong> <em>(<var>name</var>)</em><a href='#index-isvarname' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return true if <var>name</var> is a valid variable name.
+<a class="anchor" id="XREFisvarname"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-isvarname"><span class="category-def">: </span><span><code class="def-type"><var class="var">tf</var> =</code> <strong class="def-name">isvarname</strong> <code class="def-code-arguments">(<var class="var">name</var>)</code><a class="copiable-link" href="#index-isvarname"> &para;</a></span></dt>
+<dd><p>Return true if <var class="var">name</var> is a valid variable name.
 </p>
 <p>A valid variable name is composed of letters, digits, and underscores (&quot;_&quot;),
 and the first character must not be a digit.
 </p>
-<p><strong>See also:</strong> <a href="Keywords.html#XREFiskeyword">iskeyword</a>, <a href="Status-of-Variables.html#XREFexist">exist</a>, <a href="Status-of-Variables.html#XREFwho">who</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Keywords.html#XREFiskeyword">iskeyword</a>, <a class="ref" href="Status-of-Variables.html#XREFexist">exist</a>, <a class="ref" href="Status-of-Variables.html#XREFwho">who</a>.
 </p></dd></dl>
 
 
-<span id="XREFmatlab_005flang_005fmakeValidName"></span><dl class="def">
-<dt id="index-matlab_002elang_002emakeValidName"><span class="category">: </span><span><em><var>varname</var> =</em> <strong>matlab.lang.makeValidName</strong> <em>(<var>str</var>)</em><a href='#index-matlab_002elang_002emakeValidName' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-matlab_002elang_002emakeValidName-1"><span class="category">: </span><span><em><var>varname</var> =</em> <strong>matlab.lang.makeValidName</strong> <em>(&hellip;, <code>&quot;ReplacementStyle&quot;</code>, <var>rs</var>)</em><a href='#index-matlab_002elang_002emakeValidName-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-matlab_002elang_002emakeValidName-2"><span class="category">: </span><span><em><var>varname</var> =</em> <strong>matlab.lang.makeValidName</strong> <em>(&hellip;, <code>&quot;Prefix&quot;</code>, <var>pfx</var>)</em><a href='#index-matlab_002elang_002emakeValidName-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-matlab_002elang_002emakeValidName-3"><span class="category">: </span><span><em>[<var>varname</var>, <var>ismodified</var>] =</em> <strong>matlab.lang.makeValidName</strong> <em>(&hellip;)</em><a href='#index-matlab_002elang_002emakeValidName-3' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFmatlab_005flang_005fmakeValidName"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-matlab_002elang_002emakeValidName"><span class="category-def">: </span><span><code class="def-type"><var class="var">varname</var> =</code> <strong class="def-name">matlab.lang.makeValidName</strong> <code class="def-code-arguments">(<var class="var">str</var>)</code><a class="copiable-link" href="#index-matlab_002elang_002emakeValidName"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-matlab_002elang_002emakeValidName-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">varname</var> =</code> <strong class="def-name">matlab.lang.makeValidName</strong> <code class="def-code-arguments">(&hellip;, <code class="code">&quot;ReplacementStyle&quot;</code>, <var class="var">rs</var>)</code><a class="copiable-link" href="#index-matlab_002elang_002emakeValidName-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-matlab_002elang_002emakeValidName-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">varname</var> =</code> <strong class="def-name">matlab.lang.makeValidName</strong> <code class="def-code-arguments">(&hellip;, <code class="code">&quot;Prefix&quot;</code>, <var class="var">pfx</var>)</code><a class="copiable-link" href="#index-matlab_002elang_002emakeValidName-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-matlab_002elang_002emakeValidName-3"><span class="category-def">: </span><span><code class="def-type">[<var class="var">varname</var>, <var class="var">ismodified</var>] =</code> <strong class="def-name">matlab.lang.makeValidName</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-matlab_002elang_002emakeValidName-3"> &para;</a></span></dt>
 <dd>
-<p>Create valid variable name <var>varname</var> from <var>str</var>.
+<p>Create valid variable name <var class="var">varname</var> from <var class="var">str</var>.
 </p>
-<p>The input <var>str</var> must be a string or a cell array of strings.
-The output <var>varname</var> will be of the same type.
+<p>The input <var class="var">str</var> must be a string or a cell array of strings.
+The output <var class="var">varname</var> will be of the same type.
 </p>
 <p>A valid variable name is a sequence of letters, digits, and underscores that
 does not begin with a digit.
 </p>
-<p>The <code>&quot;ReplacementStyle&quot;</code> option specifies how invalid characters
+<p>The <code class="code">&quot;ReplacementStyle&quot;</code> option specifies how invalid characters
 are handled.  Acceptable values are
 </p>
-<dl compact="compact">
-<dt><span><code>&quot;underscore&quot;</code> (default)</span></dt>
-<dd><p>Replace all invalid characters with an underscore (<code>&quot;_&quot;</code>).
+<dl class="table">
+<dt><code class="code">&quot;underscore&quot;</code> (default)</dt>
+<dd><p>Replace all invalid characters with an underscore (<code class="code">&quot;_&quot;</code>).
 </p>
 </dd>
-<dt><span><code>&quot;delete&quot;</code></span></dt>
+<dt><code class="code">&quot;delete&quot;</code></dt>
 <dd><p>Remove any invalid character.
 </p>
 </dd>
-<dt><span><code>&quot;hex&quot;</code></span></dt>
+<dt><code class="code">&quot;hex&quot;</code></dt>
 <dd><p>Replace all invalid characters with their hexadecimal representation.
 </p></dd>
 </dl>
 
-<p>Whitespace characters are always removed <strong>prior</strong> to the application
-of the <code>&quot;ReplacementStyle&quot;</code>.  Lowercase letters following a whitespace
+<p>Whitespace characters are always removed <strong class="strong">prior</strong> to the application
+of the <code class="code">&quot;ReplacementStyle&quot;</code>.  Lowercase letters following a whitespace
 will be changed to uppercase.
 </p>
-<p>The <code>&quot;Prefix&quot;</code> option specifies the string <var>pfx</var> to add as a
-prefix to the input if it begins with a digit.  <var>pfx</var> must be a valid
-variable name itself.  The default prefix is <code>&quot;x&quot;</code>.
+<p>The <code class="code">&quot;Prefix&quot;</code> option specifies the string <var class="var">pfx</var> to add as a
+prefix to the input if it begins with a digit.  <var class="var">pfx</var> must be a valid
+variable name itself.  The default prefix is <code class="code">&quot;x&quot;</code>.
 </p>
-<p>The optional output <var>ismodified</var> is a logical array indicating whether
-the respective element in <var>str</var> was a valid name or not.
+<p>The optional output <var class="var">ismodified</var> is a logical array indicating whether
+the respective element in <var class="var">str</var> was a valid name or not.
 </p>
 
-<p><strong>See also:</strong> <a href="Keywords.html#XREFiskeyword">iskeyword</a>, <a href="#XREFisvarname">isvarname</a>, <a href="#XREFmatlab_005flang_005fmakeUniqueStrings">matlab.lang.makeUniqueStrings</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Keywords.html#XREFiskeyword">iskeyword</a>, <a class="ref" href="#XREFisvarname">isvarname</a>, <a class="ref" href="#XREFmatlab_005flang_005fmakeUniqueStrings">matlab.lang.makeUniqueStrings</a>.
 </p></dd></dl>
 
 
-<span id="XREFmatlab_005flang_005fmakeUniqueStrings"></span><dl class="def">
-<dt id="index-matlab_002elang_002emakeUniqueStrings"><span class="category">: </span><span><em><var>uniqstr</var> =</em> <strong>matlab.lang.makeUniqueStrings</strong> <em>(<var>str</var>)</em><a href='#index-matlab_002elang_002emakeUniqueStrings' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-matlab_002elang_002emakeUniqueStrings-1"><span class="category">: </span><span><em><var>uniqstr</var> =</em> <strong>matlab.lang.makeUniqueStrings</strong> <em>(<var>str</var>, <var>ex</var>)</em><a href='#index-matlab_002elang_002emakeUniqueStrings-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-matlab_002elang_002emakeUniqueStrings-2"><span class="category">: </span><span><em><var>uniqstr</var> =</em> <strong>matlab.lang.makeUniqueStrings</strong> <em>(<var>str</var>, <var>ex</var>, <var>maxlength</var>)</em><a href='#index-matlab_002elang_002emakeUniqueStrings-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-matlab_002elang_002emakeUniqueStrings-3"><span class="category">: </span><span><em>[<var>uniqstr</var>, <var>ismodified</var>] =</em> <strong>matlab.lang.makeUniqueStrings</strong> <em>(&hellip;)</em><a href='#index-matlab_002elang_002emakeUniqueStrings-3' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFmatlab_005flang_005fmakeUniqueStrings"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-matlab_002elang_002emakeUniqueStrings"><span class="category-def">: </span><span><code class="def-type"><var class="var">uniqstr</var> =</code> <strong class="def-name">matlab.lang.makeUniqueStrings</strong> <code class="def-code-arguments">(<var class="var">str</var>)</code><a class="copiable-link" href="#index-matlab_002elang_002emakeUniqueStrings"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-matlab_002elang_002emakeUniqueStrings-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">uniqstr</var> =</code> <strong class="def-name">matlab.lang.makeUniqueStrings</strong> <code class="def-code-arguments">(<var class="var">str</var>, <var class="var">ex</var>)</code><a class="copiable-link" href="#index-matlab_002elang_002emakeUniqueStrings-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-matlab_002elang_002emakeUniqueStrings-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">uniqstr</var> =</code> <strong class="def-name">matlab.lang.makeUniqueStrings</strong> <code class="def-code-arguments">(<var class="var">str</var>, <var class="var">ex</var>, <var class="var">maxlength</var>)</code><a class="copiable-link" href="#index-matlab_002elang_002emakeUniqueStrings-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-matlab_002elang_002emakeUniqueStrings-3"><span class="category-def">: </span><span><code class="def-type">[<var class="var">uniqstr</var>, <var class="var">ismodified</var>] =</code> <strong class="def-name">matlab.lang.makeUniqueStrings</strong> <code class="def-code-arguments">(&hellip;)</code><a class="copiable-link" href="#index-matlab_002elang_002emakeUniqueStrings-3"> &para;</a></span></dt>
 <dd>
 <p>Construct a list of unique strings from a list of strings.
 </p>
-<p>The input <var>str</var> must be a string or a cell array of strings.
-The output <var>uniqstr</var> will be of the same type.
+<p>The input <var class="var">str</var> must be a string or a cell array of strings.
+The output <var class="var">uniqstr</var> will be of the same type.
 </p>
 <p>The algorithm makes two strings unique by appending an underscore
-(<code>&quot;_&quot;</code> and a numeric count to the second string.
+(<code class="code">&quot;_&quot;</code> and a numeric count to the second string.
 </p>
-<p>If <var>ex</var> is a string or a cell array of strings, <var>uniqstr</var> will
+<p>If <var class="var">ex</var> is a string or a cell array of strings, <var class="var">uniqstr</var> will
 contain elements that are unique between themselves and with respect to
-<var>ex</var>.
+<var class="var">ex</var>.
 </p>
-<p>If <var>ex</var> is an index array or a logical array for <var>str</var> then it
-selects the subset of <var>str</var> that are made unique.  Unselected elements
+<p>If <var class="var">ex</var> is an index array or a logical array for <var class="var">str</var> then it
+selects the subset of <var class="var">str</var> that are made unique.  Unselected elements
 are not modified.
 </p>
-<p>The optional input <var>maxlength</var> specifies the maximum length of any
-string in <var>uniqstr</var>.  If an input string cannot be made unique without
-exceeding <var>maxlength</var> an error is emitted.
+<p>The optional input <var class="var">maxlength</var> specifies the maximum length of any
+string in <var class="var">uniqstr</var>.  If an input string cannot be made unique without
+exceeding <var class="var">maxlength</var> an error is emitted.
 </p>
-<p>The optional output <var>ismodified</var> is a logical array indicating whether
-each element in <var>str</var> was modified to make it unique.
+<p>The optional output <var class="var">ismodified</var> is a logical array indicating whether
+each element in <var class="var">str</var> was modified to make it unique.
 </p>
 
-<p><strong>See also:</strong> <a href="Sets.html#XREFunique">unique</a>, <a href="#XREFmatlab_005flang_005fmakeValidName">matlab.lang.makeValidName</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="Sets.html#XREFunique">unique</a>, <a class="ref" href="#XREFmatlab_005flang_005fmakeValidName">matlab.lang.makeValidName</a>.
 </p></dd></dl>
 
 
-<span id="XREFnamelengthmax"></span><dl class="def">
-<dt id="index-namelengthmax"><span class="category">: </span><span><em></em> <strong>namelengthmax</strong> <em>()</em><a href='#index-namelengthmax' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>Return the <small>MATLAB</small> compatible maximum variable name length.
+<a class="anchor" id="XREFnamelengthmax"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-namelengthmax"><span class="category-def">: </span><span><code class="def-type"><var class="var">n</var> =</code> <strong class="def-name">namelengthmax</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-namelengthmax"> &para;</a></span></dt>
+<dd><p>Return the <small class="sc">MATLAB</small> compatible maximum variable name length.
 </p>
-<p>Octave is capable of storing strings up to <em class='math'>2^{31} - 1</em> in length.
-However for <small>MATLAB</small> compatibility all variable, function, and structure
+<p>Octave is capable of storing strings up to <em class="math">2^{31} - 1</em> in length.
+However for <small class="sc">MATLAB</small> compatibility all variable, function, and structure
 field names should be shorter than the length returned by
-<code>namelengthmax</code>.  In particular, variables stored to a <small>MATLAB</small> file
-format (<samp>*.mat</samp>) will have their names truncated to this length.
+<code class="code">namelengthmax</code>.  In particular, variables stored to a <small class="sc">MATLAB</small> file
+format (<samp class="file">*.mat</samp>) will have their names truncated to this length.
 </p></dd></dl>
 
 
 
-<ul class="section-toc">
+<ul class="mini-toc">
 <li><a href="Global-Variables.html" accesskey="1">Global Variables</a></li>
 <li><a href="Persistent-Variables.html" accesskey="2">Persistent Variables</a></li>
 <li><a href="Status-of-Variables.html" accesskey="3">Status of Variables</a></li>
 </ul>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Expressions.html">Expressions</a>, Previous: <a href="Data-Containers.html">Data Containers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

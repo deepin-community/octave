@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>External Code Interface (GNU Octave (version 7.1.0))</title>
+<title>External Code Interface (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="External Code Interface (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="External Code Interface (GNU Octave (version 7.1.0))">
+<meta name="description" content="External Code Interface (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="External Code Interface (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Packages.html" rel="prev" title="Packages">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+ul.mark-bullet {list-style-type: disc}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,16 +31,16 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="appendix" id="External-Code-Interface">
-<div class="header">
+<div class="appendix-level-extent" id="External-Code-Interface">
+<div class="nav-panel">
 <p>
 Next: <a href="Test-and-Demo-Functions.html" accesskey="n" rel="next">Test and Demo Functions</a>, Previous: <a href="Packages.html" accesskey="p" rel="prev">Packages</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="External-Code-Interface-1"></span><h2 class="appendix">Appendix A External Code Interface</h2>
-<span id="index-dynamic_002dlinking"></span>
-<span id="index-Dynamically-Linked-Functions"></span>
-<span id="index-Octave-API"></span>
+<h2 class="appendix" id="External-Code-Interface-1"><span>Appendix A External Code Interface<a class="copiable-link" href="#External-Code-Interface-1"> &para;</a></span></h2>
+<a class="index-entry-id" id="index-dynamic_002dlinking"></a>
+<a class="index-entry-id" id="index-Dynamically-Linked-Functions"></a>
+<a class="index-entry-id" id="index-Octave-API"></a>
 
 <p>&quot;The sum of human wisdom is not contained in any one language&quot;
 </p>
@@ -65,9 +53,9 @@ doing so include: 1) not re-inventing the wheel; existing function libraries
 which have been thoroughly tested and debugged or large scale simulation
 codebases are a good example, 2) accessing unique capabilities of a different
 language; for example the well-known regular expression functions of Perl (but
-don&rsquo;t do that because <code>regexp</code> already exists in Octave).
+don&rsquo;t do that because <code class="code">regexp</code> already exists in Octave).
 </p>
-<p>Performance should generally <strong>not</strong> be a reason for using compiled
+<p>Performance should generally <strong class="strong">not</strong> be a reason for using compiled
 extensions.  Although compiled extensions can run faster, particularly if they
 replace a loop in Octave code, this is almost never the best path to take.
 First, there are many techniques to speed up Octave performance while remaining
@@ -82,29 +70,29 @@ real possibility of crashing the interpreter and losing work.
 <p>Before going further, you should first determine if you really need to bother
 writing code outside of Octave.
 </p>
-<ul>
-<li> Can I get the same functionality using the Octave scripting language alone?
+<ul class="itemize mark-bullet">
+<li>Can I get the same functionality using the Octave scripting language alone?
 
 <p>Even when a function already exists outside the language, it may be better to
 simply reproduce the behavior in an m-file rather than attempt to interface to
 the outside code.
 </p>
-</li><li> Is the code thoroughly optimized for Octave?
+</li><li>Is the code thoroughly optimized for Octave?
 
 <p>If performance is an issue you should always start with the in-language
 techniques for getting better performance.  Chief among these is vectorization
-(see <a href="Vectorization-and-Faster-Code-Execution.html">Vectorization and Faster Code Execution</a>) which not only makes the code
+(see <a class="pxref" href="Vectorization-and-Faster-Code-Execution.html">Vectorization and Faster Code Execution</a>) which not only makes the code
 concise and more understandable but improves performance (10X-100X).  If loops
 must be used, make sure that the allocation of space for variables takes place
 outside the loops using an assignment to a matrix of the right size, or zeros.
 </p>
-</li><li> Does the code make as much use as possible of existing built-in library
+</li><li>Does the code make as much use as possible of existing built-in library
 routines?
 
 <p>These routines are highly optimized and many do not carry the overhead of being
 interpreted.
 </p>
-</li><li> Does writing a dynamically linked function represent a useful investment of
+</li><li>Does writing a dynamically linked function represent a useful investment of
 your time, relative to staying in Octave?
 
 <p>It will take time to learn Octave&rsquo;s interface for external code and there will
@@ -115,13 +103,13 @@ inevitably be issues with tools such as compilers.
 compiled code as dynamically linked extensions.  These dynamically linked
 functions can be called from the interpreter in the same manner as any ordinary
 function.  The interface is bi-directional and external code can call Octave
-functions (like <code>plot</code>) which otherwise might be very difficult to
+functions (like <code class="code">plot</code>) which otherwise might be very difficult to
 develop.
 </p>
 <p>The interface is centered around supporting the languages C++, C, and Fortran.
 Octave itself is written in C++ and can call external C++/C code through its
 native oct-file interface.  The C language is also supported through the
-mex-file interface for compatibility with <small>MATLAB</small>.  Fortran code is easiest
+mex-file interface for compatibility with <small class="sc">MATLAB</small>.  Fortran code is easiest
 to reach through the oct-file interface.
 </p>
 <p>Because many other languages provide C or C++ APIs it is relatively simple to
@@ -129,7 +117,7 @@ build bridges between Octave and other languages.  This is also a way to bridge
 to hardware resources which often have device drivers written in C.
 </p>
 
-<ul class="section-toc">
+<ul class="mini-toc">
 <li><a href="Oct_002dFiles.html" accesskey="1">Oct-Files</a></li>
 <li><a href="Mex_002dFiles.html" accesskey="2">Mex-Files</a></li>
 <li><a href="Standalone-Programs.html" accesskey="3">Standalone Programs</a></li>
@@ -137,7 +125,7 @@ to hardware resources which often have device drivers written in C.
 </ul>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Test-and-Demo-Functions.html">Test and Demo Functions</a>, Previous: <a href="Packages.html">Packages</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

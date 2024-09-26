@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>String Operations (GNU Octave (version 7.1.0))</title>
+<title>String Operations (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="String Operations (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="String Operations (GNU Octave (version 7.1.0))">
+<meta name="description" content="String Operations (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="String Operations (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Character-Arrays.html" rel="prev" title="Character Arrays">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,13 +31,13 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="String-Operations">
-<div class="header">
+<div class="section-level-extent" id="String-Operations">
+<div class="nav-panel">
 <p>
 Next: <a href="Converting-Strings.html" accesskey="n" rel="next">Converting Strings</a>, Previous: <a href="Character-Arrays.html" accesskey="p" rel="prev">Character Arrays</a>, Up: <a href="Strings.html" accesskey="u" rel="up">Strings</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="String-Operations-1"></span><h3 class="section">5.3 String Operations</h3>
+<h3 class="section" id="String-Operations-1"><span>5.3 String Operations<a class="copiable-link" href="#String-Operations-1"> &para;</a></span></h3>
 
 <p>Octave supports a wide range of functions for manipulating strings.
 Since a string is just a matrix, simple manipulations can be accomplished
@@ -57,18 +45,18 @@ using standard operators.  The following example shows how to replace
 all blank characters with underscores.
 </p>
 <div class="example">
-<pre class="example">quote = ...
+<div class="group"><pre class="example-preformatted">quote = ...
   &quot;First things first, but not necessarily in that order&quot;;
 quote( quote == &quot; &quot; ) = &quot;_&quot;
 &rArr; quote =
     First_things_first,_but_not_necessarily_in_that_order
-</pre></div>
+</pre></div></div>
 
 <p>For more complex manipulations, such as searching, replacing, and
 general regular expressions, the following functions come with Octave.
 </p>
 
-<ul class="section-toc">
+<ul class="mini-toc">
 <li><a href="Common-String-Operations.html" accesskey="1">Common String Operations</a></li>
 <li><a href="Concatenating-Strings.html" accesskey="2">Concatenating Strings</a></li>
 <li><a href="Splitting-and-Joining-Strings.html" accesskey="3">Splitting and Joining Strings</a></li>

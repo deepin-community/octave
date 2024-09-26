@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Sending Patches (GNU Octave (version 7.1.0))</title>
+<title>Sending Patches (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Sending Patches (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Sending Patches (GNU Octave (version 7.1.0))">
+<meta name="description" content="Sending Patches (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Sending Patches (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,9 @@
 <link href="Bug-Reporting.html" rel="prev" title="Bug Reporting">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+ul.mark-bullet {list-style-type: disc}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,18 +30,18 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="appendixsubsec" id="Sending-Patches">
-<div class="header">
+<div class="appendixsubsec-level-extent" id="Sending-Patches">
+<div class="nav-panel">
 <p>
 Previous: <a href="Bug-Reporting.html" accesskey="p" rel="prev">How to Report Bugs</a>, Up: <a href="Reporting-Bugs.html" accesskey="u" rel="up">Reporting Bugs</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Sending-Patches-for-Octave"></span><h4 class="appendixsubsec">D.2.4 Sending Patches for Octave</h4>
-<span id="index-improving-Octave-1"></span>
-<span id="index-diffs_002c-submitting"></span>
-<span id="index-patches_002c-submitting"></span>
-<span id="index-submitting-diffs"></span>
-<span id="index-submitting-patches"></span>
+<h4 class="appendixsubsec" id="Sending-Patches-for-Octave"><span>D.2.4 Sending Patches for Octave<a class="copiable-link" href="#Sending-Patches-for-Octave"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-improving-Octave-1"></a>
+<a class="index-entry-id" id="index-diffs_002c-submitting"></a>
+<a class="index-entry-id" id="index-patches_002c-submitting"></a>
+<a class="index-entry-id" id="index-submitting-diffs"></a>
+<a class="index-entry-id" id="index-submitting-patches"></a>
 
 <p>If you would like to write bug fixes or improvements for Octave, that is
 very helpful.  When you send your changes, please follow these
@@ -64,37 +52,37 @@ useful, but using it will take extra work.  Maintaining Octave is a lot
 of work in the best of circumstances, and we can&rsquo;t keep up unless you do
 your best to help.
 </p>
-<ul>
-<li> Send an explanation with your changes of what problem they fix or what
+<ul class="itemize mark-bullet">
+<li>Send an explanation with your changes of what problem they fix or what
 improvement they bring about.  For a bug fix, just include a copy of the
 bug report, and explain why the change fixes the bug.
 
-</li><li> Always include a proper bug report for the problem you think you have
+</li><li>Always include a proper bug report for the problem you think you have
 fixed.  We need to convince ourselves that the change is right before
 installing it.  Even if it is right, we might have trouble judging it if
 we don&rsquo;t have a way to reproduce the problem.
 
-</li><li> Include all the comments that are appropriate to help people reading the
+</li><li>Include all the comments that are appropriate to help people reading the
 source in the future understand why this change was needed.
 
-</li><li> Don&rsquo;t mix together changes made for different reasons.
-Send them <em>individually</em>.
+</li><li>Don&rsquo;t mix together changes made for different reasons.
+Send them <em class="emph">individually</em>.
 
 <p>If you make two changes for separate reasons, then we might not want to
 install them both.  We might want to install just one.
 </p>
-</li><li> Use &lsquo;<samp>diff -c</samp>&rsquo; to make your diffs.  Diffs without context are hard
+</li><li>Use &lsquo;<samp class="samp">diff -c</samp>&rsquo; to make your diffs.  Diffs without context are hard
 for us to install reliably.  More than that, they make it hard for us to
 study the diffs to decide whether we want to install them.  Unified diff
 format is better than contextless diffs, but not as easy to read as
-&lsquo;<samp>-c</samp>&rsquo; format.
+&lsquo;<samp class="samp">-c</samp>&rsquo; format.
 
-<p>If you have GNU diff, use &lsquo;<samp>diff -cp</samp>&rsquo;, which shows the name of the
+<p>If you have GNU diff, use &lsquo;<samp class="samp">diff -cp</samp>&rsquo;, which shows the name of the
 function that each change occurs in.
 </p>
-</li><li> Write the change log entries for your changes.
+</li><li>Write the change log entries for your changes.
 
-<p>Read the <samp>ChangeLog</samp> file to see what sorts of information to put
+<p>Read the <samp class="file">ChangeLog</samp> file to see what sorts of information to put
 in, and to learn the style that we use.  The purpose of the change log
 is to show people where to find what was changed.  So you need to be
 specific about what functions you changed; in large functions, it&rsquo;s
@@ -112,7 +100,7 @@ the change, send us the header line.
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Previous: <a href="Bug-Reporting.html">How to Report Bugs</a>, Up: <a href="Reporting-Bugs.html">Reporting Bugs</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

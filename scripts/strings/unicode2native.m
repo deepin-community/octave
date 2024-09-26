@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -59,7 +59,7 @@ function native_bytes = unicode2native (utf8_str, codepage = "")
     error ("unicode2native: UTF8_STR must be a character vector");
   endif
 
-  if (! (ischar (codepage) && isrow (codepage)))
+  if (! (ischar (codepage) && (isrow (codepage) || isempty (codepage))))
     error ("unicode2native: CODEPAGE must be a string");
   endif
 
@@ -78,13 +78,38 @@ endfunction
 %! assert (unicode2native (["ЄЅІ" "\0" "ЇЈЉЊ"], "ISO-8859-5"),
 %!         uint8 ([164:166 0 167:170]));
 %!assert <*60480> (unicode2native (''), uint8 ([]))
+%!testif HAVE_ICONV <*64331>
+%! assert (! isempty (unicode2native ("abc")));
+%!testif HAVE_ICONV <*64331>
+%! assert (! isempty (unicode2native ("abc", "")));
+
+## short character arrays with invalid UTF-8
+%!testif HAVE_ICONV <*63930>
+%! assert (unicode2native (char (230), 'windows-1252'), uint8 (63));
+%!testif HAVE_ICONV <*63930>
+%! assert (unicode2native (char (249), 'windows-1252'), uint8 (63));
+%!testif HAVE_ICONV <*63930>
+%! assert (unicode2native (char (230:231), 'windows-1252'), uint8 ([63, 63]));
+%!testif HAVE_ICONV <*63930>
+%! assert (unicode2native (char (230:234), 'windows-1252'),
+%!         uint8 ([63, 63, 63, 63, 63]));
+%!testif HAVE_ICONV <*63930>
+%! assert (unicode2native (char ([230, 10]), 'windows-1252'),
+%!         uint8 ([63, 10]));
+
+## target encoding with surrogates larger than a byte
+%!testif HAVE_ICONV <*64139>
+%! assert (typecast (unicode2native ('abcde',
+%!                                   ['utf-16', nthargout(3, 'computer'), 'e']),
+%!                   'uint16'),
+%!         uint16 (97:101));
 
 %!error <Invalid call> unicode2native ()
 %!error <called with too many inputs> unicode2native ('a', 'ISO-8859-1', 'test')
 %!error <UTF8_STR must be a character vector> unicode2native (['ab'; 'cd'])
 %!error <UTF8_STR must be a character vector> unicode2native ({1 2 3 4})
 %!error <CODEPAGE must be a string> unicode2native ('ЄЅІЇЈЉЊ', 123)
-%!error <CODEPAGE must be a string> unicode2native ('ЄЅІЇЈЉЊ', ['ISO-8859-1']')
+%!error <CODEPAGE must be a string> unicode2native ('ЄЅІЇЈЉЊ', ['ISO-8859-1'].')
 %!testif HAVE_ICONV
 %! fail ("unicode2native ('a', 'foo')",
 %!       "converting from UTF-8 to codepage 'foo'");

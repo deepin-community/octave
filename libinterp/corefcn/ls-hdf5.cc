@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -100,7 +100,7 @@ hdf5_fstreambase::hdf5_fstreambase (const char *name, int mode, int /* prot */)
 }
 
 void
-hdf5_fstreambase::close (void)
+hdf5_fstreambase::close ()
 {
 #if defined (HAVE_HDF5)
 
@@ -181,7 +181,7 @@ hdf5_fstreambase::open_create (const char *name, int mode)
           // Check whether filename contains non-ASCII (UTF-8) characters.
           std::string::const_iterator first_non_ASCII
             = std::find_if (fname_str.begin (), fname_str.end (),
-                            [](char c) { return (c < 0 || c >= 128); });
+          [](char c) { return (c < 0 || c >= 128); });
           if (first_non_ASCII == fname_str.end ())
             {
               // No non-ASCII characters
@@ -307,17 +307,17 @@ hdf5_check_attr (octave_hdf5_id loc_id, const char *attr_name)
   // HDF5 doesn't print out all sorts of error messages if we
   // call H5Aopen for a non-existing attribute
 
-  H5E_auto_t err_func;
-  void *err_func_data;
+  H5E_auto_t err_fcn;
+  void *err_fcn_data;
 
   // turn off error reporting temporarily, but save the error
   // reporting function:
 
 #if defined (HAVE_HDF5_18)
-  H5Eget_auto (octave_H5E_DEFAULT, &err_func, &err_func_data);
+  H5Eget_auto (octave_H5E_DEFAULT, &err_fcn, &err_fcn_data);
   H5Eset_auto (octave_H5E_DEFAULT, nullptr, nullptr);
 #else
-  H5Eget_auto (&err_func, &err_func_data);
+  H5Eget_auto (&err_fcn, &err_fcn_data);
   H5Eset_auto (nullptr, nullptr);
 #endif
 
@@ -332,9 +332,9 @@ hdf5_check_attr (octave_hdf5_id loc_id, const char *attr_name)
 
   // restore error reporting:
 #if defined (HAVE_HDF5_18)
-  H5Eset_auto (octave_H5E_DEFAULT, err_func, err_func_data);
+  H5Eset_auto (octave_H5E_DEFAULT, err_fcn, err_fcn_data);
 #else
-  H5Eset_auto (err_func, err_func_data);
+  H5Eset_auto (err_fcn, err_fcn_data);
 #endif
   return retval;
 
@@ -355,17 +355,17 @@ hdf5_get_scalar_attr (octave_hdf5_id loc_id, octave_hdf5_id type_id,
   // HDF5 doesn't print out all sorts of error messages if we
   // call H5Aopen for a non-existing attribute
 
-  H5E_auto_t err_func;
-  void *err_func_data;
+  H5E_auto_t err_fcn;
+  void *err_fcn_data;
 
   // turn off error reporting temporarily, but save the error
   // reporting function:
 
 #if defined (HAVE_HDF5_18)
-  H5Eget_auto (octave_H5E_DEFAULT, &err_func, &err_func_data);
+  H5Eget_auto (octave_H5E_DEFAULT, &err_fcn, &err_fcn_data);
   H5Eset_auto (octave_H5E_DEFAULT, nullptr, nullptr);
 #else
-  H5Eget_auto (&err_func, &err_func_data);
+  H5Eget_auto (&err_fcn, &err_fcn_data);
   H5Eset_auto (nullptr, nullptr);
 #endif
 
@@ -384,9 +384,9 @@ hdf5_get_scalar_attr (octave_hdf5_id loc_id, octave_hdf5_id type_id,
 
   // restore error reporting:
 #if defined (HAVE_HDF5_18)
-  H5Eset_auto (octave_H5E_DEFAULT, err_func, err_func_data);
+  H5Eset_auto (octave_H5E_DEFAULT, err_fcn, err_fcn_data);
 #else
-  H5Eset_auto (err_func, err_func_data);
+  H5Eset_auto (err_fcn, err_fcn_data);
 #endif
   return retval;
 
@@ -622,8 +622,7 @@ load_inline_fcn (hid_t loc_id, const char *name, octave_value& retval)
 
   args(0) = std::string (iftext_tmp);
 
-  octave::interpreter& interp
-    = octave::__get_interpreter__ ("load_inline_fcn");
+  octave::interpreter& interp = octave::__get_interpreter__ ();
 
   octave_value_list tmp = interp.feval ("inline", args, 1);
 
@@ -664,7 +663,7 @@ hdf5_read_next_data_internal (hid_t group_id, const char *name, void *dv)
   hid_t type_class_id = -1;
   hid_t data_id = -1;
   hid_t subgroup_id = -1;
-  hid_t space_id = -1;;
+  hid_t space_id = -1;
 
   H5G_stat_t info;
   herr_t retval = 0;
@@ -672,8 +671,7 @@ hdf5_read_next_data_internal (hid_t group_id, const char *name, void *dv)
 
   std::string vname = name;
 
-  octave::type_info& type_info
-    = octave::__get_type_info__ ("hdf5_read_next_data_internal");
+  octave::type_info& type_info = octave::__get_type_info__ ();
 
   // Allow identifiers as all digits so we can load lists saved by
   // earlier versions of Octave.
@@ -1119,7 +1117,7 @@ read_hdf5_data (std::istream& is, const std::string& /* filename */,
 
       for (int i = argv_idx; i < argc; i++)
         {
-          glob_match pattern (argv[i]);
+          symbol_match pattern (argv[i]);
           if (pattern.match (std::string (&var_name[0])))
             {
               found = true;
@@ -1272,7 +1270,8 @@ save_hdf5_empty (octave_hdf5_id loc_id, const char *name, const dim_vector& d)
   if (space_hid < 0) return space_hid;
 #if defined (HAVE_HDF5_18)
   data_hid = H5Dcreate (loc_id, name, H5T_NATIVE_IDX, space_hid,
-                        octave_H5P_DEFAULT, octave_H5P_DEFAULT, octave_H5P_DEFAULT);
+                        octave_H5P_DEFAULT, octave_H5P_DEFAULT,
+                        octave_H5P_DEFAULT);
 #else
   data_hid = H5Dcreate (loc_id, name, H5T_NATIVE_IDX, space_hid,
                         octave_H5P_DEFAULT);
@@ -1434,7 +1433,8 @@ add_hdf5_data (octave_hdf5_id loc_id, const octave_value& tc,
     goto error_cleanup;
 
   // attach the type of the variable
-  type_id = H5Tcopy (H5T_C_S1); H5Tset_size (type_id, t.length () + 1);
+  type_id = H5Tcopy (H5T_C_S1);
+  H5Tset_size (type_id, t.length () + 1);
   if (type_id < 0)
     goto error_cleanup;
 

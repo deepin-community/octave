@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,6 +35,9 @@
 #if defined __cplusplus
 extern "C" {
 #endif
+
+extern OCTAVE_API long long
+octave_gettime_ns_wrapper (void);
 
 extern OCTAVE_API int octave_gettimeofday_wrapper (time_t *sec, long *usec);
 

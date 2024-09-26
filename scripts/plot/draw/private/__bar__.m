@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,16 +24,18 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __bar__ (@var{vertical}, @var{func}, @dots{})
-## Undocumented internal function.
+## @deftypefn {} {@var{varargout} =} __bar__ (@var{fcn}, @var{vertical}, @dots{})
+## Internal function with common code to implement @code{bar} and @code{barh}
+## plots.
+## @seealso{bar, barh}
 ## @end deftypefn
 
-function varargout = __bar__ (func, vertical, varargin)
+function varargout = __bar__ (fcn, vertical, varargin)
 
-  [hax, varargin, nargin] = __plt_get_axis_arg__ (func, varargin{:});
+  [hax, varargin, nargin] = __plt_get_axis_arg__ (fcn, varargin{:});
 
   if (! isnumeric (varargin{1}))
-    error ("%s: Y must be numeric", func);
+    error ("%s: Y must be numeric", fcn);
   endif
 
   width = 0.8;
@@ -63,9 +65,9 @@ function varargout = __bar__ (func, vertical, varargin)
       idx = 2;
     else
       if (! isvector (x))
-        error ("%s: X must be a vector", func);
+        error ("%s: X must be a vector", fcn);
       elseif (numel (unique (x)) != numel (x))
-        error ("%s: X vector values must be unique", func);
+        error ("%s: X vector values must be unique", fcn);
       endif
       idx = 3;
     endif
@@ -99,7 +101,7 @@ function varargout = __bar__ (func, vertical, varargin)
     else
       if ((ischar (varargin{idx}) || iscellstr (varargin{idx}))
           && ! have_line_spec)
-        [linespec, valid] = __pltopt__ (func, varargin{idx}, false);
+        [linespec, valid] = __pltopt__ (fcn, varargin{idx}, false);
         if (valid)
           have_line_spec = true;
           ## FIXME: strange parse error requires semicolon to be spaced
@@ -133,7 +135,7 @@ function varargout = __bar__ (func, vertical, varargin)
     y = y.';
   endif
   if (ngrp != rows (y))
-    error ("%s: length of X and Y must be equal", func);
+    error ("%s: length of X and Y must be equal", fcn);
   endif
 
   nbars = columns (y);
@@ -281,10 +283,10 @@ function hglist = bars (hax, ishist, vertical, x, y, xb, yb, width, group, have_
 
       if (vertical)
         h = patch (hax, xb(:,:,i), yb(:,:,i),
-                   "cdata", i*ones (columns (xb),1), "FaceColor", "flat");
+                   "cdata", i, "FaceColor", "flat");
       else
         h = patch (hax, yb(:,:,i), xb(:,:,i),
-                   "cdata", i*ones (columns (yb),1), "FaceColor", "flat");
+                   "cdata", i, "FaceColor", "flat");
       endif
 
       if (! isempty (varargin))

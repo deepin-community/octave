@@ -1,4 +1,4 @@
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -81,7 +81,7 @@ and @ref{Advanced Plotting}.
 * Multiple Plot Windows::
 * Manipulation of Plot Objects::
 * Manipulation of Plot Windows::
-* Use of the @code{interpreter} Property::
+* Use of the "interpreter" Property::
 * Printing and Saving Plots::
 * Interacting with Plots::
 * Test Plotting Functions::
@@ -307,12 +307,11 @@ function.
 The @code{xlim}, @code{ylim}, and @code{zlim} functions may be used to
 get or set individual axis limits.  Each has the same form.
 
-@c Add cross-references and function index entries for other limit functions.
-@anchor{XREFylim}
-@anchor{XREFzlim}
-@findex ylim
-@findex zlim
 @DOCSTRING(xlim)
+
+@DOCSTRING(ylim)
+
+@DOCSTRING(zlim)
 
 The @code{xticks}, @code{yticks}, @code{zticks}, @code{rticks}, and
 @code{thetaticks} functions may be used to get or set the tick mark locations
@@ -321,15 +320,15 @@ options are not currently available for @code{rticks}, and @code{thetaticks}.
 
 @c FIXME: Update this section if polarplot and polar axes changes change the
 @c        associated axis properties.
-@anchor{XREFyticks}
-@anchor{XREFzticks}
-@anchor{XREFrticks}
-@anchor{XREFthetaticks}
-@findex yticks
-@findex zticks
-@findex rticks
-@findex thetaticks
 @DOCSTRING(xticks)
+
+@DOCSTRING(yticks)
+
+@DOCSTRING(zticks)
+
+@DOCSTRING(rticks)
+
+@DOCSTRING(thetaticks)
 
 The @code{xticklabels}, @code{yticklabels}, and @code{zticklabels} functions
 may be used to get or set the label assigned to each tick location and the
@@ -338,21 +337,21 @@ labeling mode on the respective axis.  Each has the same form.
 @c FIXME: Update this section if polarplot and polar axes changes change the
 @c        associated axis properties.
 @c        Matlab also implements rticklabels and thetaticklabels.
-@anchor{XREFyticklabels}
-@anchor{XREFzticklabels}
-@findex yticklabels
-@findex zticklabels
 @DOCSTRING(xticklabels)
+
+@DOCSTRING(yticklabels)
+
+@DOCSTRING(zticklabels)
 
 The @code{xtickangle}, @code{ytickangle}, and @code{ztickangle} functions
 may be used to get or set the rotation angle of labels for the respective axis.
 Each has the same form.
 
-@anchor{XREFytickangle}
-@anchor{XREFztickangle}
-@findex ytickangle
-@findex ztickangle
 @DOCSTRING(xtickangle)
+
+@DOCSTRING(ytickangle)
+
+@DOCSTRING(ztickangle)
 
 @node Two-dimensional Function Plotting
 @subsubsection Two-dimensional Function Plotting
@@ -604,12 +603,11 @@ are drawn in an invisible axes, on top of every other axes.
 
 @DOCSTRING(text)
 
-@c Add cross-references and function index entries for other label functions.
-@anchor{XREFylabel}
-@anchor{XREFzlabel}
-@findex ylabel
-@findex zlabel
 @DOCSTRING(xlabel)
+
+@DOCSTRING(ylabel)
+
+@DOCSTRING(zlabel)
 
 @DOCSTRING(clabel)
 
@@ -745,34 +743,33 @@ figure window, call the @code{close} function.
 
 @DOCSTRING(closereq)
 
-@node Use of the @code{interpreter} Property
-@subsection Use of the @code{interpreter} Property
-@anchor{XREFinterpreterusage}
+@node Use of the "interpreter" Property
+@subsection Use of the "interpreter" Property
 
 @code{text} (such as titles, labels, legend item) and @code{axes} objects
-feature a @ref{XREFtextinterpreter,,interpreter} and
-@ref{XREFaxesticklabelinterpreter,,ticklabelinterpreter} property respectively.
-It determines the manner in which special control sequences in the text are
-rendered.
+feature an @ref{XREFtextinterpreter,,@qcode{"interpreter}} and a
+@ref{XREFaxesticklabelinterpreter,,@qcode{"ticklabelinterpreter"}} property
+respectively.  It determines the manner in which special control sequences in
+the text are rendered.
 
 The interpreter property can take three values: @qcode{"none"}, @qcode{"tex"},
 @qcode{"latex"}.
 
 @menu
-* @code{none} interpreter::
-* @code{tex} interpreter::
-* @code{latex} interpreter::
+* "none" interpreter::
+* "tex" interpreter::
+* "latex" interpreter::
 @end menu
 
-@node @code{none} interpreter
-@subsubsection @code{none} interpreter
-@anchor{XREFnoneinterpreter}
+@node "none" interpreter
+@subsubsection "none" interpreter
+
 If the interpreter is set to @qcode{"none"} then no special
 rendering occurs---the displayed text is a verbatim copy of the specified text.
 
-@node @code{tex} interpreter
-@subsubsection @code{tex} interpreter
-@anchor{XREFtexinterpreter}
+@node "tex" interpreter
+@subsubsection "tex" interpreter
+
 The @qcode{"tex"} interpreter implements a subset of @TeX{} functionality when
 rendering text.  This allows the insertion of special glyphs such as Greek
 characters or mathematical symbols.  Special characters are inserted by using
@@ -1073,9 +1070,9 @@ symbol is impossible.  While @TeX{} translates this symbol to @w{Unicode 2218}
 has chosen to follow the @TeX{} specification, but has added the additional
 symbol @code{\deg} which maps to the degree symbol (U+00B0).
 
-@node @code{latex} interpreter
-@subsubsection @code{latex} interpreter
-@anchor{XREFlatexinterpreter}
+@node "latex" interpreter
+@subsubsection "latex" interpreter
+
 The @qcode{"latex"} interpreter only works if an external @LaTeX{} tool chain
 is present.  Three binaries are needed: @code{latex}, @code{dvipng}, and
 @code{dvisvgm}.  If those binaries are installed but not on the path, one can
@@ -1267,7 +1264,6 @@ at the Octave prompt should display a three-dimensional plot.
 @node Introduction to Graphics Structures
 @subsection Introduction to Graphics Structures
 @cindex introduction to graphics structures
-@anchor{XREFgraphics structures}
 
 The graphics functions use pointers, which are of class graphics_handle, in
 order to address the data structures which control visual display.  A
@@ -1296,7 +1292,7 @@ functions @code{area}, @code{bar}, @code{barh}, @code{contour},
 @code{contourf}, @code{contour3}, @code{surfc}, @code{meshc}, @code{errorbar},
 @code{quiver}, @code{quiver3}, @code{stair}, @code{stem}, @code{stem3} each
 return a handle to a complex data structure as documented in
-@ref{XREFdatasources,,Data Sources}.
+@ref{Data Sources in Object Groups,,Data Sources}.
 
 The graphics objects are arranged in a hierarchy:
 
@@ -1627,7 +1623,11 @@ The allowed values for radio (string) properties can be retrieved
 programmatically or displayed using the one or two argument calling form of the
 @code{set} function.  @xref{XREFset, , set}.
 
-In the following documentation default values are enclosed in @{ @}.
+Any properties marked as either unused or unimlplemented in the following
+documentation are accepted without error by Octave.  Values for those properties
+are stored in the object but have no effect on the object.
+
+Default property values are enclosed in @{ @}.
 
 @node Root Properties
 @subsubsection Root Properties
@@ -1964,15 +1964,7 @@ May be one of
 @item @qcode{"-"}
 Solid line.  [default]
 
-@c Special handling required to avoid '--' becoming single en-dash in Info
-@ifnottex
-
-@item @verb{|"--"|}
-@end ifnottex
-@iftex
-
-@item @code{"--"}
-@end iftex
+@item @qcode{"--"}
 Dashed line.
 
 @item @qcode{":"}
@@ -2301,7 +2293,7 @@ corresponding hggroup elements.
 @node Data Sources in Object Groups
 @subsubsection Data Sources in Object Groups
 @cindex data sources in object groups
-@anchor{XREFdatasources}
+
 All of the group objects contain data source parameters.  There are
 string parameters that contain an expression that is evaluated to update
 the relevant data property of the group when the @code{refreshdata}
@@ -2310,9 +2302,8 @@ function is called.
 @DOCSTRING(refreshdata)
 
 @anchor{XREFlinkdata}
-@c add the description of the linkdata function here when it is written
-@c remove the explicit anchor when you add the corresponding @DOCSTRING
-@c command
+@c FIXME: Add the description of the linkdata function here when it is written.
+@c Remove the explicit anchor when you add the corresponding @DOCSTRING command.
 
 @node Area Series
 @subsubsection Area Series
@@ -2766,7 +2757,7 @@ Data source variables.
 
 @menu
 * Customizing Toolkit Behavior::
-* Hardware vs. Software Rendering::
+* Hardware vs Software Rendering::
 * Precision issues::
 @end menu
 
@@ -2796,21 +2787,31 @@ plot (1:10)
 @end group
 @end example
 
-@node Hardware vs. Software Rendering
-@subsubsection Hardware vs. Software Rendering
+@node Hardware vs Software Rendering
+@subsubsection Hardware vs Software Rendering
 @cindex opengl rendering slow windows
 
-On Windows platforms, Octave uses software rendering for the OpenGL graphics
-toolkits (@qcode{"qt"} and @qcode{"fltk"}) by default.  This is done to avoid
-rendering and printing issues due to imperfect OpenGL driver implementations
-for diverse graphic cards from different vendors.  As a down-side, software
-rendering might be considerably slower than hardware accelerated rendering.
-To permanently switch back to hardware accelerated rendering with your graphic
-card drivers, rename the following file while Octave is closed:
+When using the Windows installer for Octave, the user has the option to select
+between "System OpenGL" and "Software OpenGL" renderers.  The choice between
+hardware or software rendering affects the OpenGL graphics toolkits
+(@qcode{"qt"} and @qcode{"fltk"}) only.  Software rendering can be used to
+avoid rendering and printing issues due to imperfect OpenGL driver
+implementations for diverse graphic cards from different vendors (notably
+integrated Intel graphics).  The downside is that software rendering may be
+considerably slower than hardware-accelerated rendering (and it might not work
+correctly on 32-bit platforms or @nospell{WoW64}).  To permanently switch
+between hardware-accelerated rendering with your graphics card drivers and
+software rendering, use the "OpenGL Switcher" application from the Start menu
+while Octave is closed.  Alternatively, rename the following file while Octave
+is closed:
 
 @file{@var{octave-home}\bin\opengl32.dll}
-@*where @var{octave-home} is the directory in which Octave is installed (the
-default is @file{C:\Octave\Octave-@var{version}}).
+@*where @var{octave-home} is the directory returned by
+@ref{XREFOCTAVE_HOME, , @w{@code{OCTAVE_HOME}}}, i.e., the directory in which
+Octave is installed (the default is
+@file{C:\Program Files\GNU Octave\Octave\Octave-@var{version}\mingw64}).
+Change the file extension to @file{.bak} for hardware rendering or to
+@file{.dll} for software rendering.
 
 @node Precision issues
 @subsubsection Precision issues

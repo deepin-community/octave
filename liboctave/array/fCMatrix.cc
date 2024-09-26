@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1994-2022 The Octave Project Developers
+// Copyright (C) 1994-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -171,7 +171,7 @@ FloatComplexMatrix::operator != (const FloatComplexMatrix& a) const
 }
 
 bool
-FloatComplexMatrix::ishermitian (void) const
+FloatComplexMatrix::ishermitian () const
 {
   octave_idx_type nr = rows ();
   octave_idx_type nc = cols ();
@@ -737,7 +737,7 @@ norm1 (const FloatComplexMatrix& a)
 }
 
 FloatComplexMatrix
-FloatComplexMatrix::inverse (void) const
+FloatComplexMatrix::inverse () const
 {
   octave_idx_type info;
   float rcon;
@@ -893,19 +893,24 @@ FloatComplexMatrix::finverse (MatrixType& mattype, octave_idx_type& info,
     info = -1;
   else if (calc_cond)
     {
-      F77_INT cgecon_info = 0;
+      if (octave::math::isnan (anorm))
+        rcon = octave::numeric_limits<float>::NaN ();
+      else
+        {
+          F77_INT cgecon_info = 0;
 
-      // Now calculate the condition number for non-singular matrix.
-      char job = '1';
-      Array<float> rz (dim_vector (2 * nc, 1));
-      float *prz = rz.fortran_vec ();
-      F77_XFCN (cgecon, CGECON, (F77_CONST_CHAR_ARG2 (&job, 1),
-                                 nc, F77_CMPLX_ARG (tmp_data), nr, anorm,
-                                 rcon, F77_CMPLX_ARG (pz), prz, cgecon_info
-                                 F77_CHAR_ARG_LEN (1)));
+          // Now calculate the condition number for non-singular matrix.
+          char job = '1';
+          Array<float> rz (dim_vector (2 * nc, 1));
+          float *prz = rz.fortran_vec ();
+          F77_XFCN (cgecon, CGECON, (F77_CONST_CHAR_ARG2 (&job, 1),
+                                     nc, F77_CMPLX_ARG (tmp_data), nr, anorm,
+                                     rcon, F77_CMPLX_ARG (pz), prz, cgecon_info
+                                     F77_CHAR_ARG_LEN (1)));
 
-      if (cgecon_info != 0)
-        info = -1;
+          if (cgecon_info != 0)
+            info = -1;
+        }
     }
 
   if ((info == -1 && ! force)
@@ -1040,7 +1045,7 @@ FloatComplexMatrix::pseudo_inverse (float tol) const
 #if defined (HAVE_FFTW)
 
 FloatComplexMatrix
-FloatComplexMatrix::fourier (void) const
+FloatComplexMatrix::fourier () const
 {
   std::size_t nr = rows ();
   std::size_t nc = cols ();
@@ -1069,7 +1074,7 @@ FloatComplexMatrix::fourier (void) const
 }
 
 FloatComplexMatrix
-FloatComplexMatrix::ifourier (void) const
+FloatComplexMatrix::ifourier () const
 {
   std::size_t nr = rows ();
   std::size_t nc = cols ();
@@ -1098,7 +1103,7 @@ FloatComplexMatrix::ifourier (void) const
 }
 
 FloatComplexMatrix
-FloatComplexMatrix::fourier2d (void) const
+FloatComplexMatrix::fourier2d () const
 {
   dim_vector dv (rows (), cols ());
 
@@ -1112,7 +1117,7 @@ FloatComplexMatrix::fourier2d (void) const
 }
 
 FloatComplexMatrix
-FloatComplexMatrix::ifourier2d (void) const
+FloatComplexMatrix::ifourier2d () const
 {
   dim_vector dv (rows (), cols ());
 
@@ -1128,7 +1133,7 @@ FloatComplexMatrix::ifourier2d (void) const
 #else
 
 FloatComplexMatrix
-FloatComplexMatrix::fourier (void) const
+FloatComplexMatrix::fourier () const
 {
   (*current_liboctave_error_handler)
     ("support for FFTW was unavailable or disabled when liboctave was built");
@@ -1137,7 +1142,7 @@ FloatComplexMatrix::fourier (void) const
 }
 
 FloatComplexMatrix
-FloatComplexMatrix::ifourier (void) const
+FloatComplexMatrix::ifourier () const
 {
   (*current_liboctave_error_handler)
     ("support for FFTW was unavailable or disabled when liboctave was built");
@@ -1146,7 +1151,7 @@ FloatComplexMatrix::ifourier (void) const
 }
 
 FloatComplexMatrix
-FloatComplexMatrix::fourier2d (void) const
+FloatComplexMatrix::fourier2d () const
 {
   (*current_liboctave_error_handler)
     ("support for FFTW was unavailable or disabled when liboctave was built");
@@ -1155,7 +1160,7 @@ FloatComplexMatrix::fourier2d (void) const
 }
 
 FloatComplexMatrix
-FloatComplexMatrix::ifourier2d (void) const
+FloatComplexMatrix::ifourier2d () const
 {
   (*current_liboctave_error_handler)
     ("support for FFTW was unavailable or disabled when liboctave was built");
@@ -1166,7 +1171,7 @@ FloatComplexMatrix::ifourier2d (void) const
 #endif
 
 FloatComplexDET
-FloatComplexMatrix::determinant (void) const
+FloatComplexMatrix::determinant () const
 {
   octave_idx_type info;
   float rcon;
@@ -1345,7 +1350,7 @@ FloatComplexMatrix::determinant (MatrixType& mattype,
 }
 
 float
-FloatComplexMatrix::rcond (void) const
+FloatComplexMatrix::rcond () const
 {
   MatrixType mattype (*this);
   return rcond (mattype);
@@ -2844,7 +2849,8 @@ FloatComplexMatrix::sumsq (int dim) const
   return FloatComplexNDArray::sumsq (dim);
 }
 
-FloatMatrix FloatComplexMatrix::abs (void) const
+FloatMatrix
+FloatComplexMatrix::abs () const
 {
   return FloatComplexNDArray::abs ();
 }
@@ -2910,7 +2916,7 @@ FloatComplexMatrix::column_is_real_only (octave_idx_type j) const
 }
 
 FloatComplexColumnVector
-FloatComplexMatrix::row_min (void) const
+FloatComplexMatrix::row_min () const
 {
   Array<octave_idx_type> dummy_idx;
   return row_min (dummy_idx);
@@ -2985,7 +2991,7 @@ FloatComplexMatrix::row_min (Array<octave_idx_type>& idx_arg) const
 }
 
 FloatComplexColumnVector
-FloatComplexMatrix::row_max (void) const
+FloatComplexMatrix::row_max () const
 {
   Array<octave_idx_type> dummy_idx;
   return row_max (dummy_idx);
@@ -3060,7 +3066,7 @@ FloatComplexMatrix::row_max (Array<octave_idx_type>& idx_arg) const
 }
 
 FloatComplexRowVector
-FloatComplexMatrix::column_min (void) const
+FloatComplexMatrix::column_min () const
 {
   Array<octave_idx_type> dummy_idx;
   return column_min (dummy_idx);
@@ -3135,7 +3141,7 @@ FloatComplexMatrix::column_min (Array<octave_idx_type>& idx_arg) const
 }
 
 FloatComplexRowVector
-FloatComplexMatrix::column_max (void) const
+FloatComplexMatrix::column_max () const
 {
   Array<octave_idx_type> dummy_idx;
   return column_max (dummy_idx);
@@ -3650,9 +3656,10 @@ max (const FloatComplexMatrix& a, const FloatComplexMatrix& b)
   return result;
 }
 
-FloatComplexMatrix linspace (const FloatComplexColumnVector& x1,
-                             const FloatComplexColumnVector& x2,
-                             octave_idx_type n)
+FloatComplexMatrix
+linspace (const FloatComplexColumnVector& x1,
+          const FloatComplexColumnVector& x2,
+          octave_idx_type n)
 
 {
   octave_idx_type m = x1.numel ();
@@ -3671,19 +3678,7 @@ FloatComplexMatrix linspace (const FloatComplexColumnVector& x1,
 
   retval.clear (m, n);
   for (octave_idx_type i = 0; i < m; i++)
-    retval.xelem (i, 0) = x1(i);
-
-  // The last column is unused so temporarily store delta there
-  FloatComplex *delta = &retval.xelem (0, n-1);
-  for (octave_idx_type i = 0; i < m; i++)
-    delta[i] = (x1(i) == x2(i)) ? 0 : (x2(i) - x1(i)) / (n - 1.0f);
-
-  for (octave_idx_type j = 1; j < n-1; j++)
-    for (octave_idx_type i = 0; i < m; i++)
-      retval.xelem (i, j) = x1(i) + static_cast<float> (j)*delta[i];
-
-  for (octave_idx_type i = 0; i < m; i++)
-    retval.xelem (i, n-1) = x2(i);
+    retval.insert (linspace (x1(i), x2(i), n), i, 0);
 
   return retval;
 }

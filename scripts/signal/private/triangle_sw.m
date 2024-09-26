@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,9 +24,11 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} triangle_sw (@var{n}, @var{b})
-## Triangular spectral window.  Subfunction used for spectral density
-## estimation.
+## @deftypefn {} {@var{retval} =} triangle_sw (@var{n}, @var{b})
+## Triangular spectral window.
+##
+## Subfunction used for spectral density estimation.
+## @seealso{spectral_xdf}
 ## @end deftypefn
 
 function retval = triangle_sw (n, b)

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} rindex (@var{s}, @var{t})
+## @deftypefn {} {@var{n} =} rindex (@var{s}, @var{t})
 ## Return the position of the last occurrence of the character string
 ## @var{t} in the character string @var{s}, or 0 if no occurrence is
 ## found.

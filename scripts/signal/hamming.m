@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,9 +24,9 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} hamming (@var{m})
-## @deftypefnx {} {} hamming (@var{m}, "periodic")
-## @deftypefnx {} {} hamming (@var{m}, "symmetric")
+## @deftypefn  {} {@var{c} =} hamming (@var{m})
+## @deftypefnx {} {@var{c} =} hamming (@var{m}, "periodic")
+## @deftypefnx {} {@var{c} =} hamming (@var{m}, "symmetric")
 ## Return the filter coefficients of a Hamming window of length @var{m}.
 ##
 ## If the optional argument @qcode{"periodic"} is given, the periodic form
@@ -45,7 +45,7 @@ function c = hamming (m, opt)
     print_usage ();
   endif
 
-  if (! (isscalar (m) && (m == fix (m)) && (m > 0)))
+  if (! (isscalar (m) && m > 0 && m == fix (m)))
     error ("hamming: M must be a positive integer");
   endif
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -167,7 +167,7 @@ parse_range_spec (const octave_value& range_spec,
   return stat;
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFMETHOD (dlmread, interp, args, ,
            doc: /* -*- texinfo -*-
@@ -341,7 +341,7 @@ such as text, are also replaced by the @qcode{"emptyvalue"}.
   std::string old_locale (prev_locale ? prev_locale : "");
   std::setlocale (LC_ALL, "C");
   unwind_action act
-    ([old_locale] () { std::setlocale (LC_ALL, old_locale.c_str ()); });
+  ([old_locale] () { std::setlocale (LC_ALL, old_locale.c_str ()); });
 
   std::string line;
 
@@ -601,7 +601,7 @@ such as text, are also replaced by the @qcode{"emptyvalue"}.
 %!   unlink (file);
 %! end_unwind_protect
 
-%!testif ; ! ismac ()
+%!testif ; ! __have_feature__ ("LLVM_LIBCXX")
 %! file = tempname ();
 %! unwind_protect
 %!   fid = fopen (file, "wt");
@@ -622,9 +622,8 @@ such as text, are also replaced by the @qcode{"emptyvalue"}.
 %!   unlink (file);
 %! end_unwind_protect
 
-%!test <47413>
-%! ## Same test code as above, but intended only for test statistics on Mac.
-%! if (! ismac ()), return; endif
+%!testif HAVE_LLVM_LIBCXX  <47413>
+%! ## Same test code as above, intended only for test statistics with libc++.
 %! file = tempname ();
 %! unwind_protect
 %!   fid = fopen (file, "wt");
@@ -661,7 +660,7 @@ such as text, are also replaced by the @qcode{"emptyvalue"}.
 %!   unlink (file);
 %! end_unwind_protect
 
-%!testif ; ! ismac ()   <*50589>
+%!testif ; ! __have_feature__ ("LLVM_LIBCXX")  <*50589>
 %! file = tempname ();
 %! unwind_protect
 %!   fid = fopen (file, "wt");
@@ -679,9 +678,8 @@ such as text, are also replaced by the @qcode{"emptyvalue"}.
 %!   unlink (file);
 %! end_unwind_protect
 
-%!test <47413>
-%! ## Same test code as above, but intended only for test statistics on Mac.
-%! if (! ismac ()), return; endif
+%!testif HAVE_LLVM_LIBCXX  <47413>
+%! ## Same test code as above, intended only for test statistics with libc++.
 %! file = tempname ();
 %! unwind_protect
 %!   fid = fopen (file, "wt");
@@ -767,4 +765,4 @@ such as text, are also replaced by the @qcode{"emptyvalue"}.
 
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -45,6 +45,14 @@
 %!   __printf_assert__ ("fail\n");
 %! elseif (x)
 %!   __printf_assert__ ("pass\n");
+%! endif
+%! assert (__prog_output_assert__ ("pass"));
+
+%!test <63935>
+%! if (true (4, 1) & true (4, 1))
+%!   __printf_assert__ ("pass\n");
+%! elseif (x)
+%!   __printf_assert__ ("fail\n");
 %! endif
 %! assert (__prog_output_assert__ ("pass"));
 

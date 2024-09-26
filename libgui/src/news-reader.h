@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -29,42 +29,38 @@
 #include <QObject>
 #include <QString>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class news_reader : public QObject
 {
-  class base_qobject;
+  Q_OBJECT
 
-  class news_reader : public QObject
-  {
-    Q_OBJECT
+public:
 
-  public:
+  news_reader (const QString& base_url, const QString& page,
+               int serial = -1, bool connect_to_web = false)
+    : QObject (), m_base_url (base_url),
+      m_page (page), m_serial (serial), m_connect_to_web (connect_to_web)
+  { }
 
-    news_reader (base_qobject& oct_qobj, const QString& base_url,
-                 const QString& page, int serial = -1,
-                 bool connect_to_web = false)
-      : QObject (), m_octave_qobj (oct_qobj), m_base_url (base_url),
-        m_page (page), m_serial (serial), m_connect_to_web (connect_to_web)
-    { }
+signals:
 
-  signals:
+  void display_news_signal (const QString& news);
 
-    void display_news_signal (const QString& news);
+  void finished ();
 
-    void finished (void);
+public slots:
 
-  public slots:
+  void process ();
 
-    void process (void);
+private:
 
-  private:
+  QString m_base_url;
+  QString m_page;
+  int m_serial;
+  bool m_connect_to_web;
+};
 
-    base_qobject& m_octave_qobj;
-
-    QString m_base_url;
-    QString m_page;
-    int m_serial;
-    bool m_connect_to_web;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

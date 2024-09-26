@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Validating the number of Arguments (GNU Octave (version 7.1.0))</title>
+<title>Validating the number of Arguments (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Validating the number of Arguments (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Validating the number of Arguments (GNU Octave (version 7.1.0))">
+<meta name="description" content="Validating the number of Arguments (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Validating the number of Arguments (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,10 @@
 <link href="Validating-the-type-of-Arguments.html" rel="next" title="Validating the type of Arguments">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,61 +31,67 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Validating-the-number-of-Arguments">
-<div class="header">
+<div class="subsection-level-extent" id="Validating-the-number-of-Arguments">
+<div class="nav-panel">
 <p>
 Next: <a href="Validating-the-type-of-Arguments.html" accesskey="n" rel="next">Validating the type of Arguments</a>, Up: <a href="Validating-Arguments.html" accesskey="u" rel="up">Validating Arguments</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Validating-the-number-of-Arguments-1"></span><h4 class="subsection">11.9.1 Validating the number of Arguments</h4>
+<h4 class="subsection" id="Validating-the-number-of-Arguments-1"><span>11.9.1 Validating the number of Arguments<a class="copiable-link" href="#Validating-the-number-of-Arguments-1"> &para;</a></span></h4>
 
 <p>In Octave the following idiom is seen frequently at the beginning of a
 function definition:
 </p>
 <div class="example">
-<pre class="example">if (nargin &lt; min_#_inputs || nargin &gt; max_#_inputs)
+<div class="group"><pre class="example-preformatted">if (nargin &lt; min_#_inputs || nargin &gt; max_#_inputs)
   print_usage ();
 endif
-</pre></div>
+</pre></div></div>
 
 <p>which stops the function execution and prints a message about the correct
 way to call the function whenever the number of inputs is wrong.
 </p>
-<p>Similar error checking is provided by <code>narginchk</code> and
-<code>nargoutchk</code>.
+<p>Similar error checking is provided by <code class="code">narginchk</code> and
+<code class="code">nargoutchk</code>.
 </p>
-<span id="XREFnarginchk"></span><dl class="def">
-<dt id="index-narginchk"><span class="category">: </span><span><em></em> <strong>narginchk</strong> <em>(<var>minargs</var>, <var>maxargs</var>)</em><a href='#index-narginchk' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFnarginchk"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-narginchk"><span class="category-def">: </span><span><strong class="def-name">narginchk</strong> <code class="def-code-arguments">(<var class="var">minargs</var>, <var class="var">maxargs</var>)</code><a class="copiable-link" href="#index-narginchk"> &para;</a></span></dt>
 <dd><p>Check for correct number of input arguments.
 </p>
 <p>Generate an error message if the number of arguments in the calling function
-is outside the range <var>minargs</var> and <var>maxargs</var>.  Otherwise, do
+is outside the range <var class="var">minargs</var> and <var class="var">maxargs</var>.  Otherwise, do
 nothing.
 </p>
-<p>Both <var>minargs</var> and <var>maxargs</var> must be scalar numeric values.  Zero,
-Inf, and negative values are all allowed, and <var>minargs</var> and
-<var>maxargs</var> may be equal.
+<p>Both <var class="var">minargs</var> and <var class="var">maxargs</var> must be scalar numeric values.  Zero,
+Inf, and negative values are all allowed, and <var class="var">minargs</var> and
+<var class="var">maxargs</var> may be equal.
 </p>
-<p>Note that this function evaluates <code>nargin</code> on the caller.
+<p>Note that this function evaluates <code class="code">nargin</code> on the caller.
 </p>
 
-<p><strong>See also:</strong> <a href="#XREFnargoutchk">nargoutchk</a>, <a href="Raising-Errors.html#XREFerror">error</a>, <a href="Multiple-Return-Values.html#XREFnargout">nargout</a>, <a href="Defining-Functions.html#XREFnargin">nargin</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFnargoutchk">nargoutchk</a>, <a class="ref" href="Raising-Errors.html#XREFerror">error</a>, <a class="ref" href="Multiple-Return-Values.html#XREFnargout">nargout</a>, <a class="ref" href="Defining-Functions.html#XREFnargin">nargin</a>.
 </p></dd></dl>
 
 
-<span id="XREFnargoutchk"></span><dl class="def">
-<dt id="index-nargoutchk"><span class="category">: </span><span><em></em> <strong>nargoutchk</strong> <em>(<var>minargs</var>, <var>maxargs</var>)</em><a href='#index-nargoutchk' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-nargoutchk-1"><span class="category">: </span><span><em><var>msgstr</var> =</em> <strong>nargoutchk</strong> <em>(<var>minargs</var>, <var>maxargs</var>, <var>nargs</var>)</em><a href='#index-nargoutchk-1' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-nargoutchk-2"><span class="category">: </span><span><em><var>msgstr</var> =</em> <strong>nargoutchk</strong> <em>(<var>minargs</var>, <var>maxargs</var>, <var>nargs</var>, &quot;string&quot;)</em><a href='#index-nargoutchk-2' class='copiable-anchor'> &para;</a></span></dt>
-<dt id="index-nargoutchk-3"><span class="category">: </span><span><em><var>msgstruct</var> =</em> <strong>nargoutchk</strong> <em>(<var>minargs</var>, <var>maxargs</var>, <var>nargs</var>, &quot;struct&quot;)</em><a href='#index-nargoutchk-3' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFnargoutchk"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-nargoutchk"><span class="category-def">: </span><span><strong class="def-name">nargoutchk</strong> <code class="def-code-arguments">(<var class="var">minargs</var>, <var class="var">maxargs</var>)</code><a class="copiable-link" href="#index-nargoutchk"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-nargoutchk-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">msgstr</var> =</code> <strong class="def-name">nargoutchk</strong> <code class="def-code-arguments">(<var class="var">minargs</var>, <var class="var">maxargs</var>, <var class="var">nargs</var>)</code><a class="copiable-link" href="#index-nargoutchk-1"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-nargoutchk-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">msgstr</var> =</code> <strong class="def-name">nargoutchk</strong> <code class="def-code-arguments">(<var class="var">minargs</var>, <var class="var">maxargs</var>, <var class="var">nargs</var>, &quot;string&quot;)</code><a class="copiable-link" href="#index-nargoutchk-2"> &para;</a></span></dt>
+<dt class="deftypefnx def-cmd-deftypefn" id="index-nargoutchk-3"><span class="category-def">: </span><span><code class="def-type"><var class="var">msgstruct</var> =</code> <strong class="def-name">nargoutchk</strong> <code class="def-code-arguments">(<var class="var">minargs</var>, <var class="var">maxargs</var>, <var class="var">nargs</var>, &quot;struct&quot;)</code><a class="copiable-link" href="#index-nargoutchk-3"> &para;</a></span></dt>
 <dd><p>Check for correct number of output arguments.
 </p>
 <p>In the first form, return an error if the number of arguments is not between
-<var>minargs</var> and <var>maxargs</var>.  Otherwise, do nothing.  Note that this
-function evaluates the value of <code>nargout</code> on the caller so its value
+<var class="var">minargs</var> and <var class="var">maxargs</var>.  Otherwise, do nothing.  Note that this
+function evaluates the value of <code class="code">nargout</code> on the caller so its value
 must have not been tampered with.
 </p>
-<p>Both <var>minargs</var> and <var>maxargs</var> must be numeric scalars.  Zero, Inf,
+<p>Both <var class="var">minargs</var> and <var class="var">maxargs</var> must be numeric scalars.  Zero, Inf,
 and negative are all valid, and they can have the same value.
 </p>
 <p>For backwards compatibility, the other forms return an appropriate error
@@ -106,13 +101,13 @@ invalid.
 <p>This is useful for checking to that the number of output arguments supplied
 to a function is within an acceptable range.
 </p>
-<p><strong>See also:</strong> <a href="#XREFnarginchk">narginchk</a>, <a href="Raising-Errors.html#XREFerror">error</a>, <a href="Multiple-Return-Values.html#XREFnargout">nargout</a>, <a href="Defining-Functions.html#XREFnargin">nargin</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFnarginchk">narginchk</a>, <a class="ref" href="Raising-Errors.html#XREFerror">error</a>, <a class="ref" href="Multiple-Return-Values.html#XREFnargout">nargout</a>, <a class="ref" href="Defining-Functions.html#XREFnargin">nargin</a>.
 </p></dd></dl>
 
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Validating-the-type-of-Arguments.html">Validating the type of Arguments</a>, Up: <a href="Validating-Arguments.html">Validating Arguments</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

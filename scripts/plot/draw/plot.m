@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1993-2022 The Octave Project Developers
+## Copyright (C) 1993-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -80,6 +80,11 @@
 ## @item
 ## @code{squeeze()} is applied to arguments with more than two dimensions,
 ## but no more than two singleton dimensions.
+##
+## @item
+## If either @var{x} or @var{y} is a scalar and the other is a vector, a
+## series of points are plotted at the coordinates defined by the scalar and
+## each element of the vector.
 ##
 ## @item
 ## If both arguments are vectors, the elements of @var{y} are plotted versus

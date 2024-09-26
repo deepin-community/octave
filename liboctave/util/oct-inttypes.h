@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2004-2022 The Octave Project Developers
+// Copyright (C) 2004-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -40,21 +40,22 @@
 
 #if defined (OCTAVE_INT_USE_LONG_DOUBLE)
 
-namespace octave
-{
-  namespace math
-  {
-    inline long double round (long double x)
-    {
-      return std::roundl (x);
-    }
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-    inline long double isnan (long double x)
-    {
-      return isnan (static_cast<double> (x));
-    }
-  }
+OCTAVE_BEGIN_NAMESPACE(math)
+
+inline long double round (long double x)
+{
+  return std::roundl (x);
 }
+
+inline long double isnan (long double x)
+{
+  return isnan (static_cast<double> (x));
+}
+
+OCTAVE_END_NAMESPACE(math)
+OCTAVE_END_NAMESPACE(octave)
 
 #endif
 
@@ -108,8 +109,7 @@ OCTAVE_REGISTER_INT_TYPE (uint64_t);
 
 #undef OCTAVE_REGISTER_INT_TYPE
 
-// Handles non-homogeneous integer comparisons.  Avoids doing useless
-// tests.
+// Handles non-homogeneous integer comparisons.  Avoids doing useless tests.
 
 class octave_int_cmp_op
 {
@@ -123,22 +123,22 @@ class octave_int_cmp_op
   class prom
   {
     // Promote to int?
-    static const bool pint = (sizeof (T1) < sizeof (int)
-                              && sizeof (T2) < sizeof (int));
+    static const bool s_pint = (sizeof (T1) < sizeof (int)
+                                && sizeof (T2) < sizeof (int));
 
-    static const bool t1sig = std::numeric_limits<T1>::is_signed;
-    static const bool t2sig = std::numeric_limits<T2>::is_signed;
+    static const bool s_t1sig = std::numeric_limits<T1>::is_signed;
+    static const bool s_t2sig = std::numeric_limits<T2>::is_signed;
 
-    static const bool psig
-      = (pint || (sizeof (T2) > sizeof (T1) && t2sig) || t1sig);
+    static const bool s_psig
+      = (s_pint || (sizeof (T2) > sizeof (T1) && s_t2sig) || s_t1sig);
 
-    static const int psize
-      = (pint
+    static const int s_psize
+      = (s_pint
          ? sizeof (int)
          : (sizeof (T2) > sizeof (T1) ? sizeof (T2) : sizeof (T1)));
   public:
 
-    typedef typename query_integer_type<psize, psig>::type type;
+    typedef typename query_integer_type<s_psize, s_psig>::type type;
   };
 
   // Implements comparisons between two types of equal size but
@@ -346,8 +346,8 @@ class octave_int_base
 {
 public:
 
-  static T min_val (void) { return std::numeric_limits<T>::min (); }
-  static T max_val (void) { return std::numeric_limits<T>::max (); }
+  static T min_val () { return std::numeric_limits<T>::min (); }
+  static T max_val () { return std::numeric_limits<T>::max (); }
 
   // Convert integer value.
 
@@ -482,10 +482,10 @@ public:
   {
     // Promotion type for multiplication (if exists).
 
-    typedef typename query_integer_type<2*sizeof (T), false>::type mptype;
+    typedef typename query_integer_type<2* sizeof (T), false>::type mptype;
 
     return octave_int_base<T>::truncate_int (static_cast<mptype> (x)
-                                             * static_cast<mptype> (y));
+           * static_cast<mptype> (y));
   }
 
   // Division with rounding to nearest.  Note that / and % are
@@ -651,7 +651,7 @@ public:
   {
     // Promotion type for multiplication (if exists).
 
-    typedef typename query_integer_type<2*sizeof (T), true>::type mptype;
+    typedef typename query_integer_type<2* sizeof (T), true>::type mptype;
 
     return octave_int_base<T>::truncate_int (static_cast<mptype> (x)
            * static_cast<mptype> (y));
@@ -779,13 +779,15 @@ class octave_int_arith
 { };
 
 template <typename T>
-class octave_int : public octave_int_base<T>
+class
+OCTAVE_TEMPLATE_API
+octave_int : public octave_int_base<T>
 {
 public:
 
   typedef T val_type;
 
-  octave_int (void) : m_ival () { }
+  octave_int () : m_ival () { }
 
   octave_int (T i) : m_ival (i) { }
 
@@ -825,26 +827,26 @@ public:
 
   octave_int& operator = (const octave_int<T>&) = default;
 
-  ~octave_int (void) = default;
+  ~octave_int () = default;
 
-  T value (void) const { return m_ival; }
+  T value () const { return m_ival; }
 
-  const unsigned char * iptr (void) const
+  const unsigned char * iptr () const
   {
     return reinterpret_cast<const unsigned char *> (& m_ival);
   }
 
-  bool operator ! (void) const { return ! m_ival; }
+  bool operator ! () const { return ! m_ival; }
 
-  bool bool_value (void) const { return static_cast<bool> (value ()); }
+  bool bool_value () const { return static_cast<bool> (value ()); }
 
-  char char_value (void) const { return static_cast<char> (value ()); }
+  char char_value () const { return static_cast<char> (value ()); }
 
-  double double_value (void) const { return static_cast<double> (value ()); }
+  double double_value () const { return static_cast<double> (value ()); }
 
-  float float_value (void) const { return static_cast<float> (value ()); }
+  float float_value () const { return static_cast<float> (value ()); }
 
-  operator T (void) const { return value (); }
+  operator T () const { return value (); }
 
   octave_int<T> operator + () const { return *this; }
 
@@ -861,6 +863,12 @@ public:
   OCTAVE_INT_UN_OP (signum, signum)
 
 #undef OCTAVE_INT_UN_OP
+
+  octave_int<T> operator ~ () const
+  {
+    T bitinv = ~ m_ival;
+    return bitinv;
+  }
 
   // Homogeneous binary integer operations.
 #define OCTAVE_INT_BIN_OP(OP, NAME, ARGT)               \
@@ -887,12 +895,12 @@ public:
 
 #undef OCTAVE_INT_BIN_OP
 
-  static octave_int<T> min (void) { return std::numeric_limits<T>::min (); }
-  static octave_int<T> max (void) { return std::numeric_limits<T>::max (); }
+  static octave_int<T> min () { return std::numeric_limits<T>::min (); }
+  static octave_int<T> max () { return std::numeric_limits<T>::max (); }
 
-  static int nbits (void) { return std::numeric_limits<T>::digits; }
+  static int nbits () { return std::numeric_limits<T>::digits; }
 
-  static int byte_size (void) { return sizeof (T); }
+  static int byte_size () { return sizeof (T); }
 
   static const OCTAVE_API char * type_name ();
 
@@ -920,18 +928,19 @@ mod (const octave_int<T>& x, const octave_int<T>& y)
 
 // No mixed integer binary operations!
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+OCTAVE_BEGIN_NAMESPACE(math)
+
+template <typename T>
+bool
+isnan (const octave_int<T>&)
 {
-  namespace math
-  {
-    template <typename T>
-    bool
-    isnan (const octave_int<T>&)
-    {
-      return false;
-    }
-  }
+  return false;
 }
+
+OCTAVE_END_NAMESPACE(math)
+OCTAVE_END_NAMESPACE(octave)
 
 // FIXME: can/should any of these be inline?
 
@@ -1095,8 +1104,8 @@ bitshift (const octave_int<T>& a, int n,
   OCTAVE_DECLARE_EXTERNAL_LONG_DOUBLE_INT_OP (T, mul);          \
   OCTAVE_DECLARE_EXTERNAL_LONG_DOUBLE_INT_OP (T, div)
 
-  OCTAVE_DECLARE_EXTERNAL_LONG_DOUBLE_INT_OPS (octave_int64);
-  OCTAVE_DECLARE_EXTERNAL_LONG_DOUBLE_INT_OPS (octave_uint64);
+OCTAVE_DECLARE_EXTERNAL_LONG_DOUBLE_INT_OPS (octave_int64);
+OCTAVE_DECLARE_EXTERNAL_LONG_DOUBLE_INT_OPS (octave_uint64);
 
 #endif
 

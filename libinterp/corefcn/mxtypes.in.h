@@ -2,7 +2,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2001-2022 The Octave Project Developers
+// Copyright (C) 2001-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -54,7 +54,7 @@ SUCH DAMAGE.
 #include "octave-config.h"
 
 typedef enum
-{
+  {
   mxUNKNOWN_CLASS = 0,
   mxCELL_CLASS,
   mxSTRUCT_CLASS,
@@ -76,7 +76,7 @@ typedef enum
 mxClassID;
 
 typedef enum
-{
+  {
   mxREAL = 0,
   mxCOMPLEX = 1
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2012-2022 The Octave Project Developers
+// Copyright (C) 2012-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -33,16 +33,17 @@
 #include "Array-fwd.h"
 #include "intNDArray.h"
 
-namespace octave
-{
-  extern OCTAVE_API bool
-  base64_encode (const char *inc, const std::size_t inlen, char **out);
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  extern OCTAVE_API Array<double>
-  base64_decode (const std::string& str);
+extern OCTAVE_API bool
+base64_encode (const char *inc, const std::size_t inlen, char **out);
 
-  extern OCTAVE_API intNDArray<octave_uint8>
-  base64_decode_bytes (const std::string& str);
-}
+extern OCTAVE_API Array<double>
+base64_decode (const std::string& str);
+
+extern OCTAVE_API intNDArray<octave_uint8>
+base64_decode_bytes (const std::string& str);
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

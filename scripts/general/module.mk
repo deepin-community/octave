@@ -44,9 +44,12 @@ FCN_FILE_DIRS += \
   %reldir%/interpn.m \
   %reldir%/isequal.m \
   %reldir%/isequaln.m \
+  %reldir%/isuniform.m \
   %reldir%/logspace.m \
   %reldir%/nextpow2.m \
   %reldir%/num2str.m \
+  %reldir%/pagectranspose.m \
+  %reldir%/pagetranspose.m \
   %reldir%/pol2cart.m \
   %reldir%/polyarea.m \
   %reldir%/postpad.m \
@@ -64,7 +67,6 @@ FCN_FILE_DIRS += \
   %reldir%/rng.m \
   %reldir%/rot90.m \
   %reldir%/rotdim.m \
-  %reldir%/shift.m \
   %reldir%/shiftdim.m \
   %reldir%/sortrows.m \
   %reldir%/sph2cart.m \

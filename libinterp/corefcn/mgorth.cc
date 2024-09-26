@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2009-2022 The Octave Project Developers
+// Copyright (C) 2009-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,7 +32,7 @@
 #include "error.h"
 #include "errwarn.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 template <typename ColumnVector, typename Matrix, typename RowVector>
 static void
@@ -147,4 +147,4 @@ On exit, @var{y} is a unit vector such that:
 %! assert (a' * a, eye (5), 1e10);
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,103 +35,98 @@
 
 class octave_function;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class
+dynamic_loader
 {
-  class interpreter;
+private:
 
   class
-  dynamic_loader
+  shlibs_list
   {
-  private:
-
-    class
-    shlibs_list
-    {
-    public:
-
-      typedef std::list<dynamic_library>::iterator iterator;
-      typedef std::list<dynamic_library>::const_iterator const_iterator;
-
-      shlibs_list (void) : m_lib_list () { }
-
-      // No copying!
-
-      shlibs_list (const shlibs_list&) = delete;
-
-      shlibs_list& operator = (const shlibs_list&) = delete;
-
-      ~shlibs_list (void) = default;
-
-      void append (const dynamic_library& shl);
-
-      std::list<std::string> remove (dynamic_library& shl);
-
-      dynamic_library find_file (const std::string& file_name) const;
-
-      void display (void) const;
-
-    private:
-
-      // List of libraries we have loaded.
-      std::list<dynamic_library> m_lib_list;
-    };
-
-
   public:
 
-    dynamic_loader (interpreter& interp)
-      : m_interpreter (interp), m_loaded_shlibs (), m_doing_load (false)
-    { }
+    typedef std::list<dynamic_library>::iterator iterator;
+    typedef std::list<dynamic_library>::const_iterator const_iterator;
 
-    // No copying!
+    shlibs_list () : m_lib_list () { }
 
-    dynamic_loader (const dynamic_loader&) = delete;
+    OCTAVE_DISABLE_COPY_MOVE (shlibs_list)
 
-    dynamic_loader& operator = (const dynamic_loader&) = delete;
+    ~shlibs_list () = default;
 
-    virtual ~dynamic_loader (void) = default;
+    void append (const dynamic_library& shl);
 
-    octave_function *
-    load_oct (const std::string& fcn_name,
-              const std::string& file_name = "",
-              bool relative = false);
+    std::list<std::string> remove (dynamic_library& shl);
 
-    octave_function *
-    load_mex (const std::string& fcn_name,
-              const std::string& file_name = "",
-              bool relative = false);
+    dynamic_library find_file (const std::string& file_name) const;
 
-    bool remove_oct (const std::string& fcn_name,
-                     dynamic_library& shl);
-
-    bool remove_mex (const std::string& fcn_name,
-                     dynamic_library& shl);
+    void display () const;
 
   private:
 
-    void clear_function (const std::string& fcn_name);
-
-    void clear (dynamic_library& oct_file);
-
-    interpreter& m_interpreter;
-
-    shlibs_list m_loaded_shlibs;
-
-    bool m_doing_load;
-
-    static std::string name_mangler (const std::string& name);
-
-    static std::string name_uscore_mangler (const std::string& name);
-
-    static std::string mex_mangler (const std::string& name);
-
-    static std::string mex_uscore_mangler (const std::string& name);
-
-    static std::string mex_f77_mangler (const std::string& name);
-
-    static void * try_load_mex (dynamic_library& mex_file,
-                                const std::string& fcn_name, bool& have_fmex);
+    // List of libraries we have loaded.
+    std::list<dynamic_library> m_lib_list;
   };
-}
+
+
+public:
+
+  dynamic_loader () = delete;
+
+  dynamic_loader (interpreter& interp)
+    : m_interpreter (interp), m_loaded_shlibs (), m_doing_load (false)
+  { }
+
+  OCTAVE_DISABLE_COPY_MOVE (dynamic_loader)
+
+  virtual ~dynamic_loader () = default;
+
+  octave_function *
+  load_oct (const std::string& fcn_name,
+            const std::string& file_name = "",
+            bool relative = false);
+
+  octave_function *
+  load_mex (const std::string& fcn_name,
+            const std::string& file_name = "",
+            bool relative = false);
+
+  bool remove_oct (const std::string& fcn_name,
+                   dynamic_library& shl);
+
+  bool remove_mex (const std::string& fcn_name,
+                   dynamic_library& shl);
+
+private:
+
+  void clear_function (const std::string& fcn_name);
+
+  void clear (dynamic_library& oct_file);
+
+  interpreter& m_interpreter;
+
+  shlibs_list m_loaded_shlibs;
+
+  bool m_doing_load;
+
+  static std::string name_mangler (const std::string& name);
+
+  static std::string name_uscore_mangler (const std::string& name);
+
+  static std::string mex_mangler (const std::string& name);
+
+  static std::string mex_uscore_mangler (const std::string& name);
+
+  static std::string mex_f77_mangler (const std::string& name);
+
+  static void * try_load_mex (dynamic_library& mex_file,
+                             const std::string& fcn_name, bool& have_fmex);
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

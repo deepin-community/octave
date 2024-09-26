@@ -2,7 +2,7 @@
 
 ########################################################################
 ##
-## Copyright (C) 1993-2022 The Octave Project Developers
+## Copyright (C) 1993-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -215,8 +215,6 @@ noinst_LTLIBRARIES =
 octinclude_HEADERS =
 nodist_octinclude_HEADERS =
 
-pkgconfig_DATA =
-
 DIST_SRC =
 
 ALL_LOCAL_TARGETS =
@@ -233,7 +231,7 @@ SUBDIRS = libgnu test
 # See bug #45578.
 BUILT_SOURCES += libgnu/libgnu.la
 
-libgnu/libgnu.la: oct-conf-post.h
+libgnu/libgnu.la: oct-conf-post-private.h oct-conf-post-public.h
 	cd libgnu && $(MAKE) $(AM_MAKEFLAGS) all
 
 include liboctave/module.mk
@@ -252,7 +250,7 @@ DIST_HOOKS := \
   docs-dist-hook \
   fix-file-perms-dist-hook \
   hg-id-dist-hook \
-  appdata-dist-hook \
+  metainfo-dist-hook \
   icons-dist-hook \
   scripts-dist-hook
 
@@ -298,16 +296,11 @@ icons-dist-hook:
 endif
 
 BUILT_SOURCES += \
-  oct-conf-post.h \
+  oct-conf-post-private.h \
+  oct-conf-post-public.h \
   octave-config.h \
   run-octave \
   $(DIRSTAMP_FILES)
-
-if AMCOND_HAVE_BROKEN_STL_ALGO_H
-  BUILT_SOURCES += bits/stl_algo.h
-else
-  BUILT_SOURCES += nonexistent-file
-endif
 
 noinst_SCRIPTS = run-octave
 
@@ -330,6 +323,7 @@ MAINTAINERCLEANFILES += \
 CONFIG_FILES = @ac_config_headers@ @ac_config_files@
 
 nodist_octinclude_HEADERS += \
+  oct-conf-post-public.h \
   octave-config.h
 
 OCTAVE_INTERPRETER_TARGETS += \
@@ -359,10 +353,6 @@ octave-config.h: config.h build-aux/mk-octave-config-h.sh
 	$(AM_V_GEN)$(SHELL) $(srcdir)/build-aux/mk-octave-config-h.sh $< > $@-t && \
 	$(simple_move_if_change_rule)
 
-bits/stl_algo.h: build-aux/stl_algo.h-fixed
-	$(AM_V_GEN)$(MKDIR_P) bits && \
-	$(INSTALL_HEADER) $< $@
-
 config-vars: $(GEN_CONFIG_SHELL)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	$(SED) -n 's/  *"$$/"/; s/^\([A-Za-z_][A-Za-z0-9_]*\)=" *\(.*\)" *$$/\1 \2/p' $^ | sort -u > $@-t && \
@@ -380,19 +370,12 @@ check-subst-vars: build-aux/check-subst-vars.sh make-vars config-vars
 	@$(SHELL) -f build-aux/check-subst-vars.sh make-vars config-vars
 .PHONY: check-subst-vars
 
-## If we aren't trying to fix stl_algo.h, then try to ensure that
-## there isn't a stray copy sitting in the build tree.
-
-nonexistent-file:
-	$(AM_V_at)rm -f bits/stl_algo.h
-.PHONY: nonexistent-file
-
 .gdbinit: etc/gdbinit
 	$(AM_V_GEN)$(gdbinit-install-rule)
 
 NEWS: etc/NEWS.$(OCTAVE_MAJOR_VERSION).md
-	$(AM_V_GEN)cp $< $@
-.PHONY: NEWS
+	$(AM_V_GEN)rm -f $@ && \
+	cp $< $@
 
 define changelog-from-hg-log
   rm -f $@-t && \
@@ -458,17 +441,18 @@ install-oct: oct-file-pkg-add
 	if [ -n "`cat $(OCT_FILE_PKG_ADD_FILES)`" ]; then \
 	  $(INSTALL_DATA) oct-file-pkg-add $(DESTDIR)$(octfiledir)/PKG_ADD; \
 	fi
+	top_build_dir=`pwd` && \
 	cd $(DESTDIR)$(octlibdir) && \
 	for ltlib in $(OCT_FILE_LIBS); do \
 	  f=`echo $$ltlib | $(SED) 's,.*/,,'`; \
-	  dl=`$(SED) -n -e "s/dlname='\([^']*\)'/\1/p" < $$f`; \
+	  dl=`$(SED) -n -e "s/dlname='\([^']*\)'/\1/p" < $$top_build_dir/$$ltlib`; \
 	  if [ -n "$$dl" ]; then \
 	    $(INSTALL_PROGRAM) $$dl $(DESTDIR)$(octfiledir)/`echo $$f | $(SED) 's,^lib,,; s,\.la$$,.oct,'`; \
 	  else \
 	    echo "error: dlname is empty in $$ltlib!"; \
 	    exit 1; \
 	  fi; \
-	  lnames=`$(SED) -n -e "s/library_names='\([^']*\)'/\1/p" < $$f`; \
+	  lnames=`$(SED) -n -e "s/library_names='\([^']*\)'/\1/p" < $$top_build_dir/$$ltlib`; \
 	  if [ -n "$$lnames" ]; then \
 	    rm -f $$f $$lnames $$dl; \
 	  fi \
@@ -507,13 +491,6 @@ endef
 
 define simple_move_if_change_rule
   $(call move_if_change_rule,$@-t,$@)
-endef
-
-define cp_update_rule
-  if [ "x${srcdir}" != "x." ] && [ -f ${srcdir}/$@ ] && [ ! -f $@ ]; then \
-    cp ${srcdir}/$@ $@; \
-    touch -r ${srcdir}/$@ $@; \
-  fi
 endef
 
 define build-info-commands

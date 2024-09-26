@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -137,9 +137,9 @@
 ## purposes only.  Except for @samp{OCTAVE_HOME} and @samp{OCTAVE_EXEC_HOME},
 ## users may not override these variables.
 ##
-## If @w{@env{OCTAVE_HOME}} or @w{@env{OCTAVE_EXEC_HOME}} are set in the
+## If @w{@env{OCTAVE_HOME}}@ or @w{@env{OCTAVE_EXEC_HOME}}@ are set in the
 ## environment, then other variables are adjusted accordingly with
-## @w{@env{OCTAVE_HOME}} or @w{@env{OCTAVE_EXEC_HOME}} substituted for the
+## @w{@env{OCTAVE_HOME}}@ or @w{@env{OCTAVE_EXEC_HOME}}@ substituted for the
 ## original value of the directory specified by the @option{--prefix} or
 ## @option{--exec-prefix} options that were used when Octave was configured.
 ##
@@ -226,7 +226,7 @@ function [output, status] = mkoctfile (varargin)
   [sts, out] = system (cmd);
 
   if (nargout > 0)
-    [output, status] = deal (out, sts);
+    [output, status] = deal (strtrim (out), sts);
     if (sts != 0)
       warning ("mkoctfile: building exited with failure status\n");
     endif

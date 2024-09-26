@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2014-2022 The Octave Project Developers
+## Copyright (C) 2014-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -64,7 +64,7 @@
 ## Eventually we need to also support these features:
 ## @deftypefnx {} {zoom_object_handle =} zoom (@var{hfig})
 
-function h = zoom (hfig, option)
+function zoom (hfig, option)
 
   ## FIXME: Presumably should implement this for Matlab compatibility.
   if (nargin == 1 && nargout > 0 && isfigure (hfig))

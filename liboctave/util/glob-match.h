@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -60,7 +60,7 @@ public:
 
   glob_match& operator = (const glob_match& gm) = default;
 
-  ~glob_match (void) = default;
+  ~glob_match () = default;
 
   void set_pattern (const std::string& p) { m_pat = p; }
 
@@ -83,7 +83,7 @@ public:
   // We forward to glob_internal here to avoid problems with gnulib's
   // glob.h defining glob to be rpl_glob.
 
-  string_vector glob (void) const;
+  string_vector glob () const;
 
 private:
 
@@ -94,6 +94,57 @@ private:
   int m_fnmatch_flags;
 
   int opts_to_fnmatch_flags (unsigned int xopts) const;
+};
+
+class
+OCTAVE_API
+symbol_match
+{
+
+// This class is meant to provide a performant implementation for symbol
+// matching on all platforms.  For Windows, that is done by manually
+// implementing matching rules for '*' and '?' wildcards.  On other platforms,
+// the matching is deferred to `fnmatch`.  That means that the matching rules
+// differ depending on the platform.  To write cross-platform compatible code
+// with this class, do not use [] groups or ranges, named character classes,
+// collating symbols, or equivalence class expressions.
+
+public:
+
+  symbol_match (const std::string& pattern);
+
+  symbol_match (const symbol_match&);
+
+  symbol_match& operator = (const symbol_match& in)
+  {
+    if (this == &in)
+      return *this;
+
+    m_pat = in.m_pat;
+
+    if (m_glob)
+      m_glob->set_pattern (m_pat);
+
+    return *this;
+  }
+
+  ~symbol_match () = default;
+
+  void set_pattern (const std::string& p)
+  {
+    m_pat = p;
+
+    if (m_glob)
+      m_glob->set_pattern (m_pat);
+  }
+
+  bool match (const std::string& sym);
+
+private:
+
+  std::string m_pat;
+
+  std::unique_ptr<glob_match> m_glob;
 };
 
 #endif

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,30 +30,25 @@
 
 class QLabel;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class TextControl : public BaseControl
 {
-  class base_qobject;
-  class interpreter;
-}
+public:
+  TextControl (octave::interpreter& interp,
+               const graphics_object& go, QLabel *label);
+  ~TextControl ();
 
-namespace octave
-{
+  static TextControl *
+  create (octave::interpreter& interp,
+          const graphics_object& go);
 
-  class TextControl : public BaseControl
-  {
-  public:
-    TextControl (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-                 const graphics_object& go, QLabel *label);
-    ~TextControl (void);
+protected:
+  void update (int pId);
+};
 
-    static TextControl *
-    create (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-            const graphics_object& go);
-
-  protected:
-    void update (int pId);
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

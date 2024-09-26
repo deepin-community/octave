@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -60,14 +60,12 @@
 #include "mkostemp-wrapper.h"
 #include "oct-env.h"
 #include "oct-locbuf.h"
-#include "tmpfile-wrapper.h"
 #include "unistd-wrappers.h"
 
 #include "builtin-defun-decls.h"
 #include "defun.h"
 #include "error.h"
 #include "errwarn.h"
-#include "file-io.h"
 #include "interpreter-private.h"
 #include "interpreter.h"
 #include "load-path.h"
@@ -84,7 +82,7 @@
 #include "utils.h"
 #include "variables.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 static void
 normalize_fopen_mode (std::string& mode, bool& use_zlib)
@@ -177,8 +175,7 @@ fopen_mode_to_ios_mode (const std::string& mode)
 
 DEFMETHOD (fclose, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} fclose (@var{fid})
-@deftypefnx {} {} fclose ("all")
+@deftypefn  {} {@var{status} =} fclose (@var{fid})
 @deftypefnx {} {@var{status} =} fclose ("all")
 Close the file specified by the file descriptor @var{fid}.
 
@@ -221,7 +218,7 @@ Clear the stream state for the file specified by the file descriptor
 
 DEFMETHOD (fflush, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} fflush (@var{fid})
+@deftypefn {} {@var{status} =} fflush (@var{fid})
 Flush output to file descriptor @var{fid}.
 
 @code{fflush} returns 0 on success and an OS dependent error value
@@ -396,9 +393,6 @@ do_stream_open (const std::string& name, const std::string& mode_arg,
 
   fid = -1;
 
-  // Valid names for encodings consist of ASCII characters only.
-  std::transform (encoding.begin (), encoding.end (), encoding.begin (),
-                  ::tolower);
   if (encoding.compare ("utf-8"))
     {
       // check if encoding is valid
@@ -424,12 +418,12 @@ do_stream_open (const std::string& name, const std::string& mode_arg,
 
   std::string fname = sys::file_ops::tilde_expand (name);
 
-  sys::file_stat fs (fname);
+  bool is_dir = sys::dir_exists (fname);
 
   if (! (md & std::ios::out))
     fname = find_data_file_in_load_path ("fopen", fname);
 
-  if (! fs.is_dir ())
+  if (! is_dir)
     {
 #if defined (HAVE_ZLIB)
       if (use_zlib)
@@ -478,6 +472,22 @@ do_stream_open (const octave_value& tc_name, const octave_value& tc_mode,
   std::string arch = tc_arch.xstring_value ("%s: architecture type must be a string", fcn);
   std::string encoding = tc_encoding.xstring_value ("%s: ENCODING must be a string", fcn);
 
+  // Valid names for encodings consist of ASCII characters only.
+  std::transform (encoding.begin (), encoding.end (), encoding.begin (),
+                  ::tolower);
+
+  if (encoding == "system")
+    encoding = octave_locale_charset_wrapper ();
+
+#if defined (OCTAVE_HAVE_STRICT_ENCODING_FACET)
+  if (encoding != "utf-8")
+    {
+      warning_with_id ("Octave:fopen:encoding-unsupported",
+                       "fopen: encoding must be 'UTF-8' for this version");
+      encoding = "utf-8";
+    }
+#endif
+
   retval = do_stream_open (name, mode, arch, encoding, fid);
 
   return retval;
@@ -503,8 +513,7 @@ corresponding system error message.  The @var{mode} is a one or two
 character string that specifies whether the file is to be opened for
 reading, writing, or both.  The @var{encoding} is a character string with a
 valid encoding identifier.  This encoding is used when strings are read from
-or written to the file.  By default, the same encoding specified for reading
-@file{.m} files is used for interpreting user files.
+or written to the file.  By default, that is UTF-8.
 
 The second form of the @code{fopen} function returns a vector of file ids
 corresponding to all the currently open files, excluding the
@@ -626,11 +635,7 @@ fskipl, fseek, frewind, ftell, feof, ferror, fclear, fflush, freport, umask}
 
   octave_value arch = (nargin > 2) ? args(2) : octave_value ("native");
 
-  input_system& input_sys = interp.get_input_system ();
-  octave_value encoding = (nargin > 3) ? args(3)
-                          : octave_value (input_sys.mfile_encoding ());
-  if (encoding.string_value () == "system")
-    encoding = octave_value (octave_locale_charset_wrapper ());
+  octave_value encoding = (nargin > 3) ? args(3) : octave_value ("utf-8");
 
   int fid = -1;
 
@@ -662,6 +667,21 @@ fskipl, fseek, frewind, ftell, feof, ferror, fclear, fflush, freport, umask}
 %! assert (name, "");
 %! assert (mode, "");
 %! assert (arch, "");
+
+## FIXME: should be conditional on OCTAVE_HAVE_STRICT_ENCODING_FACET
+%!testif HAVE_LLVM_LIBCXX
+%! fname = tempname ();
+%! unwind_protect
+%!   fail ("fid = fopen (fname, 'wb', 'n', 'Windows-1252')", ...
+%!         "warning", "encoding must be 'UTF-8'");
+%!   [name, mode, arch, encoding] = fopen (fid);
+%!   assert (name, fname);
+%!   assert (mode, "wb");
+%!   assert (encoding, "utf-8");  # fallback after warning
+%! unwind_protect_cleanup
+%!   fclose (fid);
+%!   unlink (fname);
+%! end_unwind_protect
 */
 
 DEFMETHOD (freport, interp, args, ,
@@ -704,8 +724,11 @@ DEFMETHOD (frewind, interp, args, nargout,
 Move the file pointer to the beginning of the file specified by file
 descriptor @var{fid}.
 
-@code{frewind} returns 0 for success, and -1 if an error is encountered.  It
-is equivalent to @code{fseek (@var{fid}, 0, SEEK_SET)}.
+If an output @var{status} is requested then @code{frewind} returns 0 for
+success, and -1 if an error is encountered.
+
+Programming Note: @code{frewind} is equivalent to
+@code{fseek (@var{fid}, 0, SEEK_SET)}.
 @seealso{fseek, ftell, fopen}
 @end deftypefn */)
 {
@@ -728,16 +751,15 @@ is equivalent to @code{fseek (@var{fid}, 0, SEEK_SET)}.
 
 DEFMETHOD (fseek, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} fseek (@var{fid}, @var{offset})
-@deftypefnx {} {} fseek (@var{fid}, @var{offset}, @var{origin})
-@deftypefnx {} {@var{status} =} fseek (@dots{})
+@deftypefn  {} {@var{status} =} fseek (@var{fid}, @var{offset})
+@deftypefnx {} {@var{status} =} fseek (@var{fid}, @var{offset}, @var{origin})
 Set the file pointer to the location @var{offset} within the file @var{fid}.
 
 The pointer is positioned @var{offset} characters from the @var{origin}, which
-may be one of the predefined variables @w{@qcode{SEEK_SET}} (beginning),
-@w{@qcode{SEEK_CUR}} (current position), or @w{@qcode{SEEK_END}} (end of file)
+may be one of the predefined variables @w{@qcode{SEEK_SET}}@ (beginning),
+@w{@qcode{SEEK_CUR}}@ (current position), or @w{@qcode{SEEK_END}}@ (end of file)
 or strings @nospell{@qcode{"bof"}}, @nospell{@qcode{"cof"}}, or
-@nospell{@qcode{"eof"}}.  If @var{origin} is omitted, @w{@qcode{SEEK_SET}} is
+@nospell{@qcode{"eof"}}.  If @var{origin} is omitted, @w{@qcode{SEEK_SET}}@ is
 assumed.  @var{offset} may be positive, negative, or zero but not all
 combinations of @var{origin} and @var{offset} can be realized.
 
@@ -833,7 +855,8 @@ written to the file descriptor @var{fid} instead of @code{stdout}.
 If @var{fid} is omitted, the output is written to @code{stdout} making the
 function exactly equivalent to @code{printf}.
 
-The optional output returns the number of bytes written to the file.
+The optional output @var{numbytes} returns the number of bytes written to the
+file.
 
 Implementation Note: For compatibility with @sc{matlab}, escape sequences in
 the template string (e.g., @qcode{"@backslashchar{}n"} => newline) are
@@ -848,15 +871,18 @@ expanded even when the template string is defined with single quotes.
 
 DEFMETHOD (printf, interp, args, nargout,
            doc: /* -*- texinfo -*-
-@deftypefn {} {} printf (@var{template}, @dots{})
+@deftypefn  {} {} printf (@var{template}, @dots{})
+@deftypefnx {} {@var{numbytes} =} printf (@dots{})
 Print optional arguments under the control of the template string
-@var{template} to the stream @code{stdout} and return the number of
-characters printed.
+@var{template} to the stream @code{stdout} and return the number of characters
+printed.
 @ifclear OCTAVE_MANUAL
 
-See the Formatted Output section of the GNU Octave manual for a
-complete description of the syntax of the template string.
+See the Formatted Output section of the GNU Octave manual for a complete
+description of the syntax of the template string.
 @end ifclear
+
+The optional output @var{numbytes} returns the number of bytes printed.
 
 Implementation Note: For compatibility with @sc{matlab}, escape sequences in
 the template string (e.g., @qcode{"@backslashchar{}n"} => newline) are
@@ -883,20 +909,20 @@ puts_internal (interpreter& interp, const std::string& who,
 
   stream os = streams.lookup (args(0), who);
 
-  return ovl (os.puts (args(1), who));
+  return ovl (- (os.puts (args(1), who) < 0));
 }
 
 DEFMETHOD (fputs, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} fputs (@var{fid}, @var{string})
-@deftypefnx {} {@var{status} =} fputs (@var{fid}, @var{string})
+@deftypefn {} {@var{status} =} fputs (@var{fid}, @var{string})
 Write the string @var{string} to the file with file descriptor @var{fid}.
 
 The string is written to the file with no additional formatting.  Use
 @code{fdisp} instead to automatically append a newline character appropriate
 for the local machine.
 
-Return a non-negative number on success or EOF on error.
+The optional output @var{status} is 0 for success, or -1 if an error was
+encountered.
 @seealso{fdisp, fprintf, fwrite, fopen}
 @end deftypefn */)
 {
@@ -905,16 +931,45 @@ Return a non-negative number on success or EOF on error.
   return puts_internal (interp, who, args);
 }
 
+/*
+## Check if text is correctly converted to output encoding
+# FIXME: should be conditional on OCTAVE_HAVE_STRICT_ENCODING_FACET
+%!testif ; ! __have_feature__ ("LLVM_LIBCXX")  <*61839>
+%! str = "aäöu";  # string with non-ASCII characters
+%! fname = tempname ();
+%! fid = fopen (fname, "wt", "n", "ISO-8859-1");
+%! unwind_protect
+%!   fprintf (fid, '%s\n', str);
+%!   fdisp (fid, str);
+%!   fputs (fid, str);
+%!   fclose (fid);
+%!   ## re-open file for reading in binary mode
+%!   fid = fopen (fname, "rb");
+%!   fb = fread (fid);
+%!   fclose (fid);
+%!   ## check file content
+%!   encoded = [97 228 246 117];  # original string in ISO-8859-1 encoding
+%!   if (ispc ())
+%!     eol = double ("\r\n");
+%!   else
+%!     eol = double ("\n");
+%!   endif
+%!   assert (fb.', [encoded eol encoded eol encoded])
+%! unwind_protect_cleanup
+%!   unlink (fname);
+%! end_unwind_protect
+*/
+
 DEFMETHOD (puts, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} puts (@var{string})
-@deftypefnx {} {@var{status} =} puts (@var{string})
+@deftypefn {} {@var{status} =} puts (@var{string})
 Write a string to the standard output with no formatting.
 
 The string is written verbatim to the standard output.  Use @code{disp} to
 automatically append a newline character appropriate for the local machine.
 
-Return a non-negative number on success and EOF on error.
+The optional output @var{status} is 0 for success, or -1 if an error was
+encountered.
 @seealso{fputs, disp}
 @end deftypefn */)
 {
@@ -927,7 +982,7 @@ Return a non-negative number on success and EOF on error.
 
 DEFUN (sprintf, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn {} {} sprintf (@var{template}, @dots{})
+@deftypefn {} {@var{str} =} sprintf (@var{template}, @dots{})
 This is like @code{printf}, except that the output is returned as a
 string.
 
@@ -983,7 +1038,7 @@ expanded even when the template string is defined with single quotes.
   char type = (fmt_arg.is_sq_string () ? '\'' : '"');
 
   retval(0) = (result.empty () ? octave_value (charMatrix (1, 0), type)
-                               : octave_value (result, type));
+               : octave_value (result, type));
 
   return retval;
 }
@@ -1138,8 +1193,8 @@ character to be read is returned in @var{pos}.
       octave_idx_type count = 0;
 
       Array<double> size = (nargin == 3) ? args(2).vector_value ()
-                                         : Array<double> (dim_vector (1, 1),
-                                                          lo_ieee_inf_value ());
+                           : Array<double> (dim_vector (1, 1),
+                                            lo_ieee_inf_value ());
 
       octave_value tmp = os.scanf (args(1), size, count, who);
 
@@ -1911,7 +1966,7 @@ as the name of the function when reporting errors.
 %! msg1 = "textscan: 1 parameters given, but only 0 values";
 %! try
 %!   C = textscan (fid, "", "headerlines");
-%! end_try_catch;
+%! end_try_catch
 %! assert (! feof (fid));
 %! fclose (fid);
 %! unlink (f);
@@ -1923,7 +1978,7 @@ as the name of the function when reporting errors.
 %! msg1 = "textscan: HeaderLines must be numeric";
 %! try
 %!   C = textscan (fid, "", "headerlines", "hh");
-%! end_try_catch;
+%! end_try_catch
 %! fclose (fid);
 %! unlink (f);
 %! assert (msg1, lasterr);
@@ -1948,7 +2003,7 @@ as the name of the function when reporting errors.
 %! msg1 = "textscan: EndOfLine must be at most one character or '\\r\\n'";
 %! try
 %!   C = textscan (fid, "%f", "EndOfLine", "\n\r");
-%! end_try_catch;
+%! end_try_catch
 %! fclose (fid);
 %! unlink (f);
 %! assert (msg1, lasterr);
@@ -1961,7 +2016,7 @@ as the name of the function when reporting errors.
 %! msg1 = "textscan: EndOfLine must be at most one character or '\\r\\n'";
 %! try
 %!   C = textscan (fid, "%f", "EndOfLine", 33);
-%! end_try_catch;
+%! end_try_catch
 %! fclose (fid);
 %! unlink (f);
 %! assert (msg1, lasterr);
@@ -2273,11 +2328,13 @@ as the name of the function when reporting errors.
 %! assert (obs, { [0; 1; NaN; 2; 3] });
 
 ## file stream with encoding
-%!test
+## FIXME: should be conditional on OCTAVE_HAVE_STRICT_ENCODING_FACET
+%!testif ; ! __have_feature__ ("LLVM_LIBCXX")
 %! f = tempname ();
-%! fid = fopen (f, "w+", "n", "iso-8859-1");
+%! fid = fopen (f, "wt+", "n", "iso-8859-1");
 %! unwind_protect
 %!   fprintf (fid, "abc,äöü\n");
+%!   fflush (fid);
 %!   fseek (fid, 0, "bof");
 %!   obs = textscan (fid, "%s", "delimiter", ",");
 %!   fclose (fid);
@@ -2328,6 +2385,8 @@ as the name of the function when reporting errors.
 %!test <50743>
 %! C = textscan ('5973459727478852968', '%u64');
 %! assert (C{1}, uint64 (5973459727478852968));
+
+%!assert <*60711> (textscan('1,.,2', '%f', 'Delimiter', ','), {1});
 
 */
 
@@ -2648,23 +2707,23 @@ do_fwrite (stream& os, const octave_value& data,
 
 DEFMETHOD (fwrite, interp, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn  {} {} fwrite (@var{fid}, @var{data})
-@deftypefnx {} {} fwrite (@var{fid}, @var{data}, @var{precision})
-@deftypefnx {} {} fwrite (@var{fid}, @var{data}, @var{precision}, @var{skip})
-@deftypefnx {} {} fwrite (@var{fid}, @var{data}, @var{precision}, @var{skip}, @var{arch})
-@deftypefnx {} {@var{count} =} fwrite (@dots{})
+@deftypefn  {} {@var{count} =} fwrite (@var{fid}, @var{data})
+@deftypefnx {} {@var{count} =} fwrite (@var{fid}, @var{data}, @var{precision})
+@deftypefnx {} {@var{count} =} fwrite (@var{fid}, @var{data}, @var{precision}, @var{skip})
+@deftypefnx {} {@var{count} =} fwrite (@var{fid}, @var{data}, @var{precision}, @var{skip}, @var{arch})
 Write data in binary form to the file specified by the file descriptor
-@var{fid}, returning the number of values @var{count} successfully written
-to the file.
+@var{fid}.
 
-The argument @var{data} is a matrix of values that are to be written to
-the file.  The values are extracted in column-major order.
+The argument @var{data} is a matrix of values that are to be written to the
+file.  The values are extracted in column-major order.
 
 The remaining arguments @var{precision}, @var{skip}, and @var{arch} are
 optional, and are interpreted as described for @code{fread}.
 
-The behavior of @code{fwrite} is undefined if the values in @var{data}
-are too large to fit in the specified precision.
+The output @var{count} is the number of data items successfully written.
+
+Programming Note: The behavior of @code{fwrite} is undefined if the values in
+@var{data} are too large to fit in the specified precision.
 @seealso{fread, fputs, fprintf, fopen}
 @end deftypefn */)
 {
@@ -2838,10 +2897,13 @@ endwhile
 
 DEFMETHODX ("pclose", Fpclose, interp, args, ,
             doc: /* -*- texinfo -*-
-@deftypefn {} {} pclose (@var{fid})
-Close a file identifier that was opened by @code{popen}.
+@deftypefn {} {@var{status} =} pclose (@var{fid})
+Close a file identifier @var{fid} that was opened by @code{popen}.
 
-The function @code{fclose} may also be used for the same purpose.
+If successful, @code{fclose} returns 0, otherwise, it returns -1.
+
+Programming Note: The function @code{fclose} may also be used for the same
+purpose.
 @seealso{fclose, popen}
 @end deftypefn */)
 {
@@ -2852,6 +2914,49 @@ The function @code{fclose} may also be used for the same purpose.
 
   return ovl (streams.remove (args(0), "pclose"));
 }
+
+DEFUN (tempdir, args, ,
+       doc: /* -*- texinfo -*-
+@deftypefn {} {@var{dir} =} tempdir ()
+Return the name of the host system's directory for temporary files.
+
+The directory name is taken first from the environment variable @env{TMPDIR}.
+If that does not exist, the environment variable @env{TMP} (and on Windows
+platforms also with higher priority the environment variable @env{TEMP}) is
+checked.  If none of those are set, the system default returned by
+@code{P_tmpdir} is used.
+@seealso{P_tmpdir, tempname, mkstemp, tmpfile}
+@end deftypefn */)
+{
+  if (args.length () > 0)
+    print_usage ();
+
+  std::string tmpdir = sys::env::get_temp_directory ();
+
+  if (! sys::file_ops::is_dir_sep (tmpdir.back ()))
+    tmpdir += sys::file_ops::dir_sep_str ();
+
+  return ovl (tmpdir);
+}
+
+/*
+%!assert (ischar (tempdir ()))
+
+%!test
+%! old_wstate = warning ("off");
+%! old_tmpdir = getenv ("TMPDIR");
+%! unwind_protect
+%!   setenv ("TMPDIR", "__MY_TMP_DIR__");
+%!   assert (tempdir (), ["__MY_TMP_DIR__" filesep()]);
+%! unwind_protect_cleanup
+%!   if (! isempty (old_tmpdir))
+%!     setenv ("TMPDIR", old_tmpdir);
+%!   else
+%!     unsetenv ("TMPDIR");
+%!   endif
+%!   warning (old_wstate);
+%! end_unwind_protect
+*/
 
 DEFUN (tempname, args, ,
        doc: /* -*- texinfo -*-
@@ -2882,8 +2987,6 @@ by the time your program attempts to open it.  If this is a concern,
 
   if (nargin > 0)
     dir = args(0).xstring_value ("tempname: DIR must be a string");
-  else
-    dir = sys::env::getenv ("TMPDIR");
 
   std::string pfx ("oct-");
 
@@ -2966,15 +3069,15 @@ system-dependent error message.
 
   octave_value_list retval;
 
-  FILE *fid = octave_tmpfile_wrapper ();
+  std::string tmpfile (sys::tempnam (sys::env::get_temp_directory (), "oct-"));
+
+  FILE *fid = sys::fopen_tmp (tmpfile, "w+b");
 
   if (fid)
     {
-      std::string nm;
-
       std::ios::openmode md = fopen_mode_to_ios_mode ("w+b");
 
-      stream s = stdiostream::create (nm, fid, md);
+      stream s = stdiostream::create (tmpfile, fid, md);
 
       if (! s)
         {
@@ -3005,7 +3108,7 @@ these are replaced with a string that makes the filename unique.  The file
 is then created with mode read/write and permissions that are system
 dependent (on GNU/Linux systems, the permissions will be 0600 for versions
 of glibc 2.0.7 and later).  The file is opened in binary mode and with the
-@w{@code{O_EXCL}} flag.
+@w{@code{O_EXCL}}@ flag.
 
 If the optional argument @var{delete} is supplied and is true, the file will
 be deleted automatically when Octave exits.
@@ -3101,7 +3204,7 @@ convert (int x, int ibase, int obase)
 
 DEFUNX ("umask", Fumask, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} umask (@var{mask})
+@deftypefn {} {@var{oldmask} =} umask (@var{mask})
 Set the permission mask for file creation.
 
 The parameter @var{mask} is an integer, interpreted as an octal number.
@@ -3146,7 +3249,7 @@ const_value (const char *, const octave_value_list& args, int val)
 
 DEFUNX ("P_tmpdir", FP_tmpdir, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} P_tmpdir ()
+@deftypefn {} {@var{sys_tmpdir} =} P_tmpdir ()
 Return the name of the host system's @strong{default} directory for
 temporary files.
 
@@ -3168,7 +3271,7 @@ environment variable.
 
 DEFUNX ("SEEK_SET", FSEEK_SET, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} SEEK_SET ()
+@deftypefn {} {@var{fseek_origin} =} SEEK_SET ()
 Return the numerical value to pass to @code{fseek} to position the file pointer
 relative to the beginning of the file.
 @seealso{SEEK_CUR, SEEK_END, fseek}
@@ -3179,7 +3282,7 @@ relative to the beginning of the file.
 
 DEFUNX ("SEEK_CUR", FSEEK_CUR, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} SEEK_CUR ()
+@deftypefn {} {@var{fseek_origin} =} SEEK_CUR ()
 Return the numerical value to pass to @code{fseek} to position the file pointer
 relative to the current position.
 @seealso{SEEK_SET, SEEK_END, fseek}
@@ -3190,7 +3293,7 @@ relative to the current position.
 
 DEFUNX ("SEEK_END", FSEEK_END, args, ,
         doc: /* -*- texinfo -*-
-@deftypefn {} {} SEEK_END ()
+@deftypefn {} {@var{fseek_origin} =} SEEK_END ()
 Return the numerical value to pass to @code{fseek} to position the file pointer
 relative to the end of the file.
 @seealso{SEEK_SET, SEEK_CUR, fseek}
@@ -3211,7 +3314,7 @@ const_value (const char *, const octave_value_list& args,
 
 DEFMETHODX ("stdin", Fstdin, interp, args, ,
             doc: /* -*- texinfo -*-
-@deftypefn {} {} stdin ()
+@deftypefn {} {@var{fid} =} stdin ()
 Return the numeric value corresponding to the standard input stream.
 
 When Octave is used interactively, stdin is filtered through the command
@@ -3226,7 +3329,7 @@ line editing functions.
 
 DEFMETHODX ("stdout", Fstdout, interp, args, ,
             doc: /* -*- texinfo -*-
-@deftypefn {} {} stdout ()
+@deftypefn {} {@var{fid} =} stdout ()
 Return the numeric value corresponding to the standard output stream.
 
 Data written to the standard output may be filtered through the pager.
@@ -3240,7 +3343,7 @@ Data written to the standard output may be filtered through the pager.
 
 DEFMETHODX ("stderr", Fstderr, interp, args, ,
             doc: /* -*- texinfo -*-
-@deftypefn {} {} stderr ()
+@deftypefn {} {@var{fid} =} stderr ()
 Return the numeric value corresponding to the standard error stream.
 
 Even if paging is turned on, the standard error is not sent to the pager.
@@ -3253,24 +3356,4 @@ It is useful for error messages and prompts.
   return const_value ("stderr", args, streams.stderr_file ());
 }
 
-// Deprecated variables and functions.
-
-// Remove when corresponding global deprecated function is removed.
-void mark_for_deletion_deprecated (const std::string& file)
-{
-  octave::interpreter& interp
-    = octave::__get_interpreter__ ("mark_for_deletion");
-
-  interp.mark_for_deletion (file);
-}
-
-// Remove when corresponding global deprecated function is removed.
-void cleanup_tmp_files_deprecated (void)
-{
-  octave::interpreter& interp
-    = octave::__get_interpreter__ ("cleanup_tmp_files");
-
-  interp.cleanup_tmp_files ();
-}
-
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

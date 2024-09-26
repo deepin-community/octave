@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2000-2022 The Octave Project Developers
+// Copyright (C) 2000-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -134,7 +134,7 @@ octave_rl_set_screen_size (int ht, int wd)
 }
 
 void
-octave_rl_restore_terminal_state ()
+octave_rl_restore_terminal_state (void)
 {
   if (rl_deprep_term_function)
     rl_deprep_term_function ();
@@ -307,7 +307,7 @@ octave_rl_set_completer_word_break_characters (const char *s)
   rl_completer_word_break_characters = ss;
 }
 
-char *
+const char *
 octave_rl_get_completer_word_break_characters (void)
 {
   return rl_completer_word_break_characters;

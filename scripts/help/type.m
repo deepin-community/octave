@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -97,8 +97,9 @@ function text = type (varargin)
       if (quiet)
         txt = contents;
       else
-        txt = sprintf ("%s is the user-defined function defined from: %s\n\n%s",
-                        name, file, contents);
+        tmp = __which__ (name);
+        txt = sprintf ("%s is the %s defined from: %s\n\n%s",
+                        name, tmp.type, file, contents);
       endif
     elseif (e == 3)
       txt = sprintf ("%s is a dynamically-linked function", name);
@@ -144,7 +145,7 @@ endfunction
 %!test
 %! txt = type ("ls");
 %! typestr = txt{1}(1:31);
-%! assert (typestr, "ls is the user-defined function");
+%! assert (typestr, "ls is the function defined from");
 
 %!test
 %! txt = type ("ls", "-q");

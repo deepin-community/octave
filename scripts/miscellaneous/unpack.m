@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -241,7 +241,7 @@ function filelist = unpack (file, dir = [], filetype = "")
     error ("unpack: %s: not a directory", dir);
   endif
 
-  if (isfield (commandlist, tolower (nodotext)))
+  if (isfield (commandlist, lower (nodotext)))
     [commandv, commandq, parsefcn, move] = deal (commandlist.(nodotext){:});
     origdir = pwd ();
     if (move)
@@ -271,6 +271,10 @@ function filelist = unpack (file, dir = [], filetype = "")
   unwind_protect
     unsetenv ("TAR_OPTIONS");
     cd (dir);
+    if (ispc ())
+      ## Escape backslashes (necessary for UNC paths).
+      file = strrep (file, '\', '\\');
+    endif
     [status, output] = system (sprintf ([command " 2>&1"], file));
   unwind_protect_cleanup
     cd (origdir);
@@ -314,6 +318,7 @@ function files = __parse_zip__ (output)
   files = char (output(2:end));
   ## Trim constant width prefix and return cell array.
   files = cellstr (files(:,14:end));
+
 endfunction
 
 function output = __parse_tar__ (output)

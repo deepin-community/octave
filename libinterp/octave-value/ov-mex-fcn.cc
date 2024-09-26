@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -47,8 +47,8 @@ DEFINE_OV_TYPEID_FUNCTIONS_AND_DATA (octave_mex_function,
                                      "mex function", "mex function");
 
 octave_mex_function::octave_mex_function
-  (void *fptr, bool interleaved, bool fmex, const octave::dynamic_library& shl,
-   const std::string& nm)
+(void *fptr, bool interleaved, bool fmex, const octave::dynamic_library& shl,
+ const std::string& nm)
   : octave_function (nm), m_mex_fcn_ptr (fptr), m_exit_fcn_ptr (nullptr),
     m_sh_lib (shl), m_interleaved (interleaved), m_is_fmex (fmex),
     m_is_system_fcn_file (false)
@@ -61,55 +61,38 @@ octave_mex_function::octave_mex_function
     = octave::sys::canonicalize_file_name (octave::config::oct_file_dir ());
   static const std::string oct_file_dir
     = canonical_oct_file_dir.empty () ? octave::config::oct_file_dir ()
-                                      : canonical_oct_file_dir;
+      : canonical_oct_file_dir;
 
   m_is_system_fcn_file
     = (! file_name.empty ()
        && oct_file_dir == file_name.substr (0, oct_file_dir.length ()));
 }
 
-octave_mex_function::~octave_mex_function (void)
+octave_mex_function::~octave_mex_function ()
 {
   if (m_exit_fcn_ptr)
     (*m_exit_fcn_ptr) ();
 
-  octave::dynamic_loader& dyn_loader
-    = octave::__get_dynamic_loader__ ("~octave_mex_function");
+  octave::dynamic_loader& dyn_loader = octave::__get_dynamic_loader__ ();
 
   dyn_loader.remove_mex (m_name, m_sh_lib);
 }
 
 std::string
-octave_mex_function::fcn_file_name (void) const
+octave_mex_function::fcn_file_name () const
 {
   return m_sh_lib.file_name ();
 }
 
 octave::sys::time
-octave_mex_function::time_parsed (void) const
+octave_mex_function::time_parsed () const
 {
   return m_sh_lib.time_loaded ();
 }
-
-// FIXME: shouldn't this declaration be a header file somewhere?
-extern octave_value_list
-call_mex (octave_mex_function& curr_mex_fcn, const octave_value_list& args,
-          int nargout);
 
 octave_value_list
 octave_mex_function::execute (octave::tree_evaluator& tw, int nargout,
                               const octave_value_list& args)
 {
-  octave_value_list retval;
-
-  if (args.has_magic_colon ())
-    error ("invalid use of colon in function argument list");
-
-  octave::profiler& profiler = tw.get_profiler ();
-
-  octave::profiler::enter<octave_mex_function> block (profiler, *this);
-
-  retval = call_mex (*this, args, nargout);
-
-  return retval;
+  return tw.execute_mex_function (*this, nargout, args);
 }

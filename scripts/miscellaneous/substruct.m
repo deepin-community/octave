@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} substruct (@var{type}, @var{subs}, @dots{})
+## @deftypefn {} {@var{s} =} substruct (@var{type}, @var{subs}, @dots{})
 ## Create a subscript structure for use with @code{subsref} or @code{subsasgn}.
 ##
 ## For example:
@@ -47,10 +47,13 @@
 ##   @result{}   7   8   9
 ## @end group
 ## @end example
+##
+## Note: The keyword @code{end} cannot be used within @code{subsref} or
+## @code{subsasgn} for indexing assignments.
 ## @seealso{subsref, subsasgn}
 ## @end deftypefn
 
-function retval = substruct (varargin)
+function s = substruct (varargin)
 
   if (nargin < 2 || mod (nargin, 2) != 0)
     print_usage ();
@@ -72,7 +75,7 @@ function retval = substruct (varargin)
     error ('substruct: TYPE must be one of "()", "{}", or ""');
   endif
 
-  retval = struct ("type", typ, "subs", sub);
+  s = struct ("type", typ, "subs", sub);
 
 endfunction
 

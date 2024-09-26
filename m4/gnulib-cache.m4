@@ -1,8 +1,8 @@
-# Copyright (C) 2002-2021 Free Software Foundation, Inc.
+# Copyright (C) 2002-2023 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This file is distributed in the hope that it will be useful,
@@ -45,12 +45,12 @@
 #  clock-time \
 #  close \
 #  closedir \
-#  crypto/md2 \
-#  crypto/md4 \
-#  crypto/md5 \
-#  crypto/sha1 \
-#  crypto/sha256 \
-#  crypto/sha512 \
+#  crypto/md2-buffer \
+#  crypto/md4-buffer \
+#  crypto/md5-buffer \
+#  crypto/sha1-buffer \
+#  crypto/sha256-buffer \
+#  crypto/sha512-buffer \
 #  dup2 \
 #  fcntl \
 #  filemode \
@@ -63,6 +63,7 @@
 #  ftruncate \
 #  getcwd \
 #  gethostname \
+#  gethrxtime \
 #  getopt-gnu \
 #  getrusage \
 #  gettimeofday \
@@ -90,6 +91,7 @@
 #  putenv \
 #  raise \
 #  readdir \
+#  readline \
 #  rewinddir \
 #  rmdir \
 #  select \
@@ -100,6 +102,7 @@
 #  stat \
 #  stddef \
 #  stdio \
+#  strcase \
 #  strdup-posix \
 #  strerror \
 #  strptime \
@@ -110,10 +113,11 @@
 #  sys_times \
 #  sys_wait \
 #  tempname \
-#  tmpfile \
 #  uname \
 #  unicase/u8-tolower \
 #  unicase/u8-toupper \
+#  uniconv/u16-conv-from-enc \
+#  uniconv/u16-conv-to-enc \
 #  uniconv/u32-conv-to-enc \
 #  uniconv/u8-conv-from-enc \
 #  uniconv/u8-conv-to-enc \
@@ -155,12 +159,12 @@ gl_MODULES([
   clock-time
   close
   closedir
-  crypto/md2
-  crypto/md4
-  crypto/md5
-  crypto/sha1
-  crypto/sha256
-  crypto/sha512
+  crypto/md2-buffer
+  crypto/md4-buffer
+  crypto/md5-buffer
+  crypto/sha1-buffer
+  crypto/sha256-buffer
+  crypto/sha512-buffer
   dup2
   fcntl
   filemode
@@ -173,6 +177,7 @@ gl_MODULES([
   ftruncate
   getcwd
   gethostname
+  gethrxtime
   getopt-gnu
   getrusage
   gettimeofday
@@ -200,6 +205,7 @@ gl_MODULES([
   putenv
   raise
   readdir
+  readline
   rewinddir
   rmdir
   select
@@ -210,6 +216,7 @@ gl_MODULES([
   stat
   stddef
   stdio
+  strcase
   strdup-posix
   strerror
   strptime
@@ -220,10 +227,11 @@ gl_MODULES([
   sys_times
   sys_wait
   tempname
-  tmpfile
   uname
   unicase/u8-tolower
   unicase/u8-toupper
+  uniconv/u16-conv-from-enc
+  uniconv/u16-conv-to-enc
   uniconv/u32-conv-to-enc
   uniconv/u8-conv-from-enc
   uniconv/u8-conv-to-enc

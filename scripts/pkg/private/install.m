@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -329,11 +329,7 @@ endfunction
 
 function pkg = extract_pkg (nm, pat)
 
-  mfile_encoding = __mfile_encoding__ ();
-  if (strcmp (mfile_encoding, "system"))
-    mfile_encoding = __locale_charset__ ();
-  endif
-  fid = fopen (nm, "rt", "n", mfile_encoding);
+  fid = fopen (nm, "rt", "n", mfile_encoding ());
   pkg = "";
   if (fid >= 0)
     while (! feof (fid))
@@ -458,7 +454,7 @@ function copy_built_files (desc, packdir, verbose)
         if (verbose)
           printf ("copyfile");
           printf (" %s", archindependent{:});
-          printf ("%s\n", instdir);
+          printf (" %s\n", instdir);
         endif
         [status, output] = copyfile (archindependent, instdir);
         if (status != 1)

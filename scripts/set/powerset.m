@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} powerset (@var{a})
-## @deftypefnx {} {} powerset (@var{a}, "rows")
+## @deftypefn  {} {@var{p} =} powerset (@var{a})
+## @deftypefnx {} {@var{p} =} powerset (@var{a}, "rows")
 ## Compute the powerset (all subsets) of the set @var{a}.
 ##
 ## The set @var{a} must be a numerical matrix or a cell array of strings.  The

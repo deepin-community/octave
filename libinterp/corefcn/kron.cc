@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2002-2022 The Octave Project Developers
+// Copyright (C) 2002-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -49,14 +49,14 @@
 #include "error.h"
 #include "ovl.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 template <typename R, typename T>
 static MArray<T>
 kron (const MArray<R>& a, const MArray<T>& b)
 {
-  assert (a.ndims () == 2);
-  assert (b.ndims () == 2);
+  error_unless (a.ndims () == 2);
+  error_unless (b.ndims () == 2);
 
   octave_idx_type nra = a.rows ();
   octave_idx_type nrb = b.rows ();
@@ -86,7 +86,7 @@ template <typename R, typename T>
 static MArray<T>
 kron (const MDiagArray2<R>& a, const MArray<T>& b)
 {
-  assert (b.ndims () == 2);
+  error_unless (b.ndims () == 2);
 
   octave_idx_type nra = a.rows ();
   octave_idx_type nrb = b.rows ();
@@ -245,14 +245,14 @@ dispatch_kron (const octave_value& a, const octave_value& b)
 
 DEFUN (kron, args, ,
        doc: /* -*- texinfo -*-
-@deftypefn  {} {} kron (@var{A}, @var{B})
-@deftypefnx {} {} kron (@var{A1}, @var{A2}, @dots{})
+@deftypefn  {} {@var{C} =} kron (@var{A}, @var{B})
+@deftypefnx {} {@var{C} =} kron (@var{A1}, @var{A2}, @dots{})
 Form the Kronecker product of two or more matrices.
 
 This is defined block by block as
 
 @example
-x = [ a(i,j)*b ]
+c = [ a(i,j)*b ]
 @end example
 
 For example:
@@ -275,6 +275,7 @@ kron (kron (@var{A1}, @var{A2}), @dots{}, @var{An})
 
 @noindent
 Since the Kronecker product is associative, this is well-defined.
+@seealso{tensorprod}
 @end deftypefn */)
 {
   int nargin = args.length ();
@@ -333,4 +334,4 @@ Since the Kronecker product is associative, this is well-defined.
 %! assert (kron (diag ([1, 2], 2), diag ([3, 4], 2)), expected);
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

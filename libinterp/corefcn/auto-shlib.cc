@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2022 The Octave Project Developers
+// Copyright (C) 2022-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -32,10 +32,10 @@
 #include "auto-shlib.h"
 #include "defun-int.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-auto_shlib::auto_shlib (void)
+auto_shlib::auto_shlib ()
   : dynamic_library (get_current_shlib ())
 { }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

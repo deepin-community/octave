@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -23,30 +23,46 @@
 ##
 ########################################################################
 
-## This function the image input functions imread() and imfinfo() to the
-## functions that will actually be used, based on their format.  See below
-## on the details on how it identifies the format, and to what it defaults.
+## -*- texinfo -*-
+## @deftypefn {} {@var{varargout} =} imageIO (@var{fcn}, @var{core_fcn}, @var{fieldname}, @var{filename}, @var{varargin})
 ##
-## It will change the input arguments that were passed to imread() and
-## imfinfo().  It will change the filename to provide the absolute filepath
-## for the file, it will extract the possible format name from the rest of
-## the input arguments (in case there was one), and will give an error if
-## the file can't be found.
+## This function bridges the image input functions @code{imread} and
+## @code{imfinfo} to the functions that will actually be used, based on their
+## format.  See below for the details on how it identifies the format, and what
+## the defaults are.
+##
+## It will change the input arguments that were passed to @code{imread} and
+## @code{imfinfo}.  It will change the filename to provide the absolute
+## filepath for the file, it will extract the possible format name from the
+## rest of the input arguments (in case there was one), and will give an error
+## if the file can't be found.
 ##
 ## Usage:
 ##
-## func      - Function name to use on error message.
-## core_func - Function handle for the default function to use if we can't
-##             find the format in imformats.
-## fieldname - Name of the field in the struct returned by imformats that
-##             has the function to use.
-## filename  - Most likely the first input argument from the function that
-##             called this.  May be missing the file extension which can be
-##             on varargin.
-## varargin  - Followed by all the OTHER arguments passed to imread and
-##             imfinfo.
+## @table @var
+## @item fcn
+## Function name to use in error message.
+##
+## @item core_fcn
+## Function handle for the default function to use if we can't find the format
+## in imformats.
+##
+## @item fieldname
+## Name of the field in the struct returned by imformats that has the function
+## to use.
+##
+## @item filename
+## Most likely the first input argument from the function that called this.
+## May be missing the file extension which can be on varargin.
+##
+## @item varargin
+## Followed by all the OTHER arguments passed to imread and imfinfo.
+## @end table
+##
+## @seealso{imread, imwrite}
+## @end deftypefn
 
-function varargout = imageIO (func, core_func, fieldname, filename, varargin)
+function varargout = imageIO (fcn, core_fcn, fieldname, filename, varargin)
 
   ## First thing: figure out the filename and possibly download it.
   ## The first attempt is to try the filename and see if it exists.  If it
@@ -77,7 +93,7 @@ function varargout = imageIO (func, core_func, fieldname, filename, varargin)
   endif
 
   if (isempty (fn))
-    error ([func ": unable to find file '" filename "'"]);
+    error ([fcn ": unable to find file '" filename "'"]);
   endif
 
   ## unwind_protect block because we may have a file to remove in the end
@@ -89,7 +105,7 @@ function varargout = imageIO (func, core_func, fieldname, filename, varargin)
     ## try to guess the format from the file extension.  Finally, if
     ## we still don't know the format, we use the Octave core functions
     ## which is the same for all formats.
-    foo = []; # the function we will use
+    hfcn = []; # the function we will use
 
     ## We check if the call to imformats (ext) worked using
     ## "numfields (fmt) > 0 because when it fails, the returned
@@ -99,13 +115,13 @@ function varargout = imageIO (func, core_func, fieldname, filename, varargin)
     if (! isempty (varargin) && ischar (varargin{1}))
       fmt = imformats (varargin{1});
       if (numfields (fmt) > 0)
-        foo = fmt.(fieldname);
+        hfcn = fmt.(fieldname);
         varargin(1) = []; # remove format name from arguments
       endif
     endif
 
     ## try extension from filename
-    if (isempty (foo))
+    if (isempty (hfcn))
       [~, ~, ext] = fileparts (fn);
       if (! isempty (ext))
         ## remove dot from extension
@@ -113,16 +129,16 @@ function varargout = imageIO (func, core_func, fieldname, filename, varargin)
       endif
       fmt = imformats (ext);
       if (numfields (fmt) > 0)
-        foo = fmt.(fieldname);
+        hfcn = fmt.(fieldname);
       endif
     endif
 
     ## use the core function
-    if (isempty (foo))
-      foo = core_func;
+    if (isempty (hfcn))
+      hfcn = core_fcn;
     endif
 
-    [varargout{1:nargout}] = foo (fn, varargin{:});
+    [varargout{1:nargout}] = hfcn (fn, varargin{:});
 
   unwind_protect_cleanup
     if (file_2_delete)

@@ -1,7 +1,7 @@
 This file documents known bugs in Octave and describes where and how to
 report any bugs that you may find.
 
-   Copyright (C) 1996-2022 The Octave Project Developers modify it
+   Copyright (C) 1996-2024 The Octave Project Developers modify it
 freely as long as you preserve this copyright notice and permission
 notice.
 
@@ -19,7 +19,7 @@ where people's opinions differ as to what is best.
 1.A Actual Bugs We Haven't Fixed Yet
 ====================================
 
-   * Output that comes directly from Fortran functions is not sent
+   • Output that comes directly from Fortran functions is not sent
      through the pager and may appear out of sequence with other output
      that is sent through the pager.  One way to avoid this is to force
      pending output to be flushed before calling a function that will
@@ -35,7 +35,7 @@ where people's opinions differ as to what is best.
      to turn the pager off.
 
    A list of ideas for future enhancements is distributed with Octave.
-See the file 'PROJECTS' in the top level directory in the source
+See the file ‘PROJECTS’ in the top level directory in the source
 distribution.
 
 1.B Reporting Bugs
@@ -61,26 +61,26 @@ information that makes it possible to fix the bug.
 If you are not sure whether you have found a bug, here are some
 guidelines:
 
-   * If Octave gets a fatal signal, for any input whatever, that is a
+   • If Octave gets a fatal signal, for any input whatever, that is a
      bug.  Reliable interpreters never crash.
 
-   * If Octave produces incorrect results, for any input whatever, that
+   • If Octave produces incorrect results, for any input whatever, that
      is a bug.
 
-   * Some output may appear to be incorrect when it is in fact due to a
+   • Some output may appear to be incorrect when it is in fact due to a
      program whose behavior is undefined, which happened by chance to
      give the desired results on another system.  For example, the range
      operator may produce different results because of differences in
      the way floating point arithmetic is handled on various systems.
 
-   * If Octave produces an error message for valid input, that is a bug.
+   • If Octave produces an error message for valid input, that is a bug.
 
-   * If Octave does not produce an error message for invalid input, that
+   • If Octave does not produce an error message for invalid input, that
      is a bug.  However, you should note that your idea of "invalid
      input" might be my idea of "an extension" or "support for
      traditional practice".
 
-   * If you are an experienced user of programs like Octave, your
+   • If you are an experienced user of programs like Octave, your
      suggestions for improvement are welcome in any case.
 
 1.B.2 Where to Report Bugs
@@ -89,7 +89,7 @@ guidelines:
 To report a bug in Octave, submit a bug report to the Octave bug tracker
 <https://bugs.octave.org>.
 
-   *Do not send bug reports to 'help-octave'*.  Most users of Octave do
+   *Do not send bug reports to ‘help-octave’*.  Most users of Octave do
 not want to receive bug reports.
 
 1.B.3 How to Report Bugs
@@ -128,38 +128,38 @@ missing.
    To enable someone to investigate the bug, you should include all
 these things:
 
-   * The version of Octave.  You can get this by noting the version
+   • The version of Octave.  You can get this by noting the version
      number that is printed when Octave starts, or running it with the
-     '-v' option.
+     ‘-v’ option.
 
-   * A complete input file that will reproduce the bug.
+   • A complete input file that will reproduce the bug.
 
      A single statement may not be enough of an example--the bug might
      depend on other details that are missing from the single statement
      where the error finally occurs.
 
-   * The command arguments you gave Octave to execute that example and
+   • The command arguments you gave Octave to execute that example and
      observe the bug.  To guarantee you won't omit something important,
      list all the options.
 
      If we were to try to guess the arguments, we would probably guess
      wrong and then we would not encounter the bug.
 
-   * The type of machine you are using, and the operating system name
+   • The type of machine you are using, and the operating system name
      and version number.
 
-   * The command-line arguments you gave to the 'configure' command when
+   • The command-line arguments you gave to the ‘configure’ command when
      you installed the interpreter.
 
-   * A complete list of any modifications you have made to the
+   • A complete list of any modifications you have made to the
      interpreter source.
 
      Be precise about these changes--show a context diff for them.
 
-   * Details of any other deviations from the standard procedure for
+   • Details of any other deviations from the standard procedure for
      installing Octave.
 
-   * A description of what behavior you observe that you believe is
+   • A description of what behavior you observe that you believe is
      incorrect.  For example, "The interpreter gets a fatal signal," or,
      "The output produced at line 208 is incorrect."
 
@@ -183,7 +183,7 @@ these things:
      an explanation of the expected output, and why the actual output is
      incorrect.
 
-   * If you wish to suggest changes to the Octave source, send them as
+   • If you wish to suggest changes to the Octave source, send them as
      context diffs.  If you even discuss something in the Octave source,
      refer to it by context, not by line number, because the line
      numbers in the development sources probably won't match those in
@@ -191,7 +191,7 @@ these things:
 
    Here are some things that are not necessary:
 
-   * A description of the envelope of the bug.
+   • A description of the envelope of the bug.
 
      Often people who encounter a bug spend a lot of time investigating
      which changes to the input file will make the bug go away and which
@@ -207,7 +207,7 @@ these things:
      However, simplification is not vital; if you don't want to do this,
      report the bug anyway and send the entire test case you used.
 
-   * A patch for the bug.  Patches can be helpful, but if you find a
+   • A patch for the bug.  Patches can be helpful, but if you find a
      bug, you should report it, even if you cannot send a fix for the
      problem.
 
@@ -223,37 +223,37 @@ useful, but using it will take extra work.  Maintaining Octave is a lot
 of work in the best of circumstances, and we can't keep up unless you do
 your best to help.
 
-   * Send an explanation with your changes of what problem they fix or
+   • Send an explanation with your changes of what problem they fix or
      what improvement they bring about.  For a bug fix, just include a
      copy of the bug report, and explain why the change fixes the bug.
 
-   * Always include a proper bug report for the problem you think you
+   • Always include a proper bug report for the problem you think you
      have fixed.  We need to convince ourselves that the change is right
      before installing it.  Even if it is right, we might have trouble
      judging it if we don't have a way to reproduce the problem.
 
-   * Include all the comments that are appropriate to help people
+   • Include all the comments that are appropriate to help people
      reading the source in the future understand why this change was
      needed.
 
-   * Don't mix together changes made for different reasons.  Send them
+   • Don't mix together changes made for different reasons.  Send them
      _individually_.
 
      If you make two changes for separate reasons, then we might not
      want to install them both.  We might want to install just one.
 
-   * Use 'diff -c' to make your diffs.  Diffs without context are hard
+   • Use ‘diff -c’ to make your diffs.  Diffs without context are hard
      for us to install reliably.  More than that, they make it hard for
      us to study the diffs to decide whether we want to install them.
      Unified diff format is better than contextless diffs, but not as
-     easy to read as '-c' format.
+     easy to read as ‘-c’ format.
 
-     If you have GNU diff, use 'diff -cp', which shows the name of the
+     If you have GNU diff, use ‘diff -cp’, which shows the name of the
      function that each change occurs in.
 
-   * Write the change log entries for your changes.
+   • Write the change log entries for your changes.
 
-     Read the 'ChangeLog' file to see what sorts of information to put
+     Read the ‘ChangeLog’ file to see what sorts of information to put
      in, and to learn the style that we use.  The purpose of the change
      log is to show people where to find what was changed.  So you need
      to be specific about what functions you changed; in large

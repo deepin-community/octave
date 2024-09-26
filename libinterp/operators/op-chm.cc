@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,13 +38,13 @@
 #include "ov-typeinfo.h"
 #include "ops.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // char matrix unary ops.
 
 DEFUNOP (transpose, char_matrix)
 {
-  const octave_char_matrix& v = dynamic_cast<const octave_char_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_char_matrix&, v, a);
 
   return octave_value (v.matrix_value ().transpose ());
 }
@@ -54,8 +54,8 @@ DEFNDCATOP_FN (chm_chm, char_matrix, char_matrix, char_array, char_array,
 
 DEFCATOP (chm_s, char_matrix, scalar)
 {
-  const octave_char_matrix& v1 = dynamic_cast<const octave_char_matrix&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_char_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   warn_implicit_conversion ("Octave:num-to-str",
                             v2.type_name (), v1.type_name ());
@@ -66,8 +66,8 @@ DEFCATOP (chm_s, char_matrix, scalar)
 
 DEFCATOP (chm_m, char_matrix, matrix)
 {
-  const octave_char_matrix& v1 = dynamic_cast<const octave_char_matrix&> (a1);
-  const octave_matrix& v2 = dynamic_cast<const octave_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_char_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v2, a2);
 
   warn_implicit_conversion ("Octave:num-to-str",
                             v2.type_name (), v1.type_name ());
@@ -78,8 +78,8 @@ DEFCATOP (chm_m, char_matrix, matrix)
 
 DEFCATOP (s_chm, scalar, char_matrix)
 {
-  const octave_scalar& v1 = dynamic_cast<const octave_scalar&> (a1);
-  const octave_char_matrix& v2 = dynamic_cast<const octave_char_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_char_matrix&, v2, a2);
 
   warn_implicit_conversion ("Octave:num-to-str",
                             v1.type_name (), v2.type_name ());
@@ -90,8 +90,8 @@ DEFCATOP (s_chm, scalar, char_matrix)
 
 DEFCATOP (m_chm, matrix, char_matrix)
 {
-  const octave_matrix& v1 = dynamic_cast<const octave_matrix&> (a1);
-  const octave_char_matrix& v2 = dynamic_cast<const octave_char_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_char_matrix&, v2, a2);
 
   warn_implicit_conversion ("Octave:num-to-str",
                             v1.type_name (), v2.type_name ());
@@ -113,4 +113,4 @@ install_chm_ops (octave::type_info& ti)
   INSTALL_CATOP_TI (ti, octave_matrix, octave_char_matrix, m_chm);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

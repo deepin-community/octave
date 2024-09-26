@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,14 +35,13 @@
 #include "ov-null-mat.h"
 #include "ops.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // string unary ops.
 
 DEFUNOP (transpose, char_matrix_str)
 {
-  const octave_char_matrix_str& v
-    = dynamic_cast<const octave_char_matrix_str&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_char_matrix_str&, v, a);
 
   if (v.ndims () > 2)
     error ("transpose not defined for N-D objects");
@@ -64,8 +63,8 @@ DEFUNOP (transpose, char_matrix_str)
     bool a1_is_scalar = a1_dims.all_ones ();                            \
     bool a2_is_scalar = a2_dims.all_ones ();                            \
                                                                         \
-    const octave_ ## t1& v1 = dynamic_cast<const octave_ ## t1&> (a1);  \
-    const octave_ ## t2& v2 = dynamic_cast<const octave_ ## t2&> (a2);  \
+    OCTAVE_CAST_BASE_VALUE (const octave_ ## t1&, v1, a1);              \
+    OCTAVE_CAST_BASE_VALUE (const octave_ ## t2&, v2, a2);              \
                                                                         \
     if (a1_is_scalar)                                                   \
       {                                                                 \
@@ -102,9 +101,8 @@ DEFCHARNDBINOP_FN (ne, !=, char_matrix_str, char_matrix_str, char_array,
 
 DEFASSIGNOP (assign, char_matrix_str, char_matrix_str)
 {
-  octave_char_matrix_str& v1 = dynamic_cast<octave_char_matrix_str&> (a1);
-  const octave_char_matrix_str& v2
-    = dynamic_cast<const octave_char_matrix_str&> (a2);
+  OCTAVE_CAST_BASE_VALUE (octave_char_matrix_str&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_char_matrix_str&, v2, a2);
 
   v1.assign (idx, v2.char_array_value ());
   return octave_value ();
@@ -220,4 +218,4 @@ install_str_str_ops (octave::type_info& ti)
 
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

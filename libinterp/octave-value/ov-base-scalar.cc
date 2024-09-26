@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -107,7 +107,7 @@ octave_base_scalar<ST>::subsasgn (const std::string& type,
 
 template <typename ST>
 dim_vector
-octave_base_scalar<ST>::dims (void) const
+octave_base_scalar<ST>::dims () const
 {
   static dim_vector dv (1, 1);
   return dv;
@@ -143,7 +143,7 @@ octave_base_scalar<ST>::diag (octave_idx_type m, octave_idx_type n) const
 
 template <typename ST>
 bool
-octave_base_scalar<ST>::is_true (void) const
+octave_base_scalar<ST>::is_true () const
 {
   if (octave::math::isnan (scalar))
     octave::err_nan_to_logical_conversion ();
@@ -194,7 +194,7 @@ octave_base_scalar<ST>::short_disp (std::ostream& os) const
 
 template <typename ST>
 float_display_format
-octave_base_scalar<ST>::get_edit_display_format (void) const
+octave_base_scalar<ST>::get_edit_display_format () const
 {
   return make_format (scalar);
 }
@@ -219,13 +219,13 @@ octave_base_scalar<ST>::fast_elem_extract (octave_idx_type n) const
 template <typename ST>
 bool
 octave_base_scalar<ST>::fast_elem_insert_self (void *where,
-                                               builtin_type_t btyp) const
+    builtin_type_t btyp) const
 {
 
   // Don't use builtin_type () here to avoid an extra VM call.
   if (btyp == class_to_btyp<ST>::btyp)
     {
-      *(reinterpret_cast<ST *>(where)) = scalar;
+      *(reinterpret_cast<ST *> (where)) = scalar;
       return true;
     }
   else

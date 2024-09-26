@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2003-2022 The Octave Project Developers
+// Copyright (C) 2003-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -119,7 +119,7 @@
 #include "oct-locbuf.h"
 
 template <typename T>
-octave_sort<T>::octave_sort (void) :
+octave_sort<T>::octave_sort () :
   m_compare (ascending_compare), m_ms (nullptr)
 { }
 
@@ -982,7 +982,8 @@ octave_sort<T>::merge_hi (T *pa, octave_idx_type na,
           --na;
           if (na == 0)
             goto Succeed;
-        } while (acount >= MIN_GALLOP || bcount >= MIN_GALLOP);
+        }
+      while (acount >= MIN_GALLOP || bcount >= MIN_GALLOP);
       ++min_gallop;     /* penalize it for leaving galloping mode */
       m_ms->m_min_gallop = min_gallop;
     }
@@ -1125,7 +1126,8 @@ octave_sort<T>::merge_hi (T *pa, octave_idx_type *ipa, octave_idx_type na,
           --na;
           if (na == 0)
             goto Succeed;
-        } while (acount >= MIN_GALLOP || bcount >= MIN_GALLOP);
+        }
+      while (acount >= MIN_GALLOP || bcount >= MIN_GALLOP);
       ++min_gallop;     /* penalize it for leaving galloping mode */
       m_ms->m_min_gallop = min_gallop;
     }

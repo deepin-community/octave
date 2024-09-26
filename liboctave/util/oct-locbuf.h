@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -50,5 +50,26 @@
 #define OCTAVE_LOCAL_BUFFER_INIT(T, buf, size, value)                   \
   OCTAVE_LOCAL_BUFFER (T, buf, size);                                   \
   std::fill_n (buf, size, value)
+
+// The following two macros can be used in a pair if the scope of the buffer
+// should be larger than the scope in which the buffer is created.
+
+#define OCTAVE_SCOPED_BUFFER_ANCHOR(T, buf)                             \
+  std::unique_ptr<T []> octave_local_buffer_ ## buf;                    \
+  T *buf
+
+#if __cplusplus >= 201402L
+
+#define OCTAVE_SCOPED_BUFFER(T, buf, size)                              \
+  octave_local_buffer_ ## buf = std::make_unique<T []> (size);          \
+  buf = octave_local_buffer_ ## buf.get ()
+
+#else
+
+#define OCTAVE_SCOPED_BUFFER(T, buf, size)                              \
+  octave_local_buffer_ ## buf = std::unique_ptr<T []> (new T [size]);   \
+  buf = octave_local_buffer_ ## buf.get ()
+
+#endif
 
 #endif

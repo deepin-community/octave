@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -27,13 +27,13 @@ data types in the same variable: Structures, which are C-like, and are indexed
 with named fields; containers.Map objects, which store data in key/value pairs;
 and cell arrays, where each element of the array can have a different data type
 and or shape.  Multiple input arguments and return values of functions are
-organized as another data container, the comma separated list.
+organized as another data container, the comma-separated list.
 
 @menu
 * Structures::
 * containers.Map::
 * Cell Arrays::
-* Comma Separated Lists::
+* Comma-Separated Lists::
 @end menu
 
 @node Structures
@@ -180,9 +180,14 @@ contents of structure arrays.
 
 @c struct_levels_to_print libinterp/octave-value/ov-struct.cc
 @anchor{XREFstruct_levels_to_print}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} struct_levels_to_print ()
 @deftypefnx {} {@var{old_val} =} struct_levels_to_print (@var{new_val})
-@deftypefnx {} {} struct_levels_to_print (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} struct_levels_to_print (@var{new_val}, "local")
 Query or set the internal variable that specifies the number of
 structure levels to display.
 
@@ -195,9 +200,14 @@ The original variable value is restored when exiting the function.
 
 @c print_struct_array_contents libinterp/octave-value/ov-struct.cc
 @anchor{XREFprint_struct_array_contents}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} print_struct_array_contents ()
 @deftypefnx {} {@var{old_val} =} print_struct_array_contents (@var{new_val})
-@deftypefnx {} {} print_struct_array_contents (@var{new_val}, "local")
+@deftypefnx {} {@var{old_val} =} print_struct_array_contents (@var{new_val}, "local")
 Query or set the internal variable that specifies whether to print struct
 array contents.
 
@@ -333,8 +343,8 @@ x(1)
 @end group
 @end example
 
-Furthermore, the structure array can return a comma separated list of
-field values (@pxref{Comma Separated Lists}), if indexed by one of its
+Furthermore, the structure array can return a comma-separated list of
+field values (@pxref{Comma-Separated Lists}), if indexed by one of its
 own field names.  For example:
 
 @example
@@ -346,7 +356,7 @@ x.a
 @end group
 @end example
 
-Here is another example, using this comma separated list on the
+Here is another example, using this comma-separated list on the
 left-hand side of an assignment:
 
 @example
@@ -540,6 +550,11 @@ struct ("field1", @{@{1, "one"@}@}, "field2", 2)
 
 @c struct libinterp/octave-value/ov-struct.cc
 @anchor{XREFstruct}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} struct ()
 @deftypefnx {} {@var{s} =} struct (@var{field1}, @var{value1}, @var{field2}, @var{value2}, @dots{})
 @deftypefnx {} {@var{s} =} struct (@var{obj})
@@ -590,7 +605,7 @@ a cell array containing a single entry, this becomes a scalar struct with
 that single entry as the value of the field.  That single entry happens
 to be an empty cell array.
 
-Finally, if the value is a non-scalar cell array, then @code{struct}
+Finally, if the value is a nonscalar cell array, then @code{struct}
 produces a struct @strong{array}.
 @xseealso{@ref{XREFcell2struct,,cell2struct}, @ref{XREFfieldnames,,fieldnames}, @ref{XREFgetfield,,getfield}, @ref{XREFsetfield,,setfield}, @ref{XREFrmfield,,rmfield}, @ref{XREFisfield,,isfield}, @ref{XREForderfields,,orderfields}, @ref{XREFisstruct,,isstruct}, @ref{XREFstructfun,,structfun}}
 @end deftypefn
@@ -601,7 +616,12 @@ structure or a structure array.
 
 @c isstruct libinterp/octave-value/ov-struct.cc
 @anchor{XREFisstruct}
-@deftypefn {} {} isstruct (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} isstruct (@var{x})
 Return true if @var{x} is a structure or a structure array.
 @xseealso{@ref{XREFismatrix,,ismatrix}, @ref{XREFiscell,,iscell}, @ref{XREFisa,,isa}}
 @end deftypefn
@@ -614,7 +634,12 @@ Other functions that can manipulate the fields of a structure are given below.
 
 @c numfields libinterp/octave-value/ov-struct.cc
 @anchor{XREFnumfields}
-@deftypefn {} {} numfields (@var{s})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{n} =} numfields (@var{s})
 Return the number of fields of the structure @var{s}.
 @xseealso{@ref{XREFfieldnames,,fieldnames}}
 @end deftypefn
@@ -622,6 +647,11 @@ Return the number of fields of the structure @var{s}.
 
 @c fieldnames scripts/miscellaneous/fieldnames.m
 @anchor{XREFfieldnames}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{names} =} fieldnames (@var{struct})
 @deftypefnx {} {@var{names} =} fieldnames (@var{obj})
 @deftypefnx {} {@var{names} =} fieldnames (@var{javaobj})
@@ -644,8 +674,13 @@ fields (data members) of the object or class.
 
 @c isfield libinterp/octave-value/ov-struct.cc
 @anchor{XREFisfield}
-@deftypefn  {} {} isfield (@var{x}, "@var{name}")
-@deftypefnx {} {} isfield (@var{x}, @var{name})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{tf} =} isfield (@var{x}, "@var{name}")
+@deftypefnx {} {@var{tf} =} isfield (@var{x}, @var{name})
 Return true if the @var{x} is a structure and it includes an element named
 @var{name}.
 
@@ -657,6 +692,11 @@ dimension is returned.
 
 @c setfield scripts/miscellaneous/setfield.m
 @anchor{XREFsetfield}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{sout} =} setfield (@var{s}, @var{field}, @var{val})
 @deftypefnx {} {@var{sout} =} setfield (@var{s}, @var{sidx1}, @var{field1}, @var{fidx1}, @var{sidx2}, @var{field2}, @var{fidx2}, @dots{}, @var{val})
 
@@ -751,6 +791,11 @@ Note that the same result as in the above example could be achieved by:
 
 @c getfield scripts/miscellaneous/getfield.m
 @anchor{XREFgetfield}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{val} =} getfield (@var{s}, @var{field})
 @deftypefnx {} {@var{val} =} getfield (@var{s}, @var{sidx1}, @var{field1}, @var{fidx1}, @dots{})
 Get the value of the field named @var{field} from a structure or nested
@@ -768,6 +813,11 @@ an array or cell array).  For a more complete description of the syntax,
 
 @c rmfield libinterp/octave-value/ov-struct.cc
 @anchor{XREFrmfield}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{sout} =} rmfield (@var{s}, "@var{f}")
 @deftypefnx {} {@var{sout} =} rmfield (@var{s}, @var{f})
 Return a @emph{copy} of the structure (array) @var{s} with the field @var{f}
@@ -781,6 +831,11 @@ the named fields.
 
 @c orderfields scripts/miscellaneous/orderfields.m
 @anchor{XREForderfields}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{sout} =} orderfields (@var{s1})
 @deftypefnx {} {@var{sout} =} orderfields (@var{s1}, @var{s2})
 @deftypefnx {} {@var{sout} =} orderfields (@var{s1}, @{@var{cellstr}@})
@@ -862,7 +917,12 @@ t3 = orderfields (s, [3, 2, 4, 1])
 
 @c substruct scripts/miscellaneous/substruct.m
 @anchor{XREFsubstruct}
-@deftypefn {} {} substruct (@var{type}, @var{subs}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{s} =} substruct (@var{type}, @var{subs}, @dots{})
 Create a subscript structure for use with @code{subsref} or @code{subsasgn}.
 
 For example:
@@ -885,6 +945,9 @@ subsref (x, idx)
   @result{}   7   8   9
 @end group
 @end example
+
+Note: The keyword @code{end} cannot be used within @code{subsref} or
+@code{subsasgn} for indexing assignments.
 @xseealso{@ref{XREFsubsref,,subsref}, @ref{XREFsubsasgn,,subsasgn}}
 @end deftypefn
 
@@ -903,6 +966,11 @@ be converted to another type of container before being treated.
 
 @c struct2cell libinterp/octave-value/ov-cell.cc
 @anchor{XREFstruct2cell}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{c} =} struct2cell (@var{s})
 Create a new cell array from the objects stored in the struct object.
 
@@ -939,6 +1007,11 @@ c(2,1,:)(:)
 
 @c namedargs2cell scripts/miscellaneous/namedargs2cell.m
 @anchor{XREFnamedargs2cell}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{c} =} namedargs2cell (@var{s})
 Create a cell array of field name/value pairs from a scalar structure.
 
@@ -972,6 +1045,11 @@ c = namedargs2cell (s)
 @c FIXME: Currently have trouble getting documentation for classdef functions.
 @c containers.Map scripts/+containers/Map.m
 @anchor{XREFcontainers_Map}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{m} =} containers.Map ()
 @deftypefnx {} {@var{m} =} containers.Map (@var{keys}, @var{vals})
 @deftypefnx {} {@var{m} =} containers.Map (@var{keys}, @var{vals}, @qcode{"UniformValues"}, @var{is_uniform})
@@ -1098,6 +1176,11 @@ function.
 
 @c celldisp scripts/general/celldisp.m
 @anchor{XREFcelldisp}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {} celldisp (@var{c})
 @deftypefnx {} {} celldisp (@var{c}, @var{name})
 Recursively display the contents of a cell array.
@@ -1142,7 +1225,12 @@ iscell (3)
 
 @c iscell libinterp/octave-value/ov-cell.cc
 @anchor{XREFiscell}
-@deftypefn {} {} iscell (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} iscell (@var{x})
 Return true if @var{x} is a cell array object.
 @xseealso{@ref{XREFismatrix,,ismatrix}, @ref{XREFisstruct,,isstruct}, @ref{XREFiscellstr,,iscellstr}, @ref{XREFisa,,isa}}
 @end deftypefn
@@ -1200,10 +1288,15 @@ object, such as @ref{XREFlength,,length}, @ref{XREFnumel,, numel},
 
 @c cell libinterp/octave-value/ov-cell.cc
 @anchor{XREFcell}
-@deftypefn  {} {} cell (@var{n})
-@deftypefnx {} {} cell (@var{m}, @var{n})
-@deftypefnx {} {} cell (@var{m}, @var{n}, @var{k}, @dots{})
-@deftypefnx {} {} cell ([@var{m} @var{n} @dots{}])
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{C} =} cell (@var{n})
+@deftypefnx {} {@var{C} =} cell (@var{m}, @var{n})
+@deftypefnx {} {@var{C} =} cell (@var{m}, @var{n}, @var{k}, @dots{})
+@deftypefnx {} {@var{C} =} cell ([@var{m} @var{n} @dots{}])
 Create a new cell array object.
 
 If invoked with a single scalar integer argument, return a square
@@ -1220,6 +1313,11 @@ is possible to convert numerical arrays into cell arrays using the
 
 @c num2cell libinterp/corefcn/cellfun.cc
 @anchor{XREFnum2cell}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{C} =} num2cell (@var{A})
 @deftypefnx {} {@var{C} =} num2cell (@var{A}, @var{dim})
 Convert the numeric matrix @var{A} to a cell array.
@@ -1285,9 +1383,14 @@ num2cell (x, [1, 2])
 
 @c mat2cell libinterp/corefcn/cellfun.cc
 @anchor{XREFmat2cell}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{C} =} mat2cell (@var{A}, @var{dim1}, @var{dim2}, @dots{}, @var{dimi}, @dots{}, @var{dimn})
 @deftypefnx {} {@var{C} =} mat2cell (@var{A}, @var{rowdim})
-Convert the matrix @var{A} to a cell array.
+Convert the matrix @var{A} to a cell array @var{C}.
 
 Each dimension argument (@var{dim1}, @var{dim2}, etc.@:) is a vector of
 integers which specifies how to divide that dimension's elements amongst the
@@ -1375,6 +1478,11 @@ mat2cell (x, [3,1])
 
 @c cellslices libinterp/corefcn/cellfun.cc
 @anchor{XREFcellslices}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{sl} =} cellslices (@var{x}, @var{lb}, @var{ub}, @var{dim})
 Given an array @var{x}, this function produces a cell array of slices from
 the array determined by the index vectors @var{lb}, @var{ub}, for lower and
@@ -1479,7 +1587,7 @@ c([1, 2], :) = c([2, 1], :)
 
 Accessing multiple elements of a cell array with the @samp{@{} and
 @samp{@}} operators will result in a comma-separated list of all the
-requested elements (@pxref{Comma Separated Lists}).  Using the
+requested elements (@pxref{Comma-Separated Lists}).  Using the
 @samp{@{} and @samp{@}} operators the first two rows in the above
 example can be swapped back like this:
 
@@ -1537,6 +1645,11 @@ values.
 
 @c cellindexmat libinterp/corefcn/cellfun.cc
 @anchor{XREFcellindexmat}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{y} =} cellindexmat (@var{x}, @var{varargin})
 Perform indexing of matrices in a cell array.
 
@@ -1587,6 +1700,11 @@ c = cellstr (a)
 
 @c cellstr libinterp/octave-value/ov-cell.cc
 @anchor{XREFcellstr}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{cstr} =} cellstr (@var{strmat})
 Create a new cell array object from the elements of the string array
 @var{strmat}.
@@ -1631,7 +1749,12 @@ cell array of strings.
 
 @c iscellstr libinterp/octave-value/ov-cell.cc
 @anchor{XREFiscellstr}
-@deftypefn {} {} iscellstr (@var{cell})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{tf} =} iscellstr (@var{cell})
 Return true if every element of the cell array @var{cell} is a character
 string.
 @xseealso{@ref{XREFischar,,ischar}, @ref{XREFisstring,,isstring}}
@@ -1654,6 +1777,11 @@ using the @code{cell2mat} and @code{cell2struct} functions.
 
 @c cell2mat scripts/general/cell2mat.m
 @anchor{XREFcell2mat}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{m} =} cell2mat (@var{c})
 Convert the cell array @var{c} into a matrix by concatenating all
 elements of @var{c} into a hyperrectangle.
@@ -1667,8 +1795,13 @@ together.
 
 @c cell2struct libinterp/octave-value/ov-struct.cc
 @anchor{XREFcell2struct}
-@deftypefn  {} {} cell2struct (@var{cell}, @var{fields})
-@deftypefnx {} {} cell2struct (@var{cell}, @var{fields}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{S} =} cell2struct (@var{cell}, @var{fields})
+@deftypefnx {} {@var{S} =} cell2struct (@var{cell}, @var{fields}, @var{dim})
 Convert @var{cell} to a structure.
 
 The number of fields in @var{fields} must match the number of elements in
@@ -1678,10 +1811,10 @@ is omitted, a value of 1 is assumed.
 
 @example
 @group
-A = cell2struct (@{"Peter", "Hannah", "Robert";
+S = cell2struct (@{"Peter", "Hannah", "Robert";
                    185, 170, 168@},
                  @{"Name","Height"@}, 1);
-A(1)
+S(1)
    @result{}
       @{
         Name   = Peter
@@ -1694,22 +1827,21 @@ A(1)
 @end deftypefn
 
 
-@node Comma Separated Lists
-@section Comma Separated Lists
-@cindex comma separated lists
+@node Comma-Separated Lists
+@section Comma-Separated Lists
+@cindex comma-separated lists
 @cindex cs-lists
 
-Comma separated lists @footnote{Comma-separated lists are also sometimes
-informally referred to as @dfn{cs-lists}.} are the basic argument type
-to all Octave functions - both for input and return arguments.  In the
-example
+Comma-separated lists @footnote{Comma-separated lists are also sometimes
+referred to as @dfn{cs-lists}.} are the basic argument type to all Octave
+functions---both for input and return arguments.  In the example
 
 @example
 max (@var{a}, @var{b})
 @end example
 
 @noindent
-@samp{@var{a}, @var{b}} is a comma separated list.  Comma separated lists
+@samp{@var{a}, @var{b}} is a comma-separated list.  Comma-separated lists
 can appear on both the right and left hand side of an assignment.  For
 example
 
@@ -1721,15 +1853,14 @@ x = [1 0 1 0 0 1 1; 0 0 0 0 0 0 7];
 @end example
 
 @noindent
-Here, @samp{@var{x}, 2, "last"} is a comma separated list constituting
-the input arguments of @code{find}.  @code{find} returns a comma
-separated list of output arguments which is assigned element by
-element to the comma separated list @samp{@var{i}, @var{j}}.
+Here, @samp{@var{x}, 2, "last"} is a comma-separated list constituting
+the input arguments of @code{find}.  @code{find} returns a comma-separated list
+of output arguments which is assigned element by element to the comma-separated
+list @samp{@var{i}, @var{j}}.
 
-Another example of where comma separated lists are used is in the
-creation of a new array with @code{[]} (@pxref{Matrices}) or the
-creation of a cell array with @code{@{@}} (@pxref{Basic Usage of Cell
-Arrays}).  In the expressions
+Another example of where comma-separated lists are used is in the creation of a
+new array with @code{[]} (@pxref{Matrices}) or the creation of a cell array
+with @code{@{@}} (@pxref{Basic Usage of Cell Arrays}).  In the expressions
 
 @example
 @group
@@ -1739,24 +1870,24 @@ c = @{4, 5, 6, 7@};
 @end example
 
 @noindent
-both @samp{1, 2, 3, 4} and @samp{4, 5, 6, 7} are comma separated lists.
+both @samp{1, 2, 3, 4} and @samp{4, 5, 6, 7} are comma-separated lists.
 
-Comma separated lists cannot be directly manipulated by the
+Comma-separated lists cannot be directly manipulated by the
 user.  However, both structure arrays and cell arrays can be converted
-into comma separated lists, and thus used in place of explicitly
-written comma separated lists.  This feature is useful in many ways,
+into comma-separated lists, and thus used in place of explicitly
+written comma-separated lists.  This feature is useful in many ways,
 as will be shown in the following subsections.
 
 @menu
-* Comma Separated Lists Generated from Cell Arrays::
-* Comma Separated Lists Generated from Structure Arrays::
+* Comma-Separated Lists Generated from Cell Arrays::
+* Comma-Separated Lists Generated from Structure Arrays::
 @end menu
 
-@node Comma Separated Lists Generated from Cell Arrays
-@subsection Comma Separated Lists Generated from Cell Arrays
+@node Comma-Separated Lists Generated from Cell Arrays
+@subsection Comma-Separated Lists Generated from Cell Arrays
 
 As has been mentioned above (@pxref{Indexing Cell Arrays}), elements
-of a cell array can be extracted into a comma separated list with the
+of a cell array can be extracted into a comma-separated list with the
 @code{@{} and @code{@}} operators.  By surrounding this list with
 @code{[} and @code{]}, it can be concatenated into an array.  For example:
 
@@ -1803,7 +1934,7 @@ printf ("%s ", c@{:@});
 @end group
 @end example
 
-If used on the left-hand side of an assignment, a comma separated list
+If used on the left-hand side of an assignment, a comma-separated list
 generated with @code{@{@}} can be assigned to.  An example is
 
 @example
@@ -1832,9 +1963,9 @@ out = cell (4, 1);
 @end example
 
 
-@node Comma Separated Lists Generated from Structure Arrays
-@subsection Comma Separated Lists Generated from Structure Arrays
-Structure arrays can equally be used to create comma separated
+@node Comma-Separated Lists Generated from Structure Arrays
+@subsection Comma-Separated Lists Generated from Structure Arrays
+Structure arrays can equally be used to create comma-separated
 lists.  This is done by addressing one of the fields of a structure
 array.  For example:
 

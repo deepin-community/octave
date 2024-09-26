@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,55 +31,50 @@
 
 #include "ToolBarButton.cc"
 
-#include "octave-qobject.h"
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-namespace octave
+PushTool *
+PushTool::create (octave::interpreter& interp, const graphics_object& go)
 {
+  Object *parent = parentObject (interp, go);
 
-  PushTool *
-  PushTool::create (octave::base_qobject& oct_qobj,
-                    octave::interpreter& interp, const graphics_object& go)
-  {
-    Object *parent = parentObject (interp, go);
+  if (parent)
+    {
+      QWidget *parentWidget = parent->qWidget<QWidget> ();
 
-    if (parent)
-      {
-        QWidget *parentWidget = parent->qWidget<QWidget> ();
+      if (parentWidget)
+        return new PushTool (interp, go,
+                             new QAction (parentWidget));
+    }
 
-        if (parentWidget)
-          return new PushTool (oct_qobj, interp, go,
-                               new QAction (parentWidget));
-      }
+  return nullptr;
+}
 
-    return nullptr;
-  }
+PushTool::PushTool (octave::interpreter& interp,
+                    const graphics_object& go, QAction *action)
+  : ToolBarButton<uipushtool> (interp, go, action)
+{
+  connect (action, &QAction::triggered, this, &PushTool::clicked);
+}
 
-  PushTool::PushTool (octave::base_qobject& oct_qobj,
-                      octave::interpreter& interp,
-                      const graphics_object& go, QAction *action)
-    : ToolBarButton<uipushtool> (oct_qobj, interp, go, action)
-  {
-    connect (action, &QAction::triggered, this, &PushTool::clicked);
-  }
+PushTool::~PushTool ()
+{ }
 
-  PushTool::~PushTool (void)
-  { }
+void
+PushTool::update (int pId)
+{
+  switch (pId)
+    {
+    default:
+      ToolBarButton<uipushtool>::update (pId);
+      break;
+    }
+}
 
-  void
-  PushTool::update (int pId)
-  {
-    switch (pId)
-      {
-      default:
-        ToolBarButton<uipushtool>::update (pId);
-        break;
-      }
-  }
+void
+PushTool::clicked ()
+{
+  emit gh_callback_event (m_handle, "clickedcallback");
+}
 
-  void
-  PushTool::clicked (void)
-  {
-    emit gh_callback_event (m_handle, "clickedcallback");
-  }
-
-};
+OCTAVE_END_NAMESPACE(octave);

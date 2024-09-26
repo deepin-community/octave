@@ -2,7 +2,7 @@
 
 ########################################################################
 ##
-## Copyright (C) 1997-2022 The Octave Project Developers
+## Copyright (C) 1997-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -36,7 +36,7 @@ cat << \EOF
 
 #include "ov-typeinfo.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 extern void install_base_type_conversions (octave::type_info&);
 
@@ -64,7 +64,7 @@ done
 cat << \EOF
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 
 EOF
 

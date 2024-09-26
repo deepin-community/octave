@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2010-2022 The Octave Project Developers
+// Copyright (C) 2010-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,20 +35,20 @@
 #include "ov-typeinfo.h"
 #include "ops.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFBINOP (eq, fcn_handle, fcn_handle)
 {
-  const octave_fcn_handle& v1 = dynamic_cast<const octave_fcn_handle&> (a1);
-  const octave_fcn_handle& v2 = dynamic_cast<const octave_fcn_handle&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_fcn_handle&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_fcn_handle&, v2, a2);
 
   return is_equal_to (v1, v2);
 }
 
 DEFBINOP (ne, fcn_handle, fcn_handle)
 {
-  const octave_fcn_handle& v1 = dynamic_cast<const octave_fcn_handle&> (a1);
-  const octave_fcn_handle& v2 = dynamic_cast<const octave_fcn_handle&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_fcn_handle&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_fcn_handle&, v2, a2);
 
   return ! is_equal_to (v1, v2);
 }
@@ -60,4 +60,4 @@ install_fcn_ops (octave::type_info& ti)
   INSTALL_BINOP_TI (ti, op_ne, octave_fcn_handle, octave_fcn_handle, ne);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

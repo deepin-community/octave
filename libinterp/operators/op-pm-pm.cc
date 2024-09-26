@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -37,11 +37,11 @@
 #include "ops.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUNOP (transpose, perm_matrix)
 {
-  const octave_perm_matrix& v = dynamic_cast<const octave_perm_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v, a);
   return octave_value (v.perm_matrix_value ().transpose ());
 }
 
@@ -49,31 +49,31 @@ DEFBINOP_OP (mul, perm_matrix, perm_matrix, *)
 
 DEFBINOP (div, perm_matrix, perm_matrix)
 {
-  const octave_perm_matrix& v1 = dynamic_cast<const octave_perm_matrix&> (a1);
-  const octave_perm_matrix& v2 = dynamic_cast<const octave_perm_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v2, a2);
 
   return (v1.perm_matrix_value () * v2.perm_matrix_value ().inverse ());
 }
 
 DEFBINOP (ldiv, perm_matrix, perm_matrix)
 {
-  const octave_perm_matrix& v1 = dynamic_cast<const octave_perm_matrix&> (a1);
-  const octave_perm_matrix& v2 = dynamic_cast<const octave_perm_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v2, a2);
 
   return (v1.perm_matrix_value ().inverse () * v2.perm_matrix_value ());
 }
 
 DEFBINOP (pow, perm_matrix, scalar)
 {
-  const octave_perm_matrix& v1 = dynamic_cast<const octave_perm_matrix&> (a1);
-  const octave_scalar& v2 = dynamic_cast<const octave_scalar&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_scalar&, v2, a2);
 
   return xpow (v1.perm_matrix_value (), v2.scalar_value ());
 }
 
 CONVDECL (perm_matrix_to_matrix)
 {
-  const octave_perm_matrix& v = dynamic_cast<const octave_perm_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_perm_matrix&, v, a);
 
   return new octave_matrix (v.matrix_value ());
 }
@@ -94,4 +94,4 @@ install_pm_pm_ops (octave::type_info& ti)
                       perm_matrix_to_matrix);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

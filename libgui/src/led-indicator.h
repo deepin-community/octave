@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2013-2022 The Octave Project Developers
+// Copyright (C) 2013-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,34 +28,34 @@
 
 #include <QLabel>
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class led_indicator: public QLabel
 {
+  Q_OBJECT
 
-  class led_indicator: public QLabel
-  {
-    Q_OBJECT
+public:
 
-  public:
-
-    enum led_state
+  enum led_state
     {
       LED_STATE_NO = -1,
       LED_STATE_INACTIVE,
       LED_STATE_ACTIVE
     };
 
-    led_indicator (led_state initial_state = LED_STATE_INACTIVE,
-                   QWidget *parent = 0);
+  led_indicator (led_state initial_state = LED_STATE_INACTIVE,
+                 QWidget *parent = 0);
 
-  public slots:
+public slots:
 
-    void set_state (led_state state);
+  void set_state (led_state state);
 
-  private:
+private:
 
-    QString style_sheet (const QColor& col);
+  QString style_sheet (const QColor& col);
 
-  };
-}
+};
+
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

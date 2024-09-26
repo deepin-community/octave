@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2017-2022 The Octave Project Developers
+## Copyright (C) 2017-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} gammaincinv (@var{y}, @var{a})
-## @deftypefnx {} {} gammaincinv (@var{y}, @var{a}, @var{tail})
+## @deftypefn  {} {@var{x} =} gammaincinv (@var{y}, @var{a})
+## @deftypefnx {} {@var{x} =} gammaincinv (@var{y}, @var{a}, @var{tail})
 ## Compute the inverse of the normalized incomplete gamma function.
 ##
 ## The normalized incomplete gamma function is defined as
@@ -255,7 +255,7 @@ function x = gammaincinv (y, a, tail = "lower")
 endfunction
 
 ## subfunction: Newton's Method
-function x = newton_method (F, JF, y, a, x0, tol, maxit);
+function x = newton_method (F, JF, y, a, x0, tol, maxit)
 
   l = numel (y);
   res = -F (y, a, x0) ./ JF (a, x0);

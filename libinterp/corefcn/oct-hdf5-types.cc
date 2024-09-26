@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2016-2022 The Octave Project Developers
+// Copyright (C) 2016-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,7 +31,7 @@
 #include "errwarn.h"
 #include "oct-hdf5.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 bool
 check_hdf5_types (bool warn)
@@ -47,15 +47,15 @@ check_hdf5_types (bool warn)
 
       if (warn && ! ok)
         warning_with_id
-          ("Octave:internal",
-           "the size of octave_hdf5_id is smaller than the size of HDF5 hid_t");
+        ("Octave:internal",
+         "the size of octave_hdf5_id is smaller than the size of HDF5 hid_t");
 
       ok = sizeof (octave_hdf5_err) >= sizeof (herr_t);
 
       if (warn && ! ok)
         warning_with_id
-          ("Octave:internal",
-           "the size of octave_hdf5_err is smaller than the size of HDF5 herr_t");
+        ("Octave:internal",
+         "the size of octave_hdf5_err is smaller than the size of HDF5 herr_t");
 #else
 
       octave_unused_parameter (warn);
@@ -70,4 +70,4 @@ check_hdf5_types (bool warn)
   return ok;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2018-2022 The Octave Project Developers
+## Copyright (C) 2018-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -92,7 +92,12 @@ function response = webwrite (url, varargin)
     error ("webwrite: DATA must be a string");
   elseif (nargs == 1)
     if (ischar (varargin{1}) && isrow (varargin{1}))
-      param = strsplit (varargin{1}, {"=", "&"});
+      param = regexp (varargin{1}, '([^=]*)=([^&]*)&?', 'tokens');
+      if (isempty (param) || isempty (param{1}))
+        error ("webwrite: DATA not a valid query string");
+      else
+        param = [param{:}];
+      endif
       response = __restful_service__ (url, param, options);
     elseif (! iscellstr (varargin))
       error ("webwrite: DATA must be a string");
@@ -121,4 +126,3 @@ endfunction
 %!error <DATA must be a string> webwrite ("URL", 1)
 %!error <KEYS and VALUES must be strings> webwrite ("URL", "NAME1", 5)
 %!error <KEYS/VALUES must occur in pairs> webwrite ("URL", "KEY1", "VAL1", "A")
-

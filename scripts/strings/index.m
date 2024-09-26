@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} index (@var{s}, @var{t})
-## @deftypefnx {} {} index (@var{s}, @var{t}, @var{direction})
+## @deftypefn  {} {@var{n} =} index (@var{s}, @var{t})
+## @deftypefnx {} {@var{n} =} index (@var{s}, @var{t}, @var{direction})
 ## Return the position of the first occurrence of the string @var{t} in the
 ## string @var{s}, or 0 if no occurrence is found.
 ##
@@ -67,7 +67,7 @@ function n = index (s, t, direction = "first")
     f(cellfun ("isempty", f)) = {0};
   endif
 
-  direction = tolower (direction);
+  direction = lower (direction);
 
   if (strcmp (direction, "first"))
     if (iscell (f))

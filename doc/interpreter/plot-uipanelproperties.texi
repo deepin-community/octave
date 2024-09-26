@@ -1,6 +1,9 @@
 @c DO NOT EDIT!  Generated automatically by genpropdoc.m.
 
-@c Copyright (C) 2014-2022 The Octave Project Developers
+@c Copyright (C) 2014-2024 The Octave Project Developers
+@c
+@c See the file COPYRIGHT.md in the top-level directory of this
+@c distribution or <https://octave.org/copyright/>.
 @c
 @c This file is part of Octave.
 @c
@@ -20,31 +23,58 @@
 
 Properties of @code{uipanel} objects (@pxref{XREFuipanel,,uipanel}):
 
+@subsubheading Categories:
+
+@ref{XREFuipanelcategoryAppearance, , @w{Appearance}}@: | @ref{XREFuipanelcategoryCallbackExecution, , @w{Callback Execution}}@: | @ref{XREFuipanelcategoryCreation/Deletion, , @w{Creation/Deletion}}@: | @ref{XREFuipanelcategoryDisplay, , @w{Display}}@: | @ref{XREFuipanelcategoryMouseInteraction, , @w{Mouse Interaction}}@: | @ref{XREFuipanelcategoryObjectIdentification, , @w{Object Identification}}@: | @ref{XREFuipanelcategoryObjectPosition, , @w{Object Position}}@: | @ref{XREFuipanelcategoryParent/Children, , @w{Parent/Children}}@: | @ref{XREFuipanelcategoryTextAppearance, , @w{Text Appearance}}@: 
+
+@anchor{XREFuipanelcategoryAppearance}
+@subsubheading Appearance
+@prindex uipanel Appearance
+
 @table @asis
 
 @anchor{XREFuipanelbackgroundcolor}
 @prindex uipanel backgroundcolor
-@item @code{backgroundcolor}: def. @code{[0.9400   0.9400   0.9400]}
-
-
-
-@anchor{XREFuipanelbeingdeleted}
-@prindex uipanel beingdeleted
-@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
-
+@item @code{backgroundcolor}: colorspec, def. @code{[0.9400   0.9400   0.9400]}
+The color value of the background of this panel.
 
 
 @anchor{XREFuipanelbordertype}
 @prindex uipanel bordertype
 @item @code{bordertype}: @qcode{"beveledin"} | @qcode{"beveledout"} | @{@qcode{"etchedin"}@} | @qcode{"etchedout"} | @qcode{"line"} | @qcode{"none"}
-
+Sets whether or not a line border will surround the panel.
 
 
 @anchor{XREFuipanelborderwidth}
 @prindex uipanel borderwidth
-@item @code{borderwidth}: def. @code{1}
+@item @code{borderwidth}: whole number scalar, def. @code{1}
+The width of the line border in pixels.
 
 
+@anchor{XREFuipanelforegroundcolor}
+@prindex uipanel foregroundcolor
+@item @code{foregroundcolor}: colorspec, def. @code{[0   0   0]}
+The color value of the title text for this panel.
+
+
+@anchor{XREFuipanelhighlightcolor}
+@prindex uipanel highlightcolor
+@item @code{highlightcolor}: colorspec, def. @code{[1   1   1]}
+The color value of the line bordering this panel.
+
+
+@anchor{XREFuipanelshadowcolor}
+@prindex uipanel shadowcolor
+@item @code{shadowcolor}: colorspec, def. @code{[0.7000   0.7000   0.7000]}
+The color value of the line surrounding the border line around this panel.  @xref{Colors, , colorspec}.
+
+@end table
+
+@anchor{XREFuipanelcategoryCallbackExecution}
+@subsubheading Callback Execution
+@prindex uipanel CallbackExecution
+
+@table @asis
 
 @anchor{XREFuipanelbusyaction}
 @prindex uipanel busyaction
@@ -53,28 +83,38 @@ Define how Octave handles the execution of this object's callback properties whe
 @xref{Callbacks, , @w{Callbacks section}}.
 
 
-@anchor{XREFuipanelbuttondownfcn}
-@prindex uipanel buttondownfcn
-@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+@anchor{XREFuipanelinterruptible}
+@prindex uipanel interruptible
+@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
+@xref{Callbacks, , @w{Callbacks section}}.
+
+
+@anchor{XREFuipanelresizefcn}
+@prindex uipanel resizefcn
+@item @code{resizefcn}: string | function handle, def. @code{[](0x0)}
+@code{resizefcn} is deprecated.  Use @code{sizechangedfcn} instead.
+
+
+@anchor{XREFuipanelsizechangedfcn}
+@prindex uipanel sizechangedfcn
+@item @code{sizechangedfcn}: string | function handle, def. @code{[](0x0)}
+Callback triggered when the panel size is changed.
+
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
 
-@anchor{XREFuipanelchildren}
-@prindex uipanel children
-@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
-Graphics handles of the uipanel's children.
+@anchor{XREFuipanelcategoryCreation/Deletion}
+@subsubheading Creation/Deletion
+@prindex uipanel Creation/Deletion
 
+@table @asis
 
-@anchor{XREFuipanelclipping}
-@prindex uipanel clipping
-@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{clipping} is @qcode{"on"}, the uipanel is clipped in its parent axes limits.
-
-
-@anchor{XREFuipanelcontextmenu}
-@prindex uipanel contextmenu
-@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
-Graphics handle of the uicontextmenu object that is currently associated to this uipanel object.
+@anchor{XREFuipanelbeingdeleted}
+@prindex uipanel beingdeleted
+@item @code{beingdeleted}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicating that a function has initiated deletion of the object.  @code{beingdeleted} is set to true until the object no longer exists.
 
 
 @anchor{XREFuipanelcreatefcn}
@@ -92,6 +132,144 @@ Callback function executed immediately before uipanel is deleted.
 
 For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
 
+@end table
+
+@anchor{XREFuipanelcategoryDisplay}
+@subsubheading Display
+@prindex uipanel Display
+
+@table @asis
+
+@anchor{XREFuipanelclipping}
+@prindex uipanel clipping
+@item @code{clipping}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{clipping} is @qcode{"on"}, the uipanel is clipped in its parent axes limits.
+
+
+@anchor{XREFuipanelvisible}
+@prindex uipanel visible
+@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{visible} is @qcode{"off"}, the uipanel is not rendered on screen.
+
+@end table
+
+@anchor{XREFuipanelcategoryMouseInteraction}
+@subsubheading Mouse Interaction
+@prindex uipanel MouseInteraction
+
+@table @asis
+
+@anchor{XREFuipanelbuttondownfcn}
+@prindex uipanel buttondownfcn
+@item @code{buttondownfcn}: string | function handle, def. @code{[](0x0)}
+For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
+
+
+@anchor{XREFuipanelcontextmenu}
+@prindex uipanel contextmenu
+@item @code{contextmenu}: graphics handle, def. @code{[](0x0)}
+Graphics handle of the uicontextmenu object that is currently associated to this uipanel object.
+
+
+@anchor{XREFuipanelhittest}
+@prindex uipanel hittest
+@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
+Specify whether uipanel processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFuipanelpickableparts, , @w{pickableparts property}}.
+
+
+@anchor{XREFuipanelpickableparts}
+@prindex uipanel pickableparts
+@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
+Specify whether uipanel will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the uipanel or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFuipanelhittest, , @w{hittest property}}.
+
+
+@anchor{XREFuipanelselected}
+@prindex uipanel selected
+@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
+Property indicates whether this uipanel is selected.
+
+
+@anchor{XREFuipanelselectionhighlight}
+@prindex uipanel selectionhighlight
+@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
+If @code{selectionhighlight} is @qcode{"on"}, then the uipanel's selection state is visually highlighted.
+
+@end table
+
+@anchor{XREFuipanelcategoryObjectIdentification}
+@subsubheading Object Identification
+@prindex uipanel ObjectIdentification
+
+@table @asis
+
+@anchor{XREFuipaneltag}
+@prindex uipanel tag
+@item @code{tag}: string, def. @qcode{""}
+A user-defined string to label the graphics object.
+
+
+@anchor{XREFuipaneltype}
+@prindex uipanel type
+@item @code{type} (read-only): string
+Class name of the graphics object.  @code{type} is always @qcode{"uipanel"}.
+
+
+@anchor{XREFuipaneluserdata}
+@prindex uipanel userdata
+@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
+User-defined data to associate with the graphics object.
+
+@end table
+
+@anchor{XREFuipanelcategoryObjectPosition}
+@subsubheading Object Position
+@prindex uipanel ObjectPosition
+
+@table @asis
+
+@anchor{XREFuipanelposition}
+@prindex uipanel position
+@item @code{position}: four-element vector, def. @code{[0   0   1   1]}
+Size of the panel represented as the four-element vector [left, bottom, width, height].
+
+
+@anchor{XREFuipanelunits}
+@prindex uipanel units
+@item @code{units}: @qcode{"centimeters"} | @qcode{"characters"} | @qcode{"inches"} | @{@qcode{"normalized"}@} | @qcode{"pixels"} | @qcode{"points"}
+Unit of measurement used to interpret the @qcode{"position"} property.
+
+@end table
+
+@anchor{XREFuipanelcategoryParent/Children}
+@subsubheading Parent/Children
+@prindex uipanel Parent/Children
+
+@table @asis
+
+@anchor{XREFuipanelchildren}
+@prindex uipanel children
+@item @code{children} (read-only): vector of graphics handles, def. @code{[](0x1)}
+Graphics handles of the uipanel's children.
+
+
+@anchor{XREFuipanelhandlevisibility}
+@prindex uipanel handlevisibility
+@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
+If @code{handlevisibility} is @qcode{"off"}, the uipanel's handle is not visible in its parent's @qcode{"children"} property.
+
+
+@anchor{XREFuipanelparent}
+@prindex uipanel parent
+@item @code{parent}: graphics handle
+Handle of the parent graphics object.
+
+@end table
+
+@anchor{XREFuipanelcategoryTextAppearance}
+@subsubheading Text Appearance
+@prindex uipanel TextAppearance
+
+@table @asis
 
 @anchor{XREFuipanelfontangle}
 @prindex uipanel fontangle
@@ -125,126 +303,15 @@ Units used to interpret the @qcode{"fontsize"} property.
 Control the variant of the base font used for text rendering.
 
 
-@anchor{XREFuipanelforegroundcolor}
-@prindex uipanel foregroundcolor
-@item @code{foregroundcolor}: def. @code{[0   0   0]}
-
-
-
-@anchor{XREFuipanelhandlevisibility}
-@prindex uipanel handlevisibility
-@item @code{handlevisibility}: @qcode{"callback"} | @qcode{"off"} | @{@qcode{"on"}@}
-If @code{handlevisibility} is @qcode{"off"}, the uipanel's handle is not visible in its parent's "children" property.
-
-
-@anchor{XREFuipanelhighlightcolor}
-@prindex uipanel highlightcolor
-@item @code{highlightcolor}: def. @code{[1   1   1]}
-
-
-
-@anchor{XREFuipanelhittest}
-@prindex uipanel hittest
-@item @code{hittest}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether uipanel processes mouse events or passes them to ancestors of the object.  When enabled, the object may respond to mouse clicks by evaluating the @qcode{"buttondownfcn"}, showing the uicontextmenu, and eventually becoming the root @qcode{"currentobject"}.  This property is only relevant when the object can accept mouse clicks which is determined by the @qcode{"pickableparts"} property.  @xref{XREFuipanelpickableparts, , @w{pickableparts property}}.
-
-
-@anchor{XREFuipanelinterruptible}
-@prindex uipanel interruptible
-@item @code{interruptible}: @qcode{"off"} | @{@qcode{"on"}@}
-Specify whether this object's callback functions may be interrupted by other callbacks.  By default @code{interruptible} is @qcode{"on"} and callbacks that make use of @code{drawnow}, @code{figure}, @code{waitfor}, @code{getframe} or @code{pause} functions are eventually interrupted.
-@xref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFuipanelparent}
-@prindex uipanel parent
-@item @code{parent}: graphics handle
-Handle of the parent graphics object.
-
-
-@anchor{XREFuipanelpickableparts}
-@prindex uipanel pickableparts
-@item @code{pickableparts}: @qcode{"all"} | @qcode{"none"} | @{@qcode{"visible"}@}
-Specify whether uipanel will accept mouse clicks.  By default, @code{pickableparts} is @qcode{"visible"} and only visible parts of the uipanel or its children may react to mouse clicks.  When @code{pickableparts} is @qcode{"all"} both visible and invisible parts (or children) may react to mouse clicks.  When @code{pickableparts} is @qcode{"none"} mouse clicks on the object are ignored and transmitted to any objects underneath this one.  When an object is configured to accept mouse clicks the @qcode{"hittest"} property will determine how they are processed.  @xref{XREFuipanelhittest, , @w{hittest property}}.
-
-
-@anchor{XREFuipanelposition}
-@prindex uipanel position
-@item @code{position}: def. @code{[0   0   1   1]}
-
-
-
-@anchor{XREFuipanelresizefcn}
-@prindex uipanel resizefcn
-@item @code{resizefcn}: string | function handle, def. @code{[](0x0)}
-@code{resizefcn} is deprecated.  Use @code{sizechangedfcn} instead.
-
-
-@anchor{XREFuipanelselected}
-@prindex uipanel selected
-@item @code{selected}: @{@qcode{"off"}@} | @qcode{"on"}
-
-
-
-@anchor{XREFuipanelselectionhighlight}
-@prindex uipanel selectionhighlight
-@item @code{selectionhighlight}: @qcode{"off"} | @{@qcode{"on"}@}
-
-
-
-@anchor{XREFuipanelshadowcolor}
-@prindex uipanel shadowcolor
-@item @code{shadowcolor}: def. @code{[0.7000   0.7000   0.7000]}
-
-
-
-@anchor{XREFuipanelsizechangedfcn}
-@prindex uipanel sizechangedfcn
-@item @code{sizechangedfcn}: string | function handle, def. @code{[](0x0)}
-Callback triggered when the uipanel size is changed.
-
-For information on how to write graphics listener functions see @ref{Callbacks, , @w{Callbacks section}}.
-
-
-@anchor{XREFuipaneltag}
-@prindex uipanel tag
-@item @code{tag}: string, def. @qcode{""}
-A user-defined string to label the graphics object.
-
-
 @anchor{XREFuipaneltitle}
 @prindex uipanel title
-@item @code{title}: def. @qcode{""}
-
+@item @code{title}: string, def. @qcode{""}
+The text for the panel title.
 
 
 @anchor{XREFuipaneltitleposition}
 @prindex uipanel titleposition
 @item @code{titleposition}: @qcode{"centerbottom"} | @qcode{"centertop"} | @qcode{"leftbottom"} | @{@qcode{"lefttop"}@} | @qcode{"rightbottom"} | @qcode{"righttop"}
-
-
-
-@anchor{XREFuipaneltype}
-@prindex uipanel type
-@item @code{type} (read-only): string
-Class name of the graphics object.  @code{type} is always @qcode{"uipanel"}
-
-
-@anchor{XREFuipanelunits}
-@prindex uipanel units
-@item @code{units}: @qcode{"centimeters"} | @qcode{"characters"} | @qcode{"inches"} | @{@qcode{"normalized"}@} | @qcode{"pixels"} | @qcode{"points"}
-
-
-
-@anchor{XREFuipaneluserdata}
-@prindex uipanel userdata
-@item @code{userdata}: Any Octave data, def. @code{[](0x0)}
-User-defined data to associate with the graphics object.
-
-
-@anchor{XREFuipanelvisible}
-@prindex uipanel visible
-@item @code{visible}: @qcode{"off"} | @{@qcode{"on"}@}
-If @code{visible} is @qcode{"off"}, the uipanel is not rendered on screen.
+Relative position of the title within the panel.
 
 @end table

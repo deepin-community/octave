@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -31,36 +31,31 @@
 class QEvent;
 class QObject;
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class BaseControl : public Object
 {
-  class base_qobject;
-  class interpreter;
-}
+public:
+  BaseControl (octave::interpreter& interp,
+               const graphics_object& go, QWidget *w);
+  ~BaseControl ();
 
-namespace octave
-{
+  Container * innerContainer () { return nullptr; }
 
-  class BaseControl : public Object
-  {
-  public:
-    BaseControl (octave::base_qobject& oct_qobj, octave::interpreter& interp,
-                 const graphics_object& go, QWidget *w);
-    ~BaseControl (void);
+  bool eventFilter (QObject *watched, QEvent *e);
 
-    Container * innerContainer (void) { return nullptr; }
+protected:
+  void init (QWidget *w, bool callBase = false);
+  void redraw ();
+  void update (int pId);
 
-    bool eventFilter (QObject *watched, QEvent *e);
+private:
+  bool m_normalizedFont;
+  bool m_keyPressHandlerDefined;
+};
 
-  protected:
-    void init (QWidget *w, bool callBase = false);
-    void redraw (void);
-    void update (int pId);
-
-  private:
-    bool m_normalizedFont;
-    bool m_keyPressHandlerDefined;
-  };
-
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

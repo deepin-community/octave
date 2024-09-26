@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -94,9 +94,9 @@ function shading (varargin)
 
   ## NOTE: This is the old, simple code.
   ##       Unfortunately, it also shades contour plots which is not desirable.
-  ##hp = findobj (hax, "type", "patch");
-  ##hs = findobj (hax, "type", "surface");
-  ##hlist = [hp(:); hs(:)];
+  ## hp = findobj (hax, "type", "patch");
+  ## hs = findobj (hax, "type", "surface");
+  ## hlist = [hp(:); hs(:)];
 
   if (isempty (hlist))
     return;

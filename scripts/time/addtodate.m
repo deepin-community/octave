@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -64,6 +64,9 @@ function d = addtodate (d, q, f)
       ## adjust the years and months if the date rolls over a year
       dtmp(:,1) += floor ((dtmp(:,2)-1)/12);
       dtmp(:,2) = mod (dtmp(:,2)-1, 12) + 1;
+      ## avoid days beyond end of month
+      beyondEOM = dtmp(:,3) > eomday (dtmp(:,1), dtmp(:,2));
+      dtmp(beyondEOM,3) = eomday (dtmp(beyondEOM,1), dtmp(beyondEOM,2));
     endif
     dnew = datenum (dtmp);
     ## make the output the right shape
@@ -119,6 +122,20 @@ endfunction
 %!assert (addtodate (d, [1 13], "month"), [d+31 d+366+31])
 %!assert (addtodate ([d;d+1], 1, "month"), [d+31;d+1+31])
 %!assert (addtodate ([d d+1], 1, "month"), [d+31 d+1+31])
+
+## end of month days
+%!assert <*60671> (addtodate (datenum ("2020-12-31"), -1, "month"), 738125)
+%!assert <*60671> (addtodate (datenum ("2020-12-30"), -1, "month"), 738125)
+%!assert <*60671> (addtodate (datenum ("2020-12-29"), -1, "month"), 738124)
+%!assert <*60671> (addtodate (datenum ("2021-03-31"), -1, "month"), 738215)
+%!assert <*60671> (addtodate (datenum ("2021-03-29"), -1, "month"), 738215)
+%!assert <*60671> (addtodate (datenum ("2020-03-30"), -1, "month"), 737850)
+%!assert <*60671> (addtodate (datenum ("2020-03-29"), -1, "month"), 737850)
+%!assert <*60671> (addtodate (datenum ("2020-03-28"), -1, "month"), 737849)
+%!assert <*60671> (addtodate (datenum ("2020-02-29"), -1, "month"), 737819)
+%!assert <*60671> (addtodate (datenum ("2020-02-28"), -1, "month"), 737818)
+%!assert <*60671> (addtodate (datenum ("2020-01-31"), +1, "month"), 737850)
+
 
 ## Test input validation
 %!error <Invalid call> addtodate ()

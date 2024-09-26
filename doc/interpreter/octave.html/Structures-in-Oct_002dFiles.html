@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Structures in Oct-Files (GNU Octave (version 7.1.0))</title>
+<title>Structures in Oct-Files (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Structures in Oct-Files (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Structures in Oct-Files (GNU Octave (version 7.1.0))">
+<meta name="description" content="Structures in Oct-Files (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Structures in Oct-Files (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Cell-Arrays-in-Oct_002dFiles.html" rel="prev" title="Cell Arrays in Oct-Files">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,17 +31,17 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Structures-in-Oct_002dFiles">
-<div class="header">
+<div class="subsection-level-extent" id="Structures-in-Oct_002dFiles">
+<div class="nav-panel">
 <p>
 Next: <a href="Sparse-Matrices-in-Oct_002dFiles.html" accesskey="n" rel="next">Sparse Matrices in Oct-Files</a>, Previous: <a href="Cell-Arrays-in-Oct_002dFiles.html" accesskey="p" rel="prev">Cell Arrays in Oct-Files</a>, Up: <a href="Oct_002dFiles.html" accesskey="u" rel="up">Oct-Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Structures-in-Oct_002dFiles-1"></span><h4 class="subsection">A.1.5 Structures in Oct-Files</h4>
+<h4 class="subsection" id="Structures-in-Oct_002dFiles-1"><span>A.1.5 Structures in Oct-Files<a class="copiable-link" href="#Structures-in-Oct_002dFiles-1"> &para;</a></span></h4>
 
 <p>A structure in Octave is a map between a number of fields represented and their
-values.  The Standard Template Library <code>map</code> class is used, with the pair
-consisting of a <code>std::string</code> and an Octave <code>Cell</code> variable.
+values.  The Standard Template Library <code class="code">map</code> class is used, with the pair
+consisting of a <code class="code">std::string</code> and an Octave <code class="code">Cell</code> variable.
 </p>
 <p>A simple example demonstrating the use of structures within oct-files is
 </p>
@@ -95,33 +83,33 @@ DEFUN_DLD (structdemo, args, , &quot;Struct Demo&quot;)
 <p>An example of its use is
 </p>
 <div class="example">
-<pre class="example">x.a = 1; x.b = &quot;test&quot;; x.c = [1, 2];
+<div class="group"><pre class="example-preformatted">x.a = 1; x.b = &quot;test&quot;; x.c = [1, 2];
 structdemo (x, &quot;b&quot;)
 &rArr; selected = test
-</pre></div>
+</pre></div></div>
 
-<p>The example above specifically uses the <code>octave_scalar_map</code> class which is
-for representing a single struct.  For structure arrays, the <code>octave_map</code>
+<p>The example above specifically uses the <code class="code">octave_scalar_map</code> class which is
+for representing a single struct.  For structure arrays, the <code class="code">octave_map</code>
 class is used instead.  The commented code shows how the demo could be modified
-to handle a structure array.  In that case, the <code>contents</code> method returns
-a <code>Cell</code> which may have more than one element.  Therefore, to obtain the
-underlying <code>octave_value</code> in the single struct example we would write
+to handle a structure array.  In that case, the <code class="code">contents</code> method returns
+a <code class="code">Cell</code> which may have more than one element.  Therefore, to obtain the
+underlying <code class="code">octave_value</code> in the single struct example we would write
 </p>
 <div class="example">
-<pre class="example">octave_value tmp = arg0.contents (arg1)(0);
+<pre class="example-preformatted">octave_value tmp = arg0.contents (arg1)(0);
 </pre></div>
 
-<p>where the trailing <code>(0)</code> is the <code>()</code> operator on the <code>Cell</code>
+<p>where the trailing <code class="code">(0)</code> is the <code class="code">()</code> operator on the <code class="code">Cell</code>
 object.  If this were a true structure array with multiple elements we could
-iterate over the elements using the <code>()</code> operator.
+iterate over the elements using the <code class="code">()</code> operator.
 </p>
 <p>Structures are a relatively complex data container and there are more functions
-available in <samp>oct-map.h</samp> which make coding with them easier than relying
-on just <code>contents</code>.
+available in <samp class="file">oct-map.h</samp> which make coding with them easier than relying
+on just <code class="code">contents</code>.
 </p>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Sparse-Matrices-in-Oct_002dFiles.html">Sparse Matrices in Oct-Files</a>, Previous: <a href="Cell-Arrays-in-Oct_002dFiles.html">Cell Arrays in Oct-Files</a>, Up: <a href="Oct_002dFiles.html">Oct-Files</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

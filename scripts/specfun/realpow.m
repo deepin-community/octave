@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} realpow (@var{x}, @var{y})
+## @deftypefn {} {@var{z} =} realpow (@var{x}, @var{y})
 ## Compute the real-valued, element-by-element power operator.
 ##
 ## This is equivalent to @w{@code{@var{x} .^ @var{y}}}, except that

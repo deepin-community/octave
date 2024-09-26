@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2011-2022 The Octave Project Developers
+// Copyright (C) 2011-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,72 +30,73 @@
 
 #include "qt-interpreter-events.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+class interpreter;
+
+class base_qobject;
+
+class interpreter_qobject : public QObject
 {
-  class interpreter;
+  Q_OBJECT
 
-  class base_qobject;
+public:
 
-  class interpreter_qobject : public QObject
-  {
-    Q_OBJECT
+  interpreter_qobject (base_qobject& oct_qobj);
 
-  public:
+  ~interpreter_qobject () = default;
 
-    interpreter_qobject (base_qobject& oct_qobj);
+  qt_interpreter_events * qt_link ();
 
-    ~interpreter_qobject (void) = default;
+  void interpreter_event (const fcn_callback& fcn);
 
-    qt_interpreter_events * qt_link (void);
+  void interpreter_event (const meth_callback& meth);
 
-    void interpreter_event (const fcn_callback& fcn);
+  void interrupt ();
 
-    void interpreter_event (const meth_callback& meth);
+  // Note: PAUSE, STOP, and RESUME are currently only used by the new
+  // experimental terminal widget.
+  void pause ();
+  void stop ();
+  void resume ();
 
-    void interrupt (void);
+signals:
 
-    // Note: PAUSE, STOP, and RESUME are currently only used by the new
-    // experimental terminal widget.
-    void pause (void);
-    void stop (void);
-    void resume (void);
+  void ready ();
 
-  signals:
+  void shutdown_finished (int);
 
-    void ready (void);
+public slots:
 
-    void shutdown_finished (int);
+  // Programming Note: With the current design of the interpreter,
+  // additional signals will not be noticed because the execute
+  // function starts the Octave interpreter and it doesn't return
+  // until the interpreter exits.  So the Qt event loop running in the
+  // thread where the interpreter_qobject object lives never has a
+  // chance to see another signal.  Changing the design of the
+  // terminal widget as proposed and discussed here:
+  //
+  //   https://lists.gnu.org/archive/html/octave-maintainers/2019-05/msg00115.html
+  //   https://lists.gnu.org/archive/html/octave-maintainers/2019-06/msg00009.html
+  //
+  // coulld solve that problem.  Briefly, instead of having the Octave
+  // interpreter block and wait for keyboard input, the terminal
+  // widget would be in charge of accepting keyboard events and use
+  // readline in callback mode.  Then the terminal widget and the
+  // interpreter will not block except when executing code.  Then we
+  // could have the interpreter qobject directly accept signals.
 
-  public slots:
+  //! Initialize and execute the octave interpreter.
 
-    // Programming Note: With the current design of the interpreter,
-    // additional signals will not be noticed because the execute
-    // function starts the Octave interpreter and it doesn't return
-    // until the interpreter exits.  So the Qt event loop running in the
-    // thread where the interpreter_qobject object lives never has a
-    // chance to see another signal.  Changing the design of the
-    // terminal widget as proposed and discussed here:
-    //
-    //   https://lists.gnu.org/archive/html/octave-maintainers/2019-05/msg00115.html
-    //   https://lists.gnu.org/archive/html/octave-maintainers/2019-06/msg00009.html
-    //
-    // coulld solve that problem.  Briefly, instead of having the Octave
-    // interpreter block and wait for keyboard input, the terminal
-    // widget would be in charge of accepting keyboard events and use
-    // readline in callback mode.  Then the terminal widget and the
-    // interpreter will not block except when executing code.  Then we
-    // could have the interpreter qobject directly accept signals.
+  void execute ();
 
-    //! Initialize and execute the octave interpreter.
+private:
 
-    void execute (void);
+  base_qobject& m_octave_qobj;
 
-  private:
+  interpreter *m_interpreter;
+};
 
-    base_qobject& m_octave_qobj;
-
-    interpreter *m_interpreter;
-  };
-}
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

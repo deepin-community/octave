@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2019-2022 The Octave Project Developers
+## Copyright (C) 2019-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -50,7 +50,9 @@ function mustBeInteger (x)
     but = sprintf ("it was non-numeric (found a %s)", class (x));
   elseif (! isreal (x))
     but = "it was complex";
-  elseif (any (! isfinite (x)))
+  elseif (issparse (x) && (any (isinf (x)) || any (isnan (x))))
+    but = "there were non-finite values";
+  elseif (! issparse (x) && any (! isfinite (x)))
     but = "there were non-finite values";
   elseif (any (x != fix (x)))
     but = "it had fractional values in some elements";

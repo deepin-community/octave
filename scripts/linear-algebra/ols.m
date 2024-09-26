@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1996-2022 The Octave Project Developers
+## Copyright (C) 1996-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -137,10 +137,8 @@ function [beta, sigma, r] = ols (y, x)
     beta = u \ (u' \ (x' * y));
   endif
 
-  if (isargout (2) || isargout (3))
+  if (nargout > 1)
     r = y - x * beta;
-  endif
-  if (isargout (2))
 
     ## z is of full rank, avoid the SVD in rnk
     if (p == 0)

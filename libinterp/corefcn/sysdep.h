@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,29 +35,26 @@
 #include "lo-ieee.h"
 #include "lo-sysdep.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
-  extern OCTINTERP_API void sysdep_init (void);
+extern OCTINTERP_API void sysdep_init ();
 
-  extern OCTINTERP_API void set_application_id (void);
+extern OCTINTERP_API void set_application_id ();
 
-  extern OCTINTERP_API void sysdep_cleanup (void);
+extern OCTINTERP_API void sysdep_cleanup ();
 
-  extern OCTINTERP_API void raw_mode (bool, bool wait = true);
+extern OCTINTERP_API void raw_mode (bool, bool wait = true);
 
-  extern OCTINTERP_API FILE * popen (const char *command, const char *mode);
+extern OCTINTERP_API FILE * popen (const char *command, const char *mode);
 
-  extern OCTINTERP_API int pclose (FILE *f);
+extern OCTINTERP_API int pclose (FILE *f);
 
-  extern OCTINTERP_API int kbhit (bool wait = true);
+extern OCTINTERP_API int kbhit (bool wait = true);
 
-  extern OCTINTERP_API std::string get_P_tmpdir (void);
+extern OCTINTERP_API std::string get_P_tmpdir ();
 
-  extern OCTINTERP_API bool same_file_internal (const std::string&,
-                                                const std::string&);
+extern OCTINTERP_API bool drive_or_unc_share (const std::string&);
 
-  extern OCTINTERP_API bool drive_or_unc_share (const std::string&);
-
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 
 #endif

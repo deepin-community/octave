@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,10 +28,12 @@
 
 #include "octave-config.h"
 
-#include <cmath>
-
 #if defined (__cplusplus)
+#  include <cmath>
+
 extern "C" {
+#else
+#  include <math.h>
 #endif
 
 /*  Octave's idea of infinity.  */
@@ -69,15 +71,10 @@ typedef union
 
 extern OCTAVE_API void octave_ieee_init (void);
 
+#if defined (__cplusplus)
 inline int __lo_ieee_isnan (double x) { return std::isnan (x); }
 inline int __lo_ieee_isfinite (double x) { return std::isfinite (x); }
 inline int __lo_ieee_isinf (double x) { return std::isinf (x); }
-
-extern OCTAVE_API int __lo_ieee_is_NA (double);
-
-extern OCTAVE_API double lo_ieee_inf_value (void);
-extern OCTAVE_API double lo_ieee_na_value (void);
-extern OCTAVE_API double lo_ieee_nan_value (void);
 
 inline int __lo_ieee_signbit (double x) { return std::signbit (x); }
 
@@ -85,13 +82,32 @@ inline int __lo_ieee_float_isnan (float x) { return std::isnan (x); }
 inline int __lo_ieee_float_isfinite (float x) { return std::isfinite (x); }
 inline int __lo_ieee_float_isinf (float x) { return std::isinf (x); }
 
+inline int __lo_ieee_float_signbit (float x) { return std::signbit (x); }
+#else
+inline int __lo_ieee_isnan (double x) { return isnan (x); }
+inline int __lo_ieee_isfinite (double x) { return isfinite (x); }
+inline int __lo_ieee_isinf (double x) { return isinf (x); }
+
+inline int __lo_ieee_signbit (double x) { return signbit (x); }
+
+inline int __lo_ieee_float_isnan (float x) { return isnan (x); }
+inline int __lo_ieee_float_isfinite (float x) { return isfinite (x); }
+inline int __lo_ieee_float_isinf (float x) { return isinf (x); }
+
+inline int __lo_ieee_float_signbit (float x) { return signbit (x); }
+#endif
+
+extern OCTAVE_API int __lo_ieee_is_NA (double);
+
+extern OCTAVE_API double lo_ieee_inf_value (void);
+extern OCTAVE_API double lo_ieee_na_value (void);
+extern OCTAVE_API double lo_ieee_nan_value (void);
+
 extern OCTAVE_API int __lo_ieee_float_is_NA (float);
 
 extern OCTAVE_API float lo_ieee_float_inf_value (void);
 extern OCTAVE_API float lo_ieee_float_na_value (void);
 extern OCTAVE_API float lo_ieee_float_nan_value (void);
-
-inline int __lo_ieee_float_signbit (float x) { return std::signbit (x); }
 
 #if defined (__cplusplus)
 }
@@ -113,58 +129,42 @@ inline int __lo_ieee_float_signbit (float x) { return std::signbit (x); }
   (sizeof (x) == sizeof (float)                         \
    ? __lo_ieee_float_is_NA (x) : __lo_ieee_is_NA (x))
 
-#define lo_ieee_is_NaN_or_NA(x)                                         \
-  (sizeof (x) == sizeof (float)                                         \
-   ? __lo_ieee_float_is_NaN_or_NA (x) : __lo_ieee_is_NaN_or_NA (x))
-
 #define lo_ieee_signbit(x)                                      \
   (sizeof (x) == sizeof (float)                                 \
    ? __lo_ieee_float_signbit (x) : __lo_ieee_signbit (x))
 
 #if defined (__cplusplus)
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+template <typename T>
+struct numeric_limits
 {
-  template <typename T>
-  struct numeric_limits
-  {
-  public:
-    static T NA (void) { return static_cast<T> (0); }
-    static T NaN (void) { return static_cast<T> (0); }
-    static T Inf (void) { return static_cast<T> (0); }
-  };
+public:
+  static T NA () { return static_cast<T> (0); }
+  static T NaN () { return static_cast<T> (0); }
+  static T Inf () { return static_cast<T> (0); }
+};
 
-  template <>
-  struct numeric_limits<double>
-  {
-  public:
-    static double NA (void) { return octave_NA; }
-    static double NaN (void) { return octave_NaN; }
-    static double Inf (void) { return octave_Inf; }
-  };
+template <>
+struct numeric_limits<double>
+{
+public:
+  static double NA () { return octave_NA; }
+  static double NaN () { return octave_NaN; }
+  static double Inf () { return octave_Inf; }
+};
 
-  template <>
-  struct numeric_limits<float>
-  {
-  public:
-    static float NA (void) { return octave_Float_NA; }
-    static float NaN (void) { return octave_Float_NaN; }
-    static float Inf (void) { return octave_Float_Inf; }
-  };
-}
+template <>
+struct numeric_limits<float>
+{
+public:
+  static float NA () { return octave_Float_NA; }
+  static float NaN () { return octave_Float_NaN; }
+  static float Inf () { return octave_Float_Inf; }
+};
 
-#endif
-
-#if defined (OCTAVE_PROVIDE_DEPRECATED_SYMBOLS)
-
-OCTAVE_DEPRECATED (7, "use '__lo_ieee_isfinite' instead")
-inline int __lo_ieee_finite (double x) { return __lo_ieee_isfinite (x); }
-
-OCTAVE_DEPRECATED (7, "use '__lo_ieee_float_isfinite' instead")
-inline int __lo_ieee_float_finite (float x)
-{ return __lo_ieee_float_isfinite (x); }
-
-#define lo_ieee_finite(x) lo_ieee_isfinite(x)
+OCTAVE_END_NAMESPACE(octave)
 
 #endif
 

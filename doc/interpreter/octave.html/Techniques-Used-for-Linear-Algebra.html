@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Techniques Used for Linear Algebra (GNU Octave (version 7.1.0))</title>
+<title>Techniques Used for Linear Algebra (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Techniques Used for Linear Algebra (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Techniques Used for Linear Algebra (GNU Octave (version 7.1.0))">
+<meta name="description" content="Techniques Used for Linear Algebra (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Techniques Used for Linear Algebra (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,8 @@
 <link href="Basic-Matrix-Functions.html" rel="next" title="Basic Matrix Functions">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,14 +29,14 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="Techniques-Used-for-Linear-Algebra">
-<div class="header">
+<div class="section-level-extent" id="Techniques-Used-for-Linear-Algebra">
+<div class="nav-panel">
 <p>
 Next: <a href="Basic-Matrix-Functions.html" accesskey="n" rel="next">Basic Matrix Functions</a>, Up: <a href="Linear-Algebra.html" accesskey="u" rel="up">Linear Algebra</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Techniques-Used-for-Linear-Algebra-1"></span><h3 class="section">18.1 Techniques Used for Linear Algebra</h3>
-<span id="index-linear-algebra_002c-techniques"></span>
+<h3 class="section" id="Techniques-Used-for-Linear-Algebra-1"><span>18.1 Techniques Used for Linear Algebra<a class="copiable-link" href="#Techniques-Used-for-Linear-Algebra-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-linear-algebra_002c-techniques"></a>
 
 <p>Octave includes a polymorphic solver that selects an appropriate matrix
 factorization depending on the properties of the matrix itself.
@@ -61,38 +48,38 @@ time it is used in a linear equation.
 <p>The selection tree for how the linear equation is solved or a matrix
 inverse is formed is given by:
 </p>
-<ol>
+<ol class="enumerate">
 <li> If the matrix is upper or lower triangular sparse use a forward or
-backward substitution using the <small>LAPACK</small> xTRTRS function, and goto 4.
+backward substitution using the <small class="sc">LAPACK</small> xTRTRS function, and goto 4.
 
 
 </li><li> If the matrix is square, Hermitian with a real positive diagonal,
-attempt Cholesky&nbsp;factorization using the <small>LAPACK</small> xPOTRF function.
+attempt Cholesky&nbsp;factorization using the <small class="sc">LAPACK</small> xPOTRF function.
 
 </li><li> If the Cholesky&nbsp;factorization failed or the matrix is not
 Hermitian with a real positive diagonal, and the matrix is square, factorize
-using the <small>LAPACK</small> xGETRF function.
+using the <small class="sc">LAPACK</small> xGETRF function.
 
 </li><li> If the matrix is not square, or any of the previous solvers flags
 a singular or near singular matrix, find a least squares solution using
-the <small>LAPACK</small> xGELSD function.
+the <small class="sc">LAPACK</small> xGELSD function.
 </li></ol>
 
-<p>The user can force the type of the matrix with the <code>matrix_type</code>
+<p>The user can force the type of the matrix with the <code class="code">matrix_type</code>
 function.  This overcomes the cost of discovering the type of the matrix.
 However, it should be noted that identifying the type of the matrix incorrectly
-will lead to unpredictable results, and so <code>matrix_type</code> should be
+will lead to unpredictable results, and so <code class="code">matrix_type</code> should be
 used with care.
 </p>
 <p>It should be noted that the test for whether a matrix is a candidate for
-Cholesky&nbsp;factorization, performed above, and by the <code>matrix_type</code>
+Cholesky&nbsp;factorization, performed above, and by the <code class="code">matrix_type</code>
 function, does not make certain that the matrix is
 Hermitian.  However, the attempt to factorize the matrix will quickly
 detect a non-Hermitian matrix.
 </p>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Basic-Matrix-Functions.html">Basic Matrix Functions</a>, Up: <a href="Linear-Algebra.html">Linear Algebra</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

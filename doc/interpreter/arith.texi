@@ -1,6 +1,6 @@
 @c DO NOT EDIT!  Generated automatically by munge-texi.pl.
 
-@c Copyright (C) 1996-2022 The Octave Project Developers
+@c Copyright (C) 1996-2024 The Octave Project Developers
 @c
 @c This file is part of Octave.
 @c
@@ -51,7 +51,12 @@ sin ([1, 2; 3, 4])
 
 @c exp libinterp/corefcn/mappers.cc
 @anchor{XREFexp}
-@deftypefn {} {} exp (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} exp (@var{x})
 Compute
 @tex
 $e^{x}$
@@ -68,7 +73,12 @@ To compute the matrix exponential, @pxref{Linear Algebra}.
 
 @c expm1 libinterp/corefcn/mappers.cc
 @anchor{XREFexpm1}
-@deftypefn {} {} expm1 (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} expm1 (@var{x})
 Compute
 @tex
 $ e^{x} - 1 $
@@ -83,7 +93,12 @@ accurately in the neighborhood of zero.
 
 @c log libinterp/corefcn/mappers.cc
 @anchor{XREFlog}
-@deftypefn {} {} log (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} log (@var{x})
 Compute the natural logarithm,
 @tex
 $\ln{(x)},$
@@ -100,7 +115,12 @@ To compute the matrix logarithm, @pxref{Linear Algebra}.
 
 @c reallog scripts/specfun/reallog.m
 @anchor{XREFreallog}
-@deftypefn {} {} reallog (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} reallog (@var{x})
 Return the real-valued natural logarithm of each element of @var{x}.
 
 If any element results in a complex return value @code{reallog} aborts and
@@ -111,7 +131,12 @@ issues an error.
 
 @c log1p libinterp/corefcn/mappers.cc
 @anchor{XREFlog1p}
-@deftypefn {} {} log1p (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} log1p (@var{x})
 Compute
 @tex
 $\ln{(1 + x)}$
@@ -126,7 +151,12 @@ accurately in the neighborhood of zero.
 
 @c log10 libinterp/corefcn/mappers.cc
 @anchor{XREFlog10}
-@deftypefn {} {} log10 (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} log10 (@var{x})
 Compute the base-10 logarithm of each element of @var{x}.
 @xseealso{@ref{XREFlog,,log}, @ref{XREFlog2,,log2}, @ref{XREFlogspace,,logspace}, @ref{XREFexp,,exp}}
 @end deftypefn
@@ -134,6 +164,11 @@ Compute the base-10 logarithm of each element of @var{x}.
 
 @c log2 libinterp/corefcn/data.cc
 @anchor{XREFlog2}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{y} =} log2 (@var{x})
 @deftypefnx {} {[@var{f}, @var{e}] =} log2 (@var{x})
 Compute the base-2 logarithm of each element of @var{x}.
@@ -172,32 +207,45 @@ $x = 0$, $f = e = 0$.
 @end deftypefn
 
 
-@c pow2 scripts/specfun/pow2.m
+@c pow2 libinterp/corefcn/pow2.cc
 @anchor{XREFpow2}
-@deftypefn  {} {} pow2 (@var{x})
-@deftypefnx {} {} pow2 (@var{f}, @var{e})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} pow2 (@var{x})
+@deftypefnx {} {@var{y} =} pow2 (@var{f}, @var{e})
 With one input argument, compute
 @tex
-$2^x$
+$y = 2^x$
 @end tex
 @ifnottex
-2 .^ x
+y = 2 .^ x
 @end ifnottex
 for each element of @var{x}.
 
 With two input arguments, return
 @tex
-$f \cdot 2^e$.
+$y = f \cdot 2^e$,
 @end tex
 @ifnottex
-f .* (2 .^ e).
+y = f .* (2 .^ e).
 @end ifnottex
+where for complex inputs only the real part of both inputs is regarded
+and from @var{e} only the real integer part.  This calling form corresponds
+to C/C++ standard function @code{ldexp()}.
 @xseealso{@ref{XREFlog2,,log2}, @ref{XREFnextpow2,,nextpow2}, @ref{XREFpower,,power}}
 @end deftypefn
 
 
 @c nextpow2 scripts/general/nextpow2.m
 @anchor{XREFnextpow2}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{n} =} nextpow2 (@var{x})
 Compute the exponent for the smallest power of two larger than the input.
 
@@ -216,7 +264,12 @@ $2^n \ge |x|$.
 
 @c realpow scripts/specfun/realpow.m
 @anchor{XREFrealpow}
-@deftypefn {} {} realpow (@var{x}, @var{y})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{z} =} realpow (@var{x}, @var{y})
 Compute the real-valued, element-by-element power operator.
 
 This is equivalent to @w{@code{@var{x} .^ @var{y}}}, except that
@@ -227,7 +280,12 @@ This is equivalent to @w{@code{@var{x} .^ @var{y}}}, except that
 
 @c sqrt libinterp/corefcn/mappers.cc
 @anchor{XREFsqrt}
-@deftypefn {} {} sqrt (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} sqrt (@var{x})
 Compute the square root of each element of @var{x}.
 
 If @var{x} is negative, a complex result is returned.
@@ -239,7 +297,12 @@ To compute the matrix square root, @pxref{Linear Algebra}.
 
 @c realsqrt scripts/specfun/realsqrt.m
 @anchor{XREFrealsqrt}
-@deftypefn {} {} realsqrt (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} realsqrt (@var{x})
 Return the real-valued square root of each element of @var{x}.
 
 If any element results in a complex return value @code{realsqrt} aborts and
@@ -250,7 +313,12 @@ issues an error.
 
 @c cbrt libinterp/corefcn/mappers.cc
 @anchor{XREFcbrt}
-@deftypefn {} {} cbrt (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} cbrt (@var{x})
 Compute the real-valued cube root of each element of @var{x}.
 
 Unlike @code{@var{x}^(1/3)}, the result will be negative if @var{x} is
@@ -263,7 +331,12 @@ If any element of @var{x} is complex, @code{cbrt} aborts with an error.
 
 @c nthroot scripts/specfun/nthroot.m
 @anchor{XREFnthroot}
-@deftypefn {} {} nthroot (@var{x}, @var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} nthroot (@var{x}, @var{n})
 
 Compute the real (non-complex) @var{n}-th root of @var{x}.
 
@@ -300,8 +373,13 @@ defined as @code{sqrt (-1)}.
 
 @c abs libinterp/corefcn/mappers.cc
 @anchor{XREFabs}
-@deftypefn {} {} abs (@var{z})
-Compute the magnitude of @var{z}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{z} =} abs (@var{x})
+Compute the magnitude of @var{x}.
 
 The magnitude is defined as
 @tex
@@ -325,8 +403,13 @@ abs (3 + 4i)
 
 @c arg libinterp/corefcn/mappers.cc
 @anchor{XREFarg}
-@deftypefn  {} {} arg (@var{z})
-@deftypefnx {} {} angle (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{theta} =} arg (@var{z})
+@deftypefnx {} {@var{theta} =} angle (@var{z})
 Compute the argument, i.e., angle of @var{z}.
 
 This is defined as,
@@ -352,7 +435,12 @@ arg (3 + 4i)
 
 @c conj libinterp/corefcn/mappers.cc
 @anchor{XREFconj}
-@deftypefn {} {} conj (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{zc} =} conj (@var{z})
 Return the complex conjugate of @var{z}.
 
 The complex conjugate is defined as
@@ -368,9 +456,14 @@ $\bar{z} = x - iy$.
 
 @c cplxpair scripts/general/cplxpair.m
 @anchor{XREFcplxpair}
-@deftypefn  {} {} cplxpair (@var{z})
-@deftypefnx {} {} cplxpair (@var{z}, @var{tol})
-@deftypefnx {} {} cplxpair (@var{z}, @var{tol}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{zsort} =} cplxpair (@var{z})
+@deftypefnx {} {@var{zsort} =} cplxpair (@var{z}, @var{tol})
+@deftypefnx {} {@var{zsort} =} cplxpair (@var{z}, @var{tol}, @var{dim})
 Sort the numbers @var{z} into complex conjugate pairs ordered by increasing
 real part.
 
@@ -402,7 +495,12 @@ cplxpair (exp (2i*pi*[0:4]'/5)) == exp (2i*pi*[3; 2; 4; 1; 0]/5)
 
 @c imag libinterp/corefcn/mappers.cc
 @anchor{XREFimag}
-@deftypefn {} {} imag (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} imag (@var{z})
 Return the imaginary part of @var{z} as a real number.
 @xseealso{@ref{XREFreal,,real}, @ref{XREFconj,,conj}}
 @end deftypefn
@@ -410,7 +508,12 @@ Return the imaginary part of @var{z} as a real number.
 
 @c real libinterp/corefcn/mappers.cc
 @anchor{XREFreal}
-@deftypefn {} {} real (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{x} =} real (@var{z})
 Return the real part of @var{z}.
 @xseealso{@ref{XREFimag,,imag}, @ref{XREFconj,,conj}}
 @end deftypefn
@@ -454,6 +557,11 @@ do not distinguish -0.
 
 @c deg2rad scripts/general/deg2rad.m
 @anchor{XREFdeg2rad}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{rad} =} deg2rad (@var{deg})
 
 Convert degrees to radians.
@@ -478,6 +586,11 @@ deg2rad ([0, 90, 180, 270, 360])
 
 @c rad2deg scripts/general/rad2deg.m
 @anchor{XREFrad2deg}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{deg} =} rad2deg (@var{rad})
 
 Convert radians to degrees.
@@ -503,42 +616,72 @@ rad2deg ([0, pi/2, pi, 3/2*pi, 2*pi])
 
 @c sin libinterp/corefcn/mappers.cc
 @anchor{XREFsin}
-@deftypefn {} {} sin (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} sin (@var{x})
 Compute the sine for each element of @var{x} in radians.
 @xseealso{@ref{XREFasin,,asin}, @ref{XREFsind,,sind}, @ref{XREFsinh,,sinh}}
 @end deftypefn
 
 @c cos libinterp/corefcn/mappers.cc
 @anchor{XREFcos}
-@deftypefn {} {} cos (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} cos (@var{x})
 Compute the cosine for each element of @var{x} in radians.
 @xseealso{@ref{XREFacos,,acos}, @ref{XREFcosd,,cosd}, @ref{XREFcosh,,cosh}}
 @end deftypefn
 
 @c tan libinterp/corefcn/mappers.cc
 @anchor{XREFtan}
-@deftypefn {} {} tan (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} tan (@var{z})
 Compute the tangent for each element of @var{x} in radians.
 @xseealso{@ref{XREFatan,,atan}, @ref{XREFtand,,tand}, @ref{XREFtanh,,tanh}}
 @end deftypefn
 
 @c sec scripts/elfun/sec.m
 @anchor{XREFsec}
-@deftypefn {} {} sec (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} sec (@var{x})
 Compute the secant for each element of @var{x} in radians.
 @xseealso{@ref{XREFasec,,asec}, @ref{XREFsecd,,secd}, @ref{XREFsech,,sech}}
 @end deftypefn
 
 @c csc scripts/elfun/csc.m
 @anchor{XREFcsc}
-@deftypefn {} {} csc (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} csc (@var{x})
 Compute the cosecant for each element of @var{x} in radians.
 @xseealso{@ref{XREFacsc,,acsc}, @ref{XREFcscd,,cscd}, @ref{XREFcsch,,csch}}
 @end deftypefn
 
 @c cot scripts/elfun/cot.m
 @anchor{XREFcot}
-@deftypefn {} {} cot (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} cot (@var{x})
 Compute the cotangent for each element of @var{x} in radians.
 @xseealso{@ref{XREFacot,,acot}, @ref{XREFcotd,,cotd}, @ref{XREFcoth,,coth}}
 @end deftypefn
@@ -546,42 +689,72 @@ Compute the cotangent for each element of @var{x} in radians.
 
 @c asin libinterp/corefcn/mappers.cc
 @anchor{XREFasin}
-@deftypefn {} {} asin (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} asin (@var{x})
 Compute the inverse sine in radians for each element of @var{x}.
 @xseealso{@ref{XREFsin,,sin}, @ref{XREFasind,,asind}}
 @end deftypefn
 
 @c acos libinterp/corefcn/mappers.cc
 @anchor{XREFacos}
-@deftypefn {} {} acos (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} acos (@var{x})
 Compute the inverse cosine in radians for each element of @var{x}.
 @xseealso{@ref{XREFcos,,cos}, @ref{XREFacosd,,acosd}}
 @end deftypefn
 
 @c atan libinterp/corefcn/mappers.cc
 @anchor{XREFatan}
-@deftypefn {} {} atan (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} atan (@var{x})
 Compute the inverse tangent in radians for each element of @var{x}.
 @xseealso{@ref{XREFtan,,tan}, @ref{XREFatand,,atand}}
 @end deftypefn
 
 @c asec scripts/elfun/asec.m
 @anchor{XREFasec}
-@deftypefn {} {} asec (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} asec (@var{x})
 Compute the inverse secant in radians for each element of @var{x}.
 @xseealso{@ref{XREFsec,,sec}, @ref{XREFasecd,,asecd}}
 @end deftypefn
 
 @c acsc scripts/elfun/acsc.m
 @anchor{XREFacsc}
-@deftypefn {} {} acsc (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} acsc (@var{x})
 Compute the inverse cosecant in radians for each element of @var{x}.
 @xseealso{@ref{XREFcsc,,csc}, @ref{XREFacscd,,acscd}}
 @end deftypefn
 
 @c acot scripts/elfun/acot.m
 @anchor{XREFacot}
-@deftypefn {} {} acot (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} acot (@var{x})
 Compute the inverse cotangent in radians for each element of @var{x}.
 @xseealso{@ref{XREFcot,,cot}, @ref{XREFacotd,,acotd}}
 @end deftypefn
@@ -589,42 +762,72 @@ Compute the inverse cotangent in radians for each element of @var{x}.
 
 @c sinh libinterp/corefcn/mappers.cc
 @anchor{XREFsinh}
-@deftypefn {} {} sinh (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} sinh (@var{x})
 Compute the hyperbolic sine for each element of @var{x}.
 @xseealso{@ref{XREFasinh,,asinh}, @ref{XREFcosh,,cosh}, @ref{XREFtanh,,tanh}}
 @end deftypefn
 
 @c cosh libinterp/corefcn/mappers.cc
 @anchor{XREFcosh}
-@deftypefn {} {} cosh (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} cosh (@var{x})
 Compute the hyperbolic cosine for each element of @var{x}.
 @xseealso{@ref{XREFacosh,,acosh}, @ref{XREFsinh,,sinh}, @ref{XREFtanh,,tanh}}
 @end deftypefn
 
 @c tanh libinterp/corefcn/mappers.cc
 @anchor{XREFtanh}
-@deftypefn {} {} tanh (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} tanh (@var{x})
 Compute hyperbolic tangent for each element of @var{x}.
 @xseealso{@ref{XREFatanh,,atanh}, @ref{XREFsinh,,sinh}, @ref{XREFcosh,,cosh}}
 @end deftypefn
 
 @c sech scripts/elfun/sech.m
 @anchor{XREFsech}
-@deftypefn {} {} sech (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} sech (@var{x})
 Compute the hyperbolic secant of each element of @var{x}.
 @xseealso{@ref{XREFasech,,asech}}
 @end deftypefn
 
 @c csch scripts/elfun/csch.m
 @anchor{XREFcsch}
-@deftypefn {} {} csch (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} csch (@var{x})
 Compute the hyperbolic cosecant of each element of @var{x}.
 @xseealso{@ref{XREFacsch,,acsch}}
 @end deftypefn
 
 @c coth scripts/elfun/coth.m
 @anchor{XREFcoth}
-@deftypefn {} {} coth (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} coth (@var{x})
 Compute the hyperbolic cotangent of each element of @var{x}.
 @xseealso{@ref{XREFacoth,,acoth}}
 @end deftypefn
@@ -632,42 +835,72 @@ Compute the hyperbolic cotangent of each element of @var{x}.
 
 @c asinh libinterp/corefcn/mappers.cc
 @anchor{XREFasinh}
-@deftypefn {} {} asinh (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} asinh (@var{x})
 Compute the inverse hyperbolic sine for each element of @var{x}.
 @xseealso{@ref{XREFsinh,,sinh}}
 @end deftypefn
 
 @c acosh libinterp/corefcn/mappers.cc
 @anchor{XREFacosh}
-@deftypefn {} {} acosh (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} acosh (@var{x})
 Compute the inverse hyperbolic cosine for each element of @var{x}.
 @xseealso{@ref{XREFcosh,,cosh}}
 @end deftypefn
 
 @c atanh libinterp/corefcn/mappers.cc
 @anchor{XREFatanh}
-@deftypefn {} {} atanh (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} atanh (@var{x})
 Compute the inverse hyperbolic tangent for each element of @var{x}.
 @xseealso{@ref{XREFtanh,,tanh}}
 @end deftypefn
 
 @c asech scripts/elfun/asech.m
 @anchor{XREFasech}
-@deftypefn {} {} asech (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} asech (@var{x})
 Compute the inverse hyperbolic secant of each element of @var{x}.
 @xseealso{@ref{XREFsech,,sech}}
 @end deftypefn
 
 @c acsch scripts/elfun/acsch.m
 @anchor{XREFacsch}
-@deftypefn {} {} acsch (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} acsch (@var{x})
 Compute the inverse hyperbolic cosecant of each element of @var{x}.
 @xseealso{@ref{XREFcsch,,csch}}
 @end deftypefn
 
 @c acoth scripts/elfun/acoth.m
 @anchor{XREFacoth}
-@deftypefn {} {} acoth (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} acoth (@var{x})
 Compute the inverse hyperbolic cotangent of each element of @var{x}.
 @xseealso{@ref{XREFcoth,,coth}}
 @end deftypefn
@@ -675,13 +908,18 @@ Compute the inverse hyperbolic cotangent of each element of @var{x}.
 
 @c atan2 libinterp/corefcn/data.cc
 @anchor{XREFatan2}
-@deftypefn {} {} atan2 (@var{y}, @var{x})
-Compute atan (@var{y} / @var{x}) for corresponding elements of @var{y}
-and @var{x}.
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
 
-@var{y} and @var{x} must match in size and orientation.  The signs of
-elements of @var{y} and @var{x} are used to determine the quadrants of each
-resulting value.
+
+@deftypefn {} {@var{angle} =} atan2 (@var{y}, @var{x})
+Compute atan (@var{y} / @var{x}) for corresponding elements of @var{y} and
+@var{x}.
+
+@var{y} and @var{x} must match in size and orientation.  The signs of elements
+of @var{y} and @var{x} are used to determine the quadrants of each resulting
+value.
 
 This function is equivalent to @code{arg (complex (@var{x}, @var{y}))}.
 @xseealso{@ref{XREFtan,,tan}, @ref{XREFtand,,tand}, @ref{XREFtanh,,tanh}, @ref{XREFatanh,,atanh}}
@@ -704,7 +942,12 @@ cos (pi/2)
 
 @c sind scripts/elfun/sind.m
 @anchor{XREFsind}
-@deftypefn {} {} sind (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} sind (@var{x})
 Compute the sine for each element of @var{x} in degrees.
 
 The function is more accurate than @code{sin} for large values of @var{x}
@@ -715,7 +958,12 @@ and for multiples of 180 degrees (@code{@var{x}/180} is an integer) where
 
 @c cosd scripts/elfun/cosd.m
 @anchor{XREFcosd}
-@deftypefn {} {} cosd (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} cosd (@var{x})
 Compute the cosine for each element of @var{x} in degrees.
 
 The function is more accurate than @code{cos} for large values of @var{x}
@@ -727,7 +975,12 @@ of eps.
 
 @c tand scripts/elfun/tand.m
 @anchor{XREFtand}
-@deftypefn {} {} tand (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} tand (@var{x})
 Compute the tangent for each element of @var{x} in degrees.
 
 Returns zero for elements where @code{@var{x}/180} is an integer and
@@ -737,21 +990,36 @@ Returns zero for elements where @code{@var{x}/180} is an integer and
 
 @c secd scripts/elfun/secd.m
 @anchor{XREFsecd}
-@deftypefn {} {} secd (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} secd (@var{x})
 Compute the secant for each element of @var{x} in degrees.
 @xseealso{@ref{XREFasecd,,asecd}, @ref{XREFsec,,sec}}
 @end deftypefn
 
 @c cscd scripts/elfun/cscd.m
 @anchor{XREFcscd}
-@deftypefn {} {} cscd (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} cscd (@var{x})
 Compute the cosecant for each element of @var{x} in degrees.
 @xseealso{@ref{XREFacscd,,acscd}, @ref{XREFcsc,,csc}}
 @end deftypefn
 
 @c cotd scripts/elfun/cotd.m
 @anchor{XREFcotd}
-@deftypefn {} {} cotd (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} cotd (@var{x})
 Compute the cotangent for each element of @var{x} in degrees.
 @xseealso{@ref{XREFacotd,,acotd}, @ref{XREFcot,,cot}}
 @end deftypefn
@@ -759,28 +1027,48 @@ Compute the cotangent for each element of @var{x} in degrees.
 
 @c asind scripts/elfun/asind.m
 @anchor{XREFasind}
-@deftypefn {} {} asind (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} asind (@var{x})
 Compute the inverse sine in degrees for each element of @var{x}.
 @xseealso{@ref{XREFsind,,sind}, @ref{XREFasin,,asin}}
 @end deftypefn
 
 @c acosd scripts/elfun/acosd.m
 @anchor{XREFacosd}
-@deftypefn {} {} acosd (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} acosd (@var{x})
 Compute the inverse cosine in degrees for each element of @var{x}.
 @xseealso{@ref{XREFcosd,,cosd}, @ref{XREFacos,,acos}}
 @end deftypefn
 
 @c atand scripts/elfun/atand.m
 @anchor{XREFatand}
-@deftypefn {} {} atand (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} atand (@var{x})
 Compute the inverse tangent in degrees for each element of @var{x}.
 @xseealso{@ref{XREFtand,,tand}, @ref{XREFatan,,atan}}
 @end deftypefn
 
 @c atan2d scripts/elfun/atan2d.m
 @anchor{XREFatan2d}
-@deftypefn {} {} atan2d (@var{y}, @var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{d} =} atan2d (@var{y}, @var{x})
 Compute atan (@var{y} / @var{x}) in degrees for corresponding elements
 from @var{y} and @var{x}.
 @xseealso{@ref{XREFtand,,tand}, @ref{XREFatan2,,atan2}}
@@ -788,21 +1076,36 @@ from @var{y} and @var{x}.
 
 @c asecd scripts/elfun/asecd.m
 @anchor{XREFasecd}
-@deftypefn {} {} asecd (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} asecd (@var{x})
 Compute the inverse secant in degrees for each element of @var{x}.
 @xseealso{@ref{XREFsecd,,secd}, @ref{XREFasec,,asec}}
 @end deftypefn
 
 @c acscd scripts/elfun/acscd.m
 @anchor{XREFacscd}
-@deftypefn {} {} acscd (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} acscd (@var{x})
 Compute the inverse cosecant in degrees for each element of @var{x}.
 @xseealso{@ref{XREFcscd,,cscd}, @ref{XREFacsc,,acsc}}
 @end deftypefn
 
 @c acotd scripts/elfun/acotd.m
 @anchor{XREFacotd}
-@deftypefn {} {} acotd (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} acotd (@var{x})
 Compute the inverse cotangent in degrees for each element of @var{x}.
 @xseealso{@ref{XREFcotd,,cotd}, @ref{XREFacot,,acot}}
 @end deftypefn
@@ -813,6 +1116,11 @@ arguments with increased accuracy.
 
 @c sinpi scripts/elfun/sinpi.m
 @anchor{XREFsinpi}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{y} =} sinpi (@var{x})
 Compute sine (@var{x} * pi) for each element of @var{x} accurately.
 
@@ -842,6 +1150,11 @@ sinpi ([0, 1, 2, 3])
 
 @c cospi scripts/elfun/cospi.m
 @anchor{XREFcospi}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{y} =} cospi (@var{x})
 Compute cosine (@var{x} * pi) for each element of @var{x} accurately.
 
@@ -875,11 +1188,16 @@ cospi ([-3/2, -1/2, 1/2, 3/2])
 
 @c sum libinterp/corefcn/data.cc
 @anchor{XREFsum}
-@deftypefn  {} {} sum (@var{x})
-@deftypefnx {} {} sum (@var{x}, @var{dim})
-@deftypefnx {} {} sum (@dots{}, "native")
-@deftypefnx {} {} sum (@dots{}, "double")
-@deftypefnx {} {} sum (@dots{}, "extra")
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} sum (@var{x})
+@deftypefnx {} {@var{y} =} sum (@var{x}, @var{dim})
+@deftypefnx {} {@var{y} =} sum (@dots{}, "native")
+@deftypefnx {} {@var{y} =} sum (@dots{}, "double")
+@deftypefnx {} {@var{y} =} sum (@dots{}, "extra")
 Sum of elements along dimension @var{dim}.
 
 If @var{dim} is omitted, it defaults to the first non-singleton dimension.
@@ -915,10 +1233,15 @@ type @qcode{"extra"} has no effect.
 
 @c prod libinterp/corefcn/data.cc
 @anchor{XREFprod}
-@deftypefn  {} {} prod (@var{x})
-@deftypefnx {} {} prod (@var{x}, @var{dim})
-@deftypefnx {} {} prod (@dots{}, "native")
-@deftypefnx {} {} prod (@dots{}, "double")
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} prod (@var{x})
+@deftypefnx {} {@var{y} =} prod (@var{x}, @var{dim})
+@deftypefnx {} {@var{y} =} prod (@dots{}, "native")
+@deftypefnx {} {@var{y} =} prod (@dots{}, "double")
 Product of elements along dimension @var{dim}.
 
 If @var{dim} is omitted, it defaults to the first non-singleton dimension.
@@ -947,10 +1270,15 @@ in double precision even for single precision inputs.
 
 @c cumsum libinterp/corefcn/data.cc
 @anchor{XREFcumsum}
-@deftypefn  {} {} cumsum (@var{x})
-@deftypefnx {} {} cumsum (@var{x}, @var{dim})
-@deftypefnx {} {} cumsum (@dots{}, "native")
-@deftypefnx {} {} cumsum (@dots{}, "double")
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} cumsum (@var{x})
+@deftypefnx {} {@var{y} =} cumsum (@var{x}, @var{dim})
+@deftypefnx {} {@var{y} =} cumsum (@dots{}, "native")
+@deftypefnx {} {@var{y} =} cumsum (@dots{}, "double")
 Cumulative sum of elements along dimension @var{dim}.
 
 If @var{dim} is omitted, it defaults to the first non-singleton dimension.
@@ -973,8 +1301,13 @@ For an explanation of the optional parameters @qcode{"native"} and
 
 @c cumprod libinterp/corefcn/data.cc
 @anchor{XREFcumprod}
-@deftypefn  {} {} cumprod (@var{x})
-@deftypefnx {} {} cumprod (@var{x}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} cumprod (@var{x})
+@deftypefnx {} {@var{y} =} cumprod (@var{x}, @var{dim})
 Cumulative product of elements along dimension @var{dim}.
 
 If @var{dim} is omitted, it defaults to the first non-singleton dimension.
@@ -994,8 +1327,13 @@ cumprod ([1, 2; 3, 4; 5, 6])
 
 @c sumsq libinterp/corefcn/data.cc
 @anchor{XREFsumsq}
-@deftypefn  {} {} sumsq (@var{x})
-@deftypefnx {} {} sumsq (@var{x}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} sumsq (@var{x})
+@deftypefnx {} {@var{y} =} sumsq (@var{x}, @var{dim})
 Sum of squares of elements along dimension @var{dim}.
 
 If @var{dim} is omitted, it defaults to the first non-singleton dimension.
@@ -1017,7 +1355,12 @@ but it uses less memory and avoids calling @code{conj} if @var{x} is real.
 
 @c ceil libinterp/corefcn/mappers.cc
 @anchor{XREFceil}
-@deftypefn {} {} ceil (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} ceil (@var{x})
 Return the smallest integer not less than @var{x}.
 
 This is equivalent to rounding towards positive infinity.
@@ -1037,7 +1380,12 @@ ceil ([-2.7, 2.7])
 
 @c fix libinterp/corefcn/mappers.cc
 @anchor{XREFfix}
-@deftypefn {} {} fix (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} fix (@var{x})
 Truncate fractional portion of @var{x} and return the integer portion.
 
 This is equivalent to rounding towards zero.  If @var{x} is complex, return
@@ -1055,7 +1403,12 @@ fix ([-2.7, 2.7])
 
 @c floor libinterp/corefcn/mappers.cc
 @anchor{XREFfloor}
-@deftypefn {} {} floor (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} floor (@var{x})
 Return the largest integer not greater than @var{x}.
 
 This is equivalent to rounding towards negative infinity.  If @var{x} is
@@ -1073,7 +1426,12 @@ floor ([-2.7, 2.7])
 
 @c round libinterp/corefcn/mappers.cc
 @anchor{XREFround}
-@deftypefn {} {} round (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} round (@var{x})
 Return the integer nearest to @var{x}.
 
 If @var{x} is complex, return
@@ -1092,7 +1450,12 @@ round ([-2.7, 2.7])
 
 @c roundb libinterp/corefcn/mappers.cc
 @anchor{XREFroundb}
-@deftypefn {} {} roundb (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} roundb (@var{x})
 Return the integer nearest to @var{x}.  If there are two nearest
 integers, return the even one (banker's rounding).
 
@@ -1104,10 +1467,15 @@ return @code{roundb (real (@var{x})) + roundb (imag (@var{x})) * I}.
 
 @c max libinterp/corefcn/max.cc
 @anchor{XREFmax}
-@deftypefn  {} {} max (@var{x})
-@deftypefnx {} {} max (@var{x}, [], @var{dim})
-@deftypefnx {} {[@var{w}, @var{iw}] =} max (@var{x})
-@deftypefnx {} {} max (@var{x}, @var{y})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{m} =} max (@var{x})
+@deftypefnx {} {@var{m} =} max (@var{x}, [], @var{dim})
+@deftypefnx {} {[@var{m}, @var{im}] =} max (@var{x})
+@deftypefnx {} {@var{m} =} max (@var{x}, @var{y})
 Find maximum values in the array @var{x}.
 
 For a vector argument, return the maximum value.  For a matrix argument,
@@ -1173,10 +1541,15 @@ the first index of the maximum value(s).  Thus,
 
 @c min libinterp/corefcn/max.cc
 @anchor{XREFmin}
-@deftypefn  {} {} min (@var{x})
-@deftypefnx {} {} min (@var{x}, [], @var{dim})
-@deftypefnx {} {[@var{w}, @var{iw}] =} min (@var{x})
-@deftypefnx {} {} min (@var{x}, @var{y})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{m} =} min (@var{x})
+@deftypefnx {} {@var{m} =} min (@var{x}, [], @var{dim})
+@deftypefnx {} {[@var{m}, @var{im}] =} min (@var{x})
+@deftypefnx {} {@var{m} =} min (@var{x}, @var{y})
 Find minimum values in the array @var{x}.
 
 For a vector argument, return the minimum value.  For a matrix argument,
@@ -1242,9 +1615,14 @@ the first index of the minimum value(s).  Thus,
 
 @c cummax libinterp/corefcn/max.cc
 @anchor{XREFcummax}
-@deftypefn  {} {} cummax (@var{x})
-@deftypefnx {} {} cummax (@var{x}, @var{dim})
-@deftypefnx {} {[@var{w}, @var{iw}] =} cummax (@dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{M} =} cummax (@var{x})
+@deftypefnx {} {@var{M} =} cummax (@var{x}, @var{dim})
+@deftypefnx {} {[@var{M}, @var{IM}] =} cummax (@dots{})
 Return the cumulative maximum values along dimension @var{dim}.
 
 If @var{dim} is unspecified it defaults to column-wise operation.  For
@@ -1264,8 +1642,8 @@ returned.
 @group
 [w, iw] = cummax ([1 3 2 6 4 5])
 @result{}
-w =  1  3  3  6  6  6
-iw = 1  2  2  4  4  4
+M =  1  3  3  6  6  6
+IM = 1  2  2  4  4  4
 @end group
 @end example
 
@@ -1275,9 +1653,14 @@ iw = 1  2  2  4  4  4
 
 @c cummin libinterp/corefcn/max.cc
 @anchor{XREFcummin}
-@deftypefn  {} {} cummin (@var{x})
-@deftypefnx {} {} cummin (@var{x}, @var{dim})
-@deftypefnx {} {[@var{w}, @var{iw}] =} cummin (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{M} =} cummin (@var{x})
+@deftypefnx {} {@var{M} =} cummin (@var{x}, @var{dim})
+@deftypefnx {} {[@var{M}, @var{IM}] =} cummin (@var{x})
 Return the cumulative minimum values along dimension @var{dim}.
 
 If @var{dim} is unspecified it defaults to column-wise operation.  For
@@ -1295,10 +1678,10 @@ returned.
 
 @example
 @group
-[w, iw] = cummin ([5 4 6 2 3 1])
+[M, IM] = cummin ([5 4 6 2 3 1])
 @result{}
-w =  5  4  4  2  2  1
-iw = 1  2  2  4  4  6
+M =  5  4  4  2  2  1
+IM = 1  2  2  4  4  6
 @end group
 @end example
 
@@ -1308,8 +1691,13 @@ iw = 1  2  2  4  4  6
 
 @c hypot libinterp/corefcn/data.cc
 @anchor{XREFhypot}
-@deftypefn  {} {} hypot (@var{x}, @var{y})
-@deftypefnx {} {} hypot (@var{x}, @var{y}, @var{z}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{h} =} hypot (@var{x}, @var{y})
+@deftypefnx {} {@var{h} =} hypot (@var{x}, @var{y}, @var{z}, @dots{})
 Compute the element-by-element square root of the sum of the squares of
 @var{x} and @var{y}.
 
@@ -1331,6 +1719,11 @@ hypot (hypot (hypot (@var{x}, @var{y}), @var{z}), @var{w}), etc.
 
 @c gradient scripts/general/gradient.m
 @anchor{XREFgradient}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{dx} =} gradient (@var{m})
 @deftypefnx {} {[@var{dx}, @var{dy}, @var{dz}, @dots{}] =} gradient (@var{m})
 @deftypefnx {} {[@dots{}] =} gradient (@var{m}, @var{s})
@@ -1377,7 +1770,13 @@ a spacing of 1 is used.
 
 @c dot libinterp/corefcn/dot.cc
 @anchor{XREFdot}
-@deftypefn {} {} dot (@var{x}, @var{y}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{z} =} dot (@var{x}, @var{y})
+@deftypefnx {} {@var{z} =} dot (@var{x}, @var{y}, @var{dim})
 Compute the dot product of two vectors.
 
 If @var{x} and @var{y} are matrices, calculate the dot products along the
@@ -1392,22 +1791,28 @@ temporary array and is faster.  When @var{X} and @var{Y} are column vectors,
 the result is equivalent to @code{@var{X}' * @var{Y}}.  Although, @code{dot}
 is defined for integer arrays, the output may differ from the expected result
 due to the limited range of integer objects.
-@xseealso{@ref{XREFcross,,cross}, @ref{XREFdivergence,,divergence}}
+@xseealso{@ref{XREFcross,,cross}, @ref{XREFdivergence,,divergence}, @ref{XREFtensorprod,,tensorprod}}
 @end deftypefn
 
 
 @c cross scripts/linear-algebra/cross.m
 @anchor{XREFcross}
-@deftypefn  {} {} cross (@var{x}, @var{y})
-@deftypefnx {} {} cross (@var{x}, @var{y}, @var{dim})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{z} =} cross (@var{x}, @var{y})
+@deftypefnx {} {@var{z} =} cross (@var{x}, @var{y}, @var{dim})
 Compute the vector cross product of two 3-dimensional vectors @var{x} and
 @var{y}.
 
-If @var{x} and @var{y} are matrices, the cross product is applied along the
+If @var{x} and @var{y} are arrays, the cross product is applied along the
 first dimension with three elements.
 
 The optional argument  @var{dim} forces the cross product to be calculated
-along the specified dimension.
+along the specified dimension.  An error will be produced if the specified
+dimension is not three elements in size.
 
 Example Code:
 
@@ -1415,7 +1820,17 @@ Example Code:
 @group
 cross ([1, 1, 0], [0, 1, 1])
   @result{}
-       1   -1   1
+       1  -1   1
+@end group
+@end example
+
+@example
+@group
+cross (magic (3), eye (3), 2)
+  @result{}
+       0   6  -1
+      -7   0   3
+       9  -4   0
 @end group
 @end example
 
@@ -1425,6 +1840,11 @@ cross ([1, 1, 0], [0, 1, 1])
 
 @c divergence scripts/general/divergence.m
 @anchor{XREFdivergence}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{div} =} divergence (@var{x}, @var{y}, @var{z}, @var{fx}, @var{fy}, @var{fz})
 @deftypefnx {} {@var{div} =} divergence (@var{fx}, @var{fy}, @var{fz})
 @deftypefnx {} {@var{div} =} divergence (@var{x}, @var{y}, @var{fx}, @var{fy})
@@ -1457,6 +1877,11 @@ The coordinates of the vector field can be given by the arguments @var{x},
 
 @c curl scripts/general/curl.m
 @anchor{XREFcurl}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{cx}, @var{cy}, @var{cz}, @var{v}] =} curl (@var{x}, @var{y}, @var{z}, @var{fx}, @var{fy}, @var{fz})
 @deftypefnx {} {[@var{cz}, @var{v}] =} curl (@var{x}, @var{y}, @var{fx}, @var{fy})
 @deftypefnx {} {[@dots{}] =} curl (@var{fx}, @var{fy}, @var{fz})
@@ -1465,7 +1890,7 @@ The coordinates of the vector field can be given by the arguments @var{x},
 Calculate curl of vector field given by the arrays @var{fx}, @var{fy}, and
 @var{fz} or @var{fx}, @var{fy} respectively.
 @tex
-$$ curl F(x,y,z) = \left( {\partial{d} \over \partial{y}} F_z - {\partial{d} \over \partial{z}} F_y, {\partial{d} \over \partial{z}} F_x - {\partial{d} \over \partial{x}} F_z, {\partial{d} \over \partial{x}} F_y - {\partial{d} \over \partial{y}} F_x \right)$$
+$$ curl F(x,y,z) = \left( {\partial{F_z} \over \partial{y}} - {\partial{F_y} \over \partial{z}}, {\partial{F_x} \over \partial{z}} - {\partial{F_z} \over \partial{x}}, {\partial{F_y} \over \partial{x}} - {\partial{F_x} \over \partial{y}} \right)$$
 @end tex
 @ifnottex
 
@@ -1490,6 +1915,11 @@ at that point.
 
 @c del2 scripts/general/del2.m
 @anchor{XREFdel2}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{L} =} del2 (@var{M})
 @deftypefnx {} {@var{L} =} del2 (@var{M}, @var{h})
 @deftypefnx {} {@var{L} =} del2 (@var{M}, @var{dx}, @var{dy}, @dots{})
@@ -1549,10 +1979,17 @@ assert (L, dd (x));
 
 @c factorial scripts/specfun/factorial.m
 @anchor{XREFfactorial}
-@deftypefn {} {} factorial (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{f} =} factorial (@var{n})
 Return the factorial of @var{n} where @var{n} is a real non-negative
 integer.
 
+@c FIXME: This documentation is wrong.  Apparently gamma() is used for
+@c        calculations rather than prod().
 If @var{n} is a scalar, this is equivalent to @code{prod (1:@var{n})}.  For
 vector or matrix arguments, return the factorial of each element in the
 array.
@@ -1567,6 +2004,11 @@ such cases consider @code{gammaln}.
 
 @c factor scripts/specfun/factor.m
 @anchor{XREFfactor}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{pf} =} factor (@var{q})
 @deftypefnx {} {[@var{pf}, @var{n}] =} factor (@var{q})
 Return the prime factorization of @var{q}.
@@ -1579,14 +2021,39 @@ With two output arguments, return the unique prime factors @var{pf} and
 their multiplicities.  That is,
 @code{prod (@var{pf} .^ @var{n}) == @var{q}}.
 
-Implementation Note: The input @var{q} must be less than @code{flintmax}
-when the input is a floating-point class (double or single).
+Implementation Note: If the input @var{q} is @code{single} or @code{double},
+then it must not exceed the corresponding @code{flintmax}.  For larger
+inputs, cast them to @code{uint64} if they're less than 2^64:
+
+@example
+@group
+factor (uint64 (18446744073709011493))
+   @result{}     571111    761213  42431951
+@end group
+@end example
+
+For even larger inputs, use @code{sym} if you have the Symbolic package
+installed and loaded:
+
+@example
+@group
+factor (sym ('9444733049654361449941'))
+   @result{} (sym)
+              1           1
+ 1099511627689 ⋅8589934669
+@end group
+@end example
 @xseealso{@ref{XREFgcd,,gcd}, @ref{XREFlcm,,lcm}, @ref{XREFisprime,,isprime}, @ref{XREFprimes,,primes}}
 @end deftypefn
 
 
 @c gcd libinterp/corefcn/gcd.cc
 @anchor{XREFgcd}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{g} =} gcd (@var{a1}, @var{a2}, @dots{})
 @deftypefnx {} {[@var{g}, @var{v1}, @dots{}] =} gcd (@var{a1}, @var{a2}, @dots{})
 Compute the greatest common divisor of @var{a1}, @var{a2}, @dots{}.
@@ -1620,25 +2087,69 @@ gcd ([15, 9], [20, 18])
 @end group
 @end example
 
+Programming tip: To find the GCD of all the elements of a single array, use
+@code{num2cell} instead of nested calls or a loop:
+
+@example
+@group
+x = [30 42 70 105];    # vector or array of inputs
+gcd (num2cell (x) @{:@})
+   @result{}     1
+@end group
+@end example
+
 @xseealso{@ref{XREFlcm,,lcm}, @ref{XREFfactor,,factor}, @ref{XREFisprime,,isprime}}
 @end deftypefn
 
 
 @c lcm scripts/specfun/lcm.m
 @anchor{XREFlcm}
-@deftypefn  {} {} lcm (@var{x}, @var{y})
-@deftypefnx {} {} lcm (@var{x}, @var{y}, @dots{})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{l} =} lcm (@var{x}, @var{y})
+@deftypefnx {} {@var{l} =} lcm (@var{x}, @var{y}, @dots{})
 Compute the least common multiple of @var{x} and @var{y}, or of the list of
 all arguments.
 
-All elements must be numeric and of the same size or scalar.
+All inputs must be of the same size, or scalar.  All elements must be
+real integer or Gaussian (complex) integer.  For complex inputs, the result
+is unique only up to a phase factor (multiplication by +1, +i, -1, or -i),
+and one of the four is returned arbitrarily.
+
+Example code:
+
+@example
+@group
+lcm (5:8, 9:12)
+   @result{}  45  30  77  24
+@end group
+@end example
+
+Programming tip: To find the LCM of all the elements of a single array, use
+@code{num2cell} instead of nested calls or a loop:
+
+@example
+@group
+x = 1:10;    # vector or array of inputs
+lcm (num2cell (x) @{:@})
+   @result{}     2520
+@end group
+@end example
 @xseealso{@ref{XREFfactor,,factor}, @ref{XREFgcd,,gcd}, @ref{XREFisprime,,isprime}}
 @end deftypefn
 
 
 @c rem libinterp/corefcn/data.cc
 @anchor{XREFrem}
-@deftypefn {} {} rem (@var{x}, @var{y})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{r} =} rem (@var{x}, @var{y})
 Return the remainder of the division @code{@var{x} / @var{y}}.
 
 The remainder is computed using the expression
@@ -1677,7 +2188,12 @@ periodic, @code{mod} is a better choice.
 
 @c mod libinterp/corefcn/data.cc
 @anchor{XREFmod}
-@deftypefn {} {} mod (@var{x}, @var{y})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{m} =} mod (@var{x}, @var{y})
 Compute the modulo of @var{x} and @var{y}.
 
 Conceptually this is given by
@@ -1719,32 +2235,37 @@ negative numbers or when the values are periodic.
 
 @c primes scripts/specfun/primes.m
 @anchor{XREFprimes}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn {} {@var{p} =} primes (@var{n})
 Return all primes up to @var{n}.
 
 The output data class (double, single, uint32, etc.@:) is the same as the
 input class of @var{n}.  The algorithm used is the Sieve of Eratosthenes.
 
-Note: If you need a specific number of primes you can use the fact that the
-distance from one prime to the next is, on average, proportional to the
-logarithm of the prime.  Integrating, one finds that there are about
-@math{k} primes less than
-@tex
-$k \log (5 k)$.
-@end tex
-@ifnottex
-k*log (5*k).
-@end ifnottex
+Note: For a specific number @var{n} of primes, call
+@code{list_primes (@var{n})}.  Alternatively, call
+@code{primes (@var{n}*log (@var{k}*@var{n}))(1:@var{n})} where @var{k} is
+about 5 or 6.  This works because the distance from one prime to the next is
+proportional to the logarithm of the prime, on average.  On integrating,
+there are about @var{n} primes less than @code{@var{n} * log (5*@var{n})}.
 
-See also @code{list_primes} if you need a specific number @var{n} of primes.
 @xseealso{@ref{XREFlist_primes,,list_primes}, @ref{XREFisprime,,isprime}}
 @end deftypefn
 
 
 @c list_primes scripts/miscellaneous/list_primes.m
 @anchor{XREFlist_primes}
-@deftypefn  {} {} list_primes ()
-@deftypefnx {} {} list_primes (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{p} =} list_primes ()
+@deftypefnx {} {@var{p} =} list_primes (@var{n})
 List the first @var{n} primes.
 
 If @var{n} is unspecified, the first 25 primes are listed.
@@ -1754,7 +2275,12 @@ If @var{n} is unspecified, the first 25 primes are listed.
 
 @c sign libinterp/corefcn/mappers.cc
 @anchor{XREFsign}
-@deftypefn {} {} sign (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} sign (@var{x})
 Compute the @dfn{signum} function.
 
 This is defined as
@@ -1786,7 +2312,12 @@ whether zero is signed, use the @code{signbit} function.
 
 @c signbit libinterp/corefcn/mappers.cc
 @anchor{XREFsignbit}
-@deftypefn {} {} signbit (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} signbit (@var{x})
 Return logical true if the value of @var{x} has its sign bit set and false
 otherwise.
 
@@ -1806,12 +2337,21 @@ but @code{signbit (-0.0)} will return a nonzero value.
 
 @c airy libinterp/corefcn/besselj.cc
 @anchor{XREFairy}
-@deftypefn {} {[@var{a}, @var{ierr}] =} airy (@var{k}, @var{z}, @var{opt})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{a} =} airy (@var{z})
+@deftypefnx {} {@var{a} =} airy (@var{k}, @var{z})
+@deftypefnx {} {@var{a} =} airy (@var{k}, @var{z}, @var{scale})
+@deftypefnx {} {[@var{a}, @var{ierr}] =} airy (@dots{})
+
 Compute Airy functions of the first and second kind, and their derivatives.
 
 @example
 @group
- K   Function   Scale factor (if "opt" is supplied)
+ K   Function   Scale factor (if @var{scale} is true)
 ---  --------   ---------------------------------------
  0   Ai (Z)     exp ((2/3) * Z * sqrt (Z))
  1   dAi(Z)/dZ  exp ((2/3) * Z * sqrt (Z))
@@ -1823,9 +2363,12 @@ Compute Airy functions of the first and second kind, and their derivatives.
 The function call @code{airy (@var{z})} is equivalent to
 @code{airy (0, @var{z})}.
 
-The result is the same size as @var{z}.
+The optional third input @var{scale} determines whether to
+apply scaling as described above.  It is false by default.
 
-If requested, @var{ierr} contains the following status information and
+The result @var{a} is the same size as @var{z}.
+
+The optional output @var{ierr} contains the following status information and
 is the same size as the result.
 
 @enumerate 0
@@ -1854,6 +2397,11 @@ return @code{NaN}.
 
 @c besselj libinterp/corefcn/besselj.cc
 @anchor{XREFbesselj}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{J} =} besselj (@var{alpha}, @var{x})
 @deftypefnx {} {@var{J} =} besselj (@var{alpha}, @var{x}, @var{opt})
 @deftypefnx {} {[@var{J}, @var{ierr}] =} besselj (@dots{})
@@ -1903,6 +2451,11 @@ Error---no computation, algorithm termination condition not met, return
 
 @c bessely libinterp/corefcn/besselj.cc
 @anchor{XREFbessely}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{Y} =} bessely (@var{alpha}, @var{x})
 @deftypefnx {} {@var{Y} =} bessely (@var{alpha}, @var{x}, @var{opt})
 @deftypefnx {} {[@var{Y}, @var{ierr}] =} bessely (@dots{})
@@ -1952,6 +2505,11 @@ Error---no computation, algorithm termination condition not met, return
 
 @c besseli libinterp/corefcn/besselj.cc
 @anchor{XREFbesseli}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{I} =} besseli (@var{alpha}, @var{x})
 @deftypefnx {} {@var{I} =} besseli (@var{alpha}, @var{x}, @var{opt})
 @deftypefnx {} {[@var{I}, @var{ierr}] =} besseli (@dots{})
@@ -2001,6 +2559,11 @@ Error---no computation, algorithm termination condition not met, return
 
 @c besselk libinterp/corefcn/besselj.cc
 @anchor{XREFbesselk}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{K} =} besselk (@var{alpha}, @var{x})
 @deftypefnx {} {@var{K} =} besselk (@var{alpha}, @var{x}, @var{opt})
 @deftypefnx {} {[@var{K}, @var{ierr}] =} besselk (@dots{})
@@ -2051,6 +2614,11 @@ Error---no computation, algorithm termination condition not met, return
 
 @c besselh libinterp/corefcn/besselj.cc
 @anchor{XREFbesselh}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{H} =} besselh (@var{alpha}, @var{x})
 @deftypefnx {} {@var{H} =} besselh (@var{alpha}, @var{k}, @var{x})
 @deftypefnx {} {@var{H} =} besselh (@var{alpha}, @var{k}, @var{x}, @var{opt})
@@ -2104,7 +2672,12 @@ Error---no computation, algorithm termination condition not met, return
 
 @c beta scripts/specfun/beta.m
 @anchor{XREFbeta}
-@deftypefn {} {} beta (@var{a}, @var{b})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} beta (@var{a}, @var{b})
 Compute the Beta function for real inputs @var{a} and @var{b}.
 
 The Beta function definition is
@@ -2131,8 +2704,13 @@ function in an efficient manner.
 
 @c betainc scripts/specfun/betainc.m
 @anchor{XREFbetainc}
-@deftypefn  {} {} betainc (@var{x}, @var{a}, @var{b})
-@deftypefnx {} {} betainc (@var{x}, @var{a}, @var{b}, @var{tail})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{I} =} betainc (@var{x}, @var{a}, @var{b})
+@deftypefnx {} {@var{I} =} betainc (@var{x}, @var{a}, @var{b}, @var{tail})
 Compute the incomplete beta function.
 
 This is defined as
@@ -2182,9 +2760,14 @@ ch.@: 18.
 
 @c betaincinv scripts/specfun/betaincinv.m
 @anchor{XREFbetaincinv}
-@deftypefn  {} {} betaincinv (@var{y}, @var{a}, @var{b})
-@deftypefnx {} {} betaincinv (@var{y}, @var{a}, @var{b}, "lower")
-@deftypefnx {} {} betaincinv (@var{y}, @var{a}, @var{b}, "upper")
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} betaincinv (@var{y}, @var{a}, @var{b})
+@deftypefnx {} {@var{x} =} betaincinv (@var{y}, @var{a}, @var{b}, "lower")
+@deftypefnx {} {@var{x} =} betaincinv (@var{y}, @var{a}, @var{b}, "upper")
 Compute the inverse of the normalized incomplete beta function.
 
 The normalized incomplete beta function is defined as
@@ -2243,7 +2826,12 @@ $$
 
 @c betaln scripts/specfun/betaln.m
 @anchor{XREFbetaln}
-@deftypefn {} {} betaln (@var{a}, @var{b})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{lnb} =} betaln (@var{a}, @var{b})
 Compute the natural logarithm of the Beta function for real inputs @var{a}
 and @var{b}.
 
@@ -2270,7 +2858,12 @@ with the logarithm of the output rather than the function directly.
 
 @c bincoeff scripts/general/bincoeff.m
 @anchor{XREFbincoeff}
-@deftypefn {} {} bincoeff (@var{n}, @var{k})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{b} =} bincoeff (@var{n}, @var{k})
 Return the binomial coefficient of @var{n} and @var{k}.
 
 The binomial coefficient is defined as
@@ -2311,7 +2904,12 @@ big arguments.
 
 @c commutation_matrix scripts/linear-algebra/commutation_matrix.m
 @anchor{XREFcommutation_matrix}
-@deftypefn {} {} commutation_matrix (@var{m}, @var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{k} =} commutation_matrix (@var{m}, @var{n})
 Return the commutation matrix
 @tex
  $K_{m,n}$
@@ -2364,7 +2962,12 @@ Calculus with Applications in Statistics and Econometrics}.
 
 @c cosint scripts/specfun/cosint.m
 @anchor{XREFcosint}
-@deftypefn {} {} cosint (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} cosint (@var{x})
 Compute the cosine integral function:
 @tex
 $$
@@ -2417,7 +3020,12 @@ Reference:
 
 @c duplication_matrix scripts/linear-algebra/duplication_matrix.m
 @anchor{XREFduplication_matrix}
-@deftypefn {} {} duplication_matrix (@var{n})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{d} =} duplication_matrix (@var{n})
 Return the duplication matrix
 @tex
  $D_n$
@@ -2430,21 +3038,21 @@ which is the unique
  $n^2 \times n(n+1)/2$
 @end tex
 @ifnottex
-@math{n^2} by @math{n*(n+1)/2}
+@math{N^2}-by-@math{N*(N+1)/2}
 @end ifnottex
 matrix such that
 @tex
  $D_n * {\rm vech} (A) = {\rm vec} (A)$
 @end tex
 @ifnottex
-@nospell{@math{Dn vech (A) = vec (A)}}
+@nospell{@code{Dn * vech (A) = vec (A)}}
 @end ifnottex
 for all symmetric
 @tex
  $n \times n$
 @end tex
 @ifnottex
-@math{n} by @math{n}
+@math{N}-by-@math{N}
 @end ifnottex
 matrices
 @tex
@@ -2461,7 +3069,12 @@ Calculus with Applications in Statistics and Econometrics}.
 
 @c dawson libinterp/corefcn/mappers.cc
 @anchor{XREFdawson}
-@deftypefn {} {} dawson (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{v} =} dawson (@var{z})
 Compute the Dawson (scaled imaginary error) function.
 
 The Dawson function is defined as
@@ -2483,6 +3096,11 @@ $$
 
 @c ellipj libinterp/corefcn/ellipj.cc
 @anchor{XREFellipj}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{sn}, @var{cn}, @var{dn}, @var{err}] =} ellipj (@var{u}, @var{m})
 @deftypefnx {} {[@var{sn}, @var{cn}, @var{dn}, @var{err}] =} ellipj (@var{u}, @var{m}, @var{tol})
 Compute the Jacobi elliptic functions @var{sn}, @var{cn}, and @var{dn}
@@ -2524,6 +3142,11 @@ and 16.15), Dover, 1965.
 
 @c ellipke scripts/specfun/ellipke.m
 @anchor{XREFellipke}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{k} =} ellipke (@var{m})
 @deftypefnx {} {@var{k} =} ellipke (@var{m}, @var{tol})
 @deftypefnx {} {[@var{k}, @var{e}] =} ellipke (@dots{})
@@ -2591,7 +3214,12 @@ Reference: Milton @nospell{Abramowitz} and Irene A. @nospell{Stegun},
 
 @c erf libinterp/corefcn/mappers.cc
 @anchor{XREFerf}
-@deftypefn {} {} erf (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{v} =} erf (@var{z})
 Compute the error function.
 
 The error function is defined as
@@ -2619,7 +3247,12 @@ erf (z) = --------- *  | e^(-t^2) dt
 
 @c erfc libinterp/corefcn/mappers.cc
 @anchor{XREFerfc}
-@deftypefn {} {} erfc (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{v} =} erfc (@var{z})
 Compute the complementary error function.
 
 The complementary error function is defined as
@@ -2635,7 +3268,12 @@ $1 - {\rm erf} (z)$.
 
 @c erfcx libinterp/corefcn/mappers.cc
 @anchor{XREFerfcx}
-@deftypefn {} {} erfcx (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{v} =} erfcx (@var{z})
 Compute the scaled complementary error function.
 
 The scaled complementary error function is defined as
@@ -2657,7 +3295,12 @@ exp (z^2) * erfc (z)
 
 @c erfi libinterp/corefcn/mappers.cc
 @anchor{XREFerfi}
-@deftypefn {} {} erfi (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{v} =} erfi (@var{z})
 Compute the imaginary error function.
 
 The imaginary error function is defined as
@@ -2679,7 +3322,12 @@ $$
 
 @c erfinv libinterp/corefcn/mappers.cc
 @anchor{XREFerfinv}
-@deftypefn {} {} erfinv (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} erfinv (@var{x})
 Compute the inverse error function.
 
 The inverse error function is defined such that
@@ -2693,7 +3341,12 @@ erf (@var{y}) == @var{x}
 
 @c erfcinv libinterp/corefcn/mappers.cc
 @anchor{XREFerfcinv}
-@deftypefn {} {} erfcinv (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} erfcinv (@var{x})
 Compute the inverse complementary error function.
 
 The inverse complementary error function is defined such that
@@ -2707,7 +3360,12 @@ erfc (@var{y}) == @var{x}
 
 @c expint scripts/specfun/expint.m
 @anchor{XREFexpint}
-@deftypefn {} {} expint (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} expint (@var{x})
 Compute the exponential integral.
 
 The exponential integral is defined as:
@@ -2780,7 +3438,12 @@ References:
 
 @c gamma libinterp/corefcn/mappers.cc
 @anchor{XREFgamma}
-@deftypefn {} {} gamma (@var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{v} =} gamma (@var{z})
 Compute the Gamma function.
 
 The Gamma function is defined as
@@ -2814,8 +3477,13 @@ loss of precision.  The final result is then
 
 @c gammainc scripts/specfun/gammainc.m
 @anchor{XREFgammainc}
-@deftypefn  {} {} gammainc (@var{x}, @var{a})
-@deftypefnx {} {} gammainc (@var{x}, @var{a}, @var{tail})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} gammainc (@var{x}, @var{a})
+@deftypefnx {} {@var{y} =} gammainc (@var{x}, @var{a}, @var{tail})
 Compute the normalized incomplete gamma function.
 
 This is defined as
@@ -2883,8 +3551,13 @@ References:
 
 @c gammaincinv scripts/specfun/gammaincinv.m
 @anchor{XREFgammaincinv}
-@deftypefn  {} {} gammaincinv (@var{y}, @var{a})
-@deftypefnx {} {} gammaincinv (@var{y}, @var{a}, @var{tail})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{x} =} gammaincinv (@var{y}, @var{a})
+@deftypefnx {} {@var{x} =} gammaincinv (@var{y}, @var{a}, @var{tail})
 Compute the inverse of the normalized incomplete gamma function.
 
 The normalized incomplete gamma function is defined as
@@ -2947,6 +3620,11 @@ A2965--A2981, Vol 34, 2012.
 
 @c legendre scripts/specfun/legendre.m
 @anchor{XREFlegendre}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{l} =} legendre (@var{n}, @var{x})
 @deftypefnx {} {@var{l} =} legendre (@var{n}, @var{x}, @var{normalization})
 Compute the associated Legendre function of degree @var{n} and order
@@ -3090,17 +3768,30 @@ NP(x) = P(x) * (-1)  * [-------------]
 @anchor{XREFgammaln}
 @c lgamma libinterp/corefcn/mappers.cc
 @anchor{XREFlgamma}
-@deftypefn  {} {} gammaln (@var{x})
-@deftypefnx {} {} lgamma (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} gammaln (@var{x})
+@deftypefnx {} {@var{y} =} lgamma (@var{x})
 Return the natural logarithm of the gamma function of @var{x}.
+
+Programming Note: @code{lgamma} is an alias for @code{gammaln} and either name
+can be used in Octave.
 @xseealso{@ref{XREFgamma,,gamma}, @ref{XREFgammainc,,gammainc}}
 @end deftypefn
 
 
 @c psi libinterp/corefcn/psi.cc
 @anchor{XREFpsi}
-@deftypefn  {} {} psi (@var{z})
-@deftypefnx {} {} psi (@var{k}, @var{z})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{y} =} psi (@var{z})
+@deftypefnx {} {@var{y} =} psi (@var{k}, @var{z})
 Compute the psi (polygamma) function.
 
 The polygamma functions are the @var{k}th derivative of the logarithm
@@ -3135,7 +3826,12 @@ can have any value real or complex value.  However, for polygamma functions
 
 @c sinint scripts/specfun/sinint.m
 @anchor{XREFsinint}
-@deftypefn {} {} sinint (@var{x})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn {} {@var{y} =} sinint (@var{x})
 Compute the sine integral function:
 @tex
 $$
@@ -3169,6 +3865,11 @@ Reference:
 
 @c rat scripts/general/rat.m
 @anchor{XREFrat}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} rat (@var{x})
 @deftypefnx {} {@var{s} =} rat (@var{x}, @var{tol})
 @deftypefnx {} {[@var{n}, @var{d}] =} rat (@dots{})
@@ -3211,6 +3912,11 @@ fraction (one numerator, one denominator) use @code{rats}.
 
 @c rats libinterp/corefcn/pr-output.cc
 @anchor{XREFrats}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {@var{s} =} rats (@var{x})
 @deftypefnx {} {@var{s} =} rats (@var{x}, @var{len})
 Convert @var{x} into a rational approximation represented as a string.
@@ -3220,7 +3926,7 @@ with numerator @var{N} and denominator @var{D} such that
 @code{@var{x} = @var{N}/@var{D}}.
 
 The optional second argument defines the maximum length of the string
-representing the elements of @var{x}.  By default, @var{len} is 9.
+representing the elements of @var{x}.  By default, @var{len} is 13.
 
 If the length of the smallest possible rational approximation exceeds
 @var{len}, an asterisk (*) padded with spaces will be returned instead.
@@ -3243,6 +3949,11 @@ x = str2num (r)
 
 @c cart2pol scripts/general/cart2pol.m
 @anchor{XREFcart2pol}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{theta}, @var{r}] =} cart2pol (@var{x}, @var{y})
 @deftypefnx {} {[@var{theta}, @var{r}, @var{z}] =} cart2pol (@var{x}, @var{y}, @var{z})
 @deftypefnx {} {[@var{theta}, @var{r}] =} cart2pol (@var{C})
@@ -3294,6 +4005,11 @@ coordinate matrix when called with a single return argument.
 
 @c pol2cart scripts/general/pol2cart.m
 @anchor{XREFpol2cart}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{x}, @var{y}] =} pol2cart (@var{theta}, @var{r})
 @deftypefnx {} {[@var{x}, @var{y}, @var{z}] =} pol2cart (@var{theta}, @var{r}, @var{z})
 @deftypefnx {} {[@var{x}, @var{y}] =} pol2cart (@var{P})
@@ -3343,6 +4059,11 @@ coordinate matrix when called with a single return argument.
 
 @c cart2sph scripts/general/cart2sph.m
 @anchor{XREFcart2sph}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{theta}, @var{phi}, @var{r}] =} cart2sph (@var{x}, @var{y}, @var{z})
 @deftypefnx {} {[@var{theta}, @var{phi}, @var{r}] =} cart2sph (@var{C})
 Transform Cartesian coordinates to spherical coordinates.
@@ -3390,6 +4111,11 @@ coordinate matrix when called with a single return argument.
 
 @c sph2cart scripts/general/sph2cart.m
 @anchor{XREFsph2cart}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @deftypefn  {} {[@var{x}, @var{y}, @var{z}] =} sph2cart (@var{theta}, @var{phi}, @var{r})
 @deftypefnx {} {[@var{x}, @var{y}, @var{z}] =} sph2cart (@var{S})
 Transform spherical coordinates to Cartesian coordinates.
@@ -3440,11 +4166,16 @@ coordinate matrix when called with a single return argument.
 
 @c e libinterp/corefcn/data.cc
 @anchor{XREFe}
-@deftypefn  {} {} e
-@deftypefnx {} {} e (@var{n})
-@deftypefnx {} {} e (@var{n}, @var{m})
-@deftypefnx {} {} e (@var{n}, @var{m}, @var{k}, @dots{})
-@deftypefnx {} {} e (@dots{}, @var{class})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{A} =} e
+@deftypefnx {} {@var{A} =} e (@var{n})
+@deftypefnx {} {@var{A} =} e (@var{n}, @var{m})
+@deftypefnx {} {@var{A} =} e (@var{n}, @var{m}, @var{k}, @dots{})
+@deftypefnx {} {@var{A} =} e (@dots{}, @var{class})
 Return a scalar, matrix, or N-dimensional array whose elements are all equal
 to the base of natural logarithms.
 
@@ -3458,26 +4189,31 @@ $e$ satisfies the equation $\log (e) = 1$.
 
 When called with no arguments, return a scalar with the value @math{e}.
 
-When called with a single argument, return a square matrix with the
-dimension specified.
+When called with a single argument, return a square matrix with the dimension
+specified.
 
 When called with more than one scalar argument the first two arguments are
 taken as the number of rows and columns and any further arguments specify
 additional matrix dimensions.
 
-The optional argument @var{class} specifies the return type and may be
-either @qcode{"double"} or @qcode{"single"}.
+The optional argument @var{class} specifies the return type and may be either
+@qcode{"double"} or @qcode{"single"}.
 @xseealso{@ref{XREFlog,,log}, @ref{XREFexp,,exp}, @ref{XREFpi,,pi}, @ref{XREFI,,I}}
 @end deftypefn
 
 
 @c pi libinterp/corefcn/data.cc
 @anchor{XREFpi}
-@deftypefn  {} {} pi
-@deftypefnx {} {} pi (@var{n})
-@deftypefnx {} {} pi (@var{n}, @var{m})
-@deftypefnx {} {} pi (@var{n}, @var{m}, @var{k}, @dots{})
-@deftypefnx {} {} pi (@dots{}, @var{class})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{p} =} pi
+@deftypefnx {} {@var{p} =} pi (@var{n})
+@deftypefnx {} {@var{p} =} pi (@var{n}, @var{m})
+@deftypefnx {} {@var{p} =} pi (@var{n}, @var{m}, @var{k}, @dots{})
+@deftypefnx {} {@var{p} =} pi (@dots{}, @var{class})
 Return a scalar, matrix, or N-dimensional array whose elements are all equal
 to the ratio of the circumference of a circle to its
 @tex
@@ -3487,8 +4223,6 @@ diameter($\pi$).
 diameter.
 @end ifnottex
 
-Internally, @code{pi} is computed as @samp{4.0 * atan (1.0)}.
-
 When called with no arguments, return a scalar with the value of
 @tex
 $\pi$.
@@ -3497,31 +4231,36 @@ $\pi$.
 pi.
 @end ifnottex
 
-When called with a single argument, return a square matrix with the
-dimension specified.
+When called with a single argument, return a square matrix with the dimension
+specified.
 
 When called with more than one scalar argument the first two arguments are
 taken as the number of rows and columns and any further arguments specify
 additional matrix dimensions.
 
-The optional argument @var{class} specifies the return type and may be
-either @qcode{"double"} or @qcode{"single"}.
+The optional argument @var{class} specifies the return type and may be either
+@qcode{"double"} or @qcode{"single"}.
 @xseealso{@ref{XREFe,,e}, @ref{XREFI,,I}}
 @end deftypefn
 
 
 @c I libinterp/corefcn/data.cc
 @anchor{XREFI}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @c List other forms of function in documentation index
 @findex i
 @findex j
 @findex J
 
-@deftypefn  {} {} I
-@deftypefnx {} {} I (@var{n})
-@deftypefnx {} {} I (@var{n}, @var{m})
-@deftypefnx {} {} I (@var{n}, @var{m}, @var{k}, @dots{})
-@deftypefnx {} {} I (@dots{}, @var{class})
+@deftypefn  {} {@var{A} =} I
+@deftypefnx {} {@var{A} =} I (@var{n})
+@deftypefnx {} {@var{A} =} I (@var{n}, @var{m})
+@deftypefnx {} {@var{A} =} I (@var{n}, @var{m}, @var{k}, @dots{})
+@deftypefnx {} {@var{A} =} I (@dots{}, @var{class})
 Return a scalar, matrix, or N-dimensional array whose elements are all equal
 to the pure imaginary unit, defined as
 @tex
@@ -3551,14 +4290,19 @@ either @qcode{"double"} or @qcode{"single"}.
 
 @c Inf libinterp/corefcn/data.cc
 @anchor{XREFInf}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @c List other form of function in documentation index
 @findex inf
 
-@deftypefn  {} {} Inf
-@deftypefnx {} {} Inf (@var{n})
-@deftypefnx {} {} Inf (@var{n}, @var{m})
-@deftypefnx {} {} Inf (@var{n}, @var{m}, @var{k}, @dots{})
-@deftypefnx {} {} Inf (@dots{}, @var{class})
+@deftypefn  {} {@var{A} =} Inf
+@deftypefnx {} {@var{A} =} Inf (@var{n})
+@deftypefnx {} {@var{A} =} Inf (@var{n}, @var{m})
+@deftypefnx {} {@var{A} =} Inf (@var{n}, @var{m}, @var{k}, @dots{})
+@deftypefnx {} {@var{A} =} Inf (@dots{}, @var{class})
 Return a scalar, matrix or N-dimensional array whose elements are all equal
 to the IEEE representation for positive infinity.
 
@@ -3590,6 +4334,11 @@ either @qcode{"double"} or @qcode{"single"}.
 
 @c NaN libinterp/corefcn/data.cc
 @anchor{XREFNaN}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
 @c List other form of function in documentation index
 @findex nan
 
@@ -3597,7 +4346,7 @@ either @qcode{"double"} or @qcode{"single"}.
 @deftypefnx {} {@var{val} =} NaN (@var{n})
 @deftypefnx {} {@var{val} =} NaN (@var{n}, @var{m})
 @deftypefnx {} {@var{val} =} NaN (@var{n}, @var{m}, @var{k}, @dots{})
-@deftypefnx {} {@var{val} =} NaN (@dots{}, "@var{like}", @var{var}))
+@deftypefnx {} {@var{val} =} NaN (@dots{}, "like", @var{var})
 @deftypefnx {} {@var{val} =} NaN (@dots{}, @var{class})
 Return a scalar, matrix, or N-dimensional array whose elements are all equal
 to the IEEE symbol NaN (Not a Number).
@@ -3637,11 +4386,16 @@ either @qcode{"double"} or @qcode{"single"}.
 
 @c eps libinterp/corefcn/data.cc
 @anchor{XREFeps}
-@deftypefn  {} {} eps
-@deftypefnx {} {} eps (@var{x})
-@deftypefnx {} {} eps (@var{n}, @var{m})
-@deftypefnx {} {} eps (@var{n}, @var{m}, @var{k}, @dots{})
-@deftypefnx {} {} eps (@dots{}, @var{class})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{d} =} eps
+@deftypefnx {} {@var{d} =} eps (@var{x})
+@deftypefnx {} {@var{d} =} eps (@var{n}, @var{m})
+@deftypefnx {} {@var{d} =} eps (@var{n}, @var{m}, @var{k}, @dots{})
+@deftypefnx {} {@var{d} =} eps (@dots{}, @var{class})
 Return a scalar, matrix or N-dimensional array whose elements are all eps,
 the machine precision.
 
@@ -3673,11 +4427,16 @@ type and may be either @qcode{"double"} or @qcode{"single"}.
 
 @c realmax libinterp/corefcn/data.cc
 @anchor{XREFrealmax}
-@deftypefn  {} {} realmax
-@deftypefnx {} {} realmax (@var{n})
-@deftypefnx {} {} realmax (@var{n}, @var{m})
-@deftypefnx {} {} realmax (@var{n}, @var{m}, @var{k}, @dots{})
-@deftypefnx {} {} realmax (@dots{}, @var{class})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{Rmax} =} realmax
+@deftypefnx {} {@var{Rmax} =} realmax (@var{n})
+@deftypefnx {} {@var{Rmax} =} realmax (@var{n}, @var{m})
+@deftypefnx {} {@var{Rmax} =} realmax (@var{n}, @var{m}, @var{k}, @dots{})
+@deftypefnx {} {@var{Rmax} =} realmax (@dots{}, @var{class})
 Return a scalar, matrix, or N-dimensional array whose elements are all equal
 to the largest floating point number that is representable.
 
@@ -3709,16 +4468,21 @@ either @qcode{"double"} or @qcode{"single"}.
 
 @c realmin libinterp/corefcn/data.cc
 @anchor{XREFrealmin}
-@deftypefn  {} {} realmin
-@deftypefnx {} {} realmin (@var{n})
-@deftypefnx {} {} realmin (@var{n}, @var{m})
-@deftypefnx {} {} realmin (@var{n}, @var{m}, @var{k}, @dots{})
-@deftypefnx {} {} realmin (@dots{}, @var{class})
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+
+@deftypefn  {} {@var{Rmin} =} realmin
+@deftypefnx {} {@var{Rmin} =} realmin (@var{n})
+@deftypefnx {} {@var{Rmin} =} realmin (@var{n}, @var{m})
+@deftypefnx {} {@var{Rmin} =} realmin (@var{n}, @var{m}, @var{k}, @dots{})
+@deftypefnx {} {@var{Rmin} =} realmin (@dots{}, @var{class})
 Return a scalar, matrix, or N-dimensional array whose elements are all equal
 to the smallest normalized floating point number that is representable.
 
-The actual value is system dependent.  On machines that support
-IEEE floating point arithmetic, @code{realmin} is approximately
+The actual value is system dependent.  On machines that support IEEE floating
+point arithmetic, @code{realmin} is approximately
 @tex
 $2.2251\times10^{-308}$ for double precision and $1.1755\times10^{-38}$
 @end tex
@@ -3730,15 +4494,15 @@ for single precision.
 When called with no arguments, return a scalar with the value
 @code{realmin (@qcode{"double"})}.
 
-When called with a single argument, return a square matrix with the
-dimension specified.
+When called with a single argument, return a square matrix with the dimension
+specified.
 
 When called with more than one scalar argument the first two arguments are
 taken as the number of rows and columns and any further arguments specify
 additional matrix dimensions.
 
-The optional argument @var{class} specifies the return type and may be
-either @qcode{"double"} or @qcode{"single"}.
+The optional argument @var{class} specifies the return type and may be either
+@qcode{"double"} or @qcode{"single"}.
 @xseealso{@ref{XREFrealmax,,realmax}, @ref{XREFintmin,,intmin}, @ref{XREFeps,,eps}}
 @end deftypefn
 

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -66,7 +66,7 @@
 %! assert (warning ("query", "backtrace"), st);
 %! warning (ws.state, "backtrace");
 
-%!shared t1_opts, t2_opts, t1_id, t1_state, saved_opts, saved_id, saved_state
+%!test
 %! saved_opts = warning ();
 %! saved_id = {saved_opts.identifier};
 %! saved_state = {saved_opts.state};

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2020-2022 The Octave Project Developers
+## Copyright (C) 2020-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,11 +24,16 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __vectorize__ (@var{expr})
+## @deftypefn {} {@var{new_expr} =} __vectorize__ (@var{expr})
 ## Undocumented internal function.
 ## @end deftypefn
 
-function new_expr = __vectorize__ (expr);
+## The following function was translated directly from the original C++
+## version.  Yes, it will be slow, but its use is strongly discouraged
+## anyway, and most expressions will probably be short.  It may also be
+## buggy.  Well, don't use this function!
+
+function new_expr = __vectorize__ (expr)
 
   new_expr = "";
 

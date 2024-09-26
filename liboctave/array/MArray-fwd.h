@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2021-2022 The Octave Project Developers
+// Copyright (C) 2021-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -28,6 +28,6 @@
 
 #include "octave-config.h"
 
-template <typename T> class OCTARRAY_API MArray;
+template <typename T> class OCTAVE_TEMPLATE_API MArray;
 
 #endif

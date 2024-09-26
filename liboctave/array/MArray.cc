@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -149,8 +149,9 @@ MArray<T>::idx_max (const octave::idx_vector& idx, const MArray<T>& vals)
 }
 
 template <typename T>
-void MArray<T>::idx_add_nd (const octave::idx_vector& idx,
-                            const MArray<T>& vals, int dim)
+void
+MArray<T>::idx_add_nd (const octave::idx_vector& idx,
+                       const MArray<T>& vals, int dim)
 {
   int nd = std::max (this->ndims (), vals.ndims ());
   if (dim < 0)
@@ -213,7 +214,7 @@ void MArray<T>::idx_add_nd (const octave::idx_vector& idx,
 // N-dimensional array with math ops.
 template <typename T>
 void
-MArray<T>::changesign (void)
+MArray<T>::changesign ()
 {
   if (Array<T>::is_shared ())
     *this = - *this;
@@ -373,23 +374,16 @@ operator - (const MArray<T>& a)
 }
 
 template <typename T>
-void MArray<T>::instantiation_guard ()
+void
+MArray<T>::instantiation_guard ()
 {
   // This guards against accidental implicit instantiations.
   // Array<T, Alloc> instances should always be explicit and use INSTANTIATE_ARRAY.
   T::__xXxXx__ ();
 }
 
-#if defined (__clang__)
-#  define INSTANTIATE_MARRAY(T, API)            \
+#define INSTANTIATE_MARRAY(T, API)            \
   template <> API void                          \
   MArray<T>::instantiation_guard () { }         \
                                                 \
   template class API MArray<T>
-#else
-#  define INSTANTIATE_MARRAY(T, API)            \
-  template <> API void                          \
-  MArray<T>::instantiation_guard () { }         \
-                                                \
-  template class MArray<T>
-#endif

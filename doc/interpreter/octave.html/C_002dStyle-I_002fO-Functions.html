@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>C-Style I/O Functions (GNU Octave (version 7.1.0))</title>
+<title>C-Style I/O Functions (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="C-Style I/O Functions (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="C-Style I/O Functions (GNU Octave (version 7.1.0))">
+<meta name="description" content="C-Style I/O Functions (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="C-Style I/O Functions (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -19,21 +19,9 @@
 <link href="Basic-Input-and-Output.html" rel="prev" title="Basic Input and Output">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
-div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+strong.def-name {font-family: monospace; font-weight: bold; font-size: larger}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -42,61 +30,70 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="section" id="C_002dStyle-I_002fO-Functions">
-<div class="header">
+<div class="section-level-extent" id="C_002dStyle-I_002fO-Functions">
+<div class="nav-panel">
 <p>
 Previous: <a href="Basic-Input-and-Output.html" accesskey="p" rel="prev">Basic Input and Output</a>, Up: <a href="Input-and-Output.html" accesskey="u" rel="up">Input and Output</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="C_002dStyle-I_002fO-Functions-1"></span><h3 class="section">14.2 C-Style I/O Functions</h3>
+<h3 class="section" id="C_002dStyle-I_002fO-Functions-1"><span>14.2 C-Style I/O Functions<a class="copiable-link" href="#C_002dStyle-I_002fO-Functions-1"> &para;</a></span></h3>
 
 <p>Octave&rsquo;s C-style input and output functions provide most of the
 functionality of the C programming language&rsquo;s standard I/O library.  The
 argument lists for some of the input functions are slightly different,
 however, because Octave has no way of passing arguments by reference.
 </p>
-<p>In the following, <var>file</var> refers to a filename and <code>fid</code> refers
-to an integer file number, as returned by <code>fopen</code>.
+<p>In the following, <var class="var">file</var> refers to a filename and <code class="code">fid</code> refers
+to an integer file number, as returned by <code class="code">fopen</code>.
 </p>
 <p>There are three files that are always available.  Although these files
 can be accessed using their corresponding numeric file ids, you should
 always use the symbolic names given in the table below, since it will
 make your programs easier to understand.
 </p>
-<span id="XREFstdin"></span><dl class="def">
-<dt id="index-stdin"><span class="category">: </span><span><em></em> <strong>stdin</strong> <em>()</em><a href='#index-stdin' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFstdin"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-stdin"><span class="category-def">: </span><span><code class="def-type"><var class="var">fid</var> =</code> <strong class="def-name">stdin</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-stdin"> &para;</a></span></dt>
 <dd><p>Return the numeric value corresponding to the standard input stream.
 </p>
 <p>When Octave is used interactively, stdin is filtered through the command
 line editing functions.
 </p>
-<p><strong>See also:</strong> <a href="#XREFstdout">stdout</a>, <a href="#XREFstderr">stderr</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFstdout">stdout</a>, <a class="ref" href="#XREFstderr">stderr</a>.
 </p></dd></dl>
 
 
-<span id="XREFstdout"></span><dl class="def">
-<dt id="index-stdout"><span class="category">: </span><span><em></em> <strong>stdout</strong> <em>()</em><a href='#index-stdout' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFstdout"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-stdout"><span class="category-def">: </span><span><code class="def-type"><var class="var">fid</var> =</code> <strong class="def-name">stdout</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-stdout"> &para;</a></span></dt>
 <dd><p>Return the numeric value corresponding to the standard output stream.
 </p>
 <p>Data written to the standard output may be filtered through the pager.
 </p>
-<p><strong>See also:</strong> <a href="#XREFstdin">stdin</a>, <a href="#XREFstderr">stderr</a>, <a href="Paging-Screen-Output.html#XREFpage_005fscreen_005foutput">page_screen_output</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFstdin">stdin</a>, <a class="ref" href="#XREFstderr">stderr</a>, <a class="ref" href="Paging-Screen-Output.html#XREFpage_005fscreen_005foutput">page_screen_output</a>.
 </p></dd></dl>
 
 
-<span id="XREFstderr"></span><dl class="def">
-<dt id="index-stderr"><span class="category">: </span><span><em></em> <strong>stderr</strong> <em>()</em><a href='#index-stderr' class='copiable-anchor'> &para;</a></span></dt>
+<a class="anchor" id="XREFstderr"></a><span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+
+
+<dl class="first-deftypefn">
+<dt class="deftypefn" id="index-stderr"><span class="category-def">: </span><span><code class="def-type"><var class="var">fid</var> =</code> <strong class="def-name">stderr</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-stderr"> &para;</a></span></dt>
 <dd><p>Return the numeric value corresponding to the standard error stream.
 </p>
 <p>Even if paging is turned on, the standard error is not sent to the pager.
 It is useful for error messages and prompts.
 </p>
-<p><strong>See also:</strong> <a href="#XREFstdin">stdin</a>, <a href="#XREFstdout">stdout</a>.
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFstdin">stdin</a>, <a class="ref" href="#XREFstdout">stdout</a>.
 </p></dd></dl>
 
 
 
-<ul class="section-toc">
+<ul class="mini-toc">
 <li><a href="Opening-and-Closing-Files.html" accesskey="1">Opening and Closing Files</a></li>
 <li><a href="Simple-Output.html" accesskey="2">Simple Output</a></li>
 <li><a href="Line_002dOriented-Input.html" accesskey="3">Line-Oriented Input</a></li>
@@ -119,7 +116,7 @@ It is useful for error messages and prompts.
 </ul>
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Previous: <a href="Basic-Input-and-Output.html">Basic Input and Output</a>, Up: <a href="Input-and-Output.html">Input and Output</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

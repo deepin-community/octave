@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2005-2022 The Octave Project Developers
+## Copyright (C) 2005-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} __run_test_suite__ (@var{fcndirs}, @var{fixedtestdirs})
-## @deftypefnx {} {} __run_test_suite__ (@var{fcndirs}, @var{fixedtestdirs}, @var{topsrcdir}, @var{topbuilddir})
+## @deftypefn  {} {[@var{pass}, @var{fail}, @var{xfail}, @var{xbug}, @var{skip}, @var{rtskip}, @var{regress}] =} __run_test_suite__ (@var{fcndirs}, @var{fixedtestdirs})
+## @deftypefnx {} {[@var{pass}, @var{fail}, @var{xfail}, @var{xbug}, @var{skip}, @var{rtskip}, @var{regress}] =} __run_test_suite__ (@var{fcndirs}, @var{fixedtestdirs}, @var{topsrcdir}, @var{topbuilddir})
 ## Undocumented internal function.
 ## @end deftypefn
 
@@ -55,7 +55,7 @@ function [pass, fail, xfail, xbug, skip, rtskip, regress] = __run_test_suite__ (
   pso = page_screen_output ();
   orig_wquiet = warning ("query", "quiet");
   orig_wstate = warning ();
-  orig_mfile_encoding = __mfile_encoding__ ("utf-8");
+  orig_mfile_encoding = mfile_encoding ("utf-8");
   logfile = make_absolute_filename ("fntests.log");
   unwind_protect
     page_screen_output (false);
@@ -68,8 +68,11 @@ function [pass, fail, xfail, xbug, skip, rtskip, regress] = __run_test_suite__ (
       if (fid < 0)
         error ("__run_test_suite__: could not open %s for writing", logfile);
       endif
+      tot_cpu_tm = cputime ();
+      tot_tic_tag = tic ();
       test ("", "explain", fid);
       puts ("\nIntegrated test scripts:\n\n");
+      printf ("%101s\n", "[ CPU    /  CLOCK ]");
       for i = 1:length (fcndirs)
         [p, n, xf, xb, sk, rtsk, rgrs] = run_test_dir (fid, fcndirs{i}, false);
         dp += p;
@@ -91,6 +94,9 @@ function [pass, fail, xfail, xbug, skip, rtskip, regress] = __run_test_suite__ (
         drtsk += rtsk;
         drgrs += rgrs;
       endfor
+      tot_clock_tm = toc (tot_tic_tag);
+      tot_cpu_tm = cputime () - tot_cpu_tm;
+      printf ("%80s  [%6.1fs / %6.1fs]", "total time (CPU / CLOCK)", tot_cpu_tm, tot_clock_tm);
       if (! isempty (summary_failure_info))
         puts ("\nFailure Summary:\n\n");
         for i = 1:numel (summary_failure_info)
@@ -156,7 +162,7 @@ function [pass, fail, xfail, xbug, skip, rtskip, regress] = __run_test_suite__ (
     warning ("off", "all");
     warning (orig_wstate);
     warning (orig_wquiet.state, "quiet");
-    __mfile_encoding__ (orig_mfile_encoding);
+    mfile_encoding (orig_mfile_encoding);
     page_screen_output (pso);
   end_unwind_protect
 
@@ -213,8 +219,12 @@ function [pass, fail, xfail, xbug, skip, rtskip, regress] = __run_test_suite__ (
           if (has_tests (ffnm))
             tmp = reduce_test_file_name (ffnm, topbuilddir, topsrcdir);
             print_test_file_name (tmp);
+            cpu_tm = cputime ();
+            tic_tag = tic ();
             [p, n, xf, xb, sk, rtsk, rgrs] = test (ffnm, "quiet", fid);
-            print_pass_fail (p, n, xf, xb, sk, rtsk, rgrs);
+            clock_tm = toc (tic_tag);
+            cpu_tm = cputime () - cpu_tm;
+            print_pass_fail (p, n, xf, xb, sk, rtsk, rgrs, cpu_tm, clock_tm);
             dp += p;
             dn += n;
             dxf += xf;
@@ -256,11 +266,11 @@ function print_test_file_name (nm)
 
 endfunction
 
-function fail_info = print_pass_fail (p, n, xf, xb, sk, rtsk, rgrs)
+function fail_info = print_pass_fail (p, n, xf, xb, sk, rtsk, rgrs, cpu_tm, clock_tm)
 
   if (nargin == 1)
     ## The summary info struct just contains info about failures, not
-    ## skipped tests.
+    ## skipped tests or timings.
     info = p;
     p = info.pass;
     n = info.ntst;
@@ -269,10 +279,15 @@ function fail_info = print_pass_fail (p, n, xf, xb, sk, rtsk, rgrs)
     sk = 0;
     rtsk = 0;
     rgrs = info.rgrs;
+    cpu_tm = 0;
+    clock_tm = 0;
   endif
 
   if ((n + sk + rtsk + rgrs) > 0)
     printf (" pass %4d/%-4d", p, n);
+    if (cpu_tm != 0 || clock_tm != 0)
+      printf (" [%6.3fs / %6.3fs]", cpu_tm, clock_tm);
+    endif
     nfail = n - p - xf - xb - rgrs;
     if (nfail > 0)
       printf ("\n%72s %3d", "FAIL ", nfail);

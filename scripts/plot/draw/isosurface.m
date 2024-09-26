@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -245,7 +245,7 @@ function [x, y, z, v, isoval, colors, noshare, verbose] = __get_check_isosurface
     if (! ischar (varargin{i_arg}) || i_arg < 1)
       break;  # no string arguments at end, exit checking
     endif
-    switch (tolower (varargin{i_arg}))
+    switch (lower (varargin{i_arg}))
       case {"v", "verbose"}
         verbose = true;
         num_string_inputs++;

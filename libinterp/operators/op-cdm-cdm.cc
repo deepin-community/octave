@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2008-2022 The Octave Project Developers
+// Copyright (C) 2008-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -38,7 +38,7 @@
 #include "xdiv.h"
 #include "xpow.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // matrix unary ops.
 
@@ -47,15 +47,13 @@ DEFUNOP_OP (uminus, complex_diag_matrix, -)
 
 DEFUNOP (transpose, complex_diag_matrix)
 {
-  const octave_complex_diag_matrix& v
-    = dynamic_cast<const octave_complex_diag_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_diag_matrix&, v, a);
   return octave_value (v.complex_diag_matrix_value ().transpose ());
 }
 
 DEFUNOP (hermitian, complex_diag_matrix)
 {
-  const octave_complex_diag_matrix& v
-    = dynamic_cast<const octave_complex_diag_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_diag_matrix&, v, a);
   return octave_value (v.complex_diag_matrix_value ().hermitian ());
 }
 
@@ -67,10 +65,8 @@ DEFBINOP_OP (mul, complex_diag_matrix, complex_diag_matrix, *)
 
 DEFBINOP (div, complex_diag_matrix, complex_diag_matrix)
 {
-  const octave_complex_diag_matrix& v1
-    = dynamic_cast<const octave_complex_diag_matrix&> (a1);
-  const octave_complex_diag_matrix& v2
-    = dynamic_cast<const octave_complex_diag_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_diag_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_diag_matrix&, v2, a2);
 
   return xdiv (v1.complex_diag_matrix_value (),
                v2.complex_diag_matrix_value ());
@@ -78,10 +74,8 @@ DEFBINOP (div, complex_diag_matrix, complex_diag_matrix)
 
 DEFBINOP (ldiv, complex_diag_matrix, complex_diag_matrix)
 {
-  const octave_complex_diag_matrix& v1
-    = dynamic_cast<const octave_complex_diag_matrix&> (a1);
-  const octave_complex_diag_matrix& v2
-    = dynamic_cast<const octave_complex_diag_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_diag_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_diag_matrix&, v2, a2);
 
   return xleftdiv (v1.complex_diag_matrix_value (),
                    v2.complex_diag_matrix_value ());
@@ -89,8 +83,7 @@ DEFBINOP (ldiv, complex_diag_matrix, complex_diag_matrix)
 
 CONVDECL (complex_diag_matrix_to_complex_matrix)
 {
-  const octave_complex_diag_matrix& v
-    = dynamic_cast<const octave_complex_diag_matrix&> (a);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_diag_matrix&, v, a);
 
   return new octave_complex_matrix (v.complex_matrix_value ());
 }
@@ -124,4 +117,4 @@ install_cdm_cdm_ops (octave::type_info& ti)
                       complex_diag_matrix_to_complex_matrix);
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

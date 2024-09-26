@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2021-2022 The Octave Project Developers
+// Copyright (C) 2021-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -29,15 +29,16 @@
 
 #include "pt-args-block.h"
 
-namespace octave
+OCTAVE_BEGIN_NAMESPACE(octave)
+
+tree_args_block_validation_list::~tree_args_block_validation_list ()
 {
-  tree_args_block_validation_list::~tree_args_block_validation_list (void)
-  {
-    while (! empty ())
-      {
-        auto p = begin ();
-        delete *p;
-        erase (p);
-      }
-  }
+  while (! empty ())
+    {
+      auto p = begin ();
+      delete *p;
+      erase (p);
+    }
 }
+
+OCTAVE_END_NAMESPACE(octave)

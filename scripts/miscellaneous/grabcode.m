@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} grabcode (@var{url})
-## @deftypefnx {} {} grabcode (@var{filename})
+## @deftypefn  {} {} grabcode @var{filename}
+## @deftypefnx {} {} grabcode @var{url}
 ## @deftypefnx {} {@var{code_str} =} grabcode (@dots{})
 ##
 ## Grab the code from a report created by the @code{publish} function.
@@ -35,8 +35,8 @@
 ## The @code{publish} function creates this format automatically.
 ##
 ## If no return value is requested the code is saved to a temporary file and
-## opened in the default editor.  NOTE: The temporary file must be saved under
-## a new or the code will be lost.
+## opened in the default editor.  NOTE: The temporary file must be saved to a
+## new filename or the code will be lost.
 ##
 ## If an output is requested the grabbed code will be returned as string
 ## @var{code_str}.

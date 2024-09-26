@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1998-2022 The Octave Project Developers
+// Copyright (C) 1998-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -40,7 +40,7 @@
 #include "smx-cm-sm.h"
 #include "ov-re-sparse.h"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // complex matrix by sparse matrix ops.
 
@@ -51,10 +51,8 @@ DEFBINOP_OP (mul, complex_matrix, sparse_matrix, *)
 
 DEFBINOP (div, complex_matrix, sparse_matrix)
 {
-  const octave_complex_matrix& v1
-    = dynamic_cast<const octave_complex_matrix&> (a1);
-  const octave_sparse_matrix& v2
-    = dynamic_cast<const octave_sparse_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_matrix&, v2, a2);
 
   if (v2.rows () == 1 && v2.columns () == 1)
     return octave_value (v1.complex_array_value () / v2.scalar_value ());
@@ -77,10 +75,8 @@ DEFBINOPX (pow, complex_matrix, sparse_matrix)
 
 DEFBINOP (ldiv, complex_matrix, sparse_matrix)
 {
-  const octave_complex_matrix& v1
-    = dynamic_cast<const octave_complex_matrix&> (a1);
-  const octave_sparse_matrix& v2
-    = dynamic_cast<const octave_sparse_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_matrix&, v2, a2);
   MatrixType typ = v1.matrix_type ();
 
   ComplexMatrix ret = xleftdiv (v1.complex_matrix_value (),
@@ -102,10 +98,8 @@ DEFBINOP_FN (el_div, complex_matrix, sparse_matrix, quotient)
 
 DEFBINOP (el_pow, complex_matrix, sparse_matrix)
 {
-  const octave_complex_matrix& v1
-    = dynamic_cast<const octave_complex_matrix&> (a1);
-  const octave_sparse_matrix& v2
-    = dynamic_cast<const octave_sparse_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_matrix&, v2, a2);
 
   return octave_value
          (elem_xpow (SparseComplexMatrix (v1.complex_matrix_value ()),
@@ -114,10 +108,8 @@ DEFBINOP (el_pow, complex_matrix, sparse_matrix)
 
 DEFBINOP (el_ldiv, complex_matrix, sparse_matrix)
 {
-  const octave_complex_matrix& v1
-    = dynamic_cast<const octave_complex_matrix&> (a1);
-  const octave_sparse_matrix& v2
-    = dynamic_cast<const octave_sparse_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_matrix&, v2, a2);
   return octave_value
          (quotient (v2.sparse_matrix_value (), v1.complex_matrix_value ()));
 }
@@ -127,10 +119,8 @@ DEFBINOP_FN (el_or,  complex_matrix, sparse_matrix, mx_el_or)
 
 DEFCATOP (cm_sm, complex_matrix, sparse_matrix)
 {
-  const octave_complex_matrix& v1
-    = dynamic_cast<const octave_complex_matrix&> (a1);
-  const octave_sparse_matrix& v2
-    = dynamic_cast<const octave_sparse_matrix&> (a2);
+  OCTAVE_CAST_BASE_VALUE (const octave_complex_matrix&, v1, a1);
+  OCTAVE_CAST_BASE_VALUE (const octave_sparse_matrix&, v2, a2);
   SparseComplexMatrix tmp (v1.complex_matrix_value ());
   return octave_value (tmp. concat (v2.sparse_matrix_value (), ra_idx));
 }
@@ -175,4 +165,4 @@ install_cm_sm_ops (octave::type_info& ti)
 
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

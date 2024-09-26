@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2003-2022 The Octave Project Developers
+## Copyright (C) 2003-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,10 +24,10 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} isdefinite (@var{A})
-## @deftypefnx {} {} isdefinite (@var{A}, @var{tol})
-## Return true if @var{A} is symmetric positive definite matrix within the
-## tolerance specified by @var{tol}.
+## @deftypefn  {} {@var{tf} =} isdefinite (@var{A})
+## @deftypefnx {} {@var{tf} =} isdefinite (@var{A}, @var{tol})
+## Return true if @var{A} is symmetric positive definite numeric matrix within
+## the tolerance specified by @var{tol}.
 ##
 ## If @var{tol} is omitted, use a tolerance of
 ## @code{100 * eps * norm (@var{A}, "fro")}.
@@ -47,14 +47,14 @@
 ## @seealso{issymmetric, ishermitian}
 ## @end deftypefn
 
-function retval = isdefinite (A, tol)
+function tf = isdefinite (A, tol)
 
   if (nargin < 1)
     print_usage ();
   endif
 
   ## Validate inputs
-  retval = false;
+  tf = false;
   if (! isnumeric (A))
     return;
   endif
@@ -76,7 +76,7 @@ function retval = isdefinite (A, tol)
   e = tol * eye (rows (A));
   [~, p] = chol (A - e);
   if (p == 0)
-    retval = true;
+    tf = true;
   endif
 
 endfunction

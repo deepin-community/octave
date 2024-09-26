@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017-2022 The Octave Project Developers
+// Copyright (C) 2017-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -30,13 +30,10 @@
 
 // News Reader properties
 
-const gui_pref
-hw_filter_active ("history_dock_widget/filter_active", QVariant (false));
+extern gui_pref hw_filter_active;
 
-const gui_pref
-hw_filter_shown ("history_dock_widget/filter_shown", QVariant (true));
+extern gui_pref hw_filter_shown;
 
-const gui_pref
-hw_mru_list ("history_dock_widget/mru_list", QVariant ());
+extern gui_pref hw_mru_list;
 
 #endif

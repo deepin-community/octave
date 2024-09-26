@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2020-2022 The Octave Project Developers
+## Copyright (C) 2020-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -31,7 +31,7 @@
 
 function retval = __tickangle__ (caller, hax, angle)
 
-  ax = tolower (caller(1));
+  ax = lower (caller(1));
   switch (nargin)
     case 1
       retval = get (gca (), [ax, "ticklabelrotation"]);

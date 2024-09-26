@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1996-2022 The Octave Project Developers
+// Copyright (C) 1996-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -35,18 +35,18 @@
 #include "error.h"
 #include "errwarn.h"
 #include "interpreter-private.h"
+#include "interpreter.h"
 #include "ovl.h"
 #include "ov-fcn.h"
 #include "ov-cell.h"
 #include "pager.h"
-#include "parse.h"
 #include "unwind-prot.h"
 #include "utils.h"
 #include "variables.h"
 
 #include "DASSL-opts.cc"
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 // Global pointer for user defined function required by dassl.
 static octave_value dassl_fcn;
@@ -67,7 +67,7 @@ dassl_user_function (const ColumnVector& x, const ColumnVector& xdot,
 {
   ColumnVector retval;
 
-  assert (x.numel () == xdot.numel ());
+  error_unless (x.numel () == xdot.numel ());
 
   octave_value_list args;
 
@@ -81,7 +81,9 @@ dassl_user_function (const ColumnVector& x, const ColumnVector& xdot,
 
       try
         {
-          tmp = feval (dassl_fcn, args, 1);
+          interpreter& interp = __get_interpreter__ ();
+
+          tmp = interp.feval (dassl_fcn, args, 1);
         }
       catch (execution_exception& ee)
         {
@@ -116,7 +118,7 @@ dassl_user_jacobian (const ColumnVector& x, const ColumnVector& xdot,
 {
   Matrix retval;
 
-  assert (x.numel () == xdot.numel ());
+  error_unless (x.numel () == xdot.numel ());
 
   octave_value_list args;
 
@@ -131,7 +133,9 @@ dassl_user_jacobian (const ColumnVector& x, const ColumnVector& xdot,
 
       try
         {
-          tmp = feval (dassl_jac, args, 1);
+          interpreter& interp = __get_interpreter__ ();
+
+          tmp = interp.feval (dassl_jac, args, 1);
         }
       catch (execution_exception& ee)
         {
@@ -367,11 +371,11 @@ parameters for @code{dassl}.
 
   double tzero = out_times (0);
 
-  DAEFunc func (dassl_user_function);
+  DAEFunc fcn (dassl_user_function);
   if (dassl_jac.is_defined ())
-    func.set_jacobian_function (dassl_user_jacobian);
+    fcn.set_jacobian_function (dassl_user_jacobian);
 
-  DASSL dae (state, deriv, tzero, func);
+  DASSL dae (state, deriv, tzero, fcn);
 
   dae.set_options (dassl_opts);
 
@@ -491,4 +495,4 @@ parameters for @code{dassl}.
 %!error dassl_options ("foo", 1, 2)
 */
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)

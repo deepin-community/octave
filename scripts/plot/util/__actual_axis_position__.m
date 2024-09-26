@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} __actual_axis_position__ (@var{h})
-## @deftypefnx {} {} __actual_axis_position__ (@var{axis_struct})
+## @deftypefn  {} {@var{pos} =} __actual_axis_position__ (@var{h})
+## @deftypefnx {} {@var{pos} =} __actual_axis_position__ (@var{axis_struct})
 ## Undocumented internal function.
 ## @end deftypefn
 

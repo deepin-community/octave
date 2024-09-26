@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Structure Arrays (GNU Octave (version 7.1.0))</title>
+<title>Structure Arrays (GNU Octave (version 9.2.0))</title>
 
-<meta name="description" content="Structure Arrays (GNU Octave (version 7.1.0))">
-<meta name="keywords" content="Structure Arrays (GNU Octave (version 7.1.0))">
+<meta name="description" content="Structure Arrays (GNU Octave (version 9.2.0))">
+<meta name="keywords" content="Structure Arrays (GNU Octave (version 9.2.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -20,21 +20,9 @@
 <link href="Basic-Usage-and-Examples.html" rel="prev" title="Basic Usage and Examples">
 <style type="text/css">
 <!--
-a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
-a.summary-letter {text-decoration: none}
-blockquote.indentedblock {margin-right: 0em}
-div.display {margin-left: 3.2em}
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
 div.example {margin-left: 3.2em}
-kbd {font-style: oblique}
-pre.display {font-family: inherit}
-pre.format {font-family: inherit}
-pre.menu-comment {font-family: serif}
-pre.menu-preformatted {font-family: serif}
-span.nolinebreak {white-space: nowrap}
-span.roman {font-family: initial; font-weight: normal}
-span.sansserif {font-family: sans-serif; font-weight: normal}
-span:hover a.copiable-anchor {visibility: visible}
-ul.no-bullet {list-style: none}
+span:hover a.copiable-link {visibility: visible}
 -->
 </style>
 <link rel="stylesheet" type="text/css" href="octave.css">
@@ -43,13 +31,13 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<div class="subsection" id="Structure-Arrays">
-<div class="header">
+<div class="subsection-level-extent" id="Structure-Arrays">
+<div class="nav-panel">
 <p>
 Next: <a href="Creating-Structures.html" accesskey="n" rel="next">Creating Structures</a>, Previous: <a href="Basic-Usage-and-Examples.html" accesskey="p" rel="prev">Basic Usage and Examples</a>, Up: <a href="Structures.html" accesskey="u" rel="up">Structures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="Structure-Arrays-1"></span><h4 class="subsection">6.1.2 Structure Arrays</h4>
+<h4 class="subsection" id="Structure-Arrays-1"><span>6.1.2 Structure Arrays<a class="copiable-link" href="#Structure-Arrays-1"> &para;</a></span></h4>
 
 <p>A structure array is a particular instance of a structure, where each of
 the fields of the structure is represented by a cell array.  Each of
@@ -58,19 +46,19 @@ array can also be seen as an array of structures with identical
 fields.  An example of the creation of a structure array is
 </p>
 <div class="example">
-<pre class="example">x(1).a = &quot;string1&quot;;
+<div class="group"><pre class="example-preformatted">x(1).a = &quot;string1&quot;;
 x(2).a = &quot;string2&quot;;
 x(1).b = 1;
 x(2).b = 2;
-</pre></div>
+</pre></div></div>
 
 <p>which creates a 1-by-2 structure array with two fields.  Another way
-to create a structure array is with the <code>struct</code> function
-(see <a href="Creating-Structures.html">Creating Structures</a>).  As previously, to print the value of
+to create a structure array is with the <code class="code">struct</code> function
+(see <a class="pxref" href="Creating-Structures.html">Creating Structures</a>).  As previously, to print the value of
 the structure array, you can type its name:
 </p>
 <div class="example">
-<pre class="example">x
+<div class="group"><pre class="example-preformatted">x
      &rArr; x =
         {
           1x2 struct array containing the fields:
@@ -78,48 +66,48 @@ the structure array, you can type its name:
             a
             b
         }
-</pre></div>
+</pre></div></div>
 
 <p>Individual elements of the structure array can be returned by indexing
-the variable like <code><var>x</var>(1)</code>, which returns a structure with
+the variable like <code class="code"><var class="var">x</var>(1)</code>, which returns a structure with
 two fields:
 </p>
 <div class="example">
-<pre class="example">x(1)
+<div class="group"><pre class="example-preformatted">x(1)
      &rArr; ans =
         {
           a = string1
           b =  1
         }
-</pre></div>
+</pre></div></div>
 
-<p>Furthermore, the structure array can return a comma separated list of
-field values (see <a href="Comma-Separated-Lists.html">Comma Separated Lists</a>), if indexed by one of its
+<p>Furthermore, the structure array can return a comma-separated list of
+field values (see <a class="pxref" href="Comma_002dSeparated-Lists.html">Comma-Separated Lists</a>), if indexed by one of its
 own field names.  For example:
 </p>
 <div class="example">
-<pre class="example">x.a
+<div class="group"><pre class="example-preformatted">x.a
      &rArr;
         ans = string1
         ans = string2
-</pre></div>
+</pre></div></div>
 
-<p>Here is another example, using this comma separated list on the
+<p>Here is another example, using this comma-separated list on the
 left-hand side of an assignment:
 </p>
 <div class="example">
-<pre class="example">[x.a] = deal (&quot;new string1&quot;, &quot;new string2&quot;);
+<div class="group"><pre class="example-preformatted">[x.a] = deal (&quot;new string1&quot;, &quot;new string2&quot;);
  x(1).a
      &rArr; ans = new string1
  x(2).a
      &rArr; ans = new string2
-</pre></div>
+</pre></div></div>
 
 <p>Just as for numerical arrays, it is possible to use vectors as indices
-(see <a href="Index-Expressions.html">Index Expressions</a>):
+(see <a class="pxref" href="Index-Expressions.html">Index Expressions</a>):
 </p>
 <div class="example">
-<pre class="example">x(3:4) = x(1:2);
+<div class="group"><pre class="example-preformatted">x(3:4) = x(1:2);
 [x([1,3]).a] = deal (&quot;other string1&quot;, &quot;other string2&quot;);
 x.a
      &rArr;
@@ -127,24 +115,24 @@ x.a
         ans = new string2
         ans = other string2
         ans = new string2
-</pre></div>
+</pre></div></div>
 
-<p>The function <code>size</code> will return the size of the structure.  For
+<p>The function <code class="code">size</code> will return the size of the structure.  For
 the example above
 </p>
 <div class="example">
-<pre class="example">size (x)
+<div class="group"><pre class="example-preformatted">size (x)
      &rArr; ans =
 
           1   4
-</pre></div>
+</pre></div></div>
 
 <p>Elements can be deleted from a structure array in a similar manner to a
 numerical array, by assigning the elements to an empty matrix.  For
 example
 </p>
 <div class="example">
-<pre class="example">in = struct (&quot;call1&quot;, {x, Inf, &quot;last&quot;},
+<div class="group"><pre class="example-preformatted">in = struct (&quot;call1&quot;, {x, Inf, &quot;last&quot;},
              &quot;call2&quot;, {x, Inf, &quot;first&quot;})
      &rArr; in =
         {
@@ -159,11 +147,11 @@ in.call1
      &rArr;
        ans = Inf
        ans = last
-</pre></div>
+</pre></div></div>
 
 </div>
 <hr>
-<div class="header">
+<div class="nav-panel">
 <p>
 Next: <a href="Creating-Structures.html">Creating Structures</a>, Previous: <a href="Basic-Usage-and-Examples.html">Basic Usage and Examples</a>, Up: <a href="Structures.html">Structures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
 </div>

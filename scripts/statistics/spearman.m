@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 1995-2022 The Octave Project Developers
+## Copyright (C) 1995-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} spearman (@var{x})
-## @deftypefnx {} {} spearman (@var{x}, @var{y})
+## @deftypefn  {} {@var{rho} =} spearman (@var{x})
+## @deftypefnx {} {@var{rho} =} spearman (@var{x}, @var{y})
 ## @cindex Spearman's Rho
 ## Compute Spearman's rank correlation coefficient
 ## @tex
@@ -112,6 +112,9 @@ endfunction
 %! assert (spearman (x,-y), -1, 5*eps);
 
 %!assert (spearman ([1 2 3], [-1 1 -2]), -0.5, 5*eps)
+
+%!assert (spearman (1), NaN)
+%!assert (spearman (single (1)), single (NaN))
 
 ## Test input validation
 %!error <Invalid call> spearman ()

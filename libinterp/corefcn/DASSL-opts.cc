@@ -1,5 +1,5 @@
 // DO NOT EDIT!
-// Generated automatically from /home/jwe/src/octave-stable/liboctave/numeric/DASSL-opts.in.
+// Generated automatically from ../liboctave/numeric/DASSL-opts.in.
 
 // This file should not include config.h.  It is only included in other
 // C++ source files that should have included config.h before including
@@ -350,7 +350,7 @@ show_DASSL_options (const std::string& keyword)
   return retval;
 }
 
-OCTAVE_NAMESPACE_BEGIN
+OCTAVE_BEGIN_NAMESPACE(octave)
 
 DEFUN (dassl_options, args, ,
        doc: /* -*- texinfo -*-
@@ -445,5 +445,5 @@ underlying Fortran code.
   return retval;
 }
 
-OCTAVE_NAMESPACE_END
+OCTAVE_END_NAMESPACE(octave)
 

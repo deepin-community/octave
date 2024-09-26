@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -281,7 +281,7 @@ endfunction
 %! end_unwind_protect
 
 ## compare to Matlab R2016a output
-%!test
+%!test <61532>
 %! hf = figure ("visible", "off");
 %! unwind_protect
 %!   [x, y, z] = peaks ();

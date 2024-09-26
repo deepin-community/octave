@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2006-2022 The Octave Project Developers
+## Copyright (C) 2006-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -130,7 +130,6 @@
 ## time step or also at intermediate time instances.  The value should be
 ## a scalar indicating the number of equally spaced time points to use
 ## within each timestep at which to return output.
-## @emph{Note}: This option is not yet implemented.
 ##
 ## @item @code{RelTol}: positive scalar
 ## Relative error tolerance.
@@ -139,7 +138,7 @@
 ## Print solver statistics after simulation.
 ##
 ## @item @code{Vectorized}: @{@qcode{"off"}@} | @qcode{"on"}
-## Specify whether @code{odefun} can be passed multiple values of the
+## Specify whether @code{odefcn} can be passed multiple values of the
 ## state at once.
 ##
 ## @end table
@@ -155,8 +154,6 @@ function odestruct = odeset (varargin)
   persistent p;
 
   if (isempty (p))
-    ## FIXME: Add an inexact match option once it is available in inputParser.
-    ## See bug #49364.
     p = inputParser ();
     p.addParameter ("AbsTol", []);
     p.addParameter ("BDF", []);
@@ -282,13 +279,10 @@ endfunction
 %! odeopt = odeset ("NewtonTol", 3);
 %! assert (odeopt.NewtonTol, 3);
 
-## FIXME: Add an inexact match option once it is available in inputParser.
-## See bug #49364.
-## %!warning <no exact match for 'Rel'.  Assuming 'RelTol'> odeset ("Rel", 1);
-## %!error <Possible fields found: InitialSlope, InitialStep> odeset ("Initial", 1)
-
 ## Test input validation
-%!error <argument 'OPT1' is not a valid parameter> odeset ("opt1")
+%!error <argument 'opt1' is not a declared parameter> odeset ("opt1")
 %!error odeset (1, 1)
-%!error <argument 'OPT1' is not a valid parameter> odeset (odeset (), "opt1")
+%!error <argument 'opt1' is not a declared parameter> odeset (odeset (), "opt1")
 %!error odeset (odeset (), 1, 1)
+%!error <'Re' matches more than one Parameter: 'Refine', 'RelTol'>
+%! odeset ('Re', 1);

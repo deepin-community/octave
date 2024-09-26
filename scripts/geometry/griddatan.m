@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2007-2022 The Octave Project Developers
+## Copyright (C) 2007-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -106,7 +106,7 @@ function yi = griddatan (x, y, xi, method = "linear", varargin)
     elseif (! ischar (method))
       error ("griddatan: METHOD must be a string");
     else
-      method = tolower (method);
+      method = lower (method);
     endif
 
     if (strcmp (method, "linear") || strcmp (method, "nearest"))

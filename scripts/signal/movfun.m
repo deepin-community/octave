@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2018-2022 The Octave Project Developers
+## Copyright (C) 2018-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -197,12 +197,19 @@ function y = movfun (fcn, x, wlen, varargin)
   clear parser
   ## End parse input arguments
 
+  if (isempty (x))
+    ## Nothing to do.  Return immediately with empty output same shape as input.
+    ## Technically, it would be best to return the correct class, rather than
+    ## always "double", but this seems like a lot of work for little gain.
+    y = zeros (size (x));
+    return;
+  endif
+
   ## If dim was not provided find the first non-singleton dimension.
   szx = size (x);
   if (isempty (dim))
     (dim = find (szx > 1, 1)) || (dim = 1);
   endif
-
   N = szx(dim);
 
   ## Calculate slicing indices.  This call also validates WLEN input.
@@ -227,37 +234,38 @@ function y = movfun (fcn, x, wlen, varargin)
 
   ## Obtain function for boundary conditions
   if (isnumeric (bc))
-    bcfunc = @replaceval_bc;
-    bcfunc (true, bc);  # initialize replaceval function with value
+    bcfcn = @replaceval_bc;
+    bcfcn (true, bc);  # initialize replaceval function with value
   else
-    switch (tolower (bc))
+    switch (lower (bc))
       case "shrink"
-        bcfunc = @shrink_bc;
+        bcfcn = @shrink_bc;
 
       case "discard"
-        bcfunc = [];
+        bcfcn = [];
         C -= length (Cpre);
         Cpre = Cpos = [];
         N = length (C);
         szx(dperm(1)) = N;
 
       case "fill"
-        bcfunc = @replaceval_bc;
-        bcfunc (true, NaN);
+        bcfcn = @replaceval_bc;
+        bcfcn (true, NaN);
 
       case "same"
-        bcfunc = @same_bc;
+        bcfcn = @same_bc;
 
       case "periodic"
-        bcfunc = @periodic_bc;
+        bcfcn = @periodic_bc;
 
     endswitch
   endif
 
   ## FIXME: Validation doesn't seem to work correctly (noted 12/16/2018).
   ## Validate that outdim makes sense
-  tmp     = fcn (zeros (length (win), 1));  # output for window
-  noutdim = length (tmp);                   # number of output dimensions
+  fout = fcn (zeros (length (win), 1, class (x)));  # output for window
+  yclass = class (fout);                    # record class of fcn output
+  noutdim = length (fout);                  # number of output dimensions
   if (! isempty (outdim))
     if (max (outdim) > noutdim)
       error ("Octave:invalid-input-arg", ...
@@ -275,11 +283,12 @@ function y = movfun (fcn, x, wlen, varargin)
     fcn_ = fcn;
   endif
 
+  ## Initialize output array of appropriate size and class.
+  y = zeros (N, ncols, soutdim, yclass);
   ## Apply processing to each column
   ## FIXME: Is it faster with cellfun?  Don't think so, but needs testing.
-  y = zeros (N, ncols, soutdim);
   parfor i = 1:ncols
-    y(:,i,:) = movfun_oncol (fcn_, x(:,i), wlen, bcfunc,
+    y(:,i,:) = movfun_oncol (fcn_, yclass, x(:,i), wlen, bcfcn,
                              slc, C, Cpre, Cpos, win, soutdim);
   endparfor
 
@@ -290,20 +299,36 @@ function y = movfun (fcn, x, wlen, varargin)
 
 endfunction
 
-function y = movfun_oncol (fcn, x, wlen, bcfunc, slcidx, C, Cpre, Cpos, win, odim)
+function y = movfun_oncol (fcn, yclass, x, wlen, bcfcn, slcidx, C, Cpre, Cpos, win, odim)
 
   N = length (Cpre) + length (C) + length (Cpos);
-  y = NA (N, odim);
+  y = zeros (N, odim, yclass);
 
-  ## Process center part
-  y(C,:) = fcn (x(slcidx));
+  ## Process center of data
+  try
+    y(C,:) = fcn (x(slcidx));
+  catch err
+    ## Operation failed, likely because of out-of-memory error for "x(slcidx)".
+    if (! strcmp (err.identifier, "Octave:bad-alloc"))
+      rethrow (err);
+    endif
+
+    ## Try divide and conquer approach with smaller slices of data.
+    ## For loops are slow, so don't try too hard with this approach.
+    N_SLICES = 8;  # configurable
+    idx1 = fix (linspace (1, numel (C), N_SLICES));
+    idx2 = fix (linspace (1, columns (slcidx), N_SLICES));
+    for i = 1 : N_SLICES-1
+      y(C(idx1(i):idx1(i+1)),:) = fcn (x(slcidx(:, idx2(i):idx2(i+1))));
+    endfor
+  end_try_catch
 
   ## Process boundaries
   if (! isempty (Cpre))
-    y(Cpre,:) = bcfunc (fcn, x, Cpre, win, wlen, odim);
+    y(Cpre,:) = bcfcn (fcn, x, Cpre, win, wlen, odim);
   endif
   if (! isempty (Cpos))
-    y(Cpos,:) = bcfunc (fcn, x, Cpos, win, wlen, odim);
+    y(Cpos,:) = bcfcn (fcn, x, Cpos, win, wlen, odim);
   endif
 
 endfunction
@@ -601,12 +626,24 @@ endfunction
 %!assert (movfun (@min, UNO, wlen02, "Endpoints", "same"), UNO)
 %!assert (movfun (@min, UNO, wlen20, "Endpoints", "same"), UNO)
 
-## Multidimensional output
+## Multi-dimensional output
 %!assert (size( movfun (@(x) [min(x), max(x)], (1:10).', 3)), [10 2])
 %!assert (size( movfun (@(x) [min(x), max(x)], cumsum (ones (10,5),2), 3)),
 %!        [10 5 2])
 ## outdim > dim
 %!error movfun (@(x) [min(x), max(x)], (1:10).', 3, "Outdim", 3)
+
+## Test for correct return class based on output of function.
+%!test <*63802>
+%! x = single (1:10);
+%! y = movfun (@mean, x, 3);
+%! assert (class (y), 'single');
+%! y = movfun (@mean, uint8 (x), 3);
+%! assert (class (y), 'double');
+
+## Test calculation along empty dimension
+%!assert <*63802> (movfun (@mean, zeros (2,0,3, 'uint8'), 3, 'dim', 2),
+%!                 zeros (2,0,3, 'double'))
 
 ## Test input validation
 %!error <Invalid call> movfun ()

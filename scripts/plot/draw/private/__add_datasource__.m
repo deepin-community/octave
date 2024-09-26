@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2008-2022 The Octave Project Developers
+## Copyright (C) 2008-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -44,7 +44,7 @@ function newargs = __add_datasource__ (fcn, h, data, varargin)
     arg = varargin{++i};
     if (i != numel (varargin) && ischar (arg)
         && length (arg) > 9 && strcmpi (arg(end-9:end), "datasource"))
-      arg = tolower (arg);
+      arg = lower (arg);
       val = varargin{++i};
       if (ischar (val))
         set (h, arg, val);

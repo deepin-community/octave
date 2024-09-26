@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2009-2022 The Octave Project Developers
+## Copyright (C) 2009-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -147,8 +147,8 @@ function cache = gen_doc_cache_in_dir (directory)
   endif
 
   ## create cache
-  func = @(s_) create_cache (__list_functions__ (s_));
-  cache = cellfun (func, directory, "UniformOutput", false);
+  f_lsfcn = @(dir) create_cache (__list_functions__ (dir));
+  cache = cellfun (f_lsfcn, directory, "UniformOutput", false);
 
   ## concatenate results
   cache = [cache{:}];

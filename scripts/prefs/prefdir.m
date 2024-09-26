@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2013-2022 The Octave Project Developers
+## Copyright (C) 2013-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,9 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} prefdir
-## @deftypefnx {} {} prefdir (1)
-## @deftypefnx {} {@var{dir} =} prefdir
+## @deftypefn  {} {@var{dir} =} prefdir
+## @deftypefnx {} {@var{dir} =} prefdir (1)
 ## Return the directory that holds the preferences for Octave.
 ##
 ## Examples:

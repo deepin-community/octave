@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2016-2022 The Octave Project Developers
+## Copyright (C) 2016-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,8 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} gammainc (@var{x}, @var{a})
-## @deftypefnx {} {} gammainc (@var{x}, @var{a}, @var{tail})
+## @deftypefn  {} {@var{y} =} gammainc (@var{x}, @var{a})
+## @deftypefnx {} {@var{y} =} gammainc (@var{x}, @var{a}, @var{tail})
 ## Compute the normalized incomplete gamma function.
 ##
 ## This is defined as
@@ -121,7 +121,7 @@ function y = gammainc (x, a, tail = "lower")
       && ! any (strcmpi (tail, {"lower","upper","scaledlower","scaledupper"})))
     error ("gammainc: invalid value for TAIL");
   endif
-  tail = tolower (tail);
+  tail = lower (tail);
 
   ## If any of the arguments is single then the output should be as well.
   if (strcmp (class (x), "single") || strcmp (class (a), "single"))
@@ -246,15 +246,18 @@ endfunction
 
 ## x == 0, a == 0.
 function y = gammainc_00 (tail)
+
   if (strcmp (tail, "upper") || strcmp (tail, "scaledupper"))
     y = 0;
   else
     y = 1;
   endif
+
 endfunction
 
 ## x == 0.
 function y = gammainc_x0 (tail)
+
   if (strcmp (tail, "lower"))
     y = 0;
   elseif (strcmp (tail, "upper") || strcmp (tail, "scaledlower"))
@@ -262,10 +265,12 @@ function y = gammainc_x0 (tail)
   else
     y = Inf;
   endif
+
 endfunction
 
 ## x == Inf.
 function y = gammainc_x_inf (tail)
+
   if (strcmp (tail, "lower"))
     y = 1;
   elseif (strcmp (tail, "upper") || strcmp (tail, "scaledupper"))
@@ -273,10 +278,12 @@ function y = gammainc_x_inf (tail)
   else
     y = Inf;
   endif
+
 endfunction
 
 ## a == Inf.
 function y = gammainc_a_inf (tail)
+
   if (strcmp (tail, "lower"))
     y = 0;
   elseif (strcmp (tail, "upper") || strcmp (tail, "scaledlower"))
@@ -284,10 +291,12 @@ function y = gammainc_a_inf (tail)
   else
     y = Inf;
   endif
+
 endfunction
 
 ## a == 0.
 function y = gammainc_a0 (x, tail)
+
   if (strcmp (tail, "lower"))
     y = 1;
   elseif (strcmp (tail, "scaledlower"))
@@ -295,6 +304,7 @@ function y = gammainc_a0 (x, tail)
   else
     y = 0;
   endif
+
 endfunction
 
 ## a == 1.

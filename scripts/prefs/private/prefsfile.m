@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2012-2022 The Octave Project Developers
+## Copyright (C) 2012-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,12 +24,12 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} prefsfile ()
+## @deftypefn {} {@var{fname} =} prefsfile ()
 ## Return the full path and name of the file containing Octave preferences.
 ## @end deftypefn
 
-function retval = prefsfile ()
+function fname = prefsfile ()
 
-  retval = [prefdir() filesep() ".octave_prefs"];
+  fname = [prefdir() filesep() ".octave_prefs"];
 
 endfunction

@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2010-2022 The Octave Project Developers
+## Copyright (C) 2010-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,7 +24,7 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn {} {} __ghostscript__ (@var{@dots{}})
+## @deftypefn {} {[@var{gs_cmd}, @var{cleanup_cmd}] =} __ghostscript__ (@var{@dots{}})
 ## Undocumented internal function.
 ## @end deftypefn
 

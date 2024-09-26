@@ -1,6 +1,6 @@
 ########################################################################
 ##
-## Copyright (C) 2014-2022 The Octave Project Developers
+## Copyright (C) 2014-2024 The Octave Project Developers
 ##
 ## See the file COPYRIGHT.md in the top-level directory of this
 ## distribution or <https://octave.org/copyright/>.
@@ -24,9 +24,8 @@
 ########################################################################
 
 ## -*- texinfo -*-
-## @deftypefn  {} {} javachk (@var{feature})
-## @deftypefnx {} {} javachk (@var{feature}, @var{caller})
-## @deftypefnx {} {@var{msg} =} javachk (@dots{})
+## @deftypefn  {} {@var{msg} =} javachk (@var{feature})
+## @deftypefnx {} {@var{msg} =} javachk (@var{feature}, @var{caller})
 ## Check for the presence of the Java @var{feature} in the current session.
 ## Return an error structure if @var{feature} is not available, not enabled,
 ## or not recognized.

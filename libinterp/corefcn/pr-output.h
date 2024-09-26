@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 1993-2022 The Octave Project Developers
+// Copyright (C) 1993-2024 The Octave Project Developers
 //
 // See the file COPYRIGHT.md in the top-level directory of this
 // distribution or <https://octave.org/copyright/>.
@@ -384,12 +384,12 @@ octave_print_internal (std::ostream& os, const intNDArray<octave_uint64>& sa,
                        bool pr_as_read_syntax = false,
                        int extra_indent = 0);
 
-extern void
+extern OCTINTERP_API void
 octave_print_internal (std::ostream& os, const float_display_format&,
                        const octave_int<int8_t>& sa,
                        bool pr_as_read_syntax = false);
 
-inline OCTINTERP_API void
+inline void
 octave_print_internal (std::ostream& os, const octave_int<int8_t>& sa,
                        bool pr_as_read_syntax = false)
 {
@@ -397,12 +397,12 @@ octave_print_internal (std::ostream& os, const octave_int<int8_t>& sa,
   octave_print_internal (os, fmt, sa, pr_as_read_syntax);
 }
 
-extern void
+extern OCTINTERP_API void
 octave_print_internal (std::ostream& os, const float_display_format&,
                        const octave_int<uint8_t>& sa,
                        bool pr_as_read_syntax = false);
 
-inline OCTINTERP_API void
+inline void
 octave_print_internal (std::ostream& os, const octave_int<uint8_t>& sa,
                        bool pr_as_read_syntax = false)
 {
@@ -410,12 +410,12 @@ octave_print_internal (std::ostream& os, const octave_int<uint8_t>& sa,
   octave_print_internal (os, fmt, sa, pr_as_read_syntax);
 }
 
-extern void
+extern OCTINTERP_API void
 octave_print_internal (std::ostream& os, const float_display_format&,
                        const octave_int<int16_t>& sa,
                        bool pr_as_read_syntax = false);
 
-inline OCTINTERP_API void
+inline void
 octave_print_internal (std::ostream& os, const octave_int<int16_t>& sa,
                        bool pr_as_read_syntax = false)
 {
@@ -423,12 +423,12 @@ octave_print_internal (std::ostream& os, const octave_int<int16_t>& sa,
   octave_print_internal (os, fmt, sa, pr_as_read_syntax);
 }
 
-extern void
+extern OCTINTERP_API void
 octave_print_internal (std::ostream& os, const float_display_format&,
                        const octave_int<uint16_t>& sa,
                        bool pr_as_read_syntax = false);
 
-inline OCTINTERP_API void
+inline void
 octave_print_internal (std::ostream& os, const octave_int<uint16_t>& sa,
                        bool pr_as_read_syntax = false)
 {
@@ -436,12 +436,12 @@ octave_print_internal (std::ostream& os, const octave_int<uint16_t>& sa,
   octave_print_internal (os, fmt, sa, pr_as_read_syntax);
 }
 
-extern void
+extern OCTINTERP_API void
 octave_print_internal (std::ostream& os, const float_display_format&,
                        const octave_int<int32_t>& sa,
                        bool pr_as_read_syntax = false);
 
-inline OCTINTERP_API void
+inline void
 octave_print_internal (std::ostream& os, const octave_int<int32_t>& sa,
                        bool pr_as_read_syntax = false)
 {
@@ -449,12 +449,12 @@ octave_print_internal (std::ostream& os, const octave_int<int32_t>& sa,
   octave_print_internal (os, fmt, sa, pr_as_read_syntax);
 }
 
-extern void
+extern OCTINTERP_API void
 octave_print_internal (std::ostream& os, const float_display_format&,
                        const octave_int<uint32_t>& sa,
                        bool pr_as_read_syntax = false);
 
-inline OCTINTERP_API void
+inline void
 octave_print_internal (std::ostream& os, const octave_int<uint32_t>& sa,
                        bool pr_as_read_syntax = false)
 {
@@ -462,12 +462,12 @@ octave_print_internal (std::ostream& os, const octave_int<uint32_t>& sa,
   octave_print_internal (os, fmt, sa, pr_as_read_syntax);
 }
 
-extern void
+extern OCTINTERP_API void
 octave_print_internal (std::ostream& os, const float_display_format&,
                        const octave_int<int64_t>& sa,
                        bool pr_as_read_syntax = false);
 
-inline OCTINTERP_API void
+inline void
 octave_print_internal (std::ostream& os, const octave_int<int64_t>& sa,
                        bool pr_as_read_syntax = false)
 {
@@ -475,12 +475,12 @@ octave_print_internal (std::ostream& os, const octave_int<int64_t>& sa,
   octave_print_internal (os, fmt, sa, pr_as_read_syntax);
 }
 
-extern void
+extern OCTINTERP_API void
 octave_print_internal (std::ostream& os, const float_display_format&,
                        const octave_int<uint64_t>& sa,
                        bool pr_as_read_syntax = false);
 
-inline OCTINTERP_API void
+inline void
 octave_print_internal (std::ostream& os, const octave_int<uint64_t>& sa,
                        bool pr_as_read_syntax = false)
 {
@@ -517,9 +517,9 @@ public:
 
   T m_val;
 
-  int exponent (void) const;
+  int exponent () const;
 
-  T mantissa (void) const;
+  T mantissa () const;
 
   pr_engineering_float (const float_format& ff, T val)
     : m_ff (ff), m_val (val) { }
