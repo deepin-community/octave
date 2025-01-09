@@ -1,4 +1,5 @@
-This is octave.info, produced by makeinfo version 7.1 from octave.texi.
+This is octave.info, produced by makeinfo version 7.1.1 from
+octave.texi.
 
 INFO-DIR-SECTION Math
 START-INFO-DIR-ENTRY
@@ -39,12 +40,12 @@ described in *note Interpolation on Scattered Data::.
 
      Two-dimensional interpolation.
 
-     Interpolate reference data X, Y, Z to determine ZI at the
+     Interpolate numeric reference data X, Y, Z to determine ZI at the
      coordinates XI, YI.  The reference data X, Y can be matrices, as
      returned by ‘meshgrid’, in which case the sizes of X, Y, and Z must
-     be equal.  If X, Y are vectors describing a grid then ‘length (X)
-     == columns (Z)’ and ‘length (Y) == rows (Z)’.  In either case the
-     input data must be strictly monotonic.
+     be equal.  If X, Y are vectors describing a grid then
+     ‘length (X) == columns (Z)’ and ‘length (Y) == rows (Z)’.  In
+     either case the input data must be strictly monotonic.
 
      If called without X, Y, and just a single reference data matrix Z,
      the 2-D region ‘X = 1:columns (Z), Y = 1:rows (Z)’ is assumed.
@@ -98,8 +99,8 @@ described in *note Interpolation on Scattered Data::.
 
      Three-dimensional interpolation.
 
-     Interpolate reference data X, Y, Z, V to determine VI at the
-     coordinates XI, YI, ZI.  The reference data X, Y, Z can be
+     Interpolate numeric reference data X, Y, Z, V to determine VI at
+     the coordinates XI, YI, ZI.  The reference data X, Y, Z can be
      matrices, as returned by ‘meshgrid’, in which case the sizes of X,
      Y, Z, and V must be equal.  If X, Y, Z are vectors describing a
      cubic grid then ‘length (X) == columns (V)’, ‘length (Y) == rows
@@ -154,10 +155,10 @@ described in *note Interpolation on Scattered Data::.
 
      Perform N-dimensional interpolation, where N is at least two.
 
-     Each element of the N-dimensional array V represents a value at a
-     location given by the parameters X1, X2, ..., XN.  The parameters
-     X1, X2, ..., XN are either N-dimensional arrays of the same size as
-     the array V in the "ndgrid" format or vectors.
+     Each element of the N-dimensional numeric array V represents a
+     value at a location given by the parameters X1, X2, ..., XN.  The
+     parameters X1, X2, ..., XN are either N-dimensional arrays of the
+     same size as the array V in the "ndgrid" format or vectors.
 
      The parameters Y1, Y2, ..., YN represent the points at which the
      array VI is interpolated.  They can be vectors of the same length
@@ -4678,8 +4679,8 @@ method.
      Return the result of the colon expression corresponding to BASE,
      LIMIT, and optionally, INCREMENT.
 
-     This function is equivalent to the operator syntax ‘BASE : LIMIT’
-     or ‘BASE : INCREMENT : LIMIT’.
+     This function is equivalent to the operator syntax
+     ‘BASE : LIMIT’ or ‘BASE : INCREMENT : LIMIT’.
 
      See also: *note linspace: XREFlinspace.
 

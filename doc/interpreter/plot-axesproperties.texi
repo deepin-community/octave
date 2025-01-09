@@ -91,7 +91,7 @@ Color of the axes background.  @xref{Colors, , colorspec}.
 @anchor{XREFaxesdataaspectratio}
 @prindex axes dataaspectratio
 @item @code{dataaspectratio}: three-element vector, def. @code{[1   1   1]}
-Specify the relative height and width of the data displayed in the axes.  Setting @code{dataaspectratio} to @w{@code{[1, 2]}} causes the length of one unit as displayed on the x-axis to be the same as the length of 2 units on the y-axis.  @xref{XREFdaspect, , daspect function}.  Setting @code{dataaspectratio} also forces the @code{dataaspectratiomode} property to be set to @qcode{"manual"}..
+Specify the relative height and width of the data displayed in the axes.  Setting @code{dataaspectratio} to @w{@code{[1, 2]}} causes the length of one unit as displayed on the x-axis to be the same as the length of 2 units on the y-axis.  @xref{XREFdaspect, , daspect function}.  Setting @code{dataaspectratio} also forces the @code{dataaspectratiomode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesdataaspectratiomode}
@@ -121,7 +121,7 @@ Width of the main axes lines.
 @anchor{XREFaxestickdir}
 @prindex axes tickdir
 @item @code{tickdir}: @qcode{"both"} | @{@qcode{"in"}@} | @qcode{"none"} | @qcode{"out"}
-Control whether axes tick marks project @qcode{"in"} to the plot box or @qcode{"out"}.  The value @qcode{"both"} will draw tick marks both in and out.  The value @qcode{"none"} means no tick marks will be drawn, although tick labels will still be rendered.  Setting @code{tickdir} also forces the @code{tickdirmode} property to be set to @qcode{"manual"}..  Note that the default is @qcode{"in"} for 2-D and @qcode{"out"} for 3-D plots.
+Control whether axes tick marks project @qcode{"in"} to the plot box or @qcode{"out"}.  The value @qcode{"both"} will draw tick marks both in and out.  The value @qcode{"none"} means no tick marks will be drawn, although tick labels will still be rendered.  Setting @code{tickdir} also forces the @code{tickdirmode} property to be set to @qcode{"manual"}.  Note that the default is @qcode{"in"} for 2-D and @qcode{"out"} for 3-D plots.
 
 
 @anchor{XREFaxestickdirmode}
@@ -157,7 +157,7 @@ Control the x-axis location.
 @anchor{XREFaxesxcolor}
 @prindex axes xcolor
 @item @code{xcolor}: @{colorspec@} | @qcode{"none"}, def. @code{[0.1500   0.1500   0.1500]}
-Color of the x-axis.  @xref{Colors, , colorspec}.  Setting @code{xcolor} also forces the @code{xcolormode} property to be set to @qcode{"manual"}..
+Color of the x-axis.  @xref{Colors, , colorspec}.  Setting @code{xcolor} also forces the @code{xcolormode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesxcolormode}
@@ -175,7 +175,7 @@ Direction of the x axis: @qcode{"normal"} is left to right in default 2-D and 3-
 @anchor{XREFaxesxlim}
 @prindex axes xlim
 @item @code{xlim}: two-element vector, def. @code{[0   1]}
-Two-element vector @code{[xmin xmax]} specifying the limits for the x-axis.  Setting @code{xlim} also forces the @code{xlimmode} property to be set to @qcode{"manual"}..   @xref{XREFxlim, , @w{xlim function}}.
+Two-element vector @code{[xmin xmax]} specifying the limits for the x-axis.  Setting @code{xlim} also forces the @code{xlimmode} property to be set to @qcode{"manual"}.   @xref{XREFxlim, , @w{xlim function}}.
 
 
 @anchor{XREFaxesxlimitmethod}
@@ -199,7 +199,7 @@ Control whether minor x tick marks are displayed.
 @anchor{XREFaxesxtick}
 @prindex axes xtick
 @item @code{xtick}: vector
-Position of x tick marks.  Setting @code{xtick} also forces the @code{xtickmode} property to be set to @qcode{"manual"}..
+Position of x tick marks.  Setting @code{xtick} also forces the @code{xtickmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesxtickmode}
@@ -241,7 +241,7 @@ Direction of the y-axis: @qcode{"normal"} is bottom to top in 2-D and front to b
 @anchor{XREFaxesylim}
 @prindex axes ylim
 @item @code{ylim}: two-element vector, def. @code{[0   1]}
-Two-element vector @code{[ymin ymax]} specifying the limits for the y-axis.  Setting @code{ylim} also forces the @code{ylimmode} property to be set to @qcode{"manual"}..  @xref{XREFylim, , @w{ylim function}}.
+Two-element vector @code{[ymin ymax]} specifying the limits for the y-axis.  Setting @code{ylim} also forces the @code{ylimmode} property to be set to @qcode{"manual"}.  @xref{XREFylim, , @w{ylim function}}.
 
 
 @anchor{XREFaxesylimitmethod}
@@ -259,7 +259,7 @@ Current state of the y-axis limit selection method, either manually set with the
 @anchor{XREFaxesytick}
 @prindex axes ytick
 @item @code{ytick}: vector
-Position of y tick marks.  Setting @code{ytick} also forces the @code{ytickmode} property to be set to @qcode{"manual"}..
+Position of y tick marks.  Setting @code{ytick} also forces the @code{ytickmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesytickmode}
@@ -295,7 +295,7 @@ Direction of the y-axis: @qcode{"normal"} is bottom to top in default 3-D views.
 @anchor{XREFaxeszlim}
 @prindex axes zlim
 @item @code{zlim}: two-element vector, def. @code{[0   1]}
-Two-element vector @code{[zmin zmax]} specifying the limits for the z-axis.  Setting @code{zlim} also forces the @code{zlimmode} property to be set to @qcode{"manual"}..  @xref{XREFzlim, , @w{zlim function}}.
+Two-element vector @code{[zmin zmax]} specifying the limits for the z-axis.  Setting @code{zlim} also forces the @code{zlimmode} property to be set to @qcode{"manual"}.  @xref{XREFzlim, , @w{zlim function}}.
 
 
 @anchor{XREFaxeszlimitmethod}
@@ -319,7 +319,7 @@ Control whether minor z tick marks are displayed.
 @anchor{XREFaxesztick}
 @prindex axes ztick
 @item @code{ztick}: vector
-Position of z tick marks.  Setting @code{ztick} also forces the @code{ztickmode} property to be set to @qcode{"manual"}..
+Position of z tick marks.  Setting @code{ztick} also forces the @code{ztickmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesztickmode}
@@ -350,7 +350,7 @@ Transparency is not yet implemented for axes objects.  @code{gridalphamode} is u
 @anchor{XREFaxesgridcolor}
 @prindex axes gridcolor
 @item @code{gridcolor}: @{colorspec@} | @qcode{"none"}, def. @code{[0.1500   0.1500   0.1500]}
-Color of the major grid lines.  @xref{Colors, , colorspec}.  Setting @code{gridcolor} also forces the @code{gridcolormode} property to be set to @qcode{"manual"}..
+Color of the major grid lines.  @xref{Colors, , colorspec}.  Setting @code{gridcolor} also forces the @code{gridcolormode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesgridcolormode}
@@ -386,7 +386,7 @@ Transparency is not yet implemented for axes objects.  @code{minorgridalphamode}
 @anchor{XREFaxesminorgridcolor}
 @prindex axes minorgridcolor
 @item @code{minorgridcolor}: @{colorspec@} | @qcode{"none"}, def. @code{[0.1000   0.1000   0.1000]}
-Color of the minor grid lines.  @xref{Colors, , colorspec}.  Setting @code{minorgridcolor} also forces the @code{minorgridcolormode} property to be set to @qcode{"manual"}..
+Color of the minor grid lines.  @xref{Colors, , colorspec}.  Setting @code{minorgridcolor} also forces the @code{minorgridcolormode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesminorgridcolormode}
@@ -498,7 +498,7 @@ Specify whether this object's callback functions may be interrupted by other cal
 @anchor{XREFaxescameraposition}
 @prindex axes cameraposition
 @item @code{cameraposition}: three-element vector, def. @code{[0.5000   0.5000   9.1603]}
-Coordinates of the camera position viewing the axes.  Setting @code{cameraposition} also forces the @code{camerapositionmode} property to be set to @qcode{"manual"}..
+Coordinates of the camera position viewing the axes.  Setting @code{cameraposition} also forces the @code{camerapositionmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxescamerapositionmode}
@@ -510,7 +510,7 @@ Current state of the camera position property, whether automatically set accordi
 @anchor{XREFaxescameratarget}
 @prindex axes cameratarget
 @item @code{cameratarget}: three-element vector, def. @code{[0.5000   0.5000   0.5000]}
-Coordinates of the point at which the viewing camera is aimed.  Setting @code{cameratarget} also forces the @code{cameratargetmode} property to be set to @qcode{"manual"}..
+Coordinates of the point at which the viewing camera is aimed.  Setting @code{cameratarget} also forces the @code{cameratargetmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxescameratargetmode}
@@ -522,7 +522,7 @@ Current state of camera target property, either manually set with the @ref{XREFa
 @anchor{XREFaxescameraupvector}
 @prindex axes cameraupvector
 @item @code{cameraupvector}: three-element vector, def. @code{[0   1   0]}
-A 3-element vector defining the upward direction of the current view.  Note that the default is [0 1 0] for 2-D plots and [0 0 1] for 3-D plots.  Setting @code{cameraupvector} also forces the @code{cameraupvectormode} property to be set to @qcode{"manual"}..
+A 3-element vector defining the upward direction of the current view.  Note that the default is [0 1 0] for 2-D plots and [0 0 1] for 3-D plots.  Setting @code{cameraupvector} also forces the @code{cameraupvectormode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxescameraupvectormode}
@@ -534,7 +534,7 @@ Current state of camera up vector property, set to manual when the @ref{XREFaxes
 @anchor{XREFaxescameraviewangle}
 @prindex axes cameraviewangle
 @item @code{cameraviewangle}: scalar, def. @code{6.6086}
-The camera's field of view defined as an angle between 0 and 180 degrees.  Setting @code{cameraviewangle} also forces the @code{cameraviewanglemode} property to be set to @qcode{"manual"}..
+The camera's field of view defined as an angle between 0 and 180 degrees.  Setting @code{cameraviewangle} also forces the @code{cameraviewanglemode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxescameraviewanglemode}
@@ -595,7 +595,7 @@ Uniform background axes lighting is not yet implemented for axes objects.  @code
 @anchor{XREFaxesclim}
 @prindex axes clim
 @item @code{clim}: two-element vector, def. @code{[0   1]}
-Define limits for the color axis of axes children that have the @qcode{cdata} property.  Setting @code{clim} also forces the @code{climmode} property to be set to @qcode{"manual"}..
+Define limits for the color axis of axes children that have the @qcode{cdata} property.  Setting @code{clim} also forces the @code{climmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesclimmode}
@@ -778,7 +778,7 @@ Specify the position of the plot including titles, axes, and legend.  The four e
 @anchor{XREFaxesplotboxaspectratio}
 @prindex axes plotboxaspectratio
 @item @code{plotboxaspectratio}: def. @code{[1   1   1]}
-@xref{XREFpbaspect, , pbaspect function}.  Setting @code{plotboxaspectratio} also forces the @code{plotboxaspectratiomode} property to be set to @qcode{"manual"}..
+@xref{XREFpbaspect, , pbaspect function}.  Setting @code{plotboxaspectratio} also forces the @code{plotboxaspectratiomode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesplotboxaspectratiomode}
@@ -860,7 +860,7 @@ Programming Note: On systems that don’t use FontConfig natively (all but Linux
 @anchor{XREFaxesfontsize}
 @prindex axes fontsize
 @item @code{fontsize}: scalar, def. @code{10}
-Size of the font used for text rendering.  @xref{XREFaxesfontunits, , fontunits property}.  Setting @code{fontsize} also forces the @code{fontsizemode} property to be set to @qcode{"manual"}..
+Size of the font used for text rendering.  @xref{XREFaxesfontunits, , fontunits property}.  Setting @code{fontsize} also forces the @code{fontsizemode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesfontsizemode}
@@ -933,7 +933,7 @@ Graphics handle of the x label text object.
 @anchor{XREFaxesxticklabel}
 @prindex axes xticklabel
 @item @code{xticklabel}: string | cell array of strings, def. 6-by-1 cell
-Labels of x tick marks.  Setting @code{xticklabel} also forces the @code{xticklabelmode} property to be set to @qcode{"manual"}..
+Labels of x tick marks.  Setting @code{xticklabel} also forces the @code{xticklabelmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesxticklabelmode}
@@ -957,7 +957,7 @@ Graphics handle of the y label text object.
 @anchor{XREFaxesyticklabel}
 @prindex axes yticklabel
 @item @code{yticklabel}: string | cell array of strings, def. 6-by-1 cell
-Labels of y tick marks.  Setting @code{yticklabel} also forces the @code{yticklabelmode} property to be set to @qcode{"manual"}..
+Labels of y tick marks.  Setting @code{yticklabel} also forces the @code{yticklabelmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxesyticklabelmode}
@@ -981,7 +981,7 @@ Graphics handle of the z label text object.
 @anchor{XREFaxeszticklabel}
 @prindex axes zticklabel
 @item @code{zticklabel}: string | cell array of strings, def. 6-by-1 cell
-Labels of z tick marks.  Setting @code{zticklabel} also forces the @code{zticklabelmode} property to be set to @qcode{"manual"}..
+Labels of z tick marks.  Setting @code{zticklabel} also forces the @code{zticklabelmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFaxeszticklabelmode}

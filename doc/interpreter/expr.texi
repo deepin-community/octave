@@ -263,7 +263,7 @@ data(idx)
 
 @noindent
 Instead of creating the @code{idx} array it is possible to replace
-@code{data(idx)} with @w{@code{data( data <= 2 )}} in the above code.
+@code{data(idx)} with @w{@code{data( data <= 2 )}}@ in the above code.
 
 While the size of the logical index expressions is usually the same as that
 of the array being indexed, this is not a necessary condition.  If the logical
@@ -522,7 +522,7 @@ the respective dimension of the array.
 However, if the number of indexing components exceeds the number of dimensions
 (@w{@code{M > nd}}) then the excess components must all be singletons
 (@code{1}).  Moreover, if @w{@code{M < nd}}, the behavior is equivalent to
-reshaping the input object so as to merge the trailing @w{@code{nd - M}}
+reshaping the input object so as to merge the trailing @w{@code{nd - M}}@ 
 dimensions into the last index dimension @code{M}.  Thus, the result will have
 the dimensionality of the index expression, and not the original object.  This
 is the case whenever dimensionality of the index is greater than one
@@ -1145,7 +1145,7 @@ of how Octave treats that syntax.
 @deftypefn {} {@var{B} =} ctranspose (@var{A})
 Return the complex conjugate transpose of @var{A}.
 
-This function and @tcode{@var{A}'} are equivalent.
+This function and @tcode{@var{A}'}@ are equivalent.
 @xseealso{@ref{XREFtranspose,,transpose}}
 @end deftypefn
 
@@ -1178,7 +1178,7 @@ This is equivalent to @tcode{@var{A}(:,:, @var{k})'} for each page @var{k}.
 @deftypefn {} {@var{C} =} ldivide (@var{A}, @var{B})
 Return the element-by-element left division of @var{A} and @var{B}.
 
-This function and @w{@tcode{@var{A} .@backslashchar{} @var{B}}} are
+This function and @w{@tcode{@var{A} .@backslashchar{} @var{B}}}@ are
 equivalent.
 @xseealso{@ref{XREFrdivide,,rdivide}, @ref{XREFmldivide,,mldivide}, @ref{XREFtimes,,times}, @ref{XREFplus,,plus}}
 @end deftypefn
@@ -1193,7 +1193,7 @@ equivalent.
 
 
 @deftypefn {} {@var{C} =} minus (@var{A}, @var{B})
-This function and @w{@tcode{@var{A} - @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} - @var{B}}}@ are equivalent.
 @xseealso{@ref{XREFplus,,plus}, @ref{XREFuminus,,uminus}}
 @end deftypefn
 
@@ -1209,7 +1209,7 @@ This function and @w{@tcode{@var{A} - @var{B}}} are equivalent.
 @deftypefn {} {@var{C} =} mldivide (@var{A}, @var{B})
 Return the matrix left division of @var{A} and @var{B}.
 
-This function and @w{@tcode{@var{A} @backslashchar{} @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} @backslashchar{} @var{B}}}@ are equivalent.
 
 If the system is not square, or if the coefficient matrix is singular, a
 minimum norm solution is computed.
@@ -1228,7 +1228,7 @@ minimum norm solution is computed.
 @deftypefn {} {@var{C} =} mpower (@var{A}, @var{B})
 Return the matrix power operation of @var{A} raised to the @var{B} power.
 
-This function and @w{@tcode{@var{A} ^ @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} ^ @var{B}}}@ are equivalent.
 @xseealso{@ref{XREFpower,,power}, @ref{XREFmtimes,,mtimes}, @ref{XREFplus,,plus}, @ref{XREFminus,,minus}}
 @end deftypefn
 
@@ -1244,7 +1244,7 @@ This function and @w{@tcode{@var{A} ^ @var{B}}} are equivalent.
 @deftypefn {} {@var{C} =} mrdivide (@var{A}, @var{B})
 Return the matrix right division of @var{A} and @var{B}.
 
-This function and @w{@tcode{@var{A} / @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} / @var{B}}}@ are equivalent.
 
 If the system is not square, or if the coefficient matrix is singular, a
 minimum norm solution is computed.
@@ -1264,7 +1264,7 @@ minimum norm solution is computed.
 @deftypefnx {} {@var{C} =} mtimes (@var{A1}, @var{A2}, @dots{})
 Return the matrix multiplication product of inputs.
 
-This function and @w{@tcode{@var{A} * @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} * @var{B}}}@ are equivalent.
 If more arguments are given, the multiplication is applied
 cumulatively from left to right:
 
@@ -1286,7 +1286,7 @@ cumulatively from left to right:
 
 @deftypefn  {} {@var{C} =} plus (@var{A}, @var{B})
 @deftypefnx {} {@var{C} =} plus (@var{A1}, @var{A2}, @dots{})
-This function and @w{@tcode{@var{A} + @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} + @var{B}}}@ are equivalent.
 
 If more arguments are given, the summation is applied
 cumulatively from left to right:
@@ -1311,7 +1311,7 @@ cumulatively from left to right:
 Return the element-by-element operation of @var{A} raised to the
 @var{B} power.
 
-This function and @w{@tcode{@var{A} .^ @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} .^ @var{B}}}@ are equivalent.
 
 If several complex results are possible, returns the one with smallest
 non-negative argument (angle).  Use @code{realpow}, @code{realsqrt},
@@ -1332,7 +1332,7 @@ non-negative argument (angle).  Use @code{realpow}, @code{realsqrt},
 @deftypefn {} {@var{C} =} rdivide (@var{A}, @var{B})
 Return the element-by-element right division of @var{A} and @var{B}.
 
-This function and @w{@tcode{@var{A} ./ @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} ./ @var{B}}}@ are equivalent.
 @xseealso{@ref{XREFldivide,,ldivide}, @ref{XREFmrdivide,,mrdivide}, @ref{XREFtimes,,times}, @ref{XREFplus,,plus}}
 @end deftypefn
 
@@ -1349,7 +1349,7 @@ This function and @w{@tcode{@var{A} ./ @var{B}}} are equivalent.
 @deftypefnx {} {@var{C} =} times (@var{A1}, @var{A2}, @dots{})
 Return the element-by-element multiplication product of inputs.
 
-This function and @w{@tcode{@var{A} .* @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} .* @var{B}}}@ are equivalent.
 If more arguments are given, the multiplication is applied
 cumulatively from left to right:
 
@@ -1372,7 +1372,7 @@ cumulatively from left to right:
 @deftypefn {} {@var{B} =} transpose (@var{A})
 Return the transpose of @var{A}.
 
-This function and @tcode{@var{A}.'@:} are equivalent.
+This function and @tcode{@var{A}.'@:}@ are equivalent.
 @xseealso{@ref{XREFctranspose,,ctranspose}}
 @end deftypefn
 
@@ -1403,7 +1403,7 @@ This is equivalent to @tcode{@var{A}(:,:, @var{k}).@:'} for each page
 
 
 @deftypefn {} {@var{B} =} uminus (@var{A})
-This function and @w{@tcode{- @var{A}}} are equivalent.
+This function and @w{@tcode{- @var{A}}}@ are equivalent.
 @xseealso{@ref{XREFuplus,,uplus}, @ref{XREFminus,,minus}}
 @end deftypefn
 
@@ -1417,7 +1417,7 @@ This function and @w{@tcode{- @var{A}}} are equivalent.
 
 
 @deftypefn {} {@var{B} =} uplus (@var{A})
-This function and @w{@tcode{+ @var{A}}} are equivalent.
+This function and @w{@tcode{+ @var{A}}}@ are equivalent.
 @xseealso{@ref{XREFuminus,,uminus}, @ref{XREFplus,,plus}}
 @end deftypefn
 

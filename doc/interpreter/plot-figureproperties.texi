@@ -519,7 +519,7 @@ The value for the @code{papersize}, and @code{paperposition} properties depends 
 @anchor{XREFfigurepaperposition}
 @prindex figure paperposition
 @item @code{paperposition}: four-element vector, def. @code{[1.3422   3.3191   5.8156   4.3617]}
-Vector @code{[left bottom width height]} defining the position and size of the figure (in @code{paperunits} units) on the printed page.  The position @code{[left bottom]} defines the lower left corner of the figure on the page, and the size is defined by @code{[width height]}.  For output formats not implicitly rendered on paper, @code{width} and @code{height} define the size of the image and the position information is ignored.  Setting @code{paperposition} also forces the @code{paperpositionmode} property to be set to @qcode{"manual"}..
+Vector @code{[left bottom width height]} defining the position and size of the figure (in @code{paperunits} units) on the printed page.  The position @code{[left bottom]} defines the lower left corner of the figure on the page, and the size is defined by @code{[width height]}.  For output formats not implicitly rendered on paper, @code{width} and @code{height} define the size of the image and the position information is ignored.  Setting @code{paperposition} also forces the @code{paperpositionmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFfigurepaperpositionmode}
@@ -549,7 +549,7 @@ The unit used to compute the @code{paperposition} property.  The conversion from
 @anchor{XREFfigurerenderer}
 @prindex figure renderer
 @item @code{renderer}: @{@qcode{"opengl"}@} | @qcode{"painters"}
-Rendering engine used for printing when @code{renderermode} is @qcode{"manual"}.  Setting @code{renderer} also forces the @code{renderermode} property to be set to @qcode{"manual"}..
+Rendering engine used for printing when @code{renderermode} is @qcode{"manual"}.  Setting @code{renderer} also forces the @code{renderermode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFfigurerenderermode}

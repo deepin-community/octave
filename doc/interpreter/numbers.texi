@@ -841,7 +841,7 @@ when converted.
 @deftypefn {} {@var{tf} =} isinteger (@var{x})
 Return true if @var{x} is an integer object (int8, uint8, int16, etc.).
 
-Note that @w{@code{isinteger (14)}} is false because numeric constants in
+Note that @w{@code{isinteger (14)}}@ is false because numeric constants in
 Octave are double precision floating point values.
 @xseealso{@ref{XREFisfloat,,isfloat}, @ref{XREFischar,,ischar}, @ref{XREFislogical,,islogical}, @ref{XREFisstring,,isstring}, @ref{XREFisnumeric,,isnumeric}, @ref{XREFisa,,isa}}
 @end deftypefn
@@ -1087,8 +1087,8 @@ The input is either a string specifying a floating point type, or it is an
 existing floating point variable @var{var}.
 
 The default type is @qcode{"double"}, but @qcode{"single"} is a valid option.
-On IEEE 754 compatible systems, @code{flintmax} is @w{@math{2^{53}}} for
-@qcode{"double"} and @w{@math{2^{24}}} for @qcode{"single"}.
+On IEEE 754 compatible systems, @code{flintmax} is @w{@math{2^{53}}}@ for
+@qcode{"double"} and @w{@math{2^{24}}}@ for @qcode{"single"}.
 
 Example Code - query an existing variable
 
@@ -1735,7 +1735,7 @@ Return true if @var{x} is a complex-valued numeric object.
 Return true if @var{x} is a 2-D array.
 
 A matrix is an array of any type where @code{ndims (@var{x}) == 2} and for
-which @code{size (@var{x})} returns @w{@code{[M, N]}} with non-negative M and
+which @code{size (@var{x})} returns @w{@code{[M, N]}}@ with non-negative M and
 N.
 @xseealso{@ref{XREFisscalar,,isscalar}, @ref{XREFisvector,,isvector}, @ref{XREFiscell,,iscell}, @ref{XREFisstruct,,isstruct}, @ref{XREFissparse,,issparse}, @ref{XREFisa,,isa}}
 @end deftypefn
@@ -1769,7 +1769,7 @@ a 1x1 object (a scalar) is also a vector.
 Return true if @var{x} is a row vector.
 
 A row vector is a 2-D array of any type for which @code{size (@var{x})} returns
-@w{@code{[1, N]}} with non-negative N.
+@w{@code{[1, N]}}@ with non-negative N.
 @xseealso{@ref{XREFiscolumn,,iscolumn}, @ref{XREFisscalar,,isscalar}, @ref{XREFisvector,,isvector}, @ref{XREFismatrix,,ismatrix}, @ref{XREFsize,,size}}
 @end deftypefn
 
@@ -1785,7 +1785,7 @@ A row vector is a 2-D array of any type for which @code{size (@var{x})} returns
 Return true if @var{x} is a column vector.
 
 A column vector is a 2-D array of any type for which @code{size (@var{x})}
-returns @w{@code{[N, 1]}} with non-negative N.
+returns @w{@code{[N, 1]}}@ with non-negative N.
 @xseealso{@ref{XREFisrow,,isrow}, @ref{XREFisscalar,,isscalar}, @ref{XREFisvector,,isvector}, @ref{XREFismatrix,,ismatrix}, @ref{XREFsize,,size}}
 @end deftypefn
 
@@ -1817,7 +1817,7 @@ returns @w{@code{[1, 1]}}.
 Return true if @var{x} is a 2-D square array.
 
 A square array is a 2-D array of any type for which @code{size (@var{x})}
-returns @w{@code{[N, N]}} where N is a non-negative integer.
+returns @w{@code{[N, N]}}@ where N is a non-negative integer.
 @xseealso{@ref{XREFisscalar,,isscalar}, @ref{XREFisvector,,isvector}, @ref{XREFismatrix,,ismatrix}, @ref{XREFsize,,size}}
 @end deftypefn
 

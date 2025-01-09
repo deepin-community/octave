@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Nonlinear Programming (GNU Octave (version 9.2.0))</title>
+<title>Nonlinear Programming (GNU Octave (version 9.3.0))</title>
 
-<meta name="description" content="Nonlinear Programming (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Nonlinear Programming (GNU Octave (version 9.2.0))">
+<meta name="description" content="Nonlinear Programming (GNU Octave (version 9.3.0))">
+<meta name="keywords" content="Nonlinear Programming (GNU Octave (version 9.3.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -110,11 +110,9 @@ transpose ( [ ------   -----   ...   ------ ] )
 </pre></div></div>
 
 <p>The fifth and sixth arguments, <var class="var">lb</var> and <var class="var">ub</var>, contain lower and
-upper bounds on <var class="var">x</var>.  These must be consistent with the equality and
-inequality constraints <var class="var">g</var> and <var class="var">h</var>.  If the arguments are vectors
-then <var class="var">x</var>(i) is bound by <var class="var">lb</var>(i) and <var class="var">ub</var>(i).  A bound can also
-be a scalar in which case all elements of <var class="var">x</var> will share the same
-bound.
+upper bounds on <var class="var">x</var> and when provided must be vectors of the same size
+as the the vector <var class="var">x0</var>.  The bounds must be consistent with the
+equality and inequality constraints <var class="var">g</var> and <var class="var">h</var>.
 </p>
 <p>The seventh argument <var class="var">maxiter</var> specifies the maximum number of
 iterations.  The default value is 100.

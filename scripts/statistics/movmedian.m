@@ -34,14 +34,14 @@
 ##
 ## If @var{wlen} is a scalar, the function @code{movmedian} is applied to a
 ## moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-## window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-## either side of the central element.  For example, when calculating the
+## window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+## on either side of the central element.  For example, when calculating the
 ## output at index 5 with a window length of 3, @code{movmedian} uses data
 ## elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-## is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-## central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-## central element.  For example, when calculating the output at index 5 with a
-## window length of 4, @code{movmedian} uses data elements
+## is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+## central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+## the central element.  For example, when calculating the output at index 5
+## with a window length of 4, @code{movmedian} uses data elements
 ## @w{@code{[3, 4, 5, 6]}}.
 ##
 ## If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -82,8 +82,8 @@
 ## data array are deleted.  For example, with a 10-element data vector and a
 ## window of length 3, the output will contain only 8 elements.  The first
 ## element would require calculating the function over indices
-## @w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-## require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+## @w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+## require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 ## therefore discarded.
 ##
 ## @item @qcode{"fill"}
@@ -140,9 +140,20 @@ function y = movmedian (x, wlen, varargin)
 endfunction
 
 
-## FIXME: Need functional BIST tests
-## test for bug #55241
-%!assert ([1.5; (2:9).'; 9.5], movmedian ((1:10).', 3))
+%!assert (movmedian (1:5, 3), [1.5, 2, 3, 4, 4.5], eps)
+%!assert (movmedian (1:5, [1, 1]), [1.5, 2, 3, 4, 4.5], eps)
+%!assert (movmedian (1:5, 3, 2), [1.5, 2, 3, 4, 4.5], eps)
+
+%!assert (movmedian (magic (4), 3),
+%!        [10.5, 6.5, 6.5, 10.5; 9, 7, 6, 12; ...
+%!         5, 11, 10, 8; 6.5, 10.5, 10.5, 6.5], eps)
+%!assert (movmedian (magic (4), 3, 1),
+%!        [10.5, 6.5, 6.5, 10.5; 9, 7, 6, 12; ...
+%!         5, 11, 10, 8; 6.5, 10.5, 10.5, 6.5], eps)
+%!assert (movmedian (magic (4), 3, 2),
+%!        [9, 3, 3, 8; 8, 10, 10, 9; 8, 7, 7, 9; 9, 14, 14, 8])
+
+%!assert <*55241> (movmedian ((1:10).', 3), [1.5; (2:9).'; 9.5], eps)
 
 ## Test input validation
 %!error <Invalid call> movmedian ()

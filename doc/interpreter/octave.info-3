@@ -1,4 +1,5 @@
-This is octave.info, produced by makeinfo version 7.1 from octave.texi.
+This is octave.info, produced by makeinfo version 7.1.1 from
+octave.texi.
 
 INFO-DIR-SECTION Math
 START-INFO-DIR-ENTRY
@@ -1732,11 +1733,14 @@ read into memory using the ‘load’ command.
           Force Octave to assume the file is in HDF5 format.  (HDF5 is a
           free, portable binary format developed by the National Center
           for Supercomputing Applications at the University of
-          Illinois.)  Note that Octave can only read HDF5 files that
-          were created by itself with ‘save’ or with MATLAB's ‘-v7.3’
-          option (which saves in HDF5 format).  This format is only
-          available if Octave was built with a link to the HDF5
-          libraries.
+          Illinois.)  Note that ‘load’ is only designed to read HDF5
+          files that were created by itself with ‘save’, and attempts to
+          read other HDF5 files may fail or produce unpredictable
+          results.  The ‘-hdf5’ option also provides a limited ability
+          to read files created using MATLAB's ‘-v7.3’ option (which
+          saves in HDF5 format) although many data types are not yet
+          supported.  This format is only available if Octave was built
+          with a link to the HDF5 libraries.
 
      ‘-import’
           This option is accepted for backward compatibility but is
@@ -1750,10 +1754,12 @@ read into memory using the ‘load’ command.
      ‘-v7.3’
      ‘-V7.3’
      ‘-7.3’
-          Force Octave to assume the file is in MATLAB's v7.3 binary
-          data format.  As the v7.3 format is an HDF5 based format,
-          those files often can also be opened with the "-hdf5" option.
-          Note that Octave *can not* currently save in this format.
+          Octave does *not* yet implement MATLAB's v7.3 binary data
+          format.  As the v7.3 format is an HDF5 based format, the
+          "-hdf5" option may be used to attempt to open a v7.3 format
+          file, although most non-numeric data types are not yet
+          supported.  Note that Octave *can not* currently save in this
+          format.
 
      ‘-v7’
      ‘-V7’
