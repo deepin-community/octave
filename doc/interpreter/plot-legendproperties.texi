@@ -93,7 +93,7 @@ plot (rand (30));
 legend ("numcolumns", 3);
 @end group
 @end example
-Setting @code{numcolumns} also forces the @code{numcolumnsmode} property to be set to @qcode{"manual"}..
+Setting @code{numcolumns} also forces the @code{numcolumnsmode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFlegendorientation}
@@ -189,7 +189,7 @@ Programming Note: On systems that don’t use FontConfig natively (all but Linux
 @anchor{XREFlegendfontsize}
 @prindex legend fontsize
 @item @code{fontsize}: scalar, def. @code{9}
-Size of the font used for text rendering.  @xref{XREFlegendfontunits, , fontunits property}.  Setting @code{fontsize} also forces the @code{fontsizemode} property to be set to @qcode{"manual"}..
+Size of the font used for text rendering.  @xref{XREFlegendfontunits, , fontunits property}.  Setting @code{fontsize} also forces the @code{fontsizemode} property to be set to @qcode{"manual"}.
 
 
 @anchor{XREFlegendfontunits}

@@ -8715,7 +8715,7 @@ diff
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 926
+# length: 927
  -- : Y = diff (X)
  -- : Y = diff (X, K)
  -- : Y = diff (X, K, DIM)
@@ -8725,7 +8725,7 @@ diff
 
      The second argument is optional.  If supplied, ‘diff (X, K)’, where K is a non-negative integer, returns the K-th differences.  It is possible that K is larger than the first non-singleton dimension of the matrix.  In this case, ‘diff’ continues to take the differences along the next non-singleton dimension.
 
-     The dimension along which to take the difference can be explicitly stated with the optional variable DIM.  In this case the K-th order differences are calculated along this dimension.  In the case where K exceeds ‘size (X, DIM)’ an empty matrix is returned.
+     The dimension along which to take the difference can be explicitly stated with the optional variable DIM.  In this case the K-th order differences are calculated along this dimension.  In the case where K exceeds ‘size (X, DIM)’  an empty matrix is returned.
 
      See also: sort, merge.
    
@@ -10332,12 +10332,17 @@ error
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 2913
+# length: 3501
  -- : error (TEMPLATE, ...)
  -- : error (ID, TEMPLATE, ...)
      Display an error message and stop m-file execution.
 
      Format the optional arguments under the control of the template string TEMPLATE using the same rules as the ‘printf’ family of functions (*note Formatted Output::) and print the resulting message on the ‘stderr’ stream.  This formatting is only done for single-quoted character vectors if there are additional arguments following the template string.  If there are no additional arguments, the template string is used literally (i.e., without interpreting any escape sequences in single-quoted character vectors).  The message is prefixed by ‘error: ’.
+
+     The optional ID argument allows programmers to tag an error with a specific identifier so that users can later retrieve it (using ‘lasterr’ or ‘lasterror’) and know the origin of the error.  The identifier must contain at least one colon character (':') and must not contain any whitespace characters.  It should be a string of the form "NAMESPACE:ERROR-NAME". Octave's own errors use the "Octave" namespace (*note ‘error_ids’: XREFerror_ids.).  For example:
+
+          error ("MyNameSpace:wrong-type-argument",
+                 "fcn_name: argument should be numeric");
 
      Calling ‘error’ also sets Octave's internal error state such that control will return to the top level without evaluating any further commands.  This is useful for aborting from functions or scripts.
 
@@ -15190,7 +15195,7 @@ load
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4086
+# length: 4368
  -- : load file
  -- : load options file
  -- : load options file v1 v2 ...
@@ -15226,7 +15231,7 @@ load
           Force Octave to assume the file is in Octave's binary format.
 
      ‘-hdf5’
-          Force Octave to assume the file is in HDF5 format.  (HDF5 is a free, portable binary format developed by the National Center for Supercomputing Applications at the University of Illinois.)  Note that Octave can only read HDF5 files that were created by itself with ‘save’ or with MATLAB's ‘-v7.3’ option (which saves in HDF5 format).  This format is only available if Octave was built with a link to the HDF5 libraries.
+          Force Octave to assume the file is in HDF5 format.  (HDF5 is a free, portable binary format developed by the National Center for Supercomputing Applications at the University of Illinois.)  Note that ‘load’ is only designed to read HDF5 files that were created by itself with ‘save’, and attempts to read other HDF5 files may fail or produce unpredictable results.  The ‘-hdf5’ option also provides a limited ability to read files created using MATLAB's ‘-v7.3’ option (which saves in HDF5 format) although many data types are not yet supported.  This format is only available if Octave was built with a link to the HDF5 libraries.
 
      ‘-import’
           This option is accepted for backward compatibility but is ignored.  Octave can now support multi-dimensional HDF data and automatically modifies variable names if they are invalid Octave identifiers.
@@ -15237,7 +15242,7 @@ load
      ‘-v7.3’
      ‘-V7.3’
      ‘-7.3’
-          Force Octave to assume the file is in MATLAB's v7.3 binary data format.  As the v7.3 format is an HDF5 based format, those files often can also be opened with the "-hdf5" option.  Note that Octave *can not* currently save in this format.
+          Octave does *not* yet implement MATLAB's v7.3 binary data format.  As the v7.3 format is an HDF5 based format, the "-hdf5" option may be used to attempt to open a v7.3 format file, although most non-numeric data types are not yet supported.  Note that Octave *can not* currently save in this format.
 
      ‘-v7’
      ‘-V7’
@@ -31012,7 +31017,7 @@ interp2
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 2206
+# length: 2214
  -- : ZI = interp2 (X, Y, Z, XI, YI)
  -- : ZI = interp2 (Z, XI, YI)
  -- : ZI = interp2 (Z, N)
@@ -31022,7 +31027,7 @@ interp2
 
      Two-dimensional interpolation.
 
-     Interpolate reference data X, Y, Z to determine ZI at the coordinates XI, YI.  The reference data X, Y can be matrices, as returned by ‘meshgrid’, in which case the sizes of X, Y, and Z must be equal.  If X, Y are vectors describing a grid then ‘length (X) == columns (Z)’ and ‘length (Y) == rows (Z)’.  In either case the input data must be strictly monotonic.
+     Interpolate numeric reference data X, Y, Z to determine ZI at the coordinates XI, YI.  The reference data X, Y can be matrices, as returned by ‘meshgrid’, in which case the sizes of X, Y, and Z must be equal.  If X, Y are vectors describing a grid then ‘length (X) == columns (Z)’ and ‘length (Y) == rows (Z)’.  In either case the input data must be strictly monotonic.
 
      If called without X, Y, and just a single reference data matrix Z, the 2-D region ‘X = 1:columns (Z), Y = 1:rows (Z)’ is assumed.  This saves memory if the grid is regular and the distance between points is not important.
 
@@ -31069,7 +31074,7 @@ interp3
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 2211
+# length: 2219
  -- : VI = interp3 (X, Y, Z, V, XI, YI, ZI)
  -- : VI = interp3 (V, XI, YI, ZI)
  -- : VI = interp3 (V, N)
@@ -31079,7 +31084,7 @@ interp3
 
      Three-dimensional interpolation.
 
-     Interpolate reference data X, Y, Z, V to determine VI at the coordinates XI, YI, ZI.  The reference data X, Y, Z can be matrices, as returned by ‘meshgrid’, in which case the sizes of X, Y, Z, and V must be equal.  If X, Y, Z are vectors describing a cubic grid then ‘length (X) == columns (V)’, ‘length (Y) == rows (V)’, and ‘length (Z) == size (V, 3)’.  In either case the input data must be strictly monotonic.
+     Interpolate numeric reference data X, Y, Z, V to determine VI at the coordinates XI, YI, ZI.  The reference data X, Y, Z can be matrices, as returned by ‘meshgrid’, in which case the sizes of X, Y, Z, and V must be equal.  If X, Y, Z are vectors describing a cubic grid then ‘length (X) == columns (V)’, ‘length (Y) == rows (V)’, and ‘length (Z) == size (V, 3)’.  In either case the input data must be strictly monotonic.
 
      If called without X, Y, Z, and just a single reference data matrix V, the 3-D region ‘X = 1:columns (V), Y = 1:rows (V), Z = 1:size (V, 3)’ is assumed.  This saves memory if the grid is regular and the distance between points is not important.
 
@@ -31157,7 +31162,7 @@ interpn
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 2178
+# length: 2186
  -- : VI = interpn (X1, X2, ..., V, Y1, Y2, ...)
  -- : VI = interpn (V, Y1, Y2, ...)
  -- : VI = interpn (V, M)
@@ -31167,7 +31172,7 @@ interpn
 
      Perform N-dimensional interpolation, where N is at least two.
 
-     Each element of the N-dimensional array V represents a value at a location given by the parameters X1, X2, ..., XN.  The parameters X1, X2, ..., XN are either N-dimensional arrays of the same size as the array V in the "ndgrid" format or vectors.
+     Each element of the N-dimensional numeric array V represents a value at a location given by the parameters X1, X2, ..., XN.  The parameters X1, X2, ..., XN are either N-dimensional arrays of the same size as the array V in the "ndgrid" format or vectors.
 
      The parameters Y1, Y2, ..., YN represent the points at which the array VI is interpolated.  They can be vectors of the same length and orientation in which case they are interpreted as coordinates of scattered points.  If they are vectors of differing orientation or length, they are used to form a grid in "ndgrid" format.  They can also be N-dimensional arrays of equal size.
 
@@ -46452,7 +46457,7 @@ sqp
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4035
+# length: 3954
  -- : [X, OBJ, INFO, ITER, NF, LAMBDA] = sqp (X0, PHI)
  -- : [...] = sqp (X0, PHI, G)
  -- : [...] = sqp (X0, PHI, G, H)
@@ -46490,7 +46495,7 @@ sqp
           transpose ( [ ------   -----   ...   ------ ] )
                       [  dx_1     dx_2          dx_N  ]
 
-     The fifth and sixth arguments, LB and UB, contain lower and upper bounds on X.  These must be consistent with the equality and inequality constraints G and H.  If the arguments are vectors then X(i) is bound by LB(i) and UB(i).  A bound can also be a scalar in which case all elements of X will share the same bound.
+     The fifth and sixth arguments, LB and UB, contain lower and upper bounds on X and when provided must be vectors of the same size as the the vector X0.  The bounds must be consistent with the equality and inequality constraints G and H.
 
      The seventh argument MAXITER specifies the maximum number of iterations.  The default value is 100.
 
@@ -63522,7 +63527,7 @@ movmad
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4217
+# length: 4215
  -- : Y = movmad (X, WLEN)
  -- : Y = movmad (X, [NB, NA])
  -- : Y = movmad (..., DIM)
@@ -63530,7 +63535,7 @@ movmad
  -- : Y = movmad (..., PROPERTY, VALUE)
      Calculate the moving mean absolute deviation over a sliding window of length WLEN on data X.
 
-     If WLEN is a scalar, the function ‘mad’ is applied to a moving window of length WLEN.  When WLEN is an odd number the window is symmetric and includes ‘(WLEN - 1) / 2’ elements on either side of the central element.  For example, when calculating the output at index 5 with a window length of 3, ‘movmad’ uses data elements ‘[4, 5, 6]’.  If WLEN is an even number, the window is asymmetric and has ‘WLEN/2’ elements to the left of the central element and ‘WLEN/2 - 1’ elements to the right of the central element.  For example, when calculating the output at index 5 with a window length of 4, ‘movmad’ uses data elements ‘[3, 4, 5, 6]’.
+     If WLEN is a scalar, the function ‘mad’ is applied to a moving window of length WLEN.  When WLEN is an odd number the window is symmetric and includes ‘(WLEN - 1) / 2’ elements oneither side of the central element.  For example, when calculating the output at index 5 with a window length of 3, ‘movmad’ uses data elements ‘[4, 5, 6]’.  If WLEN is an even number, the window is asymmetric and has ‘WLEN/2’ elements to the left of the central element and ‘WLEN/2 - 1’ elements to the right of thecentral element.  For example, when calculating the output at index 5 with a window length of 4, ‘movmad’ uses data elements ‘[3, 4, 5, 6]’.
 
      If WLEN is an array with two elements ‘[NB, NA]’, the function is applied to a moving window ‘-NB:NA’.  This window includes NB number of elements _before_ the current element and NA number of elements _after_ the current element.  The current element is always included.  For example, given ‘WLEN = [3, 0]’, the data used to calculate index 5 is ‘[2, 3, 4, 5]’.
 
@@ -63924,7 +63929,7 @@ movstd
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4672
+# length: 4753
  -- : Y = movstd (X, WLEN)
  -- : Y = movstd (X, [NB, NA])
  -- : Y = movstd (..., OPT)
@@ -63945,7 +63950,7 @@ movstd
      1:
           normalize with N, this provides the square root of the second moment around the mean
 
-     If the optional argument DIM is given, operate along this dimension.  The normalization argument OPT must be given before the dimension.
+     If the optional argument DIM is given, operate along this dimension.  The normalization argument OPT must be given before the dimension.  To use the default value for OPT you may pass an empty input argument ‘[]’.
 
      The optional string argument "NANCOND" controls whether ‘NaN’ and ‘NA’ values should be included ("includenan"), or excluded ("omitnan"), from the data passed to ‘movstd’.  The default is "includenan".  Caution: the "omitnan" option is not yet implemented.
 
@@ -64067,7 +64072,7 @@ movvar
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4586
+# length: 4668
  -- : Y = movvar (X, WLEN)
  -- : Y = movvar (X, [NB, NA])
  -- : Y = movvar (..., OPT)
@@ -64080,7 +64085,7 @@ movvar
 
      If WLEN is an array with two elements ‘[NB, NA]’, the function is applied to a moving window ‘-NB:NA’.  This window includes NB number of elements _before_ the current element and NA number of elements _after_ the current element.  The current element is always included.  For example, given ‘WLEN = [3, 0]’, the data used to calculate index 5 is ‘[2, 3, 4, 5]’.
 
-     The optional argument OPT determines the type of normalization to use.  Valid values are
+     The optional argument OPT determines the type of normalization to use.  Valid values are:
 
      0:
           normalize with N-1, provides the best unbiased estimator of the variance [default]
@@ -64088,7 +64093,7 @@ movvar
      1:
           normalizes with N, this provides the second moment around the mean
 
-     If the optional argument DIM is given, operate along this dimension.  The normalization argument OPT must be given before the dimension.
+     If the optional argument DIM is given, operate along this dimension.  The normalization argument OPT must be given before the dimension.  To use the default value for OPT you may pass an empty input argument ‘[]’.
 
      The optional string argument "NANCOND" controls whether ‘NaN’ and ‘NA’ values should be included ("includenan"), or excluded ("omitnan"), from the data passed to ‘var’.  The default is "includenan".  Caution: the "omitnan" option is not yet implemented.
 

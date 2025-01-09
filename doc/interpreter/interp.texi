@@ -330,12 +330,13 @@ in @ref{Interpolation on Scattered Data}.
 
 Two-dimensional interpolation.
 
-Interpolate reference data @var{x}, @var{y}, @var{z} to determine @var{zi}
-at the coordinates @var{xi}, @var{yi}.  The reference data @var{x}, @var{y}
-can be matrices, as returned by @code{meshgrid}, in which case the sizes of
-@var{x}, @var{y}, and @var{z} must be equal.  If @var{x}, @var{y} are
-vectors describing a grid then @code{length (@var{x}) == columns (@var{z})}
-and @code{length (@var{y}) == rows (@var{z})}.  In either case the input
+Interpolate numeric reference data @var{x}, @var{y}, @var{z} to determine
+@var{zi} at the coordinates @var{xi}, @var{yi}.  The reference data
+@var{x}, @var{y} can be matrices, as returned by @code{meshgrid}, in which
+case the sizes of @var{x}, @var{y}, and @var{z} must be equal.  If @var{x},
+@var{y} are vectors describing a grid then
+@w{@code{length (@var{x}) == columns (@var{z})}}@ and
+@w{@code{length (@var{y}) == rows (@var{z})}}.  In either case the input
 data must be strictly monotonic.
 
 If called without @var{x}, @var{y}, and just a single reference data matrix
@@ -400,9 +401,9 @@ is @qcode{"NA"}.
 
 Three-dimensional interpolation.
 
-Interpolate reference data @var{x}, @var{y}, @var{z}, @var{v} to determine
-@var{vi} at the coordinates @var{xi}, @var{yi}, @var{zi}.  The reference
-data @var{x}, @var{y}, @var{z} can be matrices, as returned by
+Interpolate numeric reference data @var{x}, @var{y}, @var{z}, @var{v} to
+determine @var{vi} at the coordinates @var{xi}, @var{yi}, @var{zi}.  The
+reference data @var{x}, @var{y}, @var{z} can be matrices, as returned by
 @code{meshgrid}, in which case the sizes of @var{x}, @var{y}, @var{z}, and
 @var{v} must be equal.  If @var{x}, @var{y}, @var{z} are vectors describing
 a cubic grid then @code{length (@var{x}) == columns (@var{v})},
@@ -469,9 +470,9 @@ any other @var{method} is @qcode{"NA"}.
 
 Perform @var{n}-dimensional interpolation, where @var{n} is at least two.
 
-Each element of the @var{n}-dimensional array @var{v} represents a value
-at a location given by the parameters @var{x1}, @var{x2}, @dots{}, @var{xn}.
-The parameters @var{x1}, @var{x2}, @dots{}, @var{xn} are either
+Each element of the @var{n}-dimensional numeric array @var{v} represents a
+value at a location given by the parameters @var{x1}, @var{x2}, @dots{},
+@var{xn}.  The parameters @var{x1}, @var{x2}, @dots{}, @var{xn} are either
 @var{n}-dimensional arrays of the same size as the array @var{v} in
 the @qcode{"ndgrid"} format or vectors.
 

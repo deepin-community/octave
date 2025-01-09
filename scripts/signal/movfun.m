@@ -33,14 +33,14 @@
 ##
 ## If @var{wlen} is a scalar, the function @var{fcn} is applied to a moving
 ## window of length @var{wlen}.  When @var{wlen} is an odd number the window is
-## symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on either
+## symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements on either
 ## side of the central element.  For example, when calculating the output at
 ## index 5 with a window length of 3, @code{movfun} uses data elements
 ## @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window is
-## asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-## central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-## central element.  For example, when calculating the output at index 5 with a
-## window length of 4, @code{movfun} uses data elements
+## asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+## central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+## the central element.  For example, when calculating the output at index 5
+## with a window length of 4, @code{movfun} uses data elements
 ## @w{@code{[3, 4, 5, 6]}}.
 ##
 ## If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -57,11 +57,11 @@
 ## computation along dimension 1, i.e., down the columns of the array.
 ##
 ## When applied to an array (possibly multi-dimensional) with @var{n} columns,
-## @var{fcn} may return a result in either of two formats: @w{Format 1)}
-## an array of size 1-by-@var{n}-by-@var{dim3}-by-@dots{}-by-@var{dimN}.  This
+## @var{fcn} may return a result in either of two formats: @w{Format 1)}@ an
+## array of size 1-by-@var{n}-by-@var{dim3}-by-@dots{}-by-@var{dimN}.  This
 ## is the typical output format from Octave core functions.  Type
 ## @code{demo ("movfun", 5)} for an example of this use case.
-## @w{Format 2)} a row vector of length
+## @w{Format 2)}@ a row vector of length
 ## @code{@var{n} * @var{numel_higher_dims}} where @var{numel_higher_dims} is
 ## @w{@code{prod (size (@var{x})(3:end))}}.  The output of @var{fcn} for the
 ## i-th input column must be found in the output at indices
@@ -96,8 +96,8 @@
 ## data array are deleted.  For example, with a 10-element data vector and a
 ## window of length 3, the output will contain only 8 elements.  The first
 ## element would require calculating the function over indices
-## @w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-## require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+## @w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+## require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 ## therefore discarded.
 ##
 ## @item @qcode{"fill"}
@@ -294,7 +294,7 @@ function y = movfun (fcn, x, wlen, varargin)
 
   ## Restore shape
   y = reshape (y, [szx(dperm), soutdim]);
-  y = permute (y, [dperm, nd+1]);
+  y = ipermute (y, [dperm, nd+1]);
   y = squeeze (y);
 
 endfunction
@@ -644,6 +644,24 @@ endfunction
 ## Test calculation along empty dimension
 %!assert <*63802> (movfun (@mean, zeros (2,0,3, 'uint8'), 3, 'dim', 2),
 %!                 zeros (2,0,3, 'double'))
+
+## Test for correct output shape for dim > 2 and ndims > 2
+%!test <*65927>
+%! a = reshape (1:30, 5, 3, 2);
+%! b1 = cat (3, [1, 6, 11], [16, 21, 26]) + [0, 0.5, 1.5, 2.5, 3.5]';
+%! b2 = cat (3, [1:5]', [16:20]') + [0, 2.5, 7.5];
+%! b3 = cat (3, [1:5]', [8.5:1:12.5]') + [0, 5, 10];
+%! assert (movfun (@mean, a, 2), b1, eps);
+%! assert (movfun (@mean, a, 2, 'dim', 1), b1, eps);
+%! assert (movfun (@mean, a, 2, 'dim', 2), b2, eps);
+%! assert (movfun (@mean, a, 2, 'dim', 3), b3, eps);
+%!
+%! a2 = cat (4, a, a, a, a);
+%! assert (size (movfun (@mean, a2, 2)), [5, 3, 2, 4]);
+%! assert (size (movfun (@mean, a2, 2, 'dim', 1)), [5, 3, 2, 4])
+%! assert (size (movfun (@mean, a2, 2, 'dim', 2)), [5, 3, 2, 4]);
+%! assert (size (movfun (@mean, a2, 2, 'dim', 3)), [5, 3, 2, 4]);
+%! assert (size (movfun (@mean, a2, 2, 'dim', 4)), [5, 3, 2, 4]);
 
 ## Test input validation
 %!error <Invalid call> movfun ()

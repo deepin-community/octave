@@ -1,4 +1,4 @@
-This is liboctave.info, produced by makeinfo version 7.1 from
+This is liboctave.info, produced by makeinfo version 7.1.1 from
 liboctave.texi.
 
 INFO-DIR-SECTION Math
@@ -29,7 +29,7 @@ Octave C++ Classes
 
 This manual documents how to use, install and port Octave's C++ class
 library, and how to report bugs.  It corresponds to Octave version
-9.2.0.
+9.3.0.
 
 * Menu:
 
@@ -4469,34 +4469,34 @@ Function Index
 
 
 Tag Table:
-Node: Top814
-Node: Acknowledgements1823
-Node: Contributors2039
-Node: Copying2339
-Node: Introduction39892
-Node: Arrays40143
-Node: Constructors and Assignment40311
-Node: Matrix and Vector Operations48724
-Node: Matrix Factorizations80211
-Node: Ranges86517
-Node: Nonlinear Functions86686
-Node: Nonlinear Equations87230
-Node: Optimization88160
-Node: Objective Functions88439
-Node: Bounds89032
-Node: Linear Constraints90143
-Node: Nonlinear Constraints91130
-Node: Quadratic Programming91523
-Node: Nonlinear Programming93116
-Node: Quadrature94635
-Node: Collocation Weights96327
-Node: Ordinary Differential Equations97620
-Node: Differential Algebraic Equations99156
-Node: Error Handling99958
-Node: Installation100114
-Node: Bugs100238
-Node: Concept Index100345
-Node: Function Index103709
+Node: Top816
+Node: Acknowledgements1825
+Node: Contributors2041
+Node: Copying2341
+Node: Introduction39894
+Node: Arrays40145
+Node: Constructors and Assignment40313
+Node: Matrix and Vector Operations48726
+Node: Matrix Factorizations80213
+Node: Ranges86519
+Node: Nonlinear Functions86688
+Node: Nonlinear Equations87232
+Node: Optimization88162
+Node: Objective Functions88441
+Node: Bounds89034
+Node: Linear Constraints90145
+Node: Nonlinear Constraints91132
+Node: Quadratic Programming91525
+Node: Nonlinear Programming93118
+Node: Quadrature94637
+Node: Collocation Weights96329
+Node: Ordinary Differential Equations97622
+Node: Differential Algebraic Equations99158
+Node: Error Handling99960
+Node: Installation100116
+Node: Bugs100240
+Node: Concept Index100347
+Node: Function Index103711
 
 End Tag Table
 

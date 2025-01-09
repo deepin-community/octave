@@ -1,4 +1,5 @@
-This is octave.info, produced by makeinfo version 7.1 from octave.texi.
+This is octave.info, produced by makeinfo version 7.1.1 from
+octave.texi.
 
 INFO-DIR-SECTION Math
 START-INFO-DIR-ENTRY
@@ -1658,10 +1659,11 @@ Table 15.1: Available special characters in TeX mode
    *Caution: Degree Symbol*
 
    Conformance to both TeX and MATLAB with respect to the ‘\circ’ symbol
-is impossible.  While TeX translates this symbol to Unicode 2218
-(U+2218), MATLAB maps this to Unicode 00B0 (U+00B0) instead.  Octave has
-chosen to follow the TeX specification, but has added the additional
-symbol ‘\deg’ which maps to the degree symbol (U+00B0).
+is impossible.  While TeX translates this symbol to
+Unicode 2218 (U+2218), MATLAB maps this to Unicode 00B0 (U+00B0)
+instead.  Octave has chosen to follow the TeX specification, but has
+added the additional symbol ‘\deg’ which maps to the degree symbol
+(U+00B0).
 
 
 File: octave.info,  Node: "latex" interpreter,  Prev: "tex" interpreter,  Up: Use of the "interpreter" Property
@@ -3921,7 +3923,7 @@ Printing/Saving
      For output formats not implicitly rendered on paper, ‘width’ and
      ‘height’ define the size of the image and the position information
      is ignored.  Setting ‘paperposition’ also forces the
-     ‘paperpositionmode’ property to be set to "manual"..
+     ‘paperpositionmode’ property to be set to "manual".
 
 ‘paperpositionmode’: {"auto"} | "manual"
      If ‘paperpositionmode’ is set to "auto", the ‘paperposition’
@@ -3953,7 +3955,7 @@ Printing/Saving
 ‘renderer’: {"opengl"} | "painters"
      Rendering engine used for printing when ‘renderermode’ is "manual".
      Setting ‘renderer’ also forces the ‘renderermode’ property to be
-     set to "manual"..
+     set to "manual".
 
 ‘renderermode’: {"auto"} | "manual"
      Control whether the rendering engine used for printing is chosen
@@ -4041,7 +4043,7 @@ Axes Box Appearance
      one unit as displayed on the x-axis to be the same as the length of
      2 units on the y-axis.  *Note daspect function: XREFdaspect.
      Setting ‘dataaspectratio’ also forces the ‘dataaspectratiomode’
-     property to be set to "manual"..
+     property to be set to "manual".
 
 ‘dataaspectratiomode’: {"auto"} | "manual"
      Current state of the data aspect ratio mode, either manually set by
@@ -4065,7 +4067,7 @@ Axes Box Appearance
      "out".  The value "both" will draw tick marks both in and out.  The
      value "none" means no tick marks will be drawn, although tick
      labels will still be rendered.  Setting ‘tickdir’ also forces the
-     ‘tickdirmode’ property to be set to "manual"..  Note that the
+     ‘tickdirmode’ property to be set to "manual".  Note that the
      default is "in" for 2-D and "out" for 3-D plots.
 
 ‘tickdirmode’: {"auto"} | "manual"
@@ -4090,7 +4092,7 @@ Axes Box Appearance
 
 ‘xcolor’: {colorspec} | "none", def. ‘[0.1500 0.1500 0.1500]’
      Color of the x-axis.  *Note colorspec: Colors.  Setting ‘xcolor’
-     also forces the ‘xcolormode’ property to be set to "manual"..
+     also forces the ‘xcolormode’ property to be set to "manual".
 
 ‘xcolormode’: {"auto"} | "manual"
      Current state of the setting determining the color that is applied
@@ -4108,7 +4110,7 @@ Axes Box Appearance
 ‘xlim’: two-element vector, def. ‘[0 1]’
      Two-element vector ‘[xmin xmax]’ specifying the limits for the
      x-axis.  Setting ‘xlim’ also forces the ‘xlimmode’ property to be
-     set to "manual"..  *Note xlim function: XREFxlim.
+     set to "manual".  *Note xlim function: XREFxlim.
 
 ‘xlimitmethod’: "padded" | {"tickaligned"} | "tight"
      Method used to determine the x-axis limits when the ‘xlimmode’
@@ -4129,7 +4131,7 @@ Axes Box Appearance
 
 ‘xtick’: vector
      Position of x tick marks.  Setting ‘xtick’ also forces the
-     ‘xtickmode’ property to be set to "manual"..
+     ‘xtickmode’ property to be set to "manual".
 
 ‘xtickmode’: {"auto"} | "manual"
      Setting to determine whether the xtick locations and spacing are
@@ -4162,7 +4164,7 @@ Axes Box Appearance
 ‘ylim’: two-element vector, def. ‘[0 1]’
      Two-element vector ‘[ymin ymax]’ specifying the limits for the
      y-axis.  Setting ‘ylim’ also forces the ‘ylimmode’ property to be
-     set to "manual"..  *Note ylim function: XREFylim.
+     set to "manual".  *Note ylim function: XREFylim.
 
 ‘ylimitmethod’: "padded" | {"tickaligned"} | "tight"
      Method used to determine the y-axis limits when the ‘xlimmode’
@@ -4180,7 +4182,7 @@ Axes Box Appearance
 
 ‘ytick’: vector
      Position of y tick marks.  Setting ‘ytick’ also forces the
-     ‘ytickmode’ property to be set to "manual"..
+     ‘ytickmode’ property to be set to "manual".
 
 ‘ytickmode’: {"auto"} | "manual"
      Setting to determine whether the ytick locations and spacing are
@@ -4210,7 +4212,7 @@ Axes Box Appearance
 ‘zlim’: two-element vector, def. ‘[0 1]’
      Two-element vector ‘[zmin zmax]’ specifying the limits for the
      z-axis.  Setting ‘zlim’ also forces the ‘zlimmode’ property to be
-     set to "manual"..  *Note zlim function: XREFzlim.
+     set to "manual".  *Note zlim function: XREFzlim.
 
 ‘zlimitmethod’: "padded" | {"tickaligned"} | "tight"
      Method used to determine the z-axis limits when the ‘xlimmode’
@@ -4231,7 +4233,7 @@ Axes Box Appearance
 
 ‘ztick’: vector
      Position of z tick marks.  Setting ‘ztick’ also forces the
-     ‘ztickmode’ property to be set to "manual"..
+     ‘ztickmode’ property to be set to "manual".
 
 ‘ztickmode’: {"auto"} | "manual"
      Setting to determine whether the ztick locations and spacing are
@@ -4252,7 +4254,7 @@ Axes Grid Appearance
 ‘gridcolor’: {colorspec} | "none", def. ‘[0.1500 0.1500 0.1500]’
      Color of the major grid lines.  *Note colorspec: Colors.  Setting
      ‘gridcolor’ also forces the ‘gridcolormode’ property to be set to
-     "manual"..
+     "manual".
 
 ‘gridcolormode’: {"auto"} | "manual"
      Current state of the gridcolor mode, either manually set by the
@@ -4277,7 +4279,7 @@ Axes Grid Appearance
 ‘minorgridcolor’: {colorspec} | "none", def. ‘[0.1000 0.1000 0.1000]’
      Color of the minor grid lines.  *Note colorspec: Colors.  Setting
      ‘minorgridcolor’ also forces the ‘minorgridcolormode’ property to
-     be set to "manual"..
+     be set to "manual".
 
 ‘minorgridcolormode’: {"auto"} | "manual"
      Current state of the minorgridcolor mode, either manually set by
@@ -4347,7 +4349,7 @@ Camera and View Controls
 ‘cameraposition’: three-element vector, def. ‘[0.5000 0.5000 9.1603]’
      Coordinates of the camera position viewing the axes.  Setting
      ‘cameraposition’ also forces the ‘camerapositionmode’ property to
-     be set to "manual"..
+     be set to "manual".
 
 ‘camerapositionmode’: {"auto"} | "manual"
      Current state of the camera position property, whether
@@ -4358,7 +4360,7 @@ Camera and View Controls
 ‘cameratarget’: three-element vector, def. ‘[0.5000 0.5000 0.5000]’
      Coordinates of the point at which the viewing camera is aimed.
      Setting ‘cameratarget’ also forces the ‘cameratargetmode’ property
-     to be set to "manual"..
+     to be set to "manual".
 
 ‘cameratargetmode’: {"auto"} | "manual"
      Current state of camera target property, either manually set with
@@ -4369,7 +4371,7 @@ Camera and View Controls
      A 3-element vector defining the upward direction of the current
      view.  Note that the default is [0 1 0] for 2-D plots and [0 0 1]
      for 3-D plots.  Setting ‘cameraupvector’ also forces the
-     ‘cameraupvectormode’ property to be set to "manual"..
+     ‘cameraupvectormode’ property to be set to "manual".
 
 ‘cameraupvectormode’: {"auto"} | "manual"
      Current state of camera up vector property, set to manual when the
@@ -4379,7 +4381,7 @@ Camera and View Controls
 ‘cameraviewangle’: scalar, def. ‘6.6086’
      The camera's field of view defined as an angle between 0 and 180
      degrees.  Setting ‘cameraviewangle’ also forces the
-     ‘cameraviewanglemode’ property to be set to "manual"..
+     ‘cameraviewanglemode’ property to be set to "manual".
 
 ‘cameraviewanglemode’: {"auto"} | "manual"
      Current state of the camera view angle property, either manually
@@ -4421,7 +4423,7 @@ Color and Transparency
 ‘clim’: two-element vector, def. ‘[0 1]’
      Define limits for the color axis of axes children that have the
      cdata property.  Setting ‘clim’ also forces the ‘climmode’ property
-     to be set to "manual"..
+     to be set to "manual".
 
 ‘climmode’: {"auto"} | "manual"
      Current state of the color limit mode, either manually set by the
@@ -4559,7 +4561,7 @@ Object Position
 ‘plotboxaspectratio’: def. ‘[1 1 1]’
      *Note pbaspect function: XREFpbaspect.  Setting
      ‘plotboxaspectratio’ also forces the ‘plotboxaspectratiomode’
-     property to be set to "manual"..
+     property to be set to "manual".
 
 ‘plotboxaspectratiomode’: {"auto"} | "manual"
      Current state of the plot box aspect ratio mode, either manually
@@ -4624,7 +4626,7 @@ Text Appearance
 ‘fontsize’: scalar, def. ‘10’
      Size of the font used for text rendering.  *Note fontunits
      property: XREFaxesfontunits.  Setting ‘fontsize’ also forces the
-     ‘fontsizemode’ property to be set to "manual"..
+     ‘fontsizemode’ property to be set to "manual".
 
 ‘fontsizemode’: {"auto"} | "manual"
      Current state of the fontsize mode, either manually set by the
@@ -4668,7 +4670,7 @@ Text Appearance
 
 ‘xticklabel’: string | cell array of strings, def. 6-by-1 cell
      Labels of x tick marks.  Setting ‘xticklabel’ also forces the
-     ‘xticklabelmode’ property to be set to "manual"..
+     ‘xticklabelmode’ property to be set to "manual".
 
 ‘xticklabelmode’: {"auto"} | "manual"
      Setting to determine whether the xtick labels are set automatically
@@ -4684,7 +4686,7 @@ Text Appearance
 
 ‘yticklabel’: string | cell array of strings, def. 6-by-1 cell
      Labels of y tick marks.  Setting ‘yticklabel’ also forces the
-     ‘yticklabelmode’ property to be set to "manual"..
+     ‘yticklabelmode’ property to be set to "manual".
 
 ‘yticklabelmode’: {"auto"} | "manual"
      Setting to determine whether the ytick labels are set automatically
@@ -4700,7 +4702,7 @@ Text Appearance
 
 ‘zticklabel’: string | cell array of strings, def. 6-by-1 cell
      Labels of z tick marks.  Setting ‘zticklabel’ also forces the
-     ‘zticklabelmode’ property to be set to "manual"..
+     ‘zticklabelmode’ property to be set to "manual".
 
 ‘zticklabelmode’: {"auto"} | "manual"
      Setting to determine whether the ztick labels are set automatically
@@ -4779,7 +4781,7 @@ Layout
           plot (rand (30));
           legend ("numcolumns", 3);
      Setting ‘numcolumns’ also forces the ‘numcolumnsmode’ property to
-     be set to "manual"..
+     be set to "manual".
 
 ‘orientation’: "horizontal" | {"vertical"}
      Control whether the legend items are arranged vertically
@@ -4838,7 +4840,7 @@ Text Appearance
 ‘fontsize’: scalar, def. ‘9’
      Size of the font used for text rendering.  *Note fontunits
      property: XREFlegendfontunits.  Setting ‘fontsize’ also forces the
-     ‘fontsizemode’ property to be set to "manual"..
+     ‘fontsizemode’ property to be set to "manual".
 
 ‘fontunits’: "centimeters" | "inches" | "normalized" | "pixels" | {"points"}
      Units used to interpret the "fontsize" property.

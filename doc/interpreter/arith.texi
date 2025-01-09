@@ -2205,7 +2205,7 @@ x - y .* floor (x ./ y)
 @noindent
 and is written such that the correct modulus is returned for integer types.
 This function handles negative values correctly.  That is,
-@w{@code{mod (-1, 3)}} is 2, not -1, as @w{@code{rem (-1, 3)}} returns.
+@w{@code{mod (-1, 3)}}@ is 2, not -1, as @w{@code{rem (-1, 3)}}@ returns.
 
 An error results if the dimensions of the arguments do not agree, or if
 either of the arguments is complex.

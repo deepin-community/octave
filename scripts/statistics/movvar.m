@@ -35,14 +35,14 @@
 ##
 ## If @var{wlen} is a scalar, the function @code{var} is applied to a
 ## moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-## window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-## either side of the central element.  For example, when calculating the
+## window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+## on either side of the central element.  For example, when calculating the
 ## output at index 5 with a window length of 3, @code{movvar} uses data
 ## elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-## is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-## central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-## central element.  For example, when calculating the output at index 5 with a
-## window length of 4, @code{movvar} uses data elements
+## is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+## central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+## the central element.  For example, when calculating the output at index 5
+## with a window length of 4, @code{movvar} uses data elements
 ## @w{@code{[3, 4, 5, 6]}}.
 ##
 ## If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -54,7 +54,7 @@
 ## @w{@code{[2, 3, 4, 5]}}.
 ##
 ## The optional argument @var{opt} determines the type of normalization to use.
-## Valid values are
+## Valid values are:
 ##
 ## @table @asis
 ## @item 0:
@@ -67,6 +67,8 @@
 ##
 ## If the optional argument @var{dim} is given, operate along this dimension.
 ## The normalization argument @var{opt} must be given before the dimension.
+## To use the default value for @var{opt} you may pass an empty input
+## argument @code{[]}.
 ##
 ## The optional string argument @qcode{"@var{nancond}"} controls whether
 ## @code{NaN} and @code{NA} values should be included (@qcode{"includenan"}),
@@ -96,8 +98,8 @@
 ## data array are deleted.  For example, with a 10-element data vector and a
 ## window of length 3, the output will contain only 8 elements.  The first
 ## element would require calculating the function over indices
-## @w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-## require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+## @w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+## require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 ## therefore discarded.
 ##
 ## @item @qcode{"fill"}
@@ -150,11 +152,17 @@ function y = movvar (x, wlen, varargin)
   endif
 
   ## Process "opt" normalization argument
-  if (nargin > 2 && isnumeric (varargin{1}))
-    if (! varargin{1})
+  if (nargin > 2 && isnumeric (varargin{1}) && ! isempty (varargin{1}))
+    if (isempty (varargin{1}))
       fcn = @var;
-    else
+    elseif (! isscalar (varargin{1}))
+      error ("movvar: OPT must be 0 or 1");
+    elseif (! varargin{1})
+      fcn = @var;
+    elseif (varargin{1} == 1)
       fcn = @(x) var (x, 1);
+    else
+      error ("movvar: OPT must be 0 or 1");
     endif
     varargin(1) = [];
   else
@@ -166,9 +174,26 @@ function y = movvar (x, wlen, varargin)
 endfunction
 
 
-## FIXME: Need functional BIST tests
-## test for bug #55241
-%!assert ([0.5; ones(8,1); 0.5], movvar ((1:10).', 3))
+%!assert (movvar (1:5, 3), [0.5, 1, 1, 1, 0.5], eps)
+%!assert (movvar (1:5, [1, 1]), [0.5, 1, 1, 1, 0.5], eps)
+%!assert (movvar (1:5, 3, 0), [0.5, 1, 1, 1, 0.5], eps)
+%!assert <*66021> (movvar (1:5, 3, []), [0.5, 1, 1, 1, 0.5], eps)
+%!assert (movvar (1:5, 3, 1), [0.25, 2/3, 2/3, 2/3, 0.25], eps)
+%!assert (movvar (1:5, 3, 0, 2), [0.5, 1, 1, 1, 0.5], eps)
+%!assert (movvar (1:5, 3, 1, 2), [0.25, 2/3, 2/3, 2/3, 0.25], eps)
+%!assert <*66021> (movvar (1:5, 3, [], 2), [0.5, 1, 1, 1, 0.5], eps)
+
+%!assert (movvar (magic (4), 3, 0),
+%!        [60.5, 40.5, 24.5, 12.5; 31, 61/3, 37/3, 7; ...
+%!         7, 37/3, 61/3, 31; 12.5, 24.5, 40.5, 60.5], 20*eps)
+%!assert (movvar (magic (4), 3, 0, 1),
+%!        [60.5, 40.5, 24.5, 12.5; 31, 61/3, 37/3, 7; ...
+%!         7, 37/3, 61/3, 31; 12.5, 24.5, 40.5, 60.5], 20*eps)
+%!assert (movvar (magic (4), 3, 0, 2),
+%!        [98, 61, 37, 50; 18, 31/3, 7/3, 2; ...
+%!         2, 7/3, 31/3, 18; 50, 37, 61, 98], 20*eps)
+
+%!assert <*55241> (movvar ((1:10).', 3), [0.5; ones(8,1); 0.5], eps)
 
 %!test <*56765>
 %! x = 1:10;
@@ -181,3 +206,13 @@ endfunction
 ## Test input validation
 %!error <Invalid call> movvar ()
 %!error <Invalid call> movvar (1)
+%!error <OPT must be 0 or 1> movvar (1:10, 3, -1)
+%!error <OPT must be 0 or 1> movvar (1:10, 3, 1.4)
+%!error <OPT must be 0 or 1> movvar (1:10, 3, [1, 1])
+%!error <OPT must be 0 or 1> movvar (1:10, 3, [0, 0])
+%!error <OPT must be 0 or 1> movvar (1:10, 3, [0, 1])
+%!error <OPT must be 0 or 1> movvar (1:10, 3, [1, 0])
+%!error <OPT must be 0 or 1> movvar (1:10, 3, [0, 3])
+%!error <OPT must be 0 or 1> movvar (1:10, 3, [1, 3])
+%!error <OPT must be 0 or 1> movvar (1:10, 3, [3, 0])
+%!error <OPT must be 0 or 1> movvar (1:10, 3, [3, 1])

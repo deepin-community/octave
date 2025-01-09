@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Simple File I/O (GNU Octave (version 9.2.0))</title>
+<title>Simple File I/O (GNU Octave (version 9.3.0))</title>
 
-<meta name="description" content="Simple File I/O (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Simple File I/O (GNU Octave (version 9.2.0))">
+<meta name="description" content="Simple File I/O (GNU Octave (version 9.3.0))">
+<meta name="keywords" content="Simple File I/O (GNU Octave (version 9.3.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -384,11 +384,13 @@ name of the file.
 <dt><code class="code">-hdf5</code></dt>
 <dd><p>Force Octave to assume the file is in <small class="sc">HDF5</small> format.  (<small class="sc">HDF5</small> is a free,
 portable binary format developed by the National Center for Supercomputing
-Applications at the University of Illinois.)  Note that Octave can only
-read <small class="sc">HDF5</small> files that were created by itself with <code class="code">save</code> or with
-<small class="sc">MATLAB</small>&rsquo;s <code class="code">-v7.3</code> option (which saves in <small class="sc">HDF5</small> format). This
-format is only available if Octave was built with a link to the <small class="sc">HDF5</small>
-libraries.
+Applications at the University of Illinois.)  Note that <code class="code">load</code> is only
+designed to read <small class="sc">HDF5</small> files that were created by itself with <code class="code">save</code>,
+and attempts to read other <small class="sc">HDF5</small> files may fail or produce unpredictable
+results. The <code class="code">-hdf5</code> option also provides a limited ability to read
+files created using <small class="sc">MATLAB</small>&rsquo;s <code class="code">-v7.3</code> option (which saves in <small class="sc">HDF5</small>
+format) although many data types are not yet supported. This format is only
+available if Octave was built with a link to the <small class="sc">HDF5</small> libraries.
 </p>
 </dd>
 <dt><code class="code">-import</code></dt>
@@ -404,10 +406,11 @@ modifies variable names if they are invalid Octave identifiers.
 <dt><code class="code">-v7.3</code></dt>
 <dt><code class="code">-V7.3</code></dt>
 <dt><code class="code">-7.3</code></dt>
-<dd><p>Force Octave to assume the file is in <small class="sc">MATLAB</small>&rsquo;s v7.3 binary data format.
-As the v7.3 format is an HDF5 based format, those files often can also be
-opened with the <code class="code">&quot;-hdf5&quot;</code> option.  Note that Octave <strong class="strong">can not</strong>
-currently save in this format.
+<dd><p>Octave does <strong class="strong">not</strong> yet implement <small class="sc">MATLAB</small>&rsquo;s v7.3 binary data format.
+As the v7.3 format is an <small class="sc">HDF5</small> based format, the <code class="code">&quot;-hdf5&quot;</code> option
+may be used to attempt to open a v7.3 format file, although most non-numeric
+data types are not yet supported.  Note that Octave <strong class="strong">can not</strong> currently
+save in this format.
 </p>
 </dd>
 <dt><code class="code">-v7</code></dt>
@@ -631,7 +634,7 @@ such as text, are also replaced by the <code class="code">&quot;emptyvalue&quot;
 <dt class="deftypefn" id="index-csvwrite"><span class="category-def">: </span><span><strong class="def-name">csvwrite</strong> <code class="def-code-arguments">(<var class="var">filename</var>, <var class="var">x</var>)</code><a class="copiable-link" href="#index-csvwrite"> &para;</a></span></dt>
 <dt class="deftypefnx def-cmd-deftypefn" id="index-csvwrite-1"><span class="category-def">: </span><span><strong class="def-name">csvwrite</strong> <code class="def-code-arguments">(<var class="var">filename</var>, <var class="var">x</var>, <var class="var">dlm_opt1</var>, &hellip;)</code><a class="copiable-link" href="#index-csvwrite-1"> &para;</a></span></dt>
 <dd><p>Write the numeric matrix <var class="var">x</var> to the file <var class="var">filename</var> in
-comma-separated-value<!-- /@w --> (CSV) format.
+comma-separated-value<!-- /@w -->&nbsp;(CSV) format.
 </p>
 <p>This function is equivalent to
 </p>
@@ -1123,7 +1126,7 @@ interval with lower bound <var class="var">l</var> and upper bound <var class="v
 the specified value <var class="var">inmin</var> with <var class="var">inmin</var>.  Similarly, the optional
 input <code class="code">&quot;inputmax&quot;</code> replaces all elements greater than the specified
 value <var class="var">inmax</var> with <var class="var">inmax</var>.  If unspecified the minimum and maximum
-are taken from the data itself (<code class="code"><var class="var">inmin</var>&nbsp;=&nbsp;min&nbsp;(A(:))</code><!-- /@w --> and
+are taken from the data itself (<code class="code"><var class="var">inmin</var>&nbsp;=&nbsp;min&nbsp;(A(:))</code><!-- /@w -->&nbsp;and
 <code class="code"><var class="var">inmax</var>&nbsp;=&nbsp;max&nbsp;(A(:))</code><!-- /@w -->).
 </p>
 <p>Programming Notes:

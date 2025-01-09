@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Statistics on Sliding Windows of Data (GNU Octave (version 9.2.0))</title>
+<title>Statistics on Sliding Windows of Data (GNU Octave (version 9.3.0))</title>
 
-<meta name="description" content="Statistics on Sliding Windows of Data (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Statistics on Sliding Windows of Data (GNU Octave (version 9.2.0))">
+<meta name="description" content="Statistics on Sliding Windows of Data (GNU Octave (version 9.3.0))">
+<meta name="keywords" content="Statistics on Sliding Windows of Data (GNU Octave (version 9.3.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -60,14 +60,14 @@ provided.
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <var class="var">fcn</var> is applied to a moving
 window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the window is
-symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on either
+symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements on either
 side of the central element.  For example, when calculating the output at
 index 5 with a window length of 3, <code class="code">movfun</code> uses data elements
 <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window is
-asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movfun</code> uses data elements
+asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movfun</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -84,11 +84,11 @@ Therefore, <var class="var">fcn</var> must accept an array input argument and ap
 computation along dimension 1, i.e., down the columns of the array.
 </p>
 <p>When applied to an array (possibly multi-dimensional) with <var class="var">n</var> columns,
-<var class="var">fcn</var> may return a result in either of two formats: Format&nbsp;1)<!-- /@w -->
-an array of size 1-by-<var class="var">n</var>-by-<var class="var">dim3</var>-by-&hellip;-by-<var class="var">dimN</var>.  This
+<var class="var">fcn</var> may return a result in either of two formats: Format&nbsp;1)<!-- /@w -->&nbsp;an
+array of size 1-by-<var class="var">n</var>-by-<var class="var">dim3</var>-by-&hellip;-by-<var class="var">dimN</var>.  This
 is the typical output format from Octave core functions.  Type
 <code class="code">demo (&quot;movfun&quot;, 5)</code> for an example of this use case.
-Format&nbsp;2)<!-- /@w --> a row vector of length
+Format&nbsp;2)<!-- /@w -->&nbsp;a row vector of length
 <code class="code"><var class="var">n</var> * <var class="var">numel_higher_dims</var></code> where <var class="var">numel_higher_dims</var> is
 <code class="code">prod&nbsp;(size&nbsp;(<var class="var">x</var>)(3:end))</code><!-- /@w -->.  The output of <var class="var">fcn</var> for the
 i-th input column must be found in the output at indices
@@ -124,8 +124,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = <var class="var">fcn<
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>
@@ -218,11 +218,11 @@ of length <var class="var">wlen</var>.
 </p>
 <p>The moving window length input <var class="var">wlen</var> can either be a scalar not equal
 to 1 or a 2-element array of integers.  For scalar values, if odd the window
-is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on either
-side of the central element.  If <var class="var">wlen</var> is even the window is asymmetric
-and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the central element
-and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the central
-element.  When <var class="var">wlen</var> is a 2-element array,
+is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements on
+either side of the central element.  If <var class="var">wlen</var> is even the window is
+asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  When <var class="var">wlen</var> is a 2-element array,
 <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->, the window includes <var class="var">nb</var> elements to
 the left of the current element and <var class="var">na</var> elements to the right of the
 current element.
@@ -230,7 +230,7 @@ current element.
 <p>The output <var class="var">slcidx</var> is an array of indices of the slices that fit fully
 within the vector, where each column is an individual slice as the window
 moves from left to right.  The slices have <var class="var">wlen</var> elements for scalar
-<var class="var">wlen</var>, or <code class="code"><var class="var">nb</var>&nbsp;+&nbsp;<var class="var">na</var>&nbsp;+&nbsp;1</code><!-- /@w --> elements for array valued
+<var class="var">wlen</var>, or <code class="code"><var class="var">nb</var>&nbsp;+&nbsp;<var class="var">na</var>&nbsp;+&nbsp;1</code><!-- /@w -->&nbsp;elements for array valued
 <var class="var">wlen</var>.
 </p>
 <p>Optional output <var class="var">C</var> is an row vector of window center positions where
@@ -263,14 +263,14 @@ relative position stencil.
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <code class="code">mad</code> is applied to a
 moving window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the
-window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements
+oneither side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, <code class="code">movmad</code> uses data
 elements <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window
-is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movmad</code> uses data elements
+is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+thecentral element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movmad</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -311,8 +311,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = mad (<var class="var"
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>
@@ -380,14 +380,14 @@ data <var class="var">x</var>.
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <code class="code">max</code> is applied to a
 moving window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the
-window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, <code class="code">movmax</code> uses data
 elements <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window
-is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movmax</code> uses data elements
+is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movmax</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -428,8 +428,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = max (<var class="var"
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>
@@ -497,14 +497,14 @@ data <var class="var">x</var>.
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <code class="code">mean</code> is applied to a
 moving window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the
-window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, <code class="code">movmean</code> uses data
 elements <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window
-is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movmean</code> uses data elements
+is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movmean</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -545,8 +545,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = mean (<var class="var
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>
@@ -614,14 +614,14 @@ data <var class="var">x</var>.
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <code class="code">movmedian</code> is applied to a
 moving window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the
-window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, <code class="code">movmedian</code> uses data
 elements <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window
-is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movmedian</code> uses data elements
+is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movmedian</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -662,8 +662,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = movmedian (<var class
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>
@@ -731,14 +731,14 @@ data <var class="var">x</var>.
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <code class="code">min</code> is applied to a
 moving window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the
-window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, <code class="code">movmin</code> uses data
 elements <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window
-is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movmin</code> uses data elements
+is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movmin</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -779,8 +779,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = min (<var class="var"
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>
@@ -848,14 +848,14 @@ data <var class="var">x</var>.
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <code class="code">movprod</code> is applied to a
 moving window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the
-window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, <code class="code">movprod</code> uses data
 elements <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window
-is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movprod</code> uses data elements
+is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movprod</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -896,8 +896,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = movprod (<var class="
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>
@@ -966,14 +966,14 @@ For additional options and documentation, see <a class="pxref" href="#XREFmovfun
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <code class="code">movstd</code> is applied to a
 moving window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the
-window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, <code class="code">movstd</code> uses data
 elements <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window
-is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movstd</code> uses data elements
+is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movstd</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -1001,6 +1001,8 @@ moment around the mean
 
 <p>If the optional argument <var class="var">dim</var> is given, operate along this dimension.
 The normalization argument <var class="var">opt</var> must be given before the dimension.
+To use the default value for <var class="var">opt</var> you may pass an empty input
+argument <code class="code">[]</code>.
 </p>
 <p>The optional string argument <code class="code">&quot;<var class="var">nancond</var>&quot;</code> controls whether
 <code class="code">NaN</code> and <code class="code">NA</code> values should be included (<code class="code">&quot;includenan&quot;</code>),
@@ -1030,8 +1032,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = movstd (<var class="v
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>
@@ -1099,14 +1101,14 @@ data <var class="var">x</var>.
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <code class="code">movsum</code> is applied to a
 moving window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the
-window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, <code class="code">movsum</code> uses data
 elements <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window
-is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movsum</code> uses data elements
+is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movsum</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -1147,8 +1149,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = movsum (<var class="v
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>
@@ -1217,14 +1219,14 @@ data <var class="var">x</var>.
 </p>
 <p>If <var class="var">wlen</var> is a scalar, the function <code class="code">var</code> is applied to a
 moving window of length <var class="var">wlen</var>.  When <var class="var">wlen</var> is an odd number the
-window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w --> elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes <code class="code">(<var class="var">wlen</var>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</code><!-- /@w -->&nbsp;elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, <code class="code">movvar</code> uses data
 elements <code class="code">[4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.  If <var class="var">wlen</var> is an even number, the window
-is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w --> elements to the left of the
-central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w --> elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, <code class="code">movvar</code> uses data elements
+is asymmetric and has <code class="code"><var class="var">wlen</var>/2</code><!-- /@w -->&nbsp;elements to the left of the
+central element and <code class="code"><var class="var">wlen</var>/2&nbsp;-&nbsp;1</code><!-- /@w -->&nbsp;elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, <code class="code">movvar</code> uses data elements
 <code class="code">[3,&nbsp;4,&nbsp;5,&nbsp;6]</code><!-- /@w -->.
 </p>
 <p>If <var class="var">wlen</var> is an array with two elements <code class="code">[<var class="var">nb</var>,&nbsp;<var class="var">na</var>]</code><!-- /@w -->,
@@ -1236,7 +1238,7 @@ The current element is always included.  For example, given
 <code class="code">[2,&nbsp;3,&nbsp;4,&nbsp;5]</code><!-- /@w -->.
 </p>
 <p>The optional argument <var class="var">opt</var> determines the type of normalization to use.
-Valid values are
+Valid values are:
 </p>
 <dl class="table">
 <dt>0:</dt>
@@ -1251,6 +1253,8 @@ variance [default]
 
 <p>If the optional argument <var class="var">dim</var> is given, operate along this dimension.
 The normalization argument <var class="var">opt</var> must be given before the dimension.
+To use the default value for <var class="var">opt</var> you may pass an empty input
+argument <code class="code">[]</code>.
 </p>
 <p>The optional string argument <code class="code">&quot;<var class="var">nancond</var>&quot;</code> controls whether
 <code class="code">NaN</code> and <code class="code">NA</code> values should be included (<code class="code">&quot;includenan&quot;</code>),
@@ -1280,8 +1284,8 @@ length 3, <code class="code"><var class="var">y</var>(1) = var (<var class="var"
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w --> and is therefore discarded.  The last element would
-require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w --> and is
+<code class="code">[0,&nbsp;1,&nbsp;2]</code><!-- /@w -->&nbsp;and is therefore discarded.  The last element would
+require calculating the function over indices <code class="code">[9,&nbsp;10,&nbsp;11]</code><!-- /@w -->&nbsp;and is
 therefore discarded.
 </p>
 </dd>

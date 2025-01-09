@@ -282,7 +282,7 @@ spdiags (reshape (1:12, 4, 3), [-1 0 1], 5, 4)
 Return a sparse identity matrix of size @var{m}x@var{n}.
 
 The implementation is significantly more efficient than
-@w{@code{sparse (eye (@var{m}))}} as the full matrix is not constructed.
+@w{@code{sparse (eye (@var{m}))}}@ as the full matrix is not constructed.
 
 When called with a single argument, a square matrix of size
 @var{m}-by-@var{m} is created.  If called with a single vector argument,
@@ -2534,8 +2534,9 @@ functions to solve sparse linear equations using iterative techniques.
 @deftypefnx {} {@var{x} =} pcg (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M}, [], @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}, @var{eigest}] =} pcg (@var{A}, @var{b}, @dots{})
 
-Solve the linear system of equations @w{@code{@var{A} * @var{x} = @var{b}}}
-by means of the Preconditioned Conjugate Gradient iterative method.
+Solve the linear system of equations
+@w{@code{@var{A} * @var{x} = @var{b}}}@ by means of the Preconditioned
+Conjugate Gradient iterative method.
 
 The input arguments are:
 
@@ -2566,7 +2567,7 @@ is omitted or empty then a value of 20 is used.
 @item
 @var{m} is a @nospell{HPD} preconditioning matrix.  For any decomposition
 @code{@var{m} = @var{p1} * @var{p2}} such that
-@w{@code{inv (@var{p1}) * @var{A} * inv (@var{p2})}} is @nospell{HPD}, the
+@w{@code{inv (@var{p1}) * @var{A} * inv (@var{p2})}}@ is @nospell{HPD}, the
 conjugate gradient method is formally applied to the linear system
 @w{@code{inv (@var{p1}) * @var{A} * inv (@var{p2}) * @var{y} = inv
 (@var{p1}) * @var{b}}},
