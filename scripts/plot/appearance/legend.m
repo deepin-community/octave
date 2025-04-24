@@ -1070,9 +1070,9 @@ function [htxt, hicon] = create_item (hl, str, txtpval, hplt)
   endif
 
   persistent lprops = {"color", "linestyle", "linewidth"};
-  persistent mprops = {"color", "marker", "markeredgecolor", ...
+  persistent mprops = {"color", "linewidth", "marker", "markeredgecolor", ...
                        "markerfacecolor", "markersize"};
-  persistent pprops = {"edgecolor", "facecolor", ...
+  persistent pprops = {"edgecolor", "facecolor", "facealpha", ...
                        "linestyle", "linewidth", ...
                        "marker", "markeredgecolor", ...
                        "markerfacecolor", "markersize"};
@@ -2276,3 +2276,18 @@ endfunction
 %! unwind_protect_cleanup
 %!   close (hf);
 %! end_unwind_protect
+
+## Verify alpha parameter inherited by legend patch objects.
+## Only facealpha currently implemented.
+%!testif ; any (strcmp (graphics_toolkit (), {"fltk", "qt"})) <*66314>
+%! hf = figure ("visible", "off");
+%! unwind_protect
+%!   hax = axes ("parent", hf);
+%!   hp = patch (hax);
+%!   set (hp, "facealpha", 0.5);
+%!   hl = legend (hax);
+%!   assert (get (findobj (hl, "type", "patch"), "facealpha"), 0.5);
+%! unwind_protect_cleanup
+%!   close (hf);
+%! end_unwind_protect
+

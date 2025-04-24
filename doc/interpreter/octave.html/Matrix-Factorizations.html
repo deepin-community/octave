@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Matrix Factorizations (GNU Octave (version 9.2.0))</title>
+<title>Matrix Factorizations (GNU Octave (version 9.4.0))</title>
 
-<meta name="description" content="Matrix Factorizations (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Matrix Factorizations (GNU Octave (version 9.2.0))">
+<meta name="description" content="Matrix Factorizations (GNU Octave (version 9.4.0))">
+<meta name="keywords" content="Matrix Factorizations (GNU Octave (version 9.4.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -185,8 +185,8 @@ original factored matrix.
 <p>Given a Cholesky&nbsp;factorization of a real symmetric or complex Hermitian
 positive definite matrix <var class="var">A</var>&nbsp;=&nbsp;<var class="var">R</var>&rsquo;*<var class="var">R</var><!-- /@w -->, <var class="var">R</var>&nbsp;upper
 triangular, return the Cholesky&nbsp;factorization of
-<var class="var">A1</var>, where A1(p,p)&nbsp;=&nbsp;A<!-- /@w -->, A1(:,j)&nbsp;=&nbsp;A1(j,:)&rsquo;&nbsp;=&nbsp;u<!-- /@w --> and
-p&nbsp;=&nbsp;[1:j-1,j+1:n+1]<!-- /@w -->.  u(j)<!-- /@w --> should be positive.
+<var class="var">A1</var>, where A1(p,p)&nbsp;=&nbsp;A<!-- /@w -->, A1(:,j)&nbsp;=&nbsp;A1(j,:)&rsquo;&nbsp;=&nbsp;u<!-- /@w -->&nbsp;and
+p&nbsp;=&nbsp;[1:j-1,j+1:n+1]<!-- /@w -->.  u(j)<!-- /@w -->&nbsp;should be positive.
 </p>
 <p>On return, <var class="var">info</var> is set to
 </p>
@@ -232,7 +232,7 @@ original factored matrix.
 <p>Given a Cholesky&nbsp;factorization of a real symmetric or complex Hermitian
 positive definite matrix <var class="var">A</var>&nbsp;=&nbsp;<var class="var">R</var>&rsquo;*<var class="var">R</var><!-- /@w -->, <var class="var">R</var>&nbsp;upper
 triangular, return the Cholesky&nbsp;factorization of
-<var class="var">A</var>(p,p)<!-- /@w -->, where p<!-- /@w --> is the permutation <br>
+<var class="var">A</var>(p,p)<!-- /@w -->, where p is the permutation <br>
 <code class="code">p = [1:i-1, shift(i:j, 1), j+1:n]</code> if <var class="var">i</var>&nbsp;&lt;&nbsp;<var class="var">j</var><!-- /@w --> <br>
  or <br>
 <code class="code">p = [1:j-1, shift(j:i,-1), i+1:n]</code> if <var class="var">j</var>&nbsp;&lt;&nbsp;<var class="var">i</var><!-- /@w -->.  <br>
@@ -610,7 +610,7 @@ vector to be inserted into <var class="var">A</var> (if <var class="var">orient<
 <p>The default value of <var class="var">orient</var> is <code class="code">&quot;col&quot;</code>.  If <var class="var">orient</var> is
 <code class="code">&quot;col&quot;</code>, <var class="var">u</var> may be a matrix and <var class="var">j</var> an index vector
 resulting in the QR&nbsp;factorization of a matrix <var class="var">B</var> such that
-B(:,<var class="var">j</var>)<!-- /@w --> gives <var class="var">u</var> and B(:,<var class="var">j</var>)&nbsp;=&nbsp;[]<!-- /@w --> gives <var class="var">A</var>.
+B(:,<var class="var">j</var>)<!-- /@w -->&nbsp;gives <var class="var">u</var> and B(:,<var class="var">j</var>)&nbsp;=&nbsp;[]<!-- /@w -->&nbsp;gives <var class="var">A</var>.
 Notice that the latter case is done as a sequence of k insertions;
 thus, for k large enough, it will be both faster and more accurate to
 recompute the factorization from scratch.
@@ -644,7 +644,7 @@ The default value of <var class="var">orient</var> is <code class="code">&quot;c
 </p>
 <p>If <var class="var">orient</var> is <code class="code">&quot;col&quot;</code>, <var class="var">j</var> may be an index vector
 resulting in the QR&nbsp;factorization of a matrix <var class="var">B</var> such that
-A(:,<var class="var">j</var>)&nbsp;=&nbsp;[]<!-- /@w --> gives <var class="var">B</var>.  Notice that the latter case is done as
+A(:,<var class="var">j</var>)&nbsp;=&nbsp;[]<!-- /@w -->&nbsp;gives <var class="var">B</var>.  Notice that the latter case is done as
 a sequence of k deletions; thus, for k large enough, it will be both faster
 and more accurate to recompute the factorization from scratch.
 </p>
@@ -695,7 +695,7 @@ of <var class="var">A</var>(:,p)<!-- /@w -->, where p<!-- /@w --> is the permuta
 <p>There are two calling forms of the function:
 </p>
 <ol class="enumerate">
-<li> <code class="code">[<var class="var">AA</var>, <var class="var">BB</var>, <var class="var">Q</var>, <var class="var">Z</var>, <var class="var">V</var>, <var class="var">W</var>, <var class="var">lambda</var>] = qz (<var class="var">A</var>, <var class="var">B</var>)</code>
+<li> <code class="code">[<var class="var">AA</var>, <var class="var">BB</var>, <var class="var">Q</var>, <var class="var">Z</var>, <var class="var">V</var>, <var class="var">W</var>] = qz (<var class="var">A</var>, <var class="var">B</var>)</code>
 
 <p>Compute the complex QZ&nbsp;decomposition, generalized eigenvectors, and
 generalized eigenvalues.
@@ -713,7 +713,7 @@ diag (diag (<var class="var">BB</var>)) * <var class="var">W</var>' * <var class
 unitary.  The matrices <var class="var">V</var> and <var class="var">W</var> respectively contain the right
 and left generalized eigenvectors.
 </p>
-</li><li> <code class="code">[<var class="var">AA</var>, <var class="var">BB</var>, <var class="var">Z</var> {, <var class="var">lambda</var>}] = qz (<var class="var">A</var>, <var class="var">B</var>, <var class="var">opt</var>)</code>
+</li><li> <code class="code">[<var class="var">AA</var>, <var class="var">BB</var>, <var class="var">Q</var>, <var class="var">Z</var>, <var class="var">V</var>, <var class="var">W</var>] = qz (<var class="var">A</var>, <var class="var">B</var>, <var class="var">opt</var>)</code>
 
 <p>The <var class="var">opt</var> argument must be equal to either <code class="code">&quot;real&quot;</code> or
 <code class="code">&quot;complex&quot;</code>.  If it is equal to <code class="code">&quot;complex&quot;</code>, then this
@@ -731,11 +731,15 @@ are real, in which case the real and complex QZ coincide).
 </li></ol>
 
 <p>Note: <code class="code">qz</code> performs permutation balancing, but not scaling
-(see <a class="pxref" href="Basic-Matrix-Functions.html#XREFbalance"><code class="code">balance</code></a>), which may be lead to less accurate
+(see <a class="pxref" href="Basic-Matrix-Functions.html#XREFbalance"><code class="code">balance</code></a>), which may lead to less accurate
 results than <code class="code">eig</code>.  The order of output arguments was selected for
 compatibility with <small class="sc">MATLAB</small>.
 </p>
-<p><strong class="strong">See also:</strong> <a class="ref" href="Basic-Matrix-Functions.html#XREFeig">eig</a>, <a class="ref" href="Basic-Matrix-Functions.html#XREFgsvd">gsvd</a>, <a class="ref" href="Basic-Matrix-Functions.html#XREFbalance">balance</a>, <a class="ref" href="#XREFchol">chol</a>, <a class="ref" href="#XREFhess">hess</a>, <a class="ref" href="#XREFlu">lu</a>, <a class="ref" href="#XREFqr">qr</a>, <a class="ref" href="#XREFqzhess">qzhess</a>, <a class="ref" href="#XREFschur">schur</a>.
+<p>For eigenvalues, use the <code class="code">ordeig</code> function to compute them based on
+the resulting <var class="var">AA</var> and <var class="var">BB</var> matrices.
+</p>
+
+<p><strong class="strong">See also:</strong> <a class="ref" href="Basic-Matrix-Functions.html#XREFeig">eig</a>, <a class="ref" href="Basic-Matrix-Functions.html#XREFgsvd">gsvd</a>, <a class="ref" href="Basic-Matrix-Functions.html#XREFbalance">balance</a>, <a class="ref" href="#XREFchol">chol</a>, <a class="ref" href="#XREFhess">hess</a>, <a class="ref" href="#XREFlu">lu</a>, <a class="ref" href="#XREFqr">qr</a>, <a class="ref" href="#XREFqzhess">qzhess</a>, <a class="ref" href="#XREFschur">schur</a>, <a class="ref" href="#XREFordeig">ordeig</a>.
 </p></dd></dl>
 
 

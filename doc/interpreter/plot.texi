@@ -3533,7 +3533,7 @@ Plot a function @var{fcn} within the range defined by @var{limits}.
 @var{fcn} is a function handle, inline function, or string containing the
 name of the function to evaluate.
 
-The limits of the plot are of the form @w{@code{[@var{xlo}, @var{xhi}]}} or
+The limits of the plot are of the form @w{@code{[@var{xlo}, @var{xhi}]}}@ or
 @w{@code{[@var{xlo}, @var{xhi}, @var{ylo}, @var{yhi}]}}.  If no limits
 are specified the default is @code{[-5, 5]}.
 
@@ -5276,11 +5276,13 @@ The parameters @var{azimuth} and @var{elevation} can be given as two
 arguments or as 2-element vector.  The viewpoint can also be specified with
 Cartesian coordinates @var{x}, @var{y}, and @var{z}.
 
-The call @code{view (2)} sets the viewpoint to @w{@var{azimuth} = 0}@
-and @w{@var{elevation} = 90}, which is the default for 2-D graphs.
+The call @code{view (2)} sets the viewpoint to
+@w{@var{azimuth} = 0}@ and @w{@var{elevation} = 90}, which is the default
+for 2-D graphs.
 
-The call @code{view (3)} sets the viewpoint to @w{@var{azimuth} = -37.5}@
-and @w{@var{elevation} = 30}, which is the default for 3-D graphs.
+The call @code{view (3)} sets the viewpoint to
+@w{@var{azimuth} = -37.5}@ and @w{@var{elevation} = 30}, which is the
+default for 3-D graphs.
 
 If the first argument @var{hax} is an axes handle, then operate on
 this axes rather than the current axes returned by @code{gca}.
@@ -7903,7 +7905,7 @@ points to this function.
 @subsection Use of the "interpreter" Property
 
 @code{text} (such as titles, labels, legend item) and @code{axes} objects
-feature an @ref{XREFtextinterpreter,,@qcode{"interpreter}} and a
+feature an @ref{XREFtextinterpreter,,@qcode{"interpreter"}} and a
 @ref{XREFaxesticklabelinterpreter,,@qcode{"ticklabelinterpreter"}} property
 respectively.  It determines the manner in which special control sequences in
 the text are rendered.
@@ -7973,8 +7975,8 @@ numerically @tab
 
 Finally, superscripting and subscripting can be controlled with the @qcode{'^'}
 and @qcode{'_'} characters.  If the @qcode{'^'} or @qcode{'_'} is followed by a
-@{ character, then all of the block surrounded by the @w{@{ @}} pair is
-superscripted or subscripted.  Without the @w{@{ @}} pair, only the character
+@{ character, then all of the block surrounded by the @w{@{ @}}@ pair is
+superscripted or subscripted.  Without the @w{@{ @}}@ pair, only the character
 immediately following the @qcode{'^'} or @qcode{'_'} is changed.
 
 @float Table,tab:extended
@@ -8221,10 +8223,10 @@ width 0.6pt \tabskip=0pt\cr
 @cindex Degree Symbol
 
 Conformance to both @TeX{} and @sc{matlab} with respect to the @code{\circ}
-symbol is impossible.  While @TeX{} translates this symbol to @w{Unicode 2218}
-(U+2218), @sc{matlab} maps this to @w{Unicode 00B0} (U+00B0) instead.  Octave
-has chosen to follow the @TeX{} specification, but has added the additional
-symbol @code{\deg} which maps to the degree symbol (U+00B0).
+symbol is impossible.  While @TeX{} translates this symbol to
+@w{Unicode 2218}@ (U+2218), @sc{matlab} maps this to @w{Unicode 00B0}@ (U+00B0)
+instead.  Octave has chosen to follow the @TeX{} specification, but has added
+the additional symbol @code{\deg} which maps to the degree symbol (U+00B0).
 
 @node "latex" interpreter
 @subsubsection "latex" interpreter
@@ -9798,8 +9800,8 @@ Return a handle to the root graphics object.
 The root graphics object is the ultimate parent of all graphics objects.
 
 In addition, the root object contains information about the graphics
-system as a whole such as the @code{ScreenSize}.  Use @w{@code{get (groot)}}
-to find out what information is available.
+system as a whole such as the @code{ScreenSize}.  Use
+@w{@code{get (groot)}}@ to find out what information is available.
 
 Defaults for the graphic system as a whole are specified by setting
 properties of the root graphics object that begin with @qcode{"Default"}.

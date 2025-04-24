@@ -174,7 +174,7 @@ cumulatively from left to right:
 @deftypefn  {} {@var{y} =} diff (@var{x})
 @deftypefnx {} {@var{y} =} diff (@var{x}, @var{k})
 @deftypefnx {} {@var{y} =} diff (@var{x}, @var{k}, @var{dim})
-If @var{x} is a vector of length @math{n}, @w{@code{diff (@var{x})}} is the
+If @var{x} is a vector of length @math{n}, @w{@code{diff (@var{x})}}@ is the
 vector of first differences
 @tex
  $x_2 - x_1, \ldots{}, x_n - x_{n-1}$.
@@ -183,7 +183,7 @@ vector of first differences
  @var{x}(2) - @var{x}(1), @dots{}, @var{x}(n) - @var{x}(n-1).
 @end ifnottex
 
-If @var{x} is a matrix, @w{@code{diff (@var{x})}} is the matrix of column
+If @var{x} is a matrix, @w{@code{diff (@var{x})}}@ is the matrix of column
 differences along the first non-singleton dimension.
 
 The second argument is optional.  If supplied,
@@ -196,7 +196,7 @@ non-singleton dimension.
 The dimension along which to take the difference can be explicitly
 stated with the optional variable @var{dim}.  In this case the
 @var{k}-th order differences are calculated along this dimension.
-In the case where @var{k} exceeds @w{@code{size (@var{x}, @var{dim})}}
+In the case where @var{k} exceeds @w{@code{size (@var{x}, @var{dim})}}@ 
 an empty matrix is returned.
 @xseealso{@ref{XREFsort,,sort}, @ref{XREFmerge,,merge}}
 @end deftypefn
@@ -737,7 +737,7 @@ concatenate the arrays without the overhead of a function call.
 Return the generalized transpose for an N-D array object @var{A}.
 
 The permutation vector @var{perm} must contain the elements
-@w{@code{1:ndims (A)}} (in any order, but each element must appear only
+@w{@code{1:ndims (A)}}@ (in any order, but each element must appear only
 once).  The @var{N}th dimension of @var{A} gets remapped to dimension
 @code{@var{PERM}(@var{N})}.  For example:
 
@@ -1024,7 +1024,7 @@ For equal elements, the indices are such that equal elements are listed
 in the order in which they appeared in the original list.
 
 Sorting of complex entries is done first by magnitude
-(@w{@code{abs (@var{z})}}) and for any ties by phase angle
+(@w{@code{abs (@var{z})}})@ and for any ties by phase angle
 (@w{@code{angle (z)}}).  For example:
 
 @example
@@ -1131,7 +1131,7 @@ not given.
 
 Programming Note: nth_element encapsulates the C++ standard library
 algorithms nth_element and partial_sort.  On average, the complexity of the
-operation is O(M*log(K)), where @w{@code{M = size (@var{x}, @var{dim})}} and
+operation is O(M*log(K)), where @w{@code{M = size (@var{x}, @var{dim})}}@ and
 @w{@code{K = length (@var{n})}}.  This function is intended for cases where
 the ratio K/M is small; otherwise, it may be better to use @code{sort}.
 @xseealso{@ref{XREFsort,,sort}, @ref{XREFmin,,min}, @ref{XREFmax,,max}}
@@ -2753,7 +2753,7 @@ Construct a Hadamard matrix (@nospell{Hn}) of size @var{n}-by-@var{n}.
 
 The size @var{n} must be of the form @math{2^k * p} in which p is one of
 1, 12, 20 or 28.  The returned matrix is normalized, meaning
-@w{@code{Hn(:,1) == 1}} and @w{@code{Hn(1,:) == 1}}.
+@w{@code{Hn(:,1) == 1}}@ and @w{@code{Hn(1,:) == 1}}.
 
 Some of the properties of Hadamard matrices are:
 

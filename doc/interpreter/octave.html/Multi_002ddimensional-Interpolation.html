@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Multi-dimensional Interpolation (GNU Octave (version 9.2.0))</title>
+<title>Multi-dimensional Interpolation (GNU Octave (version 9.4.0))</title>
 
-<meta name="description" content="Multi-dimensional Interpolation (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Multi-dimensional Interpolation (GNU Octave (version 9.2.0))">
+<meta name="description" content="Multi-dimensional Interpolation (GNU Octave (version 9.4.0))">
+<meta name="keywords" content="Multi-dimensional Interpolation (GNU Octave (version 9.4.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -57,12 +57,13 @@ in <a class="ref" href="Interpolation-on-Scattered-Data.html">Interpolation on S
 <dd>
 <p>Two-dimensional interpolation.
 </p>
-<p>Interpolate reference data <var class="var">x</var>, <var class="var">y</var>, <var class="var">z</var> to determine <var class="var">zi</var>
-at the coordinates <var class="var">xi</var>, <var class="var">yi</var>.  The reference data <var class="var">x</var>, <var class="var">y</var>
-can be matrices, as returned by <code class="code">meshgrid</code>, in which case the sizes of
-<var class="var">x</var>, <var class="var">y</var>, and <var class="var">z</var> must be equal.  If <var class="var">x</var>, <var class="var">y</var> are
-vectors describing a grid then <code class="code">length (<var class="var">x</var>) == columns (<var class="var">z</var>)</code>
-and <code class="code">length (<var class="var">y</var>) == rows (<var class="var">z</var>)</code>.  In either case the input
+<p>Interpolate numeric reference data <var class="var">x</var>, <var class="var">y</var>, <var class="var">z</var> to determine
+<var class="var">zi</var> at the coordinates <var class="var">xi</var>, <var class="var">yi</var>.  The reference data
+<var class="var">x</var>, <var class="var">y</var> can be matrices, as returned by <code class="code">meshgrid</code>, in which
+case the sizes of <var class="var">x</var>, <var class="var">y</var>, and <var class="var">z</var> must be equal.  If <var class="var">x</var>,
+<var class="var">y</var> are vectors describing a grid then
+<code class="code">length&nbsp;(<var class="var">x</var>)&nbsp;==&nbsp;columns&nbsp;(<var class="var">z</var>)</code><!-- /@w -->&nbsp;and
+<code class="code">length&nbsp;(<var class="var">y</var>)&nbsp;==&nbsp;rows&nbsp;(<var class="var">z</var>)</code><!-- /@w -->.  In either case the input
 data must be strictly monotonic.
 </p>
 <p>If called without <var class="var">x</var>, <var class="var">y</var>, and just a single reference data matrix
@@ -130,9 +131,9 @@ is <code class="code">&quot;NA&quot;</code>.
 <dd>
 <p>Three-dimensional interpolation.
 </p>
-<p>Interpolate reference data <var class="var">x</var>, <var class="var">y</var>, <var class="var">z</var>, <var class="var">v</var> to determine
-<var class="var">vi</var> at the coordinates <var class="var">xi</var>, <var class="var">yi</var>, <var class="var">zi</var>.  The reference
-data <var class="var">x</var>, <var class="var">y</var>, <var class="var">z</var> can be matrices, as returned by
+<p>Interpolate numeric reference data <var class="var">x</var>, <var class="var">y</var>, <var class="var">z</var>, <var class="var">v</var> to
+determine <var class="var">vi</var> at the coordinates <var class="var">xi</var>, <var class="var">yi</var>, <var class="var">zi</var>.  The
+reference data <var class="var">x</var>, <var class="var">y</var>, <var class="var">z</var> can be matrices, as returned by
 <code class="code">meshgrid</code>, in which case the sizes of <var class="var">x</var>, <var class="var">y</var>, <var class="var">z</var>, and
 <var class="var">v</var> must be equal.  If <var class="var">x</var>, <var class="var">y</var>, <var class="var">z</var> are vectors describing
 a cubic grid then <code class="code">length (<var class="var">x</var>) == columns (<var class="var">v</var>)</code>,
@@ -201,9 +202,9 @@ any other <var class="var">method</var> is <code class="code">&quot;NA&quot;</co
 <dd>
 <p>Perform <var class="var">n</var>-dimensional interpolation, where <var class="var">n</var> is at least two.
 </p>
-<p>Each element of the <var class="var">n</var>-dimensional array <var class="var">v</var> represents a value
-at a location given by the parameters <var class="var">x1</var>, <var class="var">x2</var>, &hellip;, <var class="var">xn</var>.
-The parameters <var class="var">x1</var>, <var class="var">x2</var>, &hellip;, <var class="var">xn</var> are either
+<p>Each element of the <var class="var">n</var>-dimensional numeric array <var class="var">v</var> represents a
+value at a location given by the parameters <var class="var">x1</var>, <var class="var">x2</var>, &hellip;,
+<var class="var">xn</var>.  The parameters <var class="var">x1</var>, <var class="var">x2</var>, &hellip;, <var class="var">xn</var> are either
 <var class="var">n</var>-dimensional arrays of the same size as the array <var class="var">v</var> in
 the <code class="code">&quot;ndgrid&quot;</code> format or vectors.
 </p>

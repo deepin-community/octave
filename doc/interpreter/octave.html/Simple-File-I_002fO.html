@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Simple File I/O (GNU Octave (version 9.2.0))</title>
+<title>Simple File I/O (GNU Octave (version 9.4.0))</title>
 
-<meta name="description" content="Simple File I/O (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Simple File I/O (GNU Octave (version 9.2.0))">
+<meta name="description" content="Simple File I/O (GNU Octave (version 9.4.0))">
+<meta name="keywords" content="Simple File I/O (GNU Octave (version 9.4.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -81,34 +81,30 @@ A
 <dt class="deftypefnx def-cmd-deftypefn" id="index-save-6"><span class="category-def">: </span><span><code class="def-type"><var class="var">str</var> =</code> <strong class="def-name">save</strong> <code class="def-code-arguments">(&quot;-&quot;, <code class="code">&quot;<var class="var">v1</var>&quot;</code>, <code class="code">&quot;<var class="var">v2</var>&quot;</code>, &hellip;)</code><a class="copiable-link" href="#index-save-6"> &para;</a></span></dt>
 <dd><p>Save the named variables <var class="var">v1</var>, <var class="var">v2</var>, &hellip;, in the file <var class="var">file</var>.
 </p>
-<p>The special filename &lsquo;<samp class="samp">-</samp>&rsquo; may be used to return the content of the
-variables as a string.  If no variable names are listed, Octave saves all the
-variables in the current scope.  Otherwise, full variable names or pattern
-syntax can be used to specify the variables to save.  If the <samp class="option">-struct</samp>
-modifier is used then the fields of the <strong class="strong">scalar</strong> struct are saved as if
-they were variables with the corresponding field names.  The <samp class="option">-struct</samp>
-option can be combined with specific field names <var class="var">f1</var>, <var class="var">f2</var>, &hellip; to
-write only certain fields to the file.
+<p>If no variable names are listed, Octave saves all the variables in the current
+scope.  Otherwise, full variable names or pattern syntax can be used to specify
+the variables to save.  If the <samp class="option">-struct</samp> modifier is used then the
+fields of the <strong class="strong">scalar</strong> struct are saved as if they were variables with
+the corresponding field names.  The <samp class="option">-struct</samp> option can be combined
+with specific field names <var class="var">f1</var>, <var class="var">f2</var>, &hellip; to write only certain
+fields to the file.
 </p>
-<p>Valid options for the <code class="code">save</code> command are listed in the following table.
-Options that modify the output format override the format specified by
-<code class="code">save_default_options</code>.
-</p>
-<p>If save is invoked using the functional form
+<p>The <code class="code">save</code> command may also be invoked using the functional form
 </p>
 <div class="example">
 <pre class="example-preformatted">save (&quot;-option1&quot;, ..., &quot;file&quot;, &quot;v1&quot;, ...)
 </pre></div>
 
-<p>then the <var class="var">options</var>, <var class="var">file</var>, and variable name arguments (<var class="var">v1</var>,
+<p>where the <var class="var">options</var>, <var class="var">file</var>, and variable name arguments (<var class="var">v1</var>,
 &hellip;) must be specified as character strings.
 </p>
-<p>If called with a filename of <code class="code">&quot;-&quot;</code>, write the output to stdout if nargout
-is 0, otherwise return the output in a character string.
+<p>Valid options for the <code class="code">save</code> command are listed in the following table.
+Options that modify the output format override the format specified by
+<code class="code">save_default_options</code>.
 </p>
 <dl class="table">
 <dt><code class="code">-append</code></dt>
-<dd><p>Append to the destination instead of overwriting.
+<dd><p>Append to the file instead of overwriting.
 </p>
 </dd>
 <dt><code class="code">-ascii</code></dt>
@@ -133,26 +129,30 @@ spaces.  Additional options for the <samp class="option">-ascii</samp> format ar
 </p>
 </dd>
 <dt><code class="code">-float-binary</code></dt>
-<dd><p>Save the data in Octave&rsquo;s binary data format but using only single precision.
+<dd><p>Save the data in Octave&rsquo;s binary data format using just single precision.
 Use this format <strong class="strong">only</strong> if you know that all the values to be saved can
 be represented in single precision.
 </p>
 </dd>
 <dt><code class="code">-hdf5</code></dt>
-<dd><p>Save the data in <small class="sc">HDF5</small> format.  (HDF5 is a free, portable, binary format
-developed by the National Center for Supercomputing Applications at the
-University of Illinois.) This format is only available if Octave was built
+<dd><p>Save the data in <small class="sc">HDF5</small> format.  (<small class="sc">HDF5</small> is a free, portable, binary
+format developed by the National Center for Supercomputing Applications at the
+University of Illinois.)  This format is only available if Octave was built
 with a link to the <small class="sc">HDF5</small> libraries.
 </p>
 </dd>
 <dt><code class="code">-float-hdf5</code></dt>
-<dd><p>Save the data in <small class="sc">HDF5</small> format but using only single precision.  Use this
+<dd><p>Save the data in <small class="sc">HDF5</small> format using just single precision.  Use this
 format <strong class="strong">only</strong> if you know that all the values to be saved can be
 represented in single precision.
 </p>
 </dd>
-<dt><code class="code">-text</code></dt>
-<dd><p>Save the data in Octave&rsquo;s text data format.  (default)
+<dt><code class="code">-text (default)</code></dt>
+<dd><p>Save the data in Octave&rsquo;s text data format.  The
+<a class="ref" href="#XREFsave_005fprecision"><code class="code">save_precision</code></a> function specifies the number
+of significant figures to use when saving data (default: 17).  The header of
+the text data file can be configure with
+<a class="ref" href="#XREFsave_005fheader_005fformat_005fstring"><code class="code">save_header_format_string</code></a>.
 </p>
 </dd>
 <dt><code class="code">-v7.3</code></dt>
@@ -217,10 +217,13 @@ uppercase alphabetic characters.
 </dd>
 </dl>
 
-<p>Except when using the <small class="sc">MATLAB</small> binary data file format or the &lsquo;<samp class="samp">-ascii</samp>&rsquo;
-format, saving global variables also saves the global status of the variable.
-If the variable is restored at a later time using &lsquo;<samp class="samp">load</samp>&rsquo;, it will be
-restored as a global variable.
+<p>Programming Notes: If called with the special filename <code class="code">&quot;-&quot;</code> the data to
+be saved is returned as a string rather than writing it to an actual file.
+</p>
+<p>When saving global variables the global status of the variable is also stored.
+If the variable is restored at a later time using <code class="code">load</code>, it will be
+restored as a global variable.  Global status is <em class="emph">not</em> preserved if 
+using a <small class="sc">MATLAB</small> binary data file format or the <samp class="option">-ascii</samp> format. 
 </p>
 <p>Example:
 </p>
@@ -233,7 +236,8 @@ restored as a global variable.
 <p>saves the variable &lsquo;<samp class="samp">a</samp>&rsquo; and all variables beginning with &lsquo;<samp class="samp">b</samp>&rsquo; to the
 file <samp class="file">data</samp> in Octave&rsquo;s binary format.
 </p>
-<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFload">load</a>, <a class="ref" href="#XREFsave_005fdefault_005foptions">save_default_options</a>, <a class="ref" href="#XREFsave_005fheader_005fformat_005fstring">save_header_format_string</a>, <a class="ref" href="#XREFsave_005fprecision">save_precision</a>, <a class="ref" href="#XREFdlmread">dlmread</a>, <a class="ref" href="#XREFcsvread">csvread</a>, <a class="ref" href="Binary-I_002fO.html#XREFfread">fread</a>.
+
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFload">load</a>, <a class="ref" href="#XREFsave_005fdefault_005foptions">save_default_options</a>, <a class="ref" href="#XREFsave_005fheader_005fformat_005fstring">save_header_format_string</a>, <a class="ref" href="#XREFsave_005fprecision">save_precision</a>, <a class="ref" href="#XREFcsvwrite">csvwrite</a>, <a class="ref" href="#XREFdlmwrite">dlmwrite</a>, <a class="ref" href="Binary-I_002fO.html#XREFfwrite">fwrite</a>.
 </p></dd></dl>
 
 
@@ -324,52 +328,25 @@ The original variable value is restored when exiting the function.
 <dt class="deftypefnx def-cmd-deftypefn" id="index-load-4"><span class="category-def">: </span><span><strong class="def-name">load</strong> <code class="def-code-arguments">file options</code><a class="copiable-link" href="#index-load-4"> &para;</a></span></dt>
 <dt class="deftypefnx def-cmd-deftypefn" id="index-load-5"><span class="category-def">: </span><span><strong class="def-name">load</strong> <code class="def-code-arguments">file options v1 v2 &hellip;</code><a class="copiable-link" href="#index-load-5"> &para;</a></span></dt>
 <dt class="deftypefnx def-cmd-deftypefn" id="index-load-6"><span class="category-def">: </span><span><code class="def-type">S =</code> <strong class="def-name">load</strong> <code class="def-code-arguments">(&quot;file&quot;, &quot;options&quot;, &quot;v1&quot;, &quot;v2&quot;, &hellip;)</code><a class="copiable-link" href="#index-load-6"> &para;</a></span></dt>
-<dd><p>Load the named variables <var class="var">v1</var>, <var class="var">v2</var>, &hellip;, from the file
-<var class="var">file</var>.
+<dd><p>Load the named variables <var class="var">v1</var>, <var class="var">v2</var>, &hellip;, from the file <var class="var">file</var>.
 </p>
-<p>If no variables are specified then all variables found in the
-file will be loaded.  As with <code class="code">save</code>, the list of variables to extract
-can be full names or use a pattern syntax.  The format of the file is
-automatically detected but may be overridden by supplying the appropriate
-option.
+<p>If no variables are specified then all variables found in the file will be
+loaded.  Otherwise, full variable names or pattern syntax can be used to
+specify the variables to save.  The format of the file is automatically
+detected but may be overridden by supplying the appropriate option.
 </p>
-<p>If load is invoked using the functional form
+<p>The <code class="code">load</code> command may also be invoked using the functional form
 </p>
 <div class="example">
 <pre class="example-preformatted">load (&quot;-option1&quot;, ..., &quot;file&quot;, &quot;v1&quot;, ...)
 </pre></div>
 
-<p>then the <var class="var">options</var>, <var class="var">file</var>, and variable name arguments
-(<var class="var">v1</var>, &hellip;) must be specified as character strings.
-</p>
-<p>If a variable that is not marked as global is loaded from a file when a
-global symbol with the same name already exists, it is loaded in the
-global symbol table.  Also, if a variable is marked as global in a file
-and a local symbol exists, the local symbol is moved to the global
-symbol table and given the value from the file.
-</p>
-<p>If invoked with a single output argument, Octave returns data instead
-of inserting variables in the symbol table.  If the data file contains
-only numbers (TAB- or space-delimited columns), a matrix of values is
-returned.  Otherwise, <code class="code">load</code> returns a structure with members
- corresponding to the names of the variables in the file.
-</p>
-<p>The <code class="code">load</code> command can read data stored in Octave&rsquo;s text and
-binary formats, and <small class="sc">MATLAB</small>&rsquo;s binary format.  If compiled with zlib
-support, it can also load gzip-compressed files.  It will automatically
-detect the type of file and do conversion from different floating point
-formats (currently only IEEE big and little endian, though other formats
-may be added in the future).
+<p>where the <var class="var">options</var>, <var class="var">file</var>, and variable name arguments (<var class="var">v1</var>,
+&hellip;) must be specified as character strings.
 </p>
 <p>Valid options for <code class="code">load</code> are listed in the following table.
 </p>
 <dl class="table">
-<dt><code class="code">-force</code></dt>
-<dd><p>This option is accepted for backward compatibility but is ignored.
-Octave now overwrites variables currently in memory with
-those of the same name found in the file.
-</p>
-</dd>
 <dt><code class="code">-ascii</code></dt>
 <dd><p>Force Octave to assume the file contains columns of numbers in text format
 without any header or other information.  Data in the file will be loaded
@@ -384,17 +361,13 @@ name of the file.
 <dt><code class="code">-hdf5</code></dt>
 <dd><p>Force Octave to assume the file is in <small class="sc">HDF5</small> format.  (<small class="sc">HDF5</small> is a free,
 portable binary format developed by the National Center for Supercomputing
-Applications at the University of Illinois.)  Note that Octave can only
-read <small class="sc">HDF5</small> files that were created by itself with <code class="code">save</code> or with
-<small class="sc">MATLAB</small>&rsquo;s <code class="code">-v7.3</code> option (which saves in <small class="sc">HDF5</small> format). This
-format is only available if Octave was built with a link to the <small class="sc">HDF5</small>
-libraries.
-</p>
-</dd>
-<dt><code class="code">-import</code></dt>
-<dd><p>This option is accepted for backward compatibility but is ignored.
-Octave can now support multi-dimensional HDF data and automatically
-modifies variable names if they are invalid Octave identifiers.
+Applications at the University of Illinois.)  Note that <code class="code">load</code> is only
+designed to read <small class="sc">HDF5</small> files that were created by Octave with <code class="code">save</code>,
+and attempts to read other <small class="sc">HDF5</small> files may fail or produce unpredictable
+results. The <code class="code">-hdf5</code> option provides a limited ability to read files
+created using <small class="sc">MATLAB</small>&rsquo;s <code class="code">-v7.3</code> option (which saves in <small class="sc">HDF5</small>
+format) although many data types are not yet supported.  This format is only
+available if Octave was built with a link to the <small class="sc">HDF5</small> libraries.
 </p>
 </dd>
 <dt><code class="code">-text</code></dt>
@@ -404,10 +377,11 @@ modifies variable names if they are invalid Octave identifiers.
 <dt><code class="code">-v7.3</code></dt>
 <dt><code class="code">-V7.3</code></dt>
 <dt><code class="code">-7.3</code></dt>
-<dd><p>Force Octave to assume the file is in <small class="sc">MATLAB</small>&rsquo;s v7.3 binary data format.
-As the v7.3 format is an HDF5 based format, those files often can also be
-opened with the <code class="code">&quot;-hdf5&quot;</code> option.  Note that Octave <strong class="strong">can not</strong>
-currently save in this format.
+<dd><p>Octave does <strong class="strong">not</strong> yet implement <small class="sc">MATLAB</small>&rsquo;s v7.3 binary data format.
+As the v7.3 format is an <small class="sc">HDF5</small> based format, the <code class="code">&quot;-hdf5&quot;</code> option
+may be used to attempt to open a v7.3 format file, although most non-numeric
+data types are not yet supported.  Note that Octave <strong class="strong">can not</strong> currently
+save in this format.
 </p>
 </dd>
 <dt><code class="code">-v7</code></dt>
@@ -434,7 +408,48 @@ currently save in this format.
 </dd>
 </dl>
 
-<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFsave">save</a>, <a class="ref" href="#XREFdlmwrite">dlmwrite</a>, <a class="ref" href="#XREFcsvwrite">csvwrite</a>, <a class="ref" href="Binary-I_002fO.html#XREFfwrite">fwrite</a>.
+<p>The list of variables to load may use wildcard patterns (glob patterns)
+containing the following special characters:
+</p>
+<dl class="table">
+<dt><code class="code">?</code></dt>
+<dd><p>Match any single character.
+</p>
+</dd>
+<dt><code class="code">*</code></dt>
+<dd><p>Match zero or more characters.
+</p>
+</dd>
+<dt><code class="code">[ <var class="var">list</var> ]</code></dt>
+<dd><p>Match the list of characters specified by <var class="var">list</var>.  If the first character
+is <code class="code">!</code> or <code class="code">^</code>, match all characters except those specified by
+<var class="var">list</var>.  For example, the pattern <code class="code">[a-zA-Z]</code> will match all lower and
+uppercase alphabetic characters.
+</p>
+</dd>
+</dl>
+
+<p>If invoked with a single output argument, Octave assigns loaded data to the
+output instead of inserting variables in the symbol table.  If the data file
+contains only numbers (TAB- or space-delimited columns), a matrix of values is
+returned.  Otherwise, <code class="code">load</code> returns a structure with members
+corresponding to the names of the variables in the file.
+</p>
+<p>The <code class="code">load</code> command can read data stored in Octave&rsquo;s text and binary
+formats, <small class="sc">MATLAB</small>&rsquo;s binary format, and many simple formats such as
+comma-separated-values (CSV).  If compiled with zlib support, it can also load
+gzip-compressed files.  It will automatically detect the type of file and do
+conversion from different floating point formats (currently only IEEE big and
+little endian, though other formats may be added in the future).
+</p>
+<p>Programming Note: If a variable that is not marked as global is loaded from a
+file when a global symbol with the same name already exists, it is loaded in
+the global symbol table.  Also, if a variable is marked as global in a file and
+a local symbol exists, the local symbol is moved to the global symbol table and
+given the value from the file.
+</p>
+
+<p><strong class="strong">See also:</strong> <a class="ref" href="#XREFsave">save</a>, <a class="ref" href="#XREFcsvread">csvread</a>, <a class="ref" href="#XREFdlmread">dlmread</a>, <a class="ref" href="Binary-I_002fO.html#XREFfread">fread</a>, <a class="ref" href="#XREFtextscan">textscan</a>.
 </p></dd></dl>
 
 
@@ -631,7 +646,7 @@ such as text, are also replaced by the <code class="code">&quot;emptyvalue&quot;
 <dt class="deftypefn" id="index-csvwrite"><span class="category-def">: </span><span><strong class="def-name">csvwrite</strong> <code class="def-code-arguments">(<var class="var">filename</var>, <var class="var">x</var>)</code><a class="copiable-link" href="#index-csvwrite"> &para;</a></span></dt>
 <dt class="deftypefnx def-cmd-deftypefn" id="index-csvwrite-1"><span class="category-def">: </span><span><strong class="def-name">csvwrite</strong> <code class="def-code-arguments">(<var class="var">filename</var>, <var class="var">x</var>, <var class="var">dlm_opt1</var>, &hellip;)</code><a class="copiable-link" href="#index-csvwrite-1"> &para;</a></span></dt>
 <dd><p>Write the numeric matrix <var class="var">x</var> to the file <var class="var">filename</var> in
-comma-separated-value<!-- /@w --> (CSV) format.
+comma-separated-value<!-- /@w -->&nbsp;(CSV) format.
 </p>
 <p>This function is equivalent to
 </p>
@@ -1123,7 +1138,7 @@ interval with lower bound <var class="var">l</var> and upper bound <var class="v
 the specified value <var class="var">inmin</var> with <var class="var">inmin</var>.  Similarly, the optional
 input <code class="code">&quot;inputmax&quot;</code> replaces all elements greater than the specified
 value <var class="var">inmax</var> with <var class="var">inmax</var>.  If unspecified the minimum and maximum
-are taken from the data itself (<code class="code"><var class="var">inmin</var>&nbsp;=&nbsp;min&nbsp;(A(:))</code><!-- /@w --> and
+are taken from the data itself (<code class="code"><var class="var">inmin</var>&nbsp;=&nbsp;min&nbsp;(A(:))</code><!-- /@w -->&nbsp;and
 <code class="code"><var class="var">inmax</var>&nbsp;=&nbsp;max&nbsp;(A(:))</code><!-- /@w -->).
 </p>
 <p>Programming Notes:

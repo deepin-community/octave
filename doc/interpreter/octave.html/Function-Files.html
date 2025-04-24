@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Function Files (GNU Octave (version 9.2.0))</title>
+<title>Function Files (GNU Octave (version 9.4.0))</title>
 
-<meta name="description" content="Function Files (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Function Files (GNU Octave (version 9.2.0))">
+<meta name="description" content="Function Files (GNU Octave (version 9.4.0))">
+<meta name="keywords" content="Function Files (GNU Octave (version 9.4.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -99,7 +99,9 @@ ignore the time stamps for all function files.  Passing
 <dd><p>Edit the named function, or change editor settings.
 </p>
 <p>If <code class="code">edit</code> is called with the name of a file or function as its
-argument it will be opened in the text editor defined by <code class="env">EDITOR</code>.
+argument it will be opened in the default text editor.  The default editor
+for the Octave GUI is specified in the Editor tab of Preferences.  The
+default editor for the CLI is specified by the <code class="code">EDITOR</code> function.
 </p>
 <ul class="itemize mark-bullet">
 <li>If the function <var class="var">name</var> is available in a file on your path, then it

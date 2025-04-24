@@ -8715,7 +8715,7 @@ diff
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 926
+# length: 927
  -- : Y = diff (X)
  -- : Y = diff (X, K)
  -- : Y = diff (X, K, DIM)
@@ -8725,7 +8725,7 @@ diff
 
      The second argument is optional.  If supplied, ‘diff (X, K)’, where K is a non-negative integer, returns the K-th differences.  It is possible that K is larger than the first non-singleton dimension of the matrix.  In this case, ‘diff’ continues to take the differences along the next non-singleton dimension.
 
-     The dimension along which to take the difference can be explicitly stated with the optional variable DIM.  In this case the K-th order differences are calculated along this dimension.  In the case where K exceeds ‘size (X, DIM)’ an empty matrix is returned.
+     The dimension along which to take the difference can be explicitly stated with the optional variable DIM.  In this case the K-th order differences are calculated along this dimension.  In the case where K exceeds ‘size (X, DIM)’  an empty matrix is returned.
 
      See also: sort, merge.
    
@@ -10210,13 +10210,15 @@ EDITOR
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 611
+# length: 779
  -- : VAL = EDITOR ()
  -- : OLD_VAL = EDITOR (NEW_VAL)
  -- : OLD_VAL = EDITOR (NEW_VAL, "local")
-     Query or set the internal variable that specifies the default text editor.
+     Query or set the internal variable that specifies the default text editor when using the CLI.
 
      The default value is taken from the environment variable ‘EDITOR’ when Octave starts.  If the environment variable is not initialized, ‘EDITOR’ will be set to "emacs".
+
+     _Note:_ This setting applies when running the CLI. When using the Octave GUI the default editor is specified in the Editor tab of Preferences.
 
      When called from inside a function with the "local" option, the variable is changed locally for the function and any subroutines it calls.  The original variable value is restored when exiting the function.
 
@@ -10227,8 +10229,8 @@ EDITOR
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 74
-Query or set the internal variable that specifies the default text editor.
+# length: 93
+Query or set the internal variable that specifies the default text editor when using the CLI.
 
 
 
@@ -10332,12 +10334,17 @@ error
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 2913
+# length: 3501
  -- : error (TEMPLATE, ...)
  -- : error (ID, TEMPLATE, ...)
      Display an error message and stop m-file execution.
 
      Format the optional arguments under the control of the template string TEMPLATE using the same rules as the ‘printf’ family of functions (*note Formatted Output::) and print the resulting message on the ‘stderr’ stream.  This formatting is only done for single-quoted character vectors if there are additional arguments following the template string.  If there are no additional arguments, the template string is used literally (i.e., without interpreting any escape sequences in single-quoted character vectors).  The message is prefixed by ‘error: ’.
+
+     The optional ID argument allows programmers to tag an error with a specific identifier so that users can later retrieve it (using ‘lasterr’ or ‘lasterror’) and know the origin of the error.  The identifier must contain at least one colon character (':') and must not contain any whitespace characters.  It should be a string of the form "NAMESPACE:ERROR-NAME". Octave's own errors use the "Octave" namespace (*note ‘error_ids’: XREFerror_ids.).  For example:
+
+          error ("MyNameSpace:wrong-type-argument",
+                 "fcn_name: argument should be numeric");
 
      Calling ‘error’ also sets Octave's internal error state such that control will return to the top level without evaluating any further commands.  This is useful for aborting from functions or scripts.
 
@@ -15190,7 +15197,7 @@ load
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4086
+# length: 4572
  -- : load file
  -- : load options file
  -- : load options file v1 v2 ...
@@ -15200,24 +15207,15 @@ load
  -- : S = load ("file", "options", "v1", "v2", ...)
      Load the named variables V1, V2, ..., from the file FILE.
 
-     If no variables are specified then all variables found in the file will be loaded.  As with ‘save’, the list of variables to extract can be full names or use a pattern syntax.  The format of the file is automatically detected but may be overridden by supplying the appropriate option.
+     If no variables are specified then all variables found in the file will be loaded.  Otherwise, full variable names or pattern syntax can be used to specify the variables to save.  The format of the file is automatically detected but may be overridden by supplying the appropriate option.
 
-     If load is invoked using the functional form
+     The ‘load’ command may also be invoked using the functional form
 
           load ("-option1", ..., "file", "v1", ...)
 
-     then the OPTIONS, FILE, and variable name arguments (V1, ...) must be specified as character strings.
-
-     If a variable that is not marked as global is loaded from a file when a global symbol with the same name already exists, it is loaded in the global symbol table.  Also, if a variable is marked as global in a file and a local symbol exists, the local symbol is moved to the global symbol table and given the value from the file.
-
-     If invoked with a single output argument, Octave returns data instead of inserting variables in the symbol table.  If the data file contains only numbers (TAB- or space-delimited columns), a matrix of values is returned.  Otherwise, ‘load’ returns a structure with members corresponding to the names of the variables in the file.
-
-     The ‘load’ command can read data stored in Octave's text and binary formats, and MATLAB's binary format.  If compiled with zlib support, it can also load gzip-compressed files.  It will automatically detect the type of file and do conversion from different floating point formats (currently only IEEE big and little endian, though other formats may be added in the future).
+     where the OPTIONS, FILE, and variable name arguments (V1, ...) must be specified as character strings.
 
      Valid options for ‘load’ are listed in the following table.
-
-     ‘-force’
-          This option is accepted for backward compatibility but is ignored.  Octave now overwrites variables currently in memory with those of the same name found in the file.
 
      ‘-ascii’
           Force Octave to assume the file contains columns of numbers in text format without any header or other information.  Data in the file will be loaded as a single numeric matrix with the name of the variable derived from the name of the file.
@@ -15226,10 +15224,7 @@ load
           Force Octave to assume the file is in Octave's binary format.
 
      ‘-hdf5’
-          Force Octave to assume the file is in HDF5 format.  (HDF5 is a free, portable binary format developed by the National Center for Supercomputing Applications at the University of Illinois.)  Note that Octave can only read HDF5 files that were created by itself with ‘save’ or with MATLAB's ‘-v7.3’ option (which saves in HDF5 format).  This format is only available if Octave was built with a link to the HDF5 libraries.
-
-     ‘-import’
-          This option is accepted for backward compatibility but is ignored.  Octave can now support multi-dimensional HDF data and automatically modifies variable names if they are invalid Octave identifiers.
+          Force Octave to assume the file is in HDF5 format.  (HDF5 is a free, portable binary format developed by the National Center for Supercomputing Applications at the University of Illinois.)  Note that ‘load’ is only designed to read HDF5 files that were created by Octave with ‘save’, and attempts to read other HDF5 files may fail or produce unpredictable results.  The ‘-hdf5’ option provides a limited ability to read files created using MATLAB's ‘-v7.3’ option (which saves in HDF5 format) although many data types are not yet supported.  This format is only available if Octave was built with a link to the HDF5 libraries.
 
      ‘-text’
           Force Octave to assume the file is in Octave's text format.
@@ -15237,7 +15232,7 @@ load
      ‘-v7.3’
      ‘-V7.3’
      ‘-7.3’
-          Force Octave to assume the file is in MATLAB's v7.3 binary data format.  As the v7.3 format is an HDF5 based format, those files often can also be opened with the "-hdf5" option.  Note that Octave *can not* currently save in this format.
+          Octave does *not* yet implement MATLAB's v7.3 binary data format.  As the v7.3 format is an HDF5 based format, the "-hdf5" option may be used to attempt to open a v7.3 format file, although most non-numeric data types are not yet supported.  Note that Octave *can not* currently save in this format.
 
      ‘-v7’
      ‘-V7’
@@ -15258,7 +15253,24 @@ load
      ‘-mat4-binary’
           Force Octave to assume the file is in MATLAB's version 4 binary format.
 
-     See also: save, dlmwrite, csvwrite, fwrite.
+     The list of variables to load may use wildcard patterns (glob patterns) containing the following special characters:
+
+     ‘?’
+          Match any single character.
+
+     ‘*’
+          Match zero or more characters.
+
+     ‘[ LIST ]’
+          Match the list of characters specified by LIST.  If the first character is ‘!’ or ‘^’, match all characters except those specified by LIST.  For example, the pattern ‘[a-zA-Z]’ will match all lower and uppercase alphabetic characters.
+
+     If invoked with a single output argument, Octave assigns loaded data to the output instead of inserting variables in the symbol table.  If the data file contains only numbers (TAB- or space-delimited columns), a matrix of values is returned.  Otherwise, ‘load’ returns a structure with members corresponding to the names of the variables in the file.
+
+     The ‘load’ command can read data stored in Octave's text and binary formats, MATLAB's binary format, and many simple formats such as comma-separated-values (CSV). If compiled with zlib support, it can also load gzip-compressed files.  It will automatically detect the type of file and do conversion from different floating point formats (currently only IEEE big and little endian, though other formats may be added in the future).
+
+     Programming Note: If a variable that is not marked as global is loaded from a file when a global symbol with the same name already exists, it is loaded in the global symbol table.  Also, if a variable is marked as global in a file and a local symbol exists, the local symbol is moved to the global symbol table and given the value from the file.
+
+     See also: save, csvread, dlmread, fread, textscan.
    
 
 
@@ -15280,7 +15292,7 @@ save
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4857
+# length: 5095
  -- : save file
  -- : save options file
  -- : save options file V1 V2 ...
@@ -15290,20 +15302,18 @@ save
  -- : STR = save ("-", "V1", "V2", ...)
      Save the named variables V1, V2, ..., in the file FILE.
 
-     The special filename ‘-’ may be used to return the content of the variables as a string.  If no variable names are listed, Octave saves all the variables in the current scope.  Otherwise, full variable names or pattern syntax can be used to specify the variables to save.  If the ‘-struct’ modifier is used then the fields of the *scalar* struct are saved as if they were variables with the corresponding field names.  The ‘-struct’ option can be combined with specific field names F1, F2, ... to write only certain fields to the file.
+     If no variable names are listed, Octave saves all the variables in the current scope.  Otherwise, full variable names or pattern syntax can be used to specify the variables to save.  If the ‘-struct’ modifier is used then the fields of the *scalar* struct are saved as if they were variables with the corresponding field names.  The ‘-struct’ option can be combined with specific field names F1, F2, ... to write only certain fields to the file.
 
-     Valid options for the ‘save’ command are listed in the following table.  Options that modify the output format override the format specified by ‘save_default_options’.
-
-     If save is invoked using the functional form
+     The ‘save’ command may also be invoked using the functional form
 
           save ("-option1", ..., "file", "v1", ...)
 
-     then the OPTIONS, FILE, and variable name arguments (V1, ...) must be specified as character strings.
+     where the OPTIONS, FILE, and variable name arguments (V1, ...) must be specified as character strings.
 
-     If called with a filename of "-", write the output to stdout if nargout is 0, otherwise return the output in a character string.
+     Valid options for the ‘save’ command are listed in the following table.  Options that modify the output format override the format specified by ‘save_default_options’.
 
      ‘-append’
-          Append to the destination instead of overwriting.
+          Append to the file instead of overwriting.
 
      ‘-ascii’
           Save a matrix in a text file without a header or any other information.  The matrix must be 2-D and only the real part of any complex value is written to the file.  Numbers are stored in single-precision format and separated by spaces.  Additional options for the ‘-ascii’ format are
@@ -15318,16 +15328,16 @@ save
           Save the data in Octave's binary data format.
 
      ‘-float-binary’
-          Save the data in Octave's binary data format but using only single precision.  Use this format *only* if you know that all the values to be saved can be represented in single precision.
+          Save the data in Octave's binary data format using just single precision.  Use this format *only* if you know that all the values to be saved can be represented in single precision.
 
      ‘-hdf5’
           Save the data in HDF5 format.  (HDF5 is a free, portable, binary format developed by the National Center for Supercomputing Applications at the University of Illinois.)  This format is only available if Octave was built with a link to the HDF5 libraries.
 
      ‘-float-hdf5’
-          Save the data in HDF5 format but using only single precision.  Use this format *only* if you know that all the values to be saved can be represented in single precision.
+          Save the data in HDF5 format using just single precision.  Use this format *only* if you know that all the values to be saved can be represented in single precision.
 
-     ‘-text’
-          Save the data in Octave's text data format.  (default)
+     ‘-text (default)’
+          Save the data in Octave's text data format.  The *note ‘save_precision’: XREFsave_precision. function specifies the number of significant figures to use when saving data (default: 17).  The header of the text data file can be configure with *note ‘save_header_format_string’: XREFsave_header_format_string.
 
      ‘-v7.3’
      ‘-V7.3’
@@ -15370,7 +15380,9 @@ save
 
           Wildcards may also be used in the field name specifications when using the ‘-struct’ modifier (but not in the struct name itself).
 
-     Except when using the MATLAB binary data file format or the ‘-ascii’ format, saving global variables also saves the global status of the variable.  If the variable is restored at a later time using ‘load’, it will be restored as a global variable.
+     Programming Notes: If called with the special filename "-" the data to be saved is returned as a string rather than writing it to an actual file.
+
+     When saving global variables the global status of the variable is also stored.  If the variable is restored at a later time using ‘load’, it will be restored as a global variable.  Global status is _not_ preserved if using a MATLAB binary data file format or the ‘-ascii’ format.
 
      Example:
 
@@ -15380,7 +15392,7 @@ save
 
      saves the variable ‘a’ and all variables beginning with ‘b’ to the file ‘data’ in Octave's binary format.
 
-     See also: load, save_default_options, save_header_format_string, save_precision, dlmread, csvread, fread.
+     See also: load, save_default_options, save_header_format_string, save_precision, csvwrite, dlmwrite, fwrite.
    
 
 
@@ -19513,7 +19525,7 @@ qz
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 1789
+# length: 1896
  -- : [AA, BB, Q, Z, V, W] = qz (A, B)
  -- : [AA, BB, Q, Z, V, W] = qz (A, B, OPT)
      Compute the QZ decomposition of a generalized eigenvalue problem.
@@ -19524,7 +19536,7 @@ qz
 
      There are two calling forms of the function:
 
-       1. ‘[AA, BB, Q, Z, V, W, LAMBDA] = qz (A, B)’
+       1. ‘[AA, BB, Q, Z, V, W] = qz (A, B)’
 
           Compute the complex QZ decomposition, generalized eigenvectors, and generalized eigenvalues.
 
@@ -19536,15 +19548,17 @@ qz
 
           with AA and BB upper triangular, and Q and Z unitary.  The matrices V and W respectively contain the right and left generalized eigenvectors.
 
-       2. ‘[AA, BB, Z {, LAMBDA}] = qz (A, B, OPT)’
+       2. ‘[AA, BB, Q, Z, V, W] = qz (A, B, OPT)’
 
           The OPT argument must be equal to either "real" or "complex".  If it is equal to "complex", then this calling form is equivalent to the first one with only two input arguments.
 
           If OPT is equal to "real", then the real QZ decomposition is computed.  In particular, AA is only guaranteed to be quasi-upper triangular with 1-by-1 and 2-by-2 blocks on the diagonal, and Q and Z are orthogonal.  The identities mentioned above for right and left generalized eigenvectors are only verified if AA is upper triangular (i.e., when all the generalized eigenvalues are real, in which case the real and complex QZ coincide).
 
-     Note: ‘qz’ performs permutation balancing, but not scaling (*note ‘balance’: XREFbalance.), which may be lead to less accurate results than ‘eig’.  The order of output arguments was selected for compatibility with MATLAB.
+     Note: ‘qz’ performs permutation balancing, but not scaling (*note ‘balance’: XREFbalance.), which may lead to less accurate results than ‘eig’.  The order of output arguments was selected for compatibility with MATLAB.
 
-     See also: eig, gsvd, balance, chol, hess, lu, qr, qzhess, schur.
+     For eigenvalues, use the ‘ordeig’ function to compute them based on the resulting AA and BB matrices.
+
+     See also: eig, gsvd, balance, chol, hess, lu, qr, qzhess, schur, ordeig.
    
 
 
@@ -31012,7 +31026,7 @@ interp2
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 2206
+# length: 2214
  -- : ZI = interp2 (X, Y, Z, XI, YI)
  -- : ZI = interp2 (Z, XI, YI)
  -- : ZI = interp2 (Z, N)
@@ -31022,7 +31036,7 @@ interp2
 
      Two-dimensional interpolation.
 
-     Interpolate reference data X, Y, Z to determine ZI at the coordinates XI, YI.  The reference data X, Y can be matrices, as returned by ‘meshgrid’, in which case the sizes of X, Y, and Z must be equal.  If X, Y are vectors describing a grid then ‘length (X) == columns (Z)’ and ‘length (Y) == rows (Z)’.  In either case the input data must be strictly monotonic.
+     Interpolate numeric reference data X, Y, Z to determine ZI at the coordinates XI, YI.  The reference data X, Y can be matrices, as returned by ‘meshgrid’, in which case the sizes of X, Y, and Z must be equal.  If X, Y are vectors describing a grid then ‘length (X) == columns (Z)’ and ‘length (Y) == rows (Z)’.  In either case the input data must be strictly monotonic.
 
      If called without X, Y, and just a single reference data matrix Z, the 2-D region ‘X = 1:columns (Z), Y = 1:rows (Z)’ is assumed.  This saves memory if the grid is regular and the distance between points is not important.
 
@@ -31069,7 +31083,7 @@ interp3
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 2211
+# length: 2219
  -- : VI = interp3 (X, Y, Z, V, XI, YI, ZI)
  -- : VI = interp3 (V, XI, YI, ZI)
  -- : VI = interp3 (V, N)
@@ -31079,7 +31093,7 @@ interp3
 
      Three-dimensional interpolation.
 
-     Interpolate reference data X, Y, Z, V to determine VI at the coordinates XI, YI, ZI.  The reference data X, Y, Z can be matrices, as returned by ‘meshgrid’, in which case the sizes of X, Y, Z, and V must be equal.  If X, Y, Z are vectors describing a cubic grid then ‘length (X) == columns (V)’, ‘length (Y) == rows (V)’, and ‘length (Z) == size (V, 3)’.  In either case the input data must be strictly monotonic.
+     Interpolate numeric reference data X, Y, Z, V to determine VI at the coordinates XI, YI, ZI.  The reference data X, Y, Z can be matrices, as returned by ‘meshgrid’, in which case the sizes of X, Y, Z, and V must be equal.  If X, Y, Z are vectors describing a cubic grid then ‘length (X) == columns (V)’, ‘length (Y) == rows (V)’, and ‘length (Z) == size (V, 3)’.  In either case the input data must be strictly monotonic.
 
      If called without X, Y, Z, and just a single reference data matrix V, the 3-D region ‘X = 1:columns (V), Y = 1:rows (V), Z = 1:size (V, 3)’ is assumed.  This saves memory if the grid is regular and the distance between points is not important.
 
@@ -31157,7 +31171,7 @@ interpn
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 2178
+# length: 2186
  -- : VI = interpn (X1, X2, ..., V, Y1, Y2, ...)
  -- : VI = interpn (V, Y1, Y2, ...)
  -- : VI = interpn (V, M)
@@ -31167,7 +31181,7 @@ interpn
 
      Perform N-dimensional interpolation, where N is at least two.
 
-     Each element of the N-dimensional array V represents a value at a location given by the parameters X1, X2, ..., XN.  The parameters X1, X2, ..., XN are either N-dimensional arrays of the same size as the array V in the "ndgrid" format or vectors.
+     Each element of the N-dimensional numeric array V represents a value at a location given by the parameters X1, X2, ..., XN.  The parameters X1, X2, ..., XN are either N-dimensional arrays of the same size as the array V in the "ndgrid" format or vectors.
 
      The parameters Y1, Y2, ..., YN represent the points at which the array VI is interpolated.  They can be vectors of the same length and orientation in which case they are interpreted as coordinates of scattered points.  If they are vectors of differing orientation or length, they are used to form a grid in "ndgrid" format.  They can also be N-dimensional arrays of equal size.
 
@@ -41250,14 +41264,14 @@ edit
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4005
+# length: 4150
  -- : edit NAME
  -- : edit FIELD VALUE
  -- : VALUE = edit ("get", FIELD)
  -- : VALUE = edit ("get", "all")
      Edit the named function, or change editor settings.
 
-     If ‘edit’ is called with the name of a file or function as its argument it will be opened in the text editor defined by ‘EDITOR’.
+     If ‘edit’ is called with the name of a file or function as its argument it will be opened in the default text editor.  The default editor for the Octave GUI is specified in the Editor tab of Preferences.  The default editor for the CLI is specified by the ‘EDITOR’ function.
 
         • If the function NAME is available in a file on your path, then it will be opened in the editor.  If no file is found, then the m-file variant, ending with ".m", will be considered.  If still no file is found, then variants with a leading "@" and then with both a leading "@" and trailing ".m" will be considered.
 
@@ -46452,7 +46466,7 @@ sqp
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4035
+# length: 3954
  -- : [X, OBJ, INFO, ITER, NF, LAMBDA] = sqp (X0, PHI)
  -- : [...] = sqp (X0, PHI, G)
  -- : [...] = sqp (X0, PHI, G, H)
@@ -46490,7 +46504,7 @@ sqp
           transpose ( [ ------   -----   ...   ------ ] )
                       [  dx_1     dx_2          dx_N  ]
 
-     The fifth and sixth arguments, LB and UB, contain lower and upper bounds on X.  These must be consistent with the equality and inequality constraints G and H.  If the arguments are vectors then X(i) is bound by LB(i) and UB(i).  A bound can also be a scalar in which case all elements of X will share the same bound.
+     The fifth and sixth arguments, LB and UB, contain lower and upper bounds on X and when provided must be vectors of the same size as the the vector X0.  The bounds must be consistent with the equality and inequality constraints G and H.
 
      The seventh argument MAXITER specifies the maximum number of iterations.  The default value is 100.
 
@@ -63522,7 +63536,7 @@ movmad
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4217
+# length: 4215
  -- : Y = movmad (X, WLEN)
  -- : Y = movmad (X, [NB, NA])
  -- : Y = movmad (..., DIM)
@@ -63530,7 +63544,7 @@ movmad
  -- : Y = movmad (..., PROPERTY, VALUE)
      Calculate the moving mean absolute deviation over a sliding window of length WLEN on data X.
 
-     If WLEN is a scalar, the function ‘mad’ is applied to a moving window of length WLEN.  When WLEN is an odd number the window is symmetric and includes ‘(WLEN - 1) / 2’ elements on either side of the central element.  For example, when calculating the output at index 5 with a window length of 3, ‘movmad’ uses data elements ‘[4, 5, 6]’.  If WLEN is an even number, the window is asymmetric and has ‘WLEN/2’ elements to the left of the central element and ‘WLEN/2 - 1’ elements to the right of the central element.  For example, when calculating the output at index 5 with a window length of 4, ‘movmad’ uses data elements ‘[3, 4, 5, 6]’.
+     If WLEN is a scalar, the function ‘mad’ is applied to a moving window of length WLEN.  When WLEN is an odd number the window is symmetric and includes ‘(WLEN - 1) / 2’ elements oneither side of the central element.  For example, when calculating the output at index 5 with a window length of 3, ‘movmad’ uses data elements ‘[4, 5, 6]’.  If WLEN is an even number, the window is asymmetric and has ‘WLEN/2’ elements to the left of the central element and ‘WLEN/2 - 1’ elements to the right of thecentral element.  For example, when calculating the output at index 5 with a window length of 4, ‘movmad’ uses data elements ‘[3, 4, 5, 6]’.
 
      If WLEN is an array with two elements ‘[NB, NA]’, the function is applied to a moving window ‘-NB:NA’.  This window includes NB number of elements _before_ the current element and NA number of elements _after_ the current element.  The current element is always included.  For example, given ‘WLEN = [3, 0]’, the data used to calculate index 5 is ‘[2, 3, 4, 5]’.
 
@@ -63924,7 +63938,7 @@ movstd
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4672
+# length: 4753
  -- : Y = movstd (X, WLEN)
  -- : Y = movstd (X, [NB, NA])
  -- : Y = movstd (..., OPT)
@@ -63945,7 +63959,7 @@ movstd
      1:
           normalize with N, this provides the square root of the second moment around the mean
 
-     If the optional argument DIM is given, operate along this dimension.  The normalization argument OPT must be given before the dimension.
+     If the optional argument DIM is given, operate along this dimension.  The normalization argument OPT must be given before the dimension.  To use the default value for OPT you may pass an empty input argument ‘[]’.
 
      The optional string argument "NANCOND" controls whether ‘NaN’ and ‘NA’ values should be included ("includenan"), or excluded ("omitnan"), from the data passed to ‘movstd’.  The default is "includenan".  Caution: the "omitnan" option is not yet implemented.
 
@@ -64067,7 +64081,7 @@ movvar
 # name: <cell-element>
 # type: sq_string
 # elements: 1
-# length: 4586
+# length: 4668
  -- : Y = movvar (X, WLEN)
  -- : Y = movvar (X, [NB, NA])
  -- : Y = movvar (..., OPT)
@@ -64080,7 +64094,7 @@ movvar
 
      If WLEN is an array with two elements ‘[NB, NA]’, the function is applied to a moving window ‘-NB:NA’.  This window includes NB number of elements _before_ the current element and NA number of elements _after_ the current element.  The current element is always included.  For example, given ‘WLEN = [3, 0]’, the data used to calculate index 5 is ‘[2, 3, 4, 5]’.
 
-     The optional argument OPT determines the type of normalization to use.  Valid values are
+     The optional argument OPT determines the type of normalization to use.  Valid values are:
 
      0:
           normalize with N-1, provides the best unbiased estimator of the variance [default]
@@ -64088,7 +64102,7 @@ movvar
      1:
           normalizes with N, this provides the second moment around the mean
 
-     If the optional argument DIM is given, operate along this dimension.  The normalization argument OPT must be given before the dimension.
+     If the optional argument DIM is given, operate along this dimension.  The normalization argument OPT must be given before the dimension.  To use the default value for OPT you may pass an empty input argument ‘[]’.
 
      The optional string argument "NANCOND" controls whether ‘NaN’ and ‘NA’ values should be included ("includenan"), or excluded ("omitnan"), from the data passed to ‘var’.  The default is "includenan".  Caution: the "omitnan" option is not yet implemented.
 

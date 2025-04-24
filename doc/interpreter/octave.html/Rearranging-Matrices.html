@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Rearranging Matrices (GNU Octave (version 9.2.0))</title>
+<title>Rearranging Matrices (GNU Octave (version 9.4.0))</title>
 
-<meta name="description" content="Rearranging Matrices (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Rearranging Matrices (GNU Octave (version 9.2.0))">
+<meta name="description" content="Rearranging Matrices (GNU Octave (version 9.4.0))">
+<meta name="keywords" content="Rearranging Matrices (GNU Octave (version 9.4.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -298,7 +298,7 @@ concatenate the arrays without the overhead of a function call.
 <dd><p>Return the generalized transpose for an N-D array object <var class="var">A</var>.
 </p>
 <p>The permutation vector <var class="var">perm</var> must contain the elements
-<code class="code">1:ndims&nbsp;(A)</code><!-- /@w --> (in any order, but each element must appear only
+<code class="code">1:ndims&nbsp;(A)</code><!-- /@w -->&nbsp;(in any order, but each element must appear only
 once).  The <var class="var">N</var>th dimension of <var class="var">A</var> gets remapped to dimension
 <code class="code"><var class="var">PERM</var>(<var class="var">N</var>)</code>.  For example:
 </p>
@@ -557,7 +557,7 @@ matrix.  For example:
 in the order in which they appeared in the original list.
 </p>
 <p>Sorting of complex entries is done first by magnitude
-(<code class="code">abs&nbsp;(<var class="var">z</var>)</code><!-- /@w -->) and for any ties by phase angle
+(<code class="code">abs&nbsp;(<var class="var">z</var>)</code><!-- /@w -->)&nbsp;and for any ties by phase angle
 (<code class="code">angle&nbsp;(z)</code><!-- /@w -->).  For example:
 </p>
 <div class="example">
@@ -654,7 +654,7 @@ not given.
 </p>
 <p>Programming Note: nth_element encapsulates the C++ standard library
 algorithms nth_element and partial_sort.  On average, the complexity of the
-operation is O(M*log(K)), where <code class="code">M&nbsp;=&nbsp;size&nbsp;(<var class="var">x</var>,&nbsp;<var class="var">dim</var>)</code><!-- /@w --> and
+operation is O(M*log(K)), where <code class="code">M&nbsp;=&nbsp;size&nbsp;(<var class="var">x</var>,&nbsp;<var class="var">dim</var>)</code><!-- /@w -->&nbsp;and
 <code class="code">K&nbsp;=&nbsp;length&nbsp;(<var class="var">n</var>)</code><!-- /@w -->.  This function is intended for cases where
 the ratio K/M is small; otherwise, it may be better to use <code class="code">sort</code>.
 </p>

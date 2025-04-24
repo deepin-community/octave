@@ -33,11 +33,11 @@
 ##
 ## The moving window length input @var{wlen} can either be a scalar not equal
 ## to 1 or a 2-element array of integers.  For scalar values, if odd the window
-## is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on either
-## side of the central element.  If @var{wlen} is even the window is asymmetric
-## and has @w{@code{@var{wlen}/2}} elements to the left of the central element
-## and @w{@code{@var{wlen}/2 - 1}} elements to the right of the central
-## element.  When @var{wlen} is a 2-element array,
+## is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements on
+## either side of the central element.  If @var{wlen} is even the window is
+## asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+## central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+## the central element.  When @var{wlen} is a 2-element array,
 ## @w{@code{[@var{nb}, @var{na}]}}, the window includes @var{nb} elements to
 ## the left of the current element and @var{na} elements to the right of the
 ## current element.
@@ -45,7 +45,7 @@
 ## The output @var{slcidx} is an array of indices of the slices that fit fully
 ## within the vector, where each column is an individual slice as the window
 ## moves from left to right.  The slices have @var{wlen} elements for scalar
-## @var{wlen}, or @w{@code{@var{nb} + @var{na} + 1}} elements for array valued
+## @var{wlen}, or @w{@code{@var{nb} + @var{na} + 1}}@ elements for array valued
 ## @var{wlen}.
 ##
 ## Optional output @var{C} is an row vector of window center positions where
@@ -129,8 +129,36 @@ function [slcidx, C, Cpre, Cpost, win] = movslice (N, wlen)
 
 endfunction
 
+%!assert (double (movslice (10, 2)), [1:9; 2:10])
+%!assert (double (movslice (10, 9)), [1:9; 2:10].')
 
-## FIXME: Need functional BIST tests
+%!test
+%! [sl, c, cpre, cpost, win] = movslice (10, 4);
+%! assert (double (sl), [1:7; 2:8; 3:9; 4:10]);
+%! assert (double (c), 3:9);
+%! assert (cpre, 1:2);
+%! assert (cpost, 10);
+%! assert (win, [-2:1:1].');
+
+%!test
+%! [sl, c, cpre, cpost, win] = movslice (10, 10);
+%! assert (double (sl), [1:10].');
+%! assert (double (c), 6);
+%! assert (cpre, 1:5);
+%! assert (cpost, 7:10);
+%! assert (win, [-5:1:4].');
+
+## Verify uint output.  Don't test uint64 due to excessive memory usage.
+%!test
+%! [sl, c] = movslice (10, 10);
+%! assert (class (sl), "uint8");
+%! assert (class (c), "uint8");
+%! [sl, c] = movslice (1000, 1000);
+%! assert (class (sl), "uint16");
+%! assert (class (c), "uint16");
+%! [sl, c] = movslice (100000, 100000);
+%! assert (class (sl), "uint32");
+%! assert (class (c), "uint32");
 
 ## Test input validation
 %!error <Invalid call> movslice ()

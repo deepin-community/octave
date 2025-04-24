@@ -125,8 +125,8 @@ Print short help message and exit.
 Add path to the head of the search path for images.  The value of
 @var{path} specified on the command line will override any value of
 @w{@env{OCTAVE_IMAGE_PATH}}@ found in the environment, but not any commands
-in the system or user startup files that call the @w{@env{IMAGE_PATH}}@
-function.
+in the system or user startup files that call the
+@w{@env{IMAGE_PATH}}@ function.
 
 @item --info-file @var{filename}
 @cindex @sortas{options, Octave command --info-file} @ @ @code{--info-file @var{filename}}
@@ -429,8 +429,8 @@ overridden by the environment variable @w{@env{OCTAVE_VERSION_INITFILE}}.
 @item @var{config-dir}/octave/octaverc
 @cindex personal startup file
 where @code{@var{config-dir}} is the platform-dependent location for user
-local configuration files (e.g., @w{@env{$XDG_CONFIG_HOME}} on many Unix-like
-operating systems or @w{@env{%APPDATA%}} on Windows).
+local configuration files (e.g., @w{@env{$XDG_CONFIG_HOME}}@ on many Unix-like
+operating systems or @w{@env{%APPDATA%}}@ on Windows).
 
 @item ~/.octaverc
 @cindex personal startup file
@@ -1562,10 +1562,11 @@ All future commands issued during the current Octave session will be written to
 this new file (if the current setting of @code{history_save} allows for this).
 
 The default value is @file{@w{@env{$DATA}}/octave/history}, where
-@w{@env{$DATA}} is the platform-specific location for (roaming) user data files
-(e.g., @w{@env{$XDG_DATA_HOME}} or, if that is not set, @file{~/.local/share}
-on Unix-like operating systems or @w{@env{%APPDATA%}} on Windows).  The default
-value may be overridden by the environment variable @w{@env{OCTAVE_HISTFILE}}.
+@w{@env{$DATA}}@ is the platform-specific location for (roaming) user data files
+(e.g., @w{@env{$XDG_DATA_HOME}}@ or, if that is not set, @file{~/.local/share}
+on Unix-like operating systems or @w{@env{%APPDATA%}}@ on Windows).  The
+default value may be overridden by the environment variable
+@w{@env{OCTAVE_HISTFILE}}.
 
 Programming Notes:
 
@@ -1646,11 +1647,15 @@ The original variable value is restored when exiting the function.
 @deftypefn  {} {@var{val} =} EDITOR ()
 @deftypefnx {} {@var{old_val} =} EDITOR (@var{new_val})
 @deftypefnx {} {@var{old_val} =} EDITOR (@var{new_val}, "local")
-Query or set the internal variable that specifies the default text editor.
+Query or set the internal variable that specifies the default text editor when
+using the CLI.
 
-The default value is taken from the environment variable @w{@env{EDITOR}}@
-when Octave starts.  If the environment variable is not initialized,
-@w{@env{EDITOR}}@ will be set to @qcode{"emacs"}.
+The default value is taken from the environment variable
+@w{@env{EDITOR}}@ when Octave starts.  If the environment variable is not
+initialized, @w{@env{EDITOR}}@ will be set to @qcode{"emacs"}.
+
+@emph{Note:} This setting applies when running the CLI.  When using the
+Octave GUI the default editor is specified in the Editor tab of Preferences.
 
 When called from inside a function with the @qcode{"local"} option, the
 variable is changed locally for the function and any subroutines it calls.

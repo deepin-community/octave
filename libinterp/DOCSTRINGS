@@ -1076,6 +1076,13 @@ tolerance is zero, the relative tolerance must be greater than or equal to
 Return true if Octave is running in GUI mode and false otherwise.
 @seealso{have_window_system}
 @end deftypefn
+__is_multi_threaded__
+@c __is_multi_threaded__ libinterp/octave.cc
+-*- texinfo -*-
+@deftypefn {} {@var{tf} =} __is_multi_threaded__ ()
+Return true if Octave is running with multiple threads.
+@seealso{isguirunning}
+@end deftypefn
 argv
 @c argv libinterp/octave.cc
 -*- texinfo -*-
@@ -3425,8 +3432,8 @@ The input is either a string specifying a floating point type, or it is an
 existing floating point variable @var{var}.
 
 The default type is @qcode{"double"}, but @qcode{"single"} is a valid option.
-On IEEE 754 compatible systems, @code{flintmax} is @w{@math{2^{53}}} for
-@qcode{"double"} and @w{@math{2^{24}}} for @qcode{"single"}.
+On IEEE 754 compatible systems, @code{flintmax} is @w{@math{2^{53}}}@ for
+@qcode{"double"} and @w{@math{2^{24}}}@ for @qcode{"single"}.
 
 Example Code - query an existing variable
 
@@ -4454,8 +4461,8 @@ original factored matrix.
 Given a Cholesky@tie{}factorization of a real symmetric or complex Hermitian
 positive definite matrix @w{@var{A} = @var{R}'*@var{R}}, @var{R}@tie{}upper
 triangular, return the Cholesky@tie{}factorization of
-@var{A1}, where @w{A1(p,p) = A}, @w{A1(:,j) = A1(j,:)' = u} and
-@w{p = [1:j-1,j+1:n+1]}.  @w{u(j)} should be positive.
+@var{A1}, where @w{A1(p,p) = A}, @w{A1(:,j) = A1(j,:)' = u}@ and
+@w{p = [1:j-1,j+1:n+1]}.  @w{u(j)}@ should be positive.
 
 On return, @var{info} is set to
 
@@ -4493,7 +4500,7 @@ original factored matrix.
 Given a Cholesky@tie{}factorization of a real symmetric or complex Hermitian
 positive definite matrix @w{@var{A} = @var{R}'*@var{R}}, @var{R}@tie{}upper
 triangular, return the Cholesky@tie{}factorization of
-@w{@var{A}(p,p)}, where @w{p} is the permutation @*
+@w{@var{A}(p,p)}, where p is the permutation @*
 @code{p = [1:i-1, shift(i:j, 1), j+1:n]} if @w{@var{i} < @var{j}} @*
  or @*
 @code{p = [1:j-1, shift(j:i,-1), i+1:n]} if @w{@var{j} < @var{i}}.  @*
@@ -5248,7 +5255,7 @@ x - y .* floor (x ./ y)
 @noindent
 and is written such that the correct modulus is returned for integer types.
 This function handles negative values correctly.  That is,
-@w{@code{mod (-1, 3)}} is 2, not -1, as @w{@code{rem (-1, 3)}} returns.
+@w{@code{mod (-1, 3)}}@ is 2, not -1, as @w{@code{rem (-1, 3)}}@ returns.
 
 An error results if the dimensions of the arguments do not agree, or if
 either of the arguments is complex.
@@ -5471,7 +5478,7 @@ cat (4, ones (2, 2), zeros (2, 2))
 Return the generalized transpose for an N-D array object @var{A}.
 
 The permutation vector @var{perm} must contain the elements
-@w{@code{1:ndims (A)}} (in any order, but each element must appear only
+@w{@code{1:ndims (A)}}@ (in any order, but each element must appear only
 once).  The @var{N}th dimension of @var{A} gets remapped to dimension
 @code{@var{PERM}(@var{N})}.  For example:
 
@@ -5781,7 +5788,7 @@ used interchangeably.
 @deftypefn {} {@var{tf} =} isinteger (@var{x})
 Return true if @var{x} is an integer object (int8, uint8, int16, etc.).
 
-Note that @w{@code{isinteger (14)}} is false because numeric constants in
+Note that @w{@code{isinteger (14)}}@ is false because numeric constants in
 Octave are double precision floating point values.
 @seealso{isfloat, ischar, islogical, isstring, isnumeric, isa}
 @end deftypefn
@@ -5882,7 +5889,7 @@ a 1x1 object (a scalar) is also a vector.
 Return true if @var{x} is a row vector.
 
 A row vector is a 2-D array of any type for which @code{size (@var{x})} returns
-@w{@code{[1, N]}} with non-negative N.
+@w{@code{[1, N]}}@ with non-negative N.
 @seealso{iscolumn, isscalar, isvector, ismatrix, size}
 @end deftypefn
 iscolumn
@@ -5892,7 +5899,7 @@ A row vector is a 2-D array of any type for which @code{size (@var{x})} returns
 Return true if @var{x} is a column vector.
 
 A column vector is a 2-D array of any type for which @code{size (@var{x})}
-returns @w{@code{[N, 1]}} with non-negative N.
+returns @w{@code{[N, 1]}}@ with non-negative N.
 @seealso{isrow, isscalar, isvector, ismatrix, size}
 @end deftypefn
 ismatrix
@@ -5902,7 +5909,7 @@ returns @w{@code{[N, 1]}} with non-negative N.
 Return true if @var{x} is a 2-D array.
 
 A matrix is an array of any type where @code{ndims (@var{x}) == 2} and for
-which @code{size (@var{x})} returns @w{@code{[M, N]}} with non-negative M and
+which @code{size (@var{x})} returns @w{@code{[M, N]}}@ with non-negative M and
 N.
 @seealso{isscalar, isvector, iscell, isstruct, issparse, isa}
 @end deftypefn
@@ -5913,7 +5920,7 @@ N.
 Return true if @var{x} is a 2-D square array.
 
 A square array is a 2-D array of any type for which @code{size (@var{x})}
-returns @w{@code{[N, N]}} where N is a non-negative integer.
+returns @w{@code{[N, N]}}@ where N is a non-negative integer.
 @seealso{isscalar, isvector, ismatrix, size}
 @end deftypefn
 ones
@@ -6540,7 +6547,7 @@ or from a range.
 @deftypefnx {} {@var{n} =} norm (@var{A}, @var{p}, @var{opt})
 Compute the p-norm of the matrix @var{A}.
 
-If the second argument is not given, @w{@code{p = 2}} is used.
+If the second argument is not given, @w{@code{p = 2}}@ is used.
 
 If @var{A} is a matrix (or sparse matrix):
 
@@ -6606,14 +6613,14 @@ This function is equivalent to the operator syntax @w{@code{! @var{x}}}.
 @c uplus libinterp/corefcn/data.cc
 -*- texinfo -*-
 @deftypefn {} {@var{B} =} uplus (@var{A})
-This function and @w{@tcode{+ @var{A}}} are equivalent.
+This function and @w{@tcode{+ @var{A}}}@ are equivalent.
 @seealso{uminus, plus}
 @end deftypefn
 uminus
 @c uminus libinterp/corefcn/data.cc
 -*- texinfo -*-
 @deftypefn {} {@var{B} =} uminus (@var{A})
-This function and @w{@tcode{- @var{A}}} are equivalent.
+This function and @w{@tcode{- @var{A}}}@ are equivalent.
 @seealso{uplus, minus}
 @end deftypefn
 transpose
@@ -6622,7 +6629,7 @@ This function and @w{@tcode{- @var{A}}} are equivalent.
 @deftypefn {} {@var{B} =} transpose (@var{A})
 Return the transpose of @var{A}.
 
-This function and @tcode{@var{A}.'@:} are equivalent.
+This function and @tcode{@var{A}.'@:}@ are equivalent.
 @seealso{ctranspose}
 @end deftypefn
 ctranspose
@@ -6631,7 +6638,7 @@ This function and @tcode{@var{A}.'@:} are equivalent.
 @deftypefn {} {@var{B} =} ctranspose (@var{A})
 Return the complex conjugate transpose of @var{A}.
 
-This function and @tcode{@var{A}'} are equivalent.
+This function and @tcode{@var{A}'}@ are equivalent.
 @seealso{transpose}
 @end deftypefn
 plus
@@ -6639,7 +6646,7 @@ This function and @tcode{@var{A}'} are equivalent.
 -*- texinfo -*-
 @deftypefn  {} {@var{C} =} plus (@var{A}, @var{B})
 @deftypefnx {} {@var{C} =} plus (@var{A1}, @var{A2}, @dots{})
-This function and @w{@tcode{@var{A} + @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} + @var{B}}}@ are equivalent.
 
 If more arguments are given, the summation is applied
 cumulatively from left to right:
@@ -6654,7 +6661,7 @@ cumulatively from left to right:
 @c minus libinterp/corefcn/data.cc
 -*- texinfo -*-
 @deftypefn {} {@var{C} =} minus (@var{A}, @var{B})
-This function and @w{@tcode{@var{A} - @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} - @var{B}}}@ are equivalent.
 @seealso{plus, uminus}
 @end deftypefn
 mtimes
@@ -6664,7 +6671,7 @@ This function and @w{@tcode{@var{A} - @var{B}}} are equivalent.
 @deftypefnx {} {@var{C} =} mtimes (@var{A1}, @var{A2}, @dots{})
 Return the matrix multiplication product of inputs.
 
-This function and @w{@tcode{@var{A} * @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} * @var{B}}}@ are equivalent.
 If more arguments are given, the multiplication is applied
 cumulatively from left to right:
 
@@ -6680,7 +6687,7 @@ cumulatively from left to right:
 @deftypefn {} {@var{C} =} mrdivide (@var{A}, @var{B})
 Return the matrix right division of @var{A} and @var{B}.
 
-This function and @w{@tcode{@var{A} / @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} / @var{B}}}@ are equivalent.
 
 If the system is not square, or if the coefficient matrix is singular, a
 minimum norm solution is computed.
@@ -6692,7 +6699,7 @@ minimum norm solution is computed.
 @deftypefn {} {@var{C} =} mpower (@var{A}, @var{B})
 Return the matrix power operation of @var{A} raised to the @var{B} power.
 
-This function and @w{@tcode{@var{A} ^ @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} ^ @var{B}}}@ are equivalent.
 @seealso{power, mtimes, plus, minus}
 @end deftypefn
 mldivide
@@ -6701,7 +6708,7 @@ This function and @w{@tcode{@var{A} ^ @var{B}}} are equivalent.
 @deftypefn {} {@var{C} =} mldivide (@var{A}, @var{B})
 Return the matrix left division of @var{A} and @var{B}.
 
-This function and @w{@tcode{@var{A} @backslashchar{} @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} @backslashchar{} @var{B}}}@ are equivalent.
 
 If the system is not square, or if the coefficient matrix is singular, a
 minimum norm solution is computed.
@@ -6760,7 +6767,7 @@ This function is equivalent to @w{@code{@var{A} != @var{B}}}.
 @deftypefnx {} {@var{C} =} times (@var{A1}, @var{A2}, @dots{})
 Return the element-by-element multiplication product of inputs.
 
-This function and @w{@tcode{@var{A} .* @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} .* @var{B}}}@ are equivalent.
 If more arguments are given, the multiplication is applied
 cumulatively from left to right:
 
@@ -6776,7 +6783,7 @@ cumulatively from left to right:
 @deftypefn {} {@var{C} =} rdivide (@var{A}, @var{B})
 Return the element-by-element right division of @var{A} and @var{B}.
 
-This function and @w{@tcode{@var{A} ./ @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} ./ @var{B}}}@ are equivalent.
 @seealso{ldivide, mrdivide, times, plus}
 @end deftypefn
 power
@@ -6786,7 +6793,7 @@ This function and @w{@tcode{@var{A} ./ @var{B}}} are equivalent.
 Return the element-by-element operation of @var{A} raised to the
 @var{B} power.
 
-This function and @w{@tcode{@var{A} .^ @var{B}}} are equivalent.
+This function and @w{@tcode{@var{A} .^ @var{B}}}@ are equivalent.
 
 If several complex results are possible, returns the one with smallest
 non-negative argument (angle).  Use @code{realpow}, @code{realsqrt},
@@ -6800,7 +6807,7 @@ non-negative argument (angle).  Use @code{realpow}, @code{realsqrt},
 @deftypefn {} {@var{C} =} ldivide (@var{A}, @var{B})
 Return the element-by-element left division of @var{A} and @var{B}.
 
-This function and @w{@tcode{@var{A} .@backslashchar{} @var{B}}} are
+This function and @w{@tcode{@var{A} .@backslashchar{} @var{B}}}@ are
 equivalent.
 @seealso{rdivide, mldivide, times, plus}
 @end deftypefn
@@ -6847,7 +6854,7 @@ Return the result of the colon expression corresponding to @var{base},
 @var{limit}, and optionally, @var{increment}.
 
 This function is equivalent to the operator syntax
-@w{@code{@var{base} : @var{limit}}} or
+@w{@code{@var{base} : @var{limit}}}@ or
 @w{@code{@var{base} : @var{increment} : @var{limit}}}.
 @seealso{linspace}
 @end deftypefn
@@ -6987,7 +6994,7 @@ For equal elements, the indices are such that equal elements are listed
 in the order in which they appeared in the original list.
 
 Sorting of complex entries is done first by magnitude
-(@w{@code{abs (@var{z})}}) and for any ties by phase angle
+(@w{@code{abs (@var{z})}})@ and for any ties by phase angle
 (@w{@code{angle (z)}}).  For example:
 
 @example
@@ -7053,7 +7060,7 @@ not given.
 
 Programming Note: nth_element encapsulates the C++ standard library
 algorithms nth_element and partial_sort.  On average, the complexity of the
-operation is O(M*log(K)), where @w{@code{M = size (@var{x}, @var{dim})}} and
+operation is O(M*log(K)), where @w{@code{M = size (@var{x}, @var{dim})}}@ and
 @w{@code{K = length (@var{n})}}.  This function is intended for cases where
 the ratio K/M is small; otherwise, it may be better to use @code{sort}.
 @seealso{sort, min, max}
@@ -7120,7 +7127,7 @@ interchangeably.
 @deftypefn  {} {@var{y} =} diff (@var{x})
 @deftypefnx {} {@var{y} =} diff (@var{x}, @var{k})
 @deftypefnx {} {@var{y} =} diff (@var{x}, @var{k}, @var{dim})
-If @var{x} is a vector of length @math{n}, @w{@code{diff (@var{x})}} is the
+If @var{x} is a vector of length @math{n}, @w{@code{diff (@var{x})}}@ is the
 vector of first differences
 @tex
  $x_2 - x_1, \ldots{}, x_n - x_{n-1}$.
@@ -7129,7 +7136,7 @@ vector of first differences
  @var{x}(2) - @var{x}(1), @dots{}, @var{x}(n) - @var{x}(n-1).
 @end ifnottex
 
-If @var{x} is a matrix, @w{@code{diff (@var{x})}} is the matrix of column
+If @var{x} is a matrix, @w{@code{diff (@var{x})}}@ is the matrix of column
 differences along the first non-singleton dimension.
 
 The second argument is optional.  If supplied,
@@ -7142,7 +7149,7 @@ non-singleton dimension.
 The dimension along which to take the difference can be explicitly
 stated with the optional variable @var{dim}.  In this case the
 @var{k}-th order differences are calculated along this dimension.
-In the case where @var{k} exceeds @w{@code{size (@var{x}, @var{dim})}}
+In the case where @var{k} exceeds @w{@code{size (@var{x}, @var{dim})}}@ 
 an empty matrix is returned.
 @seealso{sort, merge}
 @end deftypefn
@@ -8165,11 +8172,15 @@ and 16.15), Dover, 1965.
 @deftypefn  {} {@var{val} =} EDITOR ()
 @deftypefnx {} {@var{old_val} =} EDITOR (@var{new_val})
 @deftypefnx {} {@var{old_val} =} EDITOR (@var{new_val}, "local")
-Query or set the internal variable that specifies the default text editor.
+Query or set the internal variable that specifies the default text editor when
+using the CLI.
 
-The default value is taken from the environment variable @w{@env{EDITOR}}@
-when Octave starts.  If the environment variable is not initialized,
-@w{@env{EDITOR}}@ will be set to @qcode{"emacs"}.
+The default value is taken from the environment variable
+@w{@env{EDITOR}}@ when Octave starts.  If the environment variable is not
+initialized, @w{@env{EDITOR}}@ will be set to @qcode{"emacs"}.
+
+@emph{Note:} This setting applies when running the CLI.  When using the
+Octave GUI the default editor is specified in the Editor tab of Preferences.
 
 When called from inside a function with the @qcode{"local"} option, the
 variable is changed locally for the function and any subroutines it calls.
@@ -8240,6 +8251,22 @@ following the template string.  If there are no additional arguments, the
 template string is used literally (i.e., without interpreting any escape
 sequences in single-quoted character vectors).  The message is prefixed
 by @samp{error: }.
+
+The optional @var{id} argument allows programmers to tag an error
+with a specific identifier so that users can later retrieve it (using
+@code{lasterr} or @code{lasterror}) and know the origin of the error.
+The identifier must contain at least one colon character (@qcode{':'})
+and must not contain any whitespace characters.  It should be a string of
+the form @qcode{"NAMESPACE:ERROR-NAME"}.  Octave's own errors use the
+@qcode{"Octave"} namespace (@pxref{XREFerror_ids,,@code{error_ids}}).
+For example:
+
+@example
+@group
+error ("MyNameSpace:wrong-type-argument",
+       "fcn_name: argument should be numeric");
+@end group
+@end example
 
 Calling @code{error} also sets Octave's internal error state such that
 control will return to the top level without evaluating any further
@@ -12287,51 +12314,26 @@ Pretty print Octave path directories and the files within each directory.
 @deftypefnx {} {} load file options
 @deftypefnx {} {} load file options v1 v2 @dots{}
 @deftypefnx {} {S =} load ("file", "options", "v1", "v2", @dots{})
-Load the named variables @var{v1}, @var{v2}, @dots{}, from the file
-@var{file}.
+Load the named variables @var{v1}, @var{v2}, @dots{}, from the file @var{file}.
 
-If no variables are specified then all variables found in the
-file will be loaded.  As with @code{save}, the list of variables to extract
-can be full names or use a pattern syntax.  The format of the file is
-automatically detected but may be overridden by supplying the appropriate
-option.
+If no variables are specified then all variables found in the file will be
+loaded.  Otherwise, full variable names or pattern syntax can be used to
+specify the variables to save.  The format of the file is automatically
+detected but may be overridden by supplying the appropriate option.
 
-If load is invoked using the functional form
+The @code{load} command may also be invoked using the functional form
 
 @example
 load ("-option1", @dots{}, "file", "v1", @dots{})
 @end example
 
 @noindent
-then the @var{options}, @var{file}, and variable name arguments
-(@var{v1}, @dots{}) must be specified as character strings.
-
-If a variable that is not marked as global is loaded from a file when a
-global symbol with the same name already exists, it is loaded in the
-global symbol table.  Also, if a variable is marked as global in a file
-and a local symbol exists, the local symbol is moved to the global
-symbol table and given the value from the file.
-
-If invoked with a single output argument, Octave returns data instead
-of inserting variables in the symbol table.  If the data file contains
-only numbers (TAB- or space-delimited columns), a matrix of values is
-returned.  Otherwise, @code{load} returns a structure with members
- corresponding to the names of the variables in the file.
-
-The @code{load} command can read data stored in Octave's text and
-binary formats, and @sc{matlab}'s binary format.  If compiled with zlib
-support, it can also load gzip-compressed files.  It will automatically
-detect the type of file and do conversion from different floating point
-formats (currently only IEEE big and little endian, though other formats
-may be added in the future).
+where the @var{options}, @var{file}, and variable name arguments (@var{v1},
+@dots{}) must be specified as character strings.
 
 Valid options for @code{load} are listed in the following table.
 
 @table @code
-@item -force
-This option is accepted for backward compatibility but is ignored.
-Octave now overwrites variables currently in memory with
-those of the same name found in the file.
 
 @item -ascii
 Force Octave to assume the file contains columns of numbers in text format
@@ -12345,16 +12347,13 @@ Force Octave to assume the file is in Octave's binary format.
 @item -hdf5
 Force Octave to assume the file is in @sc{hdf5} format.  (@sc{hdf5} is a free,
 portable binary format developed by the National Center for Supercomputing
-Applications at the University of Illinois.)  Note that Octave can only
-read @sc{hdf5} files that were created by itself with @code{save} or with
-@sc{matlab}'s @code{-v7.3} option (which saves in @sc{hdf5} format). This
-format is only available if Octave was built with a link to the @sc{hdf5}
-libraries.
-
-@item -import
-This option is accepted for backward compatibility but is ignored.
-Octave can now support multi-dimensional HDF data and automatically
-modifies variable names if they are invalid Octave identifiers.
+Applications at the University of Illinois.)  Note that @code{load} is only
+designed to read @sc{hdf5} files that were created by Octave with @code{save},
+and attempts to read other @sc{hdf5} files may fail or produce unpredictable
+results. The @code{-hdf5} option provides a limited ability to read files
+created using @sc{matlab}'s @code{-v7.3} option (which saves in @sc{hdf5}
+format) although many data types are not yet supported.  This format is only
+available if Octave was built with a link to the @sc{hdf5} libraries.
 
 @item -text
 Force Octave to assume the file is in Octave's text format.
@@ -12362,10 +12361,11 @@ Force Octave to assume the file is in Octave's text format.
 @item  -v7.3
 @itemx -V7.3
 @itemx -7.3
-Force Octave to assume the file is in @sc{matlab}'s v7.3 binary data format.
-As the v7.3 format is an HDF5 based format, those files often can also be
-opened with the @qcode{"-hdf5"} option.  Note that Octave @strong{can not}
-currently save in this format.
+Octave does @strong{not} yet implement @sc{matlab}'s v7.3 binary data format.
+As the v7.3 format is an @sc{hdf5} based format, the @qcode{"-hdf5"} option
+may be used to attempt to open a v7.3 format file, although most non-numeric
+data types are not yet supported.  Note that Octave @strong{can not} currently
+save in this format.
 
 @item  -v7
 @itemx -V7
@@ -12387,7 +12387,45 @@ Force Octave to assume the file is in @sc{matlab}'s version 6 binary format.
 Force Octave to assume the file is in @sc{matlab}'s version 4 binary format.
 
 @end table
-@seealso{save, dlmwrite, csvwrite, fwrite}
+
+The list of variables to load may use wildcard patterns (glob patterns)
+containing the following special characters:
+
+@table @code
+@item ?
+Match any single character.
+
+@item *
+Match zero or more characters.
+
+@item [ @var{list} ]
+Match the list of characters specified by @var{list}.  If the first character
+is @code{!} or @code{^}, match all characters except those specified by
+@var{list}.  For example, the pattern @code{[a-zA-Z]} will match all lower and
+uppercase alphabetic characters.
+
+@end table
+
+If invoked with a single output argument, Octave assigns loaded data to the
+output instead of inserting variables in the symbol table.  If the data file
+contains only numbers (TAB- or space-delimited columns), a matrix of values is
+returned.  Otherwise, @code{load} returns a structure with members
+corresponding to the names of the variables in the file.
+
+The @code{load} command can read data stored in Octave's text and binary
+formats, @sc{matlab}'s binary format, and many simple formats such as
+comma-separated-values (CSV).  If compiled with zlib support, it can also load
+gzip-compressed files.  It will automatically detect the type of file and do
+conversion from different floating point formats (currently only IEEE big and
+little endian, though other formats may be added in the future).
+
+Programming Note: If a variable that is not marked as global is loaded from a
+file when a global symbol with the same name already exists, it is loaded in
+the global symbol table.  Also, if a variable is marked as global in a file and
+a local symbol exists, the local symbol is moved to the global symbol table and
+given the value from the file.
+
+@seealso{save, csvread, dlmread, fread, textscan}
 @end deftypefn
 save
 @c save libinterp/corefcn/load-save.cc
@@ -12401,35 +12439,31 @@ Force Octave to assume the file is in @sc{matlab}'s version 4 binary format.
 @deftypefnx {} {@var{str} =} save ("-", @qcode{"@var{v1}"}, @qcode{"@var{v2}"}, @dots{})
 Save the named variables @var{v1}, @var{v2}, @dots{}, in the file @var{file}.
 
-The special filename @samp{-} may be used to return the content of the
-variables as a string.  If no variable names are listed, Octave saves all the
-variables in the current scope.  Otherwise, full variable names or pattern
-syntax can be used to specify the variables to save.  If the @option{-struct}
-modifier is used then the fields of the @strong{scalar} struct are saved as if
-they were variables with the corresponding field names.  The @option{-struct}
-option can be combined with specific field names @var{f1}, @var{f2}, @dots{} to
-write only certain fields to the file.
+If no variable names are listed, Octave saves all the variables in the current
+scope.  Otherwise, full variable names or pattern syntax can be used to specify
+the variables to save.  If the @option{-struct} modifier is used then the
+fields of the @strong{scalar} struct are saved as if they were variables with
+the corresponding field names.  The @option{-struct} option can be combined
+with specific field names @var{f1}, @var{f2}, @dots{} to write only certain
+fields to the file.
 
-Valid options for the @code{save} command are listed in the following table.
-Options that modify the output format override the format specified by
-@code{save_default_options}.
-
-If save is invoked using the functional form
+The @code{save} command may also be invoked using the functional form
 
 @example
 save ("-option1", @dots{}, "file", "v1", @dots{})
 @end example
 
 @noindent
-then the @var{options}, @var{file}, and variable name arguments (@var{v1},
+where the @var{options}, @var{file}, and variable name arguments (@var{v1},
 @dots{}) must be specified as character strings.
 
-If called with a filename of @qcode{"-"}, write the output to stdout if nargout
-is 0, otherwise return the output in a character string.
+Valid options for the @code{save} command are listed in the following table.
+Options that modify the output format override the format specified by
+@code{save_default_options}.
 
 @table @code
 @item -append
-Append to the destination instead of overwriting.
+Append to the file instead of overwriting.
 
 @item -ascii
 Save a matrix in a text file without a header or any other information.  The
@@ -12449,23 +12483,27 @@ Separate numbers with tabs.
 Save the data in Octave's binary data format.
 
 @item -float-binary
-Save the data in Octave's binary data format but using only single precision.
+Save the data in Octave's binary data format using just single precision.
 Use this format @strong{only} if you know that all the values to be saved can
 be represented in single precision.
 
 @item -hdf5
-Save the data in @sc{hdf5} format.  (HDF5 is a free, portable, binary format
-developed by the National Center for Supercomputing Applications at the
-University of Illinois.) This format is only available if Octave was built
+Save the data in @sc{hdf5} format.  (@sc{hdf5} is a free, portable, binary
+format developed by the National Center for Supercomputing Applications at the
+University of Illinois.)  This format is only available if Octave was built
 with a link to the @sc{hdf5} libraries.
 
 @item -float-hdf5
-Save the data in @sc{hdf5} format but using only single precision.  Use this
+Save the data in @sc{hdf5} format using just single precision.  Use this
 format @strong{only} if you know that all the values to be saved can be
 represented in single precision.
 
-@item -text
-Save the data in Octave's text data format.  (default)
+@item -text (default)
+Save the data in Octave's text data format.  The
+@ref{XREFsave_precision,,@code{save_precision}} function specifies the number
+of significant figures to use when saving data (default: 17).  The header of
+the text data file can be configure with
+@ref{XREFsave_header_format_string,,@code{save_header_format_string}}.
 
 @item  -v7.3
 @itemx -V7.3
@@ -12521,10 +12559,13 @@ Wildcards may also be used in the field name specifications when using the
 
 @end table
 
-Except when using the @sc{matlab} binary data file format or the @samp{-ascii}
-format, saving global variables also saves the global status of the variable.
-If the variable is restored at a later time using @samp{load}, it will be
-restored as a global variable.
+Programming Notes: If called with the special filename @qcode{"-"} the data to
+be saved is returned as a string rather than writing it to an actual file.
+
+When saving global variables the global status of the variable is also stored.
+If the variable is restored at a later time using @code{load}, it will be
+restored as a global variable.  Global status is @emph{not} preserved if 
+using a @sc{matlab} binary data file format or the @option{-ascii} format. 
 
 Example:
 
@@ -12537,8 +12578,9 @@ save -binary data a b*
 @noindent
 saves the variable @samp{a} and all variables beginning with @samp{b} to the
 file @file{data} in Octave's binary format.
+
 @seealso{load, save_default_options, save_header_format_string, save_precision,
-dlmread, csvread, fread}
+csvwrite, dlmwrite, fwrite}
 @end deftypefn
 crash_dumps_octave_core
 @c crash_dumps_octave_core libinterp/corefcn/load-save.cc
@@ -14275,10 +14317,11 @@ All future commands issued during the current Octave session will be written to
 this new file (if the current setting of @code{history_save} allows for this).
 
 The default value is @file{@w{@env{$DATA}}/octave/history}, where
-@w{@env{$DATA}} is the platform-specific location for (roaming) user data files
-(e.g., @w{@env{$XDG_DATA_HOME}} or, if that is not set, @file{~/.local/share}
-on Unix-like operating systems or @w{@env{%APPDATA%}} on Windows).  The default
-value may be overridden by the environment variable @w{@env{OCTAVE_HISTFILE}}.
+@w{@env{$DATA}}@ is the platform-specific location for (roaming) user data files
+(e.g., @w{@env{$XDG_DATA_HOME}}@ or, if that is not set, @file{~/.local/share}
+on Unix-like operating systems or @w{@env{%APPDATA%}}@ on Windows).  The
+default value may be overridden by the environment variable
+@w{@env{OCTAVE_HISTFILE}}.
 
 Programming Notes:
 
@@ -15437,7 +15480,7 @@ vector to be inserted into @var{A} (if @var{orient} is @qcode{"row"}).
 The default value of @var{orient} is @qcode{"col"}.  If @var{orient} is
 @qcode{"col"}, @var{u} may be a matrix and @var{j} an index vector
 resulting in the QR@tie{}factorization of a matrix @var{B} such that
-@w{B(:,@var{j})} gives @var{u} and @w{B(:,@var{j}) = []} gives @var{A}.
+@w{B(:,@var{j})}@ gives @var{u} and @w{B(:,@var{j}) = []}@ gives @var{A}.
 Notice that the latter case is done as a sequence of k insertions;
 thus, for k large enough, it will be both faster and more accurate to
 recompute the factorization from scratch.
@@ -15467,7 +15510,7 @@ The default value of @var{orient} is @qcode{"col"}.
 
 If @var{orient} is @qcode{"col"}, @var{j} may be an index vector
 resulting in the QR@tie{}factorization of a matrix @var{B} such that
-@w{A(:,@var{j}) = []} gives @var{B}.  Notice that the latter case is done as
+@w{A(:,@var{j}) = []}@ gives @var{B}.  Notice that the latter case is done as
 a sequence of k deletions; thus, for k large enough, it will be both faster
 and more accurate to recompute the factorization from scratch.
 
@@ -15638,14 +15681,14 @@ $$A x = \lambda B x$$
 There are two calling forms of the function:
 
 @enumerate
-@item @code{[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}, @var{lambda}] = qz (@var{A}, @var{B})}
+@item @code{[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}] = qz (@var{A}, @var{B})}
 
 Compute the complex QZ@tie{}decomposition, generalized eigenvectors, and
 generalized eigenvalues.
 @tex
-$$ AA = Q^T AZ, BB = Q^T BZ $$
-$$ { \rm diag }(BB)AV = BV{ \rm diag }(AA) $$
-$$ { \rm diag }(BB) W^T A = { \rm diag }(AA) W^T B $$
+$$ AA = Q \cdot A \cdot Z, BB = Q \cdot B \cdot Z $$
+$$ A \cdot V \cdot {\rm diag}(BB) = B \cdot V \cdot {\rm diag}(AA) $$
+$$ {\rm diag}(BB) \cdot W^T \cdot A = {\rm diag}(AA) \cdot W^T \cdot B $$
 @end tex
 @ifnottex
 
@@ -15664,7 +15707,7 @@ with @var{AA} and @var{BB} upper triangular, and @var{Q} and @var{Z}
 unitary.  The matrices @var{V} and @var{W} respectively contain the right
 and left generalized eigenvectors.
 
-@item @code{[@var{AA}, @var{BB}, @var{Z} @{, @var{lambda}@}] = qz (@var{A}, @var{B}, @var{opt})}
+@item @code{[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}] = qz (@var{A}, @var{B}, @var{opt})}
 
 The @var{opt} argument must be equal to either @qcode{"real"} or
 @qcode{"complex"}.  If it is equal to @qcode{"complex"}, then this
@@ -15682,10 +15725,14 @@ are real, in which case the real and complex QZ coincide).
 @end enumerate
 
 Note: @code{qz} performs permutation balancing, but not scaling
-(@pxref{XREFbalance,,@code{balance}}), which may be lead to less accurate
+(@pxref{XREFbalance,,@code{balance}}), which may lead to less accurate
 results than @code{eig}.  The order of output arguments was selected for
 compatibility with @sc{matlab}.
-@seealso{eig, gsvd, balance, chol, hess, lu, qr, qzhess, schur}
+
+For eigenvalues, use the @code{ordeig} function to compute them based on
+the resulting @var{AA} and @var{BB} matrices.
+
+@seealso{eig, gsvd, balance, chol, hess, lu, qr, qzhess, schur, ordeig}
 @end deftypefn
 rand
 @c rand libinterp/corefcn/rand.cc

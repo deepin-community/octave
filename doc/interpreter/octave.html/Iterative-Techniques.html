@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Iterative Techniques (GNU Octave (version 9.2.0))</title>
+<title>Iterative Techniques (GNU Octave (version 9.4.0))</title>
 
-<meta name="description" content="Iterative Techniques (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Iterative Techniques (GNU Octave (version 9.2.0))">
+<meta name="description" content="Iterative Techniques (GNU Octave (version 9.4.0))">
+<meta name="keywords" content="Iterative Techniques (GNU Octave (version 9.4.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -55,8 +55,9 @@ functions to solve sparse linear equations using iterative techniques.
 <dt class="deftypefnx def-cmd-deftypefn" id="index-pcg-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">x</var> =</code> <strong class="def-name">pcg</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">b</var>, <var class="var">tol</var>, <var class="var">maxit</var>, <var class="var">M</var>, [], <var class="var">x0</var>, &hellip;)</code><a class="copiable-link" href="#index-pcg-1"> &para;</a></span></dt>
 <dt class="deftypefnx def-cmd-deftypefn" id="index-pcg-2"><span class="category-def">: </span><span><code class="def-type">[<var class="var">x</var>, <var class="var">flag</var>, <var class="var">relres</var>, <var class="var">iter</var>, <var class="var">resvec</var>, <var class="var">eigest</var>] =</code> <strong class="def-name">pcg</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">b</var>, &hellip;)</code><a class="copiable-link" href="#index-pcg-2"> &para;</a></span></dt>
 <dd>
-<p>Solve the linear system of equations <code class="code"><var class="var">A</var>&nbsp;*&nbsp;<var class="var">x</var>&nbsp;=&nbsp;<var class="var">b</var></code><!-- /@w -->
-by means of the Preconditioned Conjugate Gradient iterative method.
+<p>Solve the linear system of equations
+<code class="code"><var class="var">A</var>&nbsp;*&nbsp;<var class="var">x</var>&nbsp;=&nbsp;<var class="var">b</var></code><!-- /@w -->&nbsp;by means of the Preconditioned
+Conjugate Gradient iterative method.
 </p>
 <p>The input arguments are:
 </p>
@@ -82,7 +83,7 @@ is omitted or empty then a value of 20 is used.
 
 </li><li><var class="var">m</var> is a HPD preconditioning matrix.  For any decomposition
 <code class="code"><var class="var">m</var> = <var class="var">p1</var> * <var class="var">p2</var></code> such that
-<code class="code">inv&nbsp;(<var class="var">p1</var>)&nbsp;*&nbsp;<var class="var">A</var>&nbsp;*&nbsp;inv&nbsp;(<var class="var">p2</var>)</code><!-- /@w --> is HPD, the
+<code class="code">inv&nbsp;(<var class="var">p1</var>)&nbsp;*&nbsp;<var class="var">A</var>&nbsp;*&nbsp;inv&nbsp;(<var class="var">p2</var>)</code><!-- /@w -->&nbsp;is HPD, the
 conjugate gradient method is formally applied to the linear system
 <code class="code">inv&nbsp;(<var class="var">p1</var>)&nbsp;*&nbsp;<var class="var">A</var>&nbsp;*&nbsp;inv&nbsp;(<var class="var">p2</var>)&nbsp;*&nbsp;<var class="var">y</var>&nbsp;=&nbsp;inv&nbsp;(<var class="var">p1</var>)&nbsp;*&nbsp;<var class="var">b</var></code><!-- /@w -->,
 with <code class="code"><var class="var">x</var> = inv (<var class="var">p2</var>) * <var class="var">y</var></code> (split preconditioning).

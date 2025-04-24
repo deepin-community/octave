@@ -561,7 +561,7 @@ interchangeably.
 Solve the linear system @code{A*x = b}.
 
 With no options, this function is equivalent to the left division operator
-@w{(@code{x = A \ b})} or the matrix-left-divide function
+@w{(@code{x = A \ b})}@ or the matrix-left-divide function
 @w{(@code{x = mldivide (A, b)})}.
 
 Octave ordinarily examines the properties of the matrix @var{A} and chooses
@@ -708,7 +708,7 @@ LU@tie{}factorization.  Once the matrix has been factorized,
 @deftypefnx {} {@var{n} =} norm (@var{A}, @var{p}, @var{opt})
 Compute the p-norm of the matrix @var{A}.
 
-If the second argument is not given, @w{@code{p = 2}} is used.
+If the second argument is not given, @w{@code{p = 2}}@ is used.
 
 If @var{A} is a matrix (or sparse matrix):
 
@@ -1196,8 +1196,8 @@ original factored matrix.
 Given a Cholesky@tie{}factorization of a real symmetric or complex Hermitian
 positive definite matrix @w{@var{A} = @var{R}'*@var{R}}, @var{R}@tie{}upper
 triangular, return the Cholesky@tie{}factorization of
-@var{A1}, where @w{A1(p,p) = A}, @w{A1(:,j) = A1(j,:)' = u} and
-@w{p = [1:j-1,j+1:n+1]}.  @w{u(j)} should be positive.
+@var{A1}, where @w{A1(p,p) = A}, @w{A1(:,j) = A1(j,:)' = u}@ and
+@w{p = [1:j-1,j+1:n+1]}.  @w{u(j)}@ should be positive.
 
 On return, @var{info} is set to
 
@@ -1247,7 +1247,7 @@ original factored matrix.
 Given a Cholesky@tie{}factorization of a real symmetric or complex Hermitian
 positive definite matrix @w{@var{A} = @var{R}'*@var{R}}, @var{R}@tie{}upper
 triangular, return the Cholesky@tie{}factorization of
-@w{@var{A}(p,p)}, where @w{p} is the permutation @*
+@w{@var{A}(p,p)}, where p is the permutation @*
 @code{p = [1:i-1, shift(i:j, 1), j+1:n]} if @w{@var{i} < @var{j}} @*
  or @*
 @code{p = [1:j-1, shift(j:i,-1), i+1:n]} if @w{@var{j} < @var{i}}.  @*
@@ -1687,7 +1687,7 @@ vector to be inserted into @var{A} (if @var{orient} is @qcode{"row"}).
 The default value of @var{orient} is @qcode{"col"}.  If @var{orient} is
 @qcode{"col"}, @var{u} may be a matrix and @var{j} an index vector
 resulting in the QR@tie{}factorization of a matrix @var{B} such that
-@w{B(:,@var{j})} gives @var{u} and @w{B(:,@var{j}) = []} gives @var{A}.
+@w{B(:,@var{j})}@ gives @var{u} and @w{B(:,@var{j}) = []}@ gives @var{A}.
 Notice that the latter case is done as a sequence of k insertions;
 thus, for k large enough, it will be both faster and more accurate to
 recompute the factorization from scratch.
@@ -1723,7 +1723,7 @@ The default value of @var{orient} is @qcode{"col"}.
 
 If @var{orient} is @qcode{"col"}, @var{j} may be an index vector
 resulting in the QR@tie{}factorization of a matrix @var{B} such that
-@w{A(:,@var{j}) = []} gives @var{B}.  Notice that the latter case is done as
+@w{A(:,@var{j}) = []}@ gives @var{B}.  Notice that the latter case is done as
 a sequence of k deletions; thus, for k large enough, it will be both faster
 and more accurate to recompute the factorization from scratch.
 
@@ -1783,14 +1783,14 @@ $$A x = \lambda B x$$
 There are two calling forms of the function:
 
 @enumerate
-@item @code{[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}, @var{lambda}] = qz (@var{A}, @var{B})}
+@item @code{[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}] = qz (@var{A}, @var{B})}
 
 Compute the complex QZ@tie{}decomposition, generalized eigenvectors, and
 generalized eigenvalues.
 @tex
-$$ AA = Q^T AZ, BB = Q^T BZ $$
-$$ { \rm diag }(BB)AV = BV{ \rm diag }(AA) $$
-$$ { \rm diag }(BB) W^T A = { \rm diag }(AA) W^T B $$
+$$ AA = Q \cdot A \cdot Z, BB = Q \cdot B \cdot Z $$
+$$ A \cdot V \cdot {\rm diag}(BB) = B \cdot V \cdot {\rm diag}(AA) $$
+$$ {\rm diag}(BB) \cdot W^T \cdot A = {\rm diag}(AA) \cdot W^T \cdot B $$
 @end tex
 @ifnottex
 
@@ -1809,7 +1809,7 @@ with @var{AA} and @var{BB} upper triangular, and @var{Q} and @var{Z}
 unitary.  The matrices @var{V} and @var{W} respectively contain the right
 and left generalized eigenvectors.
 
-@item @code{[@var{AA}, @var{BB}, @var{Z} @{, @var{lambda}@}] = qz (@var{A}, @var{B}, @var{opt})}
+@item @code{[@var{AA}, @var{BB}, @var{Q}, @var{Z}, @var{V}, @var{W}] = qz (@var{A}, @var{B}, @var{opt})}
 
 The @var{opt} argument must be equal to either @qcode{"real"} or
 @qcode{"complex"}.  If it is equal to @qcode{"complex"}, then this
@@ -1827,10 +1827,14 @@ are real, in which case the real and complex QZ coincide).
 @end enumerate
 
 Note: @code{qz} performs permutation balancing, but not scaling
-(@pxref{XREFbalance,,@code{balance}}), which may be lead to less accurate
+(@pxref{XREFbalance,,@code{balance}}), which may lead to less accurate
 results than @code{eig}.  The order of output arguments was selected for
 compatibility with @sc{matlab}.
-@xseealso{@ref{XREFeig,,eig}, @ref{XREFgsvd,,gsvd}, @ref{XREFbalance,,balance}, @ref{XREFchol,,chol}, @ref{XREFhess,,hess}, @ref{XREFlu,,lu}, @ref{XREFqr,,qr}, @ref{XREFqzhess,,qzhess}, @ref{XREFschur,,schur}}
+
+For eigenvalues, use the @code{ordeig} function to compute them based on
+the resulting @var{AA} and @var{BB} matrices.
+
+@xseealso{@ref{XREFeig,,eig}, @ref{XREFgsvd,,gsvd}, @ref{XREFbalance,,balance}, @ref{XREFchol,,chol}, @ref{XREFhess,,hess}, @ref{XREFlu,,lu}, @ref{XREFqr,,qr}, @ref{XREFqzhess,,qzhess}, @ref{XREFschur,,schur}, @ref{XREFordeig,,ordeig}}
 @end deftypefn
 
 
@@ -2696,8 +2700,9 @@ sylvester ([1, 2; 3, 4], [5, 6; 7, 8], [9, 10; 11, 12])
 @deftypefnx {} {@var{x} =} bicg (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M}, [], @var{x0}, @dots{})
 @deftypefnx {} {@var{x} =} bicg (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M1}, @var{M2}, @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}] =} bicg (@var{A}, @var{b}, @dots{})
-Solve the linear system of equations @w{@code{@var{A} * @var{x} = @var{b}}}
-by means of the Bi-Conjugate Gradient iterative method.
+Solve the linear system of equations
+@w{@code{@var{A} * @var{x} = @var{b}}}@ by means of the Bi-Conjugate
+Gradient iterative method.
 
 The input arguments are:
 
@@ -2705,7 +2710,7 @@ The input arguments are:
 
 @item @var{A} is the matrix of the linear system and it must be square.
 @var{A} can be passed as a matrix, function handle, or inline function
-@code{Afcn} such that @w{@code{Afcn (x, "notransp") = A * x}} and
+@code{Afcn} such that @w{@code{Afcn (x, "notransp") = A * x}}@ and
 @w{@code{Afcn (x, "transp") = A' * x}}.  Additional parameters to
 @code{Afcn} may be passed after @var{x0}.
 
@@ -2727,9 +2732,10 @@ is omitted or empty then a value of 20 is used.
 @var{M1}, @var{M2} are the preconditioners.  The preconditioner @var{M} is
 given as @code{@var{M} = @var{M1} * @var{M2}}.  Both @var{M1} and @var{M2}
 can be passed as a matrix or as a function handle or inline function
-@code{g} such that @w{@code{g (@var{x}, "notransp") = @var{M1} \ @var{x}}}
-or @w{@code{g (@var{x}, "notransp") = @var{M2} \ @var{x}}} and
-@w{@code{g (@var{x}, "transp") = @var{M1}' \ @var{x}}} or
+@code{g} such that
+@w{@code{g (@var{x}, "notransp") = @var{M1} \ @var{x}}}@ or
+@w{@code{g (@var{x}, "notransp") = @var{M2} \ @var{x}}}@ and
+@w{@code{g (@var{x}, "transp") = @var{M1}' \ @var{x}}}@ or
 @w{@code{g (@var{x}, "transp") = @var{M2}' \ @var{x}}}.
 If @var{M1} is omitted or empty, then preconditioning is not applied.
 The preconditioned system is theoretically equivalent to applying the

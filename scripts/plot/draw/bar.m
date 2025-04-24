@@ -292,24 +292,26 @@ endfunction
 %!   close (hf);
 %! end_unwind_protect
 
-## Style stacked (no difference for single group).
+## Style "stacked" (no difference for single group).
 %!test
-%! hf = figure ("visible", "off");
+%! hf1 = figure ("visible", "off");
+%! hf2 = figure ("visible", "off");
 %! unwind_protect
-%!   hax = axes ("parent", hf);
-%!   hb = bar (hax, 2:4, "grouped");
-%!   bardata1 = get (hb);
-%!   hl = bardata1.baseline;
-%!   baselinedata1 = get (hl);
-%!   hp = bardata1.children;
-%!   patchdata1 = get (hp);
+%!   hax1 = axes ("parent", hf1);
+%!   hb1 = bar (hax1, 2:4, "grouped");
+%!   bardata1 = get (hb1);
+%!   hl1 = bardata1.baseline;
+%!   baselinedata1 = get (hl1);
+%!   hp1 = bardata1.children;
+%!   patchdata1 = get (hp1);
 %!
-%!   hb = bar (hax, 2:4, "stacked");
-%!   bardata2 = get (hb);
-%!   hl = bardata2.baseline;
-%!   baselinedata2 = get (hl);
-%!   hp = bardata2.children;
-%!   patchdata2 = get (hp);
+%!   hax2 = axes ("parent", hf2);
+%!   hb2 = bar (hax2, 2:4, "stacked");
+%!   bardata2 = get (hb2);
+%!   hl2 = bardata2.baseline;
+%!   baselinedata2 = get (hl2);
+%!   hp2 = bardata2.children;
+%!   patchdata2 = get (hp2);
 %!
 %!   assert (bardata1.barlayout, "grouped");
 %!   assert (bardata2.barlayout, "stacked");
@@ -317,11 +319,16 @@ endfunction
 %!   bardata1.barlayout = [];
 %!   bardata1.baseline = [];
 %!   bardata1.children = [];
+%!   bardata1.parent = [];
 %!
 %!   bardata2.bargroup = [];
 %!   bardata2.barlayout = [];
 %!   bardata2.baseline = [];
 %!   bardata2.children = [];
+%!   bardata2.parent = [];
+%!
+%!   baselinedata1.parent = [];
+%!   baselinedata2.parent = [];
 %!
 %!   patchdata1.parent = [];
 %!   patchdata2.parent = [];
@@ -331,7 +338,8 @@ endfunction
 %!   assert (isequaln (patchdata1, patchdata2));
 %!
 %! unwind_protect_cleanup
-%!   close (hf);
+%!   close (hf1);
+%!   close (hf2);
 %! end_unwind_protect
 
 ## Style "hist"
@@ -627,7 +635,7 @@ endfunction
 
 ## Change to horizontal:
 
-%!test <65671>  # Baseline should change to horizontal with bars.
+%!test <*65671>  # Baseline should change to horizontal with bars.
 %! hf = figure ("visible", "off");
 %! unwind_protect
 %!   hax = axes ("parent", hf);
@@ -661,7 +669,7 @@ endfunction
 %!   close (hf);
 %! end_unwind_protect
 
-%!test <65734>  # Axis ticks after change to horizontal should match barh.
+%!test <*65734>  # Axis ticks after change to horizontal should match barh.
 %! hf = figure ("visible", "off");
 %! unwind_protect
 %!   hax = axes ("parent", hf);
@@ -775,7 +783,7 @@ endfunction
 %! end_unwind_protect
 
 ## Updating base plot xdata.
-%!test <65734>  # changing xdata should update xlim/ticks for new locations.
+%!test <*65734>  # Changing xdata should update xlim/ticks for new locations.
 %! hf = figure ("visible", "off");
 %! unwind_protect
 %!   xd = [0.6, 1.6, 2.6; 0.6, 1.6, 2.6; 1.4, 2.4, 3.4; 1.4, 2.4, 3.4];
@@ -854,6 +862,67 @@ endfunction
 %! unwind_protect_cleanup
 %!   close (hf);
 %! end_unwind_protect
+
+## Ensure x tick labels are updated with xdata changes.
+%!test <*65734>
+%! hf = figure ("visible", "off");
+%! unwind_protect
+%!   hax = axes ("parent", hf);
+%!   hb = bar (hax, 2:4);
+%!   hp = get (hb, "children");
+%!
+%!   assert (get (hb, "xdata"), [1:3]');
+%!   assert (get (hax, {"xlim", "xtick","xticklabel"}), ...
+%!           {[0.5, 3.5], 1:3, {"1"; "2"; "3"}});
+%!   assert (get (hax, {"ylim", "ytick", "yticklabel"}), ...
+%!           {[0, 4], [0:4], {"0"; "1"; "2"; "3"; "4"}});
+%!
+%!   set (hb, "xdata", [3:5]');  # column vector input.
+%!   assert (get (hax, {"xlim", "xtick","xticklabel"}), ...
+%!           {[2.5, 5.5], 3:5, {"3"; "4"; "5"}});
+%!   assert (get (hax, {"ylim", "ytick", "yticklabel"}), ...
+%!           {[0, 4], [0:4], {"0"; "1"; "2"; "3"; "4"}});
+%!
+%!   set (hb, "xdata", [9:11]);  # row vector input.
+%!   assert (get (hax, {"xlim", "xtick","xticklabel"}), ...
+%!           {[8.5, 11.5], 9:11, {"9"; "10"; "11"}});
+%!   assert (get (hax, {"ylim", "ytick", "yticklabel"}), ...
+%!           {[0, 4], [0:4], {"0"; "1"; "2"; "3"; "4"}});
+%!
+%! unwind_protect_cleanup
+%!   close (hf);
+%! end_unwind_protect
+
+#### Ensure y tick labels are updated with ydata changes.
+%!test <*65734>
+%! hf = figure ("visible", "off");
+%! unwind_protect
+%!   hax = axes ("parent", hf);
+%!   hb = bar (hax, 2:4);
+%!   hp = get (hb, "children");
+%!
+%!   assert (get (hb, "xdata"), [1:3]');
+%!   assert (get (hax, {"xlim", "xtick","xticklabel"}), ...
+%!           {[0.5, 3.5], 1:3, {"1"; "2"; "3"}});
+%!   assert (get (hax, {"ylim", "ytick", "yticklabel"}), ...
+%!           {[0, 4], [0:4], {"0"; "1"; "2"; "3"; "4"}});
+%!
+%!   set (hb, "ydata", [5:7]');  # column vector input.
+%!   assert (get (hax, {"xlim", "xtick","xticklabel"}), ...
+%!           {[0.5, 3.5], 1:3, {"1"; "2"; "3"}});
+%!   assert (get (hax, {"ylim", "ytick", "yticklabel"}), ...
+%!           {[0, 7], [0:7], {"0"; "1"; "2"; "3"; "4"; "5"; "6"; "7"}});
+%!
+%!   set (hb, "ydata", [-4:-2]);  # row vector input.
+%!   assert (get (hax, {"xlim", "xtick","xticklabel"}), ...
+%!           {[0.5, 3.5], 1:3, {"1"; "2"; "3"}});
+%!   assert (get (hax, {"ylim", "ytick", "yticklabel"}), ...
+%!           {[-4, 0], [-4:0], {"-4"; "-3"; "-2"; "-1"; "0"}});
+%!
+%! unwind_protect_cleanup
+%!   close (hf);
+%! end_unwind_protect
+
 
 %% Test input validation
 %!error <Invalid call> bar ()

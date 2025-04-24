@@ -1439,7 +1439,7 @@ cplxpair (exp (2i*pi*[0:4]'/5)) == exp (2i*pi*[3; 2; 4; 1; 0]/5)
 Cumulative numerical integration of points @var{y} using the trapezoidal
 method.
 
-@w{@code{cumtrapz (@var{y})}} computes the cumulative integral of @var{y}
+@w{@code{cumtrapz (@var{y})}}@ computes the cumulative integral of @var{y}
 along the first non-singleton dimension.  Where @code{trapz} reports only
 the overall integral sum, @code{cumtrapz} reports the current partial sum
 value at each point of @var{y}.
@@ -2380,12 +2380,13 @@ legend ("original", "nearest", "linear", "pchip", "spline");
 
 Two-dimensional interpolation.
 
-Interpolate reference data @var{x}, @var{y}, @var{z} to determine @var{zi}
-at the coordinates @var{xi}, @var{yi}.  The reference data @var{x}, @var{y}
-can be matrices, as returned by @code{meshgrid}, in which case the sizes of
-@var{x}, @var{y}, and @var{z} must be equal.  If @var{x}, @var{y} are
-vectors describing a grid then @code{length (@var{x}) == columns (@var{z})}
-and @code{length (@var{y}) == rows (@var{z})}.  In either case the input
+Interpolate numeric reference data @var{x}, @var{y}, @var{z} to determine
+@var{zi} at the coordinates @var{xi}, @var{yi}.  The reference data
+@var{x}, @var{y} can be matrices, as returned by @code{meshgrid}, in which
+case the sizes of @var{x}, @var{y}, and @var{z} must be equal.  If @var{x},
+@var{y} are vectors describing a grid then
+@w{@code{length (@var{x}) == columns (@var{z})}}@ and
+@w{@code{length (@var{y}) == rows (@var{z})}}.  In either case the input
 data must be strictly monotonic.
 
 If called without @var{x}, @var{y}, and just a single reference data matrix
@@ -2444,9 +2445,9 @@ is @qcode{"NA"}.
 
 Three-dimensional interpolation.
 
-Interpolate reference data @var{x}, @var{y}, @var{z}, @var{v} to determine
-@var{vi} at the coordinates @var{xi}, @var{yi}, @var{zi}.  The reference
-data @var{x}, @var{y}, @var{z} can be matrices, as returned by
+Interpolate numeric reference data @var{x}, @var{y}, @var{z}, @var{v} to
+determine @var{vi} at the coordinates @var{xi}, @var{yi}, @var{zi}.  The
+reference data @var{x}, @var{y}, @var{z} can be matrices, as returned by
 @code{meshgrid}, in which case the sizes of @var{x}, @var{y}, @var{z}, and
 @var{v} must be equal.  If @var{x}, @var{y}, @var{z} are vectors describing
 a cubic grid then @code{length (@var{x}) == columns (@var{v})},
@@ -2526,9 +2527,9 @@ assumptions are made about the endpoints of the interpolation.
 
 Perform @var{n}-dimensional interpolation, where @var{n} is at least two.
 
-Each element of the @var{n}-dimensional array @var{v} represents a value
-at a location given by the parameters @var{x1}, @var{x2}, @dots{}, @var{xn}.
-The parameters @var{x1}, @var{x2}, @dots{}, @var{xn} are either
+Each element of the @var{n}-dimensional numeric array @var{v} represents a
+value at a location given by the parameters @var{x1}, @var{x2}, @dots{},
+@var{xn}.  The parameters @var{x1}, @var{x2}, @dots{}, @var{xn} are either
 @var{n}-dimensional arrays of the same size as the array @var{v} in
 the @qcode{"ndgrid"} format or vectors.
 
@@ -3537,7 +3538,7 @@ The optional input @qcode{"inputmin"} replaces all elements less than
 the specified value @var{inmin} with @var{inmin}.  Similarly, the optional
 input @qcode{"inputmax"} replaces all elements greater than the specified
 value @var{inmax} with @var{inmax}.  If unspecified the minimum and maximum
-are taken from the data itself (@w{@code{@var{inmin} = min (A(:))}} and
+are taken from the data itself (@w{@code{@var{inmin} = min (A(:))}}@ and
 @w{@code{@var{inmax} = max (A(:))}}).
 
 Programming Notes:
@@ -3910,7 +3911,7 @@ b(a)
 Numerically evaluate the integral of points @var{y} using the trapezoidal
 method.
 
-@w{@code{trapz (@var{y})}} computes the integral of @var{y} along the first
+@w{@code{trapz (@var{y})}}@ computes the integral of @var{y} along the first
 non-singleton dimension.  When the argument @var{x} is omitted an equally
 spaced @var{x} vector with unit spacing (1) is assumed.
 @code{trapz (@var{x}, @var{y})} evaluates the integral with respect to the
@@ -6194,8 +6195,8 @@ supplied, the result is multiplied by @w{@code{exp (x)}}.
 @item besselh
 Compute Hankel functions of the first (@var{k} = 1) or second (@var{k} = 2)
 kind.  If the argument @var{opt} is supplied, the result is multiplied by
-@w{@code{exp (-I*@var{x})}} for @var{k} = 1 or @w{@code{exp (I*@var{x})}}
-for @var{k} = 2.
+@w{@code{exp (-I*@var{x})}}@ for @var{k} = 1 or
+@w{@code{exp (I*@var{x})}}@ for @var{k} = 2.
 @end table
 
 If @var{alpha} is a scalar, the result is the same size as @var{x}.  If
@@ -7497,7 +7498,7 @@ The elements of @var{img} are indices into the current colormap.
 
 @var{x} and @var{y} are optional 2-element vectors, @w{@code{[min, max]}},
 which specify the coordinates of the centers of the corner pixels.
-If a range is specified as @w{@code{[max, min]}} then the image will be
+If a range is specified as @w{@code{[max, min]}}@ then the image will be
 reversed along that axis.  For convenience, @var{x} and @var{y} may be
 specified as N-element vectors matching the length of the data in @var{img}.
 However, only the first and last elements will be used to determine the axis
@@ -7546,7 +7547,7 @@ that range is set to the @qcode{"clim"} of the current axes.
 
 @var{x} and @var{y} are optional 2-element vectors, @w{@code{[min, max]}},
 which specify the coordinates of the centers of the corner pixels.
-If a range is specified as @w{@code{[max, min]}} then the image will be
+If a range is specified as @w{@code{[max, min]}}@ then the image will be
 reversed along that axis.  For convenience, @var{x} and @var{y} may be
 specified as N-element vectors matching the length of the data in @var{img}.
 However, only the first and last elements will be used to determine
@@ -8347,7 +8348,7 @@ Any optional arguments are passed directly to @code{dlmread}
 @deftypefn  {} {} csvwrite (@var{filename}, @var{x})
 @deftypefnx {} {} csvwrite (@var{filename}, @var{x}, @var{dlm_opt1}, @dots{})
 Write the numeric matrix @var{x} to the file @var{filename} in
-@w{comma-separated-value} (CSV) format.
+@w{comma-separated-value}@ (CSV) format.
 
 This function is equivalent to
 
@@ -10073,7 +10074,7 @@ the 42nd IEEE Conference on Decision and Control, December 2003.
 Solve the linear system @code{A*x = b}.
 
 With no options, this function is equivalent to the left division operator
-@w{(@code{x = A \ b})} or the matrix-left-divide function
+@w{(@code{x = A \ b})}@ or the matrix-left-divide function
 @w{(@code{x = mldivide (A, b)})}.
 
 Octave ordinarily examines the properties of the matrix @var{A} and chooses
@@ -11044,7 +11045,9 @@ given, then @var{text} is also sent to standard output.
 Edit the named function, or change editor settings.
 
 If @code{edit} is called with the name of a file or function as its
-argument it will be opened in the text editor defined by @env{EDITOR}.
+argument it will be opened in the default text editor.  The default editor
+for the Octave GUI is specified in the Editor tab of Preferences.  The
+default editor for the CLI is specified by the @code{EDITOR} function.
 
 @itemize @bullet
 @item
@@ -13840,7 +13843,7 @@ The output can also be returned as a structure @var{solution} which has a
 field @var{x} containing a row vector of times where the solution was
 evaluated and a field @var{y} containing the solution matrix such that each
 column corresponds to a time in @var{x}.  Use
-@w{@code{fieldnames (@var{solution})}} to see the other fields and
+@w{@code{fieldnames (@var{solution})}}@ to see the other fields and
 additional information returned.
 
 If no output arguments are requested, and no @qcode{"OutputFcn"} is
@@ -13908,7 +13911,7 @@ The output can also be returned as a structure @var{solution} which has a
 field @var{x} containing a row vector of times where the solution was
 evaluated and a field @var{y} containing the solution matrix such that each
 column corresponds to a time in @var{x}.  Use
-@w{@code{fieldnames (@var{solution})}} to see the other fields and
+@w{@code{fieldnames (@var{solution})}}@ to see the other fields and
 additional information returned.
 
 If no output arguments are requested, and no @qcode{"OutputFcn"} is
@@ -13980,7 +13983,7 @@ The output can also be returned as a structure @var{solution} which has a
 field @var{x} containing a row vector of times where the solution was
 evaluated and a field @var{y} containing the solution matrix such that each
 column corresponds to a time in @var{x}.  Use
-@w{@code{fieldnames (@var{solution})}} to see the other fields and
+@w{@code{fieldnames (@var{solution})}}@ to see the other fields and
 additional information returned.
 
 If no output arguments are requested, and no @qcode{"OutputFcn"} is
@@ -14057,7 +14060,7 @@ The output can also be returned as a structure @var{solution} which has a
 field @var{x} containing a row vector of times where the solution was
 evaluated and a field @var{y} containing the solution matrix such that each
 column corresponds to a time in @var{x}.  Use
-@w{@code{fieldnames (@var{solution})}} to see the other fields and
+@w{@code{fieldnames (@var{solution})}}@ to see the other fields and
 additional information returned.
 
 If using the @qcode{"Events"} option then three additional outputs may be
@@ -14121,7 +14124,7 @@ The output can also be returned as a structure @var{solution} which has a
 field @var{x} containing a row vector of times where the solution was
 evaluated and a field @var{y} containing the solution matrix such that each
 column corresponds to a time in @var{x}.  Use
-@w{@code{fieldnames (@var{solution})}} to see the other fields and
+@w{@code{fieldnames (@var{solution})}}@ to see the other fields and
 additional information returned.
 
 If no output arguments are requested, and no @qcode{"OutputFcn"} is
@@ -15845,11 +15848,9 @@ transpose ( [ ------   -----   ...   ------ ] )
 
 @end ifnottex
 The fifth and sixth arguments, @var{lb} and @var{ub}, contain lower and
-upper bounds on @var{x}.  These must be consistent with the equality and
-inequality constraints @var{g} and @var{h}.  If the arguments are vectors
-then @var{x}(i) is bound by @var{lb}(i) and @var{ub}(i).  A bound can also
-be a scalar in which case all elements of @var{x} will share the same
-bound.
+upper bounds on @var{x} and when provided must be vectors of the same size
+as the the vector @var{x0}.  The bounds must be consistent with the
+equality and inequality constraints @var{g} and @var{h}.
 
 The seventh argument @var{maxiter} specifies the maximum number of
 iterations.  The default value is 100.
@@ -17898,11 +17899,13 @@ The parameters @var{azimuth} and @var{elevation} can be given as two
 arguments or as 2-element vector.  The viewpoint can also be specified with
 Cartesian coordinates @var{x}, @var{y}, and @var{z}.
 
-The call @code{view (2)} sets the viewpoint to @w{@var{azimuth} = 0}@
-and @w{@var{elevation} = 90}, which is the default for 2-D graphs.
+The call @code{view (2)} sets the viewpoint to
+@w{@var{azimuth} = 0}@ and @w{@var{elevation} = 90}, which is the default
+for 2-D graphs.
 
-The call @code{view (3)} sets the viewpoint to @w{@var{azimuth} = -37.5}@
-and @w{@var{elevation} = 30}, which is the default for 3-D graphs.
+The call @code{view (3)} sets the viewpoint to
+@w{@var{azimuth} = -37.5}@ and @w{@var{elevation} = 30}, which is the
+default for 3-D graphs.
 
 If the first argument @var{hax} is an axes handle, then operate on
 this axes rather than the current axes returned by @code{gca}.
@@ -19867,7 +19870,7 @@ Plot a function @var{fcn} within the range defined by @var{limits}.
 @var{fcn} is a function handle, inline function, or string containing the
 name of the function to evaluate.
 
-The limits of the plot are of the form @w{@code{[@var{xlo}, @var{xhi}]}} or
+The limits of the plot are of the form @w{@code{[@var{xlo}, @var{xhi}]}}@ or
 @w{@code{[@var{xlo}, @var{xhi}, @var{ylo}, @var{yhi}]}}.  If no limits
 are specified the default is @code{[-5, 5]}.
 
@@ -23613,8 +23616,8 @@ Return a handle to the root graphics object.
 The root graphics object is the ultimate parent of all graphics objects.
 
 In addition, the root object contains information about the graphics
-system as a whole such as the @code{ScreenSize}.  Use @w{@code{get (groot)}}
-to find out what information is available.
+system as a whole such as the @code{ScreenSize}.  Use
+@w{@code{get (groot)}}@ to find out what information is available.
 
 Defaults for the graphic system as a whole are specified by setting
 properties of the root graphics object that begin with @qcode{"Default"}.
@@ -26963,14 +26966,14 @@ Apply function @var{fcn} to a moving window of length @var{wlen} on data
 
 If @var{wlen} is a scalar, the function @var{fcn} is applied to a moving
 window of length @var{wlen}.  When @var{wlen} is an odd number the window is
-symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on either
+symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements on either
 side of the central element.  For example, when calculating the output at
 index 5 with a window length of 3, @code{movfun} uses data elements
 @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window is
-asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movfun} uses data elements
+asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movfun} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -26987,11 +26990,11 @@ Therefore, @var{fcn} must accept an array input argument and apply the
 computation along dimension 1, i.e., down the columns of the array.
 
 When applied to an array (possibly multi-dimensional) with @var{n} columns,
-@var{fcn} may return a result in either of two formats: @w{Format 1)}
-an array of size 1-by-@var{n}-by-@var{dim3}-by-@dots{}-by-@var{dimN}.  This
+@var{fcn} may return a result in either of two formats: @w{Format 1)}@ an
+array of size 1-by-@var{n}-by-@var{dim3}-by-@dots{}-by-@var{dimN}.  This
 is the typical output format from Octave core functions.  Type
 @code{demo ("movfun", 5)} for an example of this use case.
-@w{Format 2)} a row vector of length
+@w{Format 2)}@ a row vector of length
 @code{@var{n} * @var{numel_higher_dims}} where @var{numel_higher_dims} is
 @w{@code{prod (size (@var{x})(3:end))}}.  The output of @var{fcn} for the
 i-th input column must be found in the output at indices
@@ -27026,8 +27029,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}
@@ -27110,11 +27113,11 @@ The input @var{N} must be a positive integer.
 
 The moving window length input @var{wlen} can either be a scalar not equal
 to 1 or a 2-element array of integers.  For scalar values, if odd the window
-is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on either
-side of the central element.  If @var{wlen} is even the window is asymmetric
-and has @w{@code{@var{wlen}/2}} elements to the left of the central element
-and @w{@code{@var{wlen}/2 - 1}} elements to the right of the central
-element.  When @var{wlen} is a 2-element array,
+is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements on
+either side of the central element.  If @var{wlen} is even the window is
+asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  When @var{wlen} is a 2-element array,
 @w{@code{[@var{nb}, @var{na}]}}, the window includes @var{nb} elements to
 the left of the current element and @var{na} elements to the right of the
 current element.
@@ -27122,7 +27125,7 @@ current element.
 The output @var{slcidx} is an array of indices of the slices that fit fully
 within the vector, where each column is an individual slice as the window
 moves from left to right.  The slices have @var{wlen} elements for scalar
-@var{wlen}, or @w{@code{@var{nb} + @var{na} + 1}} elements for array valued
+@var{wlen}, or @w{@code{@var{nb} + @var{na} + 1}}@ elements for array valued
 @var{wlen}.
 
 Optional output @var{C} is an row vector of window center positions where
@@ -27369,8 +27372,9 @@ Returns the AR coefficients, @var{a}, and the variance of white noise,
 @deftypefnx {} {@var{x} =} bicg (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M}, [], @var{x0}, @dots{})
 @deftypefnx {} {@var{x} =} bicg (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M1}, @var{M2}, @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}] =} bicg (@var{A}, @var{b}, @dots{})
-Solve the linear system of equations @w{@code{@var{A} * @var{x} = @var{b}}}
-by means of the Bi-Conjugate Gradient iterative method.
+Solve the linear system of equations
+@w{@code{@var{A} * @var{x} = @var{b}}}@ by means of the Bi-Conjugate
+Gradient iterative method.
 
 The input arguments are:
 
@@ -27378,7 +27382,7 @@ The input arguments are:
 
 @item @var{A} is the matrix of the linear system and it must be square.
 @var{A} can be passed as a matrix, function handle, or inline function
-@code{Afcn} such that @w{@code{Afcn (x, "notransp") = A * x}} and
+@code{Afcn} such that @w{@code{Afcn (x, "notransp") = A * x}}@ and
 @w{@code{Afcn (x, "transp") = A' * x}}.  Additional parameters to
 @code{Afcn} may be passed after @var{x0}.
 
@@ -27400,9 +27404,10 @@ is omitted or empty then a value of 20 is used.
 @var{M1}, @var{M2} are the preconditioners.  The preconditioner @var{M} is
 given as @code{@var{M} = @var{M1} * @var{M2}}.  Both @var{M1} and @var{M2}
 can be passed as a matrix or as a function handle or inline function
-@code{g} such that @w{@code{g (@var{x}, "notransp") = @var{M1} \ @var{x}}}
-or @w{@code{g (@var{x}, "notransp") = @var{M2} \ @var{x}}} and
-@w{@code{g (@var{x}, "transp") = @var{M1}' \ @var{x}}} or
+@code{g} such that
+@w{@code{g (@var{x}, "notransp") = @var{M1} \ @var{x}}}@ or
+@w{@code{g (@var{x}, "notransp") = @var{M2} \ @var{x}}}@ and
+@w{@code{g (@var{x}, "transp") = @var{M1}' \ @var{x}}}@ or
 @w{@code{g (@var{x}, "transp") = @var{M2}' \ @var{x}}}.
 If @var{M1} is omitted or empty, then preconditioning is not applied.
 The preconditioned system is theoretically equivalent to applying the
@@ -28652,8 +28657,9 @@ Return a column vector of the nonzero values of the matrix @var{A}.
 @deftypefnx {} {@var{x} =} pcg (@var{A}, @var{b}, @var{tol}, @var{maxit}, @var{M}, [], @var{x0}, @dots{})
 @deftypefnx {} {[@var{x}, @var{flag}, @var{relres}, @var{iter}, @var{resvec}, @var{eigest}] =} pcg (@var{A}, @var{b}, @dots{})
 
-Solve the linear system of equations @w{@code{@var{A} * @var{x} = @var{b}}}
-by means of the Preconditioned Conjugate Gradient iterative method.
+Solve the linear system of equations
+@w{@code{@var{A} * @var{x} = @var{b}}}@ by means of the Preconditioned
+Conjugate Gradient iterative method.
 
 The input arguments are:
 
@@ -28684,7 +28690,7 @@ is omitted or empty then a value of 20 is used.
 @item
 @var{m} is a @nospell{HPD} preconditioning matrix.  For any decomposition
 @code{@var{m} = @var{p1} * @var{p2}} such that
-@w{@code{inv (@var{p1}) * @var{A} * inv (@var{p2})}} is @nospell{HPD}, the
+@w{@code{inv (@var{p1}) * @var{A} * inv (@var{p2})}}@ is @nospell{HPD}, the
 conjugate gradient method is formally applied to the linear system
 @w{@code{inv (@var{p1}) * @var{A} * inv (@var{p2}) * @var{y} = inv
 (@var{p1}) * @var{b}}},
@@ -29228,7 +29234,7 @@ spdiags (reshape (1:12, 4, 3), [-1 0 1], 5, 4)
 Return a sparse identity matrix of size @var{m}x@var{n}.
 
 The implementation is significantly more efficient than
-@w{@code{sparse (eye (@var{m}))}} as the full matrix is not constructed.
+@w{@code{sparse (eye (@var{m}))}}@ as the full matrix is not constructed.
 
 When called with a single argument, a square matrix of size
 @var{m}-by-@var{m} is created.  If called with a single vector argument,
@@ -30489,7 +30495,7 @@ size @var{k}.
 If the first argument is a vector, @var{set}, then generate all
 combinations of the elements of @var{set}, taken @var{k} at a time, with
 one row per combination.  The result @var{c} has @var{k} columns and
-@w{@code{nchoosek (length (@var{set}), @var{k})}} rows.
+@w{@code{nchoosek (length (@var{set}), @var{k})}}@ rows.
 
 For example:
 
@@ -31015,7 +31021,7 @@ Construct a Hadamard matrix (@nospell{Hn}) of size @var{n}-by-@var{n}.
 
 The size @var{n} must be of the form @math{2^k * p} in which p is one of
 1, 12, 20 or 28.  The returned matrix is normalized, meaning
-@w{@code{Hn(:,1) == 1}} and @w{@code{Hn(1,:) == 1}}.
+@w{@code{Hn(:,1) == 1}}@ and @w{@code{Hn(1,:) == 1}}.
 
 Some of the properties of Hadamard matrices are:
 
@@ -31351,7 +31357,7 @@ performed, and then the mean added back to obtain the final answer.
 Compute matrix of correlation coefficients.
 
 If each row of @var{x} and @var{y} is an observation and each column is
-a variable, then the @w{(@var{i}, @var{j})-th} entry of
+a variable, then the @w{(@var{i}, @var{j})-th}@ entry of
 @code{corr (@var{x}, @var{y})} is the correlation between the
 @var{i}-th variable in @var{x} and the @var{j}-th variable in @var{y}.
 @var{x} and @var{y} must have the same number of rows (observations).
@@ -31445,7 +31451,7 @@ where @math{N} is the length of the vectors @var{a} and @var{b}.
 If called with one argument, compute @code{cov (@var{x}, @var{x})}.  If
 @var{x} is a vector, this is the scalar variance of @var{x}.  If @var{x} is
 a matrix, each row of @var{x} is treated as an observation, and each column
-as a variable, and the @w{(@var{i}, @var{j})-th} entry of
+as a variable, and the @w{(@var{i}, @var{j})-th}@ entry of
 @code{cov (@var{x})} is the covariance between the @var{i}-th and
 @var{j}-th columns in @var{x}.  If @var{x} has dimensions n x m, the output
 @var{c} will be a m x m square covariance matrix.
@@ -31767,7 +31773,7 @@ k1 = ------------------------
 The optional argument @var{flag} controls which normalization is used.
 If @var{flag} is equal to 1 (default value, used when @var{flag} is omitted
 or empty), return the sample kurtosis as defined above.  If @var{flag} is
-equal to 0, return the @w{"bias-corrected"} kurtosis coefficient instead:
+equal to 0, return the @w{"bias-corrected"}@ kurtosis coefficient instead:
 @tex
 $$
 \kappa_0 = 3 + {\scriptstyle N - 1 \over \scriptstyle (N - 2)(N - 3)} \,
@@ -32170,14 +32176,14 @@ Calculate the moving mean absolute deviation over a sliding window of length
 
 If @var{wlen} is a scalar, the function @code{mad} is applied to a
 moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+oneither side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, @code{movmad} uses data
 elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movmad} uses data elements
+is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+thecentral element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movmad} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -32218,8 +32224,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}
@@ -32277,14 +32283,14 @@ data @var{x}.
 
 If @var{wlen} is a scalar, the function @code{max} is applied to a
 moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, @code{movmax} uses data
 elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movmax} uses data elements
+is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movmax} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -32325,8 +32331,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}
@@ -32384,14 +32390,14 @@ data @var{x}.
 
 If @var{wlen} is a scalar, the function @code{mean} is applied to a
 moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, @code{movmean} uses data
 elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movmean} uses data elements
+is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movmean} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -32432,8 +32438,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}
@@ -32491,14 +32497,14 @@ data @var{x}.
 
 If @var{wlen} is a scalar, the function @code{movmedian} is applied to a
 moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, @code{movmedian} uses data
 elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movmedian} uses data elements
+is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movmedian} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -32539,8 +32545,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}
@@ -32598,14 +32604,14 @@ data @var{x}.
 
 If @var{wlen} is a scalar, the function @code{min} is applied to a
 moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, @code{movmin} uses data
 elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movmin} uses data elements
+is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movmin} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -32646,8 +32652,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}
@@ -32705,14 +32711,14 @@ data @var{x}.
 
 If @var{wlen} is a scalar, the function @code{movprod} is applied to a
 moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, @code{movprod} uses data
 elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movprod} uses data elements
+is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movprod} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -32753,8 +32759,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}
@@ -32813,14 +32819,14 @@ Calculate the moving standard deviation over a sliding window of length
 
 If @var{wlen} is a scalar, the function @code{movstd} is applied to a
 moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, @code{movstd} uses data
 elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movstd} uses data elements
+is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movstd} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -32846,6 +32852,8 @@ moment around the mean
 
 If the optional argument @var{dim} is given, operate along this dimension.
 The normalization argument @var{opt} must be given before the dimension.
+To use the default value for @var{opt} you may pass an empty input
+argument @code{[]}.
 
 The optional string argument @qcode{"@var{nancond}"} controls whether
 @code{NaN} and @code{NA} values should be included (@qcode{"includenan"}),
@@ -32875,8 +32883,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}
@@ -32934,14 +32942,14 @@ data @var{x}.
 
 If @var{wlen} is a scalar, the function @code{movsum} is applied to a
 moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, @code{movsum} uses data
 elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movsum} uses data elements
+is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movsum} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -32982,8 +32990,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}
@@ -33042,14 +33050,14 @@ data @var{x}.
 
 If @var{wlen} is a scalar, the function @code{var} is applied to a
 moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-either side of the central element.  For example, when calculating the
+window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+on either side of the central element.  For example, when calculating the
 output at index 5 with a window length of 3, @code{movvar} uses data
 elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-central element.  For example, when calculating the output at index 5 with a
-window length of 4, @code{movvar} uses data elements
+is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+the central element.  For example, when calculating the output at index 5
+with a window length of 4, @code{movvar} uses data elements
 @w{@code{[3, 4, 5, 6]}}.
 
 If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -33061,7 +33069,7 @@ The current element is always included.  For example, given
 @w{@code{[2, 3, 4, 5]}}.
 
 The optional argument @var{opt} determines the type of normalization to use.
-Valid values are
+Valid values are:
 
 @table @asis
 @item 0:
@@ -33074,6 +33082,8 @@ variance [default]
 
 If the optional argument @var{dim} is given, operate along this dimension.
 The normalization argument @var{opt} must be given before the dimension.
+To use the default value for @var{opt} you may pass an empty input
+argument @code{[]}.
 
 The optional string argument @qcode{"@var{nancond}"} controls whether
 @code{NaN} and @code{NA} values should be included (@qcode{"includenan"}),
@@ -33103,8 +33113,8 @@ Any @var{y} values that use a window extending beyond the original
 data array are deleted.  For example, with a 10-element data vector and a
 window of length 3, the output will contain only 8 elements.  The first
 element would require calculating the function over indices
-@w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+@w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 therefore discarded.
 
 @item @qcode{"fill"}

@@ -1,4 +1,5 @@
-This is octave.info, produced by makeinfo version 7.1 from octave.texi.
+This is octave.info, produced by makeinfo version 7.1.1 from
+octave.texi.
 
 INFO-DIR-SECTION Math
 START-INFO-DIR-ENTRY
@@ -3534,7 +3535,7 @@ tests a random 5 by 5 matrix to see if all of its elements are less than
      The dimension along which to take the difference can be explicitly
      stated with the optional variable DIM.  In this case the K-th order
      differences are calculated along this dimension.  In the case where
-     K exceeds ‘size (X, DIM)’ an empty matrix is returned.
+     K exceeds ‘size (X, DIM)’  an empty matrix is returned.
 
      See also: *note sort: XREFsort, *note merge: XREFmerge.
 
@@ -3886,9 +3887,10 @@ File: octave.info,  Node: Rearranging Matrices,  Next: Special Utility Matrices,
  -- : B = permute (A, PERM)
      Return the generalized transpose for an N-D array object A.
 
-     The permutation vector PERM must contain the elements ‘1:ndims (A)’
-     (in any order, but each element must appear only once).  The Nth
-     dimension of A gets remapped to dimension ‘PERM(N)’.  For example:
+     The permutation vector PERM must contain the elements
+     ‘1:ndims (A)’ (in any order, but each element must appear only
+     once).  The Nth dimension of A gets remapped to dimension
+     ‘PERM(N)’.  For example:
 
           X = zeros ([2, 3, 5, 7]);
           size (X)
@@ -4096,8 +4098,9 @@ File: octave.info,  Node: Rearranging Matrices,  Next: Special Utility Matrices,
      For equal elements, the indices are such that equal elements are
      listed in the order in which they appeared in the original list.
 
-     Sorting of complex entries is done first by magnitude (‘abs (Z)’)
-     and for any ties by phase angle (‘angle (z)’).  For example:
+     Sorting of complex entries is done first by magnitude
+     (‘abs (Z)’) and for any ties by phase angle (‘angle (z)’).  For
+     example:
 
           sort ([1+i; 1; 1-i])
               ⇒ 1 + 0i
@@ -8067,31 +8070,4 @@ File: octave.info,  Node: Mathematical Constants,  Prev: Coordinate Transformati
 
      See also: *note realmax: XREFrealmax, *note intmin: XREFintmin,
      *note eps: XREFeps.
-
-
-File: octave.info,  Node: Linear Algebra,  Next: Vectorization and Faster Code Execution,  Prev: Arithmetic,  Up: Top
-
-18 Linear Algebra
-*****************
-
-This chapter documents the linear algebra functions provided in Octave.
-Reference material for many of these functions may be found in Golub and
-Van Loan, ‘Matrix Computations, 2nd Ed.’, Johns Hopkins, 1989, and in
-the ‘LAPACK Users' Guide’, SIAM, 1992.  The ‘LAPACK Users' Guide’ is
-available at: ‘http://www.netlib.org/lapack/lug/’
-
-   A common text for engineering courses is G. Strang, ‘Linear Algebra
-and Its Applications, 4th Edition’.  It has become a widespread
-reference for linear algebra.  An alternative is P. Lax ‘Linear Algebra
-and Its Applications’, and also is a good choice.  It claims to be
-suitable for high school students with substantial mathematical
-interests as well as first-year undergraduates.
-
-* Menu:
-
-* Techniques Used for Linear Algebra::
-* Basic Matrix Functions::
-* Matrix Factorizations::
-* Functions of a Matrix::
-* Specialized Solvers::
 
