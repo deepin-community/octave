@@ -1,4 +1,5 @@
-This is octave.info, produced by makeinfo version 7.1 from octave.texi.
+This is octave.info, produced by makeinfo version 7.1.1 from
+octave.texi.
 
 INFO-DIR-SECTION Math
 START-INFO-DIR-ENTRY
@@ -2612,10 +2613,9 @@ successive quadratic programming solver.
                       [  dx_1     dx_2          dx_N  ]
 
      The fifth and sixth arguments, LB and UB, contain lower and upper
-     bounds on X.  These must be consistent with the equality and
-     inequality constraints G and H.  If the arguments are vectors then
-     X(i) is bound by LB(i) and UB(i).  A bound can also be a scalar in
-     which case all elements of X will share the same bound.
+     bounds on X and when provided must be vectors of the same size as
+     the the vector X0.  The bounds must be consistent with the equality
+     and inequality constraints G and H.
 
      The seventh argument MAXITER specifies the maximum number of
      iterations.  The default value is 100.
@@ -3911,12 +3911,12 @@ already provided.
 
      If WLEN is a scalar, the function ‘mad’ is applied to a moving
      window of length WLEN.  When WLEN is an odd number the window is
-     symmetric and includes ‘(WLEN - 1) / 2’ elements on either side of
+     symmetric and includes ‘(WLEN - 1) / 2’ elements oneither side of
      the central element.  For example, when calculating the output at
      index 5 with a window length of 3, ‘movmad’ uses data elements
      ‘[4, 5, 6]’.  If WLEN is an even number, the window is asymmetric
      and has ‘WLEN/2’ elements to the left of the central element and
-     ‘WLEN/2 - 1’ elements to the right of the central element.  For
+     ‘WLEN/2 - 1’ elements to the right of thecentral element.  For
      example, when calculating the output at index 5 with a window
      length of 4, ‘movmad’ uses data elements ‘[3, 4, 5, 6]’.
 
@@ -4550,7 +4550,8 @@ already provided.
 
      If the optional argument DIM is given, operate along this
      dimension.  The normalization argument OPT must be given before the
-     dimension.
+     dimension.  To use the default value for OPT you may pass an empty
+     input argument ‘[]’.
 
      The optional string argument "NANCOND" controls whether ‘NaN’ and
      ‘NA’ values should be included ("includenan"), or excluded
@@ -4753,7 +4754,7 @@ already provided.
      to calculate index 5 is ‘[2, 3, 4, 5]’.
 
      The optional argument OPT determines the type of normalization to
-     use.  Valid values are
+     use.  Valid values are:
 
      0:
           normalize with N-1, provides the best unbiased estimator of
@@ -4765,7 +4766,8 @@ already provided.
 
      If the optional argument DIM is given, operate along this
      dimension.  The normalization argument OPT must be given before the
-     dimension.
+     dimension.  To use the default value for OPT you may pass an empty
+     input argument ‘[]’.
 
      The optional string argument "NANCOND" controls whether ‘NaN’ and
      ‘NA’ values should be included ("includenan"), or excluded

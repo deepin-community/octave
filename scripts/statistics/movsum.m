@@ -34,14 +34,14 @@
 ##
 ## If @var{wlen} is a scalar, the function @code{movsum} is applied to a
 ## moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-## window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-## either side of the central element.  For example, when calculating the
+## window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+## on either side of the central element.  For example, when calculating the
 ## output at index 5 with a window length of 3, @code{movsum} uses data
 ## elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-## is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-## central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-## central element.  For example, when calculating the output at index 5 with a
-## window length of 4, @code{movsum} uses data elements
+## is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+## central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+## the central element.  For example, when calculating the output at index 5
+## with a window length of 4, @code{movsum} uses data elements
 ## @w{@code{[3, 4, 5, 6]}}.
 ##
 ## If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -82,8 +82,8 @@
 ## data array are deleted.  For example, with a 10-element data vector and a
 ## window of length 3, the output will contain only 8 elements.  The first
 ## element would require calculating the function over indices
-## @w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-## require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+## @w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+## require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 ## therefore discarded.
 ##
 ## @item @qcode{"fill"}
@@ -141,9 +141,18 @@ function y = movsum (x, wlen, varargin)
 endfunction
 
 
-## FIXME: Need functional BIST tests
-## test for bug #55241
-%!assert ([(3:3:27).'; 19], movsum ((1:10).', 3))
+%!assert (movsum (1:5, 3), [3, 6, 9, 12, 9])
+%!assert (movsum (1:5, [1, 1]), [3, 6, 9, 12, 9])
+%!assert (movsum (1:5, 3, 2), [3, 6, 9, 12, 9])
+
+%!assert (movsum (magic (4), 3),
+%!        [21, 13, 13, 21; 30, 20, 19, 33; 18, 32, 31, 21; 13, 21, 21, 13])
+%!assert (movsum (magic (4), 3, 1),
+%!        [21, 13, 13, 21; 30, 20, 19, 33; 18, 32, 31, 21; 13, 21, 21, 13])
+%!assert (movsum (magic (4), 3, 2),
+%!        [18, 21, 18, 16; 16, 26, 29, 18; 16, 22, 25, 18; 18, 33, 30, 16])
+
+%!assert <*55241> (movsum ((1:10).', 3), [(3:3:27).'; 19])
 
 ## Test input validation
 %!error <Invalid call> movsum ()

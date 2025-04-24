@@ -1,4 +1,5 @@
-This is octave.info, produced by makeinfo version 7.1 from octave.texi.
+This is octave.info, produced by makeinfo version 7.1.1 from
+octave.texi.
 
 INFO-DIR-SECTION Math
 START-INFO-DIR-ENTRY
@@ -19,6 +20,33 @@ permission notice identical to this one.
    Permission is granted to copy and distribute translations of this
 manual into another language, under the above conditions for modified
 versions.
+
+
+File: octave.info,  Node: Linear Algebra,  Next: Vectorization and Faster Code Execution,  Prev: Arithmetic,  Up: Top
+
+18 Linear Algebra
+*****************
+
+This chapter documents the linear algebra functions provided in Octave.
+Reference material for many of these functions may be found in Golub and
+Van Loan, ‘Matrix Computations, 2nd Ed.’, Johns Hopkins, 1989, and in
+the ‘LAPACK Users' Guide’, SIAM, 1992.  The ‘LAPACK Users' Guide’ is
+available at: ‘http://www.netlib.org/lapack/lug/’
+
+   A common text for engineering courses is G. Strang, ‘Linear Algebra
+and Its Applications, 4th Edition’.  It has become a widespread
+reference for linear algebra.  An alternative is P. Lax ‘Linear Algebra
+and Its Applications’, and also is a good choice.  It claims to be
+suitable for high school students with substantial mathematical
+interests as well as first-year undergraduates.
+
+* Menu:
+
+* Techniques Used for Linear Algebra::
+* Basic Matrix Functions::
+* Matrix Factorizations::
+* Functions of a Matrix::
+* Specialized Solvers::
 
 
 File: octave.info,  Node: Techniques Used for Linear Algebra,  Next: Basic Matrix Functions,  Up: Linear Algebra
@@ -1190,7 +1218,7 @@ File: octave.info,  Node: Matrix Factorizations,  Next: Functions of a Matrix,  
 
      There are two calling forms of the function:
 
-       1. ‘[AA, BB, Q, Z, V, W, LAMBDA] = qz (A, B)’
+       1. ‘[AA, BB, Q, Z, V, W] = qz (A, B)’
 
           Compute the complex QZ decomposition, generalized
           eigenvectors, and generalized eigenvalues.
@@ -1205,7 +1233,7 @@ File: octave.info,  Node: Matrix Factorizations,  Next: Functions of a Matrix,  
           matrices V and W respectively contain the right and left
           generalized eigenvectors.
 
-       2. ‘[AA, BB, Z {, LAMBDA}] = qz (A, B, OPT)’
+       2. ‘[AA, BB, Q, Z, V, W] = qz (A, B, OPT)’
 
           The OPT argument must be equal to either "real" or "complex".
           If it is equal to "complex", then this calling form is
@@ -1221,14 +1249,17 @@ File: octave.info,  Node: Matrix Factorizations,  Next: Functions of a Matrix,  
           and complex QZ coincide).
 
      Note: ‘qz’ performs permutation balancing, but not scaling (*note
-     ‘balance’: XREFbalance.), which may be lead to less accurate
-     results than ‘eig’.  The order of output arguments was selected for
+     ‘balance’: XREFbalance.), which may lead to less accurate results
+     than ‘eig’.  The order of output arguments was selected for
      compatibility with MATLAB.
+
+     For eigenvalues, use the ‘ordeig’ function to compute them based on
+     the resulting AA and BB matrices.
 
      See also: *note eig: XREFeig, *note gsvd: XREFgsvd, *note balance:
      XREFbalance, *note chol: XREFchol, *note hess: XREFhess, *note lu:
      XREFlu, *note qr: XREFqr, *note qzhess: XREFqzhess, *note schur:
-     XREFschur.
+     XREFschur, *note ordeig: XREFordeig.
 
  -- : [AA, BB, Q, Z] = qzhess (A, B)
      Compute the Hessenberg-triangular decomposition of the matrix
@@ -1775,14 +1806,15 @@ File: octave.info,  Node: Specialized Solvers,  Prev: Functions of a Matrix,  Up
         • M1, M2 are the preconditioners.  The preconditioner M is given
           as ‘M = M1 * M2’.  Both M1 and M2 can be passed as a matrix or
           as a function handle or inline function ‘g’ such that
-          ‘g (X, "notransp") = M1 \ X’ or ‘g (X, "notransp") = M2 \ X’
-          and ‘g (X, "transp") = M1' \ X’ or
-          ‘g (X, "transp") = M2' \ X’.  If M1 is omitted or empty, then
-          preconditioning is not applied.  The preconditioned system is
-          theoretically equivalent to applying the ‘bicg’ method to the
-          linear system ‘inv (M1) * A * inv (M2) * Y = inv (M1) * B’ and
-          ‘inv (M2') * A' * inv (M1') * Z = inv (M2') * B’ and then
-          setting ‘X = inv (M2) * Y’.
+          ‘g (X, "notransp") = M1 \ X’ or
+          ‘g (X, "notransp") = M2 \ X’ and
+          ‘g (X, "transp") = M1' \ X’ or ‘g (X, "transp") = M2' \ X’.
+          If M1 is omitted or empty, then preconditioning is not
+          applied.  The preconditioned system is theoretically
+          equivalent to applying the ‘bicg’ method to the linear system
+          ‘inv (M1) * A * inv (M2) * Y = inv (M1) * B’ and ‘inv (M2') *
+          A' * inv (M1') * Z = inv (M2') * B’ and then setting ‘X = inv
+          (M2) * Y’.
 
         • X0 is the initial guess.  If X0 is omitted or empty then the
           function sets X0 to a zero vector by default.

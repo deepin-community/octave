@@ -1044,6 +1044,13 @@ nevermind:
 %!         [1, 2, NaN]);
 %! assert (! isempty (__errmsg));
 %! clear -global __errmsg;
+
+## An error should occur if called function does not return requested outputs
+%!function [a, b] = __counterror (x)
+%!  a = x;
+%!endfunction
+%!test <66642>
+%! fail ("[a, b] = cellfun (@__counterror, {1, 4})");
 */
 
 // Arrayfun was originally a .m file written by Bill Denney and Jaroslav
@@ -1668,6 +1675,13 @@ arrayfun (@@str2num, [1234],
 %! assert ([(isempty (A(1).message)), (isempty (A(2).message))],
 %!         [false, false]);
 %! assert ([A(1).index, A(2).index], [1, 2]);
+
+## An error should occur if called function does not return requested outputs
+%!function [a, b] = __counterror (x)
+%!  a = x;
+%!endfunction
+%!test <66642>
+%! fail ("[a, b] = arrayfun (@__counterror, [1, 4])");
 */
 
 static void

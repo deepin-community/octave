@@ -34,14 +34,14 @@
 ##
 ## If @var{wlen} is a scalar, the function @code{movprod} is applied to a
 ## moving window of length @var{wlen}.  When @var{wlen} is an odd number the
-## window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}} elements on
-## either side of the central element.  For example, when calculating the
+## window is symmetric and includes @w{@code{(@var{wlen} - 1) / 2}}@ elements
+## on either side of the central element.  For example, when calculating the
 ## output at index 5 with a window length of 3, @code{movprod} uses data
 ## elements @w{@code{[4, 5, 6]}}.  If @var{wlen} is an even number, the window
-## is asymmetric and has @w{@code{@var{wlen}/2}} elements to the left of the
-## central element and @w{@code{@var{wlen}/2 - 1}} elements to the right of the
-## central element.  For example, when calculating the output at index 5 with a
-## window length of 4, @code{movprod} uses data elements
+## is asymmetric and has @w{@code{@var{wlen}/2}}@ elements to the left of the
+## central element and @w{@code{@var{wlen}/2 - 1}}@ elements to the right of
+## the central element.  For example, when calculating the output at index 5
+## with a window length of 4, @code{movprod} uses data elements
 ## @w{@code{[3, 4, 5, 6]}}.
 ##
 ## If @var{wlen} is an array with two elements @w{@code{[@var{nb}, @var{na}]}},
@@ -82,8 +82,8 @@
 ## data array are deleted.  For example, with a 10-element data vector and a
 ## window of length 3, the output will contain only 8 elements.  The first
 ## element would require calculating the function over indices
-## @w{@code{[0, 1, 2]}} and is therefore discarded.  The last element would
-## require calculating the function over indices @w{@code{[9, 10, 11]}} and is
+## @w{@code{[0, 1, 2]}}@ and is therefore discarded.  The last element would
+## require calculating the function over indices @w{@code{[9, 10, 11]}}@ and is
 ## therefore discarded.
 ##
 ## @item @qcode{"fill"}
@@ -141,9 +141,22 @@ function y = movprod (x, wlen, varargin)
 endfunction
 
 
-## FIXME: Need functional BIST tests
-## test for bug #55241
-%!assert ([2; 6; 24; 60; 120; 210; 336; 504; 720; 90], movprod ((1:10).', 3))
+%!assert (movprod (1:5, 3), [2, 6, 24, 60, 20])
+%!assert (movprod (1:5, [1, 1]), [2, 6, 24, 60, 20])
+%!assert (movprod (1:5, 3, 2), [2, 6, 24, 60, 20])
+
+%!assert (movprod (magic (4), 3),
+%!        [80, 22, 30, 104; 720, 154, 180, 1248; ...
+%!         180, 1078, 900, 96; 36, 98, 90, 12])
+%!assert (movprod (magic (4), 3, 1),
+%!        [80, 22, 30, 104; 720, 154, 180, 1248; ...
+%!         180, 1078, 900, 96; 36, 98, 90, 12])
+%!assert (movprod (magic (4), 3, 2),
+%!        [32, 96, 78, 39; 55, 550, 880, 80; ...
+%!         63, 378, 504, 72; 56, 840, 210, 15])
+
+%!assert <*55241> (movprod ((1:10).', 3), ...
+%!                 [2; 6; 24; 60; 120; 210; 336; 504; 720; 90])
 
 ## Test input validation
 %!error <Invalid call> movprod ()

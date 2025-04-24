@@ -1,4 +1,5 @@
-This is octave.info, produced by makeinfo version 7.1 from octave.texi.
+This is octave.info, produced by makeinfo version 7.1.1 from
+octave.texi.
 
 INFO-DIR-SECTION Math
 START-INFO-DIR-ENTRY
@@ -1474,32 +1475,27 @@ read into memory using the ‘load’ command.
  -- : STR = save ("-", "V1", "V2", ...)
      Save the named variables V1, V2, ..., in the file FILE.
 
-     The special filename ‘-’ may be used to return the content of the
-     variables as a string.  If no variable names are listed, Octave
-     saves all the variables in the current scope.  Otherwise, full
-     variable names or pattern syntax can be used to specify the
-     variables to save.  If the ‘-struct’ modifier is used then the
-     fields of the *scalar* struct are saved as if they were variables
-     with the corresponding field names.  The ‘-struct’ option can be
-     combined with specific field names F1, F2, ... to write only
-     certain fields to the file.
+     If no variable names are listed, Octave saves all the variables in
+     the current scope.  Otherwise, full variable names or pattern
+     syntax can be used to specify the variables to save.  If the
+     ‘-struct’ modifier is used then the fields of the *scalar* struct
+     are saved as if they were variables with the corresponding field
+     names.  The ‘-struct’ option can be combined with specific field
+     names F1, F2, ... to write only certain fields to the file.
+
+     The ‘save’ command may also be invoked using the functional form
+
+          save ("-option1", ..., "file", "v1", ...)
+
+     where the OPTIONS, FILE, and variable name arguments (V1, ...) must
+     be specified as character strings.
 
      Valid options for the ‘save’ command are listed in the following
      table.  Options that modify the output format override the format
      specified by ‘save_default_options’.
 
-     If save is invoked using the functional form
-
-          save ("-option1", ..., "file", "v1", ...)
-
-     then the OPTIONS, FILE, and variable name arguments (V1, ...) must
-     be specified as character strings.
-
-     If called with a filename of "-", write the output to stdout if
-     nargout is 0, otherwise return the output in a character string.
-
      ‘-append’
-          Append to the destination instead of overwriting.
+          Append to the file instead of overwriting.
 
      ‘-ascii’
           Save a matrix in a text file without a header or any other
@@ -1518,9 +1514,9 @@ read into memory using the ‘load’ command.
           Save the data in Octave's binary data format.
 
      ‘-float-binary’
-          Save the data in Octave's binary data format but using only
-          single precision.  Use this format *only* if you know that all
-          the values to be saved can be represented in single precision.
+          Save the data in Octave's binary data format using just single
+          precision.  Use this format *only* if you know that all the
+          values to be saved can be represented in single precision.
 
      ‘-hdf5’
           Save the data in HDF5 format.  (HDF5 is a free, portable,
@@ -1530,12 +1526,17 @@ read into memory using the ‘load’ command.
           to the HDF5 libraries.
 
      ‘-float-hdf5’
-          Save the data in HDF5 format but using only single precision.
-          Use this format *only* if you know that all the values to be
-          saved can be represented in single precision.
+          Save the data in HDF5 format using just single precision.  Use
+          this format *only* if you know that all the values to be saved
+          can be represented in single precision.
 
-     ‘-text’
-          Save the data in Octave's text data format.  (default)
+     ‘-text (default)’
+          Save the data in Octave's text data format.  The *note
+          ‘save_precision’: XREFsave_precision. function specifies the
+          number of significant figures to use when saving data
+          (default: 17).  The header of the text data file can be
+          configure with *note ‘save_header_format_string’:
+          XREFsave_header_format_string.
 
      ‘-v7.3’
      ‘-V7.3’
@@ -1589,10 +1590,15 @@ read into memory using the ‘load’ command.
           when using the ‘-struct’ modifier (but not in the struct name
           itself).
 
-     Except when using the MATLAB binary data file format or the
-     ‘-ascii’ format, saving global variables also saves the global
-     status of the variable.  If the variable is restored at a later
-     time using ‘load’, it will be restored as a global variable.
+     Programming Notes: If called with the special filename "-" the data
+     to be saved is returned as a string rather than writing it to an
+     actual file.
+
+     When saving global variables the global status of the variable is
+     also stored.  If the variable is restored at a later time using
+     ‘load’, it will be restored as a global variable.  Global status is
+     _not_ preserved if using a MATLAB binary data file format or the
+     ‘-ascii’ format.
 
      Example:
 
@@ -1606,8 +1612,8 @@ read into memory using the ‘load’ command.
      See also: *note load: XREFload, *note save_default_options:
      XREFsave_default_options, *note save_header_format_string:
      XREFsave_header_format_string, *note save_precision:
-     XREFsave_precision, *note dlmread: XREFdlmread, *note csvread:
-     XREFcsvread, *note fread: XREFfread.
+     XREFsave_precision, *note csvwrite: XREFcsvwrite, *note dlmwrite:
+     XREFdlmwrite, *note fwrite: XREFfwrite.
 
    There are three functions that modify the behavior of ‘save’.
 
@@ -1680,44 +1686,19 @@ read into memory using the ‘load’ command.
      Load the named variables V1, V2, ..., from the file FILE.
 
      If no variables are specified then all variables found in the file
-     will be loaded.  As with ‘save’, the list of variables to extract
-     can be full names or use a pattern syntax.  The format of the file
-     is automatically detected but may be overridden by supplying the
-     appropriate option.
+     will be loaded.  Otherwise, full variable names or pattern syntax
+     can be used to specify the variables to save.  The format of the
+     file is automatically detected but may be overridden by supplying
+     the appropriate option.
 
-     If load is invoked using the functional form
+     The ‘load’ command may also be invoked using the functional form
 
           load ("-option1", ..., "file", "v1", ...)
 
-     then the OPTIONS, FILE, and variable name arguments (V1, ...) must
+     where the OPTIONS, FILE, and variable name arguments (V1, ...) must
      be specified as character strings.
 
-     If a variable that is not marked as global is loaded from a file
-     when a global symbol with the same name already exists, it is
-     loaded in the global symbol table.  Also, if a variable is marked
-     as global in a file and a local symbol exists, the local symbol is
-     moved to the global symbol table and given the value from the file.
-
-     If invoked with a single output argument, Octave returns data
-     instead of inserting variables in the symbol table.  If the data
-     file contains only numbers (TAB- or space-delimited columns), a
-     matrix of values is returned.  Otherwise, ‘load’ returns a
-     structure with members corresponding to the names of the variables
-     in the file.
-
-     The ‘load’ command can read data stored in Octave's text and binary
-     formats, and MATLAB's binary format.  If compiled with zlib
-     support, it can also load gzip-compressed files.  It will
-     automatically detect the type of file and do conversion from
-     different floating point formats (currently only IEEE big and
-     little endian, though other formats may be added in the future).
-
      Valid options for ‘load’ are listed in the following table.
-
-     ‘-force’
-          This option is accepted for backward compatibility but is
-          ignored.  Octave now overwrites variables currently in memory
-          with those of the same name found in the file.
 
      ‘-ascii’
           Force Octave to assume the file contains columns of numbers in
@@ -1732,17 +1713,14 @@ read into memory using the ‘load’ command.
           Force Octave to assume the file is in HDF5 format.  (HDF5 is a
           free, portable binary format developed by the National Center
           for Supercomputing Applications at the University of
-          Illinois.)  Note that Octave can only read HDF5 files that
-          were created by itself with ‘save’ or with MATLAB's ‘-v7.3’
-          option (which saves in HDF5 format).  This format is only
-          available if Octave was built with a link to the HDF5
-          libraries.
-
-     ‘-import’
-          This option is accepted for backward compatibility but is
-          ignored.  Octave can now support multi-dimensional HDF data
-          and automatically modifies variable names if they are invalid
-          Octave identifiers.
+          Illinois.)  Note that ‘load’ is only designed to read HDF5
+          files that were created by Octave with ‘save’, and attempts to
+          read other HDF5 files may fail or produce unpredictable
+          results.  The ‘-hdf5’ option provides a limited ability to
+          read files created using MATLAB's ‘-v7.3’ option (which saves
+          in HDF5 format) although many data types are not yet
+          supported.  This format is only available if Octave was built
+          with a link to the HDF5 libraries.
 
      ‘-text’
           Force Octave to assume the file is in Octave's text format.
@@ -1750,10 +1728,12 @@ read into memory using the ‘load’ command.
      ‘-v7.3’
      ‘-V7.3’
      ‘-7.3’
-          Force Octave to assume the file is in MATLAB's v7.3 binary
-          data format.  As the v7.3 format is an HDF5 based format,
-          those files often can also be opened with the "-hdf5" option.
-          Note that Octave *can not* currently save in this format.
+          Octave does *not* yet implement MATLAB's v7.3 binary data
+          format.  As the v7.3 format is an HDF5 based format, the
+          "-hdf5" option may be used to attempt to open a v7.3 format
+          file, although most non-numeric data types are not yet
+          supported.  Note that Octave *can not* currently save in this
+          format.
 
      ‘-v7’
      ‘-V7’
@@ -1777,8 +1757,46 @@ read into memory using the ‘load’ command.
           Force Octave to assume the file is in MATLAB's version 4
           binary format.
 
-     See also: *note save: XREFsave, *note dlmwrite: XREFdlmwrite, *note
-     csvwrite: XREFcsvwrite, *note fwrite: XREFfwrite.
+     The list of variables to load may use wildcard patterns (glob
+     patterns) containing the following special characters:
+
+     ‘?’
+          Match any single character.
+
+     ‘*’
+          Match zero or more characters.
+
+     ‘[ LIST ]’
+          Match the list of characters specified by LIST.  If the first
+          character is ‘!’ or ‘^’, match all characters except those
+          specified by LIST.  For example, the pattern ‘[a-zA-Z]’ will
+          match all lower and uppercase alphabetic characters.
+
+     If invoked with a single output argument, Octave assigns loaded
+     data to the output instead of inserting variables in the symbol
+     table.  If the data file contains only numbers (TAB- or
+     space-delimited columns), a matrix of values is returned.
+     Otherwise, ‘load’ returns a structure with members corresponding to
+     the names of the variables in the file.
+
+     The ‘load’ command can read data stored in Octave's text and binary
+     formats, MATLAB's binary format, and many simple formats such as
+     comma-separated-values (CSV). If compiled with zlib support, it can
+     also load gzip-compressed files.  It will automatically detect the
+     type of file and do conversion from different floating point
+     formats (currently only IEEE big and little endian, though other
+     formats may be added in the future).
+
+     Programming Note: If a variable that is not marked as global is
+     loaded from a file when a global symbol with the same name already
+     exists, it is loaded in the global symbol table.  Also, if a
+     variable is marked as global in a file and a local symbol exists,
+     the local symbol is moved to the global symbol table and given the
+     value from the file.
+
+     See also: *note save: XREFsave, *note csvread: XREFcsvread, *note
+     dlmread: XREFdlmread, *note fread: XREFfread, *note textscan:
+     XREFtextscan.
 
  -- : STR = fileread (FILENAME)
  -- : STR = fileread (FILENAME, PARAM, VALUE, ...)

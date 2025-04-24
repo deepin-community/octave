@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Specialized Solvers (GNU Octave (version 9.2.0))</title>
+<title>Specialized Solvers (GNU Octave (version 9.4.0))</title>
 
-<meta name="description" content="Specialized Solvers (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Specialized Solvers (GNU Octave (version 9.2.0))">
+<meta name="description" content="Specialized Solvers (GNU Octave (version 9.4.0))">
+<meta name="keywords" content="Specialized Solvers (GNU Octave (version 9.4.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -56,15 +56,16 @@ Previous: <a href="Functions-of-a-Matrix.html" accesskey="p" rel="prev">Function
 <dt class="deftypefnx def-cmd-deftypefn" id="index-bicg-7"><span class="category-def">: </span><span><code class="def-type"><var class="var">x</var> =</code> <strong class="def-name">bicg</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">b</var>, <var class="var">tol</var>, <var class="var">maxit</var>, <var class="var">M</var>, [], <var class="var">x0</var>, &hellip;)</code><a class="copiable-link" href="#index-bicg-7"> &para;</a></span></dt>
 <dt class="deftypefnx def-cmd-deftypefn" id="index-bicg-8"><span class="category-def">: </span><span><code class="def-type"><var class="var">x</var> =</code> <strong class="def-name">bicg</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">b</var>, <var class="var">tol</var>, <var class="var">maxit</var>, <var class="var">M1</var>, <var class="var">M2</var>, <var class="var">x0</var>, &hellip;)</code><a class="copiable-link" href="#index-bicg-8"> &para;</a></span></dt>
 <dt class="deftypefnx def-cmd-deftypefn" id="index-bicg-9"><span class="category-def">: </span><span><code class="def-type">[<var class="var">x</var>, <var class="var">flag</var>, <var class="var">relres</var>, <var class="var">iter</var>, <var class="var">resvec</var>] =</code> <strong class="def-name">bicg</strong> <code class="def-code-arguments">(<var class="var">A</var>, <var class="var">b</var>, &hellip;)</code><a class="copiable-link" href="#index-bicg-9"> &para;</a></span></dt>
-<dd><p>Solve the linear system of equations <code class="code"><var class="var">A</var>&nbsp;*&nbsp;<var class="var">x</var>&nbsp;=&nbsp;<var class="var">b</var></code><!-- /@w -->
-by means of the Bi-Conjugate Gradient iterative method.
+<dd><p>Solve the linear system of equations
+<code class="code"><var class="var">A</var>&nbsp;*&nbsp;<var class="var">x</var>&nbsp;=&nbsp;<var class="var">b</var></code><!-- /@w -->&nbsp;by means of the Bi-Conjugate
+Gradient iterative method.
 </p>
 <p>The input arguments are:
 </p>
 <ul class="itemize mark-bullet">
 <li><var class="var">A</var> is the matrix of the linear system and it must be square.
 <var class="var">A</var> can be passed as a matrix, function handle, or inline function
-<code class="code">Afcn</code> such that <code class="code">Afcn&nbsp;(x,&nbsp;&quot;notransp&quot;)&nbsp;=&nbsp;A&nbsp;*&nbsp;x</code><!-- /@w --> and
+<code class="code">Afcn</code> such that <code class="code">Afcn&nbsp;(x,&nbsp;&quot;notransp&quot;)&nbsp;=&nbsp;A&nbsp;*&nbsp;x</code><!-- /@w -->&nbsp;and
 <code class="code">Afcn&nbsp;(x,&nbsp;&quot;transp&quot;)&nbsp;=&nbsp;A'&nbsp;*&nbsp;x</code><!-- /@w -->.  Additional parameters to
 <code class="code">Afcn</code> may be passed after <var class="var">x0</var>.
 
@@ -82,9 +83,10 @@ is omitted or empty then a value of 20 is used.
 </li><li><var class="var">M1</var>, <var class="var">M2</var> are the preconditioners.  The preconditioner <var class="var">M</var> is
 given as <code class="code"><var class="var">M</var> = <var class="var">M1</var> * <var class="var">M2</var></code>.  Both <var class="var">M1</var> and <var class="var">M2</var>
 can be passed as a matrix or as a function handle or inline function
-<code class="code">g</code> such that <code class="code">g&nbsp;(<var class="var">x</var>,&nbsp;&quot;notransp&quot;)&nbsp;=&nbsp;<var class="var">M1</var>&nbsp;\&nbsp;<var class="var">x</var></code><!-- /@w -->
-or <code class="code">g&nbsp;(<var class="var">x</var>,&nbsp;&quot;notransp&quot;)&nbsp;=&nbsp;<var class="var">M2</var>&nbsp;\&nbsp;<var class="var">x</var></code><!-- /@w --> and
-<code class="code">g&nbsp;(<var class="var">x</var>,&nbsp;&quot;transp&quot;)&nbsp;=&nbsp;<var class="var">M1</var>'&nbsp;\&nbsp;<var class="var">x</var></code><!-- /@w --> or
+<code class="code">g</code> such that
+<code class="code">g&nbsp;(<var class="var">x</var>,&nbsp;&quot;notransp&quot;)&nbsp;=&nbsp;<var class="var">M1</var>&nbsp;\&nbsp;<var class="var">x</var></code><!-- /@w -->&nbsp;or
+<code class="code">g&nbsp;(<var class="var">x</var>,&nbsp;&quot;notransp&quot;)&nbsp;=&nbsp;<var class="var">M2</var>&nbsp;\&nbsp;<var class="var">x</var></code><!-- /@w -->&nbsp;and
+<code class="code">g&nbsp;(<var class="var">x</var>,&nbsp;&quot;transp&quot;)&nbsp;=&nbsp;<var class="var">M1</var>'&nbsp;\&nbsp;<var class="var">x</var></code><!-- /@w -->&nbsp;or
 <code class="code">g&nbsp;(<var class="var">x</var>,&nbsp;&quot;transp&quot;)&nbsp;=&nbsp;<var class="var">M2</var>'&nbsp;\&nbsp;<var class="var">x</var></code><!-- /@w -->.
 If <var class="var">M1</var> is omitted or empty, then preconditioning is not applied.
 The preconditioned system is theoretically equivalent to applying the

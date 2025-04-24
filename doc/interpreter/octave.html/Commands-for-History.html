@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!-- Created by GNU Texinfo 7.1, https://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 7.1.1, https://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Commands for History (GNU Octave (version 9.2.0))</title>
+<title>Commands for History (GNU Octave (version 9.4.0))</title>
 
-<meta name="description" content="Commands for History (GNU Octave (version 9.2.0))">
-<meta name="keywords" content="Commands for History (GNU Octave (version 9.2.0))">
+<meta name="description" content="Commands for History (GNU Octave (version 9.4.0))">
+<meta name="keywords" content="Commands for History (GNU Octave (version 9.4.0))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -297,10 +297,11 @@ store command history.
 this new file (if the current setting of <code class="code">history_save</code> allows for this).
 </p>
 <p>The default value is <samp class="file"><code class="env">$DATA</code><!-- /@w -->/octave/history</samp>, where
-<code class="env">$DATA</code><!-- /@w --> is the platform-specific location for (roaming) user data files
-(e.g., <code class="env">$XDG_DATA_HOME</code><!-- /@w --> or, if that is not set, <samp class="file">~/.local/share</samp>
-on Unix-like operating systems or <code class="env">%APPDATA%</code><!-- /@w --> on Windows).  The default
-value may be overridden by the environment variable <code class="env">OCTAVE_HISTFILE</code><!-- /@w -->.
+<code class="env">$DATA</code><!-- /@w -->&nbsp;is the platform-specific location for (roaming) user data files
+(e.g., <code class="env">$XDG_DATA_HOME</code><!-- /@w -->&nbsp;or, if that is not set, <samp class="file">~/.local/share</samp>
+on Unix-like operating systems or <code class="env">%APPDATA%</code><!-- /@w -->&nbsp;on Windows).  The
+default value may be overridden by the environment variable
+<code class="env">OCTAVE_HISTFILE</code><!-- /@w -->.
 </p>
 <p>Programming Notes:
 </p>
@@ -373,10 +374,15 @@ The original variable value is restored when exiting the function.
 <dt class="deftypefn" id="index-EDITOR"><span class="category-def">: </span><span><code class="def-type"><var class="var">val</var> =</code> <strong class="def-name">EDITOR</strong> <code class="def-code-arguments">()</code><a class="copiable-link" href="#index-EDITOR"> &para;</a></span></dt>
 <dt class="deftypefnx def-cmd-deftypefn" id="index-EDITOR-1"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">EDITOR</strong> <code class="def-code-arguments">(<var class="var">new_val</var>)</code><a class="copiable-link" href="#index-EDITOR-1"> &para;</a></span></dt>
 <dt class="deftypefnx def-cmd-deftypefn" id="index-EDITOR-2"><span class="category-def">: </span><span><code class="def-type"><var class="var">old_val</var> =</code> <strong class="def-name">EDITOR</strong> <code class="def-code-arguments">(<var class="var">new_val</var>, &quot;local&quot;)</code><a class="copiable-link" href="#index-EDITOR-2"> &para;</a></span></dt>
-<dd><p>Query or set the internal variable that specifies the default text editor.
+<dd><p>Query or set the internal variable that specifies the default text editor when
+using the CLI.
 </p>
-<p>The default value is taken from the environment variable <code class="env">EDITOR</code><!-- /@w -->&nbsp;when Octave starts.  If the environment variable is not initialized,
-<code class="env">EDITOR</code><!-- /@w -->&nbsp;will be set to <code class="code">&quot;emacs&quot;</code>.
+<p>The default value is taken from the environment variable
+<code class="env">EDITOR</code><!-- /@w -->&nbsp;when Octave starts.  If the environment variable is not
+initialized, <code class="env">EDITOR</code><!-- /@w -->&nbsp;will be set to <code class="code">&quot;emacs&quot;</code>.
+</p>
+<p><em class="emph">Note:</em> This setting applies when running the CLI.  When using the
+Octave GUI the default editor is specified in the Editor tab of Preferences.
 </p>
 <p>When called from inside a function with the <code class="code">&quot;local&quot;</code> option, the
 variable is changed locally for the function and any subroutines it calls.
